@@ -3,12 +3,12 @@ highlighter: pygments
 permalink: /posts/:title.html
 excerpt_separator: "<!-- more -->"
 
-github: panxw
-author: "潘学文"
-email: winfirm#163.com
-name: "潘学文个人博客"
-url: http://www.panxw.com
-domain: www.panxw.com
+github: daiwk
+author: "daiwk"
+email: daiwk#foxmail.com
+name: "daiwk-github博客"
+url: http://daiwk.github.io
+domain: daiwk.github.io
 all_categories: [
 ["android", "Android开发","/posts/android.html"], 
 ["program", "软件编程","/posts/program.html"],
@@ -21,7 +21,7 @@ all_categories: [
 
 paginate: 8
 paginate_path: "posts/page:num"
-timezone: America/Los_Angeles
+timezone: China/Beijing
 
 collections:
   docs:
