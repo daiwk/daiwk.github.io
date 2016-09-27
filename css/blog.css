@@ -1,0 +1,21 @@
+/*!
+ * Start Bootstrap - Blog Home HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.post-date{
+	float:right;
+	padding:5px;
+	font-size:12px
+}
+
+.well-ad{min-height:20px;padding-left:5px; padding-top:5px;padding-bottom:3px;margin-bottom:20px;background-color:#f5f5f5;border:1px solid #e3e3e3;}

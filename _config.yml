@@ -1,0 +1,31 @@
+markdown: kramdown
+highlighter: pygments
+permalink: /posts/:title.html
+excerpt_separator: "<!-- more -->"
+
+github: panxw
+author: "潘学文"
+email: winfirm#163.com
+name: "潘学文个人博客"
+url: http://www.panxw.com
+domain: www.panxw.com
+all_categories: [
+["android", "Android开发","/posts/android.html"], 
+["program", "软件编程","/posts/program.html"],
+["web", "Web建站","/posts/web.html"], 
+["linux", "Linux相关","/posts/linux.html"],
+["read", "读书笔记","/posts/read.html"], 
+["other", "杂记","/posts/other.html"],
+["about", "关于","/about.html"]
+]
+
+paginate: 8
+paginate_path: "posts/page:num"
+timezone: America/Los_Angeles
+
+collections:
+  docs:
+    output: true
+
+gems:
+ - jekyll-paginate

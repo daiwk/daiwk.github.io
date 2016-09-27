@@ -1,0 +1,44 @@
+---
+layout: index
+title: "强学力行、顺势而为"
+---
+
+<!-- Loop output paged posts -->
+{% for post in paginator.posts %}
+<h2>
+  <a href="{{ post.url }}">
+    {{ post.title }}
+  </a> 
+  <div class="post-date">
+	<span class="glyphicon glyphicon-time"></span>
+	{{ post.date | date:"%Y-%m-%d" }}
+  </div>
+</h2>
+<hr>
+{{ post.excerpt }}
+	<p><h3><a href="{{ post.url }}">阅读全文 &raquo;</a></h3></p>
+<hr>
+{% endfor %}
+
+<!-- Pager indicator -->
+<ul class="pager">
+  {% if paginator.previous_page %} {% if paginator.previous_page == 1 %}
+  <li class="previous">
+    <a href="/">
+      &larr; 上一页
+    </a>
+  </li>
+  {% else %}
+  <li class="previous">
+    <a href="/posts/page{{ paginator.previous_page }}/index.html">
+      &larr; 上一页
+    </a>
+  </li>
+  {% endif %} {% endif %} {% if paginator.next_page %}
+  <li class="next">
+    <a href="/posts/page{{ paginator.next_page }}/index.html">
+      下一页 &rarr;
+    </a>
+  </li>
+  {% endif %}
+</ul>

@@ -1,0 +1,56 @@
+--- 
+layout: default 
+--- 
+<!-- Navi -->
+{% for cat in site.all_categories %}{% if page.category == cat[0] %}<a href="/">首页</a>&nbsp;>&nbsp;<a href="{{cat[2]}}">{{cat[1]}}</a>&nbsp;>&nbsp;正文{% endif %}{% endfor %}
+<!-- Title -->
+<h2>{{ page.title }}</h2>
+{% if page.tags.size > 0%}<b>标签：</b>{% for tag in page.tags %}{% if tag != "" %}<a href="/tags.html#{{ tag }}"><i>{{ tag }}</i></a>{% if forloop.index != page.tags.size %}, {% endif %}{% endif %}{% endfor %}{% endif %}
+<div class="post-date">
+	<span class="glyphicon glyphicon-time"></span>
+	{{ page.date | date:"%Y-%m-%d" }}
+</div>
+<br/>
+<hr>
+<!-- adsense_468x60 -->
+<div style="text-align:center;margin-top:15px;">
+	 {% include adsense_468x60.html %} 
+</div>
+<br/>
+
+<!-- content -->
+<div style="text-indent:2em;">
+{{ content }}
+</div>
+
+<br/>
+<b>原创文章，转载请注明出处！</b>
+<br/>
+<b>本文链接：</b><a href="{{site.url}}{{page.url}}" title="{{page.name}}">{{site.url}}{{page.url}}</a>
+
+<!-- next and previous -->
+<div style="margin-top:15px; margin-bottom:10px">
+  {%if page.previous%}
+  <span class="next">
+    上篇：
+    <a href="{{page.previous.url}}">
+      {{page.previous.title}}
+    </a>
+  </span>
+  {%endif%} 
+  {%if page.next%}
+  <div style="float:right">
+  <span class="prev" >
+    下篇：
+    <a href="{{page.next.url}}">
+      {{page.next.title}}
+    </a>
+  </span>
+  </div>
+  {%endif%}
+</div>
+<hr>
+<!-- Blog Comments -->
+<div class="media">
+  {% include comment.html %} 
+</div>
