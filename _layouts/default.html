@@ -25,6 +25,7 @@
     <script src="/js/jquery-1.11.0.js"> </script>
     <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
     <script type="text/x-mathjax-config">
          MathJax.Hub.Config({
                    tex2jax: {
@@ -38,9 +39,16 @@
                          all[i].SourceElement().parentNode.className += ' has-jax';
                      }
                  });
+         MathJax.Hub.Config({
+            "HTML-CSS": { linebreaks: { automatic: true } },
+                  SVG: { linebreaks: { automatic: true } }
+          });
+
+         MathJax.Hub.Config({
+            TeX: { equationNumbers: { autoNumber: "AMS" } }
+          });
     </script>      
 
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
   </head>
   
   <body>
