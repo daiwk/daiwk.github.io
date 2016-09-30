@@ -2,7 +2,7 @@
 layout: post
 category: "nlp"
 title: "自然语言处理基本常识"
-tags: [nlp, natural language processing，自然语言处理]
+tags: [nlp, natural language processing, 自然语言处理]
 ---
 #1. 初识NLP#
 ##1.1 关于理解的标准(Turing test)##
