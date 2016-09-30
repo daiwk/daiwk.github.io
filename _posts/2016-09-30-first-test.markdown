@@ -32,7 +32,7 @@ interesting integral:
 | Phone     |   12 USD |  12  |
 | Pipe      |    1 USD | 234  |
 
-``` python
+<pre><code>
 @requires_authorization
 def somefunc(param1='', param2=0):
     '''A docstring'''
@@ -43,7 +43,7 @@ class SomeClass:
     pass
 >>> message = '''interpreter
 ... prompt'''
-```
+</code></pre>
 
 ```sequence
 Alice->Bob: Hello Bob, how are you?
