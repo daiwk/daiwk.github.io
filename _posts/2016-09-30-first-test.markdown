@@ -24,3 +24,32 @@ interesting integral:
 \int_0^\infty \frac{x^3}{e^x-1}\,dx = \frac{\pi^4}{15}
 \label{eq:sample}
 \end{equation}
+
+
+| Item      |    Value | Qty  |
+| :-------- | --------:| :--: |
+| Computer  | 1600 USD |  5   |
+| Phone     |   12 USD |  12  |
+| Pipe      |    1 USD | 234  |
+
+``` python
+@requires_authorization
+def somefunc(param1='', param2=0):
+    '''A docstring'''
+    if param1 > param2: # interesting
+        print 'Greater'
+    return (param2 - param1 + 1) or None
+class SomeClass:
+    pass
+>>> message = '''interpreter
+... prompt'''
+```
+
+```sequence
+Alice->Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob-->Alice: I am good thanks!
+```
+
+ `- [ ] haha`
+ `- [x] lalala`
