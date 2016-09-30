@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://www.panxw.com/atom.xml
+Sitemap: http://daiwk.github.io/atom.xml
