@@ -1,7 +1,7 @@
 ---
 layout: post
 category: "read"
-title: "hahaha"
+title: "just test"
 tags: [xx, cc]
 ---
 `\[
