@@ -40,4 +40,17 @@ tags: [useful links,]
 # **3. Useful Courses && Speeches**
  
 1. **google brain最近的7大研究项目**：[《谷歌大脑最近7大研究项目》](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2651987619&idx=1&sn=3f24b3384a9b10fce2001f4074b789ee&chksm=f1216a52c656e344b1f449f384fe0f41461c9e72992946a1b79c2d1d996eb4bef73e27e04f6c&scene=0&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)
-2. 
+2. **cs224d(nlp)**：课程链接：[http://cs224d.stanford.edu/syllabus.html](http://cs224d.stanford.edu/syllabus.html)；百度云课程pdf下载：[http://pan.baidu.com/s/1dFaA7PR](http://pan.baidu.com/s/1dFaA7PR)
+3. **cs231n(cnn)**：课程链接：[http://cs231n.stanford.edu/](http://cs231n.stanford.edu/)
+4. **Bay Area Deep Learning School 2016**：
+
+课程安排（附课件下载链接）：
+[http://www.bayareadlschool.org/schedule](http://www.bayareadlschool.org/schedule)
+
+演讲视频：
+
+day1: youtube: [https://www.youtube.com/watch?v=eyovmAtoUx0](https://www.youtube.com/watch?v=eyovmAtoUx0); 优酷：[http://v.youku.com/v_show/id_XMTczNzYxNjg5Ng==.html](http://v.youku.com/v_show/id_XMTczNzYxNjg5Ng==.html)
+
+day2：youtube：[https://www.youtube.com/watch?v=eyovmAtoUx0](https://www.youtube.com/watch?v=eyovmAtoUx0)；优酷：[http://v.youku.com/v_show/id_XMTczODc2ODE3Mg==.html](http://v.youku.com/v_show/id_XMTczODc2ODE3Mg==.html)
+
+daiwk整理: [deep reinforcement learning](http://pan.baidu.com/s/1mim7A2G)；[deep unsupervised learning](http://pan.baidu.com/s/1o8tVcue)
