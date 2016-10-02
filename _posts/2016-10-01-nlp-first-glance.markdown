@@ -43,6 +43,6 @@ tags: [nlp, natural language processing, 自然语言处理]
  
 1. **歧义消解(disambiguation)**：例如，如何划分分词边界。
 ```
-歧义结构分析结果的数量是随介词短语的数目的增加而呈现指数上升的。歧义结构的组合数称为开塔兰数(Catalan numbers, 记作)
+歧义结构分析结果的数量是随介词短语的数目的增加而呈现指数上升的。歧义结构的组合数称为开塔兰数(Catalan numbers, 记作`\[\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N\]`)
 ```
 2. **未知语言现象**：
