@@ -35,7 +35,7 @@ tags: [useful links,]
  
 ### mxnet
 1. **NNVM和tinyflow**：[《NNVM打造模块化深度学习系统》](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719529&idx=3&sn=6992a6067c79349583762cb28eecda89&chksm=871b0157b06c8841587bdfb992c19290c8d66386a6f8accdf70998ce3f86b36330219c09672d&scene=0&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)前端把计算表达成一个中间形式，通常我们称之为计算图，NNVM 则统一的对图做必要的操作和优化，然后再生成后端硬件代码。NNVM 是一个神经网络的比较高级的中间表示模块，它包含了图的表示以及执行无关的各种优化（例如内存分配，数据类型和形状的推导）。核心的是这两个github地址：[https://github.com/dmlc/nnvm](https://github.com/dmlc/nnvm)和[https://github.com/tqchen/tinyflow](https://github.com/tqchen/tinyflow)。
-2. 哈哈哈
+
  
 # **3. Useful Courses && Speeches**
  
