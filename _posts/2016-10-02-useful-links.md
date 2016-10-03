@@ -8,7 +8,7 @@ tags: [useful links,]
  
 ## Machine Learning
 ### **树模型**
-1. **Python的树模型**：[A Complete Tutorial on Tree Based Modeling from Scratch in Python](https://www.analyticsvidhya.com/blog/2016/01/complete-tutorial-learn-data-science-python-scratch-2/) 
+1. **Python & R的树模型**：[A Complete Tutorial on Tree Based Modeling from Scratch (in R & Python)](https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python) 
 
 ## Deep Learning 
  
@@ -53,7 +53,7 @@ tags: [useful links,]
 1. **bay area dl school's tutorial**：[https://github.com/daiwk/bayareadlschool-learning-torch](https://github.com/daiwk/bayareadlschool-learning-torch)
 
 ### tensorflow
-1. **bay area dl school's tutorial**：[https://github.com/daiwk/tf-tutorial](https://github.com/daiwk/https://github.com/daiwk/tf-tutorial)
+1. **bay area dl school's tutorial**：[https://github.com/daiwk/bayareadlschool-learning-tensorflow](https://github.com/daiwk/bayareadlschool-learning-tensorflow)
 
  
 # **3. Useful Courses && Speeches**
