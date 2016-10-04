@@ -43,11 +43,13 @@ tags: [useful links,]
 ## pretrained models
 
 1. **大规模语言建模模型库(基于One Billion Word Benchmark)**：这个数据库含有大约 10 亿个单词，词汇有 80 万单词，大部分都是新闻数据。由于训练中句子是被打乱了的，模型可以不理会文本，集中句子层面的语言建模。在此基础上，作者在论文描述了一个模型，混合了字符CNN（character CNN）、大规模深度 LSTM，以及一个专门的 Softmanx 架构，最终得到的结果可以说是迄今最好的。github:[https://github.com/tensorflow/models/tree/master/lm_1b](https://github.com/tensorflow/models/tree/master/lm_1b)
+2. 
  
 ## Deep Learning Tools
  
 ### mxnet
 1. **NNVM和tinyflow**：[《NNVM打造模块化深度学习系统》](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719529&idx=3&sn=6992a6067c79349583762cb28eecda89&chksm=871b0157b06c8841587bdfb992c19290c8d66386a6f8accdf70998ce3f86b36330219c09672d&scene=0&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)前端把计算表达成一个中间形式，通常我们称之为计算图，NNVM 则统一的对图做必要的操作和优化，然后再生成后端硬件代码。NNVM 是一个神经网络的比较高级的中间表示模块，它包含了图的表示以及执行无关的各种优化（例如内存分配，数据类型和形状的推导）。核心的是这两个github地址：[https://github.com/dmlc/nnvm](https://github.com/dmlc/nnvm)和[https://github.com/tqchen/tinyflow](https://github.com/tqchen/tinyflow)。
+2. **tf-slim**：　今年早些时候，我们发布了图像分类模型 Inception V3 在 TensorFlow 上的运行案例。代码能够让用户使用同步梯度下降用 ImageNet 分类数据库训练模型。Inception V3 模型的基础是一个叫做 TF-Slim 的 TensorFlow 库，用户可以使用这个软件包定义、训练、评估 TensorFlow 模型。TF-Slim 库提供的常用抽象能使用户快速准确地定义模型，同时确保模型架构透明，超参数明确。有更多新的层（**比如 Atrous 卷积层和 Deconvolution**）、更多新的代价函数和评估指标（**如 mAP，IoU**），同时有很多pre-trained的模型（比如 **Inception、VGG、AlexNet、ResNet**）。	[https://github.com/tensorflow/models/tree/master/slim](https://github.com/tensorflow/models/tree/master/slim)
 
 ### theano
 1. **bay area dl school's tutorial**：[https://github.com/daiwk/bayareadlschool-learning-theano](https://github.com/daiwk/bayareadlschool-learning-theano)
@@ -57,6 +59,9 @@ tags: [useful links,]
 
 ### tensorflow
 1. **bay area dl school's tutorial**：[https://github.com/daiwk/bayareadlschool-learning-tensorflow](https://github.com/daiwk/bayareadlschool-learning-tensorflow)
+
+### docker
+1. **nvidia-docker**：[https://github.com/NVIDIA/nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
 
  
 # **3. Useful Courses && Speeches**
