@@ -489,6 +489,7 @@ else:
 <br>
 
 ## 附录(Appendix)
+
 ### 命令行参数(Command Line Argument)
 
 * \--config：网络配置
@@ -512,11 +513,12 @@ TrainerInternal.cpp:160]  Batch=20 samples=2560 AvgCost=0.628761 CurrentCost=0.6
 <table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
 
 <thead>
+<tr>
 <th scope="col" class="left">名称</th>
 <th scope="col" class="left">解释</th>
 </tr>
 </thead>
-
+<tbody>
 <tr>
 <td class="left">Batch=20</td>
 <td class="left"> 表示过了20个batch </td>
