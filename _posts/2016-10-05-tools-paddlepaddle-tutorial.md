@@ -1,95 +1,551 @@
 ---
 layout: post
 category: "tools"
-title: "paddlepaddle基础"
-tags: [paddle,]
+title: "paddlepaddle快速入门教程"
+tags: [paddlepaddle,]
 ---
-# **1. Basic Knowledges**
- 
-## Machine Learning
- 
-### **树模型**
- 
-1. **Python & R的树模型**：[A Complete Tutorial on Tree Based Modeling from Scratch (in R & Python)](https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python) 
+# PaddlePaddle快速入门教程
 
-## Deep Learning 
- 
-### CNN
- 
-1. **人脸合成**：[《使用CNN进行人脸合成》](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2651987619&idx=2&sn=dfafcfe8956f4ca686532271cc1b0326&chksm=f1216a52c656e3446fe34187945a48e61ca49bdca187f5c56aab3d59829540e60645949856a4&mpshare=1&scene=1&srcid=1002uGDVOwvDY4eeWR5mzos9&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)，代码地址：[https://github.com/zo7/facegen](https://github.com/zo7/facegen)
-2. **Residual Net**：[《ICCV 2015 揭开152层神经网络的面纱》](https://mp.weixin.qq.com/s?__biz=MzAwMjM3MTc5OA==&mid=402120336&idx=1&sn=4bdc7abbfe47bc342c86129e1a18ff34&scene=18&mpshare=1&scene=1&srcid=1002wbRSWdlbb0r77vY5iWAo&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)
- 
-### RNN
- 
-1. **LSTM及其11种变种**：[《图解LSTM神经网络架构及其11种变体（附论文）》](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719562&idx=1&sn=ad6693cdeaa18034ed1c53271f642ef7&chksm=871b0134b06c8822bf89781a81081c161eb82b06d0c20b655bd7b991202d363b6c233ef137ff&scene=0&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)
-2. **augmented-rnns**：google大脑的研究员在博客中讲述了Neural Turing Machine、Attentional Interfaces、Adaptive Computation Time和Neural Programmers四大部分。[英文原文](http://distill.pub/2016/augmented-rnns/)；[新智元翻译版](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2651986905&idx=4&sn=dcfdeb7c92826c0603569d5a86025536&chksm=f1216f28c656e63e309d7c92fd06a1c67ac96ebea2a8c6f90169cd944876fb367a8bf819b4f4&mpshare=1&scene=1&srcid=1002ho2GSC2PTnFhFUio3EYj&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)；gitbub博客代码：[https://github.com/distillpub/post--augmented-rnns](https://github.com/distillpub/post--augmented-rnns)
- 
-### GAN
- 
-1. **GAN简介**：[《Deep Learning Research Review Week 1: Generative Adversarial Nets》](https://adeshpande3.github.io/adeshpande3.github.io/Deep-Learning-Research-Review-Week-1-Generative-Adversarial-Nets)
-2. **生成式对抗网络GAN研究进展系列笔记**：[http://blog.csdn.net/solomon1558/article/details/52537114](http://blog.csdn.net/solomon1558/article/details/52537114)
- 
-### Reinforcement Learning
- 
-1. **强化学习概览**：NVIDIA 博客上 Tim Dettmers 所写的《Deep Learning in a Nutshell》系列文章的第四篇：[强化学习概览](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719294&idx=1&sn=f1a01cd6710e6ea9629619cd3324d102&chksm=871b0040b06c895642ff961a6fe81f05c5e9776aff5da4845f2d3d874f88213863afd2059833&mpshare=1&scene=1&srcid=1002mDtDsEDixxCswQJOs2rH&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)
- 
-# **2. Useful Tools**
- 
-## Datasets
- 
-1. **Youtube-8m**：该数据集包含了 800 万个 YouTube 视频 URL（代表着 500,000 小时的视频）以及它们的视频层面的标签（video-level labels），这些标签来自一个多样化的包含 4800 个知识图谱实体（Knowledge Graph entity）的集合。相比于之前已有的视频数据集，这个数据集的规模和多样性都实现了显著的增长。比如说，我们所知的之前最大的视频数据集 Sports-1M 包含了大约 100 万段 YouTube 视频和 500 个体育领域的分类——YouTube-8M 在视频数量和分类数量上都差不多比它高一个数量级。论文：***《YouTube-8M: A Large-Scale Video Classification Benchmark》***
-2. **Open Images(图片数据集，包含9百万标注图片)**:一个包含了900万图像URL的数据集，值得一提的是，这些图像全部都是标签数据，标签种类超过6000种。我们尽量让数据集变得实用：数据集中所使用的标签类型比拥有1000个分类的ImageNet数据集更加贴近实际生活。 [https://github.com/openimages/dataset](https://github.com/openimages/dataset)
-
-## pretrained models
-
-1. **大规模语言建模模型库(基于One Billion Word Benchmark)**：这个数据库含有大约 10 亿个单词，词汇有 80 万单词，大部分都是新闻数据。由于训练中句子是被打乱了的，模型可以不理会文本，集中句子层面的语言建模。在此基础上，作者在论文描述了一个模型，混合了字符CNN（character CNN）、大规模深度 LSTM，以及一个专门的 Softmanx 架构，最终得到的结果可以说是迄今最好的。github:[https://github.com/tensorflow/models/tree/master/lm_1b](https://github.com/tensorflow/models/tree/master/lm_1b)
-2. 
- 
-## Deep Learning Tools
- 
-### mxnet
-1. **NNVM和tinyflow**：[《NNVM打造模块化深度学习系统》](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719529&idx=3&sn=6992a6067c79349583762cb28eecda89&chksm=871b0157b06c8841587bdfb992c19290c8d66386a6f8accdf70998ce3f86b36330219c09672d&scene=0&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)前端把计算表达成一个中间形式，通常我们称之为计算图，NNVM 则统一的对图做必要的操作和优化，然后再生成后端硬件代码。NNVM 是一个神经网络的比较高级的中间表示模块，它包含了图的表示以及执行无关的各种优化（例如内存分配，数据类型和形状的推导）。核心的是这两个github地址：[https://github.com/dmlc/nnvm](https://github.com/dmlc/nnvm)和[https://github.com/tqchen/tinyflow](https://github.com/tqchen/tinyflow)。
-2. **tf-slim**：　今年早些时候，我们发布了图像分类模型 Inception V3 在 TensorFlow 上的运行案例。代码能够让用户使用同步梯度下降用 ImageNet 分类数据库训练模型。Inception V3 模型的基础是一个叫做 TF-Slim 的 TensorFlow 库，用户可以使用这个软件包定义、训练、评估 TensorFlow 模型。TF-Slim 库提供的常用抽象能使用户快速准确地定义模型，同时确保模型架构透明，超参数明确。有更多新的层（**比如 Atrous 卷积层和 Deconvolution**）、更多新的代价函数和评估指标（**如 mAP，IoU**），同时有很多pre-trained的模型（比如 **Inception、VGG、AlexNet、ResNet**）。	[https://github.com/tensorflow/models/tree/master/slim](https://github.com/tensorflow/models/tree/master/slim)
-
-### theano
-1. **bay area dl school's tutorial**：[https://github.com/daiwk/bayareadlschool-learning-theano](https://github.com/daiwk/bayareadlschool-learning-theano)
-
-### torch
-1. **bay area dl school's tutorial**：[https://github.com/daiwk/bayareadlschool-learning-torch](https://github.com/daiwk/bayareadlschool-learning-torch)
-
-### tensorflow
-1. **bay area dl school's tutorial**：[https://github.com/daiwk/bayareadlschool-learning-tensorflow](https://github.com/daiwk/bayareadlschool-learning-tensorflow)
-
-### docker
-1. **nvidia-docker**：[https://github.com/NVIDIA/nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
-
- 
-# **3. Useful Courses && Speeches**
- 
-### Courses
-1. **cs224d(nlp)**：课程链接：[http://cs224d.stanford.edu/syllabus.html](http://cs224d.stanford.edu/syllabus.html)；百度云课程pdf下载：[http://pan.baidu.com/s/1dFaA7PR](http://pan.baidu.com/s/1dFaA7PR)
-2. **cs231n(cnn)**：课程链接：[http://cs231n.stanford.edu/](http://cs231n.stanford.edu/)
-3. **Bay Area Deep Learning School 2016**：
-课程安排（附课件下载链接）：
-[http://www.bayareadlschool.org/schedule](http://www.bayareadlschool.org/schedule)
-
-演讲视频：
-
-day1: youtube: [https://www.youtube.com/watch?v=eyovmAtoUx0](https://www.youtube.com/watch?v=eyovmAtoUx0); 优酷：[http://v.youku.com/v_show/id_XMTczNzYxNjg5Ng==.html](http://v.youku.com/v_show/id_XMTczNzYxNjg5Ng==.html)
-
-day2：youtube：[https://www.youtube.com/watch?v=eyovmAtoUx0](https://www.youtube.com/watch?v=eyovmAtoUx0)；优酷：[http://v.youku.com/v_show/id_XMTczODc2ODE3Mg==.html](http://v.youku.com/v_show/id_XMTczODc2ODE3Mg==.html)
-
-daiwk整理: [deep reinforcement learning](http://pan.baidu.com/s/1mim7A2G)；[deep unsupervised learning](http://pan.baidu.com/s/1o8tVcue)
-
-小结：[Yoshua Bengio压轴解读深度学习的基础和挑战](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719442&idx=1&sn=ff9f8412f08dbb8e52cb1fdb748e5a4e&chksm=871b00acb06c89ba46582fe5c481a5bc93a69cca5e1eb9f0d86d03db99cb9db3b1c8fdaabde4&mpshare=1&scene=1&srcid=092660FGFS96T6aIXG9i1pI0&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)；[Andrej Karpathy 最新演讲计算机视觉深度学习技术与趋势](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2651987425&idx=1&sn=e5d4bb50352bf536d786bacb4cb16258&chksm=f1216910c656e006cdc2de9aa4cdf19b82f4dd79bb1ede4710f8876056381655e339a57b0bea&mpshare=1&scene=1&srcid=1002SLviFNa9PO6AXaJghl00&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)；
-
-### Speeches
-1. **google brain最近的7大研究项目**：[《谷歌大脑最近7大研究项目》](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2651987619&idx=1&sn=3f24b3384a9b10fce2001f4074b789ee&chksm=f1216a52c656e344b1f449f384fe0f41461c9e72992946a1b79c2d1d996eb4bef73e27e04f6c&scene=0&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)
+我们以文本分类问题作为背景，介绍PaddlePaddle使用流程和常用的网络基础单元的配置方法。
 
 
-# 4. **Applications**
- 
-## NLP
+## 使用概述(Overview)
 
-### Text Abstraction
-1. **Abstractive Text Summarization using Seq-to-Seq RNNs and Beyond**：来自IBM Watson，本文是一篇非常优秀的paper，在seq2seq+attention的基础上融合了很多的features、trick进来，提出了多组对比的模型，并且在多种不同类型的数据集上做了评测，都证明了本文模型更加出色。[张俊的分析](https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247483777&idx=1&sn=d766a3dec1761bab4186cf89ce8a8723&mpshare=1&scene=1&srcid=0919dvXyKB1zjz6S543FH1Ib&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)
+**文本分类问题**：对于给定的一条文本， 我们从提前给定的类别集合中选择其所属类
+别。比如通过用户对电子商务网站评论，评估产品的质量：
+
+- 这个显示器很棒！ （好评）
+- 用了两个月之后这个显示器屏幕碎了。（差评）
+
+每一个任务流程都可以分为如下5个基础部分。
+![](../assets/Pipeline.jpg)
+
+1. 数据格式准备
+    - 每行保存一条样本，类别Id 和文本信息用Tab间隔， 文本中的单词用空格分隔（如果不切词，则字与字之间用空格分隔），例如：```类别Id ‘\t’ 这 个 显 示 器 很 棒 ！```
+2. 数据向模型传送
+    - PaddlePaddle可以读取Python写的传输数据脚本，所有字符都将转换为连续整数表示的Id传给模型
+3. 网络结构（由易到难展示4种不同的网络配置）
+    - 逻辑回归模型
+    - 词向量模型
+    - 卷积模型
+    - 时序模型
+    - 优化算法
+4. 训练模型
+5. 预测
+
+## 数据格式准备(Data Preparation)
+在本问题中，我们使用[Amazon电子产品评论数据](http://jmcauley.ucsd.edu/data/amazon/)，
+将评论分为好评(正样本)和差评(负样本)两类。[源码](https://github.com/baidu/Paddle)的`demo/quick_start`里提供了数据下载脚本
+和预处理脚本。
+
+```bash
+cd demo/quick_start
+./data/get_data.sh
+./preprocess.sh
+```
+
+## 数据向模型传送(Transfer Data to Model)
+
+### Python数据加载脚本(Data Provider Script)
+
+下面dataprovider_bow.py文件给出了完整例子，主要包括两部分：
+
+* initalizer： 定义文本信息、类别Id的数据类型。
+* process： yield文本信息和类别Id，和initalizer里定义顺序一致。
+
+```python
+from paddle.trainer.PyDataProvider2 import *
+
+# id of the word not in dictionary
+UNK_IDX = 0
+
+# initializer is called by the framework during initialization.
+# It allows the user to describe the data types and setup the
+# necessary data structure for later use.
+# `settings` is an object. initializer need to properly fill settings.input_types.
+# initializer can also store other data structures needed to be used at process().
+# In this example, dictionary is stored in settings.
+# `dictionay` and `kwargs` are arguments passed from trainer_config.lr.py
+def initializer(settings, dictionary, **kwargs):
+    # Put the word dictionary into settings
+    settings.word_dict = dictionary
+
+    # setting.input_types specifies what the data types the data provider
+    # generates.
+    settings.input_types = [
+        # The first input is a sparse_binary_vector,
+        # which means each dimension of the vector is either 0 or 1. It is the
+        # bag-of-words (BOW) representation of the texts.
+        sparse_binary_vector(len(dictionary)),
+        # The second input is an integer. It represents the category id of the
+        # sample. 2 means there are two labels in the dataset.
+        # (1 for positive and 0 for negative)
+        integer_value(2)]
+
+# Delaring a data provider. It has an initializer 'data_initialzer'.
+# It will cache the generated data of the first pass in memory, so that
+# during later pass, no on-the-fly data generation will be needed.
+# `setting` is the same object used by initializer()
+# `file_name` is the name of a file listed train_list or test_list file given
+# to define_py_data_sources2(). See trainer_config.lr.py.
+@provider(init_hook=initializer, cache=CacheType.CACHE_PASS_IN_MEM)
+def process(settings, file_name):
+    # Open the input data file.
+    with open(file_name, 'r') as f:
+        # Read each line.
+        for line in f:
+            # Each line contains the label and text of the comment, separated by \t.
+            label, comment = line.strip().split('\t')
+
+            # Split the words into a list.
+            words = comment.split()
+
+            # convert the words into a list of ids by looking them up in word_dict.
+            word_vector = [settings.word_dict.get(w, UNK_IDX) for w in words]
+
+            # Return the features for the current comment. The first is a list
+            # of ids representing a 0-1 binary sparse vector of the text,
+            # the second is the integer id of the label.
+            yield word_vector, int(label)
+```
+
+### 配置中的数据加载定义(Data Provider in Configure)
+
+在模型配置中利用`define_py_data_sources2`加载数据：
+
+```python
+from paddle.trainer_config_helpers import *
+
+file = "data/dict.txt"
+word_dict = dict()
+with open(dict_file, 'r') as f:
+    for i, line in enumerate(f):
+        w = line.strip().split()[0]
+        word_dict[w] = i
+# define the data sources for the model.
+# We need to use different process for training and prediction.
+# For training, the input data includes both word IDs and labels.
+# For prediction, the input data only includs word Ids.
+define_py_data_sources2(train_list='data/train.list',
+                        test_list='data/test.list',
+                        module="dataprovider_bow",
+                        obj="process",
+                        args={"dictionary": word_dict})
+```
+* data/train.list,data/test.list: 指定训练、测试数据
+* module="dataprovider": 数据处理Python文件名
+* obj="process": 指定生成数据的函数
+* args={"dictionary": word_dict}: 额外的参数，这里指定词典
+
+更详细用例请参考文档<a href = "../../../doc/ui/data_provider/python_case.html">Python Use Case</a>，
+数据格式和详细文档请参考<a href = "../../../doc/ui/data_provider/pydataprovider2.html">
+PyDataProviderWrapper</a>。
+
+## 网络结构(Network Architecture)
+本节我们将专注于网络结构的介绍。
+![](../assets/PipelineNetwork.jpg)
+
+我们将以基本的逻辑回归网络作为起点，并逐渐展示更加深入的功能。更详细的网络配置
+连接请参考<a href = "../../../doc/layer.html">Layer文档</a>。
+所有配置在[源码](https://github.com/baidu/Paddle)`demo/quick_start`目录，首先列举逻辑回归网络。
+
+### 逻辑回归模型(Logistic Regression)
+
+流程如下：
+![](../assets/NetLR.jpg)
+
+- 获取利用one-hot vector表示的每个单词，维度是词典大小
+
+```python
+word = data_layer(name="word",  size=word_dim)
+```
+
+- 获取该条样本类别Id，维度是类别个数。
+
+```python
+label = data_layer(name="label", size=label_dim)
+```
+
+- 利用逻辑回归模型对该向量进行分类，同时会计算分类准确率
+
+```python
+# Define a fully connected layer with logistic activation (also called softmax activation).
+output = fc_layer(input=word,
+                  size=label_dim,
+                  act_type=SoftmaxActivation())
+# Define cross-entropy classification loss and error.
+classification_cost(input=output, label=label)
+```
+
+ - input: 除过data层，每个层都有一个或多个input,多个input以list方式输入
+ - size: 该层神经元个数
+ - act_type: 激活函数类型
+
+效果总结：我们将在后面介绍训练和预测的流程的脚本。在此为方便对比不同网络结构，
+我们随时总结了各个网络的复杂度和效果。
+
+<html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">网络名称</th>
+<th scope="col" class="left">参数数量</th>
+<th scope="col" class="left">错误率</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">逻辑回归</td>
+<td class="left">252 KB</td>
+<td class="left">8.652%</td>
+</tr>
+
+</tbody>
+</table></center>
+</html>
+<br>
+
+### 词向量模型(Word Vector)
+
+embedding模型需要稍微改变数据提供的脚本，即`dataprovider_emb.py`，词向量模型、
+卷积模型、时序模型均使用该脚本。其中文本输入类型定义为整数时序类型integer_value_sequence。
+
+```
+def initializer(settings, dictionary, **kwargs):
+    settings.word_dict = dictionary
+    settings.input_types = [
+        # Define the type of the first input as sequence of integer.
+        # The value of the integers range from 0 to len(dictrionary)-1
+        integer_value_sequence(len(dictionary)),
+        # Define the second input for label id
+        integer_value(2)]
+
+@provider(init_hook=initializer)
+def process(settings, file_name):
+    ...
+    # omitted, it is same as the data provider for LR model
+```
+
+该模型依然是使用逻辑回归分类网络的框架， 只是将句子利用连续向量表示替换稀疏
+向量表示， 即对第3步进行替换。句子表示的计算更新为2步：
+![](../assets/NetContinuous.jpg)
+
+- 利用单词Id查找对应的该单词的连续表示向量(维度为word_dim)， 输入N个单词，输出为N个word_dim维度向量
+
+```python
+emb = embedding_layer(input=word, size=word_dim)
+```
+
+- 将该句话包含的所有单词向量求平均得到句子的表示
+
+```python
+avg = pooling_layer(input=emb, pooling_type=AvgPooling())
+```
+
+其它部分和逻辑回归网络结构一致。
+效果总结：
+
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">网络名称</th>
+<th scope="col" class="left">参数数量</th>
+<th scope="col" class="left">错误率</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">词向量模型</td>
+<td class="left">15 MB</td>
+<td class="left">8.484%</td>
+</tr>
+
+</tbody>
+</table>
+</center>
+<br>
+
+### 卷积模型(Convolution)
+卷积网络是一种特殊的从词向量表示到句子表示的方法， 也就是将词向量模型额步
+骤3-2进行进一步演化， 变为3个新的子步骤。
+![](../assets/NetConv.jpg)
+
+文本卷积分为三个步骤：
+1. 获取每个单词左右各k个近邻， 拼接成一个新的向量表示；
+2. 对该表示进行非线性变换 （例如Sigmoid变换）, 成为维度为hidden_dim的新的向量；
+3. 在每个维度上取出在该句话新的向量集合上该维度的最大值作为最后的句子表示向量。 这3个子步骤可配置为:
+
+```python
+text_conv = sequence_conv_pool(input=emb,
+	                           context_start=k,
+	                           context_len=2 * k + 1)
+```
+
+效果总结：
+
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">网络名称</th>
+<th scope="col" class="left">参数数量</th>
+<th scope="col" class="left">错误率</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">卷积模型</td>
+<td class="left">16 MB</td>
+<td class="left">5.628%</td>
+</tr>
+
+</tbody>
+</table></center>
+<br>
+
+ 
+### 时序模型(Time Sequence)
+![](../assets/NetRNN.jpg)
+
+时序模型即为RNN模型, 包括简单的RNN模型、GRU模型、LSTM模型等。
+
+- GRU模型配置：
+
+```python
+gru = simple_gru(input=emb, size=gru_size)
+```
+
+- LSTM模型配置：
+
+```python
+lstm = simple_lstm(input=emb, size=lstm_size)
+```
+
+针对本问题，我们采用单层LSTM模型，并使用了Dropout，效果总结：
+
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">网络名称</th>
+<th scope="col" class="left">参数数量</th>
+<th scope="col" class="left">错误率</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">时序模型</td>
+<td class="left">16 MB</td>
+<td class="left">4.812%</td>
+</tr>
+
+</tbody>
+</table></center>
+<br>
+
+## 优化算法(Optimization Algorithm)
+<a href = "../../../doc/ui/trainer_config_helpers_api.html#module-paddle.trainer_config_helpers.optimizers">优化算法</a>包括
+Momentum, RMSProp，AdaDelta，AdaGrad，ADAM，Adamax等，这里采用Adam优化方法，加了L2正则和梯度截断。
+
+```python
+settings(batch_size=128,
+         learning_rate=2e-3,
+         learning_method=AdamOptimizer(),
+         regularization=L2Regularization(8e-4),
+         gradient_clipping_threshold=25)
+```
+
+## 训练模型(Training Model)
+在完成了数据和网络结构搭建之后， 我们进入到训练部分。
+![](../assets/PipelineTrain.jpg)
+
+训练脚本：我们将训练的命令行保存在了 `train.sh`文件中。训练时所需设置的主要参数如下：
+
+```bash
+paddle train \
+--config=trainer_config.py \
+--log_period=20 \
+--save_dir=./output \
+--num_passes=15 \
+--use_gpu=false
+```
+这里没有介绍多机分布式训练，可以参考<a href = "../../cluster/index.html">分布式训练</a>的demo学习如何进行多机训练。
+
+## 预测(Prediction)
+可以使用训练好的模型评估带有label的验证集，也可以预测没有label的测试集。
+![](../assets/PipelineTest.jpg)
+
+测试脚本如下，将会测试配置文件中test.list指定的数据。
+
+```bash
+paddle train \
+--use_gpu=false \
+--job=test \
+--init_model_path=./output/pass-0000x
+```
+
+可以参考<a href = "../../ui/predict/swig_py_paddle.html">Python API预测</a>
+教程，或其他<a href = "../../demo/index.html">demo</a>的Python预测过程。也可以通过如下方式预测。
+
+预测脚本(`predict.sh`)：
+
+```bash
+model="output/pass-00003"
+paddle train \
+    --config=trainer_config.lstm.py \
+    --use_gpu=false \
+    --job=test \
+    --init_model_path=$model \
+    --config_args=is_predict=1 \
+    --predict_output_dir=. \
+
+mv rank-00000 result.txt
+```
+这里以`output/pass-00003`为例进行预测，用户可以根据训练log选择test结果最好的模型来预测。与训练网络配置不同的是：无需label相关的层，指定outputs输出概率层(softmax输出)，
+指定batch_size=1，数据传输无需label数据，预测数据指定test_list的位置。
+
+预测结果以文本的形式保存在`result.txt`中，一行为一个样本，格式如下：
+
+```
+预测ID;ID为0的概率 ID为1的概率
+预测ID;ID为0的概率 ID为1的概率
+```
+
+```
+is_predict = get_config_arg('is_predict', bool, False)
+trn = 'data/train.list' if not is_predict else None
+tst = 'data/test.list' if not is_predict else 'data/pred.list'
+obj = 'process' if not is_predict else 'process_pre'
+batch_size = 128 if not is_predict else 1
+if is_predict:
+    maxid = maxid_layer(output)
+    outputs([maxid,output])
+else:
+    label = data_layer(name="label", size=2)
+    cls = classification_cost(input=output, label=label)
+    outputs(cls)
+```
+
+## 总体效果总结(Summary)
+这些流程中的数据下载、网络配置、训练脚本在`/demo/quick_start`目录，我们在此总
+结上述网络结构在Amazon-Elec测试集(25k)上的效果:
+
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">网络名称</th>
+<th scope="col" class="left">参数数量</th>
+<th scope="col" class="left">错误率</th>
+<th scope="col" class="left">配置文件</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">逻辑回归模型</td>
+<td class="left"> 252KB </td>
+<td class="left">8.652%</td>
+<td class="left">trainer_config.lr.py</td>
+</tr>
+
+<tr>
+<td class="left">词向量模型</td>
+<td class="left"> 15MB </td>
+<td class="left"> 8.484%</td>
+<td class="left">trainer_config.emb.py</td>
+</tr>
+
+<tr>
+<td class="left">卷积模型</td>
+<td class="left"> 16MB </td>
+<td class="left"> 5.628%</td>
+<td class="left">trainer_config.cnn.py</td>
+</tr>
+
+<tr>
+<td class="left">时序模型</td>
+<td class="left"> 16MB </td>
+<td class="left"> 4.812%</td>
+<td class="left">trainer_config.lstm.py</td>
+</tr>
+
+</tbody>
+</table>
+</center>
+<br>
+
+## 附录(Appendix)
+### 命令行参数(Command Line Argument)
+
+* \--config：网络配置
+* \--save_dir：模型存储路径
+* \--log_period：每隔多少batch打印一次日志
+* \--num_passes：训练轮次，一个pass表示过一遍所有训练样本
+* \--config_args：命令指定的参数会传入网络配置中。
+* \--init_model_path：指定初始化模型路径，可用在测试或训练时指定初始化模型。
+
+默认一个pass保存一次模型，也可以通过saving_period_by_batches设置每隔多少batch保存一次模型。
+可以通过show_parameter_stats_period设置打印参数信息等。
+其他参数请参考<a href = "../../ui/index.html#command-line-argument">令行参数文档</a>。
+
+### 输出日志(Log)
+
+```
+TrainerInternal.cpp:160]  Batch=20 samples=2560 AvgCost=0.628761 CurrentCost=0.628761 Eval: classification_error_evaluator=0.304297  CurrentEval: classification_error_evaluator=0.304297
+```
+模型训练会看到这样的日志，详细的参数解释如下面表格：
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<th scope="col" class="left">名称</th>
+<th scope="col" class="left">解释</th>
+</tr>
+</thead>
+
+<tr>
+<td class="left">Batch=20</td>
+<td class="left"> 表示过了20个batch </td>
+</tr>
+
+<tr>
+<td class="left">samples=2560</td>
+<td class="left"> 表示过了2560个样本 </td>
+</tr>
+
+<tr>
+<td class="left">AvgCost</td>
+<td class="left"> 每个pass的第0个batch到当前batch所有样本的平均cost </td>
+</tr>
+
+<tr>
+<td class="left">CurrentCost</td>
+<td class="left"> 当前log_period个batch所有样本的平均cost </td>
+</tr>
+
+<tr>
+<td class="left">Eval: classification_error_evaluator</td>
+<td class="left"> 每个pass的第0个batch到当前batch所有样本的平均分类错误率 </td>
+</tr>
+
+<tr>
+<td class="left">CurrentEval: classification_error_evaluator</td>
+<td class="left"> 当前log_period个batch所有样本的平均分类错误率 </td>
+</tr>
+
+</tbody>
+</table>
+</center>
+<br>
