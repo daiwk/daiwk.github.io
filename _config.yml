@@ -14,7 +14,7 @@ all_categories: [
 ["nlp", "nlp","/posts/nlp.html"], 
 ["read", "读书笔记","/posts/read.html"], 
 ["other", "杂记","/posts/other.html"],
-["tools", "实用工具", "/posts/tools.html"]
+["tools", "实用工具", "/posts/tools.html"],
 ["about", "关于","/about.html"]
 ]
 
