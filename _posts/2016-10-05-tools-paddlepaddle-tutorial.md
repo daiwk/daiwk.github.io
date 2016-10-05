@@ -8,7 +8,6 @@ tags: [paddlepaddle,]
 
 我们以文本分类问题作为背景，介绍PaddlePaddle使用流程和常用的网络基础单元的配置方法。
 
-
 ## 使用概述(Overview)
 
 **文本分类问题**：对于给定的一条文本， 我们从提前给定的类别集合中选择其所属类
@@ -53,7 +52,7 @@ cd demo/quick_start
 * initalizer： 定义文本信息、类别Id的数据类型。
 * process： yield文本信息和类别Id，和initalizer里定义顺序一致。
 
-```python
+{% highlight python linenos %}
 from paddle.trainer.PyDataProvider2 import *
 
 # id of the word not in dictionary
@@ -107,13 +106,14 @@ def process(settings, file_name):
             # of ids representing a 0-1 binary sparse vector of the text,
             # the second is the integer id of the label.
             yield word_vector, int(label)
-```
+{% endhighlight %}
+
 
 ### 配置中的数据加载定义(Data Provider in Configure)
 
 在模型配置中利用`define_py_data_sources2`加载数据：
 
-```python
+{% highlight python linenos %}
 from paddle.trainer_config_helpers import *
 
 file = "data/dict.txt"
@@ -131,14 +131,15 @@ define_py_data_sources2(train_list='data/train.list',
                         module="dataprovider_bow",
                         obj="process",
                         args={"dictionary": word_dict})
-```
+{% endhighlight %}
+
 * data/train.list,data/test.list: 指定训练、测试数据
 * module="dataprovider": 数据处理Python文件名
 * obj="process": 指定生成数据的函数
 * args={"dictionary": word_dict}: 额外的参数，这里指定词典
 
-更详细用例请参考文档<a href = "../../../doc/ui/data_provider/python_case.html">Python Use Case</a>，
-数据格式和详细文档请参考<a href = "../../../doc/ui/data_provider/pydataprovider2.html">
+更详细用例请参考文档<a href = "http://www.paddlepaddle.org/doc/ui/data_provider/python_case.html">Python Use Case</a>，
+数据格式和详细文档请参考<a href = "http://www.paddlepaddle.org/doc/ui/data_provider/pydataprovider2.html">
 PyDataProviderWrapper</a>。
 
 ## 网络结构(Network Architecture)
@@ -146,7 +147,7 @@ PyDataProviderWrapper</a>。
 ![](../assets/PipelineNetwork.jpg)
 
 我们将以基本的逻辑回归网络作为起点，并逐渐展示更加深入的功能。更详细的网络配置
-连接请参考<a href = "../../../doc/layer.html">Layer文档</a>。
+连接请参考<a href = "http://www.paddlepaddle.org/doc/layer.html">Layer文档</a>。
 所有配置在[源码](https://github.com/baidu/Paddle)`demo/quick_start`目录，首先列举逻辑回归网络。
 
 ### 逻辑回归模型(Logistic Regression)
@@ -168,14 +169,14 @@ label = data_layer(name="label", size=label_dim)
 
 - 利用逻辑回归模型对该向量进行分类，同时会计算分类准确率
 
-```python
+{% highlight python linenos %}
 # Define a fully connected layer with logistic activation (also called softmax activation).
 output = fc_layer(input=word,
                   size=label_dim,
                   act_type=SoftmaxActivation())
 # Define cross-entropy classification loss and error.
 classification_cost(input=output, label=label)
-```
+{% endhighlight %}
 
  - input: 除过data层，每个层都有一个或多个input,多个input以list方式输入
  - size: 该层神经元个数
@@ -213,7 +214,8 @@ classification_cost(input=output, label=label)
 embedding模型需要稍微改变数据提供的脚本，即`dataprovider_emb.py`，词向量模型、
 卷积模型、时序模型均使用该脚本。其中文本输入类型定义为整数时序类型integer_value_sequence。
 
-```
+{% highlight python linenos %}
+
 def initializer(settings, dictionary, **kwargs):
     settings.word_dict = dictionary
     settings.input_types = [
@@ -227,7 +229,7 @@ def initializer(settings, dictionary, **kwargs):
 def process(settings, file_name):
     ...
     # omitted, it is same as the data provider for LR model
-```
+{% endhighlight %}
 
 该模型依然是使用逻辑回归分类网络的框架， 只是将句子利用连续向量表示替换稀疏
 向量表示， 即对第3步进行替换。句子表示的计算更新为2步：
@@ -354,7 +356,7 @@ lstm = simple_lstm(input=emb, size=lstm_size)
 <br>
 
 ## 优化算法(Optimization Algorithm)
-<a href = "../../../doc/ui/trainer_config_helpers_api.html#module-paddle.trainer_config_helpers.optimizers">优化算法</a>包括
+<a href = "http://www.paddlepaddle.org/doc/ui/trainer_config_helpers_api.html#module-paddle.trainer_config_helpers.optimizers">优化算法</a>包括
 Momentum, RMSProp，AdaDelta，AdaGrad，ADAM，Adamax等，这里采用Adam优化方法，加了L2正则和梯度截断。
 
 ```python
@@ -421,7 +423,7 @@ mv rank-00000 result.txt
 预测ID;ID为0的概率 ID为1的概率
 ```
 
-```
+{% highlight python linenos %}
 is_predict = get_config_arg('is_predict', bool, False)
 trn = 'data/train.list' if not is_predict else None
 tst = 'data/test.list' if not is_predict else 'data/pred.list'
@@ -434,7 +436,7 @@ else:
     label = data_layer(name="label", size=2)
     cls = classification_cost(input=output, label=label)
     outputs(cls)
-```
+{% endhighlight %}
 
 ## 总体效果总结(Summary)
 这些流程中的数据下载、网络配置、训练脚本在`/demo/quick_start`目录，我们在此总
