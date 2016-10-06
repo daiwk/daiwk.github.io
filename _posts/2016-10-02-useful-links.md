@@ -28,6 +28,7 @@ tags: [useful links,]
  
 1. **GAN简介**：[《Deep Learning Research Review Week 1: Generative Adversarial Nets》](https://adeshpande3.github.io/adeshpande3.github.io/Deep-Learning-Research-Review-Week-1-Generative-Adversarial-Nets)
 2. **生成式对抗网络GAN研究进展系列笔记**：[http://blog.csdn.net/solomon1558/article/details/52537114](http://blog.csdn.net/solomon1558/article/details/52537114)
+3. **cleverhans**：Ian Goodfellow等人在openai中开源了cleverhans，基于tf+keras+GPU：[https://github.com/openai/cleverhans](https://github.com/openai/cleverhans)
  
 ### Reinforcement Learning
  
@@ -59,6 +60,7 @@ tags: [useful links,]
 
 ### tensorflow
 1. **bay area dl school's tutorial**：[https://github.com/daiwk/bayareadlschool-learning-tensorflow](https://github.com/daiwk/bayareadlschool-learning-tensorflow)
+2. **a tour of tensorflow**：[a tour of tensorflow](https://arxiv.org/pdf/1610.01178v1.pdf)
 
 ### docker
 1. **nvidia-docker**：[https://github.com/NVIDIA/nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
