@@ -12,6 +12,14 @@ tags: [useful links,]
  
 1. **Python & R的树模型**：[A Complete Tutorial on Tree Based Modeling from Scratch (in R & Python)](https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python) 
 
+### **基础算法**
+
+1. **最小二乘的几何意义及投影矩阵**：[博客地址](http://mp.weixin.qq.com/s?__biz=MzA5ODUxOTA5Mg==&mid=2652550323&idx=1&sn=654ccf3d7cb12c68e5e7a2aa85907688&chksm=8b7e45e8bc09ccfe87b2d16a77205ae21a7ffcf2231d95a143cd06980e15997836425a4df284&scene=25#wechat_redirect)
+
+### **统计学习方法**
+
+1. **统计学习方法笔记**：[csdn博客](http://m.blog.csdn.net/article/details?id=8351337)
+
 ## Deep Learning 
  
 ### CNN
@@ -21,8 +29,10 @@ tags: [useful links,]
  
 ### RNN
  
-1. **LSTM及其11种变种**：[《图解LSTM神经网络架构及其11种变体（附论文）》](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719562&idx=1&sn=ad6693cdeaa18034ed1c53271f642ef7&chksm=871b0134b06c8822bf89781a81081c161eb82b06d0c20b655bd7b991202d363b6c233ef137ff&scene=0&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)
+1. **WILDML-RNN**：[part-1-4](http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/)；代码地址：[https://github.com/dennybritz/rnn-tutorial-gru-lstm](https://github.com/dennybritz/rnn-tutorial-gru-lstm)
+2. **LSTM及其11种变种**：[《图解LSTM神经网络架构及其11种变体（附论文）》](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719562&idx=1&sn=ad6693cdeaa18034ed1c53271f642ef7&chksm=871b0134b06c8822bf89781a81081c161eb82b06d0c20b655bd7b991202d363b6c233ef137ff&scene=0&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)
 2. **augmented-rnns**：google大脑的研究员在博客中讲述了Neural Turing Machine、Attentional Interfaces、Adaptive Computation Time和Neural Programmers四大部分。[英文原文](http://distill.pub/2016/augmented-rnns/)；[新智元翻译版](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2651986905&idx=4&sn=dcfdeb7c92826c0603569d5a86025536&chksm=f1216f28c656e63e309d7c92fd06a1c67ac96ebea2a8c6f90169cd944876fb367a8bf819b4f4&mpshare=1&scene=1&srcid=1002ho2GSC2PTnFhFUio3EYj&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)；gitbub博客代码：[https://github.com/distillpub/post--augmented-rnns](https://github.com/distillpub/post--augmented-rnns)
+3. **漫谈4种RNN-decoder**：[博客地址](http://jacoxu.com/?p=1852)；github地址：[https://github.com/jacoxu/encoder_decoder](https://github.com/jacoxu/encoder_decoder)
  
 ### GAN
  
@@ -31,8 +41,16 @@ tags: [useful links,]
 3. **cleverhans**：Ian Goodfellow等人在openai中开源了cleverhans，基于tf+keras+GPU：[https://github.com/openai/cleverhans](https://github.com/openai/cleverhans)
  
 ### Reinforcement Learning
+
+1. **WILDML-Deep Reinforcement Learning**：[http://www.wildml.com/2016/10/learning-reinforcement-learning/](http://www.wildml.com/2016/10/learning-reinforcement-learning/)
+2. **强化学习概览**：NVIDIA 博客上 Tim Dettmers 所写的《Deep Learning in a Nutshell》系列文章的第四篇：[强化学习概览](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719294&idx=1&sn=f1a01cd6710e6ea9629619cd3324d102&chksm=871b0040b06c895642ff961a6fe81f05c5e9776aff5da4845f2d3d874f88213863afd2059833&mpshare=1&scene=1&srcid=1002mDtDsEDixxCswQJOs2rH&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)
+
+### PNN(Progressive Neural Network)连续神经网络
+1. **PNN简介**：“我们想要从一个任务开始，在上面获得专家级别的表现，随后，我们迁移到另一个连续性的任务上，使用相同的神经网络来获得专家级别的表现，在这个过程中，神经网络不会忘掉此前学会的技巧，并可以在不同的任务间实现这些技巧的相互迁移。如果任务类似的话，我希望任务1中的技巧可以有效地迁移到任务4中。我想要实现的是，只要根据任务1进行训练，就能知道其中的技巧能否写入我的神经网络代码中，并可以迁移到下一个任务。”把单独的神经网络称为一个栏（Column），这些栏在神经网络的每一层旁边形成互连，并且， 我也会固定权重（模型的参数），这样我训练第二个栏的时候，我就知道如何使用栏1的特征，但是我不需要重新编写它们。[论文下载](http://pan.baidu.com/s/1eSHlT1S)
  
-1. **强化学习概览**：NVIDIA 博客上 Tim Dettmers 所写的《Deep Learning in a Nutshell》系列文章的第四篇：[强化学习概览](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719294&idx=1&sn=f1a01cd6710e6ea9629619cd3324d102&chksm=871b0040b06c895642ff961a6fe81f05c5e9776aff5da4845f2d3d874f88213863afd2059833&mpshare=1&scene=1&srcid=1002mDtDsEDixxCswQJOs2rH&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)
+
+### 图卷积网络
+1. **Graph Convolutional Networks**：[http://tkipf.github.io/graph-convolutional-networks/](http://tkipf.github.io/graph-convolutional-networks/)
  
 # **2. Useful Tools**
  
@@ -43,8 +61,7 @@ tags: [useful links,]
 
 ## pretrained models
 
-1. **大规模语言建模模型库(基于One Billion Word Benchmark)**：这个数据库含有大约 10 亿个单词，词汇有 80 万单词，大部分都是新闻数据。由于训练中句子是被打乱了的，模型可以不理会文本，集中句子层面的语言建模。在此基础上，作者在论文描述了一个模型，混合了字符CNN（character CNN）、大规模深度 LSTM，以及一个专门的 Softmanx 架构，最终得到的结果可以说是迄今最好的。github:[https://github.com/tensorflow/models/tree/master/lm_1b](https://github.com/tensorflow/models/tree/master/lm_1b)
-2. 
+1. **大规模语言建模模型库(基于One Billion Word Benchmark)**：这个数据库含有大约 10 亿个单词，词汇有 80 万单词，大部分都是新闻数据。由于训练中句子是被打乱了的，模型可以不理会文本，集中句子层面的语言建模。在此基础上，作者在论文描述了一个模型，混合了字符CNN（character CNN）、大规模深度 LSTM，以及一个专门的 Softmanx 架构，最终得到的结果可以说是迄今最好的。[github](https://github.com/tensorflow/models/tree/master/lm_1b)
  
 ## Deep Learning Tools
  
@@ -77,9 +94,9 @@ tags: [useful links,]
 
 演讲视频：
 
-day1: youtube: [https://www.youtube.com/watch?v=eyovmAtoUx0](https://www.youtube.com/watch?v=eyovmAtoUx0); 优酷：[http://v.youku.com/v_show/id_XMTczNzYxNjg5Ng==.html](http://v.youku.com/v_show/id_XMTczNzYxNjg5Ng==.html)
+day1: [youtube](https://www.youtube.com/watch?v=eyovmAtoUx0); [优酷](http://v.youku.com/v_show/id_XMTczNzYxNjg5Ng==.html)
 
-day2：youtube：[https://www.youtube.com/watch?v=eyovmAtoUx0](https://www.youtube.com/watch?v=eyovmAtoUx0)；优酷：[http://v.youku.com/v_show/id_XMTczODc2ODE3Mg==.html](http://v.youku.com/v_show/id_XMTczODc2ODE3Mg==.html)
+day2：[youtube](https://www.youtube.com/watch?v=eyovmAtoUx0)；[优酷](http://v.youku.com/v_show/id_XMTczODc2ODE3Mg==.html)
 
 daiwk整理: [deep reinforcement learning](http://pan.baidu.com/s/1mim7A2G)；[deep unsupervised learning](http://pan.baidu.com/s/1o8tVcue)
 
@@ -93,5 +110,19 @@ daiwk整理: [deep reinforcement learning](http://pan.baidu.com/s/1mim7A2G)；[d
  
 ## NLP
 
+### 分词
+1. **THULAC.so**：THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与社会人文计算实验室研制推出的一套中文词法分析工具包，具有中文分词和词性标注功能。[https://github.com/thunlp/THULAC.so](https://github.com/thunlp/THULAC.so)
+
 ### Text Abstraction
 1. **Abstractive Text Summarization using Seq-to-Seq RNNs and Beyond**：来自IBM Watson，本文是一篇非常优秀的paper，在seq2seq+attention的基础上融合了很多的features、trick进来，提出了多组对比的模型，并且在多种不同类型的数据集上做了评测，都证明了本文模型更加出色。[张俊的分析](https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247483777&idx=1&sn=d766a3dec1761bab4186cf89ce8a8723&mpshare=1&scene=1&srcid=0919dvXyKB1zjz6S543FH1Ib&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)
+
+## Image Processing
+
+### image2txt
+
+1. **img2txt**：[google博文链接](https://research.googleblog.com/2016/09/show-and-tell-image-captioning-open.html)；[论文链接](http://arxiv.org/abs/1609.06647)；[代码链接（tensorflow/img2txt）](https://github.com/tensorflow/models/tree/master/im2txt)
+
+## Collections
+
+### csdn深度学习代码专栏
+[https://code.csdn.net/blog/41](https://code.csdn.net/blog/41)
