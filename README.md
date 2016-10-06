@@ -1,6 +1,13 @@
 Jekyll博客模板
 ================
 
+#### 0.by daiwk
+download mathjax to offline deploy:
+https://github.com/mathjax/MathJax/archive/master.zip
+to install:
+https://www.mathjax.org/#docs
+
+
 #### 1.浏览
 http://www.panxw.com, 支持PC与智能机访问。  
 
