@@ -28,5 +28,6 @@ collections:
 
 gems:
  - jekyll-paginate
+ - jekyll-toc
 
 
