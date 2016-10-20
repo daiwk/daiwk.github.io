@@ -233,7 +233,9 @@ REDNUM=1000
 集群版的common.conf:
 local版的common.conf：
 
-[trainer.conf](http://daiwk.github.io/source_code/bilstm_crf.conf):
+[trainer.conf](http://daiwk.github.io/assets/bilstm_crf.conf):
+
+![](../assets/lstm-crf.jpeg)
 
 ```python
 
