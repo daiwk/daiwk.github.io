@@ -234,7 +234,8 @@ REDNUM=1000
 local版的common.conf：
 
 [trainer.conf](http://daiwk.github.io/source_code/bilstm_crf.conf):
-```shell
+
+```python
 
 import math
 
