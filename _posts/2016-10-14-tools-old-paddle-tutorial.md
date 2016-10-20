@@ -479,3 +479,28 @@ Outputs("crf_cost")
 干掉这个job：
 qdel 287811.nmg01-hpc-off.dmop.baidu.com
 
+
+预测：
+predict这个bin的用法：
+I1020 12:35:10.277036 25364 Main.cpp:44] Model path or feature type or both missing. Please read the usage below:
+I1020 12:35:10.277549 25364 Main.cpp:46] ./predict model_path feature_type(s) [logLevel] [isSequence]
+I1020 12:35:10.277555 25364 Main.cpp:47] @model_path: path where the model stored. the directory indicated by model_path should contain 1 binary network configuration file and 1 sub directory naming 'model' that contains the model itself.
+I1020 12:35:10.277562 25364 Main.cpp:52] @feature_type: [0|1|2] integer(s) to indicate the type of features in each instance.
+I1020 12:35:10.277567 25364 Main.cpp:54] 0 -> continues values. floating points.
+I1020 12:35:10.277572 25364 Main.cpp:55] 1 -> discrete values without weights. integers.
+I1020 12:35:10.277577 25364 Main.cpp:56] 2 -> discrete values with weights. integers:float.
+I1020 12:35:10.277581 25364 Main.cpp:57] @logLevel: from 0 to 4(default), 0 for print debug info (which will lead to core dump on failure), 4 for suppress debug info.
+I1020 12:35:10.277586 25364 Main.cpp:60] isSequence is used for SparseNonValuePredictor or MultipleTypesPredictor.
+I1020 12:35:10.277591 25364 Main.cpp:61] If isSequence=1, sparse_non_value slots (and only those slots) will be treated as SEQUENCE.
+I1020 12:35:10.277596 25364 Main.cpp:62] example: 
+I1020 12:35:10.277601 25364 Main.cpp:63] ./predict ./myModel 0
+I1020 12:35:10.277604 25364 Main.cpp:64] ./predict ./myModel "0 0 1 2"  <- instance with 4 slots, each slot contain different type of features.
+
+
+
+[INFO][PredictorInternal.cpp][readBinaryConf][40] content length of binary conf is [3923].
+[INFO][PredictorInternal.cpp][readBinaryConf][72] read binary conf file done.
+[INFO][PredictorInternal.cpp][init][420] output[0]: dim=[4], name=[crf_layer].
+[INFO][PredictorInternal.cpp][init][429] input[0]: dim=[4870], name=[word].
+[INFO][PredictorInternal.cpp][init][429] input[1]: dim=[110], name=[pos].
+[INFO][PredictorInternal.cpp][init][429] input[2]: dim=[1], name=[place_holder].
