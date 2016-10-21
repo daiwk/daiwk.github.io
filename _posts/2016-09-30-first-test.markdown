@@ -4,6 +4,10 @@ category: "read"
 title: "just test"
 tags: [xx, cc]
 ---
+
+mathjax基本公式语法：
+[http://blog.csdn.net/ethmery/article/details/50670297](http://blog.csdn.net/ethmery/article/details/50670297)
+
 `\[
 P(E)   = {n \choose k} p^k (1-p)^{ n-k}
 \tag{Eq-x}
