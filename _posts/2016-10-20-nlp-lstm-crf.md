@@ -16,6 +16,7 @@ CRF(Conditional Random Field)条件随机场是用于标注和划分**序列结�
 `\[
 p(Y_v|X,Y_w,w\neq v)=P(Y_v|X,Y_w,w\sim v)
 \tag{Eq-1.1}
+\label{eq:sample}
 \]`
 
 
