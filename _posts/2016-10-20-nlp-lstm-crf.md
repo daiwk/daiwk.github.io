@@ -42,6 +42,37 @@ exp(\sum _j \lambda _jt_j(y_{i-1},y_i,X,i)+\sum _k \mu _ks_k(y_i,X,i))
 
 参照最大熵模型的做法，在定义特征函数时可以定义一组关于观察序列的`\(\{0,1\}\)`二值特征`\(b(X,i)\)`来标识训练样本中某些分布特性，例如
 
+`\[
+b(X,i) = 
+\begin{cases}
+1, X的i位置为某个特定的词 \\
+0, else \\
+\end{cases}
+\]`
+
+转移函数可以定义为如下形式：
+
+`\[
+(t_j(y_{i-1},y_i,X,i) = 
+\begin{cases}
+b(X,i), y_{i-1}和y_i满足某种搭配条件 \\
+0, else \\
+\end{cases}
+\]`
+
+为了便于描述，可以将状态函数写成如下形式：
+`\[
+s(y_i,X,i)=s(y_{i-1},y_i,X,i)
+\]`
+
+这样，特征函数可以统一表示为 \eqref{eq:1.3}：
+`\[
+F_j(Y,X)=\sum _{i=1}^{n}f_j(y_{i-1},y_i,X,i)
+\tag{Eq-1.3}
+\label{eq:1.3}
+\]`
+
+其中
 
 # **2. 【2015】Bidirectional LSTM-CRF Models for Sequence Tagging**
 
