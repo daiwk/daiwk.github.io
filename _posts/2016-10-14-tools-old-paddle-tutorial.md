@@ -15,7 +15,9 @@ tags: [老paddle,]
 
 ### 1.1.1 预处理的文本结构：
 
->label;slotid0 fea1[:weight] fea2[:weight];slotid1 fea1[:weight] ...;
+```
+label;slotid0 fea1[:weight] fea2[:weight];slotid1 fea1[:weight] ...;
+```
 
 - fea:可以是离散值也可以是连续值
 - slot数至少为1，也就是，至少有两个分号
