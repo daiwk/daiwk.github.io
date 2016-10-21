@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "read"
-title: "just test"
-tags: [xx, cc]
+title: "basic usage"
+tags: [basic usage]
 ---
 
 mathjax基本公式语法：
