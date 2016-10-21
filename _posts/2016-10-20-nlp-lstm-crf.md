@@ -19,6 +19,12 @@ p(Y_v|X,Y_w,w\neq v)=P(Y_v|X,Y_w,w\sim v)
 \label{eq:1.1}
 \]`
 
+其中`\(，w\sim v\)`表示两个结点在图`\(G\)`中是邻近结点。那么`\((X,Y)\)`为一个随机场。
+
+理论上，只要在标记序列中描述了一定的条件独立性，`\(G\)`的图结构可以是任意的。对序列进行建模可以形成最简单、最普通的链式结构（chain-structured）图，结点对应标记序列`\(Y\)`中的元素：
+
+![](../assets/crf-demo.png)
+
 
 
 # **2. 【2015】Bidirectional LSTM-CRF Models for Sequence Tagging**
