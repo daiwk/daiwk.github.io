@@ -97,6 +97,7 @@ x(w0rn):当前词是否为俄罗斯人名用字，是：True,否：false
 x(w+-ib):当前词左右两边第i个词（i=1,2）是否为指界词，是：True,否：false
 
 也可以组合特征：
+
 `\[
 f(x(w0sn,y(w0sn))) = 1, x(w0sn)=true && y(w0sn) = pnb
 f(x(w0sn,y(w0sn))) = 0, else
