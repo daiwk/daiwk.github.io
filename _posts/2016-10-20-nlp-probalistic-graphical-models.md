@@ -11,7 +11,7 @@ tags: [概率图模型, HMM, MEMM, CRF, probalistic graphical models]
 
 根据图模型的边是否有向，可以分为有向概率图模型和无向概率图模型：
 
-![](../assets/probalistic graphical models.jpg) 
+![](../assets/probalistic graphical models.JPG) 
 
 而概率图模型在nlp中的演变过程如下所示：
 
