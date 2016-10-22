@@ -90,9 +90,49 @@ Z(X)=\sum _Yexp(\lambda _j \cdot F_j(Y,X))
 
 条件随机场模型也需要解决3个问题：**特征的选取、参数训练和解码**。训练过程可以在训练数据集上基于**对数似然函数的最大化**进行。
 
-相对于HMM,CRF的主要优点在于他的**条件随机性**，只需要考虑当前已经出现的观测状态，**没有独立性的严格要求** ，对于整个序列内部的信息和外部观测信息均可有效利用，**避免了**MEMM和其他针对线性序列模型的条件马尔可夫模型会出现的**标识偏置问题**。
+相对于HMM,CRF的主要优点在于他的**条件随机性**，只需要考虑当前已经出现的观测状态，**没有独立性的严格要求** ，对于整个序列内部的信息和外部观测信息均可有效利用，**避免了**MEMM（最大熵隐马尔可夫模型）和其他针对线性序列模型的条件马尔可夫模型会出现的**标识偏置问题**。
 
 CRF具有MEMM的一切优点，亮着的关键区别在于，MEMM使用每一个状态的指数模型来计算给定前一个状态下当前状态的条件概率，而CRF用**单个指数模型来计算给定观察序列和整个标记序列的联合概率**。因此，不同状态的不同特征权重可以相互交换代替。
+
+<html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">类型</th>
+<th scope="col" class="left">采用的模型或方法</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">有监督</td>
+<td class="left">隐马尔科夫模型或语言模型<br>最大熵模型<br>支持向量机<br>条件随机场<br>决策树<br></td>
+</tr>
+<tr>
+<td class="left">半监督/弱监督</td>
+<td class="left">利用标注的小数据集（种子数据）自举（bootstrap）学习</td>
+</tr>
+<tr>
+<td class="left">无监督</td>
+<td class="left">利用词汇资源（如WordNet）进行上下文聚类</td>
+</tr>
+<tr>
+<td class="left">混合方法</td>
+<td class="left">集中模型相结合或利用统计方法和人工总结的知识库</td>
+</tr>
+
+</tbody>
+</table></center>
+</html>
+
++ crf经典资料：[Conditional random fields: Probabilistic models for segmenting and labeling sequence data](../assets/Conditional random fields Probabilistic models for segmenting and labeling sequence data.pdf)
+
+
+隐马模型一个最大的缺点就是由于其输出独立性假设，导致其不能考虑上下文的特征，限制了特征的选择
+最大熵隐马模型则解决了隐马的问题，可以任意选择特征，但由于其在每一节点都要进行归一化，所以只能找到局部的最优值，同时也带来了标记偏见的问题，即凡是训练语料中未出现的情况全都忽略掉
+条件随机场则很好的解决了这一问题，他并不在每一个节点进行归一化，而是所有特征进行全局归一化，因此可以求得全局的最优值。
 
 工具：**CRF++(c++)/CRFSuite(c)/MALLET(java)/nltk(python)**
 
