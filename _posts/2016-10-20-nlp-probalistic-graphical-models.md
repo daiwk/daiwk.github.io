@@ -150,7 +150,7 @@ convergence to the global optimum.)
 <td class="left">解决了隐马的问题，可以任意选择特征，但由于其在每一节点都要进行归一化，所以只能找到局部的最优值，同时也带来了标记偏见的问题，即凡是训练语料中未出现的情况全都忽略掉</td>
 </tr>
 <tr>
-<td class="left">条件随机场</td>
+<td class="left">条件随机场（CRF）</td>
 <td class="left">很好的解决了这一问题，他并不在每一个节点进行归一化，而是所有特征进行全局归一化，因此可以求得全局的最优值。</td>
 </tr>
 </tbody>
