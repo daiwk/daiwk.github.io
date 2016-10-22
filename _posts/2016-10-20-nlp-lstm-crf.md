@@ -130,5 +130,10 @@ crf经典资料：
 
 # **2. 【2015】Bidirectional LSTM-CRF Models for Sequence Tagging**
 
+[论文地址](../assets/Bidirectional LSTM-CRF Models for Sequence Tagging.pdf)
+
 # **3. 【2016】Conditional Random Fields as Recurrent Neural Networks**
+
+[论文地址](../assets/Conditional Random Fields as Recurrent Neural Networks.pdf)
+
  
