@@ -43,7 +43,7 @@ P(H,S,N)=P(H|S,N)P(S|N)P(N)
 P(N=T|H=T)=\frac{P(H=T,N=T))}{P(H=T))}\\
 =\frac {\sum _{S\in \{T,F\}}P(H=T,S,N=T)} {\sum _{N,S\in \{T,F\}}P(H=T,S,N)}\\
 =\frac{(0.4\times 0.1\times 0.2=0.008)_{TTT}+(0.3\times 0.9\times 0.2=0.054)_{TFT}}{0.008_{TTT}+0.054_{TFT}+0.256_{TTF}+0.24_{TFF}}\\
-=11.11%
+=11.11\%
 \]`
 
 # **3. 马尔可夫模型**
