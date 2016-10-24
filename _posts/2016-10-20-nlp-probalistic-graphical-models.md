@@ -28,7 +28,7 @@ tags: [概率图模型, HMM, MEMM, CRF, probalistic graphical models]
 每一个结点都和一个概率函数相关，概率函数的输入是该结点的父结点所表示的随机变量的一组特定值，输出为当前结点表示的随机变量的概率值。概率值的大小表示结点之间已存关系的强度。
 
 
-对于一篇文章而言，是否是一篇新闻记为事件N，是否记录了历史记为事件H，是否记录了旅游风光记为事件S。
+对于一篇写了某个岛屿的文章而言，是否是一篇新闻记为事件N，是否记录了历史记为事件H，是否记录了旅游风光记为事件S。
 
 *![](../assets/bayes belief network.png)*
 
@@ -37,7 +37,14 @@ tags: [概率图模型, HMM, MEMM, CRF, probalistic graphical models]
 P(H,S,N)=P(H|S,N)P(S|N)P(N)
 \]`
 
+下面我们来算一个概率：一篇关于某岛屿的文章是记录了历史，那么，它是一篇新闻的概率有多大？
 
+`\[
+P(N=T|H=T)=\frac{P(H=T,N=T))}{P(H=T))}\\
+=\frac {\sum _{S\in \{T,F\}}P(H=T,S,N=T)} {\sum _{N,S\in \{T,F\}}P(H=T,S,N)}\\
+=\frac{(0.4\times 0.1\times 0.2=0.008)_{TTT}+(0.3\times 0.9\times 0.2=0.054)_{TFT}}{0.008_{TTT}+0.054_{TFT}+0.256_{TTF}+0.24_{TFF}}\\
+=11.11%
+\]`
 
 # **3. 马尔可夫模型**
 
