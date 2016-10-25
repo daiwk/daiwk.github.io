@@ -128,3 +128,6 @@ daiwk整理: [deep reinforcement learning](http://pan.baidu.com/s/1mim7A2G)；[d
 
 ### 4.3.1 csdn深度学习代码专栏
 [https://code.csdn.net/blog/41](https://code.csdn.net/blog/41)
+
+### 4.3.2 chiristopher olah的博客
+[http://colah.github.io/](http://colah.github.io/)
