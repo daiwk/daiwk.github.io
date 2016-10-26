@@ -38,6 +38,52 @@ python preprocess.py -i data/wmt14 -d 30000
 + train/test/gen.list是上述三个目录对应文件的指针。
 + src/trg.dict是上述dict_size大小的字典，包括dict_size-3个高频词和3个特殊词：<s>（sequence的开头）<e>（sequence的结尾）<unk>（不在词典中的词）
 
-```python
+接下来开始进行训练：
 
+获取mpi job的status的脚本：get_mpi_job_status.py
+
+```shell
+## local
+paddle train \
+--config='translation/train.conf' \
+--save_dir='translation/model' \
+--use_gpu=false \
+--num_passes=16 \
+--show_parameter_stats_period=100 \
+--trainer_count=4 \
+--log_period=10 \
+--dot_period=5 \
+2>&1 | tee 'translation/train.log'
+
+## cluster
+dir="thirdparty"
+cp ../dataprovider.py $dir/.
+cp ../seqToseq_net.py $dir/.
+cp ../data/pre-wmt14/src.dict $dir/.
+cp ../data/pre-wmt14/trg.dict $dir/.
+
+paddle cluster_train \
+  --config=train.cluster.conf \
+  --config_args=is_cluster=true \
+  --use_gpu=cpu \
+  --trainer_count=8 \
+  --num_passes=16 \
+  --log_period=10 \
+  --thirdparty=./thirdparty \
+  --num_nodes=2 \
+  --job_priority=normal \
+  --job_name=daiwenkai_paddle_platform_translation_demo \
+  --time_limit=00:30:00 \
+  --submitter=daiwenkai \
+  --where=nmg01-hpc-off-dmop-cpu-10G_cluster
+
+#fcr:--where=nmg01-hpc-off-dmop-cpu-10G_cluster
+#fcr-slow:--where=nmg01-hpc-off-dmop-slow-cpu-10G_cluster
+# http://wiki.baidu.com/pages/viewpage.action?pageId=204652252
+
+jobid=`grep jobid train.log.$timestamp | awk -F'jobid=' '{print $2}' | awk -F'.' '{print $1}'`
+echo $jobid
+~/.jumbo/bin/python $workspace_path/get_mpi_job_status.py -j $jobid -s ecom_off
+[[ $? -ne 0 ]] && echo "mpi job failed...$jobid" && exit 1
 ```
+
