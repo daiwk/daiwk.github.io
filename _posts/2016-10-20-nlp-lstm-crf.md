@@ -15,6 +15,8 @@ tags: [nlp, natural language processing, lstm crf, lstm, crf]
 
 # **3. 在paddlepaddle上实现**
 
+## 3.1 seq2seq的demo
+
 需要参考seq2seq的demo：[http://www.paddlepaddle.org/doc/demo/text_generation/text_generation.html](http://www.paddlepaddle.org/doc/demo/text_generation/text_generation.html)
 
 先来了解一下seq2seq：
@@ -40,9 +42,75 @@ python preprocess.py -i data/wmt14 -d 30000
 
 接下来开始进行训练：
 
-获取mpi job的status的脚本：[get_mpi_job_status.py](../source_codes/get_mpi_job_status.py)
+```python
+#train.conf
+import sys
+sys.path.append("..")
+
+from seqToseq_net import *
+
+# whether this config is used for generating
+is_generating = False
+
+### Data Definiation
+data_dir  = "./data/pre-wmt14"
+train_conf = seq_to_seq_data(data_dir = data_dir,
+                             is_generating = is_generating)
+
+### Algorithm Configuration
+settings(
+    learning_method = AdamOptimizer(),
+    batch_size = 50,
+    learning_rate = 5e-4)
+
+### Network Architecture
+gru_encoder_decoder(train_conf, is_generating)
+
+
+#train.cluster.conf
+#edit-mode: -*- python -*-
+import sys
+sys.path.append("..")
+
+### for cluster training
+cluster_config(
+    fs_name = "hdfs://nmg01-mulan-hdfs.dmop.baidu.com:54310",
+    fs_ugi = "paddle_demo,paddle_demo",
+    work_dir ="/app/idl/idl-dl/paddle/demo/seqToseq/",
+)
+
+from seqToseq_net import *
+
+# whether this config is used for generating
+is_generating = False
+# whether this config is used for cluster training
+is_cluster = get_config_arg('is_cluster', bool, False)
+
+### Data Definiation
+data_dir  = "./data/pre-wmt14" if not is_cluster else "./"
+train_conf = seq_to_seq_data(data_dir = data_dir,
+                             is_generating = is_generating)
+
+### Algorithm Configuration
+settings(
+    learning_method = AdamOptimizer(),
+    batch_size = 50,
+    learning_rate = 5e-4)
+
+### Network Architecture
+gru_encoder_decoder(train_conf, is_generating)
+```
+
+注：获取mpi job的status的脚本：[get_mpi_job_status.py](../source_codes/get_mpi_job_status.py)
 
 ```shell
+
+#num_passes: set number of passes. One pass in paddle means training all samples in dataset one time
+#show_parameter_stats_period: here show parameter statistic every 100 batches
+#trainer_count: set number of CPU threads or GPU devices
+#log_period: here print log every 10 batches
+#dot_period: here print ‘.’ every 5 batches
+
 ## local
 paddle train \
 --config='translation/train.conf' \
@@ -86,4 +154,71 @@ echo $jobid
 ~/.jumbo/bin/python $workspace_path/get_mpi_job_status.py -j $jobid -s ecom_off
 [[ $? -ne 0 ]] && echo "mpi job failed...$jobid" && exit 1
 ```
+
+日志形如：
+
+```shell
+#I0719 19:16:45.952062 15563 TrainerInternal.cpp:160]  Batch=10 samples=500 AvgCost=198.475 CurrentCost=198.475 Eval: classification_error_evaluator=0.737155  CurrentEval: classification_error_evaluator=0.737155
+#I0719 19:17:56.707319 15563 TrainerInternal.cpp:160]  Batch=20 samples=1000 AvgCost=157.479 CurrentCost=116.483 Eval: classification_error_evaluator=0.698392  CurrentEval: classification_error_evaluator=0.659065
+#.....
+
+#AvgCost: Average Cost from 0th batch to current batch
+#CurrentCost: Cost in current batch
+#classification_error_evaluator(Eval): False prediction rate for each word from 0th evaluation to current evaluation
+#classification_error_evaluator(CurrentEval): False prediction rate for each word in current evaluation
+```
+
+最后，需要生成文本：
+
+首先，把模型文件拷到data/wmt14_model目录下，然后gen.conf如下：
+
+```python
+import sys
+sys.path.append("..")
+
+from seqToseq_net import *
+
+# whether this config is used for generating
+is_generating = True
+
+### Data Definiation
+gen_conf = seq_to_seq_data(data_dir = "./data/pre-wmt14",
+                           is_generating = is_generating,
+                           gen_result = "./translation/gen_result")
+
+### Algorithm Configuration
+settings(
+      learning_method = AdamOptimizer(),
+      batch_size = 1,
+      learning_rate = 0)
+
+### Network Architecture
+gru_encoder_decoder(gen_conf, is_generating)
+```
+
+生成的命令如下
+
+```shell
+# local
+paddle train \
+    --job=test \
+    --config='translation/gen.conf' \
+    --save_dir='data/wmt14_model' \
+    --use_gpu=false \
+    --num_passes=13 \
+    --test_pass=12 \
+    --trainer_count=1 \
+    2>&1 | tee 'translation/gen.log'
+
+#job: set job mode to test
+#save_dir: the path of saved models
+#num_passes and test_pass: loading model parameters from test_pass to (num_passes - 1), here only loads data/wmt14_model/pass-00012
+
+```
+
+然而。。用jumbo装的paddle有问题。。版本太老。。我们从源码再来装一个好了。。：
+
+[http://deeplearning.baidu.com/doc_cn/build/internal/build_from_source_zh_cn.html#jumbo](http://deeplearning.baidu.com/doc_cn/build/internal/build_from_source_zh_cn.html#jumbo)
+
+## 3.2 bilstm+crf
 
