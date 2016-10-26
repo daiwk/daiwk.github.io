@@ -36,11 +36,11 @@ python preprocess.py -i data/wmt14 -d 30000
 
 + 其中，train/test/gen目录下是将原始数据的src和trg对应的行用\t连接起来生成的。
 + train/test/gen.list是上述三个目录对应文件的指针。
-+ src/trg.dict是上述dict_size大小的字典，包括dict_size-3个高频词和3个特殊词：<s>（sequence的开头）<e>（sequence的结尾）<unk>（不在词典中的词）
++ src/trg.dict是上述dict_size大小的字典，包括dict_size-3个高频词和3个特殊词：<s\>（sequence的开头）<e\>（sequence的结尾）<unk\>（不在词典中的词）
 
 接下来开始进行训练：
 
-获取mpi job的status的脚本：get_mpi_job_status.py
+获取mpi job的status的脚本：[get_mpi_job_status.py](../source_codes/get_mpi_job_status.py)
 
 ```shell
 ## local
