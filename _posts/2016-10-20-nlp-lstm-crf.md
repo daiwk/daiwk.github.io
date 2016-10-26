@@ -18,7 +18,7 @@ tags: [nlp, natural language processing, lstm crf, lstm, crf]
 需要参考seq2seq的demo：[http://www.paddlepaddle.org/doc/demo/text_generation/text_generation.html](http://www.paddlepaddle.org/doc/demo/text_generation/text_generation.html)
 
 先来了解一下seq2seq：
-首先，拿到的数据是这样的：
+首先，拿到的数据是这样的（法语->英语,wmt14数据集）：
 
 ![](../assets/wmt14 directory.JPG)
 
@@ -34,3 +34,10 @@ python preprocess.py -i data/wmt14 -d 30000
 
 ![](../assets/wmt14 preprocessed directory.JPG)
 
++ 其中，train/test/gen目录下是将原始数据的src和trg对应的行用\t连接起来生成的。
++ train/test/gen.list是上述三个目录对应文件的指针。
++ src/trg.dict是上述dict_size大小的字典，包括dict_size-3个高频词和3个特殊词：<s>（sequence的开头）<e>（sequence的结尾）<unk>（不在词典中的词）
+
+```python
+
+```

@@ -5,7 +5,7 @@ title: "daiwk"
 
 <!-- Loop output paged posts -->
 {% for post in paginator.posts %}
-<h2>
+<h3>
   <a href="{{ post.url }}">
     {{ post.title }}
   </a> 
@@ -15,10 +15,10 @@ title: "daiwk"
 	<a href="{{ post.url }}">阅读全文 &raquo;</a>
 
   </div>
-</h2>
+</h3>
 <hr>
 <!--{{ post.excerpt }}-->
-	<p><h3><a href="{{ post.url }}">阅读全文 &raquo;</a></h3></p>
+<!--	<p><h3><a href="{{ post.url }}">阅读全文 &raquo;</a></h3></p>-->
 <hr>
 {% endfor %}
 
