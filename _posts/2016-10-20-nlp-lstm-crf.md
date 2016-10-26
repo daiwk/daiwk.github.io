@@ -24,11 +24,13 @@ tags: [nlp, natural language processing, lstm crf, lstm, crf]
 
 gen/test/train三个目录，每个下面有xx.src和xx.trg两个文件，一行是一句话，src和trg的相同行表示那句话对应的翻译是什么，所以，src和trg一样多行。
 
-然后，需要进行预处理
+然后，需要进行预处理(-i INPUT: the path of input original dataset;-d DICTSIZE: the specified word count of dictionary, if not set, dictionary will contain all the words in input dataset;-m --mergeDict: merge source and target dictionary, thus, two dictionaries have the same context)
 
 ```shell
 python preprocess.py -i data/wmt14 -d 30000
 ```
 
 得到结果如下：
+
 ![](../assets/wmt14 preprocessed directory.JPG)
+
