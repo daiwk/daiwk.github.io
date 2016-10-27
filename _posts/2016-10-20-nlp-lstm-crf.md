@@ -43,6 +43,13 @@ python preprocess.py -i data/wmt14 -d 30000
 接下来开始进行训练：
 
 ```python
+
+#其实seq_to_seq_data里面，读trg.dict和src.dict的时候，使用了
+#trg_dict = dict()
+#for line_count, line in enumerate(open(trg_lang_dict, "r")):
+#    trg_dict[line.strip()] = line_count
+#对dict文件的每个单词，按照行号进行了编号！！
+
 #train.conf
 import sys
 sys.path.append("..")
@@ -216,9 +223,40 @@ paddle train \
 
 ```
 
-然而。。用jumbo装的paddle有问题。。版本太老。。我们从源码再来装一个好了。。：
+【然而。。用jumbo装的paddle有问题。。版本太老。。我们从源码再来装一个好了。。：
 
 [http://deeplearning.baidu.com/doc_cn/build/internal/build_from_source_zh_cn.html#jumbo](http://deeplearning.baidu.com/doc_cn/build/internal/build_from_source_zh_cn.html#jumbo)
+
+代码在这里[install_paddle_dwk.sh](../source_codes/install_paddle_dwk.sh)】
+
+gen的结果是这个文件translation/gen_result，内容如下：
+```shell
+0
+0       -11.1314         The <unk> <unk> about the width of the seats while large controls are at stake <e>
+1       -11.1519         The <unk> <unk> on the width of the seats while large controls are at stake <e>
+2       -11.5988         The <unk> <unk> about the width of the seats while large controls are at stake . <e>
+
+1
+0       -24.4149         The dispute is between the major aircraft manufacturers about the width of the tourist seats on the <unk> flights , paving the way for a <unk> confrontation during the month of the Dubai <unk> . <e>
+1       -26.9524         The dispute is between the major aircraft manufacturers about the width of the tourist seats on the <unk> flights , paving the way for a <unk> confrontation during the month of Dubai &apos; s <unk> . <e>
+2       -27.9574         The dispute is between the major aircraft manufacturers about the width of the tourist seats on the <unk> flights , paving the way for a <unk> confrontation during the month of Dubai &apos; s Dubai <unk> . <e>
+...
+
+```
+
+解释：
+
+```shell
+#This is the beam search result, where beam size is 3
+#‘0’ in 1st-line and ‘1’ in 6th-line mean the sequence-id in gen data
+#Other six lines list the beam search results
+#  The 2nd-column is the score of beam search (from large to small)
+#  The 3rd-colunm is the generating English sequence
+#There is 2 special tokens:
+#  <e>: the end of a sequence
+#  <unk>: a word not included in dictionary
+
+```
 
 ## 3.2 bilstm+crf
 
