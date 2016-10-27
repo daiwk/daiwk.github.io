@@ -110,7 +110,7 @@ gru_encoder_decoder(train_conf, is_generating)
 
 train.conf对应的网络结构图(慎入！。。)：
 
-![](../assets/train_seq2seq.jpeg)
+[train_seq2seq.jpeg](../assets/train_seq2seq.jpeg)
 
 注：获取mpi job的status的脚本：[get_mpi_job_status.py](../source_codes/get_mpi_job_status.py)
 
