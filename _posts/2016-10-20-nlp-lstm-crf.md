@@ -108,6 +108,10 @@ settings(
 gru_encoder_decoder(train_conf, is_generating)
 ```
 
+train.conf对应的网络结构图(慎入！。。)：
+
+![](../assets/train_seq2seq.jpeg)
+
 注：获取mpi job的status的脚本：[get_mpi_job_status.py](../source_codes/get_mpi_job_status.py)
 
 ```shell
@@ -203,6 +207,10 @@ settings(
 gru_encoder_decoder(gen_conf, is_generating)
 ```
 
+gen.conf对应的网络结构图(慎入！。。)：
+
+![](../assets/gen_seq2seq.jpeg)
+
 生成的命令如下
 
 ```shell
@@ -230,6 +238,7 @@ paddle train \
 代码在这里[install_paddle_dwk.sh](../source_codes/install_paddle_dwk.sh)】
 
 gen的结果是这个文件translation/gen_result，内容如下：
+
 ```shell
 0
 0       -11.1314         The <unk> <unk> about the width of the seats while large controls are at stake <e>
