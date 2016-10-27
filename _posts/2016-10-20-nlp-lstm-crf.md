@@ -209,7 +209,7 @@ gru_encoder_decoder(gen_conf, is_generating)
 
 gen.conf对应的网络结构图(慎入！。。)：
 
-![](../assets/gen_seq2seq.jpeg)
+[gen_seq2seq.jpeg](../assets/gen_seq2seq.jpeg)
 
 生成的命令如下
 
