@@ -49,8 +49,8 @@ cd demo/quick_start
 
 下面dataprovider_bow.py文件给出了完整例子，主要包括两部分：
 
-* initalizer： 定义文本信息、类别Id的数据类型。
-* process： yield文本信息和类别Id，和initalizer里定义顺序一致。
+* initalizer： 定义文本信息、类别Id的数据类型。settings变量必传，必须初始化**settings.input_types**变量；还可以通过kwargs传入参数，给settings定义其他变量，例如这里的settings.word_dict，例如seq2seq里的job_mode、src_dict、slots（类似input_types，semantic_role_labeling里面也用的slots）。
+* process： 需要@provider，init_hook=上面定义的hook函数（initializer）。process有两个参数，一个是settings，另一个是file_name（传给define_py_data_sources2的train_list或者test_list）。yield文本信息和类别Id，和initalizer里定义顺序一致。
 
 {% highlight python linenos %}
 from paddle.trainer.PyDataProvider2 import *
