@@ -13,7 +13,7 @@ tags: [nlp, natural language processing, lstm crf, lstm, crf]
 
 [论文地址](../assets/Conditional Random Fields as Recurrent Neural Networks.pdf)
 
-# **3. 【2016,ACL】Deep Recurrent Models with Fast-Forward Connections for Neural Machine Translation
+# **3. 【2016,ACL】Deep Recurrent Models with Fast-Forward Connections for Neural Machine Translation**
 [论文地址](../assets/Deep Recurrent Models with Fast-Forward Connections for Neural Machine Translation.pdf)
 
 # **4. 在paddlepaddle上实现**
