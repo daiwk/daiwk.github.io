@@ -214,7 +214,10 @@ create_dictionaries的流程：
 + 初始化sequence = []
 + 遍历文件，
     + features = line.split(' ')，将features放进sequence中。（也就是说sequence最开始会有3个元素，词，tag_pos，tag）
-    + 每读到空行，表示一个序列结束了，进行make_features，将这一个序列（比如训练数据有100个序列，这是第33个，而这个序列有三个字符）sequence[33]变成['jetliners', 'NNS', 'I-NP', "'s", '747', 'jetliners', '.', '#E1', '747/jetliners', 'jetliners/.']之类的，长度为feature+3个数的数组（其实就是最开始放进去的那3个元素，再加上每个feature拿到对应的值）
+    + 每读到空行，表示一个序列结束了，
+        + 进行make_features，将这一个序列（比如训练数据有100个序列，这是第33个，而这个序列有三个字符）sequence[33]变成['jetliners', 'NNS', 'I-NP', "'s", '747', 'jetliners', '.', '#E1', '747/jetliners', 'jetliners/.']之类的，长度为feature+3个数的数组（其实就是最开始放进去的那3个元素，再加上每个feature拿到对应的值）
+        + 进行add_to_dict，
+        + 重置sequence = []，并continue
     + 哈哈
 + 啦啦啦
  
