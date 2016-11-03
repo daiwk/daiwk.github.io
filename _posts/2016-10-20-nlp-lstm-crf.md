@@ -22,6 +22,9 @@ tags: [nlp, natural language processing, lstm crf, lstm, crf]
 
 md。。内部版本和开源版本不一致。。我们需要把开源版本重新安装一遍……
 
+
+## 4.1 数据集说明
+
 先看一下数据集的说明：
 [http://www.clips.uantwerpen.be/conll2000/chunking/](http://www.clips.uantwerpen.be/conll2000/chunking/)
 
@@ -51,6 +54,8 @@ md。。内部版本和开源版本不一致。。我们需要把开源版本重
 ```
 
 首先，需要将文件组织成三列，第一列是单词（中文的单字），第二列是tag_pos（part-of-speech tag as derived by the Brill tagger），第三列是标签tag（B-x表示开始，I-x表示中间）。比如，我们写好了test.txt，那么我们运行**gzip test.txt**，这样，就生成了test.txt.gz（解压的时候gzip -dc test.txt.gz > test.txt，就会生成test.txt[**如果不用-c参数，会默认删掉test.txt.gz**]）。
+
+## 4.2 dataprovider
 
 然后我们来仔细看一下dataprovider：
 
@@ -206,11 +211,11 @@ def create_dictionaries(filename, cutoff, oov_policy):
 
 ```
 
-initializer的流程：
+### 4.2.1 initializer的流程：
 
 + 初始化cutoff=[3, 1, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]（长度3+len(patterns)，即3+feature）
-+ 初始化oov_policy
-+ create_dictionaries：
++ 初始化oov_policy=[0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]，其中，**OOV_POLICY_IGNORE = 0；OOV_POLICY_USE = 1；OOV_POLICY_ERROR = 2**，也就是说除了第二个和第三个（i=1,2,...）设成oov_err，其他全部设成oov_ignore！
++ dicts = create_dictionaries(file, cutoff, oov_policy)：
 	+ 初始化dicts数组，数组长度为num_features(即len(cutoff)，即3+feature)，每个元素是一个空字典
 	+ 初始化sequence = []
 	+ 遍历文件，
@@ -219,6 +224,25 @@ initializer的流程：
 	        + 进行make_features(sequence)：将这一个序列（比如训练数据有100个序列，这是第77个，而这个序列有19个字符）sequence[i](0<=i<=18)变成['jetliners', 'NNS', 'I-NP', "'s", '747', 'jetliners', '.', '#E1', '747/jetliners', 'jetliners/.']之类的，**长度为feature+3**个数的数组（其实就是最开始放进去的那3个元素，再加上每个feature拿到对应的值）
 	        + 进行add_to_dict(sequence, dicts)：遍历sequence中的每个元素features（features长度为feature+3），对每个元素，遍历len(features)=feature+3，如果features[i] in dicts[i]，那么dicts[i][features[i]] += 1，反之，dicts[i][features[i]] = 1。实际上，就是**dicts长度始终是feature+3**，每个元素是一个字典，key是sequence（长度为序列个数）里面每个元素features的每个元素(特征)，value是这些元素出现的次数。
 	        + 重置sequence = []，并continue
-	    + aaa
-	+ 啦啦啦
- 
+	+ 遍历dicts(i=0->features+3),
+		+ dct = dicts[i]
+		+ n = 1 if oov_policy[i] == OOV_POLICY_USE else 0
+		+ todo = []
+		+ 遍历dct的元素k, v
+			+ 如果v < cutoff[i]，那么todo.append(k)**【表示，这个feature的这个元素出现的次数小于cutoff里面定义的次数，例如[-2,0]这个feature里面，有一个词'hello',他出现的次数只有5，那么我就把这个feature里的'hello'(也就是k)放到todo里面，最后干掉！】**
+			+ 否则：dct[k] = n；n += 1【对dicts[i]也就是dct的value进行重新赋值！按顺序来，从n开始。例如，这次可能cutoff的阈值是3，然后我们保留下来大于3的7个feature值，可能他们各自的次数是成百上千，但这里，**我们重新编个号，如果oov_policy[i]=OOV_POLICY_USE，那么就是1-7，否则就是0-6**】
+		+ 如果oov_policy[i] == OOV_POLICY_USE，那么dct['#OOV#'] = 0 【placeholder so that len(dct) will be the number of features】
+		+ 遍历todo的每个元素k，del dct[k]
++ dicts[2] = dict_label
++ settings.dicts = dicts；settings.oov_policy = oov_policy
++ input_types = []；num_features = len(dicts)
++ for i=0->num_original_columns:
+	+ input_types.append(integer_sequence(len(dicts[i])))
++ 如果patterns不空，那么：
+	+ dim = 0
+	+ for i=num_original_columns->num_features:
+		+ dim += len(dicts[i])
+	+ input_types.append(sparse_binary_vector_sequence(dim))
++ settings.input_types = input_types
+
+### 4.2.1 process的流程：
