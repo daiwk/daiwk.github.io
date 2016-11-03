@@ -126,7 +126,7 @@ def make_features(sequence):
             sequence[i].append(fname)
 
 
-create_dictionaries函数中：
+#create_dictionaries函数中：
 
 #cutoff: a list of numbers. If count of a feature is smaller than this,              
 # it will be ignored.          
