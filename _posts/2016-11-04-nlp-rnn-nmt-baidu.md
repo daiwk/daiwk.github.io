@@ -27,3 +27,43 @@ attention网络使用**all time steps的输入**建立一个**targetwords和inpu
 
 但single的neural network和最好的conventional(传统) SMT还是不能比的，6层BLEU才只有31.5，但传统方法有37.0。
 
+近两年，在computer vision领域，imagenet比赛前几名的，基本都是几十甚至上百层的网络，但NMT领域，成功的模型里，最深的也就6层。原因在于，**与卷积层相比，lstm里面有更多的非线性激活函数，而这些激活函数significantly decrease the magnititude（重要性）of the gradient in the deep topology, especially when the gradient progates in recurrent form.**
+
+本文中使用了一种new type of **linear connections (fast forward connections)** for 多层的recurrent network。而且，我们还在**encoder中**使用了一个**interleaved bi-directional architecture to stack lstm layers**。这种拓扑可以在encoder-decoder网络中用，也可以在attention网络中使用。
+
+
+# **2. NMT**
+
+
+
+# **3. Deep Topology**
+
+## **3.1 Network**
+
+## **3.2 Train technique**
+
+## **3.3 Generation**
+
+# **4. Experiments**
+
+## **4.1 Data sets**
+
+## **4.2 Model settings**
+
+## **4.3 Optimization**
+
+## **4.4 Results**
+
+### **4.4.1 Single models**
+
+### **4.4.2 Post processing**
+
+## **4.5 Analysis**
+
+### **4.5.1 Length**
+
+### **4.5.2 Unknown words**
+
+### **4.5.3 Over-fitting**
+
+# **5. Conclusion**
