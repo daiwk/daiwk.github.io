@@ -14,7 +14,6 @@ tags: [nlp, natural language processing, nmt, lstm nmt, 机器翻译]
 
 在wmt'14的English->French的翻译中，**单一attention**的模型BLEU达到37.7（超越了传统nmt的单浅层模型6.2的BLEU）；去掉attention，BLEU=36.3。在**对unknown words进行了特殊的处理**，同时进行**模型ensemble**之后，可以达到BLEU=40.4。
 
-
 # **1. 介绍**
 
 传统mt模型（statistical mt，SMT）包括了multiple separately tuned components，而NMT将源序列encode到一个**continuous representation space**，然后使用end-to-end的方式生成新的序列。
@@ -31,10 +30,7 @@ attention网络使用**all time steps的输入**建立一个**targetwords和inpu
 
 本文中使用了一种new type of **linear connections (fast forward connections)** for 多层的recurrent network。而且，我们还在**encoder中**使用了一个**interleaved bi-directional architecture to stack lstm layers**。这种拓扑可以在encoder-decoder网络中用，也可以在attention网络中使用。
 
-
 # **2. NMT**
-
-
 
 # **3. Deep Topology**
 
