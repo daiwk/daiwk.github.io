@@ -55,6 +55,36 @@ md。。内部版本和开源版本不一致。。我们需要把开源版本重
 
 首先，需要将文件组织成三列，第一列是单词（中文的单字），第二列是tag_pos（part-of-speech tag as derived by the Brill tagger），第三列是标签tag（B-x表示开始，I-x表示中间）。比如，我们写好了test.txt，那么我们运行**gzip test.txt**，这样，就生成了test.txt.gz（解压的时候gzip -dc test.txt.gz > test.txt，就会生成test.txt[**如果不用-c参数，会默认删掉test.txt.gz**]）。
 
+<html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">文件</th>
+<th scope="col" class="left">行数</th>
+<th scope="col" class="left">序列个数</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">train.txt</td>
+<td class="left">220663</td>
+<td class="left">8936</td>
+</tr>
+<tr>
+<td class="left">test.txt</td>
+<td class="left">49389</td>
+<td class="left">2012</td>
+</tr>
+
+</tbody>
+</table></center>
+</html>
+<br>
+
+
 ## 4.2 dataprovider
 
 然后我们来仔细看一下dataprovider：
@@ -256,11 +286,11 @@ def create_dictionaries(filename, cutoff, oov_policy):
 	+ features = line.split(' ')，将features放进sequence中。（也就是说sequence最开始会有3个元素：词，tag_pos，tag，比如'jetliners', 'NNS', 'I-NP'）
 	+ 每读到空行，表示一个序列结束了，
 		+ 进行make_features(sequence)【和initialize一样】
-		+ yield gen_sample(sequence)【代码如下所示】
+		+ yield gen_sample(sequence)【代码如下所示，大致是，对每一个sequence的元素，产出一个feature+3维的数组sample，前三个元素都是list，从dicts中获取相应value对应的id，append进去，如果拿不到==>若对应的oov_policy是OOV_POLICY_IGNORE(feature0),那么append 0xffffffff，否则如果是OOV_POLICY_ERROR（feature1\2），那么打日志，即仍是空数组，否则填充0；然后，sample append一个[]。然后vec=[],对于后面feature个元素，遍历完一个元素，dim += len(dicts[i])，对于这个元素，如果找得到id，那么vec.append dim + id，否则如果OOV_POLICY_IGNORE，那么pass，否则如果是OOV_POLICY_ERROR，那么打日志，即vec仍为[]，否则vec.ids.append(dim + 0)。遍历完了之后，把这个vec append到sample[-1]里面去。然后返回sample。也就是说，**sample的格式是[[feature0的id们], [feature1的id们], [feature2的id们], [[feature3的0+id们], [feature4的len(dicts[3])+id们], feature5的len(dicts[3])+len(dicts[4])+id们...]]**】
 		+ sequence = []
 		+ num_sequences += 1
 		+ continue
-+ 关闭文件，结束
++ 打印一下num_sequences，关闭文件，结束
 
 ```python
     def gen_sample(sequence):
@@ -271,7 +301,7 @@ def create_dictionaries(filename, cutoff, oov_policy):
         for features in sequence:
             assert len(features) == num_features, \
                 "Wrong number of features: " + line
-            for i in xrange(num_original_columns):
+            for i in xrange(num_original_columns):# 前三个
                 id = dicts[i].get(features[i], -1)
                 if id != -1:
                     sample[i].append(id)
@@ -285,7 +315,7 @@ def create_dictionaries(filename, cutoff, oov_policy):
             if patterns:
                 dim = 0 
                 vec = []
-                for i in xrange(num_original_columns, num_features):
+                for i in xrange(num_original_columns, num_features): #后面那些crf feature
                     id = dicts[i].get(features[i], -1)
                     if id != -1:
                         vec.append(dim + id)
