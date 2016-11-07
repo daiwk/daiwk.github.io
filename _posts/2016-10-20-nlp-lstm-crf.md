@@ -18,9 +18,7 @@ tags: [nlp, natural language processing, lstm crf, lstm, crf]
 
 # **4. 在paddlepaddle上实现**
 
-掉渣天的徐老师已经在开源版本的paddlepaddle实现了[rnn+crf](https://github.com/baidu/Paddle/tree/develop/demo/sequence_tagging)，我们直接拿来学习学习就好啦！！！
-
-md。。内部版本和开源版本不一致。。我们需要把开源版本重新安装一遍……
+掉渣天的徐老师已经在开源版本的paddlepaddle实现了[rnn+crf](https://github.com/baidu/Paddle/tree/develop/demo/sequence_tagging)，我们直接拿来学习学习就好啦！！！【此demo只在github版本有，且paddle的其他源都已经不维护了，诸君请自重~】
 
 
 ## 4.1 数据集说明
@@ -330,3 +328,15 @@ def create_dictionaries(filename, cutoff, oov_policy):
                 sample[-1].append(vec)
         return sample
 ```
+
+## 4.3 linear_crf
+
+实现的其实是[sgd_crf](http://leon.bottou.org/projects/sgd#stochastic_gradient_crfs)，我们可以看到，模型结构图如下所示：
+
+[linear_crf.jpeg](../assets/linear_crf.jpeg)
+
+## 4.4 rnn_crf
+
+实现的其实是大标题3的双向lstm和大标题2的crf，我们可以看到，模型结构图如下所示：
+
+[rnn_crf.jpeg](../assets/rnn_crf.jpeg)
