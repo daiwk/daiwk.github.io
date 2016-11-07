@@ -331,12 +331,12 @@ def create_dictionaries(filename, cutoff, oov_policy):
 
 ## 4.3 linear_crf
 
-实现的其实是[sgd_crf](http://leon.bottou.org/projects/sgd#stochastic_gradient_crfs)，我们可以看到，模型结构图如下所示：
+实现的其实是[sgd_crf](http://leon.bottou.org/projects/sgd#stochastic_gradient_crfs)，我们可以看到，模型结构图如下所示【不要急 慢慢看】：
 
 [linear_crf.jpeg](../assets/linear_crf.jpeg)
 
 ## 4.4 rnn_crf
 
-实现的其实是大标题3的双向lstm和大标题2的crf，我们可以看到，模型结构图如下所示：
+实现的其实是大标题3的双向lstm和大标题2的crf，我们可以看到，模型结构图如下所示【不要急 慢慢看】：
 
 [rnn_crf.jpeg](../assets/rnn_crf.jpeg)
