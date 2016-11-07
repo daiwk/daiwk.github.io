@@ -233,10 +233,12 @@ def create_dictionaries(filename, cutoff, oov_policy):
 			+ 否则：dct[k] = n；n += 1【对dicts[i]也就是dct的value进行重新赋值！按顺序来，从n开始。例如，这次可能cutoff的阈值是3，然后我们保留下来大于3的7个feature值，可能他们各自的次数是成百上千，但这里，**我们重新编个号，如果oov_policy[i]=OOV_POLICY_USE，那么就是1-7，否则就是0-6**】
 		+ 如果oov_policy[i] == OOV_POLICY_USE，那么dct['#OOV#'] = 0 【placeholder so that len(dct) will be the number of features】
 		+ 遍历todo的每个元素k，del dct[k]
-+ dicts[2] = dict_label
-+ settings.dicts = dicts；settings.oov_policy = oov_policy
-+ input_types = []；num_features = len(dicts)
-+ for i=0->num_original_columns:
++ dicts[2] = dict_label 【dict_label = {'B-ADJP': 0, 'I-ADJP': 1,...,'O': 22 },因为可能训练集里并没有全部的B-xx,I-xx和O，所以，**这里用这一步把训练集的第2个元素变成全集！！** ，这样一来，**dicts就是，词、brill tagger、B-/I-xx/O、23个feature出现次数大于他们各自阈值的value以及他们对应的重新赋予的id（oov_policy如果这个feature是OOV_POLICY_USE就从1开始，否则从0开始），另外，B-/I-xx/O那列是全集！**】
++ settings.dicts = dicts
++ settings.oov_policy = oov_policy
++ input_types = []
++ num_features = len(dicts)
++ for i=0->num_original_columns:【num_original_columns=3】
 	+ input_types.append(integer_sequence(len(dicts[i])))
 + 如果patterns不空，那么：
 	+ dim = 0
