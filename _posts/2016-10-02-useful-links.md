@@ -53,6 +53,9 @@ tags: [useful links,]
 
 ### 1.2.6 图卷积网络
 1. **Graph Convolutional Networks**：[http://tkipf.github.io/graph-convolutional-networks/](http://tkipf.github.io/graph-convolutional-networks/)
+
+### 1.2.7 copynet
+1. **copynet**:[Incorporating Copying Mechanism in Sequence-to-Sequence Learning.pdf](../assets/Incorporating Copying Mechanism in Sequence-to-Sequence Learning.pdf) [github(基于theano，作者开源的)](https://github.com/MultiPath/CopyNet)
  
 # **2. Useful Tools**
  

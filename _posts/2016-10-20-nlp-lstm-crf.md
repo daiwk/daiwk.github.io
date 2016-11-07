@@ -244,7 +244,59 @@ def create_dictionaries(filename, cutoff, oov_policy):
 	+ dim = 0
 	+ for i=num_original_columns->num_features:
 		+ dim += len(dicts[i])
-	+ input_types.append(sparse_binary_vector_sequence(dim))
-+ settings.input_types = input_types
+	+ input_types.append(sparse_binary_vector_sequence(dim))【sparse binary vector, most of the value is **0,** and the non zero elements are fixed to **1.**】
++ settings.input_types = input_types【每个元素均是长度为len(dicts[i])的sequence，区别在于，前三个每个元素是integer，后面的每个元素是sparse_binary_vector】
 
 ### 4.2.1 process的流程：
+
++ num_features = len(dicts)
++ num_sequences = 0
++ sequence = []
++ 遍历输入文件：
+	+ features = line.split(' ')，将features放进sequence中。（也就是说sequence最开始会有3个元素：词，tag_pos，tag，比如'jetliners', 'NNS', 'I-NP'）
+	+ 每读到空行，表示一个序列结束了，
+		+ 进行make_features(sequence)【和initialize一样】
+		+ yield gen_sample(sequence)【代码如下所示】
+		+ sequence = []
+		+ num_sequences += 1
+		+ continue
++ 关闭文件，结束
+
+```python
+    def gen_sample(sequence):
+        num_features = len(dicts)
+        sample = [list() for i in xrange(num_original_columns)] #【num_original_columns=3】
+        if patterns:
+            sample.append([])
+        for features in sequence:
+            assert len(features) == num_features, \
+                "Wrong number of features: " + line
+            for i in xrange(num_original_columns):
+                id = dicts[i].get(features[i], -1)
+                if id != -1:
+                    sample[i].append(id)
+                elif oov_policy[i] == OOV_POLICY_IGNORE:
+                    sample[i].append(0xffffffff)
+                elif oov_policy[i] == OOV_POLICY_ERROR:
+                    logger.fatal("Unknown token: %s" % features[i])
+                else:   
+                    sample[i].append(0)
+
+            if patterns:
+                dim = 0 
+                vec = []
+                for i in xrange(num_original_columns, num_features):
+                    id = dicts[i].get(features[i], -1)
+                    if id != -1:
+                        vec.append(dim + id)
+                    elif oov_policy[i] == OOV_POLICY_IGNORE:
+                        pass    
+                    elif oov_policy[i] == OOV_POLICY_ERROR:
+                        logger.fatal("Unknown token: %s" % features[i])
+                    else:   
+                        vec.ids.append(dim + 0)
+                            
+                    dim += len(dicts[i])
+                sample[-1].append(vec)
+        return sample
+```
