@@ -273,7 +273,7 @@ def create_dictionaries(filename, cutoff, oov_policy):
 	+ for i=num_original_columns->num_features:
 		+ dim += len(dicts[i])
 	+ input_types.append(sparse_binary_vector_sequence(dim))【sparse binary vector, most of the value is **0,** and the non zero elements are fixed to **1.**】
-+ settings.input_types = input_types【每个元素均是长度为len(dicts[i])的sequence，区别在于，前三个每个元素是integer，后面的每个元素是sparse_binary_vector】
++ settings.input_types = input_types【**只有4个元素，前三个每个均是长度为len(dicts[i])的integer sequence，最后一个元素是sparse_binary_vector，维度是3->3+feature的所有len(dicts[i])的和**】
 
 ### 4.2.1 process的流程：
 
@@ -333,10 +333,31 @@ def create_dictionaries(filename, cutoff, oov_policy):
 
 实现的其实是[sgd_crf](http://leon.bottou.org/projects/sgd#stochastic_gradient_crfs)，我们可以看到，模型结构图如下所示【不要急 慢慢看】：
 
-[linear_crf.jpeg](../assets/linear_crf.jpeg)
+![](../assets/linear_crf.jpeg)
+
+首先，从train.txt中，我们可以发现：
+
++ slot 0 size=6778 # dicts[0],输入单词字典的大小
++ slot 1 size=44 # dicts[1],brill tag的大小 
++ slot 2 size=23 # dicts[2],B-/I-xx/O的大小
++ feature size=76328 # 3->3+feature的所有len(dicts[i])的和 
+
+另外，num_label_types=int(math.ceil(float(slot2_size)) / 8)) * 8 = 24
+
+4个**data_layer**：
++ features：size=76328
++ word： size=6778
++ pos: size=44
++ chunk: size=num_label_types=24
+
+接下来是一个fc_layer(input=features,size=num_label_types=24,name=crf_input)
+
+然后这个crf_input后面接了一个crf_layer(input=crf_input,label=chunk)
 
 ## 4.4 rnn_crf
 
 实现的其实是大标题3的双向lstm和大标题2的crf，我们可以看到，模型结构图如下所示【不要急 慢慢看】：
 
-[rnn_crf.jpeg](../assets/rnn_crf.jpeg)
+![](../assets/rnn_crf.jpeg)
+
+
