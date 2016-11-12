@@ -164,6 +164,34 @@ conv_shift = conv_shift_layer(input=[layer1, layer2])
 
 ## img_conv_layer
 
+image的卷积层。目前Paddle只支持width=height的正方形图片作为输入。卷积层的具体定义见[UFLDL](http://ufldl.stanford.edu/tutorial/supervised/FeatureExtractionUsingConvolution/)。
+
+其中的num_channel是输入的image的channel数，当输入是图片时可以是1或者3（mono【单通道】 or RGB），当输入是layer时，可以是上一个layer的num_filters * num_group
+
+Paddle中有一些group的filter，每个group可以处理inputs的一些channel。例如，一个input num_channel=256, group=4, num_filter=32，那么Paddle会生成**32*4=128个filter**对inputs进行处理。channels会被分成4部分，first 256/4个channels被first 32个filters处理，以此类推。
+
++ Params:
+	+ name (basestring) – Layer name.
+	+ input (LayerOutput) – Layer Input.
+	+ filter_size (int|tuple|list) – The x dimension of a filter kernel. Or input a tuple for two image dimension.
+	+ filter_size_y (int|None) – The y dimension of a filter kernel. Since PaddlePaddle currently supports rectangular filters, the filter’s shape will be (filter_size, filter_size_y).
+	+ num_filters – Each filter group’s number of filter
+	+ act (BaseActivation) – Activation type. Default is tanh
+	+ groups (int) – Group size of filters.
+	+ stride (int/tuple/list) – The x dimension of the stride. Or input a tuple for two image dimension.
+	+ stride_y (int) – The y dimension of the stride.
+	+ padding (int/tuple/list) – The x dimension of the padding. Or input a tuple for two image dimension
+	+ padding_y (int) – The y dimension of the padding.
+	+ bias_attr (ParameterAttribute/False) – Convolution bias attribute. None means default bias. False means no bias.
+	+ num_channels (int) – number of input channels. If None will be set automatically from previous output.
+	+ param_attr (ParameterAttribute) – Convolution param attribute. None means default attribute
+	+ shared_biases (bool) – Is biases will be shared between filters or not.
+	+ layer_attr (ExtraLayerAttribute) – Layer Extra Attribute.
++ Returns:
+	+ LayerOutput object
++ Return type:
+	+ LayerOutput
+
 ## context_projection
 
 # Image Pooling Layer
