@@ -41,16 +41,24 @@ with mixed_layer(size=1024) as fc:
 
 <tbody>
 <tr>
-<td class="left">train.txt</td>
-<td class="left">220663</td>
-<td class="left">8936</td>
+<td class="left">Params</td>
+<td class="left">	
+name (basestring) – The Layer Name.<br/>
+input (LayerOutput|list|tuple) – The input layer. Could be a list/tuple of input layer.<br/>
+size (int) – The layer dimension.<br/>
+act (BaseActivation) – Activation Type. Default is tanh.<br/>
+param_attr (ParameterAttribute) – The Parameter Attribute|list.<br/>
+bias_attr (ParameterAttribute|None|Any) – The Bias Attribute. If no bias, then pass False or something not type of ParameterAttribute. None will get a default Bias.<br/>
+layer_attr (ExtraLayerAttribute|None) – Extra Layer config.<br/></td>
 </tr>
 <tr>
-<td class="left">test.txt</td>
+<td class="left">Returns</td>
 <td class="left">49389</td>
-<td class="left">2012</td>
 </tr>
-
+<tr>
+<td class="left">Return Type</td>
+<td class="left">49389</td>
+</tr>
 </tbody>
 </table></center>
 </html>
