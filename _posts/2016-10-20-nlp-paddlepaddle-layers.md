@@ -19,6 +19,44 @@ tags: [paddlepaddle, layers]
 
 ## fc_layer
 
+全连接层，用法：
+
+```python
+fc = fc_layer(input=layer,
+              size=1024,
+              act=LinearActivation(),
+              bias_attr=False)
+```
+
+等价于：
+
+```python
+with mixed_layer(size=1024) as fc:
+    fc += full_matrix_projection(input=layer)
+```
+
+<html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<tbody>
+<tr>
+<td class="left">train.txt</td>
+<td class="left">220663</td>
+<td class="left">8936</td>
+</tr>
+<tr>
+<td class="left">test.txt</td>
+<td class="left">49389</td>
+<td class="left">2012</td>
+</tr>
+
+</tbody>
+</table></center>
+</html>
+<br>
+
+
 ## selective_fc_layer
 
 # Conv Layers
