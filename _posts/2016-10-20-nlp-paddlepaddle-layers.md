@@ -173,8 +173,8 @@ Paddle中有一些group的filter，每个group可以处理inputs的一些channel
 + Params:
 	+ name (basestring) – Layer name.
 	+ input (LayerOutput) – Layer Input.
-	+ filter_size (int|tuple|list) – The x dimension of a filter kernel. Or input a tuple for two image dimension.
-	+ filter_size_y (int|None) – The y dimension of a filter kernel. Since PaddlePaddle currently supports rectangular filters, the filter’s shape will be (filter_size, filter_size_y).
+	+ filter_size (int/tuple/list) – The x dimension of a filter kernel. Or input a tuple for two image dimension.
+	+ filter_size_y (int/None) – The y dimension of a filter kernel. Since PaddlePaddle currently supports rectangular filters, the filter’s shape will be (filter_size, filter_size_y).
 	+ num_filters – Each filter group’s number of filter
 	+ act (BaseActivation) – Activation type. Default is tanh
 	+ groups (int) – Group size of filters.
