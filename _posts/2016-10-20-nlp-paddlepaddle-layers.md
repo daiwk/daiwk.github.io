@@ -111,6 +111,32 @@ sel_fc = selective_fc_layer(input=input, size=128, act=TanhActivation())
 
 ## conv_operator
 
+与img_conv_layer不同，conv_op是一个Operator，能在mixed_layer里面使用。conv_op需要两个input来perform convolution。第一个input是image，第二个input是filter kernel。**只支持GPU mode**。用法：
+
+```python
+op = conv_operator(img=input1,
+                   filter=input2,
+                   filter_size=3,
+                   num_filters=64,
+                   num_channels=64)
+```
+
++ Params:
+	+ **img (LayerOutput) – input image**
+	+ **filter (LayerOutput) – input filter**
+	+ filter_size (int) – The x dimension of a filter kernel.
+	+ filter_size_y (int) – The y dimension of a filter kernel. Since PaddlePaddle now supports rectangular filters, the filter’s shape can be (filter_size, filter_size_y).
+	+ num_filters (int) – channel of output data.
+	+ num_channel (int) – channel of input data.
+	+ stride (int) – The x dimension of the stride.
+	+ stride_y (int) – The y dimension of the stride.
+	+ padding (int) – The x dimension of padding.
+	+ padding_y (int) – The y dimension of padding.
++ Returns:
+	+ a ConvOperator Object.
++ Return tpye:
+	+ ConvOperator
+
 ## conv_shift_layer
 
 ## img_conv_layer
