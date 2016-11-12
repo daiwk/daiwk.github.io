@@ -37,12 +37,12 @@ with mixed_layer(size=1024) as fc:
 
 + Params:
 	+ name (basestring) : The Layer Name.
-	+ input (LayerOutput|list|tuple) : The input layer. Could be a list/tuple of input layer.
+	+ input (LayerOutput/list/tuple) : The input layer. Could be a list/tuple of input layer.
 	+ size (int) : The layer dimension.
 	+ act (BaseActivation) – Activation Type. Default is **tanh**.
 	+ param_attr (ParameterAttribute) – The Parameter Attribute|list.
-	+ bias_attr (ParameterAttribute|None|Any) – The Bias Attribute. If no bias, then pass False or something not type of ParameterAttribute. None will get a default Bias.
-	+ layer_attr (ExtraLayerAttribute|None) – Extra Layer config.
+	+ bias_attr (ParameterAttribute/None/Any) – The Bias Attribute. If no bias, then pass False or something not type of ParameterAttribute. None will get a default Bias.
+	+ layer_attr (ExtraLayerAttribute/None) – Extra Layer config.
 + Returns:
 	+ LayerOutput object
 + Return Type:
