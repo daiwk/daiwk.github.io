@@ -35,35 +35,18 @@ with mixed_layer(size=1024) as fc:
     fc += full_matrix_projection(input=layer)
 ```
 
-<html>
-<center>
-<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
-
-<tbody>
-<tr>
-<td class="left">Params</td>
-<td class="left">	
-name (basestring) – The Layer Name.<br/>
-input (LayerOutput|list|tuple) – The input layer. Could be a list/tuple of input layer.<br/>
-size (int) – The layer dimension.<br/>
-act (BaseActivation) – Activation Type. Default is tanh.<br/>
-param_attr (ParameterAttribute) – The Parameter Attribute|list.<br/>
-bias_attr (ParameterAttribute|None|Any) – The Bias Attribute. If no bias, then pass False or something not type of ParameterAttribute. None will get a default Bias.<br/>
-layer_attr (ExtraLayerAttribute|None) – Extra Layer config.<br/></td>
-</tr>
-<tr>
-<td class="left">Returns</td>
-<td class="left">49389</td>
-</tr>
-<tr>
-<td class="left">Return Type</td>
-<td class="left">49389</td>
-</tr>
-</tbody>
-</table></center>
-</html>
-<br>
-
++ Params:
+	+ name (basestring) – The Layer Name.
+	+ input (LayerOutput|list|tuple) – The input layer. Could be a list/tuple of input layer.
+	+ size (int) – The layer dimension.
+	+ act (BaseActivation) – Activation Type. Default is tanh.
+	+ param_attr (ParameterAttribute) – The Parameter Attribute|list.
+	+ bias_attr (ParameterAttribute|None|Any) – The Bias Attribute. If no bias, then pass False or something not type of ParameterAttribute. None will get a default Bias.
+	+ layer_attr (ExtraLayerAttribute|None) – Extra Layer config.
++ Returns:
+	+ LayerOutput object
++ Return Type:
+	+ LayerOutput
 
 ## selective_fc_layer
 
