@@ -9,8 +9,28 @@ tags: [paddlepaddle, layers]
 
 ### LayerType
 
+layer type enumerations.
+
++ Params:
+	+ type_name (basestring) – layer type name. Because layer type enumerations are strings.
++ Returns:
+	+ True if is a layer_type
++ Return type:
+	+ bool
+
 ### LayerOutput
 
+layer函数的输出，主要用于：
++ 检查layer的connection是否make sense： 例如，FC(Softmax) => Cost(MSE Error) is not good
++ tracking layer connection
++ 作为layer方法的输入
+
++ Params:
+	+ name (basestring) – Layer output name.
+	+ layer_type (basestring) – Current Layer Type. One of LayerType enumeration.
+	+ activation (BaseActivation.) – Layer Activation.
+	+ parents (list|tuple|collection.Sequence) – Layer’s parents.
+	
 ## Data layer
 
 # data_layer
@@ -49,6 +69,26 @@ with mixed_layer(size=1024) as fc:
 	+ LayerOutput
 
 ## selective_fc_layer
+
+与全连接层的区别：输出可能是sparse的。有一个select参数，指定several selected columns for output。如果select参数没有被指定，那么他和fc_layer是一样的。用法如下：
+
+```python
+sel_fc = selective_fc_layer(input=input, size=128, act=TanhActivation())
+```
+
++ Params:
+	+ name (basestring) : The Layer Name.
+	+ input (LayerOutput/list/tuple) : The input layer. Could be a list/tuple of input layer.
+	+ **select (LayerOutput)** : The select layer. The output of select layer should be **a sparse binary matrix**, and treat as the mask of selective fc.
+	+ size (int) : The layer dimension.
+	+ act (BaseActivation) – Activation Type. Default is **tanh**.
+	+ param_attr (ParameterAttribute) – The Parameter Attribute/list.
+	+ bias_attr (ParameterAttribute/None/Any) – The Bias Attribute. If no bias, then pass False or something not type of ParameterAttribute. None will get a default Bias.
+	+ layer_attr (ExtraLayerAttribute/None) – Extra Layer config.
++ Returns:
+	+ LayerOutput object
++ Return Type:
+	+ LayerOutput
 
 # Conv Layers
 
