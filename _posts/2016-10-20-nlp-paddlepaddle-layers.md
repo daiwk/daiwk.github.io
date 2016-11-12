@@ -147,6 +147,21 @@ c[i]=\sum _{j-(N-1)/2}^{(N-1)/2}a_{i+1}*b_j
 
 上式中，`\(a\)`有`\(M\)`个元素，`\(b\)`有`\(N\)`个元素(`\(N\)`为奇数)，`\(c\)`有`\(M\)`个元素。当`\(a\)`或`\(b\)`的下标为负数时，表示从右往左的下标。
 
+用法：
+
+```python
+conv_shift = conv_shift_layer(input=[layer1, layer2])
+```
+
++ Params:
+	+ name (basestring) – layer name
+	+ a (LayerOutput) – Input layer a.
+	+ b (LayerOutput) – input layer b
++ Returns:
+	+ LayerOutput object
++ Return type:
+	+ LayerOutput
+
 ## img_conv_layer
 
 ## context_projection
