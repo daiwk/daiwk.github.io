@@ -29,11 +29,28 @@ layer函数的输出，主要用于：
 	+ name (basestring) – Layer output name.
 	+ layer_type (basestring) – Current Layer Type. One of LayerType enumeration.
 	+ activation (BaseActivation.) – Layer Activation.
-	+ parents (list|tuple|collection.Sequence) – Layer’s parents.
+	+ parents (list/tuple/collection.Sequence) – Layer’s parents.
 	
 ## Data layer
 
 # data_layer
+
+数据层的定义。用法：
+
+```python
+data = data_layer(name="input",
+                  size=1000)
+```
+
++ Params:
+	+ name (basestring) – Name of this data layer.
+	+ size (int) – Size of this data layer.
+	+ layer_attr (ExtraLayerAttribute.) – Extra Layer Attribute.
++ Returns:	
+	+ LayerOutput object.
++ Return type:	
+	+ LayerOutput
+
 
 # Fully Connected Layers
 
