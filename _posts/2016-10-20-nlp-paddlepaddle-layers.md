@@ -5,6 +5,48 @@ title: "paddlepaddle layers"
 tags: [paddlepaddle, layers]
 ---
 
+## Parameter & Extra Layer Attribute
+
+#### ParameterAtribute
+
+在fine-tuning training的过程中，可以设置这个object来控制training的详情，诸如l1/l2 rate/learning rate/如何初始化参数等
+
++ Params:
+	+ is_static (bool) – True if this parameter will be fixed while training.
+	+ initial_std (float or None) – Gauss Random initialization standard deviation. None if not using Gauss Random initialize parameter.
+	+ initial_mean (float or None) – Gauss Random initialization mean. None if not using Gauss Random initialize parameter.
+	+ initial_max (float or None) – Uniform initialization max value.
+	+ initial_min (float or None) – Uniform initialization min value.
+	+ l1_rate (float or None) – the l1 regularization factor
+	+ l2_rate (float or None) – the l2 regularization factor
+	+ learning_rate (float or None) – The parameter learning rate. None means 1. The learning rate when optimize is LEARNING_RATE = GLOBAL_LEARNING_RATE * PARAMETER_LEARNING_RATE * SCHEDULER_FACTOR.
+	+ momentum (float or None) – The parameter momentum. None means use global value.
+	+ sparse_update (bool) – Enable sparse update for this parameter. It will enable both local and remote sparse update
+
+#### set_default_parameter_name
+
+设置parameter的默认名字，如果不设，那就用默认的parameter name
+
++ Params:
+	+ name (basestring) – default parameter name.
+
+#### ExtraLayerAtribute
+
+一些高阶的layer attribute设置，可以设置所有，但有些layer并不支持所有attribute，**一旦设置了不支持的，会报错且core……**
+
++ Params:
+	+ error_clipping_threshold (float) – Error clipping threshold.
+	+ drop_rate (float) – Dropout rate. Dropout will create a mask on layer output. The dropout rate is the zero rate of this mask. The details of what dropout is please refer to here.
+	+ device (int) – device ID of layer. device=-1, use CPU. device>0, use GPU. The details allocation in parallel_nn please refer to here.
+
+#### ParamAttr
+
+是ParameterAtribute的alias
+
+#### ExtraAttr
+
+是ExtraLayerAttribute的alias
+
 ## Base
 
 ### LayerType
@@ -194,17 +236,111 @@ Paddle中有一些group的filter，每个group可以处理inputs的一些channel
 
 ## context_projection
 
+将一个序列根据设置的context_len，转化为以context_start=-(context_len - 1) / 2为开头的序列。如果context position超出了序列的长度，如果padding_attr=False，那么将会填充0，否则，padding是可以通过训练得到的（learnable），并将此变量赋值为ParameterAttribute类型。
+
+例如，原始序列是[a b c d e f g]，context_len=3，padding_attr=False，那么，context_start = -1，所以，产生的序列就是[0ab abc bcd cde def efg fg0]
+
++ Params:
+	+ input (LayerOutput) – Input Sequence.
+	+ context_len (int) – context length.
+	+ context_start (int) – context start position. Default is -(context_len - 1)/2
+	+ padding_attr (bool/ParameterAttribute) – Padding Parameter Attribute. If false, it means padding always be zero. Otherwise Padding is learnable, and parameter attribute is set by this parameter.
++ Returns:
+	+ Projection
++ Return type:
+	+ Projection
+
 # Image Pooling Layer
 
 ## img_pool_layer
+
+图像处理中的pooling层，详见[UFLDL的pooling介绍](http://ufldl.stanford.edu/tutorial/supervised/Pooling/)
+
++ Params：
+	+ padding (int) – pooling padding
+	+ name (basestring.) – name of pooling layer
+	+ input (LayerOutput) – layer’s input
+	+ pool_size (int) – pooling size
+	+ num_channels (int) – number of input channel.
+	+ pool_type (BasePoolingType) – pooling type. MaxPooling or AveragePooling. **Default is MaxPooling.**
+	+ stride (int) – stride of pooling.
+	+ start (int) – start position of pooling operation.
+	+ layer_attr (ExtraLayerAttribute) – Extra Layer attribute.
++ Returns：
+	+ LayerOutput object
++ Return type:
+	+ LayerOutput
 
 # Norm Layer
 
 ## img_cmrnorm_layer
 
+Response normalization across feature maps，详见[Alex的paper(alexnet?)](../assets/ImageNet Classification with Deep Convolutional Neural Networks.pdf)
+
++ Params:
+	+ name (None/basestring) – layer name.
+	+ input (LayerOutput) – layer’s input.
+	+ size (int) – Normalize in number of sizesize feature maps.
+	+ scale (float) – The hyper-parameter.
+	+ power (float) – The hyper-parameter.
+	+ num_channels – input layer’s filers number or channels. If num_channels is None, it will be set automatically.
+	+ layer_attr (ExtraLayerAttribute) – Extra Layer Attribute.
++ Returns:
+	+ LayerOutput object.
++ Return type:
+	+ LayerOutput
+
 ## batch_norm_layer
 
+batch normalization，定义如下(详见[paper](../assets/Batch Normalization Accelerating Deep Network Training by Reducing Internal Covariate Shift.pdf))：
+
+`\[
+\mu _\beta\leftarrow \frac{1}{m}\sum _{i=1}^mx_i \ \ //\ mini-batch\ mean \\
+\sigma _\beta^2\leftarrow \frac{1}{m}\sum _{i=1}^m(x_i-\mu _\beta)^2 \ \ //\ mini-batch\ variance \\
+\hat{x_i}\leftarrow \frac{(x_i-\mu _\beta )}{\sqrt{\sigma _\beta ^2+\epsilon }} \ \ //\ normalize \\
+y_i \leftarrow \gamma \hat{x_i}+\beta \ \ //\ scale\ and\ shift \\
+\]`
+
+上式中，`\(x\)`是一个mini-batch的input features
+
++ Params:
+	+ name (basestring) – layer name.
+	+ input (LayerOutput) – batch normalization input. Better be linear activation. Because there is an activation inside batch_normalization.
+	+ batch_norm_type (None|string, None or "batch_norm" or "cudnn_batch_norm") – We have batch_norm and cudnn_batch_norm. batch_norm supports both CPU and GPU. cudnn_batch_norm requires cuDNN version greater or equal to v4 (>=v4). But cudnn_batch_norm is faster and needs less memory than batch_norm. By default (None), we will automaticly select cudnn_batch_norm for GPU and batch_norm for CPU. Otherwise, select batch norm type based on the specified type. If you use cudnn_batch_norm, we suggested you use latest version, such as v5.1.
+	+ act (BaseActivation) – Activation Type. Better be relu. Because batch normalization will normalize input near zero.
+	+ num_channels (int) – num of image channels or previous layer’s number of filters. None will automatically get from layer’s input.
+	+ bias_attr (ParameterAttribute) – ββ, better be zero when initialize. So the initial_std=0, initial_mean=1 is best practice.
+	+ param_attr (ParameterAttribute) – γγ, better be one when initialize. So the initial_std=0, initial_mean=1 is best practice.
+	+ layer_attr (ExtraLayerAttribute) – Extra Layer Attribute.
+	+ use_global_stats (bool/None.) – whether use moving mean/variance statistics during testing peroid. If None or True, it will use moving mean/variance statistics during testing. If False, it will use the mean and variance of current batch of test data for testing.
+	+ moving_average_fraction (float.) – Factor used in the moving average computation, referred to as facotr,`\(runningMean=newMean*(1-factor)+runningMean*factor\)`
++ Returns:
+	+ LayerOutput object.
++ Return type:
+	+ LayerOutput
+
 ## sum_to_one_norm_layer
+
+NEURAL TURING MACHINE中用到的sum-to-one normalization:
+
+`\[
+out[i]=fraq{in[i]}{\sum _{k-1}^{N}in[k]}
+\]`
+
+其中，`\(in\)`是一个输入vector（batch_size * data_dim）,`\(out\)`是一个输出vector（batch_size * data_dim）。用法：
+
+```python
+sum_to_one_norm = sum_to_one_norm_layer(input=layer)
+```
+
++ Params:
+	+ input (LayerOutput) – Input layer.
+	+ name (basestring) – Layer name.
+	+ layer_attr (ExtraLayerAttribute.) – extra layer attributes.
++ Returns:	
+	+ LayerOutput object.
++ Return type:	
+	+ LayerOutput
 
 # Recurrent Layers
 
