@@ -346,6 +346,34 @@ sum_to_one_norm = sum_to_one_norm_layer(input=layer)
 
 ## recurrent_layer
 
+最简单的recurrent unit layer，只是全连接层through both time and neural network。
+
+对每个[start, end]的序列，计算：
+
+`\[
+out_i=act(in_i)\ for\ i=start \\
+out_i=act(in_i+out_{i-1}*W)\ for\ i<start<=end \\
+\]`
+
+如果reverse=True，那么：
+
+`\[
+out_i=act(in_i)\ for\ i=end \\
+out_i=act(in_i+out_{i+1}*W)\ for\ i<=start<end \\
+\]`
+
++ Params:
+	+ input (LayerOutput) – Input Layer
+	+ act (BaseActivation) – activation.
+	+ bias_attr (ParameterAttribute) – bias attribute.
+	+ param_attr (ParameterAttribute) – parameter attribute.
+	+ name (basestring) – name of the layer
+	+ layer_attr (ExtraLayerAttribute) – Layer Attribute.
++ Returns:	
+	+ LayerOutput object.
++ Return type:	
+	+ LayerOutput
+
 ## lstmemory
 
 ## lstm_step_layer
