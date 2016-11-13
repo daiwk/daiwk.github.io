@@ -324,7 +324,7 @@ y_i \leftarrow \gamma \hat{x_i}+\beta \ \ //\ scale\ and\ shift \\
 NEURAL TURING MACHINE中用到的sum-to-one normalization:
 
 `\[
-out[i]=fraq{in[i]}{\sum _{k-1}^{N}in[k]}
+out[i]=\fraq{in[i]}{\sum _{k-1}^{N}in[k]}
 \]`
 
 其中，`\(in\)`是一个输入vector（batch_size * data_dim）,`\(out\)`是一个输出vector（batch_size * data_dim）。用法：
