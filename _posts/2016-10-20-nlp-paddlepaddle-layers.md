@@ -376,6 +376,13 @@ out_i=act(in_i+out_{i+1}*W)\ for\ i<=start<end \\
 
 ## lstmemory
 
+公式如下：
+
+`\[
+i_t=\sigma (W_ \\
+\]`
+
+
 ## lstm_step_layer
 
 ## grumemory
