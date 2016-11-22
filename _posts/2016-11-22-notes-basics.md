@@ -46,6 +46,13 @@ S 矩阵是源数据，有 1->N 条数据，A B C 是feature，最后一列C是�
 + 大于等于0 的模型可以选择 绝对值，平方值，这里用 **指数函数，一定大于0**
 + 小于等于1 用除法，**分子是自己，分母是自身加上1**，那一定是小于1的了
 
+注意：
+
+`\[
+\frac{exp(x)}{exp(x)+1}=\frac{exp(-x)exp(x)}{exp(-x)exp(x)+exp(-x)}=\frac{1}{1+exp(-x)}=sigmoid(x)
+\]`
+
+
 ![](../assets/basics/2steps to 0 to 1 of lr.jpg)
 
 再做一下变形，就得到了 logistic regression 模型(**仍然有linear的意味~**)
