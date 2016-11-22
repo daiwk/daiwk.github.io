@@ -19,7 +19,7 @@ tags: [机器学习common]
 
 ![](../assets/basics/subsets of rf.jpg)
 
-S 矩阵是源数据，有 1-N 条数据，A B C 是feature，最后一列C是类别
+S 矩阵是源数据，有 1->N 条数据，A B C 是feature，最后一列C是类别
 
 ![](../assets/basics/input of rf.jpg)
 
@@ -27,13 +27,13 @@ S 矩阵是源数据，有 1-N 条数据，A B C 是feature，最后一列C是�
 
 ![](../assets/basics/dtrees of rf.jpg)
 
-这 M 个子集得到 M 个决策树。将新数据投入到这 M 个树中，得到 M 个分类结果，计数看预测成哪一类的数目最多，就将此类别作为最后的预测结果
+**这 M 个子集得到 M 个决策树。**将新数据投入到这 M 个树中，得到 M 个分类结果，计数看预测成哪一类的数目最多，就将此类别作为最后的预测结果
 
 ![](../assets/basics/class prediction of rf.jpg)
 
 # 逻辑回归
 
-当预测目标是概率这样的，值域需要满足大于等于0，小于等于1的，这个时候单纯的线性模型是做不到的，因为在定义域不在某个范围之内时，值域也超出了规定区间。
+当预测目标是概率这样的，值域需要满足**大于等于0，小于等于1**的，这个时候单纯的线性模型是做不到的，因为在定义域不在某个范围之内时，值域也超出了规定区间。
 
 ![](../assets/basics/linear model of lr.jpg)
 
@@ -43,8 +43,8 @@ S 矩阵是源数据，有 1-N 条数据，A B C 是feature，最后一列C是�
 
 那么怎么得到这样的模型呢？这个模型需要满足两个条件 大于等于0，小于等于1
 
-+ 大于等于0 的模型可以选择 绝对值，平方值，这里用 指数函数，一定大于0
-+ 小于等于1 用除法，分子是自己，分母是自身加上1，那一定是小于1的了
++ 大于等于0 的模型可以选择 绝对值，平方值，这里用 **指数函数，一定大于0**
++ 小于等于1 用除法，**分子是自己，分母是自身加上1**，那一定是小于1的了
 
 ![](../assets/basics/2steps to 0 to 1 of lr.jpg)
 
@@ -62,7 +62,7 @@ S 矩阵是源数据，有 1-N 条数据，A B C 是feature，最后一列C是�
 
 # svm
 
-要将两类分开，想要得到一个超平面，最优的超平面是到两类的 margin 达到最大，margin就是超平面与离它最近一点的距离，如下图，Z2>Z1，所以绿色的超平面(hyperplane)比较好
+要将两类分开，想要得到一个超平面，最优的**超平面是到两类的 margin 达到最大**(即，这个分界面很有区分性，它附近很少有容易被判错的点)，margin就是超平面与离它最近一点的距离，如下图，Z2>Z1，所以绿色的超平面(hyperplane)比较好
 
 ![](../assets/basics/target of svm.jpg)
 
@@ -74,7 +74,7 @@ S 矩阵是源数据，有 1-N 条数据，A B C 是feature，最后一列C是�
 
 ![](../assets/basics/distance of dot to plane of svm.jpg)
 
-所以得到 total margin 的表达式如下，目标是最大化这个 margin，就需要最小化分母，于是变成了一个优化问题
+所以得到 total margin 的表达式如下，**目标是最大化这个 margin，就需要最小化分母（就是x的系数w）**，于是变成了一个优化问题
 
 ![](../assets/basics/total margin of svm.jpg)
 
@@ -82,12 +82,12 @@ S 矩阵是源数据，有 1-N 条数据，A B C 是feature，最后一列C是�
 
 ![](../assets/basics/example1.1 of svm.jpg)
 
-得到 weight vector 为（a，2a），将两个点代入方程，代入（2，3）另其值＝1，代入（1，1）另其值＝-1，求解出 a 和 截矩 w0 的值，进而得到超平面的表达式。
+得到 weight vector 为（a，2a），将两个点代入方程，代入（2，3）令其值＝1【因为class1的标签是1】，代入（1，1）令其值＝-1【因为class2的标签是-1】，求解出 a 和 截矩 w0 的值，进而得到超平面的表达式。
 
 ![](../assets/basics/example1.2 of svm.jpg)
 
-+ a 求出来后，代入（a，2a）得到的就是 support vector
-+ a 和 w0 代入超平面的方程就是 support vector machine
++ a 求出来后，代入（a，2a），得到的**w就是 support vector**
++ a 和 w0 代入，得到的**超平面的方程就是 support vector machine**
 
 # 朴素贝叶斯
 
@@ -146,7 +146,7 @@ kmeans。想要将一组数据，分为三类，粉色数值大，黄色数值�
 
 # adaboost
 
-adaboost 是 boosting 的方法之一。boosting就是把若干个分类效果并不好的分类器综合起来考虑，会得到一个效果比较好的分类器。下图，左右两个决策树，单个看是效果不怎么好的，但是把同样的数据投入进去，把两个结果加起来考虑，就会增加可信度
+adaboost 是 boosting 的方法之一。boosting就是把**若干个分类效果并不好的分类器**综合起来考虑，会得到一个效果比较好的分类器。下图，左右两个决策树，单个看是效果不怎么好的，但是把同样的数据投入进去，把两个结果加起来考虑，就会增加可信度
 
 ![](../assets/basics/adaboost1.jpg)
 
@@ -184,7 +184,7 @@ input 输入到网络中，被激活，计算的分数被传递到下一层，�
 
 # 马尔可夫
 
-Markov Chains 由 state 和 transitions 组成
+Markov Chains 由** state **和 **transitions** 组成
 
 栗子，根据这一句话 ‘the quick brown fox jumps over the lazy dog’，要得到 markov chain
 
