@@ -12,6 +12,7 @@ url: http://daiwk.github.io
 domain: daiwk.github.io
 all_categories: [
 ["nlp", "nlp","/posts/nlp.html"], 
+["rl", "强化学习","/posts/rl.html"],
 ["read", "读书笔记","/posts/read.html"], 
 ["other", "杂记","/posts/other.html"],
 ["tools", "实用工具", "/posts/tools.html"],
