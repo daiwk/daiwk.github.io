@@ -1,10 +1,9 @@
 ---
 layout: post
 category: "rl"
-title: "crf++用法"
+title: "强化学习概述"
 tags: [nlp, natural language processing, crfpp, crf++]
 ---
-
 
 from [机器之心翻译](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719294&idx=1&sn=f1a01cd6710e6ea9629619cd3324d102&chksm=871b0040b06c895642ff961a6fe81f05c5e9776aff5da4845f2d3d874f88213863afd2059833&mpshare=1&scene=1&srcid=1002mDtDsEDixxCswQJOs2rH&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)
 
