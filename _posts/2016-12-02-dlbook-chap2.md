@@ -24,4 +24,5 @@ tags: [deep learning book,]
 \end{bmatrix}
 \]`
 
-+ matrices：矩阵,
++ matrices：矩阵，一个2-D的数组。用大写斜体加粗表示`\(\boldsymbol{A}\in \mathbb{R}^{m\times n}\)`：
++ tensors：张量：0维==>标量；1维==>向量；2维==>矩阵；可以更多维`\(\boldsymbol{A_{i,j,k}}\in \mathbb{R}^{i\times j\times k}\)`：。
