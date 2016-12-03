@@ -11,3 +11,17 @@ tags: [deep learning book,]
 + [https://github.com/ExtremeMart/DeepLearningBook-ReadingNotes](https://github.com/ExtremeMart/DeepLearningBook-ReadingNotes)
 + [https://github.com/ExtremeMart/DeepLearningBook-CN](https://github.com/ExtremeMart/DeepLearningBook-CN)
 
+# 2.1 Scalars, Vectors, Matrices and Tensors
+
++ Scalars：标量，一个单独的数字。用斜体小写字母表示`\(a,n,x\)`
++ vectors：向量，一个1-D的数组。用小写斜体加粗表示`\(\boldsymbol{x}\in \mathbb{R}^n\)`：
+
+`\[
+\boldsymbol{x} = \begin{bmatrix}x_1
+\\ x_2
+\\ ...
+\\ x_n
+\end{bmatrix}
+\]`
+
++ matrices：矩阵,
