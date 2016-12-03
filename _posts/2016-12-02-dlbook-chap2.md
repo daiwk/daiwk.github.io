@@ -27,3 +27,13 @@ tags: [deep learning book,]
 + matrices：矩阵，一个2-D的数组。用大写斜体加粗表示`\(\boldsymbol{A}\in \mathbb{R}^{m\times n}\)`：
 + tensors：张量：0维==>标量；1维==>向量；2维==>矩阵；可以更多维(用加粗大写非斜体表示)`\(\mathbf{A}\in \mathbb{R}^{i\times j\times k}\)`。
 
+## 2.1.1 矩阵转置
+
+矩阵转置，简单理解就是将矩阵沿着主对角线做一次镜像：`\((\boldsymbol{A}^T)_{i,j}=\boldsymbol{A}_{j,i}\)`
+
+![](../assets/deeplearningbook/chap2/matrix_transpose.jpg)
+
+`\[
+(\boldsymbol{A}\boldsymbol{B})^T=\boldsymbol{B}^T\boldsymbol{A}^T
+\]`
+
