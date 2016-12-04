@@ -12,6 +12,7 @@ tags: [deep learning book,]
 + [https://github.com/ExtremeMart/DeepLearningBook-CN](https://github.com/ExtremeMart/DeepLearningBook-CN)
 
 几个问题：
+
 + 1.什么是熵，熵代表什么意义
 + 2.熵与KL散度有什么关系
 + 3.KL散度代表什么意义，为什么是不对称的

@@ -96,6 +96,16 @@ tags: [deep learning book,]
 
 # 2.3 Identity and Inverse Matrices
 
+单位矩阵：主对角线全1，其他元素全0的矩阵。单位矩阵和任何向量相乘，结果都是该向量本身。即，`\(\boldsymbol{I}_n\in \mathbb{R}_{n\times n}\)`，有：
+
+`\[
+\forall \boldsymbol{x}\in \mathbb{R}_{n},\ \boldsymbol{I}_n\boldsymbol{x}=\boldsymbol{x}
+\]`
+
+矩阵的逆：`\(\boldsymbol{A}^{-1}\)`满足：`\(\boldsymbol{A}^{-1}\boldsymbol{A}=\boldsymbol{I}_n\)`
+
+所以可以对方程组进行求解：`\(\boldsymbol{x}=\boldsymbol{A}^-1\boldsymbol{b}\)`
+
 # 2.4 Linear Dependence and Span
 
 # 2.5 Norms
