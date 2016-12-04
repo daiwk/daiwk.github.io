@@ -91,7 +91,7 @@ tags: [deep learning book,]
 \\\boldsymbol{A}_{1,:}\boldsymbol{x}=\boldsymbol{A}_{1,1}x_1+\boldsymbol{A}_{1,2}x_2+...+\boldsymbol{A}_{1,n}x_n=b1
 \\\boldsymbol{A}_{2,:}\boldsymbol{x}=\boldsymbol{A}_{2,1}x_1+\boldsymbol{A}_{2,2}x_2+...+\boldsymbol{A}_{2,n}x_n=b2
 \\...
-\\\boldsymbol{A}_{m,:}\boldsymbol{x}=\boldsymbol{A}_{m,1}x_1+\boldsymbol{A}_{m,2}x_2+...+\boldsymbol{A}_{m,n}x_n=b2
+\\\boldsymbol{A}_{m,:}\boldsymbol{x}=\boldsymbol{A}_{m,1}x_1+\boldsymbol{A}_{m,2}x_2+...+\boldsymbol{A}_{m,n}x_n=bm
 \]`
 
 # 2.3 Identity and Inverse Matrices
@@ -110,9 +110,17 @@ tags: [deep learning book,]
 
 线性方程组的解只有以下三种情况：
 
-+ 无解：
-+ 有无穷多的解【`\(\boldsymbol{x}\)`和`\(\boldsymbol{y}\)`都是解，那么`\(\boldsymbol{z}=\alpha \boldsymbol{x}+(1-\alpha )\boldsymbol{y}\)`也是解】
++ 无解
++ 有无穷多的解：`\(\boldsymbol{x}\)`和`\(\boldsymbol{y}\)`都是解，那么`\(\boldsymbol{z}=\alpha \boldsymbol{x}+(1-\alpha )\boldsymbol{y}\)`也是解
 + 只有一个解
+
+为了分析方程组有多少个解，我们可以从这个角度来理解线性方程组：我们从m维零向量出发，经过`\(\boldsymbol{A}\)`的n个方向的变换，最终到达m维目标向量`\(\boldsymbol{b}\)`所在的位置。那么，`\(x_i\)`就表示在这n个方向上，我分别走了多少步。
+
+`\[
+\boldsymbol{A}\boldsymbol{x}=\sum _i x_i\boldsymbol{A}_{:,i}
+\]`
+
+上面的式子表示，n个m维向量相加，得到一个m维向量这种操作称为线性组合（linear combination）。n个向量`\({\boldsymbol{v}^{(1)},...,\boldsymbol{v}^{(n)}}\)`的线性组合，指的就是每一个向量`\(\boldsymbol{v}^{(i)}\)`都乘以一个系数，并进行累加得到`\(\sum _ic_i\boldsymbol{v}^{(i)}\)`。
 
 # 2.5 Norms
 
