@@ -108,6 +108,12 @@ tags: [deep learning book,]
 
 # 2.4 Linear Dependence and Span
 
+线性方程组的解只有以下三种情况：
+
++ 无解：
++ 有无穷多的解【`\(\boldsymbol{x}\)`和`\(\boldsymbol{y}\)`都是解，那么`\(\boldsymbol{z}=\alpha \boldsymbol{x}+(1-\alpha )\boldsymbol{y}\)`也是解】
++ 只有一个解
+
 # 2.5 Norms
 
 # 2.6 Special Kinds of Matrices and Vectors
