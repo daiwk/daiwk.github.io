@@ -104,4 +104,4 @@ f(x(w0sn,y(w0sn))) =
 1, x(w0sn)=true\ and\ y(w0sn) = pnb \\
 0, else \\
 \end{cases}
-\\]`
+\]`
