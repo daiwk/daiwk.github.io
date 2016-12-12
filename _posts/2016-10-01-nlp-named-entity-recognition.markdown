@@ -99,7 +99,7 @@ x(w+-ib):当前词左右两边第i个词（i=1,2）是否为指界词，是：Tr
 也可以组合特征：
 
 `\[
-f(x(w0sn,y(w0sn))) = 
+f(x(w0sn),y(w0sn)) = 
 \begin{cases}
 1, x(w0sn)=true\ and\ y(w0sn) = pnb \\
 0, else \\
