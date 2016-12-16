@@ -1,4 +1,4 @@
----
+sh---
 layout: post
 toc: true
 category: "other"
@@ -125,7 +125,12 @@ daiwk整理: [deep reinforcement learning](http://pan.baidu.com/s/1mim7A2G)；[d
 
 ### 4.2.1 image2txt
 
-1. **img2txt**：[google博文链接](https://research.googleblog.com/2016/09/show-and-tell-image-captioning-open.html)；[论文链接](http://arxiv.org/abs/1609.06647)；[代码链接（tensorflow/img2txt）](https://github.com/tensorflow/models/tree/master/im2txt)
+1. **img2txt**：
+[google博文链接](https://research.googleblog.com/2016/09/show-and-tell-image-captioning-open.html)；[论文链接](http://arxiv.org/abs/1609.06647)；[代码链接（tensorflow/img2txt）](https://github.com/tensorflow/models/tree/master/im2txt)
+
+2. **karpathy**:[https://github.com/karpathy/neuraltalk](https://github.com/karpathy/neuraltalk)
+
+[https://github.com/karpathy/neuraltalk2](https://github.com/karpathy/neuraltalk2)
 
 ## 4.3 Collections
 
