@@ -11,12 +11,17 @@ name: "daiwk-github博客"
 url: http://daiwk.github.io
 domain: daiwk.github.io
 all_categories: [
-["nlp", "nlp","/posts/nlp.html"], 
+["links", "常用链接", "/posts/links.html"],
+["knowledge", "基础知识", "/posts/knowledge.html"],
+["platform", "常用平台", "/posts/platform.html"],
+["ml", "机器学习","/posts/ml.html"], 
+["dl", "深度学习","/posts/dl.html"],
 ["rl", "强化学习","/posts/rl.html"],
-["read", "读书笔记","/posts/read.html"], 
+["cv", "图像处理","/posts/cv.html"], 
+["nlp", "自然语言处理","/posts/nlp.html"], 
+["audio", "语音处理","/posts/audio.html"], 
+["nlp", "视频处理","/posts/video.html"], 
 ["other", "杂记","/posts/other.html"],
-["tools", "实用工具", "/posts/tools.html"],
-["tools", "deep learning book", "/posts/dlbook.html"],
 ["about", "关于","/about.html"]
 ]
 
