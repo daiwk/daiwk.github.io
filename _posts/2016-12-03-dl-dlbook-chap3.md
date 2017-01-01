@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "dlbook"
+category: "dl"
 title: "deep learning book-第3章 Probability and Information Theory"
 tags: [deep learning book,]
 ---

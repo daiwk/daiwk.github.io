@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "nlp"
+category: "platform"
 title: "paddlepaddle layers"
 tags: [paddlepaddle, layers]
 ---

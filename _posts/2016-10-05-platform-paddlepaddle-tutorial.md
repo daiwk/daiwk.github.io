@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "tools"
+category: "platform"
 title: "paddlepaddle快速入门教程"
 tags: [paddlepaddle,]
 ---

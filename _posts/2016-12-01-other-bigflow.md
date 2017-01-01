@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "tools"
+category: "other"
 title: "bigflow的坑们"
 tags: [bigflow,]
 ---

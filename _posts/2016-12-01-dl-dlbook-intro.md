@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "dlbook"
+category: "dl"
 title: "deep learning book-概览"
 tags: [deep learning book,]
 ---

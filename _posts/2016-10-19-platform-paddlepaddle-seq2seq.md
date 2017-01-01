@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "nlp"
+category: "platform"
 title: "paddlepaddle中的seq2seq的demo"
 tags: [nlp, natural language processing, seq2seq, seqToseq, paddlepaddle]
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "dlbook"
+category: "dl"
 title: "deep learning book-第4章 Numerical Computation"
 tags: [deep learning book,]
 ---

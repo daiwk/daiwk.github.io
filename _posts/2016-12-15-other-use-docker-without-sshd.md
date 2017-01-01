@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "read"
+category: "other"
 title: "在docker中不要使用sshd"
 tags: [docker, ssh]
 ---

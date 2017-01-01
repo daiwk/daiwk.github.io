@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "dlbook"
+category: "dl"
 title: "deep learning book-第5章 Machine Learning Basics"
 tags: [deep learning book,]
 ---

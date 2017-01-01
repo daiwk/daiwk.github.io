@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "tools"
+category: "platform"
 title: "老Paddle使用整理"
 tags: [老paddle,]
 ---

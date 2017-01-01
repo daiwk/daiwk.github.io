@@ -1,7 +1,7 @@
 ---
 layout: post
 toc: true
-category: "other"
+category: "links"
 title: "Useful Links"
 tags: [useful links,]
 ---

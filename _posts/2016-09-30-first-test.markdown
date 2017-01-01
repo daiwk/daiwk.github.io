@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "read"
+category: "other"
 title: "basic usage"
 tags: [basic usage]
 ---

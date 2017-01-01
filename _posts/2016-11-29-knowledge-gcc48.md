@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "read"
+category: "knowledge"
 title: "神奇的gcc48"
 tags: [gcc48]
 ---

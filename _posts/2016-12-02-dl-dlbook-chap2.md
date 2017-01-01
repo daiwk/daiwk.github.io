@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "dlbook"
+category: "dl"
 title: "deep learning book-第2章 Linear Algebra"
 tags: [deep learning book,]
 ---
