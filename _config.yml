@@ -20,7 +20,7 @@ all_categories: [
 ["cv", "图像处理","/posts/cv.html"], 
 ["nlp", "自然语言处理","/posts/nlp.html"], 
 ["audio", "语音处理","/posts/audio.html"], 
-["nlp", "视频处理","/posts/video.html"], 
+["video", "视频处理","/posts/video.html"], 
 ["other", "杂记","/posts/other.html"],
 ["about", "关于","/about.html"]
 ]

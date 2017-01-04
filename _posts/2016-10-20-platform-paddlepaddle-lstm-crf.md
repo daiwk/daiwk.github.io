@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "plaform"
+category: "platform"
 title: "paddlepaddle上的lstm crf做序列标注"
 tags: [nlp, natural language processing, lstm crf, lstm, crf]
 ---
