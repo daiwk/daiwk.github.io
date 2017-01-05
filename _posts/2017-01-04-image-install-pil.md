@@ -23,3 +23,35 @@ flag during linking and do at least one of the following:
 See any operating system documentation about shared libraries for
 more information, such as the ld(1) and ld.so(8) manual pages.
 ```
+
+```
+echo "/home/data/mylib/lib/" >> /etc/ld.so.conf
+
+ldconfig
+
+cd Imaging-....
+
+python setup.py build_ext -f # force
+
+cp ./build/lib.linux-x86_64-2.7/*.so ./PIL
+
+python selftest.py
+
+[root@cp01-daiwk-docker-test1 Imaging-1.1.7]# python selftest.py
+--------------------------------------------------------------------
+PIL 1.1.7 TEST SUMMARY 
+--------------------------------------------------------------------
+Python modules loaded from ./PIL
+Binary modules loaded from ./PIL
+--------------------------------------------------------------------
+--- PIL CORE support ok
+*** TKINTER support not installed
+--- JPEG support ok
+--- ZLIB (PNG/ZIP) support ok
+--- FREETYPE2 support ok
+*** LITTLECMS support not installed
+--------------------------------------------------------------------
+Running selftest:
+--- 57 tests passed.
+
+```
