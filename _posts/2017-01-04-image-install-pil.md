@@ -5,6 +5,10 @@ title: "安装PIL"
 tags: [paddlepaddle, 集群]
 ---
 
+img-qa:
+
+[http://idl.baidu.com/FM-IQA.html](http://idl.baidu.com/FM-IQA.html)
+
 ```
 Libraries have been installed in:
    /home/data/mylib/lib
