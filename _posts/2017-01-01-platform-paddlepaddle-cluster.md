@@ -10,13 +10,10 @@ tags: [paddlepaddle, 集群]
 参考
 [http://deeplearning.baidu.com/doc/local_compile.html](http://deeplearning.baidu.com/doc/local_compile.html)
 
-```
+```shell
 git clone http://gitlab.baidu.com/idl-dl/paddle_internal_release_tools.git
-
 cd paddle_internal_release_tools/idl/paddle/ && sh build.sh [cpu|gpu] [rdma|nonrdma]
-
 source ~/.bashrc
-
 paddle 
 
 ```
@@ -53,7 +50,6 @@ pip install poster
 ```
 
 deploy.sh 安装脚本将客户端程序安装到./output 目录，它通过修改~/.bashrc达到安装目的。
-
 
 通过
 
@@ -139,11 +135,13 @@ l_thirdparty_dir 指 $ROOT_WORKSPACE_ROOT/thirdparty/thirdparty
 
 l_workspace_dir 指 $ROOT_WORKSPACE_ROOT/
 
-然后跑：
+然后就可以运行了，下面举两个例子：
 
 ### sequence_tagging:
 
-```python
+run.sh中：
+
+```shell
 ## run.sh
 cp ./*.py ./thirdparty
 
@@ -164,7 +162,11 @@ paddle cluster_train \
            --where nmg01-idl-dl-cpu-10G_cluster \
            --thirdparty ./thirdparty \
            --job_name daiwenkai_paddle_cluster_demo_v5
+```
 
+复制一个网络结构的py为cluster_conf_dwk.py,并进行如下修改：
+
+```python
 ## cluster_conf_dwk.py:
 ###新增:
 cluster_config(
@@ -178,8 +180,11 @@ define_py_data_sources2(
     test_list="./test.list",
     module="dataprovider",
     obj="process")
+```
 
-## 修改before_hook.sh中的private_script函数：
+修改before_hook.sh中的private_script函数：
+
+```
 function private_script()
 {
   local l_thirdparty_dir=$1
@@ -190,8 +195,11 @@ function private_script()
   cp $l_thirdparty_dir/*.py $l_workspace_dir/
 
 }
+```
 
-## 集群目录结构：
+集群目录结构如下：
+
+```shell
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/sequence_tagging/test/test.txt.gz
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/sequence_tagging/train/train.txt.gz
 ```
@@ -207,10 +215,9 @@ cp -rf $python_path/lib/python2.7/site-packages/PIL ./thirdparty
 
 ```
 
-然后
+然后run.sh
 
-```python
-
+```shell
 ## run.sh
 cp ./*.py ./thirdparty
 
@@ -234,7 +241,11 @@ paddle cluster_train \
            --thirdparty ./thirdparty \
            --job_name daiwenkai_paddle_cluster_demo_image_classificatoin
 
-## cluster_conf_dwk.py:
+```
+
+复制一份cluster.vgg_16_cifar.py
+
+```python
 ###新增:
 cluster_config(
         fs_name="hdfs://nmg01-mulan-hdfs.dmop.baidu.com:54310",
@@ -246,7 +257,11 @@ cluster_config(
 ###修改：
 meta_path = "./train_data_dir/image_classification/train_meta"
 
+```
 
+由于集群上workspace生成的train.list与本地不一样，所以我们还要直接修改image_provider.py专供集群使用
+
+```python
 ## image_provider.py
 ###修改：
 @provider(init_hook=hook, min_pool_size=0)
@@ -281,7 +296,11 @@ def processData(settings, file_list):
             label = data['labels'][i]
             yield img_feat.astype('float32'), int(label) 
 
-## 修改before_hook.sh中的private_script函数：
+```
+
+修改before_hook.sh中的private_script函数：
+
+```
 function private_script()
 {
   local l_thirdparty_dir=$1
@@ -294,16 +313,24 @@ function private_script()
   cp  $l_thirdparty_dir/lib* $l_workspace_dir/
 
 }
+```
 
-## 集群目录结构：
+集群目录结构：
+
+```shell
+
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/test/test_batch_00[0－9]
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/train/train_batch_0[0－49]
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/train_meta
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/test_meta
-###其中，*batch*和*meta都是
+
+```
+
+其中，xxxbatchxxx和xxxmeta都是通过如下方法得到的
+
+```
 cd data && sh download_cifar.sh
 cd - && sh preprocess.sh
-得到的
 
 ```
 
