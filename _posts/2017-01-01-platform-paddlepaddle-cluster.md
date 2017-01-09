@@ -43,7 +43,7 @@ faq:
 
 根据[http://deeplearning.baidu.com/doc/install.html](http://deeplearning.baidu.com/doc/install.html)来搞，
 
-```
+```shell
 wget http://deeplearning.baidu.com/resources/releases/platform2_client/paddle_platform_client_ff01840260d5a3607596a7e2b3cd4f705ff75e78.tgz 
 wget http://deeplearning.baidu.com/resources/releases/platform2_client/deploy.sh 
 
@@ -57,7 +57,7 @@ deploy.sh 安装脚本将客户端程序安装到./output 目录，它通过修�
 
 通过
 
-```
+```shell
 rm ./output -fr
 ```
 
@@ -70,7 +70,7 @@ rm ./output -fr
 一般每个receiver都会保存一组默认的paddle镜像 (获取Receiver后端Paddle核心版本的方法详见[客户端教程FAQ](http://deeplearning.baidu.com/doc/client_tutorial.html) )，支持各种异构mpi集群的运行时环境，最新的receiver支持调度当前所有的mpi异构集群。
 
 
-```
+```shell
 client_path=$(dirname `which cluster_train.sh`)
 
 ```
@@ -110,20 +110,20 @@ yq01-idl-gpu-offline14.yq01.baidu.com:9399
 因为远端的集群中的paddle是最新的稳定版，如果需要使用trunk版本编译出来的paddle的新特性（如define_by_data_sources2,pyxxxx2之类的），需要额外地往thirdparty中放一个private的paddle进去。参考
 [http://deeplearning.baidu.com/doc/build_private_paddle.html](http://deeplearning.baidu.com/doc/build_private_paddle.html)
 
-```
+```shell
 git clone http://gitlab.baidu.com/idl-dl/platform2.git 
 cd platform2/tools && sh build_private_paddle.sh cpu nonrdma
 ```
 
 在当前目录下建一个thirdparty目录(记为$thirdparty_dir)
 
-```
+```shell
 cp -rf private_output/* $thirdparty_dir
 ```
 
 修改$thirdparty_dir/before_hook.sh
 
-```
+```shell
 function private_script()
 {
   local l_thirdparty_dir=$1
@@ -136,13 +136,14 @@ function private_script()
 
 其中，
 l_thirdparty_dir 指 $ROOT_WORKSPACE_ROOT/thirdparty/thirdparty
+
 l_workspace_dir 指 $ROOT_WORKSPACE_ROOT/
 
 然后跑：
 
 ### sequence_tagging:
 
-```
+```python
 ## run.sh
 cp ./*.py ./thirdparty
 
@@ -199,17 +200,16 @@ function private_script()
 
 首先要[安装PIL](https://daiwk.github.io/posts/image-install-pil.html)(写一半，完善中)，装完后
 
-```
+```shell
 lib_dir=/home/data/mylib/
 cp -rf $lib_dir/lib/lib* ./thirdparty
 cp -rf $python_path/lib/python2.7/site-packages/PIL ./thirdparty 
-``
 
 ```
 
 然后
 
-```
+```python
 
 ## run.sh
 cp ./*.py ./thirdparty
@@ -309,7 +309,7 @@ cd - && sh preprocess.sh
 
 ##　注意
 
-```
+```shell
 #ecom的队列：
 nmg01-hpc-off-dmop-cpu-10G_cluster # fcr队列, time_limit<=00:30:00
 nmg01-hpc-off-dmop-slow-cpu-10G_cluster # fcr-slow队列, time_limit<=99:59:59
