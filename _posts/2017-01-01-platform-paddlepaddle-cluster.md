@@ -67,7 +67,7 @@ rm ./output -fr
 
 客户端会将用户集群训练转发到一个receiver服务器，由receiver服务器分析用户训练配置、准备Paddle二进制镜像、最终将任务提交到物理mpi集群。
 
-一般每个receiver都会保存一组默认的paddle镜像 ( **获取Receiver后端Paddle核心版本的方法详见[客户端教程FAQ](http://deeplearning.baidu.com/doc/client_tutorial.html) )，支持各种异构mpi集群的运行时环境，最新的receiver支持调度当前所有的mpi异构集群。
+一般每个receiver都会保存一组默认的paddle镜像 (获取Receiver后端Paddle核心版本的方法详见[客户端教程FAQ](http://deeplearning.baidu.com/doc/client_tutorial.html) )，支持各种异构mpi集群的运行时环境，最新的receiver支持调度当前所有的mpi异构集群。
 
 
 ```
