@@ -15,10 +15,9 @@ git clone http://gitlab.baidu.com/idl-dl/paddle_internal_release_tools.git
 cd paddle_internal_release_tools/idl/paddle/ && sh build.sh [cpu|gpu] [rdma|nonrdma]
 source ~/.bashrc
 paddle 
-
 ```
 
-注意：
+### 注意：
 
 + 机器如果能访问github，脚本会自动下载Paddle源码库；机器如果不能访问github，脚本会提示手动下载Paddle源码，并替换Paddle目录。
 + 无需设置安装目录，默认将安装到编译目录下的output目录并导出到环境变量~/.bashrc中，无需sudo权限。
@@ -27,7 +26,7 @@ paddle
 + 编译前可能需要下载COAMKE2工具链，会提示输入svn密码
 + 整体安装脚本将尽量做到不依赖当前系统第三方库，全部采用闭包形式解决编译和安装问题。
 
-faq:
+### faq:
 
 + 如何使用Paddle稳定分之进行编译？
 [一键编译工具准备源码阶段 采用Submodule的方式引用Paddle开源库，因此只要修改脚本使得在正式编译前， 用git checkout -b $BRANCH， 然后再执行sh build.sh 即可。]
@@ -43,9 +42,7 @@ faq:
 ```shell
 wget http://deeplearning.baidu.com/resources/releases/platform2_client/paddle_platform_client_ff01840260d5a3607596a7e2b3cd4f705ff75e78.tgz 
 wget http://deeplearning.baidu.com/resources/releases/platform2_client/deploy.sh 
-
 sh deploy.sh paddle_platform_client_ff01840260d5a3607596a7e2b3cd4f705ff75e78.tgz ./output
-
 pip install poster
 ```
 
@@ -65,20 +62,15 @@ rm ./output -fr
 
 一般每个receiver都会保存一组默认的paddle镜像 (获取Receiver后端Paddle核心版本的方法详见[客户端教程FAQ](http://deeplearning.baidu.com/doc/client_tutorial.html) )，支持各种异构mpi集群的运行时环境，最新的receiver支持调度当前所有的mpi异构集群。
 
-
 ```shell
 client_path=$(dirname `which cluster_train.sh`)
-
 ```
 
-将$client_path/local_config.py替换为最新的：
-
-以
+将$client_path/local_config.py替换为最新的：【以
 [http://deeplearning.baidu.com/doc/build_private_paddle.html](http://deeplearning.baidu.com/doc/build_private_paddle.html)
-为准。
+为准。】
 
-
-```
+```shell
 yq01-idl-gpu-offline14.yq01.baidu.com:9290
 yq01-idl-gpu-offline14.yq01.baidu.com:9291
 yq01-idl-gpu-offline14.yq01.baidu.com:9292
@@ -184,7 +176,7 @@ define_py_data_sources2(
 
 修改before_hook.sh中的private_script函数：
 
-```
+```shell
 function private_script()
 {
   local l_thirdparty_dir=$1
@@ -300,7 +292,7 @@ def processData(settings, file_list):
 
 修改before_hook.sh中的private_script函数：
 
-```
+```shell
 function private_script()
 {
   local l_thirdparty_dir=$1
@@ -318,7 +310,6 @@ function private_script()
 集群目录结构：
 
 ```shell
-
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/test/test_batch_00[0－9]
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/train/train_batch_0[0－49]
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/train_meta
@@ -328,10 +319,9 @@ function private_script()
 
 其中，xxxbatchxxx和xxxmeta都是通过如下方法得到的
 
-```
+```shell
 cd data && sh download_cifar.sh
 cd - && sh preprocess.sh
-
 ```
 
 ##　注意
@@ -343,5 +333,4 @@ nmg01-hpc-off-dmop-slow-cpu-10G_cluster # fcr-slow队列, time_limit<=99:59:59
 
 #idl的队列：
 nmg01-idl-dl-cpu-10G_cluster
-
 ```
