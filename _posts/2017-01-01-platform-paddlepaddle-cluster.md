@@ -306,3 +306,15 @@ cd - && sh preprocess.sh
 得到的
 
 ```
+
+##　注意
+
+```
+#ecom的队列：
+nmg01-hpc-off-dmop-cpu-10G_cluster # fcr队列, time_limit<=00:30:00
+nmg01-hpc-off-dmop-slow-cpu-10G_cluster # fcr-slow队列, time_limit<=99:59:59
+
+#idl的队列：
+nmg01-idl-dl-cpu-10G_cluster
+
+```
