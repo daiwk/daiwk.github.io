@@ -77,10 +77,10 @@ client_path=$(dirname `which cluster_train.sh`)
 
 将$client_path/local_config.py替换为最新的：
 
-**以
+以
 [http://deeplearning.baidu.com/doc/build_private_paddle.html](http://deeplearning.baidu.com/doc/build_private_paddle.html)
 为准。
-**
+
 
 ```
 yq01-idl-gpu-offline14.yq01.baidu.com:9290
