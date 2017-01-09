@@ -248,7 +248,6 @@ cluster_config(
         )    
 ###修改：
 meta_path = "./train_data_dir/image_classification/train_meta"
-
 ```
 
 由于集群上workspace生成的train.list与本地不一样，所以我们还要直接修改image_provider.py专供集群使用
@@ -314,7 +313,6 @@ function private_script()
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/train/train_batch_0[0－49]
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/train_meta
 /app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/test_meta
-
 ```
 
 其中，xxxbatchxxx和xxxmeta都是通过如下方法得到的
@@ -324,7 +322,7 @@ cd data && sh download_cifar.sh
 cd - && sh preprocess.sh
 ```
 
-##　注意
+###　注意
 
 ```shell
 #ecom的队列：
