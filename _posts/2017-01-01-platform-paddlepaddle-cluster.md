@@ -139,7 +139,7 @@ cp ./*.py ./thirdparty
 
 source ~/.bashrc
 
-####因为字典比较特殊，所以只能用一个num_nodes,而这样会爆内存……所以得改代码……
+####因为字典比较特殊，所以只能用一个num_nodes,而这样会爆内存……所以得改代码…(徐老师说：“这种情况需要事先构建好字典，然后data provider加载”，所以，就需要参考seq2seq的demo去慢慢改了……)
 paddle cluster_train \
            --config cluster_conf_dwk.py \
            --time_limit 00:30:00 \
