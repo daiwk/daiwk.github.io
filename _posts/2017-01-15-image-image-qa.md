@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "image"
-title: "安装PIL"
-tags: [paddlepaddle, 集群]
+title: "image-qa"
+tags: [mqa, image-qa, 图片问答]
 ---
 
 img-qa:

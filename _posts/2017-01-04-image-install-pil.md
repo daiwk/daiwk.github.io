@@ -2,7 +2,7 @@
 layout: post
 category: "image"
 title: "安装PIL"
-tags: [paddlepaddle, 集群]
+tags: [PIL, jpeg, zlib]
 ---
 
 
@@ -72,7 +72,7 @@ ldconfig
 export LD_LIBRARY_PATH=/home/work/.jumbo/lib/:/home/work/mylib/lib:$LD_LIBRARY_PATH
 ```
 
-### 2. 安装imaging
+### 2. 安装PIL
 
 首先，下载安装包并解压
 
