@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "image"
+category: "cv"
 title: "image-qa"
 tags: [mqa, image-qa, 图片问答]
 ---

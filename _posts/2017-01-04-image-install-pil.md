@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "image"
+category: "cv"
 title: "安装PIL"
 tags: [PIL, jpeg, zlib]
 ---
