@@ -5,9 +5,17 @@ title: "image-qa"
 tags: [mqa, image-qa, 图片问答]
 ---
 
-img-qa:
-
+项目主页：
 [http://idl.baidu.com/FM-IQA.html](http://idl.baidu.com/FM-IQA.html)
+
+## 摘要
+
+```
+In this paper, we present the mQA model, which is able to answer questions about the content of an image. The answer can be a sentence, a phrase or a single word.
+Our model contains four components: a Long Short-Term Memory (LSTM) to extract the question representation, a Convolutional Neural Network (CNN) to extract the visual representation, an LSTM for storing the linguistic context in an answer, and a fusing component to combine the information from the first three
+components and generate the answer.
+```
+
 
 ## 下载MSCOCO数据
 
