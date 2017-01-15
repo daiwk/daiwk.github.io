@@ -10,9 +10,11 @@ tags: [paddlepaddle, 集群]
 参考
 [http://deeplearning.baidu.com/doc/local_compile.html](http://deeplearning.baidu.com/doc/local_compile.html)
 
+如果是度厂内部的机器，记得先装jumbo，然后jumbo装cmake\swig
+
 ```shell
 git clone http://gitlab.baidu.com/idl-dl/paddle_internal_release_tools.git
-cd paddle_internal_release_tools/idl/paddle/ && sh build.sh [cpu|gpu] [rdma|nonrdma]
+cd paddle_internal_release_tools/idl/paddle/ && sh build.sh [cpu|gpu] [rdma|nonrdma] #因为要输入svn密码，所以建议不要nohup
 source ~/.bashrc
 paddle 
 ```
@@ -128,6 +130,8 @@ l_thirdparty_dir 指 $ROOT_WORKSPACE_ROOT/thirdparty/thirdparty
 l_workspace_dir 指 $ROOT_WORKSPACE_ROOT/
 
 然后就可以运行了，下面举两个例子：
+
+## 4. 使用示例
 
 ### sequence_tagging:
 
