@@ -105,7 +105,7 @@ git clone http://gitlab.baidu.com/idl-dl/platform2.git
 cd platform2/tools && sh build_private_paddle.sh cpu nonrdma
 ```
 
-在当前目录下建一个thirdparty目录(记为$thirdparty_dir)
+在工作目录下建一个thirdparty目录(记为$thirdparty_dir)
 
 ```shell
 cp -rf private_output/* $thirdparty_dir
