@@ -8,7 +8,7 @@ tags: [mqa, image-qa, 图片问答]
 项目主页：
 [http://idl.baidu.com/FM-IQA.html](http://idl.baidu.com/FM-IQA.html)
 
-## 摘要
+## 1. 摘要
 
 ```
 In this paper, we present the mQA model, which is able to answer questions about the content of an image. The answer can be a sentence, a phrase or a single word.
@@ -16,8 +16,9 @@ Our model contains four components: a Long Short-Term Memory (LSTM) to extract t
 components and generate the answer.
 ```
 
+## 2. 数据准备
 
-## 下载MSCOCO数据
+### 2.1 下载MSCOCO数据
 
 ```
 #!/bin/bash
@@ -86,15 +87,30 @@ download_mscoco
 unzip_data
 ```
 
-## 下载图片－q/a的标注数据集
+### 2.2 下载图片－q/a的标注数据集
 
-### 英文qa:
+#### 2.2.1 英文qa:
 
 下载地址为[http://pan.baidu.com/s/1qXh68w8](http://pan.baidu.com/s/1qXh68w8)
 
 数据schema:
 
-### 中文qa:
+### 2.2.2 中文qa:
 
 下载地址为[http://pan.baidu.com/s/1qXh68w8](http://pan.baidu.com/s/1qXh68w8)
 数据schema:
+
+## 3. 模型介绍
+
+![](../assets/image-qa/model-intro.jpg)
+
+### 3.1 LSTM(Q)
+
+### 3.1 CNN
+
+### 3.1 LSTM(A)
+
+### 3.4 fusing layer
+
+### 3.5 intermediate and softmax
+
