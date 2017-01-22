@@ -102,7 +102,7 @@ unzip_data
 
 ## 3. 模型介绍
 
-![](../assets/image-qa/model-intro.jpg)
+![](../assets/img-qa/model-intro.jpg)
 
 ### 3.1 LSTM(Q)
 
