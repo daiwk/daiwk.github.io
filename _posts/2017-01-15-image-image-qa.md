@@ -112,5 +112,9 @@ unzip_data
 
 ### 3.4 fusing layer
 
+`\[
+\mathbf{f}(t)=g(\mathbf{V}_{\mathbf{r}_{Q}}\mathbf{r}_Q+\mathbf{V}_{\mathbf{I}}\mathbf{I}+\mathbf{V}_{\mathbf{r}_{A}}\mathbf{r}_A(t)+\mathbf{V}_{\mathbf{w}}\mathbf{w}(t))
+\]`
+
 ### 3.5 intermediate and softmax
 
