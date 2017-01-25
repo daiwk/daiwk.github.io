@@ -10,6 +10,9 @@ tags: [mqa, image-qa, 图片问答]
 
 ## 1. 摘要
 
+本文模型取名为mQA(Multilingual Image Question Answering)，可以自动回答关于图片的问题。answer可以是一句话，一个短语或者是一个单词。主要包含了四部分：lstm-q(提取question representation), cnn(提取visual representation), lstm-a(提取answer的linguistic context), fusing component(结合上述三个模块的输出，生成answer)。数据集大小：15w图片以及他们对应　的31w的中文q-a对，以及他们对应的英文翻译。
+
+
 ```
 In this paper, we present the mQA model, which is able to answer questions about the content of an image. The answer can be a sentence, a phrase or a single word.
 Our model contains four components: a Long Short-Term Memory (LSTM) to extract the question representation, a Convolutional Neural Network (CNN) to extract the visual representation, an LSTM for storing the linguistic context in an answer, and a fusing component to combine the information from the first three
