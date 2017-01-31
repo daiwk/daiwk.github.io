@@ -69,6 +69,9 @@ tags: [mqa, image-qa, 图片问答]
 
 ## 模型概览
 
+![](../assets/img-qa/model-intro.jpg)
+
+
 图像识别领域大量的研究成果都是建立在[PASCAL VOC](http://host.robots.ox.ac.uk/pascal/VOC/)、[ImageNet](http://image-net.org/)等公开的数据集上，很多图像识别算法通常在这些数据集上进行测试和比较。PASCAL VOC是2005年发起的一个视觉挑战赛，ImageNet是2010年发起的大规模视觉识别竞赛(ILSVRC)的数据集，在本章中我们基于这些竞赛的一些论文介绍图像分类模型。
 
 在2012年之前的传统图像分类方法可以用背景描述中提到的三步完成，但通常完整建立图像识别模型一般包括底层特征学习、特征编码、空间约束、分类器设计、模型融合等几个阶段。
@@ -339,7 +342,22 @@ $$  lr = lr_{0} * a^ {\lfloor \frac{n}{ b}\rfloor} $$
 
 ### 模型结构
 
-本教程中我们提供了VGG和ResNet两个模型的配置。
+本教程中m-QA模型包含了LSTM(Q)、CNN、LSTM(A)、fusing layer以及intermediate and softmax层。
+
+#### 3.1 LSTM(Q)
+
+#### 3.1 CNN
+
+#### 3.1 LSTM(A)
+
+#### 3.4 fusing layer
+
+
+$$ \mathbf{f}(t)=g(\mathbf{V}_{\mathbf{r}_{Q}}\mathbf{r}_Q+\mathbf{V}_{\mathbf{I}}\mathbf{I}+\mathbf{V}_{\mathbf{r}_{A}}\mathbf{r}_A(t)+\mathbf{V}_{\mathbf{w}}\mathbf{w}(t))  $$
+
+#### 3.5 intermediate and softmax
+
+
 
 #### VGG
 
@@ -650,117 +668,6 @@ python classify.py --job=extract --model=output/pass-00299 --data=image/dog.png 
 
 
 
-Image-sentence retrieval.
-
-Generating novel sentence descriptions for images. 
-
-
-
-## 1. 摘要
-
-
-
-
-
-## 2. 数据准备
-
-### 2.1 下载MSCOCO数据
-
-```
-#!/bin/bash
-
-function download_mscoco()
-
-{
-mkdir data
-cd data
-
-# http://mscoco.org/dataset/#download
-#2014 Training images [80K/13GB]
-#2014 Val. images [40K/6.2GB]
-#2014 Testing images [40K/6.2GB]
-#2015 Testing images [80K/12.4G]
-wget http://msvocds.blob.core.windows.net/coco2014/train2014.zip
-wget http://msvocds.blob.core.windows.net/coco2014/val2014.zip
-wget http://msvocds.blob.core.windows.net/coco2014/test2014.zip
-wget http://msvocds.blob.core.windows.net/coco2015/test2015.zip
-
-
-#annotations
-#2014 Train/Val object instances [158MB]
-#2014 Train/Val person keypoints [70MB]
-#2014 Train/Val image captions [18.8MB]
-#2014 Testing Image info [0.74MB]
-#2015 Testing Image info [1.83MB]
-wget http://msvocds.blob.core.windows.net/annotations-1-0-3/instances_train-val2014.zip
-wget http://msvocds.blob.core.windows.net/annotations-1-0-3/person_keypoints_trainval2014.zip
-wget http://msvocds.blob.core.windows.net/annotations-1-0-3/captions_train-val2014.zip
-wget http://msvocds.blob.core.windows.net/annotations-1-0-4/image_info_test2014.zip
-wget http://msvocds.blob.core.windows.net/annotations-1-0-4/image_info_test2015.zip
-
-}
-
-function unzip_data()
-{
-cd data
-#2014 Training images [80K/13GB]
-#2014 Val. images [40K/6.2GB]
-#2014 Testing images [40K/6.2GB]
-#2015 Testing images [80K/12.4G]
-unzip train2014.zip
-unzip val2014.zip
-unzip test2014.zip
-unzip test2015.zip
-
-
-#annotations
-#2014 Train/Val object instances [158MB]
-#2014 Train/Val person keypoints [70MB]
-#2014 Train/Val image captions [18.8MB]
-#2014 Testing Image info [0.74MB]
-#2015 Testing Image info [1.83MB]
-unzip instances_train-val2014.zip
-unzip person_keypoints_trainval2014.zip
-unzip captions_train-val2014.zip
-unzip image_info_test2014.zip
-unzip image_info_test2015.zip
-
-
-
-}
-
-download_mscoco
-unzip_data
-```
-
-### 2.2 下载图片－q/a的标注数据集
-
-#### 2.2.1 英文qa:
-
-下载地址为[http://pan.baidu.com/s/1qXh68w8](http://pan.baidu.com/s/1qXh68w8)
-
-数据schema:
-
-### 2.2.2 中文qa:
-
-下载地址为[http://pan.baidu.com/s/1qXh68w8](http://pan.baidu.com/s/1qXh68w8)
-数据schema:
-
 ## 3. 模型介绍
 
-![](../assets/img-qa/model-intro.jpg)
-
-### 3.1 LSTM(Q)
-
-### 3.1 CNN
-
-### 3.1 LSTM(A)
-
-### 3.4 fusing layer
-
-`\[
-\mathbf{f}(t)=g(\mathbf{V}_{\mathbf{r}_{Q}}\mathbf{r}_Q+\mathbf{V}_{\mathbf{I}}\mathbf{I}+\mathbf{V}_{\mathbf{r}_{A}}\mathbf{r}_A(t)+\mathbf{V}_{\mathbf{w}}\mathbf{w}(t))
-\]`
-
-### 3.5 intermediate and softmax
 
