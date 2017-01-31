@@ -9,9 +9,6 @@ tags: [m-rnn]
 [http://www.stat.ucla.edu/~junhua.mao/m-RNN.html](http://www.stat.ucla.edu/~junhua.mao/m-RNN.html)
 
 
-## 摘要
-
-Mao J, Xu W, Yang Y, et al. [Deep captioning with multimodal recurrent neural networks (m-rnn)](https://arxiv.org/abs/1412.6632)[J]. arXiv preprint arXiv:1412.6632, 2014.
 
 目录：
 
@@ -40,16 +37,7 @@ Mao J, Xu W, Yang Y, et al. [Deep captioning with multimodal recurrent neural ne
 
 ## 背景介绍 
 
-图像相比文字能够提供更加生动、容易理解及更具艺术感的信息，是人们转递与交换信息的重要来源。在本教程中，我们专注于图像识别领域的一个重要问题，即图像分类。
-
-图像分类是根据图像的语义信息将不同类别图像区分开来，是计算机视觉中重要的基本问题，也是图像检测、图像分割、物体跟踪、行为分析等其他高层视觉任务的基础。图像分类在很多领域有广泛应用，包括安防领域的人脸识别和智能视频分析等，交通领域的交通场景识别，互联网领域基于内容的图像检索和相册自动归类，医学领域的图像识别等。
-
-
-一般来说，图像分类通过手工特征或特征学习方法对整个图像进行全部描述，然后使用分类器判别物体类别，因此如何提取图像的特征至关重要。在深度学习算法之前使用较多的是基于词袋(Bag of Words)模型的物体分类方法。词袋方法从自然语言处理中引入，即一句话可以用一个装了词的袋子表示其特征，袋子中的词为句子中的单词、短语或字。对于图像而言，词袋方法需要构建字典。最简单的词袋模型框架可以设计为**底层特征抽取**、**特征编码**、**分类器设计**三个过程。
-
-而基于深度学习的图像分类方法，可以通过有监督或无监督的方式**学习**层次化的特征描述，从而取代了手工设计或选择图像特征的工作。深度学习模型中的卷积神经网络(Convolution Neural Network, CNN)近年来在图像领域取得了惊人的成绩，CNN直接利用图像像素信息作为输入，最大程度上保留了输入图像的所有信息，通过卷积操作进行特征的提取和高层抽象，模型输出直接是图像识别的结果。这种基于"输入-输出"直接端到端的学习方法取得了非常好的效果，得到了广泛的应用。
-
-本教程主要介绍图像分类的深度学习模型，以及如何使用PaddlePaddle训练CNN模型。
+本教程主要介绍图像分类的深度学习模型，以及如何使用PaddlePaddle训练m-rnn模型。
 
 ## 效果展示
 
@@ -533,7 +521,7 @@ python classify.py --job=extract --model=output/pass-00299 --data=image/dog.png 
 
 ## 参考文献
 
-[1] D. G. Lowe, [Distinctive image features from scale-invariant keypoints](http://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf). IJCV, 60(2):91-110, 2004.
+[1] Mao J, Xu W, Yang Y, et al. [Deep captioning with multimodal recurrent neural networks (m-rnn)](https://arxiv.org/abs/1412.6632)[J]. arXiv preprint arXiv:1412.6632, 2014.
 
 [2] N. Dalal, B. Triggs, [Histograms of Oriented Gradients for Human Detection](http://vision.stanford.edu/teaching/cs231b_spring1213/papers/CVPR05_DalalTriggs.pdf), Proc. IEEE Conf. Computer Vision and Pattern Recognition, 2005.
 
