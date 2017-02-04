@@ -9,16 +9,14 @@ tags: [m-rnn]
 [http://www.stat.ucla.edu/~junhua.mao/m-RNN.html](http://www.stat.ucla.edu/~junhua.mao/m-RNN.html)
 
 
-
 目录：
 
 * [背景介绍](#背景介绍)
 * [效果展示](#效果展示)
 * [模型概览](#模型概览)
-   * [CNN](#cnn)
+   * [Alexnet](#alexnet)
    * [VGG](#vgg)
-   * [GoogleNet](#googlenet)
-   * [ResNet](#resnet)
+   * [mrnn](#mrnn)
 * [数据准备](#数据准备)
    * [数据介绍与下载](#数据介绍与下载)
    * [数据提供给PaddlePaddle](#数据提供给paddlepaddle)
@@ -26,8 +24,7 @@ tags: [m-rnn]
    * [数据定义](#数据定义)
    * [算法配置](#算法配置)
    * [模型结构](#模型结构)
-      * [VGG](#vgg-1)
-   	  * [ResNet](#resnet-1)
+      * [mrnn](#mrnn-1)
 * [模型训练](#模型训练)
 * [模型应用](#模型应用)
    * [预测](#预测)
@@ -84,7 +81,7 @@ Alex Krizhevsky在2012年ILSVRC提出的CNN模型 \[[9](#参考文献)\] 取得�
 图4. ILSVRC图像分类Top-5错误率
 </p>
 
-### CNN
+### Alexnet
 
 传统CNN包含卷积层、全连接层等组件，并采用softmax多类别分类器和多类交叉熵损失函数，一个典型的卷积神经网络如图5所示，我们先介绍用来构造CNN的常见组件。
 
@@ -112,7 +109,7 @@ Alex Krizhevsky在2012年ILSVRC提出的CNN模型 \[[9](#参考文献)\] 取得�
 图6. 基于ImageNet的VGG16模型
 </p>
 
-### GoogleNet
+### mrnn
 
 GoogleNet \[[12](#参考文献)\] 在2014年ILSVRC的获得了冠军，在介绍该模型之前我们先来了解NIN(Network in Network)模型 \[[13](#参考文献)\] 和Inception模块，因为GoogleNet模型由多组Inception模块组成，模型设计借鉴了NIN的一些思想。
 

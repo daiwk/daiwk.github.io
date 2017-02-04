@@ -9,7 +9,6 @@ tags: [mqa, image-qa, 图片问答]
 [http://idl.baidu.com/FM-IQA.html](http://idl.baidu.com/FM-IQA.html)
 
 
-
 目录：
 
 * [背景介绍](#背景介绍)
