@@ -14,7 +14,7 @@ tags: [mqa, image-qa, 图片问答]
 * [背景介绍](#背景介绍)
 * [效果展示](#效果展示)
 * [模型概览](#模型概览)
-   * [CNN](#cnn)
+   * [CNN](#cnn) 
    * [VGG](#vgg)
    * [GoogleNet](#googlenet)
    * [ResNet](#resnet)
