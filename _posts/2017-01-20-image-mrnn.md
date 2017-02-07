@@ -9,6 +9,9 @@ tags: [m-rnn]
 [http://www.stat.ucla.edu/~junhua.mao/m-RNN.html](http://www.stat.ucla.edu/~junhua.mao/m-RNN.html)
 
 
+更新的进展：
+tf上的img2txt：[Show and Tell: Lessons learned from the 2015　MSCOCO Image Captioning Challenge](../assets/img-qa/Show and Tell Lessons learned from the 2015 MSCOCO Image Captioning Challenge.pdf)
+
 目录：
 
 * [背景介绍](#背景介绍)
