@@ -5,6 +5,10 @@ title: "paddlepaddle layers"
 tags: [paddlepaddle, layers]
 ---
 
+参考：
+
+[http://www.paddlepaddle.org/doc/ui/api/trainer_config_helpers/layers.html?highlight=img_pool_layer](http://www.paddlepaddle.org/doc/ui/api/trainer_config_helpers/layers.html?highlight=img_pool_layer)
+
 ## Parameter & Extra Layer Attribute
 
 #### ParameterAtribute
