@@ -423,6 +423,27 @@ i_t=\sigma (W_ \\
 
 ## pooling_layer
 
+**序列输入的pooling层，和图像输入不一样！！！**
+
+```python
+seq_pool = pooling_layer(input=layer,
+                         pooling_type=AvgPooling(),
+                         agg_level=AggregateLevel.EACH_SEQUENCE)
+```
+
++ Params：
+	+ agg_level (AggregateLevel) – AggregateLevel.EACH_TIMESTEP or AggregateLevel.EACH_SEQUENCE
+	+ name (basestring) – layer name.
+	+ input (LayerOutput) – input layer name.
+	+ pooling_type (BasePoolingType|None) – Type of pooling, MaxPooling(default), AvgPooling, SumPooling, SquareRootNPooling.
+	+ bias_attr (ParameterAttribute|None|False) – Bias parameter attribute. False if no bias.
+	+ layer_attr (ExtraLayerAttribute|None) – The Extra Attributes for layer, such as dropout.
++ Returns：
+	+ LayerOutput object
++ Return type:
+	+ LayerOutput
+
+
 ## last_seq
 
 ## first_seq

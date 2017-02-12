@@ -150,7 +150,7 @@ daiwk整理: [deep reinforcement learning](http://pan.baidu.com/s/1mim7A2G)；[d
 1. **google brain最近的7大研究项目**：[《谷歌大脑最近7大研究项目》](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2651987619&idx=1&sn=3f24b3384a9b10fce2001f4074b789ee&chksm=f1216a52c656e344b1f449f384fe0f41461c9e72992946a1b79c2d1d996eb4bef73e27e04f6c&scene=0&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)
 
 ## 3.3 经典学习资源
-1. **Michael Nielsen的neuralnetworksanddeeplearning**：http://neuralnetworksanddeeplearning.com
+1. **Michael Nielsen的neuralnetworksanddeeplearning**：[http://neuralnetworksanddeeplearning.com](http://neuralnetworksanddeeplearning.com)
 
 # 4. **Applications**
  
