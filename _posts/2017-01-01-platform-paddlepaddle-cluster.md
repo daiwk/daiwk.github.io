@@ -330,8 +330,8 @@ cd - && sh preprocess.sh
 
 ```shell
 #ecom的队列：
-nmg01-hpc-off-dmop-cpu-10G_cluster # fcr队列, time_limit<=00:30:00
-nmg01-hpc-off-dmop-slow-cpu-10G_cluster # fcr-slow队列, time_limit<=99:59:59
+nmg01-hpc-off-dmop-cpu-10G_cluster # fcr队列, time_limit<=03:00:00
+nmg01-hpc-off-dmop-slow-cpu-10G_cluster # fcr-slow队列, time_limit<=700:00:00
 
 #idl的队列：
 nmg01-idl-dl-cpu-10G_cluster
