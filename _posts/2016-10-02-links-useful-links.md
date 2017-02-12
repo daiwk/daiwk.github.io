@@ -6,6 +6,45 @@ title: "Useful Links"
 tags: [useful links,]
 ---
 
+目录：
+
+   * [<strong>1. Basic Knowledges</strong>](#1-basic-knowledges)
+      * [1.1 Machine Learning](#11-machine-learning)
+         * [1.1.1 <strong>树模型</strong>](#111-树模型)
+         * [1.1.2 <strong>基础算法</strong>](#112-基础算法)
+         * [1.1.3 <strong>统计学习方法</strong>](#113-统计学习方法)
+      * [1.2 Deep Learning](#12-deep-learning)
+         * [1.2.1 CNN](#121-cnn)
+         * [1.2.2 RNN](#122-rnn)
+         * [1.2.3 GAN](#123-gan)
+         * [1.2.4 Reinforcement Learning](#124-reinforcement-learning)
+         * [1.2.5 PNN(Progressive Neural Network)连续神经网络](#125-pnnprogressive-neural-network连续神经网络)
+         * [1.2.6 图卷积网络](#126-图卷积网络)
+         * [1.2.7 copynet](#127-copynet)
+   * [<strong>2. Useful Tools</strong>](#2-useful-tools)
+      * [2.1 Datasets](#21-datasets)
+      * [2.2 pretrained models](#22-pretrained-models)
+      * [2.3 Deep Learning Tools](#23-deep-learning-tools)
+         * [2.3.1 mxnet](#231-mxnet)
+         * [2.3.2 theano](#232-theano)
+         * [2.3.3 torch](#233-torch)
+         * [2.3.4 tensorflow](#234-tensorflow)
+         * [2.3.5 docker](#235-docker)
+   * [<strong>3. Useful Courses &amp;&amp; Speeches</strong>](#3-useful-courses--speeches)
+      * [3.1 Courses](#31-courses)
+      * [3.2 Speeches](#32-speeches)
+      * [3.3 经典学习资源](#33-经典学习资源)
+   * [4. <strong>Applications</strong>](#4-applications)
+      * [4.1 NLP](#41-nlp)
+         * [4.1.1 分词](#411-分词)
+         * [4.1.2 Text Abstraction](#412-text-abstraction)
+      * [4.2 Image Processing](#42-image-processing)
+         * [4.2.1 image2txt](#421-image2txt)
+      * [4.3 Collections](#43-collections)
+         * [4.3.1 csdn深度学习代码专栏](#431-csdn深度学习代码专栏)
+         * [4.3.2 chiristopher olah的博客](#432-chiristopher-olah的博客)
+
+
 # **1. Basic Knowledges**
  
 ## 1.1 Machine Learning
@@ -110,6 +149,8 @@ daiwk整理: [deep reinforcement learning](http://pan.baidu.com/s/1mim7A2G)；[d
 ## 3.2 Speeches
 1. **google brain最近的7大研究项目**：[《谷歌大脑最近7大研究项目》](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2651987619&idx=1&sn=3f24b3384a9b10fce2001f4074b789ee&chksm=f1216a52c656e344b1f449f384fe0f41461c9e72992946a1b79c2d1d996eb4bef73e27e04f6c&scene=0&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)
 
+## 3.3 经典学习资源
+1. **Michael Nielsen的neuralnetworksanddeeplearning**：http://neuralnetworksanddeeplearning.com
 
 # 4. **Applications**
  
@@ -139,3 +180,4 @@ daiwk整理: [deep reinforcement learning](http://pan.baidu.com/s/1mim7A2G)；[d
 
 ### 4.3.2 chiristopher olah的博客
 [http://colah.github.io/](http://colah.github.io/)
+
