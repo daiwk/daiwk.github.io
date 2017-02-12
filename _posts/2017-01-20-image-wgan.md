@@ -9,6 +9,22 @@ tags: [wgan]
 
 参考：[知乎专栏:令人拍案叫绝的Wasserstein GAN](https://zhuanlan.zhihu.com/p/25071913)
 
+参考顾险峰老师的文章：[看穿机器学习（W-GAN模型）的黑箱](https://mp.weixin.qq.com/s?__biz=MzA3NTM4MzY1Mg==&mid=2650813024&idx=1&sn=31e326bd79ed24f5f47b35091385b9ab&chksm=8485c46bb3f24d7d36d1a93b48d9f4d0335262b1152de0bd0f2f1d09527e4acb2ae3d4730913&mpshare=1&scene=1&srcid=02121jrcKo3ax5gCkgeZ7aS6&pass_ticket=6F3WrFmalMgZ5Oj086HJDIpCgEgR3p0cvrPVa2BxK2A4pl0bhEU19uXGpI43TaYF#rd)
+
+相关数学知识：
+
+[最优传输理论（一）](https://mp.weixin.qq.com/s?__biz=MzA3NTM4MzY1Mg==&mid=401810859&idx=1&sn=085601ed23400b162363c724651b98cb&mpshare=1&scene=1&srcid=0212spaxFITf4n7M3jA1OV8L&pass_ticket=6F3WrFmalMgZ5Oj086HJDIpCgEgR3p0cvrPVa2BxK2A4pl0bhEU19uXGpI43TaYF#rd)
+
+[最优传输理论（二）](https://mp.weixin.qq.com/s?__biz=MzA3NTM4MzY1Mg==&mid=401899637&idx=1&sn=ae6ddb620b9b2d0bc140dc10aaef0e39&mpshare=1&scene=1&srcid=0212pgfZXnZLASC3s00v6ALz&pass_ticket=6F3WrFmalMgZ5Oj086HJDIpCgEgR3p0cvrPVa2BxK2A4pl0bhEU19uXGpI43TaYF#rd)
+
+[最优传输理论（三）](https://mp.weixin.qq.com/s?__biz=MzA3NTM4MzY1Mg==&mid=402015289&idx=1&sn=7c547abab1c6c33460795ebb1019d29a&mpshare=1&scene=1&srcid=0212GqLHCpF8c1uVyCjUdEht&pass_ticket=6F3WrFmalMgZ5Oj086HJDIpCgEgR3p0cvrPVa2BxK2A4pl0bhEU19uXGpI43TaYF#rd)
+
+[最优传输理论（四）](https://mp.weixin.qq.com/s?__biz=MzA3NTM4MzY1Mg==&mid=402434159&idx=1&sn=cc0ece42454fcb464be8ecd03d97b56a&mpshare=1&scene=1&srcid=0212Cb7GHtEVM0VfqRq70P3B&pass_ticket=6F3WrFmalMgZ5Oj086HJDIpCgEgR3p0cvrPVa2BxK2A4pl0bhEU19uXGpI43TaYF#rd)
+
+[最优传输理论应用：色彩变换算法](https://mp.weixin.qq.com/s?__biz=MzA3NTM4MzY1Mg==&mid=2650812934&idx=1&sn=1f1475529ee55c794c1dfab749700e3a&chksm=8485c40db3f24d1b89a4f2c985c54a50c4e7ce4b68b9aa60e39378e21e49881d7990caede42c&mpshare=1&scene=1&srcid=02128ANnHWrmdy8dJSOYPzwJ&pass_ticket=6F3WrFmalMgZ5Oj086HJDIpCgEgR3p0cvrPVa2BxK2A4pl0bhEU19uXGpI43TaYF#rd)
+
+
+
 
 主要效果如下：
 
