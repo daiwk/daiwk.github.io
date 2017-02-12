@@ -7,7 +7,12 @@ tags: [paddlepaddle, layers]
 
 参考：
 
-[http://www.paddlepaddle.org/doc/ui/api/trainer_config_helpers/layers.html?highlight=img_pool_layer](http://www.paddlepaddle.org/doc/ui/api/trainer_config_helpers/layers.html?highlight=img_pool_layer)
+Layers:
+
+[http://www.paddlepaddle.org/doc/ui/api/trainer_config_helpers/layers.html](http://www.paddlepaddle.org/doc/ui/api/trainer_config_helpers/layers.html)
+
+ParameterAttribute:
+[http://www.paddlepaddle.org/doc/ui/api/trainer_config_helpers/attrs.html](http://www.paddlepaddle.org/doc/ui/api/trainer_config_helpers/attrs.html)
 
 ## Parameter & Extra Layer Attribute
 
@@ -16,6 +21,7 @@ tags: [paddlepaddle, layers]
 在fine-tuning training的过程中，可以设置这个object来控制training的详情，诸如l1/l2 rate/learning rate/如何初始化参数等
 
 + Params:
+	+ name (basestring) – default parameter name.
 	+ is_static (bool) – True if this parameter will be fixed while training.
 	+ initial_std (float or None) – Gauss Random initialization standard deviation. None if not using Gauss Random initialize parameter.
 	+ initial_mean (float or None) – Gauss Random initialization mean. None if not using Gauss Random initialize parameter.
