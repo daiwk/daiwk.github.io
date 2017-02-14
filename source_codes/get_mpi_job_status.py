@@ -9,9 +9,9 @@ import urllib2
 import json
 
 dic_server = {
-    "idl_off": "http://nmg01-hpc-idl-mon.dmop.baidu.com:8090/job/",
-    "idl_dl_cpu": "http://nmg01-hpc-controller.nmg01.baidu.com:8090/job/",
-    "ecom_off": "http://nmg01-hpc-off-mon.dmop.baidu.com:8090/job/", 
+    "idl_off": "http://xxxxxidl_off/job/",
+    "idl_dl_cpu": "http://xxxxxidl_cpu/job/",
+    "ecom_off": "http://xxxxxecom_off/job/", 
 }
 
 from argparse import ArgumentParser
@@ -22,7 +22,7 @@ def init_args():
     arg_parser = ArgumentParser(description="get mpi job status")
 
     arg_parser.add_argument("-j", "--jobid", dest="jobid", required=True, 
-            help="jobid, if jobid = 288262.nmg01-hpc-off.dmop.baidu.com, set 288262")
+            help="jobid, if jobid = 288262.xxxxxx, set 288262")
     
     arg_parser.add_argument("-s", "--server", \
             dest="server", help="server: idl_off, ecom_off", required=True)

@@ -42,9 +42,9 @@ paddle
 根据[http://deeplearning.baidu.com/doc/install.html](http://deeplearning.baidu.com/doc/install.html)来搞，
 
 ```shell
-wget http://deeplearning.baidu.com/resources/releases/platform2_client/paddle_platform_client_ff01840260d5a3607596a7e2b3cd4f705ff75e78.tgz 
+wget http://deeplearning.baidu.com/resources/releases/platform2_client/paddle_platform_client_xxxxxx.tgz 
 wget http://deeplearning.baidu.com/resources/releases/platform2_client/deploy.sh 
-sh deploy.sh paddle_platform_client_ff01840260d5a3607596a7e2b3cd4f705ff75e78.tgz ./output
+sh deploy.sh paddle_platform_client_xxxxxx.tgz ./output
 pip install poster
 ```
 
@@ -73,26 +73,9 @@ client_path=$(dirname `which cluster_train.sh`)
 为准。】
 
 ```shell
-yq01-idl-gpu-offline14.yq01.baidu.com:9290
-yq01-idl-gpu-offline14.yq01.baidu.com:9291
-yq01-idl-gpu-offline14.yq01.baidu.com:9292
-yq01-idl-gpu-offline14.yq01.baidu.com:9293
-yq01-idl-gpu-offline14.yq01.baidu.com:9294
-yq01-idl-gpu-offline14.yq01.baidu.com:9295
-yq01-idl-gpu-offline14.yq01.baidu.com:9296
-yq01-idl-gpu-offline14.yq01.baidu.com:9297
-yq01-idl-gpu-offline14.yq01.baidu.com:9298
-yq01-idl-gpu-offline14.yq01.baidu.com:9299
-yq01-idl-gpu-offline14.yq01.baidu.com:9390
-yq01-idl-gpu-offline14.yq01.baidu.com:9391
-yq01-idl-gpu-offline14.yq01.baidu.com:9392
-yq01-idl-gpu-offline14.yq01.baidu.com:9393
-yq01-idl-gpu-offline14.yq01.baidu.com:9394
-yq01-idl-gpu-offline14.yq01.baidu.com:9395
-yq01-idl-gpu-offline14.yq01.baidu.com:9396
-yq01-idl-gpu-offline14.yq01.baidu.com:9397
-yq01-idl-gpu-offline14.yq01.baidu.com:9398
-yq01-idl-gpu-offline14.yq01.baidu.com:9399
+例如：
+aaaa:1111
+aaaa:3333
 ```
 
 ## 3. 使用private版本的bin
@@ -147,7 +130,7 @@ source ~/.bashrc
 paddle cluster_train \
            --config cluster_conf_dwk.py \
            --time_limit 00:30:00 \
-           --submitter daiwenkai \
+           --submitter xxxxx \
            --num_nodes 1 \ 
            --job_priority normal \
            --trainer_count 4 \ 
@@ -155,9 +138,9 @@ paddle cluster_train \
            --log_period 1000 \
            --dot_period 100 \
            --saving_period 1 \ 
-           --where nmg01-idl-dl-cpu-10G_cluster \
+           --where xxxx \
            --thirdparty ./thirdparty \
-           --job_name daiwenkai_paddle_cluster_demo_v5
+           --job_name xxxxxxxxxxxxxx
 ```
 
 复制一个网络结构的py为cluster_conf_dwk.py,并进行如下修改：
@@ -166,9 +149,9 @@ paddle cluster_train \
 ## cluster_conf_dwk.py:
 ###新增:
 cluster_config(
-        fs_name="hdfs://nmg01-mulan-hdfs.dmop.baidu.com:54310",
+        fs_name="hdfs://xxxxx",
         fs_ugi="xxxx,xxxx",
-        work_dir="/app/ecom/fcr-opt/daiwenkai/paddle/demos/sequence_tagging/"
+        work_dir="xxxx/paddle/demos/sequence_tagging/"
         )   
 ###修改：
 define_py_data_sources2(
@@ -196,8 +179,8 @@ function private_script()
 集群目录结构如下：
 
 ```shell
-/app/ecom/fcr-opt/daiwenkai/paddle/demos/sequence_tagging/test/test.txt.gz
-/app/ecom/fcr-opt/daiwenkai/paddle/demos/sequence_tagging/train/train.txt.gz
+xxx/paddle/demos/sequence_tagging/test/test.txt.gz
+xxx/paddle/demos/sequence_tagging/train/train.txt.gz
 ```
 
 ### image_classification:
@@ -225,7 +208,7 @@ source ~/.bashrc
 paddle cluster_train \
            --config $config \
            --time_limit 00:30:00 \
-           --submitter daiwenkai \
+           --submitter xxx \
            --num_nodes 24 \
            --job_priority normal \
            --trainer_count 4 \ 
@@ -233,9 +216,9 @@ paddle cluster_train \
            --log_period 1000 \
            --dot_period 100 \
            --saving_period 1 \ 
-           --where nmg01-hpc-off-dmop-cpu-10G_cluster \
+           --where xxxxx \
            --thirdparty ./thirdparty \
-           --job_name daiwenkai_paddle_cluster_demo_image_classificatoin
+           --job_name xxxx
 
 ```
 
@@ -244,9 +227,9 @@ paddle cluster_train \
 ```python
 ###新增:
 cluster_config(
-        fs_name="hdfs://nmg01-mulan-hdfs.dmop.baidu.com:54310",
+        fs_name="xxxxxx",
         fs_ugi="xxx,xxx",
-        work_dir="/app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/",
+        work_dir="xxxx/paddle/demos/image_classification/",
 
         has_meta_data=True,
         )    
@@ -313,10 +296,10 @@ function private_script()
 集群目录结构：
 
 ```shell
-/app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/test/test_batch_00[0－9]
-/app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/train/train_batch_0[0－49]
-/app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/train_meta
-/app/ecom/fcr-opt/daiwenkai/paddle/demos/image_classification/test_meta
+xxx/paddle/demos/image_classification/test/test_batch_00[0－9]
+xxx/paddle/demos/image_classification/train/train_batch_0[0－49]
+xxx/paddle/demos/image_classification/train_meta
+xxx/paddle/demos/image_classification/test_meta
 ```
 
 其中，xxxbatchxxx和xxxmeta都是通过如下方法得到的
@@ -330,9 +313,9 @@ cd - && sh preprocess.sh
 
 ```shell
 #ecom的队列：
-nmg01-hpc-off-dmop-cpu-10G_cluster # fcr队列, time_limit<=03:00:00
-nmg01-hpc-off-dmop-slow-cpu-10G_cluster # fcr-slow队列, time_limit<=700:00:00
+xxxx # fbbbbbbb队列, time_limit<=03:00:00
+ccccc # fbbbbbb-slow队列, time_limit<=700:00:00
 
 #idl的队列：
-nmg01-idl-dl-cpu-10G_cluster
+xxxxxxxxxxxxx
 ```

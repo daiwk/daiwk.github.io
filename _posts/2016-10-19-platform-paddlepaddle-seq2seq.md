@@ -77,9 +77,9 @@ sys.path.append("..")
 
 ### for cluster training
 cluster_config(
-    fs_name = "hdfs://nmg01-mulan-hdfs.dmop.baidu.com:54310",
-    fs_ugi = "paddle_demo,paddle_demo",
-    work_dir ="/app/idl/idl-dl/paddle/demo/seqToseq/",
+    fs_name = "hdfs://xxxxxxxxxxxx",
+    fs_ugi = "xxxx,xxxx",
+    work_dir ="/xxxxxxxxxxxx",
 )
 
 from seqToseq_net import *
@@ -147,14 +147,11 @@ paddle cluster_train \
   --thirdparty=./thirdparty \
   --num_nodes=2 \
   --job_priority=normal \
-  --job_name=daiwenkai_paddle_platform_translation_demo \
+  --job_name=xxxxx_paddle_platform_translation_demo \
   --time_limit=00:30:00 \
-  --submitter=daiwenkai \
-  --where=nmg01-hpc-off-dmop-cpu-10G_cluster
+  --submitter=xxxxxxxx \
+  --where=xxxxxxxxxx
 
-#fcr:--where=nmg01-hpc-off-dmop-cpu-10G_cluster
-#fcr-slow:--where=nmg01-hpc-off-dmop-slow-cpu-10G_cluster
-# http://wiki.baidu.com/pages/viewpage.action?pageId=204652252
 
 jobid=`grep jobid train.log.$timestamp | awk -F'jobid=' '{print $2}' | awk -F'.' '{print $1}'`
 echo $jobid
@@ -233,7 +230,6 @@ paddle train \
 
 [http://deeplearning.baidu.com/doc_cn/build/internal/build_from_source_zh_cn.html#jumbo](http://deeplearning.baidu.com/doc_cn/build/internal/build_from_source_zh_cn.html#jumbo)
 
-代码在这里[install_paddle_dwk.sh](../source_codes/install_paddle_dwk.sh)】
 
 gen的结果是这个文件translation/gen_result，内容如下：
 

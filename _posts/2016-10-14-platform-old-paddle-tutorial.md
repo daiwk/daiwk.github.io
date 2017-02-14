@@ -204,22 +204,22 @@ cat INPUT_FILE | txt2proto OUTPUT_FILE "1" "23984 3"
 
 ```shell
 # Local dir.
-LOCAL_HADOOP_HOME=~/daiwenkai/local/hadoop-client-mulan/hadoop
+LOCAL_HADOOP_HOME=xxxxx
 
 # HDFS.
-conf_hdfs=hdfs://nmg01-mulan-hdfs.dmop.baidu.com:54310
-conf_ugi=fcr-opt,J798HJ9Kl
-conf_tracker=nmg01-mulan-job.dmop.baidu.com:54311
+conf_hdfs=hdfs://xxxxxx
+conf_ugi=xxxx,xxxx
+conf_tracker=xxxx
 
 # Data dir.
-input_dir="/app/ecom/fcr-opt/daiwenkai/paddle/brand_recognize/input/data_test"
-output_dir="/app/ecom/fcr-opt/daiwenkai/paddle/brand_recognize/preprocess/data_test_pb"
+input_dir="xxx/brand_recognize/input/data_test"
+output_dir="xxx/brand_recognize/preprocess/data_test_pb"
 # Dictionary dir
 dict_dir=
 #If force_reuse_output_path is True ,paddle will remove outputdir without check outputdir exist
 force_reuse_output_path=
 # Job parameters.
-JOBNAME="daiwenkai_gen_proto_test_brand_recognize"
+JOBNAME="xxxx_gen_proto_test_brand_recognize"
 MAPCAP=5000
 REDCAP=5000
 MAPNUM=1000
@@ -473,13 +473,13 @@ Outputs("crf_cost")
 
 使用的是ecom的线下集群，
 
-查看所有任务：[http://nmg01-hpc-off-mon.dmop.baidu.com:8090/job/](http://nmg01-hpc-off-mon.dmop.baidu.com:8090/job/)
+查看所有任务：[http://xxxx/job/](http://xxxx/job/)
 
-查看当前任务（jobid=287811.nmg01-hpc-off.dmop.baidu.com）运行：
-[http://nmg01-hpc-off-mon.dmop.baidu.com:8090/job/i-287811/](http://nmg01-hpc-off-mon.dmop.baidu.com:8090/job/i-287811/)
+查看当前任务（jobid=287811.xxx）运行：
+[http://xxxx/job/i-287811/](http://xxxx/job/i-287811/)
 
 干掉这个job：
-qdel 287811.nmg01-hpc-off.dmop.baidu.com
+qdel 287811.xxxx
 
 
 预测：

@@ -58,14 +58,14 @@ nsenter --target $PID --mount --uts --ipc --net --pid
 第一种方法相对简单；但是需要root权限访问Docker主机（从安全角度来说不是很好）。第二种方法在 SSH 的 authorized_keys 文件中使用 command= 模式。你可能熟悉 “古典的” authorized_keys文件，它看起来像这样： 
 
 ```
-ssh-rsa AAAAB3N…QOID== jpetazzo@tarrasque
+ssh-rsa bbb…QOID== aaa@ccc
 ```
 
 
 （当然，实际上一个真正的密钥是很长的，一般都会占据好几行。）你也可以强制使用一个专有的命令。如果你想要在你的系统上查看一个远程的主机上可以有效使用的内存，可以使用SSH密钥，但是你不会希望交出所有的shell权限，你可以在authorized_keys文件中输入下面的内容：
 
 ```
-command="free" ssh-rsa AAAAB3N…QOID== jpetazzo@tarrasque
+command="free" ssh-rsa bbb…QOID== aaa@ccc
 ```
 
 现在，当使用专有的密钥进行连接时，替换取得的shell，它可以执行free命令。除此之外，就不能做其他的。（通常，你可能还想要添加no-port-forwarding；如果希望了解更多信息可以查看authorized_keys(5)的手册（manpage））。这种机制的关键是使得责任分离。Alice把服务放在容器内部；她不用处理远程的访问，登陆等事务。Betty会添加SSH层，在特殊情况（调试奇怪的问题）下使用。Charlotte会考虑登陆。等等。
