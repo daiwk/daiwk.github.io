@@ -17,7 +17,7 @@ tags: [im2txt]
 + bazel([官网](https://bazel.build/versions/master/docs/install.html))
 + tf
 + numpy
-+ nltk(下载数据可以python -m nltk.downloader -d /usr/local/share/nltk_data all指定存放目录[约12G])
++ nltk(下载数据可以```python -m nltk.downloader -d /usr/local/share/nltk_data all```指定存放目录[约12G])
 
 ## 1. 数据集准备
 
