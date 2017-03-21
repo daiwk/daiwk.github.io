@@ -1,0 +1,71 @@
+---
+layout: post
+category: "platform"
+title: "openai-universe"
+tags: [openai, universe]
+---
+
+参考：[https://github.com/tensorflow/models/tree/master/im2txt](https://github.com/tensorflow/models/tree/master/im2txt)
+
+## 0. 必需的包
+
++ bazel([官网](https://bazel.build/versions/master/docs/install.html))
++ tf
++ numpy
++ nltk(下载数据可以python -m nltk.downloader -d /usr/local/share/nltk_data all指定存放目录[约12G])
+
+## 1. 数据集准备
+
+输入数据格式是“native TFRecord format”：
+
+```
+The TFRecord format consists of a set of sharded files containing serialized tf.SequenceExample protocol buffers. Each tf.SequenceExample proto contains an image (JPEG format), a caption and metadata such as the image id.
+
+Each caption is a list of words. During preprocessing, a dictionary is created that assigns each word in the vocabulary to an integer-valued id. Each caption is encoded as a list of integer word ids in the tf.SequenceExample protos.
+
+```
+
+
+使用mscoco数据集。
+
+```
+## Make sure there is at least 150G space available!!!!!!!!!!!!!!!
+
+# Location to save the MSCOCO data. 
+
+MSCOCO_DIR="${HOME}/im2txt/data/mscoco"
+
+# Build the preprocessing script.
+bazel build im2txt/download_and_preprocess_mscoco
+
+# Run the preprocessing script.
+bazel-bin/im2txt/download_and_preprocess_mscoco "${MSCOCO_DIR}"
+
+```
+
+当最后一句话是```Finished processing all 20267 image-caption pairs in data set 'test'.```时，就成功了。
+
+最终数据：
+
++ 256个训练文件：train-?????-of-00256
++ 4个验证文件：val-?????-of-00004
++ 8个测试文件：test-?????-of-00008
+
+## 2. 下载Inception v3 Checkpoint
+
+使用inception v3来初始化img部分的权重。tf专门搞了个**slim**来存这些预训练好的模型（[https://github.com/tensorflow/models/tree/master/slim#tensorflow-slim-image-classification-library](https://github.com/tensorflow/models/tree/master/slim#tensorflow-slim-image-classification-library)）。
+
+```
+# Location to save the Inception v3 checkpoint.
+INCEPTION_DIR="${HOME}/im2txt/data"
+mkdir -p ${INCEPTION_DIR}
+
+wget "http://download.tensorflow.org/models/inception_v3_2016_08_28.tar.gz"
+tar -xvf "inception_v3_2016_08_28.tar.gz" -C ${INCEPTION_DIR}
+rm "inception_v3_2016_08_28.tar.gz"
+```
+
+注意：这里的inception v3只用于**第一步**的模型初始化，后面整个模型的训练过程中，会有新的checkpoint，这个inception v3就没啥用了。
+
+## 3. 训练
+
