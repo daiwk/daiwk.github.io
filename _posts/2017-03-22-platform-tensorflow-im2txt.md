@@ -1,11 +1,16 @@
 ---
 layout: post
 category: "platform"
-title: "openai-universe"
-tags: [openai, universe]
+title: "tf的im2txt"
+tags: [im2txt]
 ---
 
 参考：[https://github.com/tensorflow/models/tree/master/im2txt](https://github.com/tensorflow/models/tree/master/im2txt)
+
+论文：
+"Show and Tell: Lessons learned from the 2015 MSCOCO Image Captioning Challenge.", Oriol Vinyals, Alexander Toshev, Samy Bengio, Dumitru Erhan., IEEE transactions on pattern analysis and machine intelligence (2016).
+[http://arxiv.org/abs/1609.06647](http://arxiv.org/abs/1609.06647)
+
 
 ## 0. 必需的包
 
