@@ -17,7 +17,7 @@ tags: [im2txt]
 + bazel([官网](https://bazel.build/versions/master/docs/install.html))
 + tf
 + numpy
-+ nltk(下载数据可以```python -m nltk.downloader -d /usr/local/share/nltk_data all```指定存放目录[约12G])
++ nltk(下载数据可以```python -m nltk.downloader -d /home/data/docker_share/nltk_data all```指定存放目录[约12G])
 
 ## 1. 数据集准备
 
@@ -38,7 +38,9 @@ Each caption is a list of words. During preprocessing, a dictionary is created t
 
 # Location to save the MSCOCO data. 
 
-MSCOCO_DIR="${HOME}/im2txt/data/mscoco"
+export MSCOCO_DIR="/home/data/docker_share/im2txt/data/mscoco"
+
+export NLTK_DATA="/home/data/docker_share/nltk_data/"
 
 # Build the preprocessing script.
 bazel build im2txt/download_and_preprocess_mscoco
