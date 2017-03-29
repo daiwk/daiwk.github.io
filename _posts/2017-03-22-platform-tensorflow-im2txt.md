@@ -38,16 +38,17 @@ Each caption is a list of words. During preprocessing, a dictionary is created t
 
 # Location to save the MSCOCO data. 
 
-export MSCOCO_DIR="/home/data/docker_share/im2txt/data/mscoco"
-
-export NLTK_DATA="/home/data/docker_share/nltk_data/"
-
+function prepare()
+{
 # Build the preprocessing script.
 bazel build im2txt/download_and_preprocess_mscoco
 
 # Run the preprocessing script.
 bazel-bin/im2txt/download_and_preprocess_mscoco "${MSCOCO_DIR}"
 
+return $?
+
+}
 ```
 
 当最后一句话是```Finished processing all 20267 image-caption pairs in data set 'test'.```时，就成功了。
@@ -63,16 +64,43 @@ bazel-bin/im2txt/download_and_preprocess_mscoco "${MSCOCO_DIR}"
 使用inception v3来初始化img部分的权重。tf专门搞了个**slim**来存这些预训练好的模型（[https://github.com/tensorflow/models/tree/master/slim#tensorflow-slim-image-classification-library](https://github.com/tensorflow/models/tree/master/slim#tensorflow-slim-image-classification-library)）。
 
 ```
+function get_inception()
+{
 # Location to save the Inception v3 checkpoint.
-INCEPTION_DIR="${HOME}/im2txt/data"
+export INCEPTION_DIR="${HOME}/im2txt/data"
 mkdir -p ${INCEPTION_DIR}
 
 wget "http://download.tensorflow.org/models/inception_v3_2016_08_28.tar.gz"
 tar -xvf "inception_v3_2016_08_28.tar.gz" -C ${INCEPTION_DIR}
 rm "inception_v3_2016_08_28.tar.gz"
+}
 ```
 
 注意：这里的inception v3只用于**第一步**的模型初始化，后面整个模型的训练过程中，会有新的checkpoint，这个inception v3就没啥用了。
 
 ## 3. 训练
 
+```
+function train() 
+{
+
+# Inception v3 checkpoint file.
+INCEPTION_CHECKPOINT="${HOME}/im2txt/data/inception_v3.ckpt"
+
+# Directory to save the model.
+MODEL_DIR="${HOME}/im2txt/model"
+
+# Build the model.
+bazel build -c opt im2txt/...
+
+# Run the training script.
+bazel-bin/im2txt/train \
+  --input_file_pattern="${MSCOCO_DIR}/train-?????-of-00256" \
+  --inception_checkpoint_file="${INCEPTION_CHECKPOINT}" \
+  --train_dir="${MODEL_DIR}/train" \
+  --train_inception=false \
+  --number_of_steps=1000000
+
+return $?
+}
+```

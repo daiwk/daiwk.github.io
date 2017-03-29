@@ -181,3 +181,9 @@ daiwk整理: [deep reinforcement learning](http://pan.baidu.com/s/1mim7A2G)；[d
 ### 4.3.2 chiristopher olah的博客
 [http://colah.github.io/](http://colah.github.io/)
 
+
+
+####### to be classified
+
++ [激活函数](https://mp.weixin.qq.com/s?__biz=MzI1NTE4NTUwOQ==&mid=2650325236&idx=1&sn=7bd8510d59ddc14e5d4036f2acaeaf8d&mpshare=1&scene=1&srcid=1214qIBJrRhevScKXQQuqas4&pass_ticket=w2yCF%2F3Z2KTqyWW%2FUwkvnidRV3HF9ym5iEfJ%2BZ1dMObpcYUW3hQymA4BpY9W3gn4#rd)
++ [梯度下降优化算法](https://mp.weixin.qq.com/s?__biz=MzA5ODUxOTA5Mg==&mid=2652550294&idx=1&sn=820ddc89e1d1af35f14ccf645b963a76&chksm=8b7e45cdbc09ccdb985b3bbc22fbc0dcd013d53e9e9a6073d09d1b676b338af7bd8b7dd2a92d&mpshare=1&scene=1&srcid=0930LxixeTcq5wCcRStBTylE&pass_ticket=w2yCF%2F3Z2KTqyWW%2FUwkvnidRV3HF9ym5iEfJ%2BZ1dMObpcYUW3hQymA4BpY9W3gn4#rd)
