@@ -5,7 +5,16 @@ title: "tf step by step: chap 1. 基础知识"
 tags: [tf step by step,]
 ---
 
-整理自《tensorflow实战》 chap 1
+目录
+
+* [1. 概要](#1-概要)
+* [2. 编程模型简介](#2-编程模型简介)
+ * [2.1 核心概念](#21-核心概念)
+ * [2.2 实现原理](#22-实现原理)
+ * [2.3 拓展功能](#23-拓展功能)
+
+
+-- 整理自《tensorflow实战》 chap 1
 
 ## 1. 概要
 + 2015年11月，tensorflow在github上开源。
