@@ -48,6 +48,23 @@ tf中的计算可以表示为有向图（directed graph）或计算图（computa
 
 ![](../assets/tf step by step/chap1/computation graph.jpg)
 
+运算核（kernel）是一个运算操作中某个具体硬件（cpu/gpu...）中的实现。tf中，可以通过**注册机制**，加入新的运算或运算核。tf的内建运算操作如下：
+
++ 标量运算：Add/Sub/Mul/Div/Exp/Log/Greater/Less/Equal
++ 向量运算：Concat/Slice/Split/Constant/Rank/Shape/Shuffle
++ 矩阵运算：MatMul/MatrixInverse/MatrixDeterminant
++ 带状态的运算：Variable/Assign/AssignAdd
++ 神经网络组件：SoftMax/Sigmoid/ReLU/Convolution2D/MaxPooling
++ 存储、恢复：Save/Restore
++ 队列及同步运算：Enqueue/Dequeue/MutexAcquire/MutexRelease
++ 控制流：Merge/Switch/Enter/Leave/NextIteration
+
+session是用户使用tf时的交互式接口，可以通过Session的**extend方法添加新的节点和边**，然后run。
+
+大多数运算中，计算图会被反复执行多次，数据（即tensor）并不会被持续保留。**但Variable是特殊的运算操作，可以将一些需要保留的tensor存储在内存或显存中，同时可以被更新，如模型参数。**Assign/AssignAdd/AssignMul都是Variable的特殊操作。
+
+
+
 
 ### 2.2 实现原理
 
