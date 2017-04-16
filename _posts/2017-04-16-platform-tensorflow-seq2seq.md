@@ -149,23 +149,61 @@ export TRAIN_STEPS=1000000
 
 ```
 export DATA_PATH=
+export DATA_TYPE=copy # or reverse
 
-export VOCAB_SOURCE=${DATA_PATH}/nmt_data/toy_reverse/train/vocab.sources.txt
-export VOCAB_TARGET=${DATA_PATH}/nmt_data/toy_reverse/train/vocab.targets.txt
-export TRAIN_SOURCES=${DATA_PATH}/nmt_data/toy_reverse/train/sources.txt
-export TRAIN_TARGETS=${DATA_PATH}/nmt_data/toy_reverse/train/targets.txt
-export DEV_SOURCES=${DATA_PATH}/nmt_data/toy_reverse/dev/sources.txt
-export DEV_TARGETS=${DATA_PATH}/nmt_data/toy_reverse/dev/targets.txt
+export VOCAB_SOURCE=${DATA_PATH}/nmt_data/toy_${DATA_TYPE}/train/vocab.sources.txt
+export VOCAB_TARGET=${DATA_PATH}/nmt_data/toy_${DATA_TYPE}/train/vocab.targets.txt
+export TRAIN_SOURCES=${DATA_PATH}/nmt_data/toy_${DATA_TYPE}/train/sources.txt
+export TRAIN_TARGETS=${DATA_PATH}/nmt_data/toy_${DATA_TYPE}/train/targets.txt
+export DEV_SOURCES=${DATA_PATH}/nmt_data/toy_${DATA_TYPE}/dev/sources.txt
+export DEV_TARGETS=${DATA_PATH}/nmt_data/toy_${DATA_TYPE}/dev/targets.txt
 
-export DEV_TARGETS_REF=${DATA_PATH}/nmt_data/toy_reverse/dev/targets.txt
+export DEV_TARGETS_REF=${DATA_PATH}/nmt_data/toy_${DATA_TYPE}/dev/targets.txt
 export TRAIN_STEPS=1000
 ```
 
 ### 4.4 定义模型
 
+标准的模型是[seq2seq with attention](https://arxiv.org/abs/1409.0473),它有大量的超参数。在example_configs下有small/medium/large等conf，例如，medium的conf:
 
+```
+model: AttentionSeq2Seq
+model_params:
+  attention.class: seq2seq.decoders.attention.AttentionLayerBahdanau
+  attention.params:
+    num_units: 256
+  bridge.class: seq2seq.models.bridges.ZeroBridge
+  embedding.dim: 256
+  encoder.class: seq2seq.encoders.BidirectionalRNNEncoder
+  encoder.params:
+    rnn_cell:
+      cell_class: GRUCell
+      cell_params:
+        num_units: 256
+      dropout_input_keep_prob: 0.8
+      dropout_output_keep_prob: 1.0
+      num_layers: 1
+  decoder.class: seq2seq.decoders.AttentionDecoder
+  decoder.params:
+    rnn_cell:
+      cell_class: GRUCell
+      cell_params:
+        num_units: 256
+      dropout_input_keep_prob: 0.8
+      dropout_output_keep_prob: 1.0
+      num_layers: 2
+  optimizer.name: Adam
+  optimizer.params:
+    epsilon: 0.0000008
+  optimizer.learning_rate: 0.0001
+  source.max_seq_len: 50
+  source.reverse: false
+  target.max_seq_len: 50
+```
 
 ### 4.5 训练
+
+**单GPU（例如TitanX），即使是small模型，训练WMT'16 English-German数据要收敛得好几天。在8GPU的集群上，用tf的分布式训练，large模型需要2-3天。**而对于toy数据，在cpu上，1000 step大概要10min。
 
 ### 4.6 预测
 
