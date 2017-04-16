@@ -88,6 +88,25 @@ Madam President , I should like to draw your attention to a case in which this P
 
 ### 4.2 数据下载
 
+使用预处理过的English-German WMT'16 Translation Task的数据集进行训练。 参考wmt16_en_de.sh，需要自定义```OUTPUT_DIR```变量。这个脚本下载数据、使用Moses Tokenizer进行分词、清理了training data、学习了约32,000的vocabulary大小的subword units.也可以直接去google drive下载预处理过的[WMT'16 EN-DE Data (502MB)](https://drive.google.com/open?id=0B_bZck-ksdkpM25jRUN2X2UxMm8)。
+
+格式如下：
+
+<table>
+<tr>
+haha
+</tr>
+<tr>
+<td>uuuuu
+</td>
+<tr>
+</table>
+Filename	Description
+train.tok.clean.bpe.32000.en	The English training data, one sentence per line, processed using BPE.
+train.tok.clean.bpe.32000.de	The German training data, one sentence per line, processed using BPE.
+vocab.bpe.32000	The full vocabulary used in the training data, one token per line.
+newstestXXXX.*	Development and test data sets, in the same format as the training data. We provide both pre-processed and original data files used for evaluation. 
+
 ### 4.3 小数据集：generate toy data
 
 ### 4.4 定义模型
