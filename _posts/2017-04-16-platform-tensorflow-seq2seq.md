@@ -92,20 +92,39 @@ Madam President , I should like to draw your attention to a case in which this P
 
 格式如下：
 
-<table>
+<html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
 <tr>
-haha
+<th scope="col" class="left">文件名</th>
+<th scope="col" class="left">描述</th>
+
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">train.tok.clean.bpe.32000.en</td>
+<td class="left">The English training data, one sentence per line, processed using BPE.</td>
 </tr>
 <tr>
-<td>uuuuu
-</td>
+<td class="left">train.tok.clean.bpe.32000.de</td>
+<td class="left">The German training data, one sentence per line, processed using BPE.</td>
+</tr>
 <tr>
-</table>
-Filename	Description
-train.tok.clean.bpe.32000.en	The English training data, one sentence per line, processed using BPE.
-train.tok.clean.bpe.32000.de	The German training data, one sentence per line, processed using BPE.
-vocab.bpe.32000	The full vocabulary used in the training data, one token per line.
-newstestXXXX.*	Development and test data sets, in the same format as the training data. We provide both pre-processed and original data files used for evaluation. 
+<td class="left">vocab.bpe.32000</td>
+<td class="left">The full vocabulary used in the training data, one token per line.</td>
+</tr>
+<tr>
+<td class="left">newstestXXXX.*</td>
+<td class="left">Development and test data sets, in the same format as the training data. We provide both pre-processed and original data files used for evaluation. </td>
+</tr>
+
+</tbody>
+</table></center>
+</html>	
 
 ### 4.3 小数据集：generate toy data
 
