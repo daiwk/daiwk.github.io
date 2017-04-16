@@ -14,6 +14,10 @@ tags: [seq2seq, tensorflow]
 对应的论文：
 [Massive Exploration of Neural Machine Translation Architectures](https://arxiv.org/pdf/1703.03906.pdf)
 
+整体架构图：
+
+![](../assets/tf-seq2seq architecture.jpg)
+
 ## 2. 安装
 
 首先安装python-tk（python的gui）
