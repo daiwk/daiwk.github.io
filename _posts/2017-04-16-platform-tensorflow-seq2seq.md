@@ -126,9 +126,44 @@ Madam President , I should like to draw your attention to a case in which this P
 </table></center>
 </html>	
 
+然后需要设置环境变量：
+
+```
+# Set this to where you extracted the downloaded file
+export DATA_PATH=
+
+export VOCAB_SOURCE=${DATA_PATH}/vocab.bpe.32000
+export VOCAB_TARGET=${DATA_PATH}/vocab.bpe.32000
+export TRAIN_SOURCES=${DATA_PATH}/train.tok.clean.bpe.32000.en
+export TRAIN_TARGETS=${DATA_PATH}/train.tok.clean.bpe.32000.de
+export DEV_SOURCES=${DATA_PATH}/newstest2013.tok.bpe.32000.en
+export DEV_TARGETS=${DATA_PATH}/newstest2013.tok.bpe.32000.de
+
+export DEV_TARGETS_REF=${DATA_PATH}/newstest2013.tok.de
+export TRAIN_STEPS=1000000
+```
+
 ### 4.3 小数据集：generate toy data
 
+直接跑toy.sh就行了,然后设置一下环境变量
+
+```
+export DATA_PATH=
+
+export VOCAB_SOURCE=${DATA_PATH}/nmt_data/toy_reverse/train/vocab.sources.txt
+export VOCAB_TARGET=${DATA_PATH}/nmt_data/toy_reverse/train/vocab.targets.txt
+export TRAIN_SOURCES=${DATA_PATH}/nmt_data/toy_reverse/train/sources.txt
+export TRAIN_TARGETS=${DATA_PATH}/nmt_data/toy_reverse/train/targets.txt
+export DEV_SOURCES=${DATA_PATH}/nmt_data/toy_reverse/dev/sources.txt
+export DEV_TARGETS=${DATA_PATH}/nmt_data/toy_reverse/dev/targets.txt
+
+export DEV_TARGETS_REF=${DATA_PATH}/nmt_data/toy_reverse/dev/targets.txt
+export TRAIN_STEPS=1000
+```
+
 ### 4.4 定义模型
+
+
 
 ### 4.5 训练
 
