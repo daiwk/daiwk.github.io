@@ -317,4 +317,4 @@ infer脚本默认只评估最新的checkpoint，如果想指定checkpoint，可�
 
 **注意：**
 
-如果你使用toy造数据，可以直接```git clone github.com/daiwk/seq2seq.git```，然后运行dwk_train.sh即可。
+如果你使用toy造数据，可以直接```git clone https://github.com/daiwk/seq2seq.git```，然后运行dwk_train.sh即可。
