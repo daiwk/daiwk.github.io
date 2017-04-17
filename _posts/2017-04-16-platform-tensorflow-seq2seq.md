@@ -205,10 +205,116 @@ model_params:
 
 **单GPU（例如TitanX），即使是small模型，训练WMT'16 English-German数据要收敛得好几天。在8GPU的集群上，用tf的分布式训练，large模型需要2-3天。**而对于toy数据，在cpu上，1000 step大概要10min。
 
+```
+export MODEL_DIR=${TMPDIR:-/tmp}/nmt_tutorial
+mkdir -p $MODEL_DIR
+
+python -m bin.train \
+  --config_paths="
+      ./example_configs/nmt_small.yml,
+      ./example_configs/train_seq2seq.yml,
+      ./example_configs/text_metrics_bpe.yml" \
+  --model_params "
+      vocab_source: $VOCAB_SOURCE
+      vocab_target: $VOCAB_TARGET" \
+  --input_pipeline_train "
+    class: ParallelTextInputPipeline
+    params:
+      source_files:
+        - $TRAIN_SOURCES
+      target_files:
+        - $TRAIN_TARGETS" \
+  --input_pipeline_dev "
+    class: ParallelTextInputPipeline
+    params:
+       source_files:
+        - $DEV_SOURCES
+       target_files:
+        - $DEV_TARGETS" \
+  --batch_size 32 \
+  --train_steps $TRAIN_STEPS \
+  --output_dir $MODEL_DIR
+```
+
+其中，参数如下：
++ config_paths：可以输入多个conf文件，会**按顺序merge在一起**。nmt_small.yml描述模型类型及超参数，train_seq2seq.yml包括了common options，例如，追踪什么metric、多久sample一次response。
++ model_params：可以重写模型参数，yaml/json格式。大部分参数其实在nmt_small.yml里都定义了，但
++ input_pipeline_train：如何读训练集。例子中是parallel text format。
++ input_pipeline_dev：如何读验证集。例子中是parallel text format。
++ output_dir：模型的checkpoint和summary的存放位置。
+
+使用tensorboard监控输出目录（有log_perplexity和bleu等指标）：
+
+```
+tensorboard --logdir $MODEL_DIR
+```
+
 ### 4.6 预测
+
+```
+export PRED_DIR=${MODEL_DIR}/pred
+mkdir -p ${PRED_DIR}
+
+python -m bin.infer \
+  --tasks "
+    - class: DecodeText" \
+  --model_dir $MODEL_DIR \
+  --input_pipeline "
+    class: ParallelTextInputPipeline
+    params:
+      source_files:
+        - $DEV_SOURCES" \
+  >  ${PRED_DIR}/predictions.txt
+```
+
+其中，
++ tasks：
++ model_dir：
++ model_dir：
 
 ### 4.7 使用beamsearch进行decode
 
+beamsearch并不是使用贪心的方法去寻找最可能的词，而是```keeps several hypotheses, or "beams", in memory and chooses the best one based on a scoring function. ```。可以通过指定model_params来使用beamsearch。另外，使用beamsearch会使预测时间变得**significantly longer**。
+
+```
+python -m bin.infer \
+  --tasks "
+    - class: DecodeText
+    - class: DumpBeams
+      params:
+        file: ${PRED_DIR}/beams.npz" \
+  --model_dir $MODEL_DIR \
+  --model_params "
+    inference.beam_search.beam_width: 5" \
+  --input_pipeline "
+    class: ParallelTextInputPipeline
+    params:
+      source_files:
+        - $DEV_SOURCES" \
+  > ${PRED_DIR}/predictions.txt
+```
+
+另外，上面的例子显示了，tasks参数可以传多个task进去；另外，还把结果存放在了${PRED_DIR}/beams.npz中。用法：
+
+```
+import numpy as np
+r = np.load("/tmp/nmt_tutorial/pred/beams.npz")
+print r.files
+##得到：['predicted_ids', 'beam_parent_ids', 'log_probs', 'scores']
+```
+
 ### 4.8 基于checkpoint进行评估
 
+infer脚本默认只评估最新的checkpoint，如果想指定checkpoint，可以传```checkpoint_path```参数。
+
 ### 4.9 计算BLEU
+
+以下命令可以计算bleu：
+
+```
+./bin/tools/multi-bleu.perl ${DEV_TARGETS_REF} < ${PRED_DIR}/predictions.txt
+```
+
+**注意：**
+
+如果你使用toy造数据，可以直接```git clone github.com/daiwk/seq2seq.git```，然后运行dwk_train.sh即可。
