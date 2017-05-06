@@ -56,3 +56,39 @@ docker commit -m "1.0.1 version" ffd32a5b82f7 registry.baidu.com/daiwenkai/scrap
 ```
 docker push registry.baidu.com/daiwenkai/scrapy-framework:1.0.1
 ```
+
+## docker save
+
+导出image
+
+```
+docker save -o scrapy-framework.docker.tar 8ce4bbc775d2
+```
+
+## docker load
+
+导入image
+
+```
+docker load -i scrapy-framework.docker.tar 
+```
+
+## docker export
+
+导出container
+
+```
+docker export ffd32a5b82f7 > scrapy-framework.tar    
+```
+
+## docker import
+
+```
+docker export ffd32a5b82f7 > scrapy-framework.tar    
+```
+
+## 注意
+
+在win7安装时，要用docker toolbox([https://download.docker.com/win/stable/DockerToolbox.exe](https://download.docker.com/win/stable/DockerToolbox.exe))
+
+win10以上时，用docker-ce([https://store.docker.com/editions/community/docker-ce-desktop-windows?tab=description](https://store.docker.com/editions/community/docker-ce-desktop-windows?tab=description))
