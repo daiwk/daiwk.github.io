@@ -96,8 +96,28 @@ cat scrapy-framework.tar | docker import - daiwk/scrapy-framework
 cat deep-learning-factory.1.0.3.tar | docker import - test/deep-learning-factory  
 ```
 
+## docker exec
+
+不用交互式shell，直接执行命令。（**注意：命令不能加""。。。另外，好像也不能有&&之类的[可以后续再探索探索。。。]**）
+
+其中：
+
++ -d :分离模式: 在后台运行
++ -i :即使没有附加也保持STDIN 打开
++ -t :分配一个伪终端
+
+```
+cat /home/disk0/daiwk_img_data/demo_scrapy/lp_mining/lp_spider/containerid | xargs -i docker exec -dt {} /bin/bash /home/data/demo_scrap
+y/lp_mining/lp_spider/run_all_images.sh 
+
+cat /home/disk0/daiwk_img_data/demo_scrapy/lp_mining/lp_spider/containerid | xargs -i docker exec {} tail /home/data/demo_scrapy/lp_min
+ing/lp_spider/crawl.images8.log
+
+```
+
+
 ## 注意
 
-在win7安装时，要用docker toolbox([https://download.docker.com/win/stable/DockerToolbox.exe](https://download.docker.com/win/stable/DockerToolbox.exe))
++ 在win7安装时，要用docker toolbox([https://download.docker.com/win/stable/DockerToolbox.exe](https://download.docker.com/win/stable/DockerToolbox.exe))
 
-win10以上时，用docker-ce([https://store.docker.com/editions/community/docker-ce-desktop-windows?tab=description](https://store.docker.com/editions/community/docker-ce-desktop-windows?tab=description))
++ win10以上时，用docker-ce([https://store.docker.com/editions/community/docker-ce-desktop-windows?tab=description](https://store.docker.com/editions/community/docker-ce-desktop-windows?tab=description))
