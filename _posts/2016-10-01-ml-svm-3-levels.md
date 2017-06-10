@@ -56,6 +56,10 @@ x=x_0+\gamma \frac{\omega}{||\omega||}
 `\[
 \\x=x_0+\gamma\frac{\omega}{||\omega||}
 \\\omega^Tx=\omega^Tx_0+\gamma\frac{\omega^T\omega}{||\omega||}
+\\\omega^Tx+b=\omega^Tx_0+b+\gamma\frac{\omega^T\omega}{||\omega||}
+\\f(x)=0+\gamma\frac{\omega^T\omega}{||\omega||}
+\\f(x)=\gamma||\omega||
+\\\gamma=\frac{f)(x)}{\omega}
 \]`
 
 
