@@ -44,11 +44,14 @@ g(f(x))=g(\omega^Tx+b) =
 
 #### 1.3.2 几何间隔(geometric margin)`\(\tilde{\gamma}\)`
 
+![](../assets/geometric margin.png)
+
 点`\(x\)`投影到超平面的点为`\(x_0\)`,因为`\(\omega\)`是垂直于超平面的法向量，设`\(x\)`到超平面的距离是`\(\gamma\)`,那么
 
 `\[
 x=x_0+\gamma \frac{\omega}{||\omega||}
 \]`
 
-![](../assets/geometric margin.png)
+
+
 
