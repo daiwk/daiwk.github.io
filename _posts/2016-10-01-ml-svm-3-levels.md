@@ -19,10 +19,10 @@ tags: [svm理解, ]
 svm中，使用+1/-1分类，而非logistic regression的0/1分类。
 
 `\[
-g(f(x))=g(w^Tx+b) =
+g(f(x))=g(\omega^Tx+b) =
 \begin{cases}
-+1, w^Tx+b >= 0 \\
--1, w^Tx+b < 0 \\
++1, \omega^Tx+b >= 0 \\
+-1, \omega^Tx+b < 0 \\
 \end{cases}
 \]`
 
@@ -32,14 +32,19 @@ g(f(x))=g(w^Tx+b) =
 
 #### 1.3.1 函数间隔(functional margin)`\(\hat{\gamma}\)`
 
-函数间隔：`\(\hat{\gamma}=y(w^Tx+b)=yf(x)\)`
+函数间隔：`\(\hat{\gamma}=y(\omega^Tx+b)=yf(x)\)`
 
-超平面(w,b)关于数据集T上的函数间隔：(w,b)关于T中所以样本点的函数间隔的最小值：`\(\hat{\gamma}=min\hat{\gamma}_i,i=0,1,...\)`
+超平面`\((\omega,b)\)`关于数据集T上的函数间隔：(w,b)关于T中所以样本点的函数间隔的最小值：`\(\hat{\gamma}=min\hat{\gamma}_i,i=0,1,...\)`
 
-当w，b同时扩大时，超平面没变（`\(w^Tx+b=0,2w^Tx+2b=0\)`），**但函数间隔却变大了**，所以，需要规范化。
+当w，b同时扩大时，超平面没变（`\(\omega^Tx+b=0,2\omega^Tx+2b=0\)`），**但函数间隔却变大了**，所以，需要规范化。
 
 #### 1.3.2 几何间隔(geometric margin)`\(\tilde{\gamma}\)`
 
+点`\(x\)`投影到超平面的点为`\(x_0\)`,因为w是垂直于超平面的法向量，设`\(x\)`到超平面的距离是`\(\gamma\)`,那么
+
+`\[
+x=x_0+\gamma \frac{\omega}{||\omega||}
+\]`
 
 ![](../assets/geometric margin.png)
 
