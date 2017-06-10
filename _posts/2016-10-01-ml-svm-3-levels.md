@@ -62,4 +62,10 @@ x=x_0+\gamma \frac{\omega}{||\omega||}
 \\\gamma=\frac{f(x)}{||\omega||}
 \]`
 
+几何间隔定义为：
 
+`\[
+\tilde{\gamma}=y\gamma=\frac{yf(x)}{||\omega||}=\frac{\hat{\gamma}}{||\omega||}
+\]`
+
+即，**几何间隔＝函数间隔/`\(||\omega||\)`**
