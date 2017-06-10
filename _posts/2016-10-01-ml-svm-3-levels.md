@@ -41,4 +41,5 @@ g(f(x))=g(w^Tx+b) =
 #### 1.3.2 几何间隔(geometric margin)`\(\tilde{\gamma}\)`
 
 
+![](../assets/geometric margin.png)
 
