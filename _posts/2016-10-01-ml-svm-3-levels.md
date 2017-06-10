@@ -52,6 +52,10 @@ g(f(x))=g(\omega^Tx+b) =
 x=x_0+\gamma \frac{\omega}{||\omega||}
 \]`
 
-
+因为`\(x_0\)`是超平面上的点，所以`\(f(x_0)=0\)`，所以
+`\[
+\\x=x_0+\gamma\frac{\omega}{||\omega||}
+\\\omega^Tx=\omega^Tx_0+\gamma\frac{\omega^T\omega}{||\omega||}
+\]`
 
 
