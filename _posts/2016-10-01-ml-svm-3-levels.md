@@ -8,6 +8,9 @@ tags: [svm理解, ]
 参考 
 **支持向量机通俗导论（理解SVM的三层境界）**：[http://blog.csdn.net/v_july_v/article/details/7624837](http://blog.csdn.net/v_july_v/article/details/7624837)
 
+**支持向量机: Maximum Margin Classifier**
+[http://blog.pluskid.org/?p=632](http://blog.pluskid.org/?p=632)
+
 ## 1. 最大间隔分类器
 
 ### 1.1 logistic regression
@@ -16,7 +19,7 @@ tags: [svm理解, ]
 
 ### 1.2 +1/-1分类
 
-svm中，使用+1/-1分类，而非logistic regression的0/1分类。
+svm中，使用+1/-1分类(方便推导公式)，而非logistic regression的0/1分类。
 
 `\[
 g(f(x))=g(\omega^Tx+b) =
@@ -26,13 +29,15 @@ g(f(x))=g(\omega^Tx+b) =
 \end{cases}
 \]`
 
+最简单的情形，假设数据是线性可分的。
+
 所以，要寻找超平面的两条边界间的最大间隔，从而求w和b。
 
 ### 1.3 函数间隔与几何间隔
 
 #### 1.3.1 函数间隔(functional margin)`\(\hat{\gamma}\)`
 
-函数间隔：`\(\hat{\gamma}=y(\omega^Tx+b)=yf(x)\)`
+函数间隔：`\(\hat{\gamma}=y(\omega^Tx+b)=yf(x)\)`（保证margin的非负）
 
 超平面`\((\omega,b)\)`关于数据集T上的函数间隔：(w,b)关于T中所以样本点的函数间隔的最小值：
 
