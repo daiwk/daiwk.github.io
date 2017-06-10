@@ -5,11 +5,34 @@ title: "svm理解"
 tags: [svm理解, ]
 ---
 
-参考 
-**支持向量机通俗导论（理解SVM的三层境界）**：[http://blog.csdn.net/v_july_v/article/details/7624837](http://blog.csdn.net/v_july_v/article/details/7624837)
+参考:
 
-**支持向量机: Maximum Margin Classifier**
++ **支持向量机通俗导论（理解SVM的三层境界）**：[http://blog.csdn.net/v_july_v/article/details/7624837](http://blog.csdn.net/v_july_v/article/details/7624837)
+
++ **支持向量机: Maximum Margin Classifier**
 [http://blog.pluskid.org/?p=632](http://blog.pluskid.org/?p=632)
+
++ **支持向量机: Support Vector**
+[http://blog.pluskid.org/?p=682](http://blog.pluskid.org/?p=682)
+
++ **支持向量机: Kernel**
+[http://blog.pluskid.org/?p=685](http://blog.pluskid.org/?p=685)
+
++ **支持向量机: Kernel**
+[http://blog.pluskid.org/?p=685](http://blog.pluskid.org/?p=685)
+
++ **支持向量机：Outliers**
+[http://blog.pluskid.org/?p=692](http://blog.pluskid.org/?p=692)
+
++ **支持向量机：Numerical Optimization**
+[http://blog.pluskid.org/?p=696](http://blog.pluskid.org/?p=696)
+
++ **支持向量机：Duality**
+[http://blog.pluskid.org/?p=702](http://blog.pluskid.org/?p=702)
+
++ **支持向量机：Kernel II**
+[http://blog.pluskid.org/?p=723](http://blog.pluskid.org/?p=723)
+
 
 ## 1. 最大间隔分类器
 
@@ -67,10 +90,13 @@ x=x_0+\gamma \frac{\omega}{||\omega||}
 \\\gamma=\frac{f(x)}{||\omega||}
 \]`
 
-几何间隔定义为：
+因为`\(\gamma\)`也是有符号的，而间隔只要他的绝对值，所以，几何间隔定义为：
 
 `\[
 \tilde{\gamma}=y\gamma=\frac{yf(x)}{||\omega||}=\frac{\hat{\gamma}}{||\omega||}
 \]`
 
 即，**几何间隔＝函数间隔/`\(||\omega||\)`**
+
+#### 1.3.3 最大间隔分类器（maximum margin classifier）
+
