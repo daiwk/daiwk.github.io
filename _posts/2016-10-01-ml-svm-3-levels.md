@@ -26,3 +26,12 @@ g(f(x))=g(w^Tx+b) =
 \end{cases}
 \]`
 
+所以，要寻找超平面的两条边界间的最大间隔，从而求w和b。
+
+### 1.3 函数间隔与几何间隔
+
+#### 1.3.1 函数间隔(functional margin)`\(\hat{\gamma}\)`
+
+函数间隔：`\(\hat{\gamma}\)`
+
+#### 1.3.2 几何间隔(geometric margin)`\(\tilde{\gamma}\)`
