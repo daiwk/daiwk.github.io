@@ -32,6 +32,10 @@ g(f(x))=g(w^Tx+b) =
 
 #### 1.3.1 函数间隔(functional margin)`\(\hat{\gamma}\)`
 
-函数间隔：`\(\hat{\gamma}\)`
+函数间隔：`\(\hat{\gamma}\)=y(w^Tx+b)=yf(x)`
+
+超平面(w,b)关于数据集T上的函数间隔：(w,b)关于T中所以样本点的函数间隔的最小值：`\(\hat{\gamma}=min\hat{\gamma}_i,i=0,1,...\)`
+
+当w，b同时扩大时，超平面没变（`\(w^Tx+b=0,2w^Tx+2b=0\)`），但函数距离却变大了，所以，需要规范化。
 
 #### 1.3.2 几何间隔(geometric margin)`\(\tilde{\gamma}\)`
