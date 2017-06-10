@@ -34,7 +34,11 @@ g(f(x))=g(\omega^Tx+b) =
 
 函数间隔：`\(\hat{\gamma}=y(\omega^Tx+b)=yf(x)\)`
 
-超平面`\((\omega,b)\)`关于数据集T上的函数间隔：(w,b)关于T中所以样本点的函数间隔的最小值：`\(\hat{\gamma}=min\hat{\gamma}_i,i=0,1,...\)`
+超平面`\((\omega,b)\)`关于数据集T上的函数间隔：(w,b)关于T中所以样本点的函数间隔的最小值：
+
+`\[
+\hat{\gamma}=min\hat{\gamma}_i,i=0,1,...
+\]`
 
 当w，b同时扩大时，超平面没变（`\(\omega^Tx+b=0,2\omega^Tx+2b=0\)`），**但函数间隔却变大了**，所以，需要规范化。
 
