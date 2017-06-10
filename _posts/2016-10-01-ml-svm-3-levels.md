@@ -19,7 +19,7 @@ tags: [svm理解, ]
 svm中，使用+1/-1分类，而非logistic regression的0/1分类。
 
 `\[
-g(w^Tx+b) =
+g(f(x))=g(w^Tx+b) =
 \begin{cases}
 +1, w^Tx+b >= 0 \\
 -1, w^Tx+b < 0 \\
