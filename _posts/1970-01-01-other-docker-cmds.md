@@ -5,6 +5,17 @@ title: "docker常用命令"
 tags: [docker常用命令,]
 ---
 
+## install docker-enter
+
+```
+docker pull jpetazzo/nsenter
+docker run --rm -v /usr/bin:/target jpetazzo/nsenter
+docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
+
+wget -P ~ https://github.com/yeasy/docker_practice/raw/master/_local/.bashrc_docker --no-check-certificate;
+echo "[ -f ~/.bashrc_docker ] && . ~/.bashrc_docker" >> ~/.bashrc; source ~/.bashrc
+```
+
 ## docker run
 
 ```
