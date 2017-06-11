@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "ml"
-title: "svm理解"
-tags: [svm理解, ]
+title: "深入理解svm"
+tags: [深入理解svm, ]
 ---
 
 参考:
@@ -14,9 +14,6 @@ tags: [svm理解, ]
 
 + **支持向量机: Support Vector**
 [http://blog.pluskid.org/?p=682](http://blog.pluskid.org/?p=682)
-
-+ **支持向量机: Kernel**
-[http://blog.pluskid.org/?p=685](http://blog.pluskid.org/?p=685)
 
 + **支持向量机: Kernel**
 [http://blog.pluskid.org/?p=685](http://blog.pluskid.org/?p=685)
@@ -99,4 +96,40 @@ x=x_0+\gamma \frac{\omega}{||\omega||}
 即，**几何间隔＝函数间隔/`\(||\omega||\)`**
 
 #### 1.3.3 最大间隔分类器（maximum margin classifier）
+
+对一个数据点进行分类，当这个点和超平面之间的间隔越大的时候，分类正确的把握越大(离超平面越远，那他肯定不是分界面附近的点，肯定属于某一个类别)。对于一个包含n个点的数据集，我们可以很自然地定义它的间隔为所有这n个点的间隔中最小的那个。于是，为了使得分类的把握尽量大，我们希望所选择的超平面能够最大化这个间隔值（**最大化这n个点里离超平面最近的点和超平面间的间隔**）。
+
+所以，最大间隔分类器的目标就是：
+
+`\[
+\max\tilde{\gamma}, s.t. y_i(\omega^Tx_i+b)=\hat{\gamma}_i>=\hat{\gamma}, i=1,2,...,n
+\]`
+
+其中，`\(\hat{\gamma}=\tilde{\gamma}||\omega||\)`。
+
+由于，即使超平面固定，`\(\hat{\gamma}\)`也会随着`\(||\omega||\)`的变化而变化，而我们的目标是固定超平面，所以可以固定`\(\hat{\gamma}\)`也可以固定`\(||\omega||\)`。为了方便推导，这里选择固定`\(\hat{\gamma}\)`。令`\(\hat{\gamma}=1\)`，则`\(\tilde{\gamma}=\frac{1}{||\omega||}\)`，所以，优化目标转化为：
+
+`\[
+\max\frac{1}{||\omega||}, s.t. y_i(\omega^Tx_i+b)=\hat{\gamma}_i>=1, i=1,2,...,n
+\]`
+
+![](../assets/maximum margin classifier.png)
+
+图中，红色和蓝色两个超平面到中间的超平面的距离都是`\(\tilde{\gamma}\)`，当这个分类间隔最大的时候，这两个超平面上的点都叫做support vector,满足`\(y(\omega^Tx+b)=1\)`，而非support vector的点，都有`\(y(\omega^Tx+b)>1\)`。
+
+
+### 2. support vector
+
+support vector的一个最直接的好处就是计算和存储上的优越性，几百万个点，实际上可能只有一两百个surpport vector，存储这一两百个点拿来做inference之类的就够了。
+
+
+### 3. kernel
+
+### 4. Outliers
+
+### 5. Numerical Optimization
+
+### 6. Duality
+
+### 7. Kernel II
 
