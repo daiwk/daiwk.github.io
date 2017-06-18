@@ -102,13 +102,23 @@ tf为cpu和gpu提供了管理设备的对象接口，每一个对象负责**分�
 
 这样的通讯机制可以转化为发送节点和接收节点的实现问题，用户无须设计节点间的通信流程，可以用同一套代码自动扩展到不同硬件环境并处理复杂的通信流程。下图就是cpu和gpu间的通讯。
 
-![](../assets/cpu gpu communication.png)
+![](../assets/tf step by step/chap1/cpu gpu communication.png)
 
 代码层面，从单机单设备到单机多设备的修改，只要一行，就可以实现单gpu到多gpu的修改。
 
-![](../assets/code 1 gpu to multi gpu.png)
+![](../assets/tf step by step/chap1/code 1 gpu to multi gpu.png)
 
+#### 2.2.3 分布式通讯机制
 
++ 发送节点和接收节点与单机的实现不同：变为不同机器间使用TCP或RDMA（Remote Direct Memory Access,不需要cpu的参与直接把数据复制到远程机器的内存指定地址的操作。）。
+
++ 容错方面，故障会在两种情况下被检测，一种是信息从发送节点传输到接收节点失败时；另一种是周期性的worker心跳检测失败时。
+
++ 故障恢复：当故障被检测到时，整个计算图会被终止并重启。Variable node可以被持久化，tf支持检查点（checkpoint）的保存和恢复，每个Variable node都会链接到一个Save node，每隔几轮迭代就会保存一次数据到持久化的存储系统（例如分布式文件系统）。同样地，每个Variable node都会链接一个Restore node，每次重启时，都会被调用并恢复数据。所以，发生故障并重启后，模型参数将得到保留，训练可以从上一个checkpoint恢复而不需要从头开始。
+
+另，GPU集群和单GPU的加速比变化如图。少于16卡时，基本没性能损耗。50卡时，加速比40。100卡时，加速比达到56。
+
+![](../assets/tf step by step/chap1/gpu cluster accelerate.png)
 
 ### 2.3 拓展功能
 
