@@ -5,9 +5,9 @@ title: "tensor-to-tensor"
 tags: [tensor-to-tensor, t2t, ]
 ---
 
-参考(一个模型库学习所有：谷歌开源模块化深度学习系统Tensor2Tensor)[https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650728195&idx=1&sn=fee60fcf9d65a7fc1a4724c36518abc5&chksm=871b237db06caa6b4ec51f4bdb26d4f300d1fdb7883d067d16bb028fad5eeda85f9da205cafe&mpshare=1&scene=1&srcid=0620OFv5szDePHE3dhbAsDgH&pass_ticket=02kbaa2bXJP8WM9p0uBjXe%2F%2FwL4NTu7po2dscLQk1ttBb0YAEBNnLOiV07OR7Anm#rd]
+参考[一个模型库学习所有：谷歌开源模块化深度学习系统Tensor2Tensor](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650728195&idx=1&sn=fee60fcf9d65a7fc1a4724c36518abc5&chksm=871b237db06caa6b4ec51f4bdb26d4f300d1fdb7883d067d16bb028fad5eeda85f9da205cafe&mpshare=1&scene=1&srcid=0620OFv5szDePHE3dhbAsDgH&pass_ticket=02kbaa2bXJP8WM9p0uBjXe%2F%2FwL4NTu7po2dscLQk1ttBb0YAEBNnLOiV07OR7Anm#rd)
 
-github: (https://github.com/tensorflow/tensor2tensor)[https://github.com/tensorflow/tensor2tensor]
+github: [https://github.com/tensorflow/tensor2tensor](https://github.com/tensorflow/tensor2tensor)
 
 ## 简介
 
@@ -31,7 +31,7 @@ T2T 库构建于 TensorFlow 之上，定义了深度学习系统所需的各个�
 
 ### Attention Is All You Need
 
-链接：(https://arxiv.org/abs/1706.03762)[https://arxiv.org/abs/1706.03762]
+链接：[https://arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762)
 
 在编码器-解码器配置中，显性序列显性转录模型（dominant sequence transduction model）基于复杂的 RNN 或 CNN。表现最佳的模型也需通过注意力机制（attention mechanism）连接编码器和解码器。**我们提出了一种新型的简单网络架构——Transformer，它完全基于注意力机制，彻底放弃了循环和卷积。**两项机器翻译任务的实验表明，这些模型的翻译质量更优，同时更并行，所需训练时间也大大减少。我们的模型在 WMT 2014 英语转德语的翻译任务中取得了 BLEU 得分 28.4 的成绩，领先当前现有的最佳结果（包括集成模型）超过 2 个 BLEU 分值。在 WMT 2014 英语转法语翻译任务上，在 8 块 GPU 上训练了 3.5 天之后，我们的模型获得了新的单模型顶级 BLEU 得分 41.0，只是目前文献中最佳模型训练成本的一小部分。我们表明 Transformer 在其他任务上也泛化很好，把它成功应用到了有大量训练数据和有限训练数据的英语组别分析上。
 
@@ -39,7 +39,7 @@ T2T 库构建于 TensorFlow 之上，定义了深度学习系统所需的各个�
 
 单一模型同时在 ImageNet、多个翻译任务、图像抓取（COCO 数据集）、一个语音识别语料库和一个英文解析任务中获得训练。该模型架构整合了多个领域的组件。它包含卷基层、注意力机制和 sparsely-gated 层，其中的每个组件对于特定任务都是非常重要的，我们观察到添加这些组件并不会影响模型性能——在大多数情况下，它反而会改善任务中的表现。我们还展示了多个任务联合训练会让仅含少量数据的任务收益颇丰，而大型任务的表现仅有少量性能衰减
 
-链接：(https://arxiv.org/abs/1706.05137)[https://arxiv.org/abs/1706.05137]
+链接：[https://arxiv.org/abs/1706.05137](https://arxiv.org/abs/1706.05137)
 
 ## 实践
 
