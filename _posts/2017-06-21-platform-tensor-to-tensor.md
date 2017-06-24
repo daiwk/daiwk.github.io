@@ -2,7 +2,7 @@
 layout: post
 category: "platform"
 title: "tensor-to-tensor"
-tags: [tensor-to-tensor, t2t, ]
+tags: [tensor-to-tensor, t2t, tensor2tensor]
 ---
 
 目录
