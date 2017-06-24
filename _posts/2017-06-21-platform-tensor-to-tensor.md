@@ -7,15 +7,15 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
 
 目录
 
-  * [1. 简介](#1-简介)
-  * [2. 模块化多任务训练](#2-模块化多任务训练)
-  * [3. 内置的最佳实践](#3-内置的最佳实践)
-  * [4. Attention Is All You Need](#4-attention-is-all-you-need)
-     * [4.1 背景](#41-背景)
-  * [5. One Model To Learn Them All](#5-one-model-to-learn-them-all)
-  * [6. 实践](#6-实践)
-     * [6.1 安装cuda 8.0](#61-安装cuda-80)
-     * [6.2 安装tensor2tensor](#62-安装tensor2tensor)
+* [1. 简介](#1-简介)
+* [2. 模块化多任务训练](#2-模块化多任务训练)
+* [3. 内置的最佳实践](#3-内置的最佳实践)
+* [4. Attention Is All You Need](#4-attention-is-all-you-need)
+ * [4.1 背景](#41-背景)
+* [5. One Model To Learn Them All](#5-one-model-to-learn-them-all)
+* [6. 实践](#6-实践)
+ * [6.1 安装cuda 8.0](#61-安装cuda-80)
+ * [6.2 安装tensor2tensor](#62-安装tensor2tensor)
 
 参考[一个模型库学习所有：谷歌开源模块化深度学习系统Tensor2Tensor](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650728195&idx=1&sn=fee60fcf9d65a7fc1a4724c36518abc5&chksm=871b237db06caa6b4ec51f4bdb26d4f300d1fdb7883d067d16bb028fad5eeda85f9da205cafe&mpshare=1&scene=1&srcid=0620OFv5szDePHE3dhbAsDgH&pass_ticket=02kbaa2bXJP8WM9p0uBjXe%2F%2FwL4NTu7po2dscLQk1ttBb0YAEBNnLOiV07OR7Anm#rd)
 
