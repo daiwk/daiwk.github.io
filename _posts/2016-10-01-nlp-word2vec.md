@@ -51,11 +51,11 @@ P(w_1, ..., w_T) = \prod_{t=n}^TP(w_t|w_{t-1}, w_{t-2}, ..., w_{t-n+1})
 
 
 <html>
-<img src='../assets/word2vec-nnlm.png' style='max-width: 400'/>
+<img src='../assets/word2vec-nnlm.png' style='max-width: 400px'/>
 <html>
 
 <html>
-<img src='../assets/word2vec-nnlm-noted.png' style='max-width: 400'/>
+<img src='../assets/word2vec-nnlm-noted.jpg' style='max-width: 400px'/>
 <html>
 
 
@@ -90,7 +90,7 @@ CBOW模型通过一个词的上下文（各N个词）预测当前词。当N=2时
 ![](../assets/word2vec-cbow.png)
 
 <html>
-<img src='../assets/word2vec-cbow.png' style='max-width: 400'/>
+<img src='../assets/word2vec-cbow.png' style='max-width: 400px'/>
 <html>
 
 
@@ -107,7 +107,7 @@ context = \frac{x_{t-1} + x_{t-2} + x_{t+1} + x_{t+2}}{4}
 CBOW的好处是对上下文词语的分布在词向量上进行了平滑，去掉了噪声，因此在小数据集上很有效。而Skip-gram的方法中，用一个词预测其上下文，得到了当前词上下文的很多样本，因此可用于更大的数据集。
 
 <html>
-<img src='../assets/word2vec-skipgram.png' style='max-width: 400'/>
+<img src='../assets/word2vec-skipgram.png' style='max-width: 400px'/>
 <html>
 
 如上图所示，Skip-gram模型的具体做法是，将一个词的词向量映射到2n个词的词向量（2n表示当前输入词的前后各n个词），然后分别通过softmax得到这2n个词的分类损失值之和。
