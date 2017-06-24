@@ -53,7 +53,7 @@ P(w_1, ..., w_T) = \prod_{t=n}^TP(w_t|w_{t-1}, w_{t-2}, ..., w_{t-n+1})
 <img src='../assets/word2vec-nnlm.png' style='max-width: 400px'/>
 <img src='../assets/word2vec-nnlm-noted.jpg' style='max-width: 400px'/>
 <br/>
-<html>
+</html>
 
 + 对于每个样本，模型输入`\(w_{t-n+1},...w_{t-1}\)`，输出句子第t个词为字典中`\(|V|\)`个词的概率。每个输入词`\(w_{t-n+1},...w_{t-1}\)`通过矩阵`\(C\)`映射到词向量`\(C(w_{t-n+1}),...C(w_{t-1})\)`
 
@@ -90,7 +90,7 @@ CBOW模型通过一个词的上下文（各N个词）预测当前词。当N=2时
 <img src='../assets/word2vec-cbow.png' style='max-width: 400px'/>
 <br/>
 
-<html>
+</html>
 
 具体来说，不考虑上下文的词语输入顺序，CBOW是用上下文词语的词向量的均值来预测当前词。即：
 
@@ -109,6 +109,6 @@ CBOW的好处是对上下文词语的分布在词向量上进行了平滑，去�
 <img src='../assets/word2vec-skipgram.png' style='max-width: 400px'/>
 <br/>
 
-<html>
+</html>
 
 如上图所示，Skip-gram模型的具体做法是，将一个词的词向量映射到2n个词的词向量（2n表示当前输入词的前后各n个词），然后分别通过softmax得到这2n个词的分类损失值之和。

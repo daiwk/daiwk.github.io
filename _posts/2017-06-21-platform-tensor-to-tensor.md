@@ -43,3 +43,7 @@ T2T 库构建于 TensorFlow 之上，定义了深度学习系统所需的各个�
 
 ## 实践
 
+### 安装cuda 8.0
+
++ 安装cuda 8.0
++ 安装cuda 8.0所需的对应cudnn版本（t2t要求cudnn5.0 for cuda 8.0）
