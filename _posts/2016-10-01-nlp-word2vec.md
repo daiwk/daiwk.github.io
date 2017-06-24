@@ -76,8 +76,22 @@ J(\theta) = -\sum_{i=1}^N\sum_{c=1}^{|V|}y_k^{i}log(softmax(g_k^i))
 
 # 2. CBOW(Continuous Bag-of-Words)
 
+CBOW模型通过一个词的上下文（各N个词）预测当前词。当N=2时，模型如下图所示：
+
 ![](../assets/word2vec-cbow.png)
+
+具体来说，不考虑上下文的词语输入顺序，CBOW是用上下文词语的词向量的均值来预测当前词。即：
+
+`\[
+context = \frac{x_{t-1} + x_{t-2} + x_{t+1} + x_{t+2}}{4}
+\]`
+
+其中`\(x_t\)`为第t个词的词向量，分类分数（score）向量 `\(z=U*context\)`，最终的分类y采用softmax，损失函数采用多类分类交叉熵。
 
 # 3. Continuous skip-gram
 
+CBOW的好处是对上下文词语的分布在词向量上进行了平滑，去掉了噪声，因此在小数据集上很有效。而Skip-gram的方法中，用一个词预测其上下文，得到了当前词上下文的很多样本，因此可用于更大的数据集。
+
 ![](../assets/word2vec-skipgram.png)
+
+如上图所示，Skip-gram模型的具体做法是，将一个词的词向量映射到2n个词的词向量（2n表示当前输入词的前后各n个词），然后分别通过softmax得到这2n个词的分类损失值之和。
