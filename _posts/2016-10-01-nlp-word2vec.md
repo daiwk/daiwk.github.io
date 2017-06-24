@@ -48,16 +48,12 @@ P(w_1, ..., w_T) = \prod_{t=n}^TP(w_t|w_{t-1}, w_{t-2}, ..., w_{t-n+1})
 
 其中，`\(f(w_t, w_{t-1}, ..., w_{t-n+1})\)`表示根据历史n-1个词得到当前词`\(w_t\)`的条件概率，`\(R(\theta)\)`表示参数正则项。
 
-
-
 <html>
+<br/>
 <img src='../assets/word2vec-nnlm.png' style='max-width: 400px'/>
-<html>
-
-<html>
 <img src='../assets/word2vec-nnlm-noted.jpg' style='max-width: 400px'/>
+<br/>
 <html>
-
 
 + 对于每个样本，模型输入`\(w_{t-n+1},...w_{t-1}\)`，输出句子第t个词为字典中`\(|V|\)`个词的概率。每个输入词`\(w_{t-n+1},...w_{t-1}\)`通过矩阵`\(C\)`映射到词向量`\(C(w_{t-n+1}),...C(w_{t-1})\)`
 
@@ -87,12 +83,14 @@ J(\theta) = -\sum_{i=1}^N\sum_{c=1}^{|V|}y_k^{i}log(softmax(g_k^i))
 
 CBOW模型通过一个词的上下文（各N个词）预测当前词。当N=2时，模型如下图所示：
 
-![](../assets/word2vec-cbow.png)
 
 <html>
+<br/>
+
 <img src='../assets/word2vec-cbow.png' style='max-width: 400px'/>
-<html>
+<br/>
 
+<html>
 
 具体来说，不考虑上下文的词语输入顺序，CBOW是用上下文词语的词向量的均值来预测当前词。即：
 
@@ -107,7 +105,10 @@ context = \frac{x_{t-1} + x_{t-2} + x_{t+1} + x_{t+2}}{4}
 CBOW的好处是对上下文词语的分布在词向量上进行了平滑，去掉了噪声，因此在小数据集上很有效。而Skip-gram的方法中，用一个词预测其上下文，得到了当前词上下文的很多样本，因此可用于更大的数据集。
 
 <html>
+<br/>
 <img src='../assets/word2vec-skipgram.png' style='max-width: 400px'/>
+<br/>
+
 <html>
 
 如上图所示，Skip-gram模型的具体做法是，将一个词的词向量映射到2n个词的词向量（2n表示当前输入词的前后各n个词），然后分别通过softmax得到这2n个词的分类损失值之和。
