@@ -76,5 +76,8 @@ J(\theta) = -\sum_{i=1}^N\sum_{c=1}^{|V|}y_k^{i}log(softmax(g_k^i))
 
 # 2. CBOW(Continuous Bag-of-Words)
 
+![](../assets/word2vec-cbow.png)
+
 # 3. Continuous skip-gram
 
+![](../assets/word2vec-skipgram.png)
