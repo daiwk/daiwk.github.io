@@ -87,7 +87,7 @@ CBOW模型通过一个词的上下文（各N个词）预测当前词。当N=2时
 <html>
 <br/>
 
-<img src='../assets/word2vec-cbow.png' style='max-height: : 100px'/>
+<img src='../assets/word2vec-cbow.png' style='max-height: 300px'/>
 <br/>
 
 </html>
@@ -106,7 +106,7 @@ CBOW的好处是对上下文词语的分布在词向量上进行了平滑，去�
 
 <html>
 <br/>
-<img src='../assets/word2vec-skipgram.png' style='max-height: 100px'/>
+<img src='../assets/word2vec-skipgram.png' style='max-height: 300px'/>
 <br/>
 
 </html>

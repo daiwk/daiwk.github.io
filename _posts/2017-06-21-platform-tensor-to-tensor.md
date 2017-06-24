@@ -35,6 +35,14 @@ T2T 库构建于 TensorFlow 之上，定义了深度学习系统所需的各个�
 
 主要的序列转换模型（dominant sequence transduction model）都是基于复杂的 RNN 或 CNN的encoder-decoder模型。表现最佳的模型也需通过注意力机制（attention mechanism）连接编码器和解码器。**我们提出了一种新型的简单网络架构——Transformer，它完全基于注意力机制，彻底放弃了循环和卷积。**两项机器翻译任务的实验表明，这些模型的**翻译质量更优，同时更并行，所需训练时间也大大减少。**我们的模型在 WMT 2014 英语转德语的翻译任务中取得了 BLEU 得分 28.4 的成绩，领先当前现有的最佳结果（包括集成模型）超过 2 个 BLEU 分值。在 WMT 2014 英语转法语翻译任务上，在 8 块 GPU 上训练了 3.5 天之后，我们的模型获得了新的单模型顶级 BLEU 得分 41.0，只是目前文献中最佳模型训练成本的一小部分。我们表明 Transformer 在其他任务上也泛化很好，把它成功应用到了有大量训练数据和有限训练数据的英语组别分析上。
 
+#### 背景
+
+rnn需要当前时间步的状态，以及之前时间步的状态，所以这种序列特性天生地（inherently）难以并行，当序列较长时，由于内存有限，这缺陷尤为明显。最近的解决方法主要有两种：factorization tricks[Factorization tricks for LSTM networks](https://arxiv.org/abs/1703.10722)和conditional computation[Outrageously large neural networks: The sparsely-gated mixture-of-experts layer](https://arxiv.org/abs/1701.06538)[Conditional computation, where parts of the network are active on a per-example basis, has been proposed in theory as a way of dramatically increasing model capacity without a proportional increase in computation.]。**但序列计算的局限性一直还在。**
+
+注意力机制往往只是与rnn结合使用，可以不需要关心输入输出序列的distance就能对输入输出序列的依赖关系进行建模(allows modeling of dependencies without regard to their distance in the input or output sequences.)。
+
+本文的Transformer避开了recurrence，只用attention，便可以刻画出输入和输出的依赖关系。由于并行性得到了提升，训练时间可以缩短到8个P100 GPU只要12小时，并且翻译质量有所提升。
+
 ### One Model To Learn Them All
 
 单一模型同时在 ImageNet、多个翻译任务、image caption（COCO 数据集）、一个语音识别语料库和一个英文解析任务中获得训练。该模型架构整合了多个领域的组件。它包含卷基层、注意力机制和 sparsely-gated 层，其中的每个组件对于特定任务都是非常重要的，我们观察到添加这些组件并不会影响模型性能——在大多数情况下，它反而会改善任务中的表现。我们还展示了**多个任务联合训练会让仅含少量数据的任务收益颇丰，而大型任务的表现仅有少量性能衰减。**
@@ -47,3 +55,16 @@ T2T 库构建于 TensorFlow 之上，定义了深度学习系统所需的各个�
 
 + 安装cuda 8.0
 + 安装cuda 8.0所需的对应cudnn版本（t2t要求cudnn5.0 for cuda 8.0）
+
+### 安装tensor2tensor
+
+```
+# Assumes tensorflow or tensorflow-gpu installed
+pip install tensor2tensor
+
+# Installs with tensorflow-gpu requirement
+pip install tensor2tensor[tensorflow_gpu]
+
+# Installs with tensorflow (cpu) requirement
+pip install tensor2tensor[tensorflow]
+```
