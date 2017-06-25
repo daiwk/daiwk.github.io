@@ -73,9 +73,15 @@ to averaging attention-weighted positions, an effect we counteract with Multi-He
 </html>
 
 + encoder:
+
+encoder堆叠了N=6层，每层有两个子层：
+    + multi-head self-attention
+    + position-wise的全连接层
+这两个子层内均是residual connection，再加上layer normalization，即，`\(LayerNorm(x+Sublayer(x))\)`（即图中的Add&Norm），Sublayer是子层自己实现的函数。**为了方便这些residual connection，架构中的所有子层（包括embedding）,输出的维度均是`\(d_model=512\)`。**
+
 + decoder:
 
-
+decoder同样堆叠了N=6层。**在encoder的两个子层的基础上，decoder加了一个子层，即，对encoder的输出增加了一个masked multi-head attention层。**连接一样是Add & Norm。另外，**还对self-attention子层进行了修改，prevent positions from attending to subsequent positions.** **由于输入的output embedding有一个position的offset，所以结合masking，可以保证对位置i的预测，只依赖于位置小于i的位置的输出。**
 
 ## 5. One Model To Learn Them All
 
