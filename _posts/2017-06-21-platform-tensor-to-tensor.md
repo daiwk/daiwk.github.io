@@ -12,6 +12,8 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
 * [3. 内置的最佳实践](#3-内置的最佳实践)
 * [4. Attention Is All You Need](#4-attention-is-all-you-need)
  * [4.1 背景](#41-背景)
+ * [4.2 架构](#42-架构)
+    * [4.2.1 encoder and decoder stacks](#421-encoder-and-decoder-stacks)
 * [5. One Model To Learn Them All](#5-one-model-to-learn-them-all)
 * [6. 实践](#6-实践)
  * [6.1 安装cuda 8.0](#61-安装cuda-80)
@@ -62,7 +64,7 @@ to averaging attention-weighted positions, an effect we counteract with Multi-He
 
 沿用了encoder-decoder架构，框架用于解决由一个任意长度的源序列到另一个任意长度的目标序列的变换问题。即编码阶段将整个源序列编码成一个向量，解码阶段通过最大化预测序列概率，从中解码出整个目标序列。Transformer同样使用了encoder-decoder，在编码和解码阶段均使用stacked self-attention、point-wise和全连接。
 
-#### encoder and decoder stacks
+#### 4.2.1 encoder and decoder stacks
 
 <html>
 <br/>
