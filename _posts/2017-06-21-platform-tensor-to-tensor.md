@@ -67,7 +67,7 @@ to averaging attention-weighted positions, an effect we counteract with Multi-He
 <html>
 <br/>
 
-<img src='../assets/transformer-model architecture.png' style='max-height: 300px'/>
+<img src='../assets/transformer-model architecture.png' style='max-height: 400px'/>
 <br/>
 
 </html>
