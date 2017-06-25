@@ -58,6 +58,25 @@ to averaging attention-weighted positions, an effect we counteract with Multi-He
 
 另外，self-attention(即intra-attention)是一种会对一个单独的序列的不同位置进行关联的注意力机制。
 
+### 4.2 架构
+
+沿用了encoder-decoder架构，框架用于解决由一个任意长度的源序列到另一个任意长度的目标序列的变换问题。即编码阶段将整个源序列编码成一个向量，解码阶段通过最大化预测序列概率，从中解码出整个目标序列。Transformer同样使用了encoder-decoder，在编码和解码阶段均使用stacked self-attention、point-wise和全连接。
+
+#### encoder and decoder stacks
+
+<html>
+<br/>
+
+<img src='../assets/transformer-model architecture.png' style='max-height: 300px'/>
+<br/>
+
+</html>
+
++ encoder:
++ decoder:
+
+
+
 ## 5. One Model To Learn Them All
 
 单一模型同时在 ImageNet、多个翻译任务、image caption（COCO 数据集）、一个语音识别语料库和一个英文解析任务中获得训练。该模型架构整合了多个领域的组件。它包含卷基层、注意力机制和 sparsely-gated 层，其中的每个组件对于特定任务都是非常重要的，我们观察到添加这些组件并不会影响模型性能——在大多数情况下，它反而会改善任务中的表现。我们还展示了**多个任务联合训练会让仅含少量数据的任务收益颇丰，而大型任务的表现仅有少量性能衰减。**
