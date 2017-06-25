@@ -14,6 +14,19 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
  * [4.1 背景](#41-背景)
  * [4.2 架构](#42-架构)
     * [4.2.1 encoder and decoder stacks](#421-encoder-and-decoder-stacks)
+    * [4.2.2 attention](#422-attention)
+    * [4.2.3 position-wise feed-forward networks](#423-position-wise-feed-forward-networks)
+    * [4.2.4 embeddings and softmax](#424-embeddings-and-softmax)
+    * [4.2.5 positional encoding](#425-positional-encoding)
+ * [4.3 训练](#43-训练)
+    * [4.3.1 训练数据和batching](#431-训练数据和batching)
+    * [4.3.2 hardware &amp; schedule](#432-hardware--schedule)
+    * [4.3.3 optimizer](#433-optimizer)
+    * [4.3.4 regularizatioin](#434-regularizatioin)
+ * [4.4 结果](#44-结果)
+    * [4.4.1 机器翻译](#441-机器翻译)
+    * [4.4.2 model variations](#442-model-variations)
+    * [4.4.3 English Constituency Parsing](#443-english-constituency-parsing)
 * [5. One Model To Learn Them All](#5-one-model-to-learn-them-all)
 * [6. 实践](#6-实践)
  * [6.1 安装cuda 8.0](#61-安装cuda-80)
@@ -85,6 +98,43 @@ encoder堆叠了N=6层，每层有两个子层：
 
 decoder同样堆叠了N=6层。**在encoder的两个子层的基础上，decoder加了一个子层，即，对encoder的输出增加了一个masked multi-head attention层。**连接一样是Add & Norm。另外，**还对self-attention子层进行了修改，prevent positions from attending to subsequent positions.** **由于输入的output embedding有一个position的offset，所以结合masking，可以保证对位置i的预测，只依赖于位置小于i的位置的输出。**
 
+#### 4.2.2 attention
+
+attention函数：将一个query和一系列的key-value对映射起来
+
++ scaled dot-product attention
+
++ multi-head attention
+
++ attention在本模型中的应用
+
+#### 4.2.3 position-wise feed-forward networks
+
+#### 4.2.4 embeddings and softmax
+
+#### 4.2.5 positional encoding
+
+### 4.3 训练
+
+#### 4.3.1 训练数据和batching
+
+#### 4.3.2 hardware & schedule
+
+#### 4.3.3 optimizer
+
+
+#### 4.3.4 regularizatioin
+
+
+### 4.4 结果
+
+#### 4.4.1 机器翻译
+
+#### 4.4.2 model variations
+
+#### 4.4.3 English Constituency Parsing
+
+Constituency: 选区；选区的选民；支持者；主顾
 ## 5. One Model To Learn Them All
 
 单一模型同时在 ImageNet、多个翻译任务、image caption（COCO 数据集）、一个语音识别语料库和一个英文解析任务中获得训练。该模型架构整合了多个领域的组件。它包含卷基层、注意力机制和 sparsely-gated 层，其中的每个组件对于特定任务都是非常重要的，我们观察到添加这些组件并不会影响模型性能——在大多数情况下，它反而会改善任务中的表现。我们还展示了**多个任务联合训练会让仅含少量数据的任务收益颇丰，而大型任务的表现仅有少量性能衰减。**
