@@ -91,10 +91,10 @@ to averaging attention-weighted positions, an effect we counteract with Multi-He
 
 encoder堆叠了N=6层，每层有两个子层：
 
-    + multi-head self-attention
-    + position-wise的全连接层
+  + multi-head self-attention
+  + position-wise的全连接层
 
-这两个子层内均是residual connection，再加上layer normalization，即，`\(LayerNorm(x+Sublayer(x))\)`（即图中的Add&Norm），Sublayer是子层自己实现的函数。**为了方便这些residual connection，架构中的所有子层（包括embedding）,输出的维度均是`\(d_model=512\)`。**
+这两个子层内均是residual connection，再加上layer normalization，即，`\(LayerNorm(x+Sublayer(x))\)`（即图中的Add&Norm），Sublayer是子层自己实现的函数。**为了方便这些residual connection，架构中的所有子层（包括embedding）,输出的维度均是`\(d_{model}=512\)`。**
 
 + decoder:
 
