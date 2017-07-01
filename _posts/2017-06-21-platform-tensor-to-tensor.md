@@ -98,7 +98,7 @@ encoder堆叠了N=6层，每层有两个子层：
 
 + decoder:
 
-decoder同样堆叠了N=6层。**在encoder的两个子层的基础上，decoder加了一个子层，即，对encoder的输出增加了一个masked multi-head attention层。**连接一样是Add & Norm。另外，**还对self-attention子层进行了修改，prevent positions from attending to subsequent positions.** **由于输入的output embedding有一个position的offset，所以结合masking，可以保证对位置i的预测，只依赖于位置小于i的位置的输出。**
+decoder同样堆叠了N=6层。**在encoder的两个子层的基础上，decoder加了一个子层，即，对encoder的输出增加了一个masked multi-head attention层【通过添加mask，这个子层不要encoder的输出作为输入，只要output的embedding作为输入】。**连接一样是Add & Norm。另外，**还对self-attention子层进行了修改，prevent positions from attending to subsequent positions.** **由于输入的output embedding有一个position的offset，所以结合masking，可以保证对位置i的预测，只依赖于位置小于i的位置的输出。**
 
 #### 4.2.2 attention
 
@@ -167,11 +167,21 @@ Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 
 + attention在本模型中的应用
 
-  + 瞄瞄
-  + 吕
-  + 册
- 
+  + encoder-decoder结构中，对当前层的decoder而言，query来自前一层的decoder，key和value来自encoder的输出。
+  + encoder有self-attention层。在self-attention中，所有层的key，value和query都来自于前一层encoder的输出。因此，当前层的encoder的每个位置可以attend to前一层的所有位置。
+  + 类似的，当前层的encoder的每个位置（例如位置i）可以attend to前一层的所有位置（包括位置i）。但为了保持auto-regressive特性，需要阻止leftword infomation（左边，即encoder的输出） 流入decoder，所以在scaled dot-product attention里使用mask把所有输入给softmax的都mask掉（**图figure2中的mask(opt)**）。相当于不要Q(上一层decoder的输出)，也不要K，V（encoder的输出，所以图里，encoder的输出在mask这层被干掉了，所以没画这条线）
+
 #### 4.2.3 position-wise feed-forward networks
+
+其实每个encoder和decoder层，除了attention子层之外，还有一个全连接的前馈网络。这个前馈网络会作用于每一个position。这个前馈网络包括了两种线性变换：
+
+`\[
+FFN(x)=ReLU(xW_1+b_1)W_2+b_2=max(0, xW_1+b_1)W_2+b_2
+\]`
+
+**不同位置的线性变换是一样的，不同层的变换是不同的。**
+
+另一种理解方法其实就是，2个卷积层（kernel size=1）。本文中，`\(d_{model}=512\)`，inner-layer的维度是`\(d_ff=2048\)`。其实，这种position-wise的前馈网络实际上可以看作是另一种attention（附录里有说明。。。。）
 
 #### 4.2.4 embeddings and softmax
 
