@@ -136,14 +136,14 @@ Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 
 有两种常用的attention：addictive attention和dot-product attention。dot-product attention和scaled dot-product attention的唯一区别就是，没有除以`\(\sqrt{d_k}\)`。addictive attention使用一个只有一个隐层的前馈神经网络计算weight。计算复杂度上二者相似，但由于有高度优化的矩阵乘法实现，所以dot-product的速度和空间利用会更好。
 
-当`\(d_k\)`不大时，additive attention比没用scale的dot-product attention表现更好。但`\(d_k\)`很大时，点积会变得特别大，所以softmax会出现有些区域的梯度变得特别小（**例如，假设`\(q\)`和`\(k\)`是独立的随机变量，均值都是0，方差都是1，那么他们的点积`\(qk=\sum^{d_k}_{i=1}q_ik_i\)`的均值是0，方差是`\(d_k*1^2=d_k\)`。**）
+当`\(d_k\)`不大时，additive attention比没用scale的dot-product attention表现更好。但`\(d_k\)`很大时，点积会变得特别大，所以softmax会出现有些区域的梯度变得特别小（**例如，假设`\(q\)`和`\(k\)`是独立的随机变量，均值都是0，方差都是1，那么他们的点积`\(qk=\sum^{d_k}_{i=1}q_ik_i\)`的均值是0，方差是`\(d_k*1^2=d_k\)`。【详见下面的两个随机变量的和与积的方差推导】**），因此，需要通过除以`\(\sqrt{d_k}\)`来scale。
 
 `\[
-\\设 X 与 Y 是两个随机变量，则
-\\D(X+Y)= D(X)+D(Y)+2Cov(X,Y)
-\\D(X -Y)= D(X)+D(Y)-2Cov(X,Y)
+\\设 X 与 Y 是两个随机变量，则方差
+\\V(X+Y)= V(X)+V(Y)+2Cov(X,Y)
+\\V(X -Y)= V(X)+V(Y)-2Cov(X,Y)
 \\特别的，当X，Y是两个不相关的随机变量则
-\\D(X+Y)=D(X)+D(Y),D(X-Y)=D(X)+D(Y)
+\\V(X+Y)=V(X)+V(Y),V(X-Y)=V(X)+V(Y)
 \]`
 
 <html>
@@ -155,6 +155,15 @@ Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 </html>
 
 + multi-head attention
+
+实际应用中，并不是直接计算`\(d_model\)`维【前面提到了，架构中的所有子层（包括embedding）,输出的维度均是`\(d_{model}=512\)`】的query，key，value。而是把这`\(d_model\)`维拆成`\(h\)`份，所以`\(d_k=d_v=d_model/h\)`,(因为`\(d_model\)`是一样的，`\(h\)`也是一样的，所以`\(d_k=d_v\)`)。而这个变换通过对`\(\Q,K,W)`各自进行一个线性变换，变成`\(d_k,d_k,d_v\)`维即可，最终通过concat(把`\(h\)`个结果首尾相连),然后再做一个线性变换，变成`\(d_model\)`维。
+
+`\[
+\\MultiHead(Q,K,V)=Concat(head_1,...,head_h)W^Q
+\\where head_i=Attention(QW_i^Q,KW_i^K,VW_i^V)
+\]`
+
+其中，`\(W_i^Q\in \mathbb{d_model\times d_k}\)`
 
 + attention在本模型中的应用
 
