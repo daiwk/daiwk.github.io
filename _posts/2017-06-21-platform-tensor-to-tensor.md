@@ -102,7 +102,22 @@ decoder同样堆叠了N=6层。**在encoder的两个子层的基础上，decoder
 
 #### 4.2.2 attention
 
-attention函数：将一个query和一系列的key-value对映射起来
+attention函数：将一个query和一系列的(key, value)对映射起来。其中，**query、key、value均是向量，维度分别为`\(d_k\)`, `\(d_k\)`, `\(d_v\)`。**输出是各value的加权组合：
+
+`\[
+q_1,q_2,...->[(k_1,v_1), (k_2,v_2), ...]->w_1*v_1+w_2*v_2+...
+\]`
+
+
+
+<html>
+<br/>
+
+<img src='../assets/transformer architecture-attention-noted.png' style='max-height: 400px'/>
+<br/>
+
+</html>
+
 
 + scaled dot-product attention
 

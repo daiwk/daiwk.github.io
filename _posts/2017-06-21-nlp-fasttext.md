@@ -5,7 +5,8 @@ title: "fasttext"
 tags: [fasttext, ]
 ---
 
-## 使用方法
+
+## 1. bin使用方法
 
 编译好的bin地址：[https://daiwk.github.io/assets/fasttext](https://daiwk.github.io/assets/fasttext)
 
@@ -22,7 +23,7 @@ __label__xx w1 w2 w3 ...
 + 训练命令：
 
 ```
-./fasttext supervised -input train_demo_fassttext.txt -output haha.model
+./fasttext supervised -input train_demo_fasttext.txt -output haha.model
 ```
 
 ### 预测
@@ -48,5 +49,14 @@ cat test_demo_fasttext.txt | ./fasttext predict-prob haha.model.bin -
 
 ```
 key __label__xx probability
+```
+
+## 2. python使用方法
+
+### 安装
+
+```
+xxxx/pip install cython
+xxxx/pip install fasttext
 ```
 
