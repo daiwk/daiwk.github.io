@@ -136,7 +136,7 @@ Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 
 有两种常用的attention：addictive attention和dot-product attention。dot-product attention和scaled dot-product attention的唯一区别就是，没有除以`\(\sqrt{d_k}\)`。addictive attention使用一个只有一个隐层的前馈神经网络计算weight。计算复杂度上二者相似，但由于有高度优化的矩阵乘法实现，所以dot-product的速度和空间利用会更好。
 
-当`\(d_k\)`不大时，additive attention比没用scale的dot-product attention表现更好。但`\(d_k\)`很大时，点积会变得特别大，所以softmax会出现有些区域的梯度变得特别小（**例如，假设`\(q\)`和`\(k\)`是独立的随机变量，均值都是0，方差都是1，那么他们的点积`\(qk=\sum{d_k}{i=1}q_ik_i\)`的均值是0，方差是`\(d_k*1^2=d_k\)`。**）
+当`\(d_k\)`不大时，additive attention比没用scale的dot-product attention表现更好。但`\(d_k\)`很大时，点积会变得特别大，所以softmax会出现有些区域的梯度变得特别小（**例如，假设`\(q\)`和`\(k\)`是独立的随机变量，均值都是0，方差都是1，那么他们的点积`\(qk=\sum^{d_k}_{i=1}q_ik_i\)`的均值是0，方差是`\(d_k*1^2=d_k\)`。**）
 
 `\[
 \\设 X 与 Y 是两个随机变量，则
