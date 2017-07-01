@@ -146,7 +146,13 @@ Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 \\D(X+Y)=D(X)+D(Y),D(X-Y)=D(X)+D(Y)
 \]`
 
+<html>
+<br/>
 
+<img src='../assets/xy's variance.png' style='max-height: 200px'/>
+<br/>
+
+</html>
 
 + multi-head attention
 
