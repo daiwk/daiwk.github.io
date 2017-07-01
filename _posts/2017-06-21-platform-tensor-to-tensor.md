@@ -102,13 +102,11 @@ decoder同样堆叠了N=6层。**在encoder的两个子层的基础上，decoder
 
 #### 4.2.2 attention
 
-attention函数：将一个query和一系列的(key, value)对映射起来。其中，**query、key、value均是向量，维度分别为`\(d_k\)`, `\(d_k\)`, `\(d_v\)`。**输出是各value的加权组合：
+attention函数：将一个query和一系列的(key, value)对映射起来。其中，**query、key、value均是向量，维度分别为`\(d_k\)`, `\(d_k\)`, `\(d_v\)`。**最终的输出是各value的加权组合：
 
 `\[
-q_1,q_2,...->[(k_1,v_1), (k_2,v_2), ...]->w_1*v_1+w_2*v_2+...
+q->[(k_1,v_1), (k_2,v_2), ...]->attention=w_1*v_1+w_2*v_2+...
 \]`
-
-
 
 <html>
 <br/>
@@ -118,8 +116,24 @@ q_1,q_2,...->[(k_1,v_1), (k_2,v_2), ...]->w_1*v_1+w_2*v_2+...
 
 </html>
 
+其中权重是通过如下方法获取的：
 
 + scaled dot-product attention
+
+query和所有key算点积，然后除以`\(\sqrt(d_k)\)`，然后算softmax，得到的就是value的weight。实际应用中，一系列的query，记为矩阵`\(Q\)`，同样地，有`\(K\)`和`\(V\)`。
+
+`\[
+Attention(Q,K,V)=softmax(\frac{}{\sqrt{}})
+\]`
+
+
+<html>
+<br/>
+
+<img src='../assets/scaled dot-product attention and multi-head attention.png' style='max-height: 400px'/>
+<br/>
+
+</html>
 
 + multi-head attention
 
