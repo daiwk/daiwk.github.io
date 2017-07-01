@@ -149,7 +149,7 @@ Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 <html>
 <br/>
 
-<img src='../assets/xy's variance.png' style='max-height: 200px'/>
+<img src="../assets/xy's variance.png" style='max-height: 200px'/>
 <br/>
 
 </html>
