@@ -160,10 +160,10 @@ Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 
 `\[
 \\MultiHead(Q,K,V)=Concat(head_1,...,head_h)W^Q
-\\where head_i=Attention(QW_i^Q,KW_i^K,VW_i^V)
+\\where\ head_i=Attention(QW_i^Q,KW_i^K,VW_i^V)
 \]`
 
-其中，`\(W_i^Q\in \mathbb{d_model\times d_k}\)`，`\(W_i^K\in \mathbb{d_model\times d_k}\)`，`\(W_i^V\in \mathbb{d_model\times d_v}\)`，`\(W_i^O\in \mathbb{hd_v\times d_k}\)`
+其中，`\(W_i^Q\in \mathbb{R}^{d_model\times d_k}\)`，`\(W_i^K\in \mathbb{R}^{d_model\times d_k}\)`，`\(W_i^V\in \mathbb{R}^{d_model\times d_v}\)`，`\(W_i^O\in \mathbb{R}^{hd_v\times d_k}\)`
 
 + attention在本模型中的应用
 
