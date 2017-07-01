@@ -167,9 +167,9 @@ Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 
 + attention在本模型中的应用
 
- + 瞄瞄
- + 吕
- + 册
+  + 瞄瞄
+  + 吕
+  + 册
  
 #### 4.2.3 position-wise feed-forward networks
 
