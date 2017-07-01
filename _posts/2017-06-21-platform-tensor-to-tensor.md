@@ -156,17 +156,21 @@ Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 
 + multi-head attention
 
-实际应用中，并不是直接计算`\(d_model\)`维【前面提到了，架构中的所有子层（包括embedding）,输出的维度均是`\(d_{model}=512\)`】的query，key，value。而是把这`\(d_model\)`维拆成`\(h\)`份，所以`\(d_k=d_v=d_model/h\)`,(因为`\(d_model\)`是一样的，`\(h\)`也是一样的，所以`\(d_k=d_v\)`)。而这个变换通过对`\(\Q,K,W)`各自进行一个线性变换，变成`\(d_k,d_k,d_v\)`维即可，最终通过concat(把`\(h\)`个结果首尾相连),然后再做一个线性变换，变成`\(d_model\)`维。
+实际应用中，并不是直接计算`\(d_model\)`维【前面提到了，架构中的所有子层（包括embedding）,输出的维度均是`\(d_{model}=512\)`】的query，key，value。而是把这`\(d_model\)`维拆成`\(h\)`份，所以`\(d_k=d_v=d_model/h\)`,(因为`\(d_model\)`是一样的，`\(h\)`也是一样的【本文设为8】，所以`\(d_k=d_v\)`)。而这个变换通过对`\(\Q,K,W)`各自进行一个线性变换，变成`\(d_k,d_k,d_v\)`维即可，最终通过concat(把`\(h\)`个结果首尾相连),然后再做一个线性变换，变成`\(d_model\)`维。
 
 `\[
 \\MultiHead(Q,K,V)=Concat(head_1,...,head_h)W^Q
 \\where head_i=Attention(QW_i^Q,KW_i^K,VW_i^V)
 \]`
 
-其中，`\(W_i^Q\in \mathbb{d_model\times d_k}\)`
+其中，`\(W_i^Q\in \mathbb{d_model\times d_k}\)`，`\(W_i^K\in \mathbb{d_model\times d_k}\)`，`\(W_i^V\in \mathbb{d_model\times d_v}\)`，`\(W_i^O\in \mathbb{hd_v\times d_k}\)`
 
 + attention在本模型中的应用
 
+ + 瞄瞄
+ + 吕
+ + 册
+ 
 #### 4.2.3 position-wise feed-forward networks
 
 #### 4.2.4 embeddings and softmax
