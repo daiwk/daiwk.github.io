@@ -120,10 +120,10 @@ q->[(k_1,v_1), (k_2,v_2), ...]->attention=w_1*v_1+w_2*v_2+...
 
 + scaled dot-product attention
 
-query和所有key算点积，然后除以`\(\sqrt(d_k)\)`，然后算softmax，得到的就是value的weight。实际应用中，一系列的query，记为矩阵`\(Q\)`，同样地，有`\(K\)`和`\(V\)`。
+query和所有key算点积，然后除以`\(\sqrt{d_k}\)`，然后算softmax，得到的就是value的weight。实际应用中，一系列的query，记为矩阵`\(Q\)`，同样地，有`\(K\)`和`\(V\)`。
 
 `\[
-Attention(Q,K,V)=softmax(\frac{}{\sqrt{}})
+Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 \]`
 
 
