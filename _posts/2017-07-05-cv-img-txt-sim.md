@@ -8,7 +8,7 @@ tags: [图文相关性, ]
 
 ## 1. 相关模型
 
-使用rank_cost:
+使用rank_cost([paddle_v2的layers](http://www.paddlepaddle.org/doc/api/v2/config/layer.html)):
 
 `\[
 \begin{align}\begin{aligned}C_{i,j} & = -\tilde{P_{ij}} * o_{i,j} + log(1 + e^{o_{i,j}})\\o_{i,j} & =  o_i - o_j\\\tilde{P_{i,j}} & = \{0, 0.5, 1\} \ or \ \{0, 1\}\end{aligned}\end{align}
