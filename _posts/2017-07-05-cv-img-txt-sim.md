@@ -53,8 +53,21 @@ tags: [图文相关性, ]
 
 </html>
 
+### 1.4 使用nlpc的wordembedding
+
+把lstm改成nlpc的wordembedding。
+
+<html>
+<br/>
+
+<img src='../assets/img_txt_sim_bidword_nlpc_wordembedding.svg' style='max-height: 400px'/>
+<br/>
+
+</html>
+
 ## 2. 回归现有模型
 
 ### 2.1 拟合图搜相关性模型
+
 
 
