@@ -8,6 +8,12 @@ tags: [图文相关性, ]
 
 ## 1. 相关模型
 
+使用rank_cost:
+
+`\[
+\begin{align}\begin{aligned}C_{i,j} & = -\tilde{P_{ij}} * o_{i,j} + log(1 + e^{o_{i,j}})\\o_{i,j} & =  o_i - o_j\\\tilde{P_{i,j}} & = \{0, 0.5, 1\} \ or \ \{0, 1\}\end{aligned}\end{align}
+\]`
+
 ### 1. basic模型
 
 文本采用word2vec获取标题向量，cos_sim计算 图文的相关性，然后用pairwise训练
