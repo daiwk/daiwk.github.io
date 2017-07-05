@@ -6,7 +6,7 @@ tags: [图文相关性, ]
 ---
 
 
-## 1. 相关模型
+## 1. rank_cost相关模型
 
 使用rank_cost([paddle_v2的layers](http://www.paddlepaddle.org/doc/api/v2/config/layer.html)):
 
@@ -41,9 +41,9 @@ tags: [图文相关性, ]
 </html>
 
 
-### 2. 训练数据更新
+### 3. 训练数据更新（不使用标题）
 
-之前都用title，现在改成单元内的bidword,pic的pair对。
+之前都用title，现在改成单元内的bidword,pic的pair对。并且，引入rank_cost的weight参数。
 
 <html>
 <br/>
