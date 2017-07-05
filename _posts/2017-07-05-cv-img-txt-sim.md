@@ -6,7 +6,11 @@ tags: [图文相关性, ]
 ---
 
 
-## 1. basic模型
+## 1. 相关模型
+
+### 1. basic模型
+
+文本采用word2vec获取标题向量，cos_sim计算 图文的相关性，然后用pairwise训练
 
 <html>
 <br/>
@@ -16,5 +20,13 @@ tags: [图文相关性, ]
 
 </html>
 
+### 2. 升级文本表示为bi-lstm
 
+<html>
+<br/>
+
+<img src='../assets/img_txt_sim_lstm.svg' style='max-height: 400px'/>
+<br/>
+
+</html>
 
