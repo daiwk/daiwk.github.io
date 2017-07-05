@@ -34,3 +34,15 @@ tags: [图文相关性, ]
 
 </html>
 
+
+### 2. 训练数据更新
+
+之前都用title，现在改成单元内的bidword,pic的pair对。
+
+<html>
+<br/>
+
+<img src='../assets/img_txt_sim_bidword.svg' style='max-height: 400px'/>
+<br/>
+
+</html>
