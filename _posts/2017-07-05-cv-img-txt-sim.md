@@ -55,7 +55,7 @@ tags: [图文相关性, ]
 
 ### 1.4 使用nlpc的wordembedding
 
-把lstm改成nlpc的wordembedding。
+把lstm改成nlpc的wordembedding。如果文本数据量少（短文本）的话，用这个其实就好了。不用接lstm。
 
 <html>
 <br/>
@@ -69,5 +69,22 @@ tags: [图文相关性, ]
 
 ### 2.1 拟合图搜相关性模型
 
+<html>
+<br/>
+
+<img src='../assets/img_txt_sim_bidword_regression_tusou.svg' style='max-height: 400px'/>
+<br/>
+
+</html>
+
+### 2.2 拟合idl模型
 
 
+
+<html>
+<br/>
+
+<img src='../assets/img_txt_sim_bidword_regression_idl.svg' style='max-height: 400px'/>
+<br/>
+
+</html>
