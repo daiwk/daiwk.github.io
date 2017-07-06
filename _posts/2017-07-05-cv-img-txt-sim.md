@@ -14,6 +14,12 @@ tags: [图文相关性, ]
 \begin{align}\begin{aligned}C_{i,j} & = -\tilde{P_{ij}} * o_{i,j} + log(1 + e^{o_{i,j}})\\o_{i,j} & =  o_i - o_j\\\tilde{P_{i,j}} & = \{0, 0.5, 1\} \ or \ \{0, 1\}\end{aligned}\end{align}
 \]`
 
++ `\(C_{i,j}\)`是cross-entropy cost。
++ `\(\tilde{P_{i,j}}\)`是label。1是正序（左>右），0是逆序。
++ `\(o_i\)`和`\(o_j\)`是左、右的输出，是1维的。
+
+weight的引入:参考[Ranking with Ordered Weighted Pairwise Classification](http://machinelearning.org/archive/icml2009/papers/163.pdf)
+
 ### 1.1 basic模型
 
 文本采用word2vec获取标题向量，cos_sim计算 图文的相关性，然后用pairwise训练
@@ -66,6 +72,8 @@ tags: [图文相关性, ]
 </html>
 
 ## 2. 回归现有模型
+
+把rank_cost换成regression_cost
 
 ### 2.1 拟合图搜相关性模型
 
