@@ -26,6 +26,12 @@ __label__xx w1 w2 w3 ...
 ./fasttext supervised -input train_demo_fasttext.txt -output haha.model
 ```
 
+高级参数：
+
+```
+-minn 1 -maxn 6: 不用切词，1-6直接n-gram
+```
+
 ### 预测
 
 
