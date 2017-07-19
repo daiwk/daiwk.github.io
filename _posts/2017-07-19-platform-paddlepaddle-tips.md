@@ -1,8 +1,8 @@
 ---
 layout: post
-category: "ml"
-title: "机器学习相关tips"
-tags: [ml, tips]
+category: "platform"
+title: "paddle相关tips"
+tags: [paddle, tips]
 ---
 
 
@@ -10,7 +10,7 @@ tags: [ml, tips]
 
 ### 1.1 学习率
 
-相关issue [https://github.com/PaddlePaddle/Paddle/issues/1167 ]https://github.com/PaddlePaddle/Paddle/issues/1167 (https://github.com/PaddlePaddle/Paddle/issues/1167)
+相关issue [https://github.com/PaddlePaddle/Paddle/issues/1167](https://github.com/PaddlePaddle/Paddle/issues/1167)
 
 paddle_pr/proto/TrainerConfig.proto中有关于momentum各个参数的解释
 
