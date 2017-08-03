@@ -30,6 +30,7 @@ tags: [useful links,]
          * [2.3.3 torch](#233-torch)
          * [2.3.4 tensorflow](#234-tensorflow)
          * [2.3.5 docker](#235-docker)
+      * [2.4 docker-images](#24-docker-images)
    * [<strong>3. Useful Courses &amp;&amp; Speeches</strong>](#3-useful-courses--speeches)
       * [3.1 Courses](#31-courses)
       * [3.2 Speeches](#32-speeches)
@@ -127,6 +128,9 @@ tags: [useful links,]
 ### 2.3.5 docker
 1. **nvidia-docker**：[https://github.com/NVIDIA/nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
 
+### 2.4 docker-images
+
+链接:**[http://pan.baidu.com/s/1kUU9znh](http://pan.baidu.com/s/1kUU9znh) 密码:yyfp**
  
 # **3. Useful Courses && Speeches**
  
