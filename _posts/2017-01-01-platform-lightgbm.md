@@ -11,4 +11,28 @@ tags: [lightgbm, ]
 
 ## 安装
 
+### 安装cxx包
+
+```
+apt-get update
+apt-get install git
+apt-get install cmake
+apt-get install openmpi-bin openmpi-doc libopenmpi-dev
+git clone --recursive https://github.com/Microsoft/LightGBM ; cd LightGBM
+mkdir build ; cd build
+cmake -DUSE_MPI=ON ..
+make -j4
+```
+
+### 安装py
+
+```
+pip install lightgbm
+```
+
+### 验证
+
+```
+import lightgbm as lgb
+```
 
