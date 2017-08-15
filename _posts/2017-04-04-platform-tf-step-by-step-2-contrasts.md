@@ -1,7 +1,7 @@
 ---
 layout: post
 category: "platform"
-title: "tf step by step: chap 1. 基础知识"
+title: "tf step by step: chap 2. 对比"
 tags: [tf step by step,]
 ---
 
