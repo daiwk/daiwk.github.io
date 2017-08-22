@@ -178,6 +178,8 @@ daiwk整理: [deep reinforcement learning](http://pan.baidu.com/s/1mim7A2G)；[d
 
 [https://github.com/karpathy/neuraltalk2](https://github.com/karpathy/neuraltalk2)
 
+3. **pretrained_resnet**：paddle的model_zoo中:[https://github.com/PaddlePaddle/Paddle/tree/develop/v1_api_demo/model_zoo/resnet](https://github.com/PaddlePaddle/Paddle/tree/develop/v1_api_demo/model_zoo/resnet)，用法:[http://doc.paddlepaddle.org/doc_cn/tutorials/imagenet_model/resnet_model_cn.html?highlight=zoo](http://doc.paddlepaddle.org/doc_cn/tutorials/imagenet_model/resnet_model_cn.html?highlight=zoo)
+
 ## 4.3 Collections
 
 ### 4.3.1 csdn深度学习代码专栏
