@@ -48,3 +48,31 @@ print "$var\n";
 # 这是一个 Here 文档实例，使用单引号。
 # 例如：a = $a
 ```
+
+## 数据类型
+
++ 标量
+```perl
+$myfirst=123;　    #数字123　
+$mysecond="123";   #字符串123　
+```
++ 数组
+```perl
+@arr=(1,2,3)
+```
++ 哈希
+```perl
+%h=('a'=>1,'b'=>2); 
+```
+各种转义字符的意思详见[http://www.runoob.com/perl/perl-data-types.html](http://www.runoob.com/perl/perl-data-types.html)
+
+```perl
+#!/usr/bin/perl
+ 
+%data = ('google', 45, 'runoob', 30, 'taobao', 40);
+ 
+print "\$data{'google'} = $data{'google'}\n";
+print "\$data{'runoob'} = $data{'runoob'}\n";
+print "\$data{'taobao'} = $data{'taobao'}\n";
+```
+
