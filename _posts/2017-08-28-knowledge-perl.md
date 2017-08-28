@@ -53,7 +53,7 @@ print "$var\n";
 
 + 标量
 ```perl
-$myfirst=123;　    #数字123　
+$myfirst=123;      #数字123　
 $mysecond="123";   #字符串123　
 ```
 + 数组
