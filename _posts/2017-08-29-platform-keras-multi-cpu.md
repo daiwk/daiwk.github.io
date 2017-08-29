@@ -5,7 +5,9 @@ title: "keras使用多核cpu"
 tags: [keras, theano, 多核cpu, htop]
 ---
 
-## 开启theano后端
+## 使用theano后端
+
+### 开启theano后端
 
 vim ``` ~/.keras/keras.json ```，修改为
 ```
@@ -17,25 +19,27 @@ vim ``` ~/.keras/keras.json ```，修改为
 }
 ```
 
-## 打开openmp的flag
+### 打开openmp的flag
 
 ```python
 import theano
 theano.config.openmp = True
 ```
 
-## 确保gcc版本
+### 确保gcc版本
 
 至少要是482的
 
 ```
 export PATH=/opt/compiler/gcc-4.8.2/bin/:$PATH
 ```
-## 设置环境变量并运行
+### 设置环境变量并运行
 
 ```
 OMP_NUM_THREADS=20 python xxx.py
 ```
+## 使用tensorflow后端
+参考：[Tensorflow并行：多核(multicore)，多线程(multi-thread)](http://www.deepnlp.org/blog/tensorflow-parallelism/)
 
 ## 用htop查看进程情况
 
