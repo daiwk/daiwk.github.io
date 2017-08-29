@@ -7,6 +7,7 @@ tags: [docker常用命令,]
 
 ## install docker-enter
 
+参考[使用nsenter进入Docker容器](http://blog.csdn.net/fenglailea/article/details/44900401)
 ```
 docker pull jpetazzo/nsenter
 docker run --rm -v /usr/bin:/target jpetazzo/nsenter
