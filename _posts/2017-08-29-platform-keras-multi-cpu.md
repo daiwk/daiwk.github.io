@@ -45,4 +45,4 @@ jumbo install htop
 
 htop样例如下：
 
-![](../assets/htop.png)
+<img src='../assets/htop.png' style='max-height: 200px'/>
