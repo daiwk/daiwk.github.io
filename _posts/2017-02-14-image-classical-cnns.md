@@ -27,6 +27,10 @@ tags: [cnn]
 
 如果有4个通道，2个卷积核，那么最终得到两个图(2个通道)，每个图是4个通道对应的卷积结果对应元素相加，再经过激活得到的**】
 
+权值共享：
+
+有m个a*b的卷积核，那么就只有m*a*b个参数，因为生成最终m个feature map的过程中，生成每个feature map时都是共享同一个a*b的卷积核（a*b个参数）。
+
 ### 池化
 
 [ufldl-池化](http://deeplearning.stanford.edu/wiki/index.php/%E6%B1%A0%E5%8C%96)
