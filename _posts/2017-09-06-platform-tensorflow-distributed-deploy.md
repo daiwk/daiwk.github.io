@@ -34,9 +34,21 @@ tags: [tensorflow, 分布式, 部署]
 
 #### in-graph 模式
 
+<html>
+<br/>
+<img src='../assets/distributed-tf-in-graph.png' style='max-height: 300px'/>
+<br/>
+</html>
+
 in-graph模式和单机多GPU模型有点类似。in-graph模式，把计算已经从单机多GPU，已经扩展到了多机多GPU了，不过数据分发还是在一个节点。这样的好处是配置简单，其他多机多GPU的计算节点，只要起个join操作，暴露一个网络接口，等在那里接受任务就好了。这些计算节点暴露出来的网络接口，使用起来就跟本机的一个GPU的使用一样，只要在操作的时候指定tf.device("/job:worker/task:n")，就可以向指定GPU一样，把操作指定到一个计算节点上计算，使用起来和多GPU的类似。**但是这样的坏处是训练数据的分发依然在一个节点上，要把训练数据分发到不同的机器上，严重影响并发训练速度。**在大数据训练的情况下，不推荐使用这种模式。
 
 #### between-graph模式
+
+<html>
+<br/>
+<img src='../assets/distributed-tf-between-graph.png' style='max-height: 300px'/>
+<br/>
+</html>
 
 between-graph模式下，训练的参数保存在参数服务器，**数据不用分发，数据分片的保存在各个计算节点，各个计算节点自己算自己的，**算完了之后，把要更新的参数告诉参数服务器，参数服务器更新参数。这种模式的优点是不用训练数据的分发了，尤其是在数据量在TB级的时候，节省了大量的时间，所以大数据深度学习还是推荐使用between-graph模式。
 
@@ -52,4 +64,111 @@ between-graph模式下，训练的参数保存在参数服务器，**数据不�
 
 官方分布式文档：[https://www.tensorflow.org/deploy/distributed](https://www.tensorflow.org/deploy/distributed)
 
+## replica_device_setter
+
+### round-robin模式：
+
+什么参数都不传，默认是round-robin
+
+<html>
+<br/>
+<img src='../assets/distributed-tf-replica_device_setter.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+但如果只有两个ps任务，可能会把weight都给一个，bias都给另一个，这样就很不利。
+
+### greedystrategy
+
+<html>
+<br/>
+<img src='../assets/distributed-tf-replica_device_setter-strategy.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+依据变量占用的内存，会相对负载均衡。
+
+### partition
+
+<html>
+<br/>
+<img src='../assets/distributed-tf-replica_device_setter-partition.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+如果embedding需要lookup的表非常大，可以直接指定partition，这样在查表的时候，也只会去相应的partition查。
+
+## Sessionis and servers
+
+<html>
+<br/>
+<img src='../assets/distributed-tf-sessions-and-servers.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+ClusterSpec是一个字典，每个节点都存同一份（如果是K8s之类的，会有集群管理者）
+
+ps代码：
+
+<html>
+<br/>
+<img src='../assets/distributed-tf-sessions-and-servers-ps.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+## fault tolerance
+
+<html>
+<br/>
+<img src='../assets/distributed-tf-failure-tolerance-saver.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+设置saver的sharded=True，因为例如有3个ps，那么每个的saver就会保存它自己的全部变量。
+
+<html>
+<br/>
+<img src='../assets/distributed-tf-failure-tolerance-saver-chief.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+save的条件是，只有是chief(完成初始化参数、写检查点、写结果给tensorboard等)的时候才写。另外，写文件的地址可以是hdfs、google cloud等。
+
+### 故障恢复
+
+如果一个非chief的worker挂了，问题不大，重新启动一个就行了
+
+如果一个ps挂了,chief会暂停所有worker的作业，并在上一个检查点恢复所有ps任务
+
+如果chief挂了，类似ps挂，全部暂停，等故障修复后，把chief恢复到上一个检查点的状态。当然，也可以用zookeeper，用选举的机制，选出一个新的chief，而不用全部暂停。
+
+<html>
+<br/>
+<img src='../assets/distributed-tf-failure-tolerance-monitoredTrainingSession.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+MonitoredTrainingSession每10min都随着编写检查点的hook出现一次，每100个steps会写一次summary
+
+<html>
+<br/>
+<img src='../assets/distributed-tf-arch.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+高level的api:experiment:
+
+<html>
+<br/>
+<img src='../assets/distributed-tf-experiment.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+详见：
+
+[https://www.tensorflow.org/deploy/distributed](https://www.tensorflow.org/deploy/distributed)
+
+[https://www.tensorflow.org/extend/architecture](https://www.tensorflow.org/extend/architecture)
+
+[https://www.tensorflow.org/extend/estimators](https://www.tensorflow.org/extend/estimators)
 
