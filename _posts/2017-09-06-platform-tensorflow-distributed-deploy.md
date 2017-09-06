@@ -172,3 +172,7 @@ MonitoredTrainingSession每10min都随着编写检查点的hook出现一次，�
 
 [https://www.tensorflow.org/extend/estimators](https://www.tensorflow.org/extend/estimators)
 
+简单的demo:
+
+[https://github.com/thewintersun/distributeTensorflowExample](https://github.com/thewintersun/distributeTensorflowExample)
+
