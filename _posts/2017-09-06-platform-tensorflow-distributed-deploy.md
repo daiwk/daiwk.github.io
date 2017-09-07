@@ -40,6 +40,8 @@ tags: [tensorflow, 分布式, 部署]
 <br/>
 </html>
 
+一个client(显示调用tf::Session的进程),将里面的参数和ops指定给对应的job去完成.数据分发只由一个client完成.
+
 in-graph模式和单机多GPU模型有点类似。in-graph模式，把计算已经从单机多GPU，已经扩展到了多机多GPU了，不过数据分发还是在一个节点。这样的好处是配置简单，其他多机多GPU的计算节点，只要起个join操作，暴露一个网络接口，等在那里接受任务就好了。这些计算节点暴露出来的网络接口，使用起来就跟本机的一个GPU的使用一样，只要在操作的时候指定tf.device("/job:worker/task:n")，就可以向指定GPU一样，把操作指定到一个计算节点上计算，使用起来和多GPU的类似。**但是这样的坏处是训练数据的分发依然在一个节点上，要把训练数据分发到不同的机器上，严重影响并发训练速度。**在大数据训练的情况下，不推荐使用这种模式。
 
 #### between-graph模式
@@ -49,6 +51,8 @@ in-graph模式和单机多GPU模型有点类似。in-graph模式，把计算已�
 <img src='../assets/distributed-tf-between-graph.png' style='max-height: 300px'/>
 <br/>
 </html>
+
+有很多独立的client,各个client构建了相同的graph(包含参数,通过使用tf.train.replica_device_setter,将这些参数映射到ps_server上.)
 
 between-graph模式下，训练的参数保存在参数服务器，**数据不用分发，数据分片的保存在各个计算节点，各个计算节点自己算自己的，**算完了之后，把要更新的参数告诉参数服务器，参数服务器更新参数。这种模式的优点是不用训练数据的分发了，尤其是在数据量在TB级的时候，节省了大量的时间，所以大数据深度学习还是推荐使用between-graph模式。
 
