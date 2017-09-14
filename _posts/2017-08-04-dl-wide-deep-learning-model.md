@@ -32,7 +32,6 @@ GBDT又叫MART（Multiple Additive Regression Tree)，GBDT中的树是**回归�
 
 
 
-
 [Wide & deep learning for recommender systems](https://arxiv.org/pdf/1606.07792.pdf)
 
 用于ctr预估[https://github.com/PaddlePaddle/models/tree/develop/ctr](https://github.com/PaddlePaddle/models/tree/develop/ctr)
