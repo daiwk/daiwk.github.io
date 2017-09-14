@@ -172,5 +172,6 @@ GBDT与LR的融合方式，Facebook的paper有个例子如下图2所示，图中
 
 用于ctr预估[https://github.com/PaddlePaddle/models/tree/develop/ctr](https://github.com/PaddlePaddle/models/tree/develop/ctr)
 
+特征的生成：[https://github.com/PaddlePaddle/models/blob/develop/ctr/dataset.md](https://github.com/PaddlePaddle/models/blob/develop/ctr/dataset.md)
 
 
