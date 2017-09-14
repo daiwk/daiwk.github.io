@@ -177,7 +177,7 @@ LR 对于 DNN 模型的优势是对大规模稀疏特征的容纳能力，包括
 <html>
 <br/>
 
-<img src='../assets/wide-and-deep-model.png' style='max-height: 350px'/>
+<img src='../assets/wide-and-deep-model.png' style='max-height: 200px'/>
 <br/>
 
 </html>
