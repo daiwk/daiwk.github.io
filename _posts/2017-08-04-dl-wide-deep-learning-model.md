@@ -170,6 +170,18 @@ GBDT与LR的融合方式，Facebook的paper有个例子如下图2所示，图中
 
 [Wide & deep learning for recommender systems](https://arxiv.org/pdf/1606.07792.pdf)
 
+LR 对于 DNN 模型的优势是对大规模稀疏特征的容纳能力，包括内存和计算量等方面，工业界都有非常成熟的优化方法； 而 DNN 模型具有自己学习新特征的能力，一定程度上能够提升特征使用的效率， 这使得 DNN 模型在同样规模特征的情况下，更有可能达到更好的学习效果。
+
+模型结构如下：
+
+<html>
+<br/>
+
+<img src='../assets/wide-and-deep-model.png' style='max-height: 350px'/>
+<br/>
+
+</html>
+
 用于ctr预估[https://github.com/PaddlePaddle/models/tree/develop/ctr](https://github.com/PaddlePaddle/models/tree/develop/ctr)
 
 特征的生成：[https://github.com/PaddlePaddle/models/blob/develop/ctr/dataset.md](https://github.com/PaddlePaddle/models/blob/develop/ctr/dataset.md)
