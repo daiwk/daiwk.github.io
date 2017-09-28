@@ -60,6 +60,8 @@ k8s会调度相应的app到对应的docker host上去运行
 
 ### 架构
 
+单集群可以一次5000台机器上线
+
 有一个中心化的api server，然后把状态存储在etcd中
 主节点有scheduler和controller mgr，worker节点有kubelet和service proxy。
 
@@ -135,7 +137,7 @@ service是真实应用服务的抽象，定义了pod的逻辑集合和访问这�
 + nodeport
 + loadbalancer
   + blvxxxxx: 类似bfe
-  +ingress: 7层的routing，nginx的实现
+  +ingress: 7层的routing，nginx的实现(可以访问内部节点，然后开个外网ip，让其他k8s也能访问它内部的节点)
 
 ### DNS
 
