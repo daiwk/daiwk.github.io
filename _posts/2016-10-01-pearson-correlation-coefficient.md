@@ -1,0 +1,54 @@
+---
+layout: post
+category: "ml"
+title: "pearson相关系数"
+tags: [pearson相关系数, Pearson Correlation Coefficient]
+---
+
+参考：
+[https://www.zhihu.com/question/19734616](https://www.zhihu.com/question/19734616)
+
+计算公式：
+[http://blog.csdn.net/zhangjunjie789/article/details/51737366](http://blog.csdn.net/zhangjunjie789/article/details/51737366)
+
+```python
+from math import sqrt
+
+def multiply(a,b):
+        #a,b两个列表的数据一一对应相乘之后求和
+        sum_ab=0.0
+            for i in range(len(a)):
+                        temp=a[i]*b[i]
+                                sum_ab+=temp
+                            return sum_ab
+
+                        def cal_pearson(x,y):
+                                n=len(x)
+                                    #求x_list、y_list元素之和
+                                    sum_x=sum(x)
+        sum_y=sum(y)
+        #求x_list、y_list元素乘积之和
+        sum_xy=multiply(x,y)
+        #求x_list、y_list的平方和
+        sum_x2 = sum([pow(i,2) for i in x])
+        sum_y2 = sum([pow(j,2) for j in y])
+        molecular=sum_xy-(float(sum_x)*float(sum_y)/n)
+        #计算Pearson相关系数，molecular为分子，denominator为分母
+        denominator=sqrt((sum_x2-float(sum_x**2)/n)*(sum_y2-float(sum_y**2)/n))
+        return molecular/denominator
+
+        f=open('filename','r')
+        data={}
+        lines=f.readlines()
+    for line in lines:
+        #strip用于去掉换行符,split()通过指定分隔符对字符串进行切片,返回子字符串
+        cols=line.strip('\n').split(',')
+            for i in range(len(cols)):
+                        #float将字符串转成浮点数
+                        data.setdefault(i,[]).append(float(cols[i]))
+    x=data[0]
+    y=data[1]
+
+    if __name__=='__main__':
+        print ("x_list,y_list的Pearson相关系数为："+str(cal_pearson(x,y)))
+```
