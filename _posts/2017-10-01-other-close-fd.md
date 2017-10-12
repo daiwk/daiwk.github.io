@@ -10,9 +10,9 @@ tags: [fd, ]
 一个爬虫程序写了for循环，但中间一个网络请求卡住了，后面的一直排不上，需要把这个请求kill掉，让后面的继续：
 
 ```shell
-ps aux | grep xxx
-## 得到的进程号是1234
+ps aux | grep new_image_spider.py| grep -v grep | awk -F' ' '{print $2}' 
 
+## 得到的进程号是1234
 ll /proc/1234/fd
 total 0
 lr-x------  1 work work 64 Oct 12 17:58 0 -> /dev/null
