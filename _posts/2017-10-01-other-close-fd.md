@@ -40,5 +40,4 @@ lr-x------  1 work work 64 Oct 12 17:58 3 -> /home/disk1/xxx/2.txt
 l-wx------  1 work work 64 Oct 12 17:58 4 -> /home/disk1/xxx/1.txt
 lrwx------  1 work work 64 Oct 12 17:58 5 -> socket:[444444555]
 
-
 ```
