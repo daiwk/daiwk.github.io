@@ -14,8 +14,6 @@ ps aux | grep xxx
 ## 得到的进程号是1234
 
 ll /proc/1234/fd
-
-ll /proc/6099/fd
 total 0
 lr-x------  1 work work 64 Oct 12 17:58 0 -> /dev/null
 l-wx------  1 work work 64 Oct 12 17:58 1 -> /home/disk1/xxx/4.txt
@@ -30,7 +28,7 @@ gdb -p 1234
 ## 然后
 p close(5)
 
-再check:
+## 再check:
 ll /proc/6099/fd
 total 0
 lr-x------  1 work work 64 Oct 12 17:58 0 -> /dev/null
@@ -40,4 +38,5 @@ lr-x------  1 work work 64 Oct 12 17:58 3 -> /home/disk1/xxx/2.txt
 l-wx------  1 work work 64 Oct 12 17:58 4 -> /home/disk1/xxx/1.txt
 lrwx------  1 work work 64 Oct 12 17:58 5 -> socket:[444444555]
 
+## 发现5这个fd换了，成功了！。。
 ```
