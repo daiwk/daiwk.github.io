@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "rl"
-title: "alpha-zero"
-tags: [alpha zero, ]
+title: "alphago-zero"
+tags: [alphago zero, ]
 ---
 
 参考
@@ -10,6 +10,7 @@ tags: [alpha zero, ]
 
 [今日Nature: 人工智能从0到1, 无师自通完爆阿法狗100-0 | 深度解析](https://mp.weixin.qq.com/s?__biz=MzA4NDQwNDQ2Nw==&mid=2650480675&idx=1&sn=9cfb29cb37fa28892cae59775ba6b816&chksm=87e831bfb09fb8a92f24ad7516e51ca215cefa627d3fa0d4a82b334418a8311dd37ee02e9e29&mpshare=1&scene=1&srcid=1019QrErNgHVFjp0D7xARMyj&pass_ticket=h3hZq0WHA7Cyui0YBndmrxji2MHJPRFf2%2F6zqKyUTOnTIhZZuESFoAbpmgeoETVa#rd)
 
+[AlphaGo Zero 没有告诉你的秘密](https://mp.weixin.qq.com/s?__biz=MjM5ODIzNDQ3Mw==&mid=2649967631&idx=1&sn=c3ebeaa66be9a920bfdad91020da3ed1&chksm=beca3c0989bdb51f9ff1d3f89cbe05d5b0822db9fa89d912abfe6660e6c070abeabcf44b733f&mpshare=1&scene=1&srcid=1019F9cifstsNiGxC0gaOwGc&pass_ticket=h3hZq0WHA7Cyui0YBndmrxji2MHJPRFf2%2F6zqKyUTOnTIhZZuESFoAbpmgeoETVa#rd)
 
 ## 背景
 
