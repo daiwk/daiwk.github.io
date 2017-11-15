@@ -5,6 +5,13 @@ title: "安装h5py"
 tags: [h5py]
 ---
 
+目录
+
+<!-- TOC -->
+
+
+<!-- /TOC -->
+
 参考：[http://www.cnblogs.com/Ponys/p/3671458.html](http://www.cnblogs.com/Ponys/p/3671458.html)
 
 + 确定系统有python，numpy，libhdf5-serial-dev，和HDF5.前三者一般都有。这里要安装HDF5

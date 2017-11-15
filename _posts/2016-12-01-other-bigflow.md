@@ -5,6 +5,16 @@ title: "bigflow的坑们"
 tags: [bigflow,]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [自动缩减](#自动缩减)
+- [一些reduce的task非常慢](#一些reduce的task非常慢)
+- [数据太长](#数据太长)
+- [lazyvar](#lazyvar)
+
+<!-- /TOC -->
 
 ### 自动缩减
 

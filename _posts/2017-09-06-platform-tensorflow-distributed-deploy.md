@@ -5,6 +5,27 @@ title: "tensorflow分布式部署"
 tags: [tensorflow, 分布式, 部署]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [单机多gpu](#单机多gpu)
+- [分布式多机多GPU训练](#分布式多机多gpu训练)
+    - [参数服务器](#参数服务器)
+    - [tensorflow的分布式](#tensorflow的分布式)
+        - [in-graph 模式](#in-graph-模式)
+        - [between-graph模式](#between-graph模式)
+    - [同步更新和异步更新](#同步更新和异步更新)
+- [replica_device_setter](#replica_device_setter)
+    - [round-robin模式：](#round-robin模式)
+    - [greedystrategy](#greedystrategy)
+    - [partition](#partition)
+- [Sessionis and servers](#sessionis-and-servers)
+- [fault tolerance](#fault-tolerance)
+    - [故障恢复](#故障恢复)
+
+<!-- /TOC -->
+
 参考[白话tensorflow分布式部署和开发](http://blog.csdn.net/luodongri/article/details/52596780)
 
 ## 单机多gpu

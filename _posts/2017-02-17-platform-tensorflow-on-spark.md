@@ -5,6 +5,12 @@ title: "雅虎开源tensorflow on spark"
 tags: [tensorflow on spark, yahoo]
 ---
 
+目录
+
+<!-- TOC -->
+
+
+<!-- /TOC -->
 
 [机器知心文章：](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650723201&idx=2&sn=81dd9fbd5f00b1d17437c17a2e14f8c9&chksm=871b17ffb06c9ee92edc24c76eb32c05173ce2831c4109fb779293fdec9de146bf5e34fadd6d&scene=0&pass_ticket=cRg%2Fd4VBk6Un%2BRmxRlIcTdkS45x%2BlrSXeEh%2BFaF%2FTqiBl%2Ba0V%2BvF404WLkESRtTu#rd)
 

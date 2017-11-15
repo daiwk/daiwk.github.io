@@ -5,6 +5,43 @@ title: "paddlepaddle on kubernetes"
 tags: [paddlepaddle, kubernetes]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [背景](#背景)
+    - [物理机时代](#物理机时代)
+    - [虚拟机时代](#虚拟机时代)
+    - [前容器时代](#前容器时代)
+    - [后容器时代](#后容器时代)
+    - [k8s起源](#k8s起源)
+    - [CNCF基金会](#cncf基金会)
+    - [k8s现状](#k8s现状)
+    - [例子](#例子)
+- [架构&组件](#架构组件)
+    - [k8s & docker](#k8s--docker)
+    - [k8s & Node](#k8s--node)
+    - [架构](#架构)
+- [基础概念&术语](#基础概念术语)
+    - [Pod](#pod)
+    - [ReplicationSet](#replicationset)
+    - [Label](#label)
+    - [deployment](#deployment)
+    - [rolling update](#rolling-update)
+    - [StatefulSet](#statefulset)
+    - [daemonSet](#daemonset)
+    - [Jobs](#jobs)
+    - [service](#service)
+    - [headless service](#headless-service)
+    - [k8s service对外提供访问](#k8s-service对外提供访问)
+    - [DNS](#dns)
+    - [native network model](#native-network-model)
+    - [Volumes](#volumes)
+- [inf k8s](#inf-k8s)
+- [paddle+k8s](#paddlek8s)
+
+<!-- /TOC -->
+
 paddlepaddle可以和kubernetes结合了！
 [http://blog.kubernetes.io/2017/02/run-deep-learning-with-paddlepaddle-on-kubernetes.html](http://blog.kubernetes.io/2017/02/run-deep-learning-with-paddlepaddle-on-kubernetes.html)
 

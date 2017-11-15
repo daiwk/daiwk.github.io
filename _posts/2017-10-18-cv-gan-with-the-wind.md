@@ -5,6 +5,15 @@ title: "gan with the wind"
 tags: [gan, ]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [背景](#背景)
+- [参考文献](#参考文献)
+
+<!-- /TOC -->
+
 ## 背景
 
 参考[虚构的对抗，GAN with the wind](https://mp.weixin.qq.com/s?__biz=MzA3NTM4MzY1Mg==&mid=2650814302&idx=1&sn=87642b1c0662b3b71666e45a1cb2a0b3&chksm=8485c155b3f248433dbdb33d92d36851d25791a261c7ae09164155314e1cee7d578140ef0456&mpshare=1&scene=1&srcid=1018lhAqPZOlGOOGCzx0bqrH&pass_ticket=h3hZq0WHA7Cyui0YBndmrxji2MHJPRFf2%2F6zqKyUTOnTIhZZuESFoAbpmgeoETVa#rd)

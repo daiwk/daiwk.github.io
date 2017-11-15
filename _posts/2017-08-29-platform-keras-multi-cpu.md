@@ -5,6 +5,20 @@ title: "keras使用多核cpu"
 tags: [keras, theano, 多核cpu, htop]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [使用theano后端](#使用theano后端)
+    - [开启theano后端](#开启theano后端)
+    - [打开openmp的flag](#打开openmp的flag)
+    - [确保gcc版本](#确保gcc版本)
+    - [设置环境变量并运行](#设置环境变量并运行)
+- [使用tensorflow后端](#使用tensorflow后端)
+- [用htop查看进程情况](#用htop查看进程情况)
+
+<!-- /TOC -->
+
 ## 使用theano后端
 
 ### 开启theano后端

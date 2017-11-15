@@ -5,6 +5,20 @@ title: "梯度下降优化算法"
 tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [梯度下降](#梯度下降)
+- [momentum](#momentum)
+- [NAG](#nag)
+- [Adagrad](#adagrad)
+- [Adadelta](#adadelta)
+- [RMSprop](#rmsprop)
+- [Adam](#adam)
+
+<!-- /TOC -->
+
 ## 梯度下降
 
 ## momentum

@@ -5,6 +5,14 @@ title: "tf step by step: chap 2. 对比"
 tags: [tf step by step,]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [1. tensorflow](#1-tensorflow)
+
+<!-- /TOC -->
+
 -- 整理自《tensorflow实战》 chap 2
 
 ## 1. tensorflow

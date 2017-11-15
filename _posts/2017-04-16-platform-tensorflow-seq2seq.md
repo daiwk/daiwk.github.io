@@ -5,6 +5,26 @@ title: "tf的seq2seq"
 tags: [seq2seq, tensorflow]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [1. 简介](#1-简介)
+- [2. 安装](#2-安装)
+- [3. 基本概念](#3-基本概念)
+- [4. 示例：nmt](#4-示例nmt)
+    - [4.1 数据格式](#41-数据格式)
+    - [4.2 数据下载](#42-数据下载)
+    - [4.3 小数据集：generate toy data](#43-小数据集generate-toy-data)
+    - [4.4 定义模型](#44-定义模型)
+    - [4.5 训练](#45-训练)
+    - [4.6 预测](#46-预测)
+    - [4.7 使用beamsearch进行decode](#47-使用beamsearch进行decode)
+    - [4.8 基于checkpoint进行评估](#48-基于checkpoint进行评估)
+    - [4.9 计算BLEU](#49-计算bleu)
+
+<!-- /TOC -->
+
 使用tf，但独立于tensorflow/models之外的一个seq2seq的框架：
 
 主页：[https://google.github.io/seq2seq/](https://google.github.io/seq2seq/)

@@ -5,6 +5,26 @@ title: "深入理解svm"
 tags: [深入理解svm, ]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [1. 最大间隔分类器](#1-最大间隔分类器)
+    - [1.1 logistic regression](#11-logistic-regression)
+    - [1.2 +1/-1分类](#12-1-1分类)
+    - [1.3 函数间隔与几何间隔](#13-函数间隔与几何间隔)
+        - [1.3.1 函数间隔(functional margin)`\(\hat{\gamma}\)`](#131-函数间隔functional-margin\\hat\gamma\)
+        - [1.3.2 几何间隔(geometric margin)`\(\tilde{\gamma}\)`](#132-几何间隔geometric-margin\\tilde\gamma\)
+        - [1.3.3 最大间隔分类器（maximum margin classifier）](#133-最大间隔分类器maximum-margin-classifier)
+    - [2. support vector](#2-support-vector)
+    - [3. kernel](#3-kernel)
+    - [4. Outliers](#4-outliers)
+    - [5. Numerical Optimization](#5-numerical-optimization)
+    - [6. Duality](#6-duality)
+    - [7. Kernel II](#7-kernel-ii)
+
+<!-- /TOC -->
+
 参考:
 
 + **支持向量机通俗导论（理解SVM的三层境界）**：[http://blog.csdn.net/v_july_v/article/details/7624837](http://blog.csdn.net/v_july_v/article/details/7624837)

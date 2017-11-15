@@ -5,6 +5,25 @@ title: "deep learning book-第2章 Linear Algebra"
 tags: [deep learning book,]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [2.1 Scalars, Vectors, Matrices and Tensors](#21-scalars-vectors-matrices-and-tensors)
+- [2.2 Multiplying Matrices and Vectors](#22-multiplying-matrices-and-vectors)
+- [2.3 Identity and Inverse Matrices](#23-identity-and-inverse-matrices)
+- [2.4 Linear Dependence and Span](#24-linear-dependence-and-span)
+- [2.5 Norms](#25-norms)
+- [2.6 Special Kinds of Matrices and Vectors](#26-special-kinds-of-matrices-and-vectors)
+- [2.7 Eigendecomposition](#27-eigendecomposition)
+- [2.8 Singular Value Decomposition](#28-singular-value-decomposition)
+- [2.9 The Moore-Penrose Pseudoinverse](#29-the-moore-penrose-pseudoinverse)
+- [2.10 The Trace Operator](#210-the-trace-operator)
+- [2.11 The Determinant](#211-the-determinant)
+- [2.12 Example: Principal Components Analysis](#212-example-principal-components-analysis)
+
+<!-- /TOC -->
+
 几个git链接：
 
 + [https://github.com/HFTrader/DeepLearningBook](https://github.com/HFTrader/DeepLearningBook)

@@ -5,6 +5,24 @@ title: "paddlepaddle上的lstm crf做序列标注"
 tags: [nlp, natural language processing, lstm crf, lstm, crf]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [**1. 【2015】Bidirectional LSTM-CRF Models for Sequence Tagging**](#1-2015bidirectional-lstm-crf-models-for-sequence-tagging)
+- [**2. 【2016】Conditional Random Fields as Recurrent Neural Networks**](#2-2016conditional-random-fields-as-recurrent-neural-networks)
+- [**3. 【2016,ACL】Deep Recurrent Models with Fast-Forward Connections for Neural Machine Translation**](#3-2016acldeep-recurrent-models-with-fast-forward-connections-for-neural-machine-translation)
+- [**4. 在paddlepaddle上实现**](#4-在paddlepaddle上实现)
+    - [4.1 数据集说明](#41-数据集说明)
+    - [4.2 dataprovider](#42-dataprovider)
+        - [4.2.1 initializer的流程：](#421-initializer的流程)
+        - [4.2.1 process的流程：](#421-process的流程)
+    - [4.3 linear_crf](#43-linear_crf)
+    - [4.4 rnn_crf](#44-rnn_crf)
+
+<!-- /TOC -->
+
+
 # **1. 【2015】Bidirectional LSTM-CRF Models for Sequence Tagging**
 
 [论文地址](../assets/Bidirectional LSTM-CRF Models for Sequence Tagging.pdf)

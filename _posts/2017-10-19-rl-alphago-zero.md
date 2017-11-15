@@ -5,6 +5,15 @@ title: "alphago-zero"
 tags: [alphago zero, ]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [背景](#背景)
+- [论文地址](#论文地址)
+
+<!-- /TOC -->
+
 参考
 [【21天完虐Master】AlphaGo Zero横空出世，DeepMind Nature论文解密不使用人类知识掌握围棋](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652006424&idx=1&sn=d0be3ac450e735cbd9946de4f155fc42&chksm=f1211ce9c65695ff159a3f44d31abc92ad9494bef122082a09089d3ffeaa9e74678db1256392&mpshare=1&scene=1&srcid=10192t2Uq9DfDmj8F6gQ652a&pass_ticket=h3hZq0WHA7Cyui0YBndmrxji2MHJPRFf2%2F6zqKyUTOnTIhZZuESFoAbpmgeoETVa#rd)
 

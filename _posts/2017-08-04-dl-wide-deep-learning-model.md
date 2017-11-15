@@ -4,17 +4,24 @@ category: "dl"
 title: "ctr预估"
 tags: [ctr预估, lr+gbdt, wide and deep learning ]
 ---
-* [1. 传统方法：](#1-传统方法)
-     * [1.1 LR GBDT](#11-lrgbdt)
-        * [1.1.1 LR](#111-lr)
-        * [1.1.2 GBDT](#112-gbdt)
-           * [1.1.2.1 回归树](#1121-回归树)
-           * [1.1.2.2 提升树算法（Boosting Decision Tree）](#1122-提升树算法boosting-decision-tree)
-           * [1.1.2.3 GBDT](#1123-gbdt)
-           * [1.1.2.4 参数设置](#1124-参数设置)
-        * [1.1.3 LR GBDT](#113-lrgbdt)
-        * [1.1.4 引入id类特征](#114-引入id类特征)
-* [2. wide &amp; deep learning](#2-wide--deep-learning)
+
+目录
+
+<!-- TOC -->
+
+- [1. 传统方法：](#1-传统方法)
+    - [1.1 LR+GBDT](#11-lrgbdt)
+        - [1.1.1 LR](#111-lr)
+        - [1.1.2 GBDT](#112-gbdt)
+            - [1.1.2.1 回归树](#1121-回归树)
+            - [1.1.2.2 提升树算法（Boosting Decision Tree）](#1122-提升树算法boosting-decision-tree)
+            - [1.1.2.3 GBDT](#1123-gbdt)
+            - [1.1.2.4 参数设置](#1124-参数设置)
+        - [1.1.3 LR+GBDT](#113-lrgbdt)
+        - [1.1.4 引入id类特征](#114-引入id类特征)
+- [2. wide & deep learning](#2-wide--deep-learning)
+
+<!-- /TOC -->
 
 ## 1. 传统方法：
 

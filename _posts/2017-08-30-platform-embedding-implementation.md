@@ -5,6 +5,23 @@ title: "各框架的embedding实现"
 tags: [embedding,]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [keras](#keras)
+- [paddle](#paddle)
+- [应用](#应用)
+    - [xx率预估](#xx率预估)
+        - [模型结构](#模型结构)
+        - [编码方式（embedding）](#编码方式embedding)
+            - [随机编码](#随机编码)
+            - [挂靠编码](#挂靠编码)
+            - [分词编码](#分词编码)
+        - [Online Update](#online-update)
+
+<!-- /TOC -->
+
 ## keras
 
 [https://keras.io/layers/embeddings/](https://keras.io/layers/embeddings/) keras的embedding是参考[A Theoretically Grounded Application of Dropout in Recurrent Neural Networks](https://arxiv.org/pdf/1512.05287.pdf)这个实现的，类似对输入数据进行dropout。

@@ -5,6 +5,17 @@ title: "lightgbm"
 tags: [lightgbm, ]
 ---
 
+
+目录
+
+<!-- TOC -->
+
+- [安装](#安装)
+    - [安装cxx包](#安装cxx包)
+    - [安装py](#安装py)
+    - [验证](#验证)
+
+<!-- /TOC -->
 [https://github.com/Microsoft/LightGBM](https://github.com/Microsoft/LightGBM)
 
 参考[http://www.jianshu.com/p/48e82dbb142b](http://www.jianshu.com/p/48e82dbb142b)

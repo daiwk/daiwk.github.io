@@ -5,6 +5,13 @@ title: "image-qa"
 tags: [mqa, image-qa, 图片问答]
 ---
 
+目录
+
+<!-- TOC -->
+
+
+<!-- /TOC -->
+
 2017年vqa challenge冠军：
 [2017 VQA Challenge 第一名技术报告](https://mp.weixin.qq.com/s/BQy3qpmQqeQquhf92hwcvQ)
 

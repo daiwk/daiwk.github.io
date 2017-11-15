@@ -5,6 +5,21 @@ title: "强化学习概述"
 tags: [nlp, natural language processing, crfpp, crf++]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [强化学习概述](#强化学习概述)
+- [价值函数（VALUE FUNCTION）](#价值函数value-function)
+- [贴现因子（DISCOUNTING FACTOR）](#贴现因子discounting-factor)
+- [策略函数（POLICY FUNCTION）](#策略函数policy-function)
+- [Q-函数（Q-FUNCTION）](#q-函数q-function)
+- [Q-学习（Q-Learning）](#q-学习q-learning)
+- [深度 Q-学习（DEEP Q-LEARNING）](#深度-q-学习deep-q-learning)
+- [AlphaGo](#alphago)
+
+<!-- /TOC -->
+
 更多资料参见[wildml的rl专题](http://www.wildml.com/2016/10/learning-reinforcement-learning/)
 
 from [机器之心翻译](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719294&idx=1&sn=f1a01cd6710e6ea9629619cd3324d102&chksm=871b0040b06c895642ff961a6fe81f05c5e9776aff5da4845f2d3d874f88213863afd2059833&mpshare=1&scene=1&srcid=1002mDtDsEDixxCswQJOs2rH&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)

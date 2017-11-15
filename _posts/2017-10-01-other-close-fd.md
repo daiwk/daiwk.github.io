@@ -5,6 +5,13 @@ title: "关闭正在运行的程序正在使用的文件句柄"
 tags: [fd, ]
 ---
 
+目录
+
+<!-- TOC -->
+
+
+<!-- /TOC -->
+
 [https://stackoverflow.com/questions/323146/how-to-close-a-file-descriptor-from-another-process-in-unix-systems](https://stackoverflow.com/questions/323146/how-to-close-a-file-descriptor-from-another-process-in-unix-systems)
 
 一个爬虫程序写了for循环，但中间一个网络请求卡住了，后面的一直排不上，需要把这个请求kill掉，让后面的继续：

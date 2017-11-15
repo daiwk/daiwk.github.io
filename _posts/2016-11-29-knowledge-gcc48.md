@@ -5,6 +5,17 @@ title: "神奇的gcc48"
 tags: [gcc48]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [1.神奇的gcc48](#1神奇的gcc48)
+- [2.注意事项](#2注意事项)
+    - [1）/opt/compiler/gcc-4.8.2/lib或者lib64添加到LD_LIBRARY_PATH中吗？](#1optcompilergcc-482lib或者lib64添加到ld_library_path中吗)
+    - [2）使用gcc4编译得到的so，可以被gcc3编译得到的binary加载吗？](#2使用gcc4编译得到的so可以被gcc3编译得到的binary加载吗)
+
+<!-- /TOC -->
+
 # 1.神奇的gcc48
 
 使用gcc48的最直接方法：

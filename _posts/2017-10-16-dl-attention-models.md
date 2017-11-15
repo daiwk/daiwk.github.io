@@ -8,11 +8,17 @@ tags: [attention models, ]
 参考[从2017年顶会论文看Attention Model - PaperWeekly 第50期](https://mp.weixin.qq.com/s/R59A_qviCMjklIlmTE-qww)
 
 
-* [引言](#引言)
-  * [单层Attention Model](#单层attention-model)
-  * [多注意力机制（Hierarchical Attention &amp; Dual Attention）](#多注意力机制hierarchical-attention--dual-attention)
-        * [基于知识图谱或者领域知识的注意力机制（Knowledge-base Attention）](#基于知识图谱或者领域知识的注意力机制knowledge-base-attention)
-  * [参考文献](#参考文献)
+目录
+
+<!-- TOC -->
+
+- [引言](#引言)
+- [单层Attention Model](#单层attention-model)
+- [多注意力机制（Hierarchical Attention & Dual Attention）](#多注意力机制hierarchical-attention--dual-attention)
+- [基于知识图谱或者领域知识的注意力机制（Knowledge-base Attention）](#基于知识图谱或者领域知识的注意力机制knowledge-base-attention)
+- [参考文献](#参考文献)
+
+<!-- /TOC -->
 
 ## 引言
 

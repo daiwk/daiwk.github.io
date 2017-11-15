@@ -5,7 +5,15 @@ title: "basic usage"
 tags: [basic usage]
 ---
 
-mathjax基本公式语法：
+目录
+
+<!-- TOC -->
+
+- [mathjax基本公式语法](#mathjax基本公式语法)
+
+<!-- /TOC -->
+
+## mathjax基本公式语法
 [http://blog.csdn.net/ethmery/article/details/50670297](http://blog.csdn.net/ethmery/article/details/50670297)
 
 `\[

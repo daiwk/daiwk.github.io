@@ -6,6 +6,16 @@ tags: [PIL, jpeg, zlib]
 ---
 
 
+目录
+
+<!-- TOC -->
+
+- [0. 一键安装paddle](#0-一键安装paddle)
+- [1. 编译jpeg](#1-编译jpeg)
+- [2. 安装PIL](#2-安装pil)
+
+<!-- /TOC -->
+
 ### 0. 一键安装paddle
 
 [https://daiwk.github.io/posts/platform-paddlepaddle-cluster.html](https://daiwk.github.io/posts/platform-paddlepaddle-cluster.html)的0/1/2三个part，必要时看看第3个part。

@@ -5,6 +5,22 @@ title: "异常检测常用算法"
 tags: [异常检测, anormaly detection, iforest]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [1. 概述](#1-概述)
+    - [1.1 异常的原因](#11-异常的原因)
+    - [1.2 方法](#12-方法)
+    - [1.3 方法](#13-方法)
+- [2. 无监督算法](#2-无监督算法)
+    - [2.1 作用于numeric data的方法](#21-作用于numeric-data的方法)
+    - [2.2 作用于categorical data的方法](#22-作用于categorical-data的方法)
+    - [2.3 Exact methods v.s. Probalistic methods](#23-exact-methods-vs-probalistic-methods)
+- [iForest](#iforest)
+
+<!-- /TOC -->
+
 参考[数据挖掘（七）---异常检测](http://blog.163.com/zhoulili1987619@126/blog/static/353082012015211114642546)
 
 ## 1. 概述

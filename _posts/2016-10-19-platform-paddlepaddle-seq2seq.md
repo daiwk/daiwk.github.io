@@ -5,6 +5,18 @@ title: "paddlepaddle中的seq2seq的demo"
 tags: [nlp, natural language processing, seq2seq, seqToseq, paddlepaddle]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [**1. seq2seq简介**](#1-seq2seq简介)
+- [**2. seq2seq数据集简介**](#2-seq2seq数据集简介)
+- [**2. seq2seq数据预处理**](#2-seq2seq数据预处理)
+- [**3. seq2seq训练**](#3-seq2seq训练)
+- [**3. seq2seq生成文本**](#3-seq2seq生成文本)
+
+<!-- /TOC -->
+
 # **1. seq2seq简介**
 
 seq2seq的demo：[http://www.paddlepaddle.org/doc/demo/text_generation/text_generation.html](http://www.paddlepaddle.org/doc/demo/text_generation/text_generation.html)

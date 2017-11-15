@@ -4,6 +4,52 @@ category: "platform"
 title: "paddlepaddle快速入门教程"
 tags: [paddlepaddle,]
 ---
+
+目录
+
+<!-- TOC -->
+
+- [PaddlePaddle快速入门教程](#paddlepaddle快速入门教程)
+    - [使用概述(Overview)](#使用概述overview)
+    - [数据格式准备(Data Preparation)](#数据格式准备data-preparation)
+    - [数据向模型传送(Transfer Data to Model)](#数据向模型传送transfer-data-to-model)
+        - [Python数据加载脚本(Data Provider Script)](#python数据加载脚本data-provider-script)
+- [id of the word not in dictionary](#id-of-the-word-not-in-dictionary)
+- [initializer is called by the framework during initialization.](#initializer-is-called-by-the-framework-during-initialization)
+- [It allows the user to describe the data types and setup the](#it-allows-the-user-to-describe-the-data-types-and-setup-the)
+- [necessary data structure for later use.](#necessary-data-structure-for-later-use)
+- [`settings` is an object. initializer need to properly fill settings.input_types.](#settings-is-an-object-initializer-need-to-properly-fill-settingsinput_types)
+- [initializer can also store other data structures needed to be used at process().](#initializer-can-also-store-other-data-structures-needed-to-be-used-at-process)
+- [In this example, dictionary is stored in settings.](#in-this-example-dictionary-is-stored-in-settings)
+- [`dictionay` and `kwargs` are arguments passed from trainer_config.lr.py](#dictionay-and-kwargs-are-arguments-passed-from-trainer_configlrpy)
+- [Delaring a data provider. It has an initializer 'data_initialzer'.](#delaring-a-data-provider-it-has-an-initializer-data_initialzer)
+- [It will cache the generated data of the first pass in memory, so that](#it-will-cache-the-generated-data-of-the-first-pass-in-memory-so-that)
+- [during later pass, no on-the-fly data generation will be needed.](#during-later-pass-no-on-the-fly-data-generation-will-be-needed)
+- [`setting` is the same object used by initializer()](#setting-is-the-same-object-used-by-initializer)
+- [`file_name` is the name of a file listed train_list or test_list file given](#file_name-is-the-name-of-a-file-listed-train_list-or-test_list-file-given)
+- [to define_py_data_sources2(). See trainer_config.lr.py.](#to-define_py_data_sources2-see-trainer_configlrpy)
+        - [配置中的数据加载定义(Data Provider in Configure)](#配置中的数据加载定义data-provider-in-configure)
+- [define the data sources for the model.](#define-the-data-sources-for-the-model)
+- [We need to use different process for training and prediction.](#we-need-to-use-different-process-for-training-and-prediction)
+- [For training, the input data includes both word IDs and labels.](#for-training-the-input-data-includes-both-word-ids-and-labels)
+- [For prediction, the input data only includs word Ids.](#for-prediction-the-input-data-only-includs-word-ids)
+    - [网络结构(Network Architecture)](#网络结构network-architecture)
+        - [逻辑回归模型(Logistic Regression)](#逻辑回归模型logistic-regression)
+- [Define a fully connected layer with logistic activation (also called softmax activation).](#define-a-fully-connected-layer-with-logistic-activation-also-called-softmax-activation)
+- [Define cross-entropy classification loss and error.](#define-cross-entropy-classification-loss-and-error)
+        - [词向量模型(Word Vector)](#词向量模型word-vector)
+        - [卷积模型(Convolution)](#卷积模型convolution)
+        - [时序模型(Time Sequence)](#时序模型time-sequence)
+    - [优化算法(Optimization Algorithm)](#优化算法optimization-algorithm)
+    - [训练模型(Training Model)](#训练模型training-model)
+    - [预测(Prediction)](#预测prediction)
+    - [总体效果总结(Summary)](#总体效果总结summary)
+    - [附录(Appendix)](#附录appendix)
+        - [命令行参数(Command Line Argument)](#命令行参数command-line-argument)
+        - [输出日志(Log)](#输出日志log)
+
+<!-- /TOC -->
+
 # PaddlePaddle快速入门教程
 
 我们以文本分类问题作为背景，介绍PaddlePaddle使用流程和常用的网络基础单元的配置方法。

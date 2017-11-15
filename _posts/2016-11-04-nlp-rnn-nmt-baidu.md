@@ -5,6 +5,32 @@ title: "Deep Recurrent Models with Fast-Forward Connections for Neural Machine T
 tags: [nlp, natural language processing, nmt, lstm nmt, 机器翻译]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [**0. 摘要**](#0-摘要)
+- [**1. 介绍**](#1-介绍)
+- [**2. NMT**](#2-nmt)
+- [**3. Deep Topology**](#3-deep-topology)
+    - [**3.1 Network**](#31-network)
+    - [**3.2 Train technique**](#32-train-technique)
+    - [**3.3 Generation**](#33-generation)
+- [**4. Experiments**](#4-experiments)
+    - [**4.1 Data sets**](#41-data-sets)
+    - [**4.2 Model settings**](#42-model-settings)
+    - [**4.3 Optimization**](#43-optimization)
+    - [**4.4 Results**](#44-results)
+        - [**4.4.1 Single models**](#441-single-models)
+        - [**4.4.2 Post processing**](#442-post-processing)
+    - [**4.5 Analysis**](#45-analysis)
+        - [**4.5.1 Length**](#451-length)
+        - [**4.5.2 Unknown words**](#452-unknown-words)
+        - [**4.5.3 Over-fitting**](#453-over-fitting)
+- [**5. Conclusion**](#5-conclusion)
+
+<!-- /TOC -->
+
 这篇论文发表在acl,2016上
 [论文地址](../assets/Deep Recurrent Models with Fast-Forward Connections for Neural Machine Translation.pdf)
 

@@ -5,11 +5,22 @@ title: "pearson相关系数"
 tags: [pearson相关系数, Pearson Correlation Coefficient]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [计算公式](#计算公式)
+- [代码](#代码)
+
+<!-- /TOC -->
+
 参考：
 [https://www.zhihu.com/question/19734616](https://www.zhihu.com/question/19734616)
 
-计算公式：
+## 计算公式
 [http://blog.csdn.net/zhangjunjie789/article/details/51737366](http://blog.csdn.net/zhangjunjie789/article/details/51737366)
+
+## 代码
 
 ```python
 from math import sqrt

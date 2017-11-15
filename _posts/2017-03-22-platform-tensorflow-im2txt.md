@@ -5,6 +5,17 @@ title: "tf的im2txt"
 tags: [im2txt]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [0. 必需的包](#0-必需的包)
+- [1. 数据集准备](#1-数据集准备)
+- [2. 下载Inception v3 Checkpoint](#2-下载inception-v3-checkpoint)
+- [3. 训练](#3-训练)
+
+<!-- /TOC -->
+
 参考：[https://github.com/tensorflow/models/tree/master/im2txt](https://github.com/tensorflow/models/tree/master/im2txt)
 
 论文：

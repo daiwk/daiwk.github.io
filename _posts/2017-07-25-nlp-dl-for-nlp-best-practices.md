@@ -5,6 +5,14 @@ title: "Deep Learning for NLP Best Practices "
 tags: [Deep Learning for NLP Best Practices, ]
 ---
 
+目录
+
+<!-- TOC -->
+
+- [introductioin](#introductioin)
+
+<!-- /TOC -->
+
 参考[http://ruder.io/deep-learning-nlp-best-practices/](http://ruder.io/deep-learning-nlp-best-practices/)
 
 
