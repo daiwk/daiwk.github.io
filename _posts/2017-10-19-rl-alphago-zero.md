@@ -17,7 +17,7 @@ tags: [alphago zero, ]
 参考
 [【21天完虐Master】AlphaGo Zero横空出世，DeepMind Nature论文解密不使用人类知识掌握围棋](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652006424&idx=1&sn=d0be3ac450e735cbd9946de4f155fc42&chksm=f1211ce9c65695ff159a3f44d31abc92ad9494bef122082a09089d3ffeaa9e74678db1256392&mpshare=1&scene=1&srcid=10192t2Uq9DfDmj8F6gQ652a&pass_ticket=h3hZq0WHA7Cyui0YBndmrxji2MHJPRFf2%2F6zqKyUTOnTIhZZuESFoAbpmgeoETVa#rd)
 
-[今日Nature: 人工智能从0到1, 无师自通完爆阿法狗100-0 | 深度解析](https://mp.weixin.qq.com/s?__biz=MzA4NDQwNDQ2Nw==&mid=2650480675&idx=1&sn=9cfb29cb37fa28892cae59775ba6b816&chksm=87e831bfb09fb8a92f24ad7516e51ca215cefa627d3fa0d4a82b334418a8311dd37ee02e9e29&mpshare=1&scene=1&srcid=1019QrErNgHVFjp0D7xARMyj&pass_ticket=h3hZq0WHA7Cyui0YBndmrxji2MHJPRFf2%2F6zqKyUTOnTIhZZuESFoAbpmgeoETVa#rd)
+[今日Nature: 人工智能从0到1, 无师自通完爆阿法狗100-0 \| 深度解析](https://mp.weixin.qq.com/s?__biz=MzA4NDQwNDQ2Nw==&mid=2650480675&idx=1&sn=9cfb29cb37fa28892cae59775ba6b816&chksm=87e831bfb09fb8a92f24ad7516e51ca215cefa627d3fa0d4a82b334418a8311dd37ee02e9e29&mpshare=1&scene=1&srcid=1019QrErNgHVFjp0D7xARMyj&pass_ticket=h3hZq0WHA7Cyui0YBndmrxji2MHJPRFf2%2F6zqKyUTOnTIhZZuESFoAbpmgeoETVa#rd)
 
 [AlphaGo Zero 没有告诉你的秘密](https://mp.weixin.qq.com/s?__biz=MjM5ODIzNDQ3Mw==&mid=2649967631&idx=1&sn=c3ebeaa66be9a920bfdad91020da3ed1&chksm=beca3c0989bdb51f9ff1d3f89cbe05d5b0822db9fa89d912abfe6660e6c070abeabcf44b733f&mpshare=1&scene=1&srcid=1019F9cifstsNiGxC0gaOwGc&pass_ticket=h3hZq0WHA7Cyui0YBndmrxji2MHJPRFf2%2F6zqKyUTOnTIhZZuESFoAbpmgeoETVa#rd)
 
