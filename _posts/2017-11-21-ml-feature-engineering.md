@@ -172,13 +172,13 @@ tags: [特征工程, ]
 <tbody>
 <tr>
 <td class="left">decomposition.PCA</td>
-<td class="left">PCA</td>
+<td class="left">  PCA</td>
 <td class="left">主成分分析，为了让映射后的样本有最大的发散性，是一种无监督的降维方法。</td>
 </tr>
 
 <tr>
 <td class="left">lda.LDA</td>
-<td class="left">LDA</td>
+<td class="left">  LDA</td>
 <td class="left">线性判别分析法，为了让映射后的样本有最好的分类性能，是一种有监督的降维方法。</td>
 </tr>
 
