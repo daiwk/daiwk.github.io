@@ -240,12 +240,7 @@ pca.explained_variaance_ratio_：percentage of variance explained by each of the
 
 ## 5. sklearn小技巧
 
-包	类或方法	说明
-sklearn.pipeline	Pipeline	流水线处理
-sklearn.pipeline	FeatureUnion	并行处理
-sklearn.grid_search	GridSearchCV	网格搜索调参
-externals.joblib	dump	数据持久化
-externals.joblib	load	从文件系统中加载数据至内存
+参考 [http://www.cnblogs.com/jasonfreak/p/5448462.html](http://www.cnblogs.com/jasonfreak/p/5448462.html)
 
 <html>
 <center>
