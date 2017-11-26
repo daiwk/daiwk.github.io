@@ -20,6 +20,7 @@ tags: [特征工程, ]
     - [3.1 特征间的统计指标](#31-特征间的统计指标)
     - [3.2 特征选择的形式](#32-特征选择的形式)
 - [4. 降维](#4-降维)
+- [5. sklearn小技巧](#5-sklearn小技巧)
 
 <!-- /TOC -->
 
@@ -56,6 +57,12 @@ tags: [特征工程, ]
 <td class="left">preprocessing.StandardScaler</td>
 <td class="left">无量纲(dimension)化</td>
 <td class="left">标准化，基于特征矩阵的列，将特征值转换至服从标准正态分布</td>
+</tr>
+
+<tr>
+<td class="left">preprocessing.MinMaxScaler</td>
+<td class="left">无量纲(dimension)化</td>
+<td class="left">区间缩放，基于最大最小值，将特征值转换到[0, 1]区间上</td>
 </tr>
 
 <tr>
@@ -230,3 +237,48 @@ tags: [特征工程, ]
 
 pca.explained_variaance_ratio_：percentage of variance explained by each of the selected components. 
 
+
+## 5. sklearn小技巧
+
+包	类或方法	说明
+sklearn.pipeline	Pipeline	流水线处理
+sklearn.pipeline	FeatureUnion	并行处理
+sklearn.grid_search	GridSearchCV	网格搜索调参
+externals.joblib	dump	数据持久化
+externals.joblib	load	从文件系统中加载数据至内存
+
+<html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">包</th>
+<th scope="col" class="left">类或方法</th>
+<th scope="col" class="left">说明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">sklearn.pipeline</td>
+<td class="left">Pipeline</td>
+<td class="left">流水线处理</td>
+</tr>
+
+<tr>
+<td class="left">sklearn.pipeline</td>
+<td class="left">FeatureUnion</td>
+<td class="left">并行处理</td>
+</tr>
+
+<tr>
+<td class="left">sklearn.grid_search</td>
+<td class="left">GridSearchCV</td>
+<td class="left">网格搜索调参</td>
+</tr>
+
+
+</tbody>
+</table></center>
+</html>
