@@ -14,6 +14,7 @@ tags: [paddle, tips]
     - [1.2 日志解释](#12-日志解释)
     - [1.3 集群设置](#13-集群设置)
     - [1.4 正则](#14-正则)
+    - [1.5 初始化](#15-初始化)
 
 <!-- /TOC -->
 
@@ -56,3 +57,14 @@ https://github.com/PaddlePaddle/models/blob/develop/mt_with_external_memory/trai
                  size=128,
                  param_attr=paddle.attr.Param(decay_rate=0))
 ```
+
+### 1.5 初始化
+
+正交初始化：
+
+```python
+W = np.random.randn(ndim, ndim)
+u, s, v = np.linalg.svd(W)
+```
+求正交要 svd ，可以用numpy算好之后，用u做初始化
+
