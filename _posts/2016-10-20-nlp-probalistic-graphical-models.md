@@ -19,7 +19,7 @@ tags: [概率图模型, HMM, MEMM, CRF, probalistic graphical models]
 - [**7. 最大熵模型**](#7-最大熵模型)
 - [**8. 最大熵隐马尔可夫模型**](#8-最大熵隐马尔可夫模型)
 - [**9. CRF**](#9-crf)
-- [**友情链接**：](#友情链接)
+- [**友情链接**](#友情链接)
 
 <!-- /TOC -->
 
@@ -277,7 +277,7 @@ crf经典资料：
 工具：**CRF++(c++)/CRFSuite(c)/MALLET(java)/nltk(python)**
 
 
-# **友情链接**：
+# **友情链接**
 
 + [Graphical Models in a Nutshell](https://ai.stanford.edu/~koller/Papers/Koller+al:SRL07.pdf)
 + 图模型教科书：《Probabilistic Graphical Models: Principles and Techniques》
