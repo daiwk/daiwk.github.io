@@ -19,6 +19,7 @@ tags: [概率图模型, HMM, MEMM, CRF, probalistic graphical models]
 - [**7. 最大熵模型**](#7-最大熵模型)
 - [**8. 最大熵隐马尔可夫模型**](#8-最大熵隐马尔可夫模型)
 - [**9. CRF**](#9-crf)
+- [**友情链接**：](#友情链接)
 
 <!-- /TOC -->
 
@@ -274,3 +275,16 @@ crf经典资料：
 + 开山之作：[Conditional random fields: Probabilistic models for segmenting and labeling sequence data(Lafferty,2001)](../assets/Conditional random fields Probabilistic models for segmenting and labeling sequence data.pdf)
 
 工具：**CRF++(c++)/CRFSuite(c)/MALLET(java)/nltk(python)**
+
+
+# **友情链接**：
+
++ [Graphical Models in a Nutshell](https://ai.stanford.edu/~koller/Papers/Koller+al:SRL07.pdf)
++ 图模型教科书：《Probabilistic Graphical Models: Principles and Techniques》
++ Prasoon Goyal的博客
+    + part1:
+        + [https://blog.statsbot.co/probabilistic-graphical-models-tutorial-and-solutions-e4f1d72af189](https://blog.statsbot.co/probabilistic-graphical-models-tutorial-and-solutions-e4f1d72af189) 
+        + [想了解概率图模型？你要先理解图论的基本定义与形式](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650725041&idx=1&sn=0c57ba70e2613e6af80c4ab61c996d44&chksm=871b1ecfb06c97d9547e50705d3e74a2b8c41254f0efc2dd88d2e89eec3bfac5da089f28c398&scene=21#wechat_redirect)
+    + part2:
+        + [https://blog.statsbot.co/probabilistic-graphical-models-tutorial-d855ba0107d1](https://blog.statsbot.co/probabilistic-graphical-models-tutorial-d855ba0107d1) 
+        + [读懂概率图模型：你需要从基本概念和参数估计开始](https://mp.weixin.qq.com/s/S-6Mb6zNzVPpxR8DbWdT-A)

@@ -64,3 +64,8 @@ tags: [cnn]
 
 inception发展过程：
 [http://blog.csdn.net/u010402786/article/details/52433324](http://blog.csdn.net/u010402786/article/details/52433324)
+
+
+科普贴：
+
+[https://zhuanlan.zhihu.com/p/27642620?utm_source=itdadao&utm_medium=referral](https://zhuanlan.zhihu.com/p/27642620?utm_source=itdadao&utm_medium=referral)
