@@ -288,3 +288,4 @@ crf经典资料：
     + part2:
         + [https://blog.statsbot.co/probabilistic-graphical-models-tutorial-d855ba0107d1](https://blog.statsbot.co/probabilistic-graphical-models-tutorial-d855ba0107d1) 
         + [读懂概率图模型：你需要从基本概念和参数估计开始](https://mp.weixin.qq.com/s/S-6Mb6zNzVPpxR8DbWdT-A)
+
