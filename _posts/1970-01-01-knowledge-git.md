@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "knowledge"
-title: "url"
-tags: [url, ]
+title: "git常用操作"
+tags: [git, ]
 ---
 
 目录
@@ -16,7 +16,6 @@ tags: [url, ]
 
 ## git常用操作
 
-
 ### 如何把fork的源代码的更新merge到自己的来
 
 ```shell
@@ -26,3 +25,4 @@ git fetch upstream
 git merge upstream/master
 git push 
 ```
+
