@@ -1,17 +1,21 @@
 ---
 layout: post
 category: "dl"
-title: "selu"
-tags: [selu, ]
+title: "激活函数"
+tags: [激活函数, activation function ]
 ---
 
 目录
 
 <!-- TOC -->
 
-- [概述](#概述)
+- [selu](#selu)
+    - [概述](#概述)
 
 <!-- /TOC -->
+
+
+## selu
 
 参考
 [引爆机器学习圈：「自归一化神经网络」提出新型激活函数SELU](https://zhuanlan.zhihu.com/p/27362891)
@@ -20,7 +24,7 @@ tags: [selu, ]
 
 paper: [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
 
-## 概述
+### 概述
 
 其实就是ELU乘了个lambda，关键在于这个lambda是大于1的。以前relu，prelu，elu这些激活函数，都是在负半轴坡度平缓，这样在activation的方差过大的时候可以让它减小，防止了梯度爆炸，但是正半轴坡度简单的设成了1。而selu的正半轴大于1，在方差过小的的时候可以让它增大，同时防止了梯度消失。这样激活函数就有一个不动点，网络深了以后每一层的输出都是均值为0方差为1。
 
