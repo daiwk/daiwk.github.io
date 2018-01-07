@@ -85,7 +85,7 @@ f'(x) = \begin{cases} \alpha e^{x} = f(x) + \alpha & \text{for } x < 0\\1 & \tex
 </html>
 
 注：
-tensorflow中的实现就是`\(\alpha = 1\)`的版本：
+tensorflow中的实现就是`\(\alpha = 1\)`的版本```tensorflow/tensorflow/core/kernels/relu_op_functor.h```：：
 
 ```c++
 // Functor used by EluOp to do the computations.
@@ -143,7 +143,7 @@ f'(x) = \begin{cases}\lambda\alpha e^{x} = (f(x) + \lambda \alpha) & \text{for }
 \]`
 
 
-tensorflow中的实现：
+tensorflow中的实现```tensorflow/tensorflow/core/kernels/relu_op_functor.h```：
 ```c++
 // Functor used by SeluOp to do the computations.
 template <typename Device, typename T>
@@ -215,7 +215,8 @@ f'(x)=\frac{1}{(1+|x|)^2}, f'(x) \in (0,1]
 <br/>
 </html>
 
-tensorflow实现：
+tensorflow实现```tensorflow/tensorflow/core/kernels/softsign_op.h```：
+
 ```c++
 // Functor used by SoftsignOp to do the computations.
 template <typename Device, typename T>
