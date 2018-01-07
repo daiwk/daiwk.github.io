@@ -215,6 +215,39 @@ f'(x)=\frac{1}{(1+|x|)^2}, f'(x) \in (0,1]
 <br/>
 </html>
 
+tensorflow实现：
+```c++
+// Functor used by SoftsignOp to do the computations.
+template <typename Device, typename T>
+struct Softsign {
+  // Computes Softsign activation.
+  //
+  // features: any shape.
+  // activations: same shape as "features".
+  void operator()(const Device& d, typename TTypes<T>::ConstTensor features,
+                  typename TTypes<T>::Tensor activations) {
+    activations.device(d) =
+        features / (features.abs() + features.constant(T(1)));
+  }
+};
+
+// Functor used by SoftsignGradOp to do the computations.
+template <typename Device, typename T>
+struct SoftsignGrad {
+  // Computes SoftsignGrad backprops.
+  //
+  // gradients: gradients backpropagated to the Softsign op.
+  // features: inputs that were passed to the Softsign op.
+  // backprops: gradients to backpropagate to the Softsign inputs.
+  void operator()(const Device& d, typename TTypes<T>::ConstTensor gradients,
+                  typename TTypes<T>::ConstTensor features,
+                  typename TTypes<T>::Tensor backprops) {
+    backprops.device(d) =
+        gradients / (features.abs() + features.constant(T(1))).square();
+  }
+};
+```
+
 ## 17. SoftPlus
 
 ## 18. Signum
