@@ -88,12 +88,18 @@ paper: [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
 Softsign 是 Tanh 激活函数的另一个替代选择。就像 Tanh 一样，Softsign 是反对称、去中心、可微分，并返回-1 和 1 之间的值。其更平坦的曲线与更慢的下降导数表明它可以更高效地学习。
 
 `\[
-f(x)=\frac{x}{1+|x|}
+f(x)=\frac{x}{1+|x|}, f(x) \in (-1,1)
 \]`
 
 `\[
-f'(x)=\frac{1}{1+|x|^2}
+f'(x)=\frac{1}{(1+|x|)^2}, f'(x) \in (0,1]
 \]`
+
+<html>
+<br/>
+<img src='../assets/activations_softsign.png' style='max-height: 300px'/>
+<br/>
+</html>
 
 ## 17. SoftPlus
 
