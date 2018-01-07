@@ -19,7 +19,6 @@ tags: [激活函数, activation function ]
 - [8. RReLU](#8-rrelu)
 - [9. ELU](#9-elu)
 - [10. SELU](#10-selu)
-    - [概述](#概述)
 - [11. SReLU](#11-srelu)
 - [12. Hard Sigmoid](#12-hard-sigmoid)
 - [13. Hard Tanh](#13-hard-tanh)
@@ -59,6 +58,64 @@ tags: [激活函数, activation function ]
 
 ## 9. ELU
 
+指数线性单元（Exponential Linear Unit，ELU）也属于 ReLU 修正类激活函数的一员。和 PReLU 以及 RReLU 类似，为负值输入添加了一个非零输出。和其它修正类激活函数不同的是，它包括一个负指数项，从而防止静默神经元出现，导数收敛为零，从而提高学习效率。
+
+
+`\(\alpha = 0.7\)`：
+
+<html>
+<br/>
+<img src='../assets/activations_elu_alpha0.7.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+`\(\alpha = 1\)`：
+
+<html>
+<br/>
+<img src='../assets/activations_elu_alpha1.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+注：
+tensorflow中的实现就是`\(\alpha = 1\)`的版本：
+
+```c++
+// Functor used by EluOp to do the computations.
+template <typename Device, typename T>
+struct Elu {
+  // Computes Elu activation.
+  //
+  // features: any shape.
+  // activations: same shape as "features".
+  void operator()(const Device& d, typename TTypes<T>::ConstTensor features,
+                  typename TTypes<T>::Tensor activations) {
+    // features.constant(?)
+    activations.device(d) =
+        (features < static_cast<T>(0))
+            .select(features.exp() - features.constant(static_cast<T>(1)),
+                    features);
+  }
+};
+
+// Functor used by EluGradOp to do the computations.
+template <typename Device, typename T>
+struct EluGrad {
+  // Computes EluGrad backprops.
+  //
+  // gradients: gradients backpropagated to the Elu op.
+  // activations: outputs of the Elu op.
+  // backprops: gradients to backpropagate to the Elu inputs.
+  void operator()(const Device& d, typename TTypes<T>::ConstTensor gradients,
+                  typename TTypes<T>::ConstTensor activations,
+                  typename TTypes<T>::Tensor backprops) {
+    backprops.device(d) =
+        (activations < static_cast<T>(0))
+            .select((activations + static_cast<T>(1)) * gradients, gradients);
+  }
+};
+```
+
 ## 10. SELU
 
 参考
@@ -68,9 +125,59 @@ tags: [激活函数, activation function ]
 
 paper: [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
 
-### 概述
-
 其实就是ELU乘了个lambda，关键在于这个lambda是大于1的。以前relu，prelu，elu这些激活函数，都是在负半轴坡度平缓，这样在activation的方差过大的时候可以让它减小，防止了梯度爆炸，但是正半轴坡度简单的设成了1。而selu的正半轴大于1，在方差过小的的时候可以让它增大，同时防止了梯度消失。这样激活函数就有一个不动点，网络深了以后每一层的输出都是均值为0方差为1。
+
+`\[
+f(x) = \lambda \begin{cases}\alpha(e^x - 1) & \text{for } x < 0\\x & \text{for } x \ge 0 \end{cases}\\\text{ with } \lambda = 1.0507, \alpha = 1.67326
+\]`
+
+`\[
+    
+\]`
+
+
+tensorflow中的实现：
+```c++
+// Functor used by SeluOp to do the computations.
+template <typename Device, typename T>
+struct Selu {
+  // Computes Selu activation.
+  //
+  // features: any shape.
+  // activations: same shape as "features".
+  void operator()(const Device& d, typename TTypes<T>::ConstTensor features,
+                  typename TTypes<T>::Tensor activations) {
+    // features.constant(?)
+    const auto scale = static_cast<T>(1.0507009873554804934193349852946);
+    const auto scale_alpha = static_cast<T>(1.7580993408473768599402175208123);
+    const auto one = static_cast<T>(1);
+    const auto zero = static_cast<T>(0);
+    activations.device(d) =
+        (features < zero)
+            .select(scale_alpha * (features.exp() - features.constant(one)),
+                    scale * features);
+  }
+};
+
+// Functor used by SeluGradOp to do the computations.
+template <typename Device, typename T>
+struct SeluGrad {
+  // Computes SeluGrad backprops.
+  //
+  // gradients: gradients backpropagated to the Selu op.
+  // activations: outputs of the Selu op.
+  // backprops: gradients to backpropagate to the Selu inputs.
+  void operator()(const Device& d, typename TTypes<T>::ConstTensor gradients,
+                  typename TTypes<T>::ConstTensor activations,
+                  typename TTypes<T>::Tensor backprops) {
+    const auto scale = static_cast<T>(1.0507009873554804934193349852946);
+    const auto scale_alpha = static_cast<T>(1.7580993408473768599402175208123);
+    backprops.device(d) =
+        (activations < static_cast<T>(0)).select(
+            gradients * (activations + scale_alpha), gradients * scale);
+  }
+};
+```
 
 ## 11. SReLU
 
