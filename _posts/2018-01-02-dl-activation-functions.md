@@ -85,7 +85,7 @@ f'(x) = \begin{cases} \alpha e^{x} = f(x) + \alpha & \text{for } x < 0\\1 & \tex
 </html>
 
 注：
-tensorflow中的实现就是`\(\alpha = 1\)`的版本```tensorflow/tensorflow/core/kernels/relu_op_functor.h```：：
+tensorflow中的实现就是`\(\alpha = 1\)`的版本```tensorflow/tensorflow/core/kernels/relu_op_functor.h```：
 
 ```c++
 // Functor used by EluOp to do the computations.
