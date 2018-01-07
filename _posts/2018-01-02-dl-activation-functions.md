@@ -60,6 +60,13 @@ tags: [激活函数, activation function ]
 
 指数线性单元（Exponential Linear Unit，ELU）也属于 ReLU 修正类激活函数的一员。和 PReLU 以及 RReLU 类似，为负值输入添加了一个非零输出。和其它修正类激活函数不同的是，它包括一个负指数项，从而防止静默神经元出现，导数收敛为零，从而提高学习效率。
 
+`\[
+f(x) = \begin{cases}\alpha(e^x - 1) & \text{for } x < 0\\x & \text{for } x \ge 0\end{cases}  
+\]`
+
+`\[
+f'(x) = \begin{cases} \alpha e^{x} = f(x) + \alpha & \text{for } x < 0\\1 & \text{for } x \ge 0\end{cases}    
+\]`
 
 `\(\alpha = 0.7\)`：
 
@@ -132,7 +139,7 @@ f(x) = \lambda \begin{cases}\alpha(e^x - 1) & \text{for } x < 0\\x & \text{for }
 \]`
 
 `\[
-    
+f'(x) = \begin{cases}\lambda\alpha e^{x} = (f(x) + \lambda \alpha) & \text{for } x < 0\\\lambda & \text{for } x \ge 0\end{cases}
 \]`
 
 
