@@ -48,7 +48,40 @@ tags: [激活函数, activation function ]
 
 ## 4. Sigmoid
 
+Sigmoid 因其在 logistic 回归中的重要地位而被人熟知，值域在 0 到 1 之间。Logistic Sigmoid（或者按通常的叫法，Sigmoid）激活函数给神经网络引进了概率的概念。它的导数是非零的，并且很容易计算（是其初始输出的函数）。然而，在分类任务中，sigmoid 正逐渐被 Tanh 函数取代作为标准的激活函数，因为后者为奇函数（关于原点对称）。
+
+`\[
+\begin{align*}f(x) = \frac{1}{1 + e^{-x}} \end{align*}  
+\]`
+
+`\[
+\begin{align*}f'(x) &= \frac{e^{-x}}{(1+e^{-x})^2} \\&= f(x)(1-f(x)) \end{align*}  
+\]`
+
+<html>
+<br/>
+<img src='../assets/activations_sigmoid.png' style='max-height: 300px'/>
+<br/>
+</html>
+
 ## 5. Tanh
+
+在分类任务中，双曲正切函数（Tanh）逐渐取代 Sigmoid 函数作为标准的激活函数，其具有很多神经网络所钟爱的特征。它是完全可微分的，反对称，对称中心在原点。为了解决学习缓慢和/或梯度消失问题，可以使用这个函数的更加平缓的变体（log-log、softsign、symmetrical sigmoid 等等）。
+
+`\[
+\begin{align*}f(x)&=\tanh(x)\\&=\frac{2}{1+e^{-2x}}-1\end{align*}  
+\]`
+
+`\[
+\begin{align*}f'(x)&=1-\tanh^2(x)\\&=1-f(x)^2\end{align*}
+\]`
+
+<html>
+<br/>
+<img src='../assets/activations_tanh.png' style='max-height: 300px'/>
+<br/>
+</html>
+
 
 ## 6. Leaky Relu
 
@@ -194,6 +227,22 @@ struct SeluGrad {
 ## 13. Hard Tanh
 
 ## 14. LeCun Tanh
+
+LeCun Tanh（也被称作 Scaled Tanh）是 Tanh 激活函数的扩展版本。它具有以下几个可以改善学习的属性：f(± 1) = ±1；二阶导数在 x=1 最大化；且有效增益接近 1。
+
+`\[
+\begin{align*}f(x)&=1.7519\tanh(\frac{2}{3}x)\end{align*}  
+\]`
+
+`\[
+\begin{align*}f'(x)&=1.7519*\frac{2}{3}(1-\tanh^2(\frac{2}{3}x))\\&=1.7519*\frac{2}{3}-\frac{2}{3*1.7519}f(x)^2\end{align*}
+\]`
+
+<html>
+<br/>
+<img src='../assets/activations_lecun_tanh.png' style='max-height: 300px'/>
+<br/>
+</html>
 
 ## 15. ArcTan
 
