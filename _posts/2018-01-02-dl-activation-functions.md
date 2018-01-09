@@ -120,10 +120,25 @@ Sigmoid 因其在 logistic 回归中的重要地位而被人熟知，值域在 0
 
 ## 6. Leaky Relu
 
+经典（以及广泛使用的）ReLU 激活函数的变体，带泄露修正线性单元（Leaky ReLU）的输出对负值输入有很小的坡度。由于导数总是不为零，这能减少静默神经元的出现，允许基于梯度的学习（虽然会很慢）。
 
+`\[
+f(x) =\begin{cases}x & \text{for } x\geq0\\0.01x & \text{for } x<0\end{cases}
+\]`
 
+`\[
+f'(x) =\begin{cases}1 & \text{for } x\geq0\\0.01 & \text{for } x<0\end{cases}
+\]`
+
+<html>
+<br/>
+<img src='../assets/activations_leaky_relu.png' style='max-height: 300px'/>
+<br/>
+</html>
 
 ## 7. PReLU
+
+
 
 ## 8. RReLU
 
