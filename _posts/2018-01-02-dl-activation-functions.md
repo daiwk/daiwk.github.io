@@ -42,9 +42,45 @@ tags: [激活函数, activation function ]
 
 ## 1. Step
 
+激活函数 Step 更倾向于理论而不是实际，它模仿了生物神经元要么全有要么全无的属性。它无法应用于神经网络，因为其导数是 0（除了零点导数无定义以外），这意味着基于梯度的优化方法并不可行。
+
+`\[
+f(x) =\begin{cases}1 & \text{for } x\geq0\\0 & \text{for } x<0\end{cases}  
+\]`
+
+`\[
+f'(x) =\begin{cases}0 & \text{for } x\neq0\\? & \text{for } x=0\end{cases}  
+\]`
+
 ## 2. Identity 
 
+通过激活函数 Identity，节点的输入等于输出。它完美适合于潜在行为是线性（与线性回归相似）的任务。当存在非线性，单独使用该激活函数是不够的，但它依然可以在最终输出节点上作为激活函数用于回归任务。
+
+`\[
+\begin{align*}f(x) = x\end{align*}  
+\]`
+
+`\[
+\begin{align*}f'(x) = 1\end{align*}
+\]`
+
 ## 3. ReLU
+
+修正线性单元（Rectified linear unit，ReLU）是神经网络中最常用的激活函数。它保留了 step 函数的生物学启发（只有输入超出阈值时神经元才激活），不过当输入为正的时候，导数不为零，从而允许基于梯度的学习（尽管在 x=0 的时候，导数是未定义的）。使用这个函数能使计算变得很快，因为无论是函数还是其导数都不包含复杂的数学运算。然而，当输入为负值的时候，ReLU 的学习速度可能会变得很慢，甚至使神经元直接无效，因为此时输入小于零而梯度为零，从而其权重无法得到更新，在剩下的训练过程中会一直保持静默。
+
+`\[
+f(x) =\begin{cases}x & \text{for } x\geq0\\0 & \text{for } x<0\end{cases}
+\]`
+
+`\[
+f'(x) =\begin{cases}1 & \text{for } x\geq0\\0 & \text{for } x<0\end{cases}
+\]`
+
+<html>
+<br/>
+<img src='../assets/activations_relu.png' style='max-height: 300px'/>
+<br/>
+</html>
 
 ## 4. Sigmoid
 
@@ -82,8 +118,10 @@ Sigmoid 因其在 logistic 回归中的重要地位而被人熟知，值域在 0
 <br/>
 </html>
 
-
 ## 6. Leaky Relu
+
+
+
 
 ## 7. PReLU
 
