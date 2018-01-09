@@ -138,9 +138,37 @@ f'(x) =\begin{cases}1 & \text{for } x\geq0\\0.01 & \text{for } x<0\end{cases}
 
 ## 7. PReLU
 
+参数化修正线性单元（Parameteric Rectified Linear Unit，PReLU）属于 ReLU 修正类激活函数的一员。它和 RReLU 以及 Leaky ReLU 有一些共同点，即为负值输入添加了一个线性项。而最关键的区别是，这个线性项的斜率实际上是在模型训练中学习到的。
 
+`\[
+f_{\alpha}(x) =\begin{cases}x & \text{for } x\geq0\\\alpha x & \text{for } x<0\end{cases}\]`
+
+`\[
+f'_{\alpha}(x) =\begin{cases}1 & \text{for } x\geq0\\\alpha & \text{for } x<0\end{cases}
+\]`
+
+<html>
+<br/>
+<img src='../assets/activations_prelu.png' style='max-height: 300px'/>
+<br/>
+</html>
 
 ## 8. RReLU
+
+随机带泄露的修正线性单元（Randomized Leaky Rectified Linear Unit，RReLU）也属于 ReLU 修正类激活函数的一员。和 Leaky ReLU 以及 PReLU 很相似，为负值输入添加了一个线性项。而最关键的区别是，这个线性项的斜率在每一个节点上都是**随机分配**的（通常服从均匀分布）。
+
+`\[
+f(x) =\begin{cases}x & \text{for } x\geq0\\\alpha x & \text{for } x<0\end{cases}\]`
+
+`\[
+f'(x) =\begin{cases}1 & \text{for } x\geq0\\\alpha & \text{for } x<0\end{cases}  
+\]`
+
+<html>
+<br/>
+<img src='../assets/activations_rrelu.png' style='max-height: 300px'/>
+<br/>
+</html>
 
 ## 9. ELU
 
@@ -274,10 +302,58 @@ struct SeluGrad {
 
 ## 11. SReLU
 
+S 型整流线性激活单元（S-shaped Rectified Linear Activation Unit，SReLU）属于以 ReLU 为代表的整流激活函数族。它由三个分段线性函数组成。其中两种函数的斜度，以及函数相交的位置会在模型训练中被学习。
+
+`\[
+f_{t_l,a_l,t_r,a_r}(x) = \begin{cases}t_l + a_l (x - t_l) & \text{for } x \le t_l\\x & \text{for } t_l < x < t_r\\t_r + a_r (x - t_r) & \text{for } x \ge t_r\end{cases}
+\]`
+
+`\[
+f'_{t_l,a_l,t_r,a_r}(x) = \begin{cases}a_l & \text{for } x \le t_l\\1   & \text{for } t_l < x < t_r\\a_r & \text{for } x \ge t_r\end{cases}
+\]`
+
+<html>
+<br/>
+<img src='../assets/activations_srelu.png' style='max-height: 300px'/>
+<br/>
+</html>
 
 ## 12. Hard Sigmoid
 
+Hard Sigmoid 是 Logistic Sigmoid 激活函数的分段线性近似。它更易计算，这使得学习计算的速度更快，尽管首次派生值为零可能导致静默神经元/过慢的学习速率（详见 ReLU）。
+
+`\[
+f(x) =\begin{cases}0 & \text{for } x<-2.5\\0.2x + 0.5 & \text{for } -2.5\geq x\leq 2.5 \\1 & \text{for } x>2.5\end{cases}
+\]`
+
+`\[
+f(x) =\begin{cases}0 & \text{for } x<-2.5\\0.2 & \text{for } -2.5\geq x\leq 2.5 \\0 & \text{for } x>2.5\end{cases}  
+\]`
+
+<html>
+<br/>
+<img src='../assets/activations_hard_sigmoid.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+
 ## 13. Hard Tanh
+
+Hard Tanh 是 Tanh 激活函数的线性分段近似。相较而言，它更易计算，这使得学习计算的速度更快，尽管首次派生值为零可能导致静默神经元/过慢的学习速率（详见 ReLU）。
+
+`\[
+f(x) =\begin{cases}-1 & \text{for } x<-1\\x & \text{for } -1\geq x\leq 1 \\1 & \text{for } x>1\end{cases}  
+\]`
+
+`\[
+f(x) =\begin{cases}0 & \text{for } x<-1\\1 & \text{for } -1\geq x\leq 1 \\0 & \text{for } x>1\end{cases}  
+\]`
+
+<html>
+<br/>
+<img src='../assets/activations_hard_tanh.png' style='max-height: 300px'/>
+<br/>
+</html>
 
 ## 14. LeCun Tanh
 
