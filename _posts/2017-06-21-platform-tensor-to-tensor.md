@@ -20,6 +20,7 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
         - [4.2.3 position-wise feed-forward networks](#423-position-wise-feed-forward-networks)
         - [4.2.4 embeddings and softmax](#424-embeddings-and-softmax)
         - [4.2.5 positional encoding](#425-positional-encoding)
+        - [4.2.6 生成过程](#426-生成过程)
     - [4.3 训练](#43-训练)
         - [4.3.1 训练数据和batching](#431-训练数据和batching)
         - [4.3.2 hardware & schedule](#432-hardware--schedule)
@@ -100,13 +101,15 @@ encoder堆叠了N=6层，每层有两个子层：
 
 这两个子层内均是residual connection，再加上layer normalization，即，`\(LayerNorm(x+Sublayer(x))\)`（即图中的Add&Norm），Sublayer是子层自己实现的函数。**为了方便这些residual connection，架构中的所有子层（包括embedding）,输出的维度均是`\(d_{model}=512\)`。**
 
+[注：LayerNorm是Batch Normalization的一个变体，BN针对一个minibatch的输入样本，计算均值和方差，基于计算的均值和方差来对某一层神经网络的输入X中每一个case进行归一化操作。但BN有两个明显不足：1、高度依赖于mini-batch的大小，实际使用中会对mini-Batch大小进行约束，不适合类似在线学习（mini-batch为1）情况；2、不适用于RNN网络中normalize操作：BN实际使用时需要计算并且保存某一层神经网络mini-batch的均值和方差等统计信息，对于对一个固定深度的前向神经网络（DNN，CNN）使用BN，很方便；但对于RNN来说，sequence的长度是不一致的，换句话说RNN的深度不是固定的，不同的time-step需要保存不同的statics特征，可能存在一个特殊sequence比其的sequence长很多，这样training时，计算很麻烦。但LN可以有效解决上面这两个问题。LN中同层神经元输入拥有相同的均值和方差，不同的输入样本有不同的均值和方差；而BN中则针对不同神经元输入计算均值和方差，同一个minibatch中的输入拥有相同的均值和方差。因此，LN不依赖于mini-batch的大小和输入sequence的深度，因此可以用于bath-size为1和RNN中对边长的输入sequence的normalize操作。参考[<优化策略-2>深度学习加速器Layer Normalization-LN](https://mp.weixin.qq.com/s?__biz=MzIxNDgzNDg3NQ==&mid=2247483765&idx=1&sn=be24746f5e99058a4b9e8e209848a717&chksm=97a0caa1a0d743b7440c224e17fdc8579a88793940470e6d028b34040f7385f2b99d4da17478&scene=21#wechat_redirect)]
+
 + decoder:
 
 decoder同样堆叠了N=6层。**在encoder的两个子层的基础上，decoder加了一个子层，即，对encoder的输出增加了一个masked multi-head attention层【通过添加mask，这个子层不要encoder的输出作为输入，只要output的embedding作为输入】。**连接一样是Add & Norm。另外，**还对self-attention子层进行了修改，prevent positions from attending to subsequent positions.** **由于输入的output embedding有一个position的offset，所以结合masking，可以保证对位置i的预测，只依赖于位置小于i的位置的输出。**
 
 #### 4.2.2 attention
 
-attention函数：将一个query和一系列的(key, value)对映射起来。其中，**query、key、value均是向量，维度分别为`\(d_k\)`, `\(d_k\)`, `\(d_v\)`。**最终的输出是各value的加权组合：
+attention函数：将一个query和一系列的(key, value)对映射起来。其中，**query、key、value均是向量，维度分别为`\(d_k\)`, `\(d_k\)`, `\(d_v\)`。**最终的输出是各value的加权组合（v的权重w其实就是下面公式里V的系数`\(softmax(\frac{QK^T}{\sqrt{d_k}})\)`）：
 
 `\[
 q->[(k_1,v_1), (k_2,v_2), ...]->attention=w_1*v_1+w_2*v_2+...
@@ -189,7 +192,37 @@ FFN(x)=ReLU(xW_1+b_1)W_2+b_2=max(0, xW_1+b_1)W_2+b_2
 
 #### 4.2.4 embeddings and softmax
 
+与其他序列转换模型类似，本文也使用learned embeddings对input tokens和output tokens转换为`\(d_{model}\)`维的向量（架构图中的 input embedding和output embedding）。
+
+同时也使用learned linear变换和softmax将decoder的输出转换为预测的下一个token的概率。
+
+本文中，与[Using the output embedding to improve language models](https://arxiv.org/pdf/1608.05859.pdf)类似【看一看！！！。。。】，两个embedding层与pre-softmax transformation均共享同一个参数矩阵。
+
 #### 4.2.5 positional encoding
+
+鉴于本模型没有cnn也没有rnn，为了引入序列的位置信息，需要加入"position encoding"。在encoder和decoder的底部，也就是对应的embedding之后，加入了`\(d_{model}\)`维的position encoding，与embedding的维数一致，便于对二者求和。
+
+本文使用的position encoding如下:
+
+`\[
+\\PE_{(pos,2i)}=sin(pos/10000^{2i/d_{model}})
+\\PE_{(pos,2i+1)}=cos(pos/10000^{2i/d_{model}})
+\]`
+
+pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\)`能被表示为`\(PE_{pos}\)`的线性函数 。
+
+#### 4.2.6 生成过程
+
+参考[从《Convolutional Sequence to Sequence Learning》到《Attention Is All You Need》](https://zhuanlan.zhihu.com/p/27464080)
+
+
+<html>
+<br/>
+
+<img src="../assets/tensor2tensor-generation.png.png" style='max-height: 400px'/>
+<br/>
+
+</html>
 
 ### 4.3 训练
 
