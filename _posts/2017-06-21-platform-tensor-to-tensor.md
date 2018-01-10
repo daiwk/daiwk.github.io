@@ -219,7 +219,7 @@ pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\
 <html>
 <br/>
 
-<img src="../assets/tensor2tensor-generation.png.png" style='max-height: 400px'/>
+<img src="../assets/tensor2tensor-generation.png" style='max-height: 400px'/>
 <br/>
 
 </html>
