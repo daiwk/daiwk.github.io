@@ -22,7 +22,9 @@ tags: [parameter server, pserver ]
     - [6.2 Messages](#62-messages)
     - [6.3 Consistent Hashing](#63-consistent-hashing)
     - [6.4 Replication and Consistency](#64-replication-and-consistency)
-    - [](#)
+        - [6.4.1 默认的复制方式: **Chain replication (强一致性, 可靠)**：](#641-默认的复制方式-chain-replication-强一致性-可靠)
+        - [6.4.2 Replication after Aggregation](#642-replication-after-aggregation)
+- [6.5 Server Management](#65-server-management)
 
 <!-- /TOC -->
 
@@ -173,12 +175,79 @@ parameter server 在push跟pull的时候，都是**rang-based**，这就带来�
 
 ### 6.2 Messages
 
-一条 message 包括：时间戳，len(range)对k-v。
+一条 message 包括：时间戳，len(range)对k-v：
 
+`\[
+[vc(R), (k_1, v_1), . . . , (k_p, v_p)] k_j \in R \; \; and\;\; j \in \{1, . . . p\}
+\]`
 
+这是parameter server 中**最基本的通信格式**，不仅仅是**共享的参数**才有，**task 的message**也是这样的格式，只要把这里的(key, value) 改成 **(task ID, 参数/返回值)**。
+
+由于机器学习问题通常都需要很高的网络带宽，因此**信息的压缩**是必须的。
+
++ **key的压缩：** 
+    因为训练数据通常在分配之后都不会发生改变，因此
+    + worker没有必要每次都发送相同的key，只需要**接收方在第一次接收的时候缓存**起来就行了。
+    + **第二次**，worker不再需要同时发送key和value，**只需要发送value 和 key list的hash就行**。这样瞬间减少了一半的通信量。 
++ **value的压缩：** 假设参数是稀疏的，那么就会有大量的0存在。因此，为了进一步压缩，我们**只需要发送非0值。**parameter server使用**Snappy快速压缩库来压缩数据、高效去除0值。**【Snappy 是一个 C++ 的用来压缩和解压缩的开发包。其目标不是最大限度压缩或者兼容其他压缩格式，而是旨在提供**高速压缩速度和合理的压缩率**。 Snappy在 Google 内部被广泛的使用，从 BigTable 到 MapReduce 以及内部的 RPC 系统[https://code.google.com/p/snappy/]( https://code.google.com/p/snappy/)】
+
+**另外，key 的压缩和 value 的压缩可以同时进行。**
+
+另外，还有**用户自定义过滤**：
+对于机器学习优化问题比如梯度下降来说，并不是每次计算的梯度对于最终优化都是有价值的，用户可以通过**自定义的规则过滤一些不必要的传送，再进一步压缩带宽cost**：
++ 发送**很小的梯度值**是低效的
++ **更新接近最优情况的值**是低效的 
+因此，只在非最优的情况下发送，可通过**KKT**来判断
+ 
 ### 6.3 Consistent Hashing
+
+parameter server 在数据一致性上，使用的是传统的**一致性哈希**算法，**参数key与server node id被插入到一个hash ring中**。在分布式系统中，**动态增加和移除节点**的同时还能**保证系统存储与key分配的性能效率**。
+
+<html>
+<br/>
+<img src='../assets/pserver_hash_ring.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+每个节点都复制了它逆时钟方向的k个节点中的key。图中，k=2，`\(S_1\)`复制了`\(S_2\)`和`\(S_3\)`内的key。
 
 ### 6.4 Replication and Consistency
 
-### 
+两种方式保证slave跟master之间的数据一致性：
+
+#### 6.4.1 默认的复制方式: **Chain replication (强一致性, 可靠)**：
+
+<html>
+<br/>
+<img src='../assets/pserver_chain_replication.png' style='max-height: 200px'/>
+<br/>
+</html>
+
++ **更新**：**只能发生在数据头节点**,然后更新逐步后移，直到更新到达尾节点，并由尾节点向客户确认更新成功； 
++ **查询**：为保证强一致性，客户查询**只能在尾节点进行**
+
+#### 6.4.2 Replication after Aggregation
+
+<html>
+<br/>
+<img src='../assets/pserver_replication_after_aggregation.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+两个worker 节点分别向server传送x和y。server 首先通过一定方式（如：`\(f(x+y)\)` ）**进行aggregate**，然后**再进行复制操作**；
+当有n个worker的时候，复制只需要`\(k/n\)`的带宽。通常来说，**k（复制次数）是一个很小的常数**，而**n的值大概是几百到几千**；
+
+## 6.5 Server Management 
+
+要想实现系统的容错以及动态的扩展系统规模，必须要求系统能够支持**动态添加和移除节点。**
+
+当有一个 server节点添加进来时： 
+1. server manager 会对新的节点分配一些range 的key，这会造成其他server节点的key的变化； 
+2. 新节点会获取数据做为训练用，另外会复制k份到slave。 
+3. server manager 将节点的变化情况广播出去。接收方可能会移除不再属于自己的数据，并且将未完成的任务提交给新来的节点
+
+当有一个worker节点W添加进来时：
+1. task scheduler 为W分配数据； 
+2. 这个 worker 节点通过网络或者文件系统得到分配到的训练数据。接着，W会从服务器pull参数； 
+3. task scheduler 会广播节点的变化情况，可能会使一些节点释放一部分训练数据
 
