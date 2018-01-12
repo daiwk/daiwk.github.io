@@ -61,4 +61,31 @@ tags: [parameter server, pserver ]
 
 在parameter server中，每个 server 实际上都只负责分到的**部分参数**（servers共同维持一个全局的共享参数），而每个 work 也只分到**部分数据**和处理任务。
 
+<html>
+<br/>
+<img src='../assets/pserver_framework1.gif' style='max-height: 250px'/>
+<br/>
+</html>
+
+上图中，每个子节点都只维护自己分配到的参数（黑色），**自己部分更新之后**，将计算结果（例如，参数）传回到主节点，进行**全局的更新**（比如平均操作之类的），主节点再向子节点传送新的参数。
+
+servers 与 workers 之间的通信如下：
+
+<html>
+<br/>
+<img src='../assets/pserver_framework_server_worker_communication_0.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+<html>
+<br/>
+<img src='../assets/pserver_framework_server_worker_communication.png' style='max-height: 300px'/>
+<br/>
+</html>
+
++ **server 节点：**可以跟其他 server 节点通信，每个server负责自己分到的参数，**server group 共同维持所有参数的更新。** 
++ **server manager node：**负责维护一些**元数据的一致性**，比如各个**节点的状态**，**参数的分配**情况等
++ **worker 节点：**worker之间没有通信，**只跟自己对应的server进行通信。**每个**worker group**有一个**task scheduler**，负责向worker**分配任务**，并且**监控worker的运行情况**。当有新的worker加入或者退出，task scheduler 负责**重新分配任务**。
+
+
 
