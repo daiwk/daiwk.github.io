@@ -14,6 +14,15 @@ tags: [parameter server, pserver ]
 - [3. 对比parameter server与通用分布式系统](#3-对比parameter-server与通用分布式系统)
 - [4. parameter server的优势](#4-parameter-server的优势)
 - [5. parameter server系统架构](#5-parameter-server系统架构)
+    - [5.1 总体架构](#51-总体架构)
+- [5.2 (k,v), range push & pull](#52-kv-range-push--pull)
+- [5.3 Asynchronous Tasks and Dependency](#53-asynchronous-tasks-and-dependency)
+- [6. Implementation](#6-implementation)
+    - [6.1 Vector Clock](#61-vector-clock)
+    - [6.2 Messages](#62-messages)
+    - [6.3 Consistent Hashing](#63-consistent-hashing)
+    - [6.4 Replication and Consistency](#64-replication-and-consistency)
+    - [](#)
 
 <!-- /TOC -->
 
@@ -59,6 +68,8 @@ tags: [parameter server, pserver ]
 
 ## 5. parameter server系统架构
 
+### 5.1 总体架构
+
 在parameter server中，每个 server 实际上都只负责分到的**部分参数**（servers共同维持一个全局的共享参数），而每个 work 也只分到**部分数据**和处理任务。
 
 <html>
@@ -87,5 +98,87 @@ servers 与 workers 之间的通信如下：
 + **server manager node：**负责维护一些**元数据的一致性**，比如各个**节点的状态**，**参数的分配**情况等
 + **worker 节点：**worker之间没有通信，**只跟自己对应的server进行通信。**每个**worker group**有一个**task scheduler**，负责向worker**分配任务**，并且**监控worker的运行情况**。当有新的worker加入或者退出，task scheduler 负责**重新分配任务**。
 
+## 5.2 (k,v), range push & pull
 
+parameter server 中，**参数都是可以被表示成(key, value)的集合**，比如一个最小化损失函数的问题，**key就是feature ID，而value就是它的权值。**对于**稀疏参数，不存在的key，就可以认为是0。**
+
+workers 跟 servers 之间通过 push 跟 pull 来通信。
+**worker 通过 push 将计算好的梯度发送到server，然后通过 pull 从server更新参数。**
+为了提高计算性能和带宽效率，parameter server 允许用户使用**Range Push 跟 Range Pull**操作。
+
+range push/pull：发送和接收特定Range中的参数。
+
+## 5.3 Asynchronous Tasks and Dependency
+
+如果 iter1 需要在 iter0 computation，push 跟 pull 都完成后才能开始，那么就是Synchronous，反之就是Asynchronous.
+
+<html>
+<br/>
+<img src='../assets/pserver_asynchronous_tasks.png' style='max-height: 250px'/>
+<br/>
+</html>
+
+Asynchronous Task：能够提高系统的效率（因为节省了很多等待的过程），但是，它的缺点就是容易降低算法的收敛速率。
+
+系统性能和算法收敛速率的trade-off需要考虑的因素：
++ 算法对于参数非一致性的敏感度；
++ 训练数据特征之间的关联度；
++ 硬盘的存储容量
+
+考虑到用户使用的时候会有不同的情况，parameter server 为用户提供了多种任务依赖方式：
+
+<html>
+<br/>
+<img src='../assets/pserver_dependency.png' style='max-height: 250px'/>
+<br/>
+</html>
+
++ **Sequential**： 这里其实是 synchronous task，任务之间是有顺序的，只有上一个任务完成，才能开始下一个任务； 
++ **Eventual**： 跟 sequential 相反，所有任务之间没有顺序，各自独立完成自己的任务， 
++ **Bounded Delay**： 这是sequential 跟 eventual 之间的trade-off，可以设置一个`\(\tau \)`作为最大的延时时间。也就是说，只有`\(>\tau \)`之前的任务都被完成了，才能开始一个新的任务。极端的情况：
++ `\(\tau = 0\)`情况就是 Sequential； 
++ `\(\tau = \infty \)`情况就是 Sequential； 
+
+一个bounded delay 的 PGD (proximal gradient descent)算法的系统运行流程：
+
+<html>
+<br/>
+<img src='../assets/pserver_proximal_gradient_descent.jpg' style='max-height: 300px'/>
+<br/>
+</html>
+
+如何选择`\(\tau \)`
+
+<html>
+<br/>
+<img src='../assets/pserver_bounded_delay_choose.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+## 6. Implementation
+
+### 6.1 Vector Clock
+
+parameter server 使用 vector clock 来记录**每个节点中参数的时间戳**，能够用来**跟踪状态**或**避免数据的重复发送**。但是，假设有n个节点，m个参数，那么vector clock的空间复杂度就是`\(O(n*m)\)`。当有几千个节点和几十亿的参数时，对于内存和带宽来说都是不可实现的。
+
+parameter server 在push跟pull的时候，都是**rang-based**，这就带来了一个好处：**这个range里面的参数共享的是同一个时间戳**，这显然可以大大降低空间复杂度。
+
+<html>
+<br/>
+<img src='../assets/pserver_vector_lock.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+每次从一个range里再提取一个range，最多会生成3个新的 vector clocks（一分为三）。假设总共m个参数，`\(k\)`是算法中产生的所有的range，那么空间复杂度就变成了`\(O(k*m)\)`。
+
+### 6.2 Messages
+
+一条 message 包括：时间戳，len(range)对k-v。
+
+
+### 6.3 Consistent Hashing
+
+### 6.4 Replication and Consistency
+
+### 
 
