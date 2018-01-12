@@ -13,10 +13,14 @@ tags: [parameter server, pserver ]
 - [2. 发展历程](#2-发展历程)
 - [3. 对比parameter server与通用分布式系统](#3-对比parameter-server与通用分布式系统)
 - [4. parameter server的优势](#4-parameter-server的优势)
+- [5. parameter server系统架构](#5-parameter-server系统架构)
 
 <!-- /TOC -->
 
 [Parameter Server 详解](http://blog.csdn.net/cyh_24/article/details/50545780)
+
+参考论文：
+[Scaling Distributed Machine Learning with the Parameter Server](https://www.cs.cmu.edu/~muli/file/parameter_server_osdi14.pdf)
 
 ## 1. 背景
 
@@ -52,4 +56,9 @@ tags: [parameter server, pserver ]
 节点故障是不可避免的，特别是在大规模商用服务器集群中。**从非灾难性机器故障中恢复，只需要1秒，而且不需要中断计算**。**Vector clocks**保证了经历故障之后还是能运行良好
 + Ease of Use
 **全局共享的参数**可以被表示成各种形式：vector，matrices 或者相应的sparse类型，这大大方便了机器学习算法的开发。并且提供的线性代数的数据类型都具有高性能的多线程库。
+
+## 5. parameter server系统架构
+
+在parameter server中，每个 server 实际上都只负责分到的**部分参数**（servers共同维持一个全局的共享参数），而每个 work 也只分到**部分数据**和处理任务。
+
 
