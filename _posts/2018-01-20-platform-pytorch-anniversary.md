@@ -223,9 +223,15 @@ Ritchie Ng，在清华、新加坡国立大学都学习过的研究者，推出�
 
 ## Sparse Tensors
 
-In March, we released a small package supporting sparse Tensors and in May we released CUDA support for the sparse package. The package is small and limited in functionality, and is used for implementing Sparse Embeddings and commonly used sparse paradigms in deep learning. This package is still small in scope and there’s demand to expand it — if you are interested in working on expanding the sparse package, reach out to us on our [Discussion Boards](https://discuss.pytorch.org/)
+In March, we released a small package supporting sparse Tensors and in May we released CUDA support for the sparse package. The package is small and limited in functionality, and is used for **implementing Sparse Embeddings and commonly used sparse paradigms in deep learning**. This package is still small in scope and there’s demand to expand it — if you are interested in working on expanding the sparse package, reach out to us on our [Discussion Boards](https://discuss.pytorch.org/)
 
 ## Performance
+
+性能是一场仍在进行中的战斗，尤其对于想要最大化灵活性的动态框架 PyTorch 而言。去年，从核心 Tensor 库到神经网络算子，我们改善了 PyTorch 在 board 上的性能，能在 board 上更快的编写微优化。
+
++ 我们添加了专门的 **AVX 和 AVX2 内部函数，用于 Tensor 运算**；
++ 写**更快的 GPU kernel**，用于常用的工作负载，如级联和 Softmax；
++ 为多个神经网络算子重写代码，如 nn.Embedding 和组卷积。
 
 ### Reducing framework overhead by 10x across board
 
@@ -241,4 +247,4 @@ In March, we released a small package supporting sparse Tensors and in May we re
 
 我们收到的一个普遍请求是将 PyTorch 模型输出到另一个框架。**用户使用 PyTorch 进行快速研究，模型完成后，他们想将模型搭载到更大的项目中，而该项目只要求使用 C++。**
 
-因此我们构建了 tracer，可将 PyTorch 模型输出为中间表示。用户可使用后续的 tracer 更高效地运行当前的 PyTorch 模型，或将其转换成 ONNX 格式以输出至 Caffe2、MXNet、TensorFlow 等其他框架，或直接搭载至硬件加速库，如 CoreML 或 TensorRT。今年，我们将更多地利用 JIT 编译器提升性能。
+因此我们构建了 [**tracer**](https://github.com/pytorch/pytorch/blob/master/torch/csrc/jit/tracer.h)，可将 PyTorch 模型输出为中间表示。用户可使用后续的 tracer 更高效地运行当前的 PyTorch 模型，或将其转换成 ONNX 格式以输出至 Caffe2、MXNet、TensorFlow 等其他框架，或直接搭载至硬件加速库，如 CoreML 或 TensorRT。今年，我们将更多地利用 JIT 编译器提升性能。
