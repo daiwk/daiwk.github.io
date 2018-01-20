@@ -50,7 +50,7 @@ make && make install
 因为安装时要用到```-lpython2.7```，如果没有root权限，去报错的gcc命令里找```-L```的路径，发现最简单粗暴的方法就是
 
 ```
-cp  /home/work/tools/python-2.7.8-tf1.4-gpu/lib/libpython2.7.so* /home/work/tools/openmpi/lib 
+cp  /home/work/tools/python-2.7.8-tf1.4-gpu/lib/libpython2.7.so* /home/work/tools/openmpi/lib
 ```
 
 或者
