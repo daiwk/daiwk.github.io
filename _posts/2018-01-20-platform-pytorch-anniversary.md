@@ -30,6 +30,8 @@ tags: [pytorch, ]
     - [Closer to NumPy](#closer-to-numpy)
     - [Sparse Tensors](#sparse-tensors)
     - [Performance](#performance)
+        - [Reducing framework overhead by 10x across board](#reducing-framework-overhead-by-10x-across-board)
+        - [ATen](#aten)
     - [Exporting models to production — ONNX Support and the JIT compiler](#exporting-models-to-production--onnx-support-and-the-jit-compiler)
 
 <!-- /TOC -->
@@ -158,21 +160,85 @@ FaderNetworks:
 
 ## Metrics
 
++ 在 Github 上有 87769 行代码引入 Torch。
++ 在 Github 上有 3983 个 repository 在名字或者描述中提到了 PyTorch。
++ PyTorch binary 下载量超过 50 万，具体数字是 651916。
++ 在论坛上，有 5400 名用户发表了 21500 条讨论，涉及 5200 个主题。
++ 自发布以来，在 Reddit 上的/r/machinelearning 主题中有 131 条讨论提到了 PyTorch。同期，TensorFlow 被提及的次数为 255。
+
+pytorch v.s. tensorflow:
+[PyTorch和TensorFlow到底哪个更好？看看一线开发者怎么说](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650723769&idx=1&sn=17565e650771699ceddabb214d485626&chksm=871b11c7b06c98d1c76623f7c90120e363cc43462b74f22c27038e324c2975ec4d0db5b483c1&scene=21#wechat_redirect)
+
+[TensorFlow开源一周年：这可能是一份最完整的盘点](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650720407&idx=1&sn=768d7248e0ab5fa469dbae86d11152e1&chksm=871b0ce9b06c85ffefa2e0c8f6fb7ae4cc1c0500cda7bad008fe68ed6b87d7c8765d138e1fd1&scene=21#wechat_redirect)
+
 ## Research Metrics
 
+PyTorch 是一个专注于研究的框架。所以与衡量它的指标包括 PyTorch 在机器学习研究论文中的使用。
++ 在 ICLR 2018 学术会议提交的论文中，有 87 篇提到了 PyTorch，相比之下 TensorFlow 228 篇，Keras 42 篇，Theano 和 Matlab 是 32 篇。
++ 按照月度来看，arXiv 论文提到 PyTorch 框架的有 72 篇，TensorFlow 是 273 篇，Keras 100 篇，Caffe 94 篇，Theano 53 篇。
+
 ## Courses, Tutorials and Books
+
+Sasank Chilamkurthy 承担了改进教程的任务，教程详见：[http://pytorch.org/tutorials/](http://pytorch.org/tutorials/)
+
+Sean Robertson 和 Justin Johnson 编写了 NLP 领域的全新教程，还有通过示例学习的教程。
++ [https://github.com/spro/practical-pytorch](https://github.com/spro/practical-pytorch)
++ [https://github.com/jcjohnson/pytorch-examples](https://github.com/jcjohnson/pytorch-examples)
+
+Yunjey Choi 写了用 30 行或者更少的代码部署大多数模型的教程。每个新教程都帮助用户用不同的学习方法更快地找到适合自己的学习路径。
++ [https://github.com/yunjey/pytorch-tutorial](https://github.com/yunjey/pytorch-tutorial)
+
+Goku Mohandas 和 Delip Rao 把正在写的书中的代码做了改变，使用了 PyTorch。
+
+我们看到，一些大学的机器学习课程是使用 PyTorch 作为主要工具讲授的，例如哈佛 CS 287。为了更进一步方便大众学习，我们还看到三个在线课程使用 PyTorch 讲授。
+
++ [https://harvard-ml-courses.github.io/cs287-web/](https://harvard-ml-courses.github.io/cs287-web/)
+
+Fast.ai 的「Deep Learning for Coders」是个流行的在线课程。9 月份，Jeremy 和 Rachel 宣布下一个 fast.ai 的课程将几乎全部基于 PyTorch。
+
++ [http://www.fast.ai/2017/09/08/introducing-pytorch-for-fastai/](http://www.fast.ai/2017/09/08/introducing-pytorch-for-fastai/)
+
+Ritchie Ng，在清华、新加坡国立大学都学习过的研究者，推出了名为「Practical Deep Learning with PyTorch」的 Udemy 课程。
+
++ [https://www.udemy.com/practical-deep-learning-with-pytorch/](https://www.udemy.com/practical-deep-learning-with-pytorch/)
+
+来自香港科技大学的 Sung Kim 在 Yotube 上推出了面向普通观众的在线课程「PyTorch Zero to All」。
+
++ [https://www.youtube.com/playlist?list=PLlMkM4tgfjnJ3I-dbhO9JTw7gNty6o_2m](https://www.youtube.com/playlist?list=PLlMkM4tgfjnJ3I-dbhO9JTw7gNty6o_2m)
++ [四天速成！香港科技大学 PyTorch 课件分享](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650731685&idx=1&sn=9b8cfdf380ff9c8c91b45ebe7452f4ee&chksm=871b30dbb06cb9cd199412e72d7740970e82c7c61057473871287706a4239f3661eafbfd1630&scene=21#wechat_redirect)
 
 # Engineering
 
 ## Higher-order gradients
 
+随着多篇关于实现**梯度罚项**的论文的发表，以及**二阶梯度**法的不断研究发展，高阶梯度成为必需的热门功能。去年 8 月，我们实现了一个通用接口，**可使用 n 阶导数**，加快**支持高阶梯度函数的收敛**，截至写作本文时，几乎所有 ops 都支持此界面。
+
 ## Distributed PyTorch
+
+去年 8 月，我们发布了一个小型分布式包，该包使用非常流行的 MPI 集合（MPI-collective）方法。**它有多个后端，如 TCP、MPI、Gloo 和 NCCL2**，以支持多种**CPU/GPU集合**操作和用例，这个包整合了 **Infiniband 和 RoCE** 等分布式技术。分布很难，我们在初始迭代时也有一些 bug。在后续版本中，我们作出了一些改进，使这个包更加稳定，性能也更强。
 
 ## Closer to NumPy
 
+用户最大的一个需求是他们熟悉的 NumPy 功能。**Broadcasting** 和 **Advanced Indexing** 等功能方便、简洁，节约用户的时间。我们实现了这些功能，开始使我们的 API 更接近 NumPy。随着时间的进展，我们希望在合适的地方越来越接近 NumPy 的 API。
+
 ## Sparse Tensors
+
+In March, we released a small package supporting sparse Tensors and in May we released CUDA support for the sparse package. The package is small and limited in functionality, and is used for implementing Sparse Embeddings and commonly used sparse paradigms in deep learning. This package is still small in scope and there’s demand to expand it — if you are interested in working on expanding the sparse package, reach out to us on our [Discussion Boards](https://discuss.pytorch.org/)
 
 ## Performance
 
+### Reducing framework overhead by 10x across board
+
+由于 PyTorch 是动态图框架，我们在训练循环的**每次迭代时都要创建一个新图**。因此，框架开销必须很低，或者工作负载必须足够大来隐藏框架开销。去年 8 月，DyNet 的作者（Graham Neubig 及其团队）展示了 DyNet 在一些小型 NLP 模型上的速度快于 PyTorch。这是很有意思的一个挑战，我们开始重写 PyTorch 内部构件，**将框架开销从 10 微秒／算子降低到 1 微秒**。
+
+### ATen
+
+重新设计 PyTorch 内部构件的同时，我们也构建了 ATen C++11 库，该库现在主导 PyTorch 所有后端。ATen 具备一个类似 PyTorch Python API 的 API，使之成为**便于 Tensor 计算的 C++库**。ATen 可由 PyTorch 独立构建和使用。
+
+[https://github.com/pytorch/pytorch/tree/master/aten](https://github.com/pytorch/pytorch/tree/master/aten)
+
 ## Exporting models to production — ONNX Support and the JIT compiler
 
+我们收到的一个普遍请求是将 PyTorch 模型输出到另一个框架。**用户使用 PyTorch 进行快速研究，模型完成后，他们想将模型搭载到更大的项目中，而该项目只要求使用 C++。**
+
+因此我们构建了 tracer，可将 PyTorch 模型输出为中间表示。用户可使用后续的 tracer 更高效地运行当前的 PyTorch 模型，或将其转换成 ONNX 格式以输出至 Caffe2、MXNet、TensorFlow 等其他框架，或直接搭载至硬件加速库，如 CoreML 或 TensorRT。今年，我们将更多地利用 JIT 编译器提升性能。
