@@ -11,6 +11,12 @@ tags: [fasttext, ]
 - [0. 原理](#0-原理)
     - [0.1 softmax回归](#01-softmax回归)
     - [0.2 分层softmax](#02-分层softmax)
+    - [0.4 n-gram](#04-n-gram)
+    - [0.5 CBOW](#05-cbow)
+        - [0.5.1 前向传播](#051-前向传播)
+        - [0.5.2 反向传播](#052-反向传播)
+    - [0.6 skip-gram](#06-skip-gram)
+    - [0.7 fasttext](#07-fasttext)
 - [1. bin使用方法](#1-bin使用方法)
     - [训练](#训练)
     - [预测](#预测)
@@ -18,6 +24,12 @@ tags: [fasttext, ]
     - [安装](#安装)
 
 <!-- /TOC -->
+
+paper: [Enriching Word Vectors with Subword Information](https://arxiv.org/pdf/1607.04606.pdf)
+
+[Bag of Tricks for Efficient Text Classification](https://arxiv.org/pdf/1607.01759v3.pdf)
+
+website: [https://fasttext.cc/](https://fasttext.cc/)【有pretrained-vectors可以下载】
 
 ## 0. 原理
 
@@ -75,7 +87,7 @@ p(y_j)=\prod _{l=1}^{L(y_j)-1}\sigma (\left \lfloor n(y_j,l+1)=LC(n(y_j,l)) \rig
 \end{matrix}\right.
 \]`
 
-+ `\(\theata _{n(y_j,l)}\)`是中间节点`\(n(y_j,l)\)`的参数
++ `\(\theta _{n(y_j,l)}\)`是中间节点`\(n(y_j,l)\)`的参数
 
 高亮的节点和边是**从根节点到`\(y_2\)`的路径**，路径长度`\(L(y_2)=3?\)`，
 
@@ -85,6 +97,121 @@ p(y_j)=\prod _{l=1}^{L(y_j)-1}\sigma (\left \lfloor n(y_j,l+1)=LC(n(y_j,l)) \rig
 \]`
 
 于是，从根节点走到叶子节点`\(y_2\)`，其实是做了3次二分类的lr。通过分层的Softmax，计算复杂度一下从`\(|K|\)`降低到**`\(log_2|K|\)`**。
+
+### 0.4 n-gram
+
+基本思想是将文本内容按照字节顺序进行大小为N的滑动窗口操作，最终形成长度为N的字节片段序列。n-gram产生的特征只是作为文本特征的候选集，你后面可能会采用信息熵、卡方统计、IDF等文本特征选择方式筛选出比较重要特征。
+
+### 0.5 CBOW
+
+CBOW模型的基本思路是：用上下文预测目标词汇。
+
+<html>
+<br/>
+<img src='../assets/fasttext-cbow.png' style='max-height: 200px'/>
+<br/>
+</html>
+
++ 输入层由目标词汇y的上下文单词`\({x_1,...,x_c}\)`组成，`\(x_i\)`是一个one-hot后的V维向量；
++ 隐层是N维向量h；
++ 输出层是one-hot编码后的目标词y
+
+权重：
+
++ 每个输入向量通过VxN维的权重矩阵W（C个向量，共享同一个W）连接到隐层
++ 隐层通过V*N维的权重矩阵W'连接到输出层
+
+因为词库V往往非常大，使用标准的softmax计算相当耗时，于是CBOW的输出层采用的是分层Softmax。
+
+#### 0.5.1 前向传播
+
+**隐层的输出是C个上下文单词向量先求和，然后乘以W,再取平均**，得到的一个N维向量:
+
+`\[
+h=\frac{1}{C}W \sum ^C_{i=1}x_i    
+\]`
+
+然后计算输出层的每个节点：
+
+`\[
+u_j=v'_{w_j}^T \cdot h
+\]`
+
+其中的`\(v'_{w_j}\)`是矩阵W'的第j列**(W'是N行V列，即，第j个词对应的N维向量)**，`\(u_j\)`就是一个N维向量和N维向量的转置乘出来的一个值，
+
+最后，`\(u_j\)`作为softmax的输入，得到`\(y_j\)`：
+
+`\[
+y_j=p(w_{y_j}|w_1,...,w_C)=\frac {exp(u_j)}{\sum ^V_{j'=1}exp(u_{j'})}
+\]`
+
+#### 0.5.2 反向传播
+
+定义损失函数，objective是最大化给定输入上下文，target单词的条件概率如下：
+
+<html>
+<br/>
+<img src='../assets/fasttext-back-prop.png
+'style='max-height: 200px'/><br/>
+</html>
+
+更新W'：
+
+<html>
+<br/>
+<img src='../assets/fasttext-back-prop-update-w1.png' style='max-height: 200px'/><br/>
+</html>
+
+更新W：
+
+<html>
+<br/>
+<img src='../assets/fasttext-back-prop-update-w.png' style='max-height: 200px'/><br/>
+</html>
+
+### 0.6 skip-gram
+
+### 0.7 fasttext
+
+word2vec把语料库中的**每个单词当成原子**的，它会为每个单词生成一个向量。这**忽略了单词内部的形态特征**，比如：“apple” 和“apples”，"xx公司"和"xx"，两个单词都有较多公共字符，即它们的内部形态类似，但是在传统的word2vec中，这种单词内部形态信息因为它们被转换成不同的id丢失了。
+
+为了克服这个问题，fastText使用了**字符级别**的**n-grams**来表示一个单词。例如，apple的3-gram如下：
+
+“<ap”,  “app”,  “ppl”,  “ple”, “le>”
+
+<表示前缀，>表示后缀。进一步，我们可以用这5个trigram的向量叠加来表示“apple”的词向量。
+
+好处：
+
+1. 对于**低频词生成的词向量**效果会更好。因为它们的n-gram可以和其它词共享。
+2. 对于**训练词库之外的单词(未登录词)**，仍然可以构建它们的词向量。我们可以叠加它们的字符级n-gram向量。
+
+注：当然，最新的方法其实是[BPE](https://daiwk.github.io/posts/nlp-nmt.html#71-backbone%E6%A8%A1%E5%9E%8B)。
+
+fastext的架构图如下：
+
+<html>
+<br/>
+<img src='../assets/fasttext-arch.png' style='max-height: 200px'/><br/>
+</html>
+
+相同点：
+
+和CBOW一样，fastText模型也只有三层：输入层、隐含层、输出层（Hierarchical Softmax），输入都是多个经向量表示的单词，输出都是一个特定的target，隐含层都是对**多个词向量的叠加平均**。
+
+不同点：
+
++ CBOW的输入是目标单词的上下文，fastText的输入是**多个单词**及**其n-gram特征**，这些特征用来表示单个文档；
++ CBOW的输入单词被onehot编码过，fastText的输入特征是被embedding过；
++ word2vec是一个无监督算法，而fasttext是一个有监督算法。CBOW的输出是目标词汇，fastText的输出是文档对应的类标。
+
+对于N篇文档，最小化针对所有文档的 negative loglikelihood(其实就是多分类的交叉熵)：
+
+`\[
+-\frac {1}{N}\sum ^N_{n=1}y_nlog(f(BAx_n))
+\]`
+
+其中，`\(x_n\)`是第n篇文档的normalized bag of features。A是基于word的look-up table，即词的embedding向量，`\(Ax_n\)`是将word的embedding向量找到后相加或者取平均，得到hidden向量。B是函数f的参数，f是softmax。
 
 ## 1. bin使用方法
 
