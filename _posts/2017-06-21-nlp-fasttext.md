@@ -25,9 +25,11 @@ tags: [fasttext, ]
 
 <!-- /TOC -->
 
-paper: [Enriching Word Vectors with Subword Information](https://arxiv.org/pdf/1607.04606.pdf)
+paper: 
 
-[Bag of Tricks for Efficient Text Classification](https://arxiv.org/pdf/1607.01759v3.pdf)
+【提出fasttext的paper】[Bag of Tricks for Efficient Text Classification](https://arxiv.org/pdf/1607.01759v3.pdf)
+
+[Enriching Word Vectors with Subword Information](https://arxiv.org/pdf/1607.04606.pdf)
 
 website: [https://fasttext.cc/](https://fasttext.cc/)【有pretrained-vectors可以下载】
 
