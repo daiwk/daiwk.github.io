@@ -84,7 +84,7 @@ p(y_j)=\prod _{l=1}^{L(y_j)-1}\sigma (\left \lfloor n(y_j,l+1)=LC(n(y_j,l)) \rig
 \\=\sigma (\theta _{n(y_2,1)}^TX) \cdot \sigma (\theta _{n(y_2,2)}^TX) \cdot \sigma (-\theta _{n(y_2,3)}^TX) 
 \]`
 
-通过分层的Softmax，计算复杂度一下从|K|降低到log|K|。
+于是，从根节点走到叶子节点`\(y_2\)`，其实是做了3次二分类的lr。通过分层的Softmax，计算复杂度一下从|K|降低到**log2|K|**。
 
 ## 1. bin使用方法
 
