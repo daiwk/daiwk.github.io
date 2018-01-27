@@ -43,7 +43,7 @@ softmax回归被称作多项逻辑回归（multinomial logistic regression），
 
 ### 0.2 分层softmax
 
-softmax中，我们需要对所有的K个概率做归一化，这在|y|很大时非常耗时。分层softmax的基本思想是使用树的层级结构替代扁平化的标准Softmax，在计算`\(P(y=j)\)`时，只需计算**一条路径上的所有节点的概率值**，无需在意其它的节点。
+softmax中，我们需要对所有的K个概率做归一化，这在`\(|y|\)`很大时非常耗时。分层softmax的基本思想是使用树的层级结构替代扁平化的标准Softmax，在计算`\(P(y=j)\)`时，只需计算**一条路径上的所有节点的概率值**，无需在意其它的节点。
 
 <html>
 <br/>
@@ -84,7 +84,7 @@ p(y_j)=\prod _{l=1}^{L(y_j)-1}\sigma (\left \lfloor n(y_j,l+1)=LC(n(y_j,l)) \rig
 \\=\sigma (\theta _{n(y_2,1)}^TX) \cdot \sigma (\theta _{n(y_2,2)}^TX) \cdot \sigma (-\theta _{n(y_2,3)}^TX) 
 \]`
 
-于是，从根节点走到叶子节点`\(y_2\)`，其实是做了3次二分类的lr。通过分层的Softmax，计算复杂度一下从|K|降低到**log2|K|**。
+于是，从根节点走到叶子节点`\(y_2\)`，其实是做了3次二分类的lr。通过分层的Softmax，计算复杂度一下从`\(|K|\)`降低到**`\(log_2|K|\)`**。
 
 ## 1. bin使用方法
 
