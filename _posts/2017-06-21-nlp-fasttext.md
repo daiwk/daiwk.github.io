@@ -10,6 +10,7 @@ tags: [fasttext, ]
 
 - [0. 原理](#0-原理)
     - [0.1 softmax回归](#01-softmax回归)
+    - [0.2 分层softmax](#02-分层softmax)
 - [1. bin使用方法](#1-bin使用方法)
     - [训练](#训练)
     - [预测](#预测)
@@ -40,6 +41,50 @@ softmax回归被称作多项逻辑回归（multinomial logistic regression），
 <br/>
 </html>
 
+### 0.2 分层softmax
+
+softmax中，我们需要对所有的K个概率做归一化，这在|y|很大时非常耗时。分层softmax的基本思想是使用树的层级结构替代扁平化的标准Softmax，在计算`\(P(y=j)\)`时，只需计算**一条路径上的所有节点的概率值**，无需在意其它的节点。
+
+<html>
+<br/>
+<img src='../assets/fasttext-hierachical-softmax.png' style='max-height: 100px'/>
+<br/>
+</html>
+
+树的结构是根据**类标的频数**构造的**霍夫曼树**。
+
++ **K**个不同的类标组成所有的**叶子**节点。
++ **K-1个内部节点**作为内部参数。
++ 从根节点到某个叶子节点经过的节点和边形成一条路径，路径长度被表示为`\(L(y_j)\)`。
+
+`\[
+p(y_j)=\prod _{l=1}^{L(y_j)-1}\sigma (\left \lfloor n(y_j,l+1)=LC(n(y_j,l)) \right \rfloor \cdot \theta _{n(y_j,l)} ^TX) 
+\]`
+
+其中，
+
++ `\(l\)`表示第几层（从1开始）；
++ `\(\sigma (\cdot )\)`表示sigmoid函数；
++ `\(LC(n)\)`表示n节点的左孩子；
++ `\(\left \lfloor \right \rfloor \)`是一个特殊的函数，定义如下：
+
+`\[
+\left \lfloor x \right \rfloor =\left\{\begin{matrix}
+1, if x =true
+\\ -1,otherwise
+\end{matrix}\right.
+\]`
+
++ `\(\theata _{n(y_j,l)}\)`是中间节点`\(n(y_j,l)\)`的参数
+
+高亮的节点和边是**从根节点到`\(y_2\)`的路径**，路径长度`\(L(y_2)=3?\)`，
+
+`\[
+\\P(y_2)=P(n(y_2,1),left)P(n(y_2,2),left)P(n(y_2,3),right)
+\\=\sigma (\theta _{n(y_2,1)}^TX) \cdot \sigma (\theta _{n(y_2,2)}^TX) \cdot \sigma (-\theta _{n(y_2,3)}^TX) 
+\]`
+
+通过分层的Softmax，计算复杂度一下从|K|降低到log|K|。
 
 ## 1. bin使用方法
 
