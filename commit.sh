@@ -16,3 +16,5 @@ echo `date`
 python ./gen_urls.py
 
 curl -H 'Content-Type:text/plain' --data-binary @urls.txt "http://data.zz.baidu.com/urls?site=https://daiwk.github.io&token=yLCy2sKPeFnXzSvK"
+
+# http://google.com/ping?sitemap=https://daiwk.github.io/urls.txt
