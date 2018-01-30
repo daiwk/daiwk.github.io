@@ -18,8 +18,6 @@ tags: [PIL, jpeg, zlib]
 
 ### 0. 一键安装paddle
 
-[https://daiwk.github.io/posts/platform-paddlepaddle-cluster.html](https://daiwk.github.io/posts/platform-paddlepaddle-cluster.html)的0/1/2三个part，必要时看看第3个part。
-
 如果是度厂内部的机器，记得先装jumbo，然后jumbo装cmake\swig
 
 ### 1. 编译jpeg

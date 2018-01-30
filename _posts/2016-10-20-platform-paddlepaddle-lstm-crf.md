@@ -267,7 +267,7 @@ def create_dictionaries(filename, cutoff, oov_policy):
 	+ 遍历文件，
 	    + features = line.split(' ')，将features放进sequence中。（也就是说sequence最开始会有3个元素：词，tag_pos，tag，比如'jetliners', 'NNS', 'I-NP'）
 	    + 每读到空行，表示一个序列结束了，
-	        + 进行make_features(sequence)：将这一个序列（比如训练数据有100个序列，这是第77个，而这个序列有19个字符）sequence[i](0<=i<=18)变成['jetliners', 'NNS', 'I-NP', "'s", '747', 'jetliners', '.', '#E1', '747/jetliners', 'jetliners/.']之类的，**长度为feature+3**个数的数组（其实就是最开始放进去的那3个元素，再加上每个feature拿到对应的值）
+	        + 进行make_features(sequence)：将这一个序列（比如训练数据有100个序列，这是第77个，而这个序列有19个字符）sequence[i]【0<=i<=18】变成['jetliners', 'NNS', 'I-NP', "'s", '747', 'jetliners', '.', '#E1', '747/jetliners', 'jetliners/.']之类的，**长度为feature+3**个数的数组（其实就是最开始放进去的那3个元素，再加上每个feature拿到对应的值）
 	        + 进行add_to_dict(sequence, dicts)：遍历sequence中的每个元素features（features长度为feature+3），对每个元素，遍历len(features)=feature+3，如果features[i] in dicts[i]，那么dicts[i][features[i]] += 1，反之，dicts[i][features[i]] = 1。实际上，就是**dicts长度始终是feature+3**，每个元素是一个字典，key是sequence（长度为序列个数）里面每个元素features的每个元素(特征)，value是这些元素出现的次数。
 	        + 重置sequence = []，并continue
 	+ 遍历dicts(i=0->features+3),
