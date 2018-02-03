@@ -1,7 +1,7 @@
 ---
 layout: post
 category: "dl"
-title: ""
+title: "capsule"
 tags: [capsules, capsule, ]
 ---
 
