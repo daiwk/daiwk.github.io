@@ -1,8 +1,8 @@
 ---
 layout: post
-category: "nlp"
-title: "2017年度10大值得读的cv方面的paper"
-tags: [2017, cv, ]
+category: "dl"
+title: ""
+tags: [capsules, capsule, ]
 ---
 
 目录
