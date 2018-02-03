@@ -9,11 +9,14 @@ git add assets
 git add index.html
 git add source_codes
 git add commit.sh
-git commit -m "xx"
-git push --set-upstream origin master
-echo `date`
 
 python ./gen_urls.py
+git add ./urls.txt
+git add ./commit.sh
+
+git commit -m "xx"
+echo `date`
+git push --set-upstream origin master
 
 curl -H 'Content-Type:text/plain' --data-binary @urls.txt "http://data.zz.baidu.com/urls?site=https://daiwk.github.io&token=yLCy2sKPeFnXzSvK"
 
