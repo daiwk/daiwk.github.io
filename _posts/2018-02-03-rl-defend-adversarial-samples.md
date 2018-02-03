@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "cv"
+category: "rl"
 title: "对抗样本防御"
 tags: [对抗样本, adversarial,  ]
 ---
