@@ -12,7 +12,7 @@ git add commit.sh
 
 python ./gen_urls.py
 git add ./urls.txt
-git add ./commit.sh
+git add ./commit_windows.sh
 
 git commit -m "xx"
 echo `date`

@@ -13,7 +13,6 @@ git add commit.sh
 python='/c/Python27/python.exe'
 $python ./gen_urls.py
 git add ./urls.txt
-git add ./commit.sh
 git add ./commit_windows.sh
 
 git commit -m "xx"
