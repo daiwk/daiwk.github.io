@@ -9,6 +9,7 @@ tags: [capsules, capsule, ]
 
 <!-- TOC -->
 
+- [haaha](#haaha)
 
 <!-- /TOC -->
 
@@ -20,4 +21,9 @@ tags: [capsules, capsule, ]
 
 本文主要参考jhui的博客：
 [https://jhui.github.io/2017/11/03/Dynamic-Routing-Between-Capsules/](https://jhui.github.io/2017/11/03/Dynamic-Routing-Between-Capsules/)
+
+
+## haaha
+
+神经元的激活水平通常被解释为检测特定特征的可能性。
 
