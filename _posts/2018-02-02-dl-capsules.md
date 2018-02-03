@@ -27,6 +27,11 @@ tags: [capsules, capsule, ]
     - [10.4 image-reconstruction](#104-image-reconstruction)
     - [10.5 reconstruction-loss](#105-reconstruction-loss)
 - [11. what-capsule-is-learning](#11-what-capsule-is-learning)
+- [12. sarasra的代码](#12-sarasra的代码)
+    - [12.1 Quick mnist test results：](#121-quick-mnist-test-results)
+    - [12.2 Quick CIFAR10 ensemble test results](#122-quick-cifar10-ensemble-test-results)
+    - [12.3 训练](#123-训练)
+    - [12.4 训练+验证](#124-训练验证)
 
 <!-- /TOC -->
 
@@ -63,9 +68,33 @@ CNN善于**检测特征**，却在探索**特征（视角，大小，方位）�
 
 ## 3. capsule
 
-胶囊是一组神经元，不仅捕捉**特征的可能性**，还捕捉**具体特征的参数**。
+胶囊是**一组**神经元，不仅捕捉**特征的可能性**，还捕捉**具体特征的参数**。
+
+<html>
+<br/>
+<img src='../assets/cap1.jpg' style='max-height: 200px'/>
+<br/>
+</html>
+
+第一行表示神经元检测到数字“7”的概率。2-D胶囊是组合了2个神经元的网络。这个胶囊在检测数字“7”时输出2-D向量。
+
+第二行中的第一个图像，它输出一个向量`\(v = (0, 0.9)\)`，向量的模是`\(\| v \| = \sqrt{ 0^2 + 0.9^2 } = 0.9\)`。
+
+在第三行，旋转图像20°。胶囊将产生具有**相同幅度**但**不同方向**的矢量。这里，矢量的角度表示数字“7”的旋转角度。
+
+最后，还可以添加2个神经元来捕捉大小和笔画的宽度(如下图)。
+
+<html>
+<br/>
+<img src='../assets/cap2.jpg' style='max-height: 50px'/>
+<br/>
+</html>
+
+我们称胶囊的**输出向量**为活动向量(**activity vector**) ，其**幅度(模)**代表**检测特征的概率**，其**方向**代表其**参数**（属性）。
 
 ## 4. dynamic-routing
+
+
 
 ### 4.1 intuition
 
@@ -94,3 +123,120 @@ CNN善于**检测特征**，却在探索**特征（视角，大小，方位）�
 ### 10.5 reconstruction-loss
 
 ## 11. what-capsule-is-learning
+
+## 12. sarasra的代码
+
+要求：tf/numpy/gpu
+
+测试：
+
+```shell
+python layers_test.py
+```
+
+### 12.1 Quick mnist test results：
+
++ 下载tfrecords，并解压到```$DATA_DIR/```
+
+```shell
+wget https://storage.googleapis.com/capsule_toronto/mnist_data.tar.gz
+```
+
++ 下载model checkpoint，并解压到```$CKPT_DIR```
+
+```shell
+wget https://storage.googleapis.com/capsule_toronto/mnist_checkpoints.tar.gz
+```
+
++ 测试
+
+```shell
+python experiment.py --data_dir=$DATA_DIR/mnist_data/ --train=false \
+--summary_dir=/tmp/ --checkpoint=$CKPT_DIR/mnist_checkpoint/model.ckpt-1
+```
+
+### 12.2 Quick CIFAR10 ensemble test results
+
++ 下载cifar10 binary version，并解压到```$DATA_DIR/```
+
+```shell
+wget  https://www.cs.toronto.edu/~kriz/cifar.html
+```
+
++ 下载cifar10 model checkpoints，并解压到```$CKPT_DIR```
+
+```shell
+wget https://storage.googleapis.com/capsule_toronto/cifar_checkpoints.tar.gz
+```
+
++ 测试
+
+```shell
+python experiment.py --data_dir=$DATA_DIR --train=false --dataset=cifar10 \
+--hparams_override=num_prime_capsules=64,padding=SAME,leaky=true,remake=false \
+--summary_dir=/tmp/ --checkpoint=$CKPT_DIR/cifar/cifar{}/model.ckpt-600000 \
+--num_trials=7
+```
+
+### 12.3 训练
+
++ mnist
+
+```shell
+python experiment.py --data_dir=$DATA_DIR --dataset=cifar10 --max_steps=600000\
+--hparams_override=num_prime_capsules=64,padding=SAME,leaky=true,remake=false \
+--summary_dir=/tmp/
+```
+
++ mnist baseline
+
+```shell
+python experiment.py --data_dir=$DATA_DIR/mnist_data/ --max_steps=300000\
+--summary_dir=/tmp/attempt1/ --model=baseline
+```
+
++ cifar
+
+```shell
+python experiment.py --ata_dir=$DATA_DIR/mnist_data/ --max_steps=300000\
+--summary_dir=/tmp/attempt0/
+```
+
+### 12.4 训练+验证
+
+训练时在验证集上验证：
+
++ ```--validate=true```
++ 需要两个gpu：一个训练；一个验证
++ 如果两个job都在同一台机器，需要限制每个job的RAM大小，因为 TensorFlow will fill all your RAM for the session of your first job and your second job will fail
+
+```shell
+python experiment.py --data_dir=$DATA_DIR/mnist_data/ --max_steps=300000\
+--summary_dir=/tmp/attempt0/ --train=false --validate=true
+```
+
+测试/训练 MultiMNIST:
+
+```shell
+--num_targets=2
+--data_dir=$DATA_DIR/multitest_6shifted_mnist.tfrecords@10
+```
+
+生成multiMNIST/MNIST records的代码：
+
+```shell
+input_data/mnist/mnist_shift.py
+```
+
+generate multiMNIST test split的代码：
+
+```shell
+python mnist_shift.py --data_dir=$DATA_DIR/mnist_data/ --split=test --shift=6 
+--pad=4 --num_pairs=1000 --max_shard=100000 --multi_targets=true
+```
+
+build expanded_mnist for affNIST generalizability：
+
+```shell
+--shift=6 --pad=6
+```
