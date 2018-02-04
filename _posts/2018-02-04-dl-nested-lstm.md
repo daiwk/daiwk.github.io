@@ -33,5 +33,5 @@ tags: [nested lstm,  ]
 <br/>
 </html>
 
-计算(outer)memory cell不是`\(c_t^{outer}=f_t\odot c_{t-1}+i_t\odot g_t\)`，而是将concatenation `\(f_t\odot c_{t-1}, i_t\odot g_t\)`作为inner lstm(NLSTM)的memory cell的输入，并指定`\(c^{outer}_t=h^{inner}_t\)`。
+计算(outer)memory cell不是`\(c_t^{outer}=f_t\odot c_{t-1}+i_t\odot g_t\)`，而是将concatenation `\((f_t\odot c_{t-1}, i_t\odot g_t)\)`作为inner lstm(NLSTM)的memory cell的输入，并指定`\(c^{outer}_t=h^{inner}_t\)`。
 
