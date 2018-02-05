@@ -96,17 +96,137 @@ CNN善于**检测特征**，却在探索**特征（视角，大小，方位）�
 
 ### 4.1 intuition
 
-假设有3张类似但大小、方向不同的人脸图，嘴巴和眼睛的capsule分别记录了嘴巴和眼睛的水平方向的宽度（当然，也可以加上别的，例如高度、颜色等）。在dynamic routing中，将input capsules的vectors通过一个转移矩阵**（transformation matrix）**转换成一个**vote**，并且将**相似vote**的capsules分为**同一组**。这些**votes**最终成为**parent capsule**的**output vector**。
+假设有3张类似但大小、方向不同的人脸图，嘴巴和眼睛的capsule分别记录了嘴巴和眼睛的水平方向的宽度（当然，也可以加上别的，例如高度、颜色等）。在dynamic routing中，将input capsules的vectors通过一个变换矩阵**（transformation matrix）**转换成一个**vote**，并且将**相似vote**的capsules分为**同一组**。这些**votes**最终成为**parent capsule**的**output vector**。
 
 ### 4.2 calculating-a-capsule-output
 
+对于capsule网络，一个capsule的输入`\(u_i\)`和`\(v_j\)`都是向量。
+
+<html>
+<br/>
+<img src='../assets/capsule-dynamic-routing.jpg' style='max-height: 80px'/>
+<br/>
+</html>
+
+我们将一个变换矩阵（transformation matrix）`\(W_{ij}\)`应用到前一层的输出`\(u_i\)`上，例如，使用一个`\(m\times k\)`的矩阵，将`\(k\times D\)`的`\(u_i\)`变成一个`\(m\times D\)`的`\(\hat {u_{j|i}}\)`。
+
+然后计算`\(c_{ij}\)`和`\(\hat {u_{j|i}}\)`的加权和，得到`\(s_j\)`：
+
+`\[
+\\\hat {u_{j|i}}=W_{ij}u_i
+\\s_j=\sum_i c_{ij}\hat {u_{j|i}}
+\]`
+
+其中，`\(c_{ij}\)`是迭代动态路由过程（iterative dynamic routing process）训练的**耦合系数**（coupling coefficients），而且`\(\sum_jc_{ij}=1\)`。
+
+这里不适用ReLU，而使用一个**挤压函数（squashing function）**，来缩短0和单位长度之间的向量：
+
+`\[
+v_j=\frac{||s_j||^2}{1+||s_j||^2}\frac{s_j}{||s_j||}
+\]`
+
+挤压函数能够**将短向量缩小到接近0**，**将长向量缩小为接近单位向量**。因此，每个capsule的似然性在**0到1之间**。
+
+`\[
+v_j\approx ||s_j||s_j,\ for\ s_j\ is\ short
+v_j\approx \frac{s_j}{||s_j||},\ for\ s_j\ is\ long
+\]`
+
 ## 5. iterative-dynamic-routing
+
+在深度学习中，我们使用反向传播来训练模型参数。转换矩阵`\(W_{ij}\)`在胶囊中仍然用**反向传播**训练。不过，耦合系数`\(c_{ij}\)` 用新的**迭代动态路由方法**进行计算。
+
+<html>
+<br/>
+<img src='../assets/capsule-iterative-dynamic-routing.jpg' style='max-height: 150px'/>
+<br/>
+</html>
+
+伪代码如下：
+
+<html>
+<br/>
+<img src='../assets/capsule-iterative-dynamic-routing-algorithm.jpg' style='max-height: 200px'/>
+<br/>
+</html>
+
+在深度学习中，我们使用反向传播来训练基于成本函数的模型参数。这些参数（权重）控制信号从一层到另一层的路由。如果两个神经元之间的权重为零，则神经元的激活不会传播到该神经元。
+
+迭代动态路由提供了如何**根据特征参数**来**路由信号**的替代方案。通过利用特征参数，理论上，可以**更好地将胶囊分组**，形成一个**高层次的结构**。例如，胶囊层可能最终表现为**探索“部分-整体”关系的分析树**。例如，脸部由眼睛、鼻子和嘴组成。迭代动态路由利用变换矩阵、可能性和特征的性质，控制向上传播到上面胶囊的信号的多少。
+
 
 ## 6. max-pooling-shortcoming
 
 ## 7. significant-of-routing-by-agreement-with-capsules
 
 ## 8. capsnet-architecture
+
+<html>
+<br/>
+<img src='../assets/capsnet-architecture.jpg' style='max-height: 200px'/>
+<br/>
+</html>
+
+每一层的说明(capsule层使用convolution kernel来explore locality information)：
+
+<html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">Layer Name</th>
+<th scope="col" class="left">Apply</th>
+<th scope="col" class="left">Output shape</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">Image</td>
+<td class="left">Raw image array</td>
+<td class="left">28x28x1</td>
+</tr>
+
+<tr>
+<td class="left">ReLU Conv1</td>
+<td class="left">Convolution layer with 9x9 kernels output 256 channels, stride 1, no padding with ReLU	</td>
+<td class="left">20x20x256</td>
+</tr>
+
+<tr>
+<td class="left">PrimaryCapsules</td>
+<td class="left">Convolution capsule layer with 9x9 kernel output 32x6x6 8-D capsule, stride 2, no padding</td>
+<td class="left">6x6x32x8</td>
+</tr>
+
+<tr>
+<td class="left">DigiCaps</td>
+<td class="left">Capsule output computed from a (16x8 matrix) between and ( from 1 to 32x6x6 and from 1 to 10).</td>
+<td class="left">10x16</td>
+</tr>
+
+<tr>
+<td class="left">FC1</td>
+<td class="left">Fully connected with ReLU</td>
+<td class="left">512</td>
+</tr>
+
+<tr>
+<td class="left">FC2</td>
+<td class="left">Fully connected with ReLU</td>
+<td class="left">1024</td>
+</tr>
+
+<tr>
+<td class="left">Output image</td>
+<td class="left">Fully connected with sigmoid</td>
+<td class="left">784(28x28)</td>
+</tr>
+
+</tbody>
+</table></center>
+</html>
 
 ## 9. loss-function-margin-loss
 
