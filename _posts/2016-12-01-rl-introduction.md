@@ -2,7 +2,7 @@
 layout: post
 category: "rl"
 title: "强化学习概述"
-tags: [nlp, natural language processing, crfpp, crf++]
+tags: [rl, reinforcement learning, 强化学习]
 ---
 
 目录
