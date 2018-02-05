@@ -94,9 +94,9 @@ CNN善于**检测特征**，却在探索**特征（视角，大小，方位）�
 
 ## 4. dynamic-routing
 
-
-
 ### 4.1 intuition
+
+假设有3张类似但大小、方向不同的人脸图，嘴巴和眼睛的capsule分别记录了嘴巴和眼睛的水平方向的宽度（当然，也可以加上别的，例如高度、颜色等）。在dynamic routing中，将input capsules的vectors通过一个转移矩阵**（transformation matrix）**转换成一个**vote**，并且将**相似vote**的capsules分为**同一组**。这些**votes**最终成为**parent capsule**的**output vector**。
 
 ### 4.2 calculating-a-capsule-output
 
