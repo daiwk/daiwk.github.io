@@ -104,7 +104,7 @@ CNN善于**检测特征**，却在探索**特征（视角，大小，方位）�
 
 <html>
 <br/>
-<img src='../assets/capsule-dynamic-routing.jpg' style='max-height: 80px'/>
+<img src='../assets/capsule-dynamic-routing.jpg' style='max-height: 150px'/>
 <br/>
 </html>
 
@@ -161,9 +161,11 @@ v_j\approx \frac{s_j}{||s_j||},\ for\ s_j\ is\ long
 
 ## 8. capsnet-architecture
 
+使用CapsNet进行mnist任务
+
 <html>
 <br/>
-<img src='../assets/capsnet-architecture.jpg' style='max-height: 200px'/>
+<img src='../assets/capsnet-architecture.jpg' style='max-height: 300px'/>
 <br/>
 </html>
 
