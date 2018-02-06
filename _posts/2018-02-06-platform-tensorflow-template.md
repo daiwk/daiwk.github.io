@@ -1,8 +1,8 @@
 ---
 layout: post
-category: "dl"
-title: "nested lstm"
-tags: [nested lstm,  ]
+category: "platform"
+title: "tensorflow项目架构模板"
+tags: [tensorflow template,  ]
 ---
 
 目录
