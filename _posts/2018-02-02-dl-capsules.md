@@ -32,6 +32,7 @@ tags: [capsules, capsule, ]
     - [12.2 Quick CIFAR10 ensemble test results](#122-quick-cifar10-ensemble-test-results)
     - [12.3 训练](#123-训练)
     - [12.4 训练+验证](#124-训练验证)
+- [13. 源码解析](#13-源码解析)
 
 <!-- /TOC -->
 
@@ -362,3 +363,7 @@ build expanded_mnist for affNIST generalizability：
 ```shell
 --shift=6 --pad=6
 ```
+
+## 13. 源码解析
+
+参考[Capsule官方代码开源之后，机器之心做了份核心代码解读](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650737203&idx=1&sn=43c2b6f0e62f8c4aa3f913aa8b9c9620&chksm=871ace4db06d475be8366969d74c4b2250602f5e262a3f97a5faf2183e53474d3f9fd6763308&mpshare=1&scene=1&srcid=0206E7CpxZFlD3UayCkIu2Pk&pass_ticket=eOgGMWWl1n%2B%2FqN%2BBmdlJBRG9MYce7eTK6SlPMr8UGO1IWGU8J0lq%2Bggu9PIzKO2r#rd)
