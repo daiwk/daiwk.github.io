@@ -124,7 +124,7 @@ q_{\pi}(s,a)=E_{\pi}[\sum _{k=0}^{\infty}\gamma ^kR_{t+k+1}|S_t=s,A_t=a]
 `\[
 \\\upsilon(S_t)=E_{S_t,S_{t+1},...}(R_{t+1}+\gamma G_{t+1}|S_t=s)
 \\=E_{S_t}(R_{t+1})+\gamma E_{S_{t+1},...}(G_{t+1})
-\\=E_{S_t}(R_{t+1})+\gamma \upsilon(S_{t+1})
+\\=E_{S_t}(R_{t+1}+\gamma \upsilon(S_{t+1}))
 \\=E(R_{t+1}+\gamma\upsilon(S_{t+1}))
 \]`
 
