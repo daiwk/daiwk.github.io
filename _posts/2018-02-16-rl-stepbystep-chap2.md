@@ -21,7 +21,7 @@ tags: [深入浅出强化学习, 马尔科夫决策过程 ]
         - [方差](#方差)
     - [2.2 随机策略](#22-随机策略)
         - [贪婪策略](#贪婪策略)
-        - [`\(\epsilon -greedy\)`策略](#\\epsilon--greedy\策略)
+        - [`\(\varepsilon -greedy\)`策略](#\\varepsilon--greedy\策略)
 - [3. 基于gym的MDP实例](#3-基于gym的mdp实例)
 
 <!-- /TOC -->
@@ -172,7 +172,7 @@ Var(f(x))=E[(f(x)-E[f(x)])^2]
 
 #### 贪婪策略
 
-#### `\(\epsilon -greedy\)`策略
+#### `\(\varepsilon -greedy\)`策略
 
 
 
