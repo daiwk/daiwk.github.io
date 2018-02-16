@@ -117,9 +117,11 @@ q_{\pi}(s,a)=E_{\pi}[\sum _{k=0}^{\infty}\gamma ^kR_{t+k+1}|S_t=s,A_t=a]
 最后一个等号的证明（看书P23……）
 
 `\[
-\\\upsilon(S_t)=E
+\\\upsilon(S_t)=E_{S_t,S_{t+1},...}(R_{t+1}+\gammaG_{t+1}|S_t=s)
+\\=E_{S_t}(R_{t+1})+\gammaE_{S_{t+1},...}(G_{t+1})
+\\=E_{S_t}(R_{t+1})+\gamma\upsilon(S_{t+1})
+\\=E(R_{t+1}+\gamma\upsilon(S_{t+1}))
 \]`
-
 
 同理，状态-动作值函数的贝尔曼方程：
 
