@@ -161,8 +161,17 @@ q_{\pi}(s,a)=R^a_{ss'}+\gamma \sum _{s'}P^a_{ss'}\upsilon _{\pi}(s')
 所以，状态-行为值函数是：
 
 `\[
-q_{\pi}(s,a)=R^a_{ss'}+\gamma \sum_{s'\in S}P^a_{ss'}\sum _{a'\in A}\pi(a'|s')q_{\pi}(s',a')
+q_{\pi}(s,a)=R^a_{ss'}+\gamma \sum_{s'\in S}P^a_{ss'}\sum _{a'\in A}\pi(a'|s')q_{\pi}()
 \]`
+
+示例：
+
+<html>
+<br/>
+<img src='../assets/state-value-function-demo.jpg' style='max-height: 200px'/>
+<br/>
+</html>
+
 
 ## 2. MDP中的概率学基础
 
