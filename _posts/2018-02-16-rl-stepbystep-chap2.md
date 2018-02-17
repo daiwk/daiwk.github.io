@@ -186,6 +186,33 @@ q_{\pi}(s,a)=R^a_{ss'}+\gamma \sum_{s'\in S}P^a_{ss'}\sum _{a'\in A}\pi(a'|s')q_
 \end{split}
 \]`
 
+每个策略对应一个状态值函数，最优策略对应着最优状态值函数。
+
+定义：最优状态值函数`\(\upsilon ^*(s)\)`为在所有策略中值最大的值函数，即`\(\upsion ^*(s)=max_{\pi}\upsilon_{\pi}(s)\)`。
+
+最优状态-行为值函数`\(q^*(s,a)\)`为在所有策略中最大的状态-行为值函数，即`\(q^*(s,a)=max_\{\pi}q_{\pi}(s,a)\)`。
+
+从而，最优状态值函数的贝尔曼最优方程：
+
+`\[
+\upsilon ^*(s)=max_{a}R^a_{ss'}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon ^*(s')
+\]`
+
+最优状态-行为值函数的贝尔曼最优方程：
+
+`\[
+q^*(s,a)=R^a_{ss'}+\gamma \sum _{s'\in S}P^a_{ss'}max_{a'}q^*(s',a')
+\]`
+
+若已各大最优状态-值函数，最优策略可以通过直接最大化`\(q^*(s,a)\)`来决定：
+
+`\[
+\pi_*(a|s)=\left\{\begin{matrix}
+1 &if\ a=argmax_{a\in A}q_*(s,a) \\ 
+0 & otherwise
+\end{matrix}\right.
+\]`
+
 
 ## 2. MDP中的概率学基础
 
