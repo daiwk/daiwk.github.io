@@ -112,20 +112,24 @@ q_{\pi}(s,a)=E_{\pi}[\sum _{k=0}^{\infty}\gamma ^kR_{t+k+1}|S_t=s,A_t=a]
 状态值函数的贝尔曼方程：
 
 `\[
-\\\upsilon(S_t)=\upsilon(s)=E[G_t|S_t=s]
-\\=E[R_{t+1}+\gamma R_{t+2}+...|S_t=s]
-\\=E[R_{t+1}+\gamma (R_{t+2}+\gamma R_{t+3}+...)|S_t=s]
-\\=E[R_{t+1}+\gamma G_{t+1}|S_t=s]
-\\=E[R_{t+1}+\gamma \upsilon(S_{t+1})|S_t=s]
+\begin{split}
+\\\upsilon(S_t)&=\upsilon(s)=E[G_t|S_t=s]
+\\&=E[R_{t+1}+\gamma R_{t+2}+...|S_t=s]
+\\&=E[R_{t+1}+\gamma (R_{t+2}+\gamma R_{t+3}+...)|S_t=s]
+\\&=E[R_{t+1}+\gamma G_{t+1}|S_t=s]
+\\&=E[R_{t+1}+\gamma \upsilon(S_{t+1})|S_t=s]
+\end{split}
 \]`
 
 最后一个等号的证明（书P23，有小改……）
 
 `\[
-\\\upsilon(S_t)=E_{S_t,S_{t+1},...}(R_{t+1}+\gamma G_{t+1}|S_t=s)
-\\=E_{S_t}(R_{t+1})+\gamma E_{S_{t+1},...}(G_{t+1})
-\\=E_{S_t}(R_{t+1}+\gamma \upsilon(S_{t+1}))
-\\=E(R_{t+1}+\gamma\upsilon(S_{t+1}))
+\begin{split}
+\\\upsilon(S_t)&=E_{S_t,S_{t+1},...}(R_{t+1}+\gamma G_{t+1}|S_t=s)
+\\&=E_{S_t}(R_{t+1})+\gamma E_{S_{t+1},...}(G_{t+1})
+\\&=E_{S_t}(R_{t+1}+\gamma \upsilon(S_{t+1}))
+\\&=E(R_{t+1}+\gamma\upsilon(S_{t+1}))
+\end{split}
 \]`
 
 同理，状态-行为值函数的贝尔曼方程：
