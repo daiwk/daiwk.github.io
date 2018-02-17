@@ -225,13 +225,13 @@ q^*(s,a)=R^a_{ss'}+\gamma \sum _{s'\in S}P^a_{ss'}\underset{a'}{max}q^*(s',a')
 + 离散型随机变量的期望：
 
 `\[
-E_{x~P}[f(x)]=\sum _xP(x)f(x)
+E_{x\sim P}[f(x)]=\sum _xP(x)f(x)
 \]`
 
 + 连续型随机变量的期望通过积分求得：
 
 `\[
-E_{x~P}[f(x)]=\int p(x)f(x)dx
+E_{x\sim P}[f(x)]=\int p(x)f(x)dx
 \]`
 
 期望的运算是线性的：
