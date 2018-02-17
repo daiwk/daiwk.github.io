@@ -113,5 +113,6 @@ https://daiwk.github.io/posts/platform-tensorflow-template.html
 https://daiwk.github.io/posts/rl-alibaba-rl.html
 https://daiwk.github.io/posts/rl-stepbystep-chap1.html
 https://daiwk.github.io/posts/dl-2017-introductions.html
+https://daiwk.github.io/posts/dl-wasserstein-autoencoders.html
 https://daiwk.github.io/posts/rl-stepbystep-chap2.html
 https://daiwk.github.io/tags.html
