@@ -225,7 +225,7 @@ q^*(s,a)=R^a_{ss'}+\gamma \sum _{s'\in S}P^a_{ss'}\underset{a'}{max}q^*(s',a')
 + `\(A\)`为**动作集**
 + `\(P:S\times A\times S\rightarrow R\)`为**转移概率**
 + `\(r:S\times A\rightarrow [-R_{max},R_{max}]\)`为**立即回报函数**
-+ `\(\rho_0\):S\rightarrow R`是**初始状态分布**
++ `\(\rho_0:S\rightarrow R\)`是**初始状态分布**
 + `\(\gamma \in [0,1]\)`是**折扣因子**
 + `\(T\)`为**水平范围（即步数）**
 
