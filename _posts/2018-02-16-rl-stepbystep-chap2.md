@@ -320,3 +320,7 @@ Var(f(x))=E[(f(x)-E[f(x)])^2]
 类似softmax，可以参考**[多类分类下为什么用softmax而不是用其他归一化方法?](https://www.zhihu.com/question/40403377)**。
 
 ## 3. 基于gym的MDP实例
+
+详见书p29
+
+[https://github.com/daiwk/reinforcement-learning-code/blob/master/grid_mdp.py](https://github.com/daiwk/reinforcement-learning-code/blob/master/grid_mdp.py)

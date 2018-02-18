@@ -126,7 +126,9 @@ reset()是重新初始化函数。实现如下：
 
 ### render()函数
 
-render()扮演图像引擎的角色。为了便于直观显示环境中物理的状态，需要除了物理引擎之外的图像引擎。源码如下（注释参考：[https://github.com/gxnk/reinforcement-learning-code/blob/master/%E7%AC%AC%E4%B8%80%E8%AE%B2%20%20gym%20%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91/cartpole_notes.py](https://github.com/gxnk/reinforcement-learning-code/blob/master/%E7%AC%AC%E4%B8%80%E8%AE%B2%20%20gym%20%E5%AD%A6%E4%B9%A0%E5%8F%8A%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91/cartpole_notes.py)）：
+render()扮演图像引擎的角色。为了便于直观显示环境中物理的状态，需要除了物理引擎之外的图像引擎。源码如下:
+
+注释参考：[https://github.com/daiwk/reinforcement-learning-code/blob/master/cartpole_notes.py](https://github.com/daiwk/reinforcement-learning-code/blob/master/cartpole_notes.py)
 
 ```python
         if self.viewer is None:
