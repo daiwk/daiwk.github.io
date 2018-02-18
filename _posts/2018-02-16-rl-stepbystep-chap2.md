@@ -278,11 +278,45 @@ Var(f(x))=E[(f(x)-E[f(x)])^2]
 
 #### 2.2.1 贪婪策略
 
+`\[
+\pi_*(a|s)=\left\{\begin{matrix}
+1 &if\ a=\underset{a\in A}{argmax}q_*(s,a) \\ 
+0 & otherwise
+\end{matrix}\right.
+\]`
+
+贪婪策略是一个**确定性策略**，只有动作值函数`\(q^*(s,a)\)`**最大**的动作时取**概率1**
+
 #### 2.2.2 `\(\varepsilon -greedy\)`策略
+
+`\[
+\pi_(a|s)=\left\{\begin{matrix}
+1-\varepsilon + \frac{\varepsilon}{|A(s)|} &if\ a=\underset{a\in A}{argmax}q_*(s,a) \\ 
+\frac{\varepsilon}{|A(s)|} & otherwise
+\end{matrix}\right.
+\]`
+`\(\varepsilon -greedy\)`策略是强化学习**最基本最常用**的**随机策略**。该策略平衡了e&e，也就是**利用(exploitation)**和**探索(exploration)**，其中选取动作值函数最大的部分为利用，其他非最估动作仍然有概率的部分为探索部分。
 
 #### 2.2.3 高斯策略
 
+一般的高斯策略都可以写成
+
+`\[
+\pi_{\theta}=\mu_{\theta}+\varepsilon,\varepsilon \sim N(0,\sigma ^2)
+\]`
+
+其中`\(\mu_{\theta}\)`为**确定性部分**，`\(\varepsilon\)`为**零均值**的**高斯随机噪声**。这种策略也**平衡**了**利用**与**探索**，利用由确定性部分完成，探索由`\(\varepsilon\)`完成。
+
 #### 2.2.4 玻尔兹曼分布
 
+对于**动作空间是离散的，或者动作空间并不大**的情况，可以采用玻尔兹曼分布(吉布斯分布)作为随机策略，即：
+
+`\[
+\pi(a|s,\theta)=\frac{exp(Q(s,a,\theta))}{\sum_bexp(h(s,b,\theta))}
+\]`
+
+其中，`\(Q(s,a,\theta)\)`是动作值函数。**动作值函数大的动作被选中的概率大，小的动作被选中的概率小。**
+
+类似softmax，可以参考**[多类分类下为什么用softmax而不是用其他归一化方法?](https://www.zhihu.com/question/40403377)**。
 
 ## 3. 基于gym的MDP实例
