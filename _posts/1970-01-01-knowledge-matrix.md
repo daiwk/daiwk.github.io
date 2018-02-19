@@ -1,8 +1,8 @@
 ---
 layout: post
-category: "rl"
-title: "阿里巴巴的强化学习应用"
-tags: [阿里巴巴, 强化学习, ]
+category: "knowledge"
+title: "机器学习中的矩阵、向量求导"
+tags: [机器学习中的矩阵、向量求导, ]
 ---
 
 目录
