@@ -98,6 +98,11 @@ tags: [深入浅出强化学习, 基于模型的动态规划]
 
 + 输入：需要评估的策略`\(\pi\)`状态转移概率`\(P^a_{ss'}\)`回报函数`\(R^a_s\)`，折扣因子`\(\gamma\)`
 + 初始化值函数：`\(\upsilon(s)=0\)`
++ repeat k=0,1,...
+    + for s in S:
+        + `\(\upsilon_{k+1}(s)=\sum _{a\in A}\pi(a|s)(R^a_{ss'}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_k(s'))\)`
++ until `\(\upsilon_{k+1}=\upsilon_k\)`
++ 输出：`\(\upsilon(s)\)`
 
 #### 1.2.2 贪婪策略
 
