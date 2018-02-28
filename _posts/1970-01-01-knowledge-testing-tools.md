@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "knowledge"
-title: "gtest"
-tags: [gtest, ]
+title: "单元测试工具"
+tags: [gtest, BllseyeCoverage, ]
 ---
 
 目录
@@ -12,10 +12,13 @@ tags: [gtest, ]
 - [gtest](#gtest)
     - [显示所有测试用例](#显示所有测试用例)
     - [只执行部分测试用例](#只执行部分测试用例)
+- [BullseyeCoverage](#bullseyecoverage)
 
 <!-- /TOC -->
 
 ## gtest
+
+简介：[Google C++单元测试框架---Gtest框架简介（译文）](https://www.cnblogs.com/jycboy/p/6057677.html)
 
 ### 显示所有测试用例
 
@@ -45,4 +48,8 @@ TestNodeB.
 ./xxx --gtest_filter=TestNodeA.test*
 ./xxx --gtest_filter=TestNodeA.test_a1
 ```
+
+## BullseyeCoverage
+
+官网的下载页面：[https://www.bullseye.com/cgi-bin/download.sh](https://www.bullseye.com/cgi-bin/download.sh)
 
