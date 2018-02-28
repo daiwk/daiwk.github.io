@@ -53,3 +53,5 @@ TestNodeB.
 
 官网的下载页面：[https://www.bullseye.com/cgi-bin/download.sh](https://www.bullseye.com/cgi-bin/download.sh)
 
+简介：[代码覆盖率工具BullseyeCoverage研究](http://blog.csdn.net/billbliss/article/details/43971629)
+
