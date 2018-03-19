@@ -68,7 +68,7 @@ https://daiwk.github.io/posts/cv-img-txt-sim.html
 https://daiwk.github.io/posts/ml-tips.html
 https://daiwk.github.io/posts/platform-paddlepaddle-tips.html
 https://daiwk.github.io/posts/nlp-dl-for-nlp-best-practices.html
-https://daiwk.github.io/posts/dl-wide-deep-learning-model.html
+https://daiwk.github.io/posts/dl-traditional-ctr-models.html
 https://daiwk.github.io/posts/dl-youtube-video-recommendation.html
 https://daiwk.github.io/posts/ml-anormaly-detection.html
 https://daiwk.github.io/posts/ml-ftrl.html
@@ -102,7 +102,7 @@ https://daiwk.github.io/posts/dl-deep-cross-network.html
 https://daiwk.github.io/posts/knowledge-c++11.html
 https://daiwk.github.io/posts/rl-irgan.html
 https://daiwk.github.io/posts/dl-pserver.html
-https://daiwk.github.io/posts/dl-deep-fm.html
+https://daiwk.github.io/posts/dl-dl-ctr-models.html
 https://daiwk.github.io/posts/dl-normalization.html
 https://daiwk.github.io/posts/nlp-squad.html
 https://daiwk.github.io/posts/platform-pytorch-anniversary.html

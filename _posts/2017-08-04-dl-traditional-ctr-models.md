@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "dl"
-title: "ctr预估"
-tags: [ctr预估, lr+gbdt, wide and deep learning ]
+title: "传统ctr预估"
+tags: [ctr预估, lr+gbdt, ]
 ---
 
 目录
@@ -19,7 +19,7 @@ tags: [ctr预估, lr+gbdt, wide and deep learning ]
             - [1.1.2.4 参数设置](#1124-参数设置)
         - [1.1.3 LR+GBDT](#113-lrgbdt)
         - [1.1.4 引入id类特征](#114-引入id类特征)
-- [2. wide & deep learning](#2-wide--deep-learning)
+- [2. 基于深度学习的ctr预估模型](#2-基于深度学习的ctr预估模型)
 
 <!-- /TOC -->
 
@@ -183,26 +183,7 @@ GBDT与LR的融合方式，Facebook的paper有个例子如下图2所示，图中
 如何使用GBDT 映射得到的特征？通过GBDT生成的特征，可直接作为LR的特征使用，省去人工处理分析特征的环节，LR的输入特征完全依赖于通过GBDT得到的特征。此思路已尝试，通过实验发现GBDT+LR在曝光充分的广告上确实有效果，但整体效果需要权衡优化各类树的使用。同时，也可考虑将GBDT生成特征与LR原有特征结合起来使用，待尝试。
 
 
-## 2. wide & deep learning
+## 2. 基于深度学习的ctr预估模型
 
-[Wide & deep learning for recommender systems](https://arxiv.org/pdf/1606.07792.pdf)
-
-LR 对于 DNN 模型的优势是对大规模稀疏特征的容纳能力，包括内存和计算量等方面，工业界都有非常成熟的优化方法； 而 DNN 模型具有自己学习新特征的能力，一定程度上能够提升特征使用的效率， 这使得 DNN 模型在同样规模特征的情况下，更有可能达到更好的学习效果。
-
-模型结构如下：
-
-<html>
-<br/>
-
-<img src='../assets/wide-and-deep-model.png' style='max-height: 200px'/>
-<br/>
-
-</html>
-
-模型左边的 Wide 部分，可以容纳大规模系数特征，并且对一些特定的信息（比如 ID）有一定的记忆能力； 而模型右边的 Deep 部分，能够学习特征间的隐含关系，在相同数量的特征下有更好的学习和推导能力。
-
-用于ctr预估[https://github.com/PaddlePaddle/models/tree/develop/ctr](https://github.com/PaddlePaddle/models/tree/develop/ctr)
-
-特征的生成：[https://github.com/PaddlePaddle/models/blob/develop/ctr/dataset.md](https://github.com/PaddlePaddle/models/blob/develop/ctr/dataset.md)
-
+基于深度学习的可以参考[基于深度学习的ctr预估模型集合（持续更新）](https://daiwk.github.io/posts/dl-dl-ctr-models.html)
 
