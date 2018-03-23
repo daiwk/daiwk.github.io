@@ -93,6 +93,9 @@ w_{13}+w_{23}
 
 ## tensorflow
 
+tensorflow的embedding操作：
+[https://memeda.github.io/%E6%8A%80%E6%9C%AF/2017/04/13/tfembedding.html](https://memeda.github.io/%E6%8A%80%E6%9C%AF/2017/04/13/tfembedding.html)
+
 如何使用预训练的embedding来初始化tf的embedding_lookup: 
 [https://stackoverflow.com/questions/35687678/using-a-pre-trained-word-embedding-word2vec-or-glove-in-tensorflow](https://stackoverflow.com/questions/35687678/using-a-pre-trained-word-embedding-word2vec-or-glove-in-tensorflow)
 
