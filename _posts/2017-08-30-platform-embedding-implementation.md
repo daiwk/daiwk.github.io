@@ -12,6 +12,7 @@ tags: [embedding,]
 - [基本思想](#基本思想)
 - [keras](#keras)
 - [paddle](#paddle)
+- [tensorflow](#tensorflow)
 - [应用](#应用)
     - [xx率预估](#xx率预估)
         - [模型结构](#模型结构)
@@ -90,6 +91,11 @@ w_{13}+w_{23}
 
 [https://github.com/PaddlePaddle/Paddle/issues/2910](https://github.com/PaddlePaddle/Paddle/issues/2910)
 
+## tensorflow
+
+如何使用预训练的embedding来初始化tf的embedding_lookup: 
+[https://stackoverflow.com/questions/35687678/using-a-pre-trained-word-embedding-word2vec-or-glove-in-tensorflow](https://stackoverflow.com/questions/35687678/using-a-pre-trained-word-embedding-word2vec-or-glove-in-tensorflow)
+
 
 ## 应用
 
@@ -106,7 +112,7 @@ w_{13}+w_{23}
 连续值统计特征是非常有用的特征，Google的模型是把embedding向量和统计特征放到同一个DNN网络中学习，但实验发现这样会削弱统计特征的作用。我们为统计特征专门又组建了一个包含2个隐层的网路，并且为了增强非线性效果，激活函数从RELU改为TanH/Sigmiod。
 
 + deep model
-    + 首先需要把离散特征（item_id，item_tag, user_id，user_tag，query_tag）embeding成连续特征。
+    + 首先需要把离散特征（item_id，item_tag, user_id，user_tag，query_tag）embedding成连续特征。
     + 将embedding后的向量作为DNN的输入。考虑到最终线上预测性能的问题，目前我们的DNN网络还比较简单，只有1到2个隐层。
 
 整体模型使用三层全连接层用于sparse+dense特征表征学习，再用两层全连接层用于点击/购买与否分类的统一深度学习模型解决方案：
