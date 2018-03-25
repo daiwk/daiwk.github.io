@@ -26,7 +26,7 @@ all_categories: [
 ["about", "关于","/about.html"]
 ]
 
-paginate: 5
+paginate: 10
 paginate_path: "posts/page:num"
 timezone: China/Beijing
 
