@@ -9,17 +9,18 @@ tags: [tensorflow基础, ]
 
 <!-- TOC -->
 
-- [pandas](#pandas)
 - [创建和操作张量](#创建和操作张量)
     - [矢量加法](#矢量加法)
     - [张量形状](#张量形状)
     - [广播](#广播)
     - [矩阵乘法](#矩阵乘法)
     - [张量变形](#张量变形)
+    - [变量、初始化和赋值](#变量初始化和赋值)
+- [pandas](#pandas)
 
 <!-- /TOC -->
 
-## pandas
+参考 [https://developers.google.cn/machine-learning/crash-course/exercises](https://developers.google.cn/machine-learning/crash-course/exercises)
 
 ## 创建和操作张量
 
@@ -170,3 +171,110 @@ with tf.Graph().as_default():
     print "1-D vector:"
     print one_dimensional_vector.eval()
 ```
+
+### 变量、初始化和赋值
+
+创建变量时，可以明确设置一个初始值，也可以使用初始化程序（例如分布）:
+
+```python
+g = tf.Graph()
+with g.as_default():
+  # Create a variable with the initial value 3.
+  v = tf.Variable([3])
+
+  # Create a variable of shape [1], with a random initial value,
+  # sampled from a normal distribution with mean 1 and standard deviation 0.35.
+  w = tf.Variable(tf.random_normal([1], mean=1.0, stddev=0.35))
+```
+
+TensorFlow 的一个特性是变量初始化不是自动进行的。例如，以下代码块会导致错误：
+
+```python
+with g.as_default():
+  with tf.Session() as sess:
+    try:
+      v.eval()
+    except tf.errors.FailedPreconditionError as e:
+      print "Caught expected error: ", e
+      # Caught expected error:  Attempting to use uninitialized value Variable
+	    #[[Node: _retval_Variable_0_0 = _Retval[T=DT_INT32, index=0, _device="/job:localhost/replica:0/task:0/device:CPU:0"](Variable)]]
+```
+
+最简单的方法，是调用```global_variables_initializer```，初始化后，变量的值保留在**同一会话中**（不过，当**启动新会话时，需要重新初始化**）
+
+```python
+with g.as_default():
+  with tf.Session() as sess:
+    initialization = tf.global_variables_initializer()
+    sess.run(initialization)
+    # Now, variables can be accessed normally, and have values assigned to them.
+    print v.eval()
+    print w.eval()
+```
+
+要更改变量的值，使用**assign**指令。请注意，仅创建 assign 指令不会起到任何作用。和初始化一样，**必须运行赋值指令**才能更新变量值：
+
+```python
+with g.as_default():
+  with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    # This should print the variable's initial value.
+    print v.eval()
+
+    assignment = tf.assign(v, [7])
+    # The variable has not been changed yet!
+    print v.eval()
+
+    # Execute the assignment op.
+    sess.run(assignment)
+    # Now the variable is updated.
+    print v.eval()
+```
+
+练习：
+
+创建一个骰子模拟，在模拟中生成一个 `10x3` 二维张量，其中：
+  * 列 `1` 和 `2` 均存储一个骰子的一次投掷值。
+  * 列 `3` 存储同一行中列 `1` 和 `2` 的值的总和。
+
+例如，第一行中可能会包含以下值：
+  * 列 `1` 存储 `4`
+  * 列 `2` 存储 `3`
+  * 列 `3` 存储 `7`
+
+```python
+with tf.Graph().as_default(), tf.Session() as sess:
+  # Task 2: Simulate 10 throws of two dice. Store the results
+  # in a 10x3 matrix.
+
+  # We're going to place dice throws inside two separate
+  # 10x1 matrices. We could have placed dice throws inside
+  # a single 10x2 matrix, but adding different columns of
+  # the same matrix is tricky. We also could have placed
+  # dice throws inside two 1-D tensors (vectors); doing so
+  # would require transposing the result.
+  dice1 = tf.Variable(tf.random_uniform([10, 1],
+                                        minval=1, maxval=7,
+                                        dtype=tf.int32))
+  dice2 = tf.Variable(tf.random_uniform([10, 1],
+                                        minval=1, maxval=7,
+                                        dtype=tf.int32))
+
+  # We may add dice1 and dice2 since they share the same shape
+  # and size.
+  dice_sum = tf.add(dice1, dice2)
+
+  # We've got three separate 10x1 matrices. To produce a single
+  # 10x3 matrix, we'll concatenate them along dimension 1.
+  resulting_matrix = tf.concat(
+      values=[dice1, dice2, dice_sum], axis=1)
+
+  # The variables haven't been initialized within the graph yet,
+  # so let's remedy that.
+  sess.run(tf.global_variables_initializer())
+
+  print(resulting_matrix.eval())
+```
+
+## pandas
+
