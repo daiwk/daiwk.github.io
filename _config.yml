@@ -2,7 +2,8 @@ markdown: kramdown
 highlighter: rouge
 
 permalink: /posts/:title.html
-excerpt_separator: "<!-- more -->"
+excerpt_separator: "<!-- /TOC -->"
+#excerpt_separator: "<!-- more -->"
 
 github: daiwk
 author: "daiwk"
