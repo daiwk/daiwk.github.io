@@ -17,6 +17,18 @@ tags: [tensorflow基础, ]
     - [张量变形](#张量变形)
     - [变量、初始化和赋值](#变量初始化和赋值)
 - [pandas](#pandas)
+    - [基本概念](#基本概念)
+    - [访问数据](#访问数据)
+    - [操控数据](#操控数据)
+    - [索引](#索引)
+- [线性回归](#线性回归)
+    - [定义特征并配置特征列](#定义特征并配置特征列)
+    - [定义目标:](#定义目标)
+    - [配置 LinearRegressor](#配置-linearregressor)
+    - [定义输入函数](#定义输入函数)
+    - [训练模型](#训练模型)
+    - [评估模型](#评估模型)
+- [重新训练](#重新训练)
 
 <!-- /TOC -->
 
@@ -278,6 +290,9 @@ with tf.Graph().as_default(), tf.Session() as sess:
 
 ## pandas
 
+pandas官网：[http://pandas.pydata.org/pandas-docs/stable/index.html](http://pandas.pydata.org/pandas-docs/stable/index.html)
+
+### 基本概念
  *pandas* 中的主要数据结构被实现为以下两类：
   * **`DataFrame`**，您可以将它想象成一个关系型数据**表格**，其中包含多个行和已命名的列。
   * **`Series`**，它是单**一列**。`DataFrame` 中包含一个或多个 `Series`，每个 `Series` 均有一个名称。
@@ -294,3 +309,362 @@ population = pd.Series([852469, 1015785, 485199])
 
 pd.DataFrame({ 'City name': city_names, 'Population': population })
 ```
+
+加载整个文件，并显示一些统计信息（如：count/mean/std/min/25%/50%/75%/max）：
+
+```python
+california_housing_dataframe = pd.read_csv("https://storage.googleapis.com/mledu-datasets/california_housing_train.csv", sep=",")
+california_housing_dataframe.describe()
+```
+
+显示前几条记录：
+
+```python
+california_housing_dataframe.head()
+```
+
+绘制图表（某一列的值的分布）：
+
+```python
+california_housing_dataframe.hist('housing_median_age')
+```
+
+### 访问数据
+
+```python
+cities = pd.DataFrame({ 'City name': city_names, 'Population': population })
+cities['City name'] # 直接访问某一列
+cities['City name'][1] # 访问某一列的某一行
+cities[0:2] # 整个表格的第0-1行的所有列的数据
+```
+
+pandas的[索引和选择官方文档](http://pandas.pydata.org/pandas-docs/stable/indexing.html)
+
+### 操控数据
+
+可以直接进行算术运算：
+
+```python
+population / 1000.
+```
+
+也可以通过numpy的函数进行操作
+
+```python
+import numpy as np
+np.log(population)
+```
+
+也可以通过apply以及lambda进行操作：
+
+```python
+population.apply(lambda val: val > 1000000)
+```
+
+dataframe的修改，可以直接操作：
+
+```python
+cities['Area square miles'] = pd.Series([46.87, 176.53, 97.92])
+cities['Population density'] = cities['Population'] / cities['Area square miles']
+
+cities['Is wide and has saint name'] = (cities['Area square miles'] > 50) & cities['City name'].apply(lambda name: name.startswith('San'))
+
+```
+
+### 索引
+
+Series 和 DataFrame 对象也定义了 index 属性，该属性会向每个 Series 项或 DataFrame 行赋一个标识符值。
+
+默认情况下，在构造时，pandas 会赋可反映源数据顺序的索引值。**索引值在创建后是稳定的**；也就是说，它们不会因为数据重新排序而发生改变。
+
+```python
+city_names.index # RangeIndex(start=0, stop=3, step=1)，city_names这一列有0,1,2总共3行
+cities.index # RangeIndex(start=0, stop=3, step=1)，整个dataframe有0,1,2总共3行
+```
+
+调用 DataFrame.reindex 以手动重新排列各行的顺序。
+
+```python
+cities.reindex([2, 0, 1])
+#City name	Population	Area square miles	Population density	Is wide and has saint name
+#2	Sacramento	485199	97.92	4955.055147	False
+#0	San Francisco	852469	46.87	18187.945381	False
+#1	San Jose	1015785	176.53	5754.177760	True
+```
+
+重建索引是一种随机排列 DataFrame 的绝佳方式。(参考[https://blog.csdn.net/you_are_my_dream/article/details/70165384](https://blog.csdn.net/you_are_my_dream/article/details/70165384)，np.random.permutation与np.random.shuffle有两处不同：
+如果传给permutation一个矩阵，它会返回一个洗牌后的矩阵副本；而shuffle只是对一个矩阵进行洗牌，无返回值。 如果传入一个整数，它会返回一个洗牌后的arange。)
+
+```python
+cities.reindex(np.random.permutation(cities.index))
+```
+
+注意：
+如果您的 reindex 输入数组包含原始 DataFrame 索引值中没有的值，reindex 会为此类“丢失的”索引添加新行，并在所有对应列中填充 NaN 值：
+
+```python
+cities.reindex([0, 4, 5, 2])
+#	City name	Population	Area square miles	Population density	Is wide and has saint name
+#0	San Francisco	852469.0	46.87	18187.945381	False
+#4	NaN	NaN	NaN	NaN	NaN
+#5	NaN	NaN	NaN	NaN	NaN
+#2	Sacramento	485199.0	97.92	4955.055147	False
+```
+
+## 线性回归
+
+
+### 定义特征并配置特征列
+
+在 TensorFlow 中，我们使用一种称为**“特征列”**的结构来表示特征的**数据类型**。特征列仅存储对特征数据的描述；**不包含特征数据**本身。
+
+主要有两类数据：
+
+* **分类数据**：一种文字数据。
+* **数值数据**：一种数字（整数或浮点数）数据以及您希望视为数字的数据。有时您可能会希望将数值数据（例如邮政编码）视为分类数据。
+
+```python
+# Define the input feature: total_rooms.
+my_feature = california_housing_dataframe[["total_rooms"]]
+​
+# Configure a numeric feature column for total_rooms.
+feature_columns = [tf.feature_column.numeric_column("total_rooms")]
+```
+
+### 定义目标:
+
+```python
+targets = california_housing_dataframe["median_house_value"]
+```
+
+### 配置 LinearRegressor
+
+使用```clip_gradients_by_norm``将梯度裁剪应用到我们的优化器。梯度裁剪可确保梯度大小在训练期间不会变得过大，梯度过大会导致梯度下降法失败。
+
+```python
+# Use gradient descent as the optimizer for training the model.
+my_optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.0000001)
+my_optimizer = tf.contrib.estimator.clip_gradients_by_norm(my_optimizer, 5.0)
+
+# Configure the linear regression model with our feature columns and optimizer.
+# Set a learning rate of 0.0000001 for Gradient Descent.
+linear_regressor = tf.estimator.LinearRegressor(
+    feature_columns=feature_columns,
+    optimizer=my_optimizer
+)
+```
+
+### 定义输入函数
+
+将 Pandas 特征数据转换成 NumPy 数组字典，例如，本例中就是把pandas的一列"total_rooms":[3.,20.,...,42.]变成一个字典{"total_rooms":array([3.,20.,...42.])}
+
+使用 TensorFlow Dataset API 根据我们的数据构建 Dataset 对象，并**将数据拆分成大小为 batch_size 的多批数据**，以**按照指定周期数 (num_epochs) 进行重复**。
+
+如果 shuffle 设置为 True，则我们会对数据进行随机处理，以便数据在训练期间以随机方式传递到模型。buffer_size 参数会指定 shuffle 将**从中随机抽样的数据集的大小**(representing the number of elements from this dataset from which the new dataset will sample)。
+
+```python
+def my_input_fn(features, targets, batch_size=1, shuffle=True, num_epochs=None):
+    """Trains a linear regression model of one feature.
+  
+    Args:
+      features: pandas DataFrame of features
+      targets: pandas DataFrame of targets
+      batch_size: Size of batches to be passed to the model
+      shuffle: True or False. Whether to shuffle the data.
+      num_epochs: Number of epochs for which data should be repeated. None = repeat indefinitely
+    Returns:
+      Tuple of (features, labels) for next data batch
+    """
+  
+    # Convert pandas data into a dict of np arrays.
+    features = {key:np.array(value) for key,value in dict(features).items()}                                           
+ 
+    # Construct a dataset, and configure batching/repeating
+    ds = Dataset.from_tensor_slices((features,targets)) # warning: 2GB limit
+    ds = ds.batch(batch_size).repeat(num_epochs)
+    
+    # Shuffle the data, if specified
+    if shuffle:
+      ds = ds.shuffle(buffer_size=10000)
+    
+    # Return the next batch of data
+    features, labels = ds.make_one_shot_iterator().get_next()
+    return features, labels
+```
+
+### 训练模型
+
+```python
+_ = linear_regressor.train(
+    input_fn = lambda:my_input_fn(my_feature, targets),
+    steps=100
+)
+```
+
+### 评估模型
+
+```python
+# Create an input function for predictions.
+# Note: Since we're making just one prediction for each example, we don't 
+# need to repeat or shuffle the data here.
+prediction_input_fn =lambda: my_input_fn(my_feature, targets, num_epochs=1, shuffle=False)
+
+# Call predict() on the linear_regressor to make predictions.
+predictions = linear_regressor.predict(input_fn=prediction_input_fn)
+
+# Format predictions as a NumPy array, so we can calculate error metrics.
+predictions = np.array([item['predictions'][0] for item in predictions])
+
+# Print Mean Squared Error and Root Mean Squared Error.
+mean_squared_error = metrics.mean_squared_error(predictions, targets)
+root_mean_squared_error = math.sqrt(mean_squared_error)
+print "Mean Squared Error (on training data): %0.3f" % mean_squared_error
+print "Root Mean Squared Error (on training data): %0.3f" % root_mean_squared_error
+```
+
+RMSE 的一个很好的特性是，它可以在与原目标相同的规模下解读。
+
+```python
+min_house_value = california_housing_dataframe["median_house_value"].min()
+max_house_value = california_housing_dataframe["median_house_value"].max()
+min_max_difference = max_house_value - min_house_value
+
+print "Min. Median House Value: %0.3f" % min_house_value
+print "Max. Median House Value: %0.3f" % max_house_value
+print "Difference between Min. and Max.: %0.3f" % min_max_difference
+print "Root Mean Squared Error: %0.3f" % root_mean_squared_error
+```
+
+可以通过以下方法获得均匀分布的随机数据样本：
+
+```python
+sample = california_housing_dataframe.sample(n=300)
+```
+
+## 重新训练
+
+在 10 个等分的时间段内使用此函数，以便观察模型在每个时间段的改善情况。
+
+对于每个时间段，我们都会计算训练损失并绘制相应图表。这可以帮助您判断模型收敛的时间，或者模型是否需要更多迭代。
+
+此外，我们还会绘制模型随着时间的推移学习的特征权重和偏差项值的曲线图。您还可以通过这种方式查看模型的收敛效果。
+
+```python
+def train_model(learning_rate, steps, batch_size, input_feature="total_rooms"):
+  """Trains a linear regression model of one feature.
+  
+  Args:
+    learning_rate: A `float`, the learning rate.
+    steps: A non-zero `int`, the total number of training steps. A training step
+      consists of a forward and backward pass using a single batch.
+    batch_size: A non-zero `int`, the batch size.
+    input_feature: A `string` specifying a column from `california_housing_dataframe`
+      to use as input feature.
+  """
+  
+  periods = 10
+  steps_per_period = steps / periods
+
+  my_feature = input_feature
+  my_feature_data = california_housing_dataframe[[my_feature]]
+  my_label = "median_house_value"
+  targets = california_housing_dataframe[my_label]
+
+  # Create feature columns
+  feature_columns = [tf.feature_column.numeric_column(my_feature)]
+  
+  # Create input functions
+  training_input_fn = lambda:my_input_fn(my_feature_data, targets, batch_size=batch_size)
+  prediction_input_fn = lambda: my_input_fn(my_feature_data, targets, num_epochs=1, shuffle=False)
+  
+  # Create a linear regressor object.
+  my_optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
+  my_optimizer = tf.contrib.estimator.clip_gradients_by_norm(my_optimizer, 5.0)
+  linear_regressor = tf.estimator.LinearRegressor(
+      feature_columns=feature_columns,
+      optimizer=my_optimizer
+  )
+
+  # Set up to plot the state of our model's line each period.
+  plt.figure(figsize=(15, 6))
+  plt.subplot(1, 2, 1)
+  plt.title("Learned Line by Period")
+  plt.ylabel(my_label)
+  plt.xlabel(my_feature)
+  sample = california_housing_dataframe.sample(n=300)
+  plt.scatter(sample[my_feature], sample[my_label])
+  colors = [cm.coolwarm(x) for x in np.linspace(-1, 1, periods)]
+
+  # Train the model, but do so inside a loop so that we can periodically assess
+  # loss metrics.
+  print "Training model..."
+  print "RMSE (on training data):"
+  root_mean_squared_errors = []
+  for period in range (0, periods):
+    # Train the model, starting from the prior state.
+    linear_regressor.train(
+        input_fn=training_input_fn,
+        steps=steps_per_period
+    )
+    # Take a break and compute predictions.
+    predictions = linear_regressor.predict(input_fn=prediction_input_fn)
+    predictions = np.array([item['predictions'][0] for item in predictions])
+    
+    # Compute loss.
+    root_mean_squared_error = math.sqrt(
+        metrics.mean_squared_error(predictions, targets))
+    # Occasionally print the current loss.
+    print "  period %02d : %0.2f" % (period, root_mean_squared_error)
+    # Add the loss metrics from this period to our list.
+    root_mean_squared_errors.append(root_mean_squared_error)
+    # Finally, track the weights and biases over time.
+    # Apply some math to ensure that the data and line are plotted neatly.
+    y_extents = np.array([0, sample[my_label].max()])
+    
+    weight = linear_regressor.get_variable_value('linear/linear_model/%s/weights' % input_feature)[0]
+    bias = linear_regressor.get_variable_value('linear/linear_model/bias_weights')
+
+    x_extents = (y_extents - bias) / weight
+    x_extents = np.maximum(np.minimum(x_extents,
+                                      sample[my_feature].max()),
+                           sample[my_feature].min())
+    y_extents = weight * x_extents + bias
+    plt.plot(x_extents, y_extents, color=colors[period]) 
+  print "Model training finished."
+
+  # Output a graph of loss metrics over periods.
+  plt.subplot(1, 2, 2)
+  plt.ylabel('RMSE')
+  plt.xlabel('Periods')
+  plt.title("Root Mean Squared Error vs. Periods")
+  plt.tight_layout()
+  plt.plot(root_mean_squared_errors)
+
+  # Output a table with calibration data.
+  calibration_data = pd.DataFrame()
+  calibration_data["predictions"] = pd.Series(predictions)
+  calibration_data["targets"] = pd.Series(targets)
+  display.display(calibration_data.describe())
+
+  print "Final RMSE (on training data): %0.2f" % root_mean_squared_error
+```
+
+```python
+train_model(
+    learning_rate=0.00002,
+    steps=500,
+    batch_size=5
+)
+```
+
+<html>
+<br/>
+<img src='../assets/tf-basic-rmse-1.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+<html>
+<br/>
+<img src='../assets/tf-basic-rmse-2.png' style='max-height: 200px'/>
+<br/>
+</html>
