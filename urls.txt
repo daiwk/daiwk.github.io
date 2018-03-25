@@ -122,4 +122,5 @@ https://daiwk.github.io/posts/rl-stepbystep-chap3.html
 https://daiwk.github.io/posts/ml-google-tutorial-tf-ml.html
 https://daiwk.github.io/posts/dl-dl-ai-notes.html
 https://daiwk.github.io/posts/dl-indrnn.html
+https://daiwk.github.io/posts/platform-tf-basics.html
 https://daiwk.github.io/tags.html
