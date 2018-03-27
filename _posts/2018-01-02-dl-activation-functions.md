@@ -445,5 +445,8 @@ struct SoftsignGrad {
 
 ## 25. Cos
 
+注意区分：**两个向量的cos相似度（例如作为loss_layer）**的求导：
+[https://math.stackexchange.com/questions/1923613/partial-derivative-of-cosine-similarity](https://math.stackexchange.com/questions/1923613/partial-derivative-of-cosine-similarity)
+
 ## 26. Sinc
 

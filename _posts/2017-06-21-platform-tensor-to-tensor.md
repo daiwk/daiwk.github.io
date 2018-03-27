@@ -34,6 +34,9 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
 - [6. 实践](#6-实践)
     - [6.1 安装cuda 8.0](#61-安装cuda-80)
     - [6.2 安装tensor2tensor](#62-安装tensor2tensor)
+- [7. 代码解析](#7-代码解析)
+    - [7.1 原版（tensor2tensor）](#71-原版tensor2tensor)
+    - [7.2 单纯transformer](#72-单纯transformer)
 
 <!-- /TOC -->
 
@@ -270,3 +273,13 @@ pip install tensor2tensor[tensorflow_gpu]
 # Installs with tensorflow (cpu) requirement
 pip install tensor2tensor[tensorflow]
 ```
+
+## 7. 代码解析
+
+### 7.1 原版（tensor2tensor）
+
+[https://github.com/tensorflow/tensor2tensor](https://github.com/tensorflow/tensor2tensor)
+
+### 7.2 单纯transformer
+
+[https://github.com/Kyubyong/transformer](https://github.com/Kyubyong/transformer)
