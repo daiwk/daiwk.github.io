@@ -283,3 +283,6 @@ pip install tensor2tensor[tensorflow]
 ### 7.2 单纯transformer
 
 [https://github.com/Kyubyong/transformer](https://github.com/Kyubyong/transformer)
+
+代码解析：
+[https://blog.csdn.net/mijiaoxiaosan/article/details/74909076](https://blog.csdn.net/mijiaoxiaosan/article/details/74909076)
