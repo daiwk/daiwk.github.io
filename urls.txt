@@ -123,4 +123,13 @@ https://daiwk.github.io/posts/ml-google-tutorial-tf-ml.html
 https://daiwk.github.io/posts/dl-dl-ai-notes.html
 https://daiwk.github.io/posts/dl-indrnn.html
 https://daiwk.github.io/posts/platform-tf-basics.html
+https://daiwk.github.io/posts/platform-baidurpc.html
+https://daiwk.github.io/posts/platform-grpc.html
+https://daiwk.github.io/posts/platform-k8s.html
+https://daiwk.github.io/posts/platform-memcached.html
+https://daiwk.github.io/posts/platform-microservices.html
+https://daiwk.github.io/posts/platform-nginx.html
+https://daiwk.github.io/posts/platform-storm.html
+https://daiwk.github.io/posts/platform-thrift.html
+https://daiwk.github.io/posts/platform-zookeeper.html
 https://daiwk.github.io/tags.html
