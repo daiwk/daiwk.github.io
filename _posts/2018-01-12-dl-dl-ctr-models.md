@@ -35,6 +35,28 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
 
 ## FM
 
+二阶多项式模型：
+
+
+`\[
+\phi(x) = w_0+\sum _{i}w_ix_i+\sum_{i}\sum_{j<i}w_{ij}x_ix_j
+\]`
+
+多项式模型的问题在于二阶项的参数过多，假设特征个数为n，那么二阶项的参数数目为n(n+1)/2，参数太多，而却只有少数模式在样本中能找到，因此模型无法学出对应的权重。
+
+FM模型：
+
+`\[
+\hat{y} = w_0+\sum _{i=1}^nw_ix_i+\sum_{i=1}^{n-1}\sum_{j=i+1}\left \langle \mathbf{v}_i,\mathbf{v_j}  \right \rangle x_ix_j
+\]`
+
+其中，
++ `\(w_0\in \mathbb{R}\)`
++ `\(\mathbf{w}\in \mathbb{R}^n\)`
++ `\(\mathbf{V}\in \mathbb{R}^{n\times k}\)`
++ `\(\hat{w_{ij}}=\mathbf{v_i}\mathbf{v_j}^T=\sum _{l=1}^kv_{il}v_{jl}\)`
+所以上式中的`\(\mathbf{v}_i\)`就表示`\(\mathbf{V}\)`这个矩阵的第i行（有k列），而`\(\left \langle \mathbf{v}_i,\mathbf{v_j}  \right \rangle\)`就表示第i行和和j行这两个向量的内积（得到一个数），而得到的正好就是权重矩阵的第i行第j列的元素`\(\hat{w}_{ij}\)`，而`\(\hat{w}\)`这个矩阵是`\((n-1)\times(n-1)\)`维的矩阵，刻画的是相邻两个x（`\(x_i\)`和`\(x_{i+1}\)`之前的系数）。因此，可以理解为，将这个`\((n-1)\times(n-1)\)`维的矩阵用一个`\(n\times k\)`维的低秩矩阵来表示。
+
 ## FFM
 
 ## FNN, SNN
