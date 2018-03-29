@@ -15,6 +15,10 @@ tags: [kubernetes, k8s ]
     - [前容器时代](#前容器时代)
     - [后容器时代](#后容器时代)
     - [k8s起源](#k8s起源)
+        - [borg](#borg)
+        - [omega](#omega)
+        - [mesos](#mesos)
+        - [nomad](#nomad)
     - [CNCF基金会](#cncf基金会)
     - [k8s现状](#k8s现状)
     - [例子](#例子)
@@ -43,6 +47,7 @@ tags: [kubernetes, k8s ]
 
 [https://github.com/kubernetes/kubernetes](https://github.com/kubernetes/kubernetes)
 
+百度前员工刘杰写的《分布式系统原理介绍》【[https://daiwk.github.io/assets/分布式系统原理介绍.pdf](https://daiwk.github.io/assets/分布式系统原理介绍.pdf)】。
 ## 背景
 
 ### 物理机时代
@@ -66,6 +71,22 @@ docker，基于LXC为基础构建的容器引擎，通过namespace和cgroup实�
 2004年google开始使用容器，06年cgroup
 内部集群资源管理平台borg和omega
 k8s起源于borg，参考了omega的经验和教训。borg和omega的创始人都加入k8s。
+
+[https://daiwk.github.io/assets/Borg_Omega_Kubernetes.pdf](https://daiwk.github.io/assets/Borg_Omega_Kubernetes.pdf)
+
+#### borg
+
+[https://daiwk.github.io/assets/Borg.pdf](https://daiwk.github.io/assets/Borg.pdf)
+
+#### omega
+
+[https://daiwk.github.io/assets/Omega.pdf](https://daiwk.github.io/assets/Omega.pdf)
+
+#### mesos
+
+#### nomad
+
+[https://daiwk.github.io/assets/Nomad.pdf](https://daiwk.github.io/assets/Nomad.pdf)
 
 ### CNCF基金会
 
