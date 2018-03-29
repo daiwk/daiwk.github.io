@@ -27,6 +27,22 @@ tags: [baidurpc, ]
     - [rpc::Server](#rpcserver)
         - [同端口多协议](#同端口多协议)
         - [特性](#特性)
+    - [内置服务](#内置服务)
+        - [/status](#status)
+        - [/connections](#connections)
+        - [/flags](#flags)
+        - [/vars](#vars)
+        - [/rpcz](#rpcz)
+        - [/pprof/profiler](#pprofprofiler)
+        - [/pprof/heap](#pprofheap)
+    - [baidurpc的性能](#baidurpc的性能)
+    - [其他语言实现](#其他语言实现)
+    - [bthread](#bthread)
+        - [eventloop](#eventloop)
+        - [eventloop+threadpool](#eventloopthreadpool)
+        - [bthread](#bthread-1)
+    - [bvar](#bvar)
+    - [base](#base)
 
 <!-- /TOC -->
 
@@ -147,7 +163,7 @@ xx.Init("10.1.1.1", "la", NULL);
 + 没有io线程和worker线程之分，首先，是没有io线程的，只有worker线程，其次，默认取cpu的核数，会在/flags里记录，可以通过内置的html页面去动态地修改
 + 同进程内所有Server/Channel默认共享工作线程。为了提高线程的利用率
 
-```SERVER_OWNS_SERVICE```指的是server析构的时候，一起把service给干掉；反之，```SERVER_NOT_OWNS_SERVICE```指的是service析构时，不把service干掉
+SERVER_OWNS_SERVICE指的是server析构的时候，一起把service给干掉；反之，SERVER_NOT_OWNS_SERVICE指的是service析构时，不把service干掉
 
 ```c++
 rpc::Server xx;
@@ -219,7 +235,6 @@ butex使bthread阻塞函数可同时被bthread和pthread调用，分别阻塞bth
 超快的scheduler
 + 更好的cache locality: 允许新线程在当前cpu core上执行
 + 减少全局竞争：取线程任务靠steal，而非pull
-
 
 #### eventloop
 
