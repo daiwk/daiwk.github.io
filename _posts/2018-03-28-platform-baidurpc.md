@@ -163,7 +163,7 @@ xx.Init("10.1.1.1", "la", NULL);
 + 没有io线程和worker线程之分，首先，是没有io线程的，只有worker线程，其次，默认取cpu的核数，会在/flags里记录，可以通过内置的html页面去动态地修改
 + 同进程内所有Server/Channel默认共享工作线程。为了提高线程的利用率
 
-SERVER_OWNS_SERVICE指的是server析构的时候，一起把service给干掉；反之，SERVER_NOT_OWNS_SERVICE指的是service析构时，不把service干掉
+其中，```SERVER_OWNS_SERVICE```指的是server析构的时候，一起把service给干掉；反之，```SERVER_DOESNT_OWN_SERVICE```指的是service析构时，不把service干掉
 
 ```c++
 rpc::Server xx;
