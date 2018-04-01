@@ -57,49 +57,49 @@ tags: [导引, navigation]
  
 ### 1.1.1 **树模型**
  
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 [https://daiwk.github.io/posts/links-useful-links.html#111-%E6%A0%91%E6%A8%A1%E5%9E%8B](https://daiwk.github.io/posts/links-useful-links.html#111-%E6%A0%91%E6%A8%A1%E5%9E%8B) 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
 
 ### 1.1.2 **基础算法**
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 [https://daiwk.github.io/posts/links-useful-links.html#112-%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95](https://daiwk.github.io/posts/links-useful-links.html#112-%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95)
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
 
 ### 1.1.3 **统计学习方法**
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 [https://daiwk.github.io/posts/links-useful-links.html#113-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95](https://daiwk.github.io/posts/links-useful-links.html#113-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95)
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
 
 ## 1.2 Deep Learning 
  
 ### 1.2.1 CNN
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 [https://daiwk.github.io/posts/links-useful-links.html#121-cnn](https://daiwk.github.io/posts/links-useful-links.html#121-cnn)
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 1.2.2 RNN
  
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 [https://daiwk.github.io/posts/links-useful-links.html#122-rnn](https://daiwk.github.io/posts/links-useful-links.html#122-rnn)
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 
 + 小合辑（从lstm到gru到双向多层到nmt到attention）:[https://daiwk.github.io/posts/nlp-nmt.html](https://daiwk.github.io/posts/nlp-nmt.html)
 + attention model集合：[https://daiwk.github.io/posts/dl-attention-models.html](https://daiwk.github.io/posts/dl-attention-models.html)
@@ -114,142 +114,142 @@ tags: [导引, navigation]
  
 ### 1.2.3 GAN
  
- 1. 【站外资源汇总】
+ A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 1.2.4 Reinforcement Learning
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 1.2.5 PNN(Progressive Neural Network)连续神经网络
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 1.2.6 图卷积网络
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 1.2.7 copynet
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 # **2. Useful Tools**
  
 ## 2.1 Datasets
  
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ## 2.2 pretrained models
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ## 2.3 Deep Learning Tools
  
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 2.3.1 mxnet
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 2.3.2 theano
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 2.3.3 torch
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 2.3.4 tensorflow
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 2.3.5 docker
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 2.4 docker-images
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 # **3. Useful Courses && Speeches**
  
 ## 3.1 Courses
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ## 3.2 Speeches
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ## 3.3 经典学习资源
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 # 4. **Applications**
@@ -258,61 +258,61 @@ tags: [导引, navigation]
 
 ### 4.1.1 分词
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 4.1.2 Text Abstraction
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ## 4.2 Image Processing
 
 ### 4.2.1 image2txt
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ## 4.3 Collections
 
 ### 4.3.1 csdn深度学习代码专栏
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 4.3.2 chiristopher olah的博客
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 4.3.3 激活函数系列
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
 ### 4.3.4 梯度下降算法系列
 
-1. 【站外资源汇总】
+A. 【站外资源汇总】
 
 
-2. 【站内资源汇总】
+B. 【站内资源汇总】
 暂无
  
