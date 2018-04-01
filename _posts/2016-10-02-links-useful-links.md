@@ -107,7 +107,7 @@ tags: [useful links,]
  
 ## 2.1 Datasets
  
-1. **Youtube-8m**：该数据集包含了 800 万个 YouTube 视频 URL（代表着 500,000 小时的视频）以及它们的视频层面的标签（video-level labels），这些标签来自一个多样化的包含 4800 个知识图谱实体（Knowledge Graph entity）的集合。相比于之前已有的视频数据集，这个数据集的规模和多样性都实现了显著的增长。比如说，我们所知的之前最大的视频数据集 Sports-1M 包含了大约 100 万段 YouTube 视频和 500 个体育领域的分类——YouTube-8M 在视频数量和分类数量上都差不多比它高一个数量级。论文：***《YouTube-8M: A Large-Scale Video Classification Benchmark》***
+1. **Youtube-8m**：该数据集包含了 800 万个 YouTube 视频 URL（代表着 500,000 小时的视频）以及它们的视频层面的标签（video-level labels），这些标签来自一个多样化的包含 4800 个知识图谱实体（Knowledge Graph entity）的集合。相比于之前已有的视频数据集，这个数据集的规模和多样性都实现了显著的增长。比如说，我们所知的之前最大的视频数据集 Sports-1M 包含了大约 100 万段 YouTube 视频和 500 个体育领域的分类——YouTube-8M 在视频数量和分类数量上都差不多比它高一个数量级。论文：**《YouTube-8M: A Large-Scale Video Classification Benchmark》**
 2. **Open Images(图片数据集，包含9百万标注图片)**:一个包含了900万图像URL的数据集，值得一提的是，这些图像全部都是标签数据，标签种类超过6000种。我们尽量让数据集变得实用：数据集中所使用的标签类型比拥有1000个分类的ImageNet数据集更加贴近实际生活。 [https://github.com/openimages/dataset](https://github.com/openimages/dataset)
 
 ## 2.2 pretrained models

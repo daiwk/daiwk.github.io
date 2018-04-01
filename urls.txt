@@ -127,10 +127,12 @@ https://daiwk.github.io/posts/cv-tips.html
 https://daiwk.github.io/posts/platform-baidurpc.html
 https://daiwk.github.io/posts/platform-grpc.html
 https://daiwk.github.io/posts/platform-k8s.html
+https://daiwk.github.io/posts/platform-linux-kernel.html
 https://daiwk.github.io/posts/platform-memcached.html
 https://daiwk.github.io/posts/platform-microservices.html
 https://daiwk.github.io/posts/platform-nginx.html
 https://daiwk.github.io/posts/platform-storm.html
 https://daiwk.github.io/posts/platform-thrift.html
 https://daiwk.github.io/posts/platform-zookeeper.html
+https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/tags.html
