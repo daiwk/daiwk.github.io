@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "platform"
-title: "zookeeper"
-tags: [zookeeper, ]
+title: "linux内核"
+tags: [linux内核, ]
 ---
 
 目录
@@ -12,4 +12,5 @@ tags: [zookeeper, ]
 
 <!-- /TOC -->
 
-[https://github.com/apache/zookeeper](https://github.com/apache/zookeeper)
+参考**《Linux内核设计与实现（原书第3版）》**
+
