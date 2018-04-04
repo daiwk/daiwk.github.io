@@ -134,5 +134,6 @@ https://daiwk.github.io/posts/platform-nginx.html
 https://daiwk.github.io/posts/platform-storm.html
 https://daiwk.github.io/posts/platform-thrift.html
 https://daiwk.github.io/posts/platform-zookeeper.html
+https://daiwk.github.io/posts/self-attention-models.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/tags.html
