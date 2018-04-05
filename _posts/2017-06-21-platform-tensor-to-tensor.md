@@ -20,7 +20,8 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
         - [4.2.3 position-wise feed-forward networks](#423-position-wise-feed-forward-networks)
         - [4.2.4 embeddings and softmax](#424-embeddings-and-softmax)
         - [4.2.5 positional encoding](#425-positional-encoding)
-        - [4.2.6 生成过程](#426-生成过程)
+        - [4.2.6 why self-attention](#426-why-self-attention)
+        - [4.2.7 生成过程](#427-生成过程)
     - [4.3 训练](#43-训练)
         - [4.3.1 训练数据和batching](#431-训练数据和batching)
         - [4.3.2 hardware & schedule](#432-hardware--schedule)
@@ -214,7 +215,18 @@ FFN(x)=ReLU(xW_1+b_1)W_2+b_2=max(0, xW_1+b_1)W_2+b_2
 
 pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\)`能被表示为`\(PE_{pos}\)`的线性函数 。
 
-#### 4.2.6 生成过程
+#### 4.2.6 why self-attention
+
+对比self-attention与CNN、RNN：
+
+对于同一个任务(正常的编码器/解码器中的一层)：将一个序列`\((x_1,...,x_n)\)`映射成另一个序列`\((z_1,...,z_n)\)`，其中，`\(x_i,z_i\in mathbb{R}^d\)`。从以下3个方面考虑：
+
++ 每一层的总的**计算复杂度**
++ 能被**并行化**的计算量（可以用**『所需要的最小的序列操作』**来衡量）
++ 网络中**长距离依赖**的路径长度
+
+
+#### 4.2.7 生成过程
 
 参考[从《Convolutional Sequence to Sequence Learning》到《Attention Is All You Need》](https://zhuanlan.zhihu.com/p/27464080)
 
