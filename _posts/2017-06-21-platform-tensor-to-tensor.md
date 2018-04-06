@@ -219,7 +219,7 @@ pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\
 
 对比self-attention与CNN、RNN：
 
-对于同一个任务(正常的编码器/解码器中的一层)：将一个序列`\((x_1,...,x_n)\)`映射成另一个序列`\((z_1,...,z_n)\)`，其中，`\(x_i,z_i\in mathbb{R}^d\)`。从以下3个方面考虑：
+对于同一个任务(正常的编码器/解码器中的一层)：将一个序列`\((x_1,...,x_n)\)`映射成另一个序列`\((z_1,...,z_n)\)`，其中，`\(x_i,z_i\in \mathbb{R}^d\)`。从以下3个方面考虑：
 
 1. 每一层的总的**计算复杂度**
 
@@ -253,7 +253,6 @@ pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\
 <td class="left">\(O(1)\)</td>
 </tr>
 
-<tbody>
 <tr>
 <td class="left">Recurrent</td>
 <td class="left">\(O(n\times d^2)\)</td>
@@ -261,19 +260,17 @@ pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\
 <td class="left">\(O(n)\)</td>
 </tr>
 
-<tbody>
 <tr>
 <td class="left">Convolutional</td>
 <td class="left">\(O(k\times n\times d^2)\)</td>
-<td class="left">\(O(1\)</td>
+<td class="left">\(O(1)\)</td>
 <td class="left">\(O(log_k(n))\)</td>
 </tr>
 
-<tbody>
 <tr>
 <td class="left">Self-Attention(restricted)</td>
 <td class="left">\(O(r\times n\times d)\)</td>
-<td class="left">\(O(1\)</td>
+<td class="left">\(O(1)\)</td>
 <td class="left">\(O(n/r)\)</td>
 </tr>
 
