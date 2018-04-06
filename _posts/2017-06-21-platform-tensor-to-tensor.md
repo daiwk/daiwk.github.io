@@ -248,14 +248,33 @@ pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\
 <tbody>
 <tr>
 <td class="left">Self-Attention</td>
-<td class="left">`\(O(n^2*d)\)`</td>
-<td class="left">主成分分析，为了让映射后的样本有最大的发散性，是一种无监督的降维方法。</td>
+<td class="left">\(O(n^2\times d)\)</td>
+<td class="left">\(O(1)\)</td>
+<td class="left">\(O(1)\)</td>
 </tr>
 
+<tbody>
 <tr>
-<td class="left">lda.LDA</td>
-<td class="left">  LDA</td>
-<td class="left">线性判别分析法，为了让映射后的样本有最好的分类性能，是一种有监督的降维方法。</td>
+<td class="left">Recurrent</td>
+<td class="left">\(O(n\times d^2)\)</td>
+<td class="left">\(O(n)\)</td>
+<td class="left">\(O(n)\)</td>
+</tr>
+
+<tbody>
+<tr>
+<td class="left">Convolutional</td>
+<td class="left">\(O(k\times n\times d^2)\)</td>
+<td class="left">\(O(1\)</td>
+<td class="left">\(O(log_k(n))\)</td>
+</tr>
+
+<tbody>
+<tr>
+<td class="left">Self-Attention(restricted)</td>
+<td class="left">\(O(r\times n\times d)\)</td>
+<td class="left">\(O(1\)</td>
+<td class="left">\(O(n/r)\)</td>
 </tr>
 
 </tbody>
