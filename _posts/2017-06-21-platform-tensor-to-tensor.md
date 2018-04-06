@@ -239,10 +239,23 @@ self-attention需要的序列操作是常数级别的，而recurrent需要`\(O(n
 
 单一的卷积层（kernel size为`\(k\)`，`\(k<n\)`）并没法连接所有输入和输出position的pair对，所以有两种方法可以解决：
 
-  + 就contiguous kernels而言，可以将`\(O(n/k)\)`的卷积层stack起来
+  + 就contiguous kernels而言，可以将`\(O(n/k)\)`的卷积层stack起来(没太懂。。。)
   + 就dilated convolutions(空洞卷积，参考[https://www.zhihu.com/question/54149221](https://www.zhihu.com/question/54149221)，原文是[Neural machine translation in linear time](https://arxiv.org/pdf/1610.10099.pdf)，参考[https://zhuanlan.zhihu.com/p/23795111](https://zhuanlan.zhihu.com/p/23795111))而言，增加网络中任意两个position的最长路径的长度到`\(O(log_k(n))\)`
 
-总的来说，
+总的来说，因为有`\(k\)`这个因素，convolutional比recurrent要更昂贵。Separable convolutions【[ Xception: Deep learning with depthwise separable convolutions](https://arxiv.org/pdf/1610.02357.pdf)，以及[https://blog.csdn.net/u014380165/article/details/75142710](https://blog.csdn.net/u014380165/article/details/75142710)】能将复杂度降低到`\(O(k\times n\times d+n\times d^2)\)`，但即使`\(k=n\)`，这样的网络结构的复杂度也相当于一个self-attention层加上一个point-wise feed-forward层。
+
++ self-attention还有一个好处，产出的模型更加可解释（interpretable）。
+
+不仅是不同head的attention学到的task不同，而且从下图的visualization来看，甚至可以理解为，有的head学习某种句法/语法关系，有的学习另一种句法/语法关系。。
+
+<html>
+<br/>
+
+<img src='../assets/transformer-attention-visualization.png' style='max-height: 400px'/>
+<br/>
+
+</html>
+
 
 如下表，`\(n\)`是序列长度，`\(d\)`是表示维度，`\(k\)`是cnn的kernel size，`\(r\)`是restricted self-attention的neighborhood size。
 
