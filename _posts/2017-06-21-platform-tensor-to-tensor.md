@@ -231,6 +231,7 @@ pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\
 
 影响对长距离依赖的学习能力的一个重要影响因素就是，**信号在网络中需要遍历的前向和后向的路径的长度**(the length of the paths forward and backward signals have to traverse in the network.)。输入和输出序列各position的任意组合间的路径越短，就越容易学习长距离依赖。因此，这里考虑**输入和输出的任意两个position间的最长路径长度**.
 
+如下表，`\(n\)`是序列长度，`\(d\)`是embedding的维度，`\(k\)`是cnn的kernel size，`\(r\)`是restricted self-attention的neighborhood size。
 
 <html>
 <center>
