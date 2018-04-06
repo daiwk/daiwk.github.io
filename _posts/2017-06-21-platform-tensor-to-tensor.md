@@ -221,10 +221,46 @@ pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\
 
 对于同一个任务(正常的编码器/解码器中的一层)：将一个序列`\((x_1,...,x_n)\)`映射成另一个序列`\((z_1,...,z_n)\)`，其中，`\(x_i,z_i\in mathbb{R}^d\)`。从以下3个方面考虑：
 
-+ 每一层的总的**计算复杂度**
-+ 能被**并行化**的计算量（可以用**『所需要的最小的序列操作』**来衡量）
-+ 网络中**长距离依赖**的路径长度
+1. 每一层的总的**计算复杂度**
 
+
+2. 能被**并行化**的计算量（可以用"**所需要的最小的序列操作**"来衡量）
+
+
+3. 网络中**长距离依赖**的路径长度
+
+影响对长距离依赖的学习能力的一个重要影响因素就是，**信号在网络中需要遍历的前向和后向的路径的长度**(the length of the paths forward and backward signals have to traverse in the network.)。输入和输出序列各position的任意组合间的路径越短，就越容易学习长距离依赖。因此，这里考虑**输入和输出的任意两个position间的最长路径长度**.
+
+
+<html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">Layer Type</th>
+<th scope="col" class="left">Complexity per Layer</th>
+<th scope="col" class="left">Sequential Operations</th>
+<th scope="col" class="left">Maximum Path Length</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">Self-Attention</td>
+<td class="left">`\(O(n^2*d)\)`</td>
+<td class="left">主成分分析，为了让映射后的样本有最大的发散性，是一种无监督的降维方法。</td>
+</tr>
+
+<tr>
+<td class="left">lda.LDA</td>
+<td class="left">  LDA</td>
+<td class="left">线性判别分析法，为了让映射后的样本有最好的分类性能，是一种有监督的降维方法。</td>
+</tr>
+
+</tbody>
+</table></center>
+</html>
 
 #### 4.2.7 生成过程
 
