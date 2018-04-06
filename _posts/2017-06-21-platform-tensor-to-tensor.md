@@ -242,6 +242,7 @@ self-attention需要的序列操作是常数级别的，而recurrent需要`\(O(n
   + 就contiguous kernels而言，可以将`\(O(n/k)\)`的卷积层stack起来
   + 就dilated convolutions(空洞卷积，参考[https://www.zhihu.com/question/54149221](https://www.zhihu.com/question/54149221)，原文是[Neural machine translation in linear time](https://arxiv.org/pdf/1610.10099.pdf)，参考[https://zhuanlan.zhihu.com/p/23795111](https://zhuanlan.zhihu.com/p/23795111))而言，增加网络中任意两个position的最长路径的长度到`\(O(log_k(n))\)`
 
+总的来说，
 
 如下表，`\(n\)`是序列长度，`\(d\)`是表示维度，`\(k\)`是cnn的kernel size，`\(r\)`是restricted self-attention的neighborhood size。
 
