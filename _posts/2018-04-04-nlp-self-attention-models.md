@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "dl"
+category: "nlp"
 title: "自然语言处理中的自注意力机制（Self-Attention Mechanism）"
 tags: [自注意力, self-attention,  ]
 ---
