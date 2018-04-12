@@ -2,7 +2,7 @@
 layout: post
 category: "nlp"
 title: "搜索相关性、知识图谱和DuerOS"
-tags: [im2txt]
+tags: [dueros]
 ---
 
 目录
