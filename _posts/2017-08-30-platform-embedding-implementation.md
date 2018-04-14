@@ -93,6 +93,9 @@ w_{13}+w_{23}
 
 ## tensorflow
 
+embedding_lookup和embedding_lookup_sparse: 
+[https://blog.csdn.net/huhu0769/article/details/71169346](https://blog.csdn.net/huhu0769/article/details/71169346)
+
 tensorflow的embedding操作：
 [https://memeda.github.io/%E6%8A%80%E6%9C%AF/2017/04/13/tfembedding.html](https://memeda.github.io/%E6%8A%80%E6%9C%AF/2017/04/13/tfembedding.html)
 
