@@ -74,7 +74,7 @@ git checkout test-dwk
 
 提交
 ```shell
-git push --set-upstream origin HEAD:refs/for/remotes/origin/test-dwk
+git push --set-upstream origin test-dwk
 ```
 + case2
 
