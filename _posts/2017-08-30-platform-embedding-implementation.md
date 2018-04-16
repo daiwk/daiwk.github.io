@@ -13,6 +13,11 @@ tags: [embedding,]
 - [keras](#keras)
 - [paddle](#paddle)
 - [tensorflow](#tensorflow)
+- [基于图的各种embedding](#基于图的各种embedding)
+    - [DeepWalk](#deepwalk)
+    - [LINE](#line)
+    - [node2vec](#node2vec)
+    - [SDNE](#sdne)
 - [应用](#应用)
     - [xx率预估](#xx率预估)
         - [模型结构](#模型结构)
@@ -101,6 +106,30 @@ tensorflow的embedding操作：
 
 如何使用预训练的embedding来初始化tf的embedding_lookup: 
 [https://stackoverflow.com/questions/35687678/using-a-pre-trained-word-embedding-word2vec-or-glove-in-tensorflow](https://stackoverflow.com/questions/35687678/using-a-pre-trained-word-embedding-word2vec-or-glove-in-tensorflow)
+
+
+## 基于图的各种embedding
+
+### DeepWalk
+
+### LINE
+
+### node2vec
+
+开源代码实现：
+
+[http://snap.stanford.edu/node2vec/](http://snap.stanford.edu/node2vec/)
+
+[node2vec: Scalable Feature Learning for Networks](http://arxiv.org/abs/1607.00653)
+
+[Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781)
+
+在计算广告、推荐领域中，围绕着node2vec有俩很有意思的应用：
+
++ Facebook：[http://geek.csdn.net/news/detail/200138](http://geek.csdn.net/news/detail/200138)
++ Tencent：[http://www.sohu.com/a/124091440_355140](http://www.sohu.com/a/124091440_355140)
+
+### SDNE
 
 
 ## 应用
