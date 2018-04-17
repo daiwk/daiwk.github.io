@@ -137,5 +137,6 @@ https://daiwk.github.io/posts/platform-zookeeper.html
 https://daiwk.github.io/posts/nlp-self-attention-models.html
 https://daiwk.github.io/posts/platform-tensorflow-code-analysis-overview.html
 https://daiwk.github.io/posts/dl-mtl.html
+https://daiwk.github.io/posts/dl-talk-to-book.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/tags.html
