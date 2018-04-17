@@ -24,6 +24,7 @@ pre-trained model:
 使用示例：
 [https://www.tensorflow.org/hub/modules/google/universal-sentence-encoder/1](https://www.tensorflow.org/hub/modules/google/universal-sentence-encoder/1)
 
+my notebook: [https://github.com/daiwk/workspace_tf/blob/master/talk_to_books/Semantic_Similarity_with_TF_Hub_Universal_Encoder.ipynb](https://github.com/daiwk/workspace_tf/blob/master/talk_to_books/Semantic_Similarity_with_TF_Hub_Universal_Encoder.ipynb)
 
 项目链接：[https://research.google.com/semanticexperiences/](https://research.google.com/semanticexperiences/)
 
