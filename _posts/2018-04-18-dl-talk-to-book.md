@@ -9,6 +9,11 @@ tags: [talk to book, Universal Sentence Encoder]
 
 <!-- TOC -->
 
+- [实验效果：](#实验效果)
+    - [准确率](#准确率)
+    - [性能](#性能)
+        - [计算复杂度](#计算复杂度)
+        - [内存占用](#内存占用)
 
 <!-- /TOC -->
 
@@ -32,3 +37,23 @@ my notebook: [https://github.com/daiwk/workspace_tf/blob/master/talk_to_books/Se
 
 + attention is all you need，解读可以参考[https://daiwk.github.io/posts/platform-tensor-to-tensor.html](https://daiwk.github.io/posts/platform-tensor-to-tensor.html)
 + DAN，即[Deep Unordered Composition Rivals Syntactic Methods for Text Classification](https://www.cs.umd.edu/~miyyer/pubs/2015_acl_dan.pdf)
+
+## 实验效果：
+
+### 准确率
+
+在transfer learning的任务SST上，USE_T（Universal Sentence Encoder + Transformer）只需要1k的训练数据（这个数据集总共有67.3k的训练数据），就能够达到其他很多模型使用全量训练数据得到的准确率。
+
+### 性能
+
+假设句子长度为n。
+
+#### 计算复杂度
+
++ Transformer: `\(O(n^2)\)`
++ DAN: `\(O(n)\)`
+
+#### 内存占用
+
++ Transformer: `\(O(n^2)\)`。但对于短句，因为Transformer只要存储unigram的embedding，所以占用的内存几乎是DAN的一半。
++ DAN: 与句子长度无关，由用来存储unigram和bigram的embedding的参数决定
