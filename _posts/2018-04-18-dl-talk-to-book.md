@@ -28,3 +28,7 @@ my notebook: [https://github.com/daiwk/workspace_tf/blob/master/talk_to_books/Se
 
 项目链接：[https://research.google.com/semanticexperiences/](https://research.google.com/semanticexperiences/)
 
+主要的两篇参考文献：
+
++ attention is all you need，解读可以参考[https://daiwk.github.io/posts/platform-tensor-to-tensor.html](https://daiwk.github.io/posts/platform-tensor-to-tensor.html)
++ DAN，即[Deep Unordered Composition Rivals Syntactic Methods for Text Classification](https://www.cs.umd.edu/~miyyer/pubs/2015_acl_dan.pdf)
