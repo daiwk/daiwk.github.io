@@ -21,6 +21,8 @@ tags: [word2vec, ngram, nnlm, cbow, c-skip-gram, 统计语言模型]
 
 参考paddlepaddle book: [https://github.com/PaddlePaddle/book/blob/develop/04.word2vec/README.cn.md](https://github.com/PaddlePaddle/book/blob/develop/04.word2vec/README.cn.md)
 
+参考fasttext及更多cbow/skip-gram：[https://daiwk.github.io/posts/nlp-word2vec.html](https://daiwk.github.io/posts/nlp-word2vec.html)
+
 Word2vec的原理主要涉及到**统计语言模型**（包括N-gram模型和神经网络语言模型(nnlm)），**continuous bag-of-words**模型以及**continuous skip-gram**模型。
 
 语言模型旨在为语句的联合概率函数`\(P(w_1,...,w_T)\)`建模。语言模型的目标是，希望模型对有意义的句子赋予大概率，对没意义的句子赋予小概率。 常用条件概率表示语言模型：

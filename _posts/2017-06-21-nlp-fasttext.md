@@ -25,6 +25,8 @@ tags: [fasttext, ]
 
 <!-- /TOC -->
 
+参考word2vec基本原理：[https://daiwk.github.io/posts/nlp-word2vec.html](https://daiwk.github.io/posts/nlp-word2vec.html)
+
 paper: 
 
 【提出fasttext的paper】[Bag of Tricks for Efficient Text Classification](https://arxiv.org/pdf/1607.01759v3.pdf)
@@ -133,7 +135,7 @@ CBOW模型的基本思路是：用上下文预测目标词汇。
 h=\frac{1}{C}W \sum ^C_{i=1}x_i 
 \]`
 
-然后计算输出层的每个节点：`\(u_j=v'_{w_j}^T \cdot h\)`。
+然后计算输出层的每个节点：`\(u_j=v'_{w_j}^T\cdot h\)`。
 
 其中的`\(v'_{w_j}\)`是矩阵W'的第j列**(W'是N行V列，即，第j个词对应的N维向量)**，`\(u_j\)`就是一个N维向量和N维向量的转置乘出来的一个值，
 
@@ -149,8 +151,7 @@ y_j=p(w_{y_j}|w_1,...,w_C)=\frac {exp(u_j)}{\sum ^V_{j'=1}exp(u_{j'})}
 
 <html>
 <br/>
-<img src='../assets/fasttext-back-prop.png
-'style='max-height: 200px'/><br/>
+<img src='../assets/fasttext-back-prop.png' style='max-height: 200px'/><br/>
 </html>
 
 更新W'：
