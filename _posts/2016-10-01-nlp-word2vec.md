@@ -14,11 +14,12 @@ tags: [word2vec, ngram, nnlm, cbow, c-skip-gram, 统计语言模型]
     - [神经网络语言模型（NNLM）](#神经网络语言模型nnlm)
 - [2. CBOW(Continuous Bag-of-Words)](#2-cbowcontinuous-bag-of-words)
 - [3. Continuous skip-gram](#3-continuous-skip-gram)
-    - [4. NCE](#4-nce)
-    - [x. tensorflow的简单实现](#x-tensorflow的简单实现)
-        - [xxx](#xxx)
-    - [y1. tensorflow的高级实现1](#y1-tensorflow的高级实现1)
-    - [y2. tensorflow的高级实现2](#y2-tensorflow的高级实现2)
+- [4. NCE](#4-nce)
+- [x. tensorflow的简单实现](#x-tensorflow的简单实现)
+    - [简介](#简介)
+    - [代码解读](#代码解读)
+- [y1. tensorflow的高级实现1](#y1-tensorflow的高级实现1)
+- [y2. tensorflow的高级实现2](#y2-tensorflow的高级实现2)
 
 <!-- /TOC -->
 
@@ -131,13 +132,15 @@ CBOW的好处是对上下文词语的分布在词向量上进行了平滑，去�
 
 而且，在tf中的实现```tensorflow/tensorflow/examples/tutorials/word2vec/word2vec_basic.py```，也是基于skip-gram+nce_loss的。
 
-## 4. NCE
+# 4. NCE
 
 参考[https://blog.csdn.net/itplus/article/details/37998797](https://blog.csdn.net/itplus/article/details/37998797)
 
-## x. tensorflow的简单实现
+# x. tensorflow的简单实现
 
 讲解：[https://www.tensorflow.org/tutorials/word2vec](https://www.tensorflow.org/tutorials/word2vec)
+
+## 简介
 
 使用maximum likelihood principle，最大化给定previous words `\(h\)`，下一个词`\(w_t\)`的概率（使用softmax定义）：
 
@@ -197,9 +200,15 @@ the quick brown fox jumped over the lazy dog
 (quick, the), (quick, brown), (brown, quick), (brown, fox), ...
 ```
 
+画图时，可以使用[t-SNE](https://lvdmaaten.github.io/tsne/)的降维方法，将高维向量映射到2维空间。
 
+<html>
+<br/>
+<img src='../assets/linear-relationships.png' style='max-width: 400px'/>
+<br/>
+</html>
 
-### xxx
+## 代码解读
 
 其中的生成一个batch的方法如下：
 
@@ -233,12 +242,12 @@ def generate_batch(batch_size, num_skips, skip_window):
   return batch, labels
 ```
 
-## y1. tensorflow的高级实现1
+# y1. tensorflow的高级实现1
 
 [https://github.com/tensorflow/models/blob/master/tutorials/embedding/word2vec.py](https://github.com/tensorflow/models/blob/master/tutorials/embedding/word2vec.py)
 
 
-## y2. tensorflow的高级实现2
+# y2. tensorflow的高级实现2
 
 [https://github.com/tensorflow/models/blob/master/tutorials/embedding/word2vec_optimized.py](https://github.com/tensorflow/models/blob/master/tutorials/embedding/word2vec_optimized.py)
 
