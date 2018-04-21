@@ -22,7 +22,7 @@ tags: [rl, reinforcement learning, 强化学习]
         - [回答1(by 俞扬)：](#回答1by-俞扬)
         - [回答2：](#回答2)
     - [Actor-Critic](#actor-critic)
-    - [xxx](#xxx)
+    - [PPO](#ppo)
 
 <!-- /TOC -->
 
@@ -222,4 +222,11 @@ Deep Deterministic Policy Gradient([Continuous control with deep reinforcement l
 
 视频解读：[https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/6-2-A-DDPG/](https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/6-2-A-DDPG/)
 
-### xxx
+### PPO
+
+参考[业界 \| OpenAI 提出强化学习近端策略优化，可替代策略梯度法](http://www.myzaker.com/article/597191731bc8e0a41b000004/)
+
+[Proximal Policy Optimization Algorithms](https://openai-public.s3-us-west-2.amazonaws.com/blog/2017-07/ppo/ppo-arxiv.pdf)
+
+
+
