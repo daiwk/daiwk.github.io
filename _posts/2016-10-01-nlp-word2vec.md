@@ -149,6 +149,56 @@ P(w_t | h) &= \text{softmax} (\text{score} (w_t, h)) \\
 \end{align}
 \]`
 
+需要最大化的对应的log-likelihood就是：
+
+`\[
+\begin{align}
+ J_\text{ML} &= \log P(w_t | h) \\
+  &= \text{score} (w_t, h) -
+     \log \left( \sum_\text{Word w' in Vocab} \exp \{ \text{score} (w', h) \} \right).
+\end{align}
+\]`
+
+如果直接硬算，对于每个时间步，都需要遍历词典大小的空间，显然效率是不行的。在word2vec中，将这样一个多分类问题，变成了一个区分目标词`\(w_t\)`和k个noise words`\(\tilde w\)`的二分类问题。下图是cbow的示例，skipgram正好是倒过来。
+
+<html>
+<br/>
+<img src='../assets/nce-nplm.png' style='max-width: 400px'/>
+<br/>
+</html>
+
+数学上，目标就是要最大化：
+
+`\[
+J_\text{NEG} = \log Q_\theta(D=1 |w_t, h) +
+  k \mathop{\mathbb{E}}_{\tilde w \sim P_\text{noise}}
+     \left[ \log Q_\theta(D = 0 |\tilde w, h) \right]
+\]`
+
+其中，`\(Q_\theta(D=1 | w, h)\)`是使用学到的embedding vector `\(\theta\)`，在给定上下文h，预测词w的概率。
+
+直观地理解，这个目标就是希望预测为`\(w_t\)`的概率尽可能大，同时预测为非`\(\tilde w\)`的概率尽可能大，也就是，**希望预测为真实词的概率尽量磊，预测为noise word的概率尽量小**。在极限情况下，这可以近似为softmax，但这计算量比softmax小很多。这就是所谓的[negative sampling](https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf)。tensorflow有一个很类似的损失函数[noise-contrastive estimation(NCE)](https://papers.nips.cc/paper/5165-learning-word-embeddings-efficiently-with-noise-contrastive-estimation.pdf)```tf.nn.nce_loss()```。
+
+针对句子
+
+```
+the quick brown fox jumped over the lazy dog
+```
+
+如果使用window_size=1，那么对于CBOW，就有：
+
+```
+([the, brown], quick), ([quick, fox], brown), ([brown, jumped], fox), ...
+```
+
+而对于skipgram，则有：
+
+```
+(quick, the), (quick, brown), (brown, quick), (brown, fox), ...
+```
+
+
+
 ### xxx
 
 其中的生成一个batch的方法如下：
