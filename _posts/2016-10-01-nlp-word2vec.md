@@ -14,6 +14,9 @@ tags: [word2vec, ngram, nnlm, cbow, c-skip-gram, 统计语言模型]
     - [神经网络语言模型（NNLM）](#神经网络语言模型nnlm)
 - [2. CBOW(Continuous Bag-of-Words)](#2-cbowcontinuous-bag-of-words)
 - [3. Continuous skip-gram](#3-continuous-skip-gram)
+    - [4. NCE](#4-nce)
+    - [x. tensorflow的实现](#x-tensorflow的实现)
+        - [xxx](#xxx)
 
 <!-- /TOC -->
 
@@ -21,7 +24,7 @@ tags: [word2vec, ngram, nnlm, cbow, c-skip-gram, 统计语言模型]
 
 参考paddlepaddle book: [https://github.com/PaddlePaddle/book/blob/develop/04.word2vec/README.cn.md](https://github.com/PaddlePaddle/book/blob/develop/04.word2vec/README.cn.md)
 
-参考fasttext及更多cbow/skip-gram：[https://daiwk.github.io/posts/nlp-word2vec.html](https://daiwk.github.io/posts/nlp-word2vec.html)
+参考fasttext及更多cbow/skip-gram：[https://daiwk.github.io/posts/nlp-fasttext.html](https://daiwk.github.io/posts/nlp-fasttext.html)
 
 Word2vec的原理主要涉及到**统计语言模型**（包括N-gram模型和神经网络语言模型(nnlm)），**continuous bag-of-words**模型以及**continuous skip-gram**模型。
 
@@ -89,7 +92,6 @@ J(\theta) = -\sum_{i=1}^N\sum_{c=1}^{|V|}y_k^{i}log(softmax(g_k^i))
 
 CBOW模型通过一个词的上下文（各N个词）预测当前词。当N=2时，模型如下图所示：
 
-
 <html>
 <br/>
 
@@ -106,9 +108,11 @@ context = \frac{x_{t-1} + x_{t-2} + x_{t+1} + x_{t+2}}{4}
 
 其中`\(x_t\)`为第t个词的词向量，分类分数（score）向量 `\(z=U*context\)`，最终的分类y采用softmax，损失函数采用多类分类交叉熵。
 
+CBOW经常结合hierarchical softmax一起实现，详见[https://daiwk.github.io/posts/nlp-fasttext.html#02-%E5%88%86%E5%B1%82softmax](https://daiwk.github.io/posts/nlp-fasttext.html#02-%E5%88%86%E5%B1%82softmax)
+
 # 3. Continuous skip-gram
 
-CBOW的好处是对上下文词语的分布在词向量上进行了平滑，去掉了噪声，因此在小数据集上很有效。而Skip-gram的方法中，用一个词预测其上下文，得到了当前词上下文的很多样本，因此可用于更大的数据集。
+CBOW的好处是对上下文词语的分布在词向量上进行了平滑，去掉了噪声，因此在小数据集上很有效。而Skip-gram的方法中，**用一个词预测其上下文，得到了当前词上下文的很多样本，因此可用于更大的数据集。**
 
 <html>
 <br/>
@@ -118,3 +122,51 @@ CBOW的好处是对上下文词语的分布在词向量上进行了平滑，去�
 </html>
 
 如上图所示，Skip-gram模型的具体做法是，将一个词的词向量映射到2n个词的词向量（2n表示当前输入词的前后各n个词），然后分别通过softmax得到这2n个词的分类损失值之和。
+
+参考[https://blog.csdn.net/u014595019/article/details/54093161](https://blog.csdn.net/u014595019/article/details/54093161)
+
+『我当时使用的是Hierarchical Softmax+CBOW的模型。给我的感觉是比较累，既要费力去写huffman树，还要自己写计算梯度的代码，完了按层softmax速度还慢。这次我决定用tensorflow来写，除了极大的精简了代码以外，可以使用gpu对运算进行加速。此外，这次使用了**负采样(negative sampling)+skip-gram**模型，从而**避免了使用Huffman树导致训练速度变慢**的情况，**适合大规模的文本**。』
+
+而且，在tf中的实现```tensorflow/tensorflow/examples/tutorials/word2vec/word2vec_basic.py```，也是基于skip-gram+nce_loss的。
+
+## 4. NCE
+
+参考[https://blog.csdn.net/itplus/article/details/37998797](https://blog.csdn.net/itplus/article/details/37998797)
+
+## x. tensorflow的实现
+
+讲解：[https://www.tensorflow.org/tutorials/word2vec](https://www.tensorflow.org/tutorials/word2vec)
+
+### xxx
+
+其中的生成一个batch的方法如下：
+
+```python
+def generate_batch(batch_size, num_skips, skip_window):
+  global data_index
+  assert batch_size % num_skips == 0
+  assert num_skips <= 2 * skip_window
+  batch = np.ndarray(shape=(batch_size), dtype=np.int32)
+  labels = np.ndarray(shape=(batch_size, 1), dtype=np.int32)
+  span = 2 * skip_window + 1  # [ skip_window target skip_window ]
+  buffer = collections.deque(maxlen=span)  # pylint: disable=redefined-builtin
+  if data_index + span > len(data):
+    data_index = 0
+  buffer.extend(data[data_index:data_index + span])
+  data_index += span
+  for i in range(batch_size // num_skips):
+    context_words = [w for w in range(span) if w != skip_window]
+    words_to_use = random.sample(context_words, num_skips)
+    for j, context_word in enumerate(words_to_use):
+      batch[i * num_skips + j] = buffer[skip_window]
+      labels[i * num_skips + j, 0] = buffer[context_word]
+    if data_index == len(data):
+      buffer.extend(data[0:span])
+      data_index = span
+    else:
+      buffer.append(data[data_index])
+      data_index += 1
+  # Backtrack a little bit to avoid skipping words in the end of a batch
+  data_index = (data_index + len(data) - span) % len(data)
+  return batch, labels
+```

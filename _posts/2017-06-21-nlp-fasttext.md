@@ -172,43 +172,7 @@ y_j=p(w_{y_j}|w_1,...,w_C)=\frac {exp(u_j)}{\sum ^V_{j'=1}exp(u_{j'})}
 
 ### 0.6 skip-gram
 
-参考[https://blog.csdn.net/u014595019/article/details/54093161](https://blog.csdn.net/u014595019/article/details/54093161)
-
-『我当时使用的是Hierarchical Softmax+CBOW的模型。给我的感觉是比较累，既要费力去写huffman树，还要自己写计算梯度的代码，完了按层softmax速度还慢。这次我决定用tensorflow来写，除了极大的精简了代码以外，可以使用gpu对运算进行加速。此外，这次使用了**负采样(negative sampling)+skip-gram**模型，从而**避免了使用Huffman树导致训练速度变慢**的情况，**适合大规模的文本**。』
-
-而且，在tf中的实现```tensorflow/tensorflow/examples/tutorials/word2vec/word2vec_basic.py```，也是基于skip-gram+nce_loss的。
-
-其中的生成一个batch的方法如下：
-
-```python
-def generate_batch(batch_size, num_skips, skip_window):
-  global data_index
-  assert batch_size % num_skips == 0
-  assert num_skips <= 2 * skip_window
-  batch = np.ndarray(shape=(batch_size), dtype=np.int32)
-  labels = np.ndarray(shape=(batch_size, 1), dtype=np.int32)
-  span = 2 * skip_window + 1  # [ skip_window target skip_window ]
-  buffer = collections.deque(maxlen=span)  # pylint: disable=redefined-builtin
-  if data_index + span > len(data):
-    data_index = 0
-  buffer.extend(data[data_index:data_index + span])
-  data_index += span
-  for i in range(batch_size // num_skips):
-    context_words = [w for w in range(span) if w != skip_window]
-    words_to_use = random.sample(context_words, num_skips)
-    for j, context_word in enumerate(words_to_use):
-      batch[i * num_skips + j] = buffer[skip_window]
-      labels[i * num_skips + j, 0] = buffer[context_word]
-    if data_index == len(data):
-      buffer.extend(data[0:span])
-      data_index = span
-    else:
-      buffer.append(data[data_index])
-      data_index += 1
-  # Backtrack a little bit to avoid skipping words in the end of a batch
-  data_index = (data_index + len(data) - span) % len(data)
-  return batch, labels
-```
+参考[技术干货 \| 漫谈Word2vec之skip-gram模型](https://mp.weixin.qq.com/s?__biz=MzA5NzY0MDg1NA==&mid=2706953858&idx=1&sn=cb83cb61330cdb77275e846bec6e7433&scene=21#wechat_redirect)
 
 ### 0.7 fasttext
 
