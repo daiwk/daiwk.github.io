@@ -19,6 +19,9 @@ tags: [rl, reinforcement learning, 强化学习]
 - [AlphaGo](#alphago)
 - [其他](#其他)
     - [q learning和policy gradient的区别](#q-learning和policy-gradient的区别)
+        - [回答1(by 俞扬)：](#回答1by-俞扬)
+        - [回答2：](#回答2)
+    - [Actor-Critic](#actor-critic)
     - [xxx](#xxx)
 
 <!-- /TOC -->
@@ -158,13 +161,65 @@ AlphaGo 也使用蒙特卡洛搜索树用于训练。该树包含在每次迭代
 
 参考[https://www.zhihu.com/question/49787932](https://www.zhihu.com/question/49787932)
 
-+ 回答1：
+问题：
 
-Q-learning 是一种基于值函数估计的强化学习方法，Policy Gradient是一种策略搜索强化学习方法。两者是求解强化学习问题的不同方法，如果熟悉监督学习，前者可类比Naive Bayes——通过估计后验概率来得到预测，后者可类比SVM——不估计后验概率而直接优化学习目标。回答问题：1. 这两种方法的本质上是否是一样的（解空间是否相等）？比如说如果可以收敛到最优解，那么对于同一个问题它们一定会收敛到一样的情况？两者是不同的求解方法，而解空间（策略空间）不是由求解方法确定的，而是由策略模型确定的。两者可以使用相同的模型，例如相同大小的神经网络，这时它们的解空间是一样的。Q-learning在离散状态空间中理论上可以收敛到最优策略，但收敛速度可能极慢。在使用函数逼近后（例如使用神经网络策略模型）则不一定。Policy Gradient由于使用梯度方法求解非凸目标，只能收敛到不动点，不能证明收敛到最优策略。2. 在Karpathy的blog中提到说更多的人更倾向于Policy Gradient，那么它们两种方法之间一些更细节的区别是什么呢？ 基于值函数的方法（Q-learning, SARSA等等经典强化学习研究的大部分算法）存在策略退化问题，即值函数估计已经很准确了，但通过值函数得到的策略仍然不是最优。这一现象类似于监督学习中通过后验概率来分类，后验概率估计的精度很高，但得到的分类仍然可能是错的，例如真实正类后验概率为 0.501，如果估计为0.9，虽然差别有0.3，如果估计为0.499，虽然差别只有0.002，但分类确是错的。尤其是当强化学习使用值函数近似时，策略退化现象非常常见。可见 Tutorial on Reinforcement Learning  slides中的例子。Policy Gradient不会出现策略退化现象，其目标表达更直接，求解方法更现代，还能够直接求解stochastic policy等等优点更加实用。（3. 有人愿意再对比一下action-critic就更好了(:Actor-Critic 就是在求解策略的同时用值函数进行辅助，用估计的值函数替代采样的reward，提高样本利用率。
+1. 这两种方法的本质上是否是一样的（解空间是否相等）？比如说如果可以收敛到最优解，那么对于同一个问题它们一定会收敛到一样的情况？
 
-+ 回答2：
+2. 在Karpathy的blog中提到说更多的人更倾向于Policy Gradient，那么它们两种方法之间一些更细节的区别是什么呢？ 
+3. 有人愿意再对比一下action-critic就更好了(:
 
-按我的理解，两者从本质上就是不一样的。和MDP里面的value iteration与policy iteration不同(MDP马尔可夫决策过程中的值迭代和策略迭代感觉并没有本质区别？ - nia nia 的回答)，Q Learning和Policy Gradient是在解决不同的问题，而不是同一问题的两种不同的数值方法。首先，在modeling上，Q Learning假设policy是deterministic的，而且它的求解空间是函数空间，一个 (state, action) -> R 的函数。其次，在一些很弱的假设下(一般都成立)，Q Learning算法本身定义的迭代算子是一个contraction operator，所以在 t -> infinity 保证收敛到全局最优解 (最优解不一定对应唯一的policy)。当然，和Machine Learning中要学习一个分布一样，实际操作中往往是parametrize Q函数，假设Q函数是由有限维参数决定，然后求解最优的函数。这个时候收敛性就不好说了，比如像DQN用神经网络来描述，用随机梯度下降来求解，当t -> infinity，replay buffer size -> infinity的情况下能保证收敛到最优的吗？我觉得答案是否定的。在modeling上，Policy Gradient假设policy是stochastic的，而且是服从一个parametrized的policy分布。得到这个最优的参数就得到了在这个分布假设下最优的Policy。求解算法就是通过梯度下降，每一步迭代的梯度也是stochastic的，没有全局收敛性的保障。如果learning rate逐渐下降能收敛到一个局部最优。Actor-critic可被视作Policy Gradient，唯一的区别是进一步通过Q function来降低Policy Gradient每一步stochastic梯度的variance。Q function也是用同样的sample，通过Q Learning来学习的，可以说是充分利用了agent每一步探索得到的宝贵信息吧。
+问题3的回答见下一节。。
+
+#### 回答1(by 俞扬)：
+
+Q-learning 是一种基于**值函数估计**的强化学习方法，Policy Gradient是一种**策略搜索**强化学习方法。两者是求解强化学习问题的不同方法，如果熟悉监督学习，前者可类比Naive Bayes——通过**估计后验概率来得到预测**，后者可类比SVM——**不估计后验概率而直接优化学习目标**。
+
+1. 这两种方法的本质上是否是一样的（解空间是否相等）？比如说如果可以收敛到最优解，那么对于同一个问题它们一定会收敛到一样的情况？
+
+两者是不同的求解方法，而**解空间（策略空间）不是由求解方法确定的，而是由策略模型确定的**。两者可以使用相同的模型，例如相同大小的神经网络，这时它们的解空间是一样的。
+
+Q-learning在离散状态空间中**理论上可以收敛到最优**策略，但**收敛速度可能极慢**。在使用**函数逼近后（例如使用神经网络策略模型）**则不一定。
+
+Policy Gradient由于**使用梯度方法**求解**非凸目标**，**只能收敛到不动点**，不能证明收敛到最优策略。
+
+2. 在Karpathy的blog中提到说更多的人更倾向于Policy Gradient，那么它们两种方法之间一些更细节的区别是什么呢？ 
+
+基于**值函数**的方法（Q-learning, SARSA等等经典强化学习研究的大部分算法）存在**策略退化**问题，即值函数估计已经很准确了，但通过值函数得到的策略仍然不是最优。这一现象类似于监督学习中通过后验概率来分类，**后验概率估计的精度很高，但得到的分类仍然可能是错的**，例如真实正类后验概率为0.501，如果估计为0.9，虽然差别有0.3，**如果估计为0.499，虽然差别只有0.002，但分类确是错的**。尤其是当强化学习使用值函数近似时，策略退化现象非常常见。可见**俞扬的[《Tutorial on Reinforcement Learning  slides》](http://lamda.nju.edu.cn/yuy/Default.aspx?Page=adl-rl&AspxAutoDetectCookieSupport=1)**中的例子。
+
+**Policy Gradient不会出现策略退化现象**，其**目标表达更直接**，**求解方法更现代**，还能够**直接求解stochastic policy**等等优点更加实用。
+
+#### 回答2：
+
+按我的理解，两者从本质上就是不一样的。和MDP里面的value iteration与policy iteration不同([MDP马尔可夫决策过程中的值迭代和策略迭代感觉并没有本质区别？ - nia nia 的回答](https://www.zhihu.com/question/41477987/answer/91389684))，Q Learning和Policy Gradient是在**解决不同的问题**，而不是同一问题的两种不同的数值方法。
+
++ Q learning:
+
+首先，在modeling上，Q Learning**假设policy是deterministic的**，而且它的**求解空间是函数空间**，一个 **(state, action) -> R 的函数**。
+
+其次，在一些很弱的假设下(一般都成立)，Q Learning算法本身定义的**迭代算子**是一个**contraction operator(压缩算子，什么鬼。。。)**，所以在 t -> infinity **保证收敛到全局最优**解 (**最优解不一定对应唯一的policy**)。
+
+当然，和Machine Learning中要学习一个分布一样，**实际操作中往往是parametrize Q函数**，假设Q函数是由有限维参数决定，然后求解最优的函数。这个时候收敛性就不好说了，比如**像DQN用神经网络来描述，用随机梯度下降来求解**，当t -> infinity，replay buffer size -> infinity的情况下能保证收敛到最优的吗？我觉得答案是否定的。
+
++ policy gradient: 
+
+在modeling上，Policy Gradient**假设policy是stochastic**的，而且是**服从一个parametrized的policy分布**。
+
+得到这个**最优的参数**就得到了**在这个分布假设下最优的Policy**。
+
+求解算法就是通过**梯度下降，每一步迭代的梯度也是stochastic的，没有全局收敛性的保障**。如果learning rate逐渐下降能收敛到一个局部最优。
+
+### Actor-Critic
+
+Actor-Critic(A3C，玩家-评委)就是在**求解策略**的同时**用值函数进行辅助**，用**估计的值函数**替代**采样的reward**，提高样本利用率。
+
+**Actor-critic可被视作Policy Gradient**，唯一的区别是进一步**通过Q function来降低Policy Gradient每一步stochastic梯度的variance**。**Q function**也是用同样的sample，**通过Q Learning来学习**的，可以说是充分利用了agent每一步探索得到的宝贵信息吧。
+
+可以参考[https://www.zhihu.com/question/56692640](https://www.zhihu.com/question/56692640)
+
+Deep Deterministic Policy Gradient([Continuous control with deep reinforcement learning](https://arxiv.org/pdf/1509.02971v2.pdf))是现有的actor-critic算法中比较好的，原始代码在[https://github.com/pemami4911/deep-rl](https://github.com/pemami4911/deep-rl)
+
+修改后的代码[https://github.com/wangshusen/deep-rl](https://github.com/wangshusen/deep-rl)以及对应的解读：
+
+视频解读：[https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/6-2-A-DDPG/](https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/6-2-A-DDPG/)
 
 ### xxx
-
