@@ -39,8 +39,23 @@ Krizhevsky在2014年的文章中，提出的两点观察结论为后来的研究
 
 ## 研究现状
 
-+ **参数修剪和共享**（parameter pruning and sharing
-+ **低秩因子分解**（low-rank factorization）
-+ **转移/紧凑卷积滤波器**（transferred/compact convolutional filters） 
-+ **知识蒸馏**（knowledge distillation） 
++ **参数修剪和共享**（parameter pruning and sharing)：针对**模型参数的冗余**性，试图去除冗余和不重要的项。
++ **低秩因子分解**（low-rank factorization）：使用**矩阵/张量分解**来**估计深度学习模型的信息参数**。
++ **转移/紧凑卷积滤波器**（transferred/compact convolutional filters）：设计了**特殊的结构卷积滤波器**来降低存储和计算复杂度。
++ **知识蒸馏**（knowledge distillation）：通过学习一个**蒸馏模型**，训练一个**更紧凑的神经网络**来重现一个更大的网络的输出。
 
+参数修剪和共享、低秩分解和知识蒸馏方法可以用于**全连接层**和**卷积层**的CNN，但另一方面，使用转移/紧凑型卷积核的方法**仅支持卷积层**(因为只是修改卷积filter)。
+
+低秩因子分解和基于转换/紧凑型卷积核的方法提供了一个**端到端**的流水线，可以很容易地在 CPU/GPU 环境中实现。
+
+参数修剪和共享使用不同的方法，如矢量量化，二进制编码和稀疏约束来执行任务，这导致常**需要几个步骤**才能达到目标。
+
+关于训练协议，基于参数修剪/共享、低秩分解的模型**可以从预训练模型**或者**从头开始**训练，因此灵活而有效。然而转移/紧凑的卷积核和知识蒸馏模型**只能支持从零开始**训练。
+
+<html>
+<br/>
+
+<img src='../assets/4ways-for-compression-dnn.webp' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
