@@ -1,7 +1,7 @@
 ---
 layout: post
 category: "dl"
-title: "tensorflow probability"
+title: "深度神经网络的模型压缩和加速方法"
 tags: [模型压缩, 加速]
 ---
 
