@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "dl"
+category: "rl"
 title: "rl代码集合"
 tags: [rl, ]
 ---
