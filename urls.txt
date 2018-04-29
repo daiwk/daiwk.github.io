@@ -144,5 +144,6 @@ https://daiwk.github.io/posts/cv-resnet-etc.html
 https://daiwk.github.io/posts/platform-pytorch-keras-gan.html
 https://daiwk.github.io/posts/rl-rl-codes.html
 https://daiwk.github.io/posts/cv-object-detection.html
+https://daiwk.github.io/posts/platform-tensorflow-optimizations.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/tags.html
