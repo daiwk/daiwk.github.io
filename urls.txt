@@ -96,7 +96,7 @@ https://daiwk.github.io/posts/rl-alphago-zero.html
 https://daiwk.github.io/posts/nlp-nmt.html
 https://daiwk.github.io/posts/rl-pg-gan.html
 https://daiwk.github.io/posts/ml-feature-engineering.html
-https://daiwk.github.io/posts/nlp-muse.html
+https://daiwk.github.io/posts/nlp-unsupervised-nmt.html
 https://daiwk.github.io/posts/dl-activation-functions.html
 https://daiwk.github.io/posts/dl-deep-cross-network.html
 https://daiwk.github.io/posts/knowledge-c++11.html
