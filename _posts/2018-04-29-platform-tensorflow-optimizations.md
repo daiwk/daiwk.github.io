@@ -173,33 +173,186 @@ TensorFlowRS通过对接PS-Plus，给出了一套完整的端到端的在线学�
 
 #### 非ID化特征支持
 
-在在线学习的场景下做特征实时ID化是比较复杂的，需要一个超高性能的全局的ID生成器，这给样本生成带来了很大的复杂度。TensorFlowRS利用PS-Plus直接实现了对非ID特征的支持，极大的简化了实时样本构建的复杂度。
+在在线学习的场景下做**特征实时ID化**是比较复杂的，需要一个**超高性能**的**全局**的ID生成器，这给样本生成带来了很大的复杂度。TensorFlowRS利用PS-Plus**直接实现**了对**非ID特征**的支持，极大的简化了**实时样本构建**的复杂度。
 
 #### 特征动态增删
 
-在在线训练的场景下，训练任务会以service的形式长期运行，在训练过程中，不断会有新特征加入到模型中，为了保证训练可以长期进行而不会因为新特征的不断加入导致OOM，PS-Plus在支持特征动态添加的同时，还提供了默认的特征删除策略，可以将低频或者低权重的特征删除掉，用户还可以通过UDF定制符合自身业务需求的删除策略
+在在线训练的场景下，**训练任务**会以**service**的形式**长期运行**，在训练过程中，不断会有新特征加入到模型中，为了保证训练可以长期进行而不会因为新特征的不断加入导致OOM，PS-Plus在**支持特征动态添加**的同时，还提供了**默认的特征删除策略**，可以将**低频或者低权重**的特征**删除**掉，用户还可以通过**UDF定制**符合自身业务需求的删除策略
 
 #### 模型增量实时导出
 
-在线学习模型更新的常见方式有全量和增量两种。在模型参数较多的情况下，全量更新的方式会对在线系统的带宽带来巨大的压力，而降低更新频率又会使模型的实效性降低。PS-Plus支持以任意频率将模型增量部分实时写出到消息队列，在大幅减少网络IO的同时实现了真正意义上的模型实时更新。
+在线学习模型更新的常见方式有全量和增量两种。在模型参数较多的情况下，全量更新的方式会对在线系统的带宽带来巨大的压力，而降低更新频率又会使模型的实效性降低。PS-Plus支持以**任意频率**将模型**增量部分实时写出到消息队列**，在**大幅减少网络IO**的同时实现了真正意义上的模型实时更新。
 
 #### AUC Decay
 
-在在线学习的场景下，我们希望在训练的过程中就可以尽快的发现模型本身的异常，而不是等模型更新到线上之后。因此我们需要有一些方法来评估模型在训练过程中的 AUC等指标。TF里默认的streaming auc的实现在历史数据累积了一定量的时候，无法及时反应当前模型的状态，反馈有很大的滞后性。因此我们引入了新的AUC计算机制：AUC Decay。AUC Decay本质上是一种特殊的Moving Average，通过基于时间的减益方式，弱化历史样本和模型在当前AUC计算中的比重，以达到更快反应模型变化的目的。
+在在线学习的场景下，我们希望在**训练的过程中**就可以尽快的**发现模型本身的异常**，而不是等模型更新到线上之后。因此我们需要有一些方法来评估模型在训练过程中的 AUC等指标。TF里**默认的streaming auc**的实现在**历史数据累积了一定量**的时候，**无法及时反应当前模型的状态**，反馈有很大的**滞后性**。因此我们引入了新的AUC计算机制：**AUC Decay**。AUC Decay本质上是一种**特殊的Moving Average**，通过**基于时间的减益方式**，**弱化历史样本和模型**在**当前AUC**计算中的**比重**，以达到更快反应模型变化的目的。
 
 ### 大规模训练场景下的收敛效果优化
 
 #### 问题阐述
 
+大数据模型引入了分布式并行训练，同步并行训练受长尾worker的制约，并发数容易受限。**异步并行**是快速训练的主流。异步并行训练打破了普通SGD训练的串行性，计算的梯度与更新的模型不是严格一致，引入了梯度delay的问题。
+
+在基于ParameterServer的训练框架里，系统分为两个角色：worker和ps。
+
++ **ps**的职责是模型的**切块存储**与**更新**；
++ **worker**的职责是**加载从ps端获得最新的模型**，读取数据进行**模型训练**，最后把学到**梯度发送给ps**，由ps更新模型。
+
+异步并发训练**打破**了普通SGD训练的**串行性**，引入了梯度delay的问题。
+
+<html>
+<br/>
+<img src='../assets/tensorflowRS-gradient-delay.webp' style='max-height: 300px'/>
+<br/>
+</html>
+
+如图，`\(worker_m\)`拿到了模型`\(w_t\)`，计算得到梯度`\(g_t\)`，但传给ps时，已经有r个worker向ps提交了梯度更新，所以，这个时候应用到的是模型`\(w_{t+r}\)`。虽然梯度更新的大方向可能偏差不大，但与模型`\(w_{t+r}\)`期望的梯度`\(g_{t+r}\)`相比，`\(g_t\)`是存在细微偏差的。
+
 #### 梯度补偿
+
+微软在ICML2017提出过**DC-ASGD optimizer**【[
+Asynchronous Stochastic Gradient Descent with Delay Compensation](https://arxiv.org/abs/1609.08326)】，使用**泰勒展开**来**近似梯度补偿**。我们测试在**50并发以内收益良好**。可是在**上百并发**训练里，**泰勒展开超过了近似收敛半径**，导致的误差增大，效果下降。
+
+各框架实现dc-asgd的issue：
+
++ tf: [https://github.com/tensorflow/tensorflow/issues/8744](https://github.com/tensorflow/tensorflow/issues/8744)，但后来被removed了【[https://github.com/tensorflow/tensorflow/pull/9551](https://github.com/tensorflow/tensorflow/pull/9551)】，因为```it was lacking an _apply_dense() implementation, there were typos that caused failures when used, etc.The commit is obviously in the history for somebody to re-use and fix, if they wanted, but they'd need to write more tests and probably refactor it to make it something that the team could accept to TensorFlow.```
++ mxnet: [https://github.com/apache/incubator-mxnet/pull/3614](https://github.com/apache/incubator-mxnet/pull/3614)，代码在```mxnet.optimizer.DCASGD```
+
+改进：引入`\(\Delta w\)`【maybe就是下面第一篇里讲到的隐式动量？，，再看看】与g的**相关因子**来衡量**梯度delay的严重程度**，从而用来boost**主流**的**sgd-based optimizer**。在每一维度上：
+
++ 如果大部分`\(\Delta w\)`与-g是**正相关**，说明大部分worker都在**往同方向更新**，模型w**在这个方向上已经走的挺远了**，继续前进需要**谨慎**。这个时候，**保持g的方向不变，但减少g的绝对值。**
++ 如果大部分`\(\Delta w\)`与-g是**负相关**，说明大部分worker都在往反方向更新，此时**g是一个比较强烈的转折信号**，揭示了模型w的更新方向要发生变化，我们需要重视这个信号，所以我们**保持g的方向不变，但增大了g的绝对值**。
+
+引入相关因子是基于以下原因：
+
++ 异步训练时，存在**隐式**的**梯度动量加速**情况。参见[Asynchrony begets(产生) Momentum, with an Application to Deep Learning](https://arxiv.org/abs/1605.09774)，**并发越大**，**隐式动量越大**，造成**梯度往一个方向过度前进**的情况。此文的abstract里说：```For convolutional neural networks, we experimentally validate that the degree of asynchrony directly correlates with the momentum, confirming our main result. An important implication is that tuning the momentum parameter is important when considering different levels of asynchrony.```
++ 如果**不是很老的w**，**相关因子**是**转折信号**，暗示模型在**多个worker的动量累积推动**下**前进的有些过度**了。
++ 存在着tradeoff，**太老的w**，**信号准确率会下降**，这时要**控制(调小)**系数**lambda**。
+
+所以`\(\Delta w\)`与g的相关性具备普适性，可以和主流的sgd-based optimizer结合，适应不同场景的不同优化器并发训练需求。
 
 #### 实验结果
 
+用相关性因子boost了SGD、Momentum、AdaGrad三种算法，
+
++ WDE模型
+
+<html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">并行度</th>
+<th scope="col" class="left">Boosted-sgd auc</th>
+<th scope="col" class="left">Boosted-moment auc</th>
+<th scope="col" class="left">Boosted-adagrad auc</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">100</td>
+<td class="left">+0.012%</td>
+<td class="left">+0.01%</td>
+<td class="left">+0.012%</td>
+</tr>
+
+<tr>
+<td class="left">200</td>
+<td class="left">+0.028%</td>
+<td class="left">+0.045%</td>
+<td class="left">+0.051%</td>
+</tr>
+
+<tr>
+<td class="left">400</td>
+<td class="left">+0.043%</td>
+<td class="left">+0.064%</td>
+<td class="left">+0.058%</td>
+</tr>
+
+</tbody>
+</table></center>
+</html>
+
++ Cifar10 Alexnet模型
+
+<html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">并行度</th>
+<th scope="col" class="left">Boosted-sgd accuracy</th>
+<th scope="col" class="left">Boosted-moment accuracy</th>
+<th scope="col" class="left">Boosted-adagrad accuracy</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">30</td>
+<td class="left">+0.43%</td>
+<td class="left">+0.2%</td>
+<td class="left">+0.25%</td>
+</tr>
+
+<tr>
+<td class="left">60</td>
+<td class="left">+0.56%</td>
+<td class="left">+0.25%</td>
+<td class="left">+0.46%</td>
+</tr>
+
+</tbody>
+</table></center>
+</html>
+
 ### 高级训练模式
+
+TFRS中集成了多种高阶训练模式，例如Graph Embedding，Memory Network，Cross Media Training等。
 
 #### Graph Embedding
 
+Graph Embedding，图是一种表征能力极强的数据结构，但是**无法直接作为神经网络的输入**。TFRS**支持样本以图的形式进行输入**，并支持**多种随机游走算法动态生成正负样本**。目前Graph Embedding已经应用在了淘宝搜索直通车的向量化召回等多个项目里，通过**在User-Query-Item**三种节点的**异构有向图**中随机游走，**生成**深度神经网络能够处理的**稀疏特征**。最终学习出User，Query和Item三者的**高维向量化的表示**，用于线上广告的向量化召回。
+
+值得一提的是，除了Graph Embedding，我们同样**支持对图的结构进行学习**，例如在**训练过程**中**反馈调整图中的边的权重**等。
+
+<html>
+<br/>
+<img src='../assets/tensorflowRS-graph-embedding.webp' style='max-height: 300px'/>
+<br/>
+</html>
+
 #### Memory Network
+
+Memory Network记忆网络最早由Facebook在2015年提出，用于QA系统中。在本模型出现之前，机器学习的模型都缺乏可以读取和写入外部知识的组件。对很多任务来说，这是一个很强的限制。比如，给定一系列事实或故事，然后要求回答关于该主题的问题，虽然原则上这可以用**RNN等模型**进行处理，然而**它们的记忆（隐藏状态和权重编码）通常太小**，并且**不能精确地记住过去的事实**。在阿里妈妈搜索广告场景下，我们使用记忆网络对用户行为进行建模。
+
+相比一般的在样本组织阶段进行记忆体生成的方式，TFRS通过在**训练过程中**引入**动态记忆存储模块**，**支持长短期记忆**，大幅提高了序列化类行为数据的训练效率。
+
+注：区分neural turing machine与memory networks：[https://blog.csdn.net/u012436149/article/details/52959593](https://blog.csdn.net/seahailang/article/details/78146350)
+
++ NTM与MN同样都使用了一个**外部记忆单元**。在NTM中，其最精彩的部分是**基于内容和地址**的**soft addressing**，soft addressing**选择性**的**读取和写入**记忆单元的**某些位置**，同时soft addressing 的引入也使得**原来不可微分的寻址过程**变成了**可微分的过程**，使得整个模型可以使用基于梯度的方法来进行训练 
++ MN相对来说实现比较简单，它比较**类似于attention model**。**读和写**的过程都比较**直接**。
+
+ntm以及对应的tf源码解析：[https://blog.csdn.net/u012436149/article/details/52959593](https://blog.csdn.net/u012436149/article/details/52959593)
+
+mn以及对应的代码：[https://blog.csdn.net/u011274209/article/details/53384232](https://blog.csdn.net/u011274209/article/details/53384232)
+
+facebook的官方memNN的代码(有lua的torch7，也有tf的实现)：[https://github.com/facebook/MemNN](https://github.com/facebook/MemNN)
 
 ### 可视化模型分析系统DeepInsight
 
+DeepInsight是一个深度学习可视化质量评估系统，支持**训练阶段**模型**内部数据**的**全面透出**与**可视化分析**，用以解决模型评估、分析、调试等一系列问题，提高深度模型的可解释性。
+
+下面我们通过一个**过拟合**的例子来说明DeepInsight在模型质量分析和问题定位方面发挥的作用：
+
+<html>
+<br/>
+<img src='../assets/tensorflowRS-deepinsight.webp' style='max-height: 300px'/>
+<br/>
+</html>
+
+上图是通过DeepInsight生成的特征权重分布,从图中我们可以看到**右侧过拟合**模型的**边权重大小分布很不均匀**，出现了**大量权重极大的边**，且**集中**在一条**带状区域**内，其为**某一组特征**输入所**连接的所有边**，这表明模型**过度拟合**了**该组特征**的信息。在使用正则项和dropout之后，过拟合的问题仍然没解决，因此我们最终**定位到问题出现在该组特征的输入**上。
