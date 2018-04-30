@@ -95,6 +95,7 @@ https://daiwk.github.io/posts/platform-horovod.html
 https://daiwk.github.io/posts/rl-alphago-zero.html
 https://daiwk.github.io/posts/nlp-nmt.html
 https://daiwk.github.io/posts/rl-pg-gan.html
+https://daiwk.github.io/posts/dl-pointer-network-copynet.html
 https://daiwk.github.io/posts/ml-feature-engineering.html
 https://daiwk.github.io/posts/nlp-new-nmt.html
 https://daiwk.github.io/posts/dl-activation-functions.html
@@ -146,6 +147,5 @@ https://daiwk.github.io/posts/platform-pytorch-keras-gan.html
 https://daiwk.github.io/posts/rl-rl-codes.html
 https://daiwk.github.io/posts/cv-object-detection.html
 https://daiwk.github.io/posts/platform-tensorflow-optimizations.html
-https://daiwk.github.io/posts/dl-pointer-network-copynet.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/tags.html
