@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "platform"
-title: "baidurpc"
-tags: [baidurpc, ]
+title: "seastar"
+tags: [seastar, ]
 ---
 
 目录
