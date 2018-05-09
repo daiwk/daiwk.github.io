@@ -50,6 +50,9 @@ attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt {d_k}})V
 + 机器翻译里的归一化后的目标语言和源语言的匹配程度`\(a_{ij}\)`就是`\(softmax(\frac{QK^T}{\sqrt {d_k}})\)`
 + 机器翻译里的`\(c_i\)`就是最终的`\(attention(Q,K,V)\)`
 
+**所以说，机器翻译的attention，本质就是想看源语言的encoder输出的每一个元素`\(h_j\)`搞一个权重，然后加权求和。而这个权重是通`\(h_j\)`自己与目标语言的隐层状态`\(z_i\)`进行变换得到的。所以k=v=源语言的encoder输出，q=目标语言的隐层状态。**
+
+
 ## multi-head attention
 
 + Query，Key，Value最开始都是`\(d_{model}\)`维，各自通过h个线性变换拆成h部分，每一部分的大小是`\(d_k\)`，`\(d_k\)`和`\(d_v\)`（`\(d_k=d_v=d_{model}/h\)`）。
