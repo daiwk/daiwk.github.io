@@ -38,7 +38,7 @@ tags: [激活函数, activation function ]
 
 <!-- /TOC -->
 
-参考[26种神经网络激活函数可视化](https://www.jiqizhixin.com/articles/2017-10-10-3)，原文[Visualising Activation Functions in Neural Networks](https://dashee87.github.io/data%20science/deep%20learning/visualising-activation-functions-in-neural-networks/)【可以在里面选择不同的激活函数，看图】
+参考[26种神经网络激活函数可视化](https://www.jiqizhixin.com/articles/2017-10-10-3)，原文[Visualising Activation Functions in Neural Networks](https://dashee87.github.io/data%20science/deep%20learning/visualising-activation-functions-in-neural-networks/)【可以在里面选择不同的激活函数，看图】
 
 ## 1. Step
 
@@ -240,8 +240,11 @@ struct EluGrad {
 ## 10. SELU
 
 参考
+
 [引爆机器学习圈：「自归一化神经网络」提出新型激活函数SELU](https://zhuanlan.zhihu.com/p/27362891)
+
 [加速网络收敛——BN、LN、WN与selu](http://skyhigh233.com/blog/2017/07/21/norm/)
+
 [如何评价 Self-Normalizing Neural Networks 这篇论文?](https://www.zhihu.com/question/60910412)
 
 paper: [Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
