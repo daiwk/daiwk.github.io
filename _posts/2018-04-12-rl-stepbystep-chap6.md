@@ -57,7 +57,7 @@ DeepMind发表在Nature上的文章[Human-level control through deep reinforceme
 >给定起始状态`\(s\)`，并根据`\(\epsilon\)`-greedy策略在状态`\(s\)`选择动作`\(a\)`
 >1.     Repeat
 >         1. 根据`\(\epsilon \)`-greedy策略选择动作`\(a_t\)`，得到回报`\(r_t\)`和下一个状态`\(s_{t+1}\)`
->         1. 使用时间差分方法更新行为值函数`\(Q(s_t,a_t)\leftarrow Q(s_t,a_t)+\alpha [r_t+\gamma max_a(Q(s_{t+1},a))-Q(s_t,a_t)])`
+>         1. 使用时间差分方法更新行为值函数`\(Q(s_t,a_t)\leftarrow Q(s_t,a_t)+\alpha [r_t+\gamma max_a(Q(s_{t+1},a))-Q(s_t,a_t)]\)`
 >         1. `\(s=s'\)`, `\(a=a'\)`
 >1.     Until s是最终状态
 >1. Until 所有的`\(Q(s,a)\)`收敛
