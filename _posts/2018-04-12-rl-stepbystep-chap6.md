@@ -108,7 +108,7 @@ Q(s_t,a_t)\leftarrow Q(s_t,a_t)+\alpha [r_t+\gamma max_a(Q(s_{t+1},a))-Q(s_t,a_t
 
 在DQN之前，计算TD目标的动作值函数所用的网络参数`\(\theta\)`与梯度计算中要逼近的动作值函数所用的网络参数相同，这样就容易导致数据间存在关联性，从而使训练不稳定。
 
-所以DQN的做法就是将TD目标的网络表示为`\(\theta ^{-}\)`，用于动作值函数逼近的网络`\(\theta\)`每一步都更新，而用于计算TD目标的网络则是每固定的步数才更新一次：
+所以DQN的做法就是将TD目标的网络表示为`\(\theta ^{-}\)`，用于动作值函数逼近的网络`\(\theta\)`每一步都更新，而用于计算TD目标的网络`\(\theta ^{-}\)`则是每固定的步数才更新一次：
 
 `\[
 \theta_{t+1}=\theta _t+\alpha [r+\gamma max_{a'}(Q(s',a';\theta ^{-}))-Q(s,a;\theta)]\nabla Q(s,a;\theta)
