@@ -67,6 +67,19 @@ Qlearning的算法流程如下：
 >1. Until 所有的`\(Q(s,a)\)`收敛
 >1. 输出最终策略：`\(\pi (s)=argmax_aQ(s,a)\)`
 
+```flow
+st=>start: Start:>https://www.zybuluo.com
+io=>inputoutput: verification
+op=>operation: Your Operation
+cond=>condition: Yes or No?
+sub=>subroutine: Your Subroutine
+e=>end
+
+st->io->op->cond
+cond(yes)->e
+cond(no)->sub->io
+```
+
 
 ### 2.2 Double DQN
 
