@@ -63,6 +63,10 @@ DeepMind发表在Nature上的文章[Human-level control through deep reinforceme
 >Until 所有的`\(Q(s,a)\)`收敛
 >输出最终策略：`\(\pi (s)=argmax_aQ(s,a)\)`
 
+```
+`\(a=3\)`
+```
+
 ### 2.2 Double DQN
 
 ### 2.3 优先回放(Prioritized Replay)
