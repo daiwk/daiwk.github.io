@@ -45,8 +45,8 @@ DeepMind发表在Nature上的文章[Human-level control through deep reinforceme
 + 经验回放
 + 设立单独的目标网络
 
->aaaa `\(a=3\)`
-> 
+>+ aaaa `\(a=3\)`
+>+ bbb
 
 ### 2.2 Double DQN
 
