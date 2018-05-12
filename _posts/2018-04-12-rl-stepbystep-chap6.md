@@ -49,15 +49,19 @@ DeepMind发表在Nature上的文章[Human-level control through deep reinforceme
 
 + 异策略：**行动策略**与 **要评估的策略**不是同一个策略。
     + 行动策略（用来选择行动`\(a\)`的策略）是`\(\epsilon -greedy\)`策略
-    + 要评估和改进的策略是贪婪策略（即`\(max_aQ(s_{t+1},a)\)`，当前状态`\(s_{t+1}\)`下，使`\(Q(s_{t+1},a)\)`达到最大的行动`\(a\)`）
+    + 要评估和改进的策略是贪婪策略（即`\(max_aQ(s_{t+1},a)\)`，当前状态`\(s_{t+1}\)`下，使用各种a使`\(Q(s_{t+1},a)\)`达到的最大值）
 + 时间差分（Time Differential, TD）：使用时间差分目标（即，`\(r_t+\gamma max_aQ(s_{t+1},a)\)`）来更新当前的行为值函数
 
 >1. 初始化`\(Q(s,a),\forall s\in S,a\in A(s)\)`，给定参数`\(\alpha, \gamma\)`
 >1. Repeat
 >给定起始状态`\(s\)`，并根据`\(\epsilon\)`-greedy策略在状态`\(s\)`选择动作`\(a\)`
->    1. Repeat
+>1.     Repeat
 >         1. 根据`\(\epsilon \)`-greedy策略选择动作`\(a_t\)`，得到回报`\(r_t\)`和下一个状态`\(s_{t+1}\)`
 >         1. 使用时间差分方法更新行为值函数`\(Q(s_t,a_t)\leftarrow Q(s_t,a_t)+\alpha [r_t+\gamma max_a(Q(s_{t+1},a))-Q(s_t,a_t)])`
+>         1. `\(s=s'\)`, `\(a=a'\)`
+>1.     Until s是最终状态
+>1. Until 所有的`\(Q(s,a)\)`收敛
+>1. 输出最终策略：`\(\pi (s)=argmax_aQ(s,a)\)`
 
 ### 2.2 Double DQN
 
