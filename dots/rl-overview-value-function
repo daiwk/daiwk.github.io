@@ -1,0 +1,30 @@
+// rl-overview-value-function
+digraph {
+	xgjc [label="序贯决策问题" shape=box style=rounded]
+	mdp [label="马尔科夫决策过程MDP(s,A,P,R,gamma)" shape=box style=rounded]
+	xgjc -> mdp
+	model_dp [label="基于模型的动态规划方法" shape=box style=rounded]
+	no_model_dp [label="无模型的强化学习方法" shape=box style=rounded]
+	mdp -> model_dp [label="(S,A,P,R,gamma)"]
+	mdp -> no_model_dp [label="(S,A,P?,R?,gamma?)"]
+	policy_iter_model_dp [label="策略迭代" shape=box style=rounded]
+	value_iter_model_dp [label="值迭代" shape=box style=rounded]
+	policy_search_model_dp [label="策略搜索" shape=box style=rounded]
+	monte_carlo_no_model_dp [label="蒙特卡洛方法" shape=box style=rounded]
+	temporal_difference_no_model_dp [label="时间差分方法（TD）" shape=box style=rounded]
+	model_dp -> policy_iter_model_dp
+	model_dp -> value_iter_model_dp
+	model_dp -> policy_search_model_dp
+	no_model_dp -> monte_carlo_no_model_dp
+	no_model_dp -> temporal_difference_no_model_dp
+	monte_carlo_on_policy [label="on-policy" shape=box style=rounded]
+	temporal_difference_on_policy [label="on-policy" shape=box style=rounded]
+	monte_carlo_off_policy [label="off-policy" shape=box style=rounded]
+	temporal_difference_off_policy [label="off-policy" shape=box style=rounded]
+	monte_carlo_no_model_dp -> monte_carlo_on_policy [label="行动策略=评估策略"]
+	monte_carlo_no_model_dp -> monte_carlo_off_policy [label="行动策略!=评估策略"]
+	temporal_difference_no_model_dp -> temporal_difference_on_policy [label="行动策略=评估策略"]
+	temporal_difference_no_model_dp -> temporal_difference_off_policy [label="行动策略!=评估策略"]
+	dqn [label=DQN fillcolor=yellow fontcolor=red shape=box style="rounded,filled"]
+	dqn -> temporal_difference_off_policy [style=dashed]
+}

@@ -1,0 +1,26 @@
+// rl-overview-policy-search
+digraph {
+	policy_search [label="策略搜索方法" shape=box style=rounded]
+	has_model [label="基于模型的策略搜索方法" shape=box style=rounded]
+	no_model [label="无模型的策略搜索方法" shape=box style=rounded]
+	stochastic [label="随机策略" shape=box style=rounded]
+	policy_gradient [label="策略梯度方法" shape=box style=rounded]
+	statistic_learn [label="统计学习方法" shape=box style=rounded]
+	path_calcius [label="路径积分" shape=box style=rounded]
+	deterministic [label="确定性策略" shape=box style=rounded]
+	gps [label="引导策略搜索GPS" shape=box style=rounded]
+	ddpg [label=DDPG shape=box style=rounded]
+	trpo [label=TRPO shape=box style=rounded]
+	policy_search -> has_model
+	policy_search -> no_model
+	no_model -> stochastic
+	no_model -> deterministic
+	stochastic -> policy_gradient
+	policy_gradient -> trpo [label="单调步长，
+方差约简"]
+	stochastic -> statistic_learn
+	stochastic -> path_calcius
+	has_model -> gps
+	no_model -> gps
+	deterministic -> ddpg
+}
