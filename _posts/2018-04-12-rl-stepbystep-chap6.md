@@ -53,7 +53,7 @@ DeepMind发表在Nature上的文章[Human-level control through deep reinforceme
 + 异策略：**行动策略**与 **要评估的策略**不是同一个策略。
     + 行动策略（用来选择行动`\(a\)`的策略）是**`\(\epsilon -greedy\)`策略**
     + 要评估和改进的策略是**贪婪策略**（即`\(max_aQ(s_{t+1},a)\)`，当前状态`\(s_{t+1}\)`下，使用各种a使`\(Q(s_{t+1},a)\)`达到的**最大值**），即，是最大的`\(Q\)`，与行动策略里随机选一个`\(a\)`得到的`\(Q\)`不同
-+ 时间差分（Time Differential, TD）：使用时间差分目标（即，`\(r_t+\gamma max_aQ(s_{t+1},a)\)`）来更新当前的行为值函数
++ 时间差分（temporal difference, TD）：使用时间差分目标（即，`\(r_t+\gamma max_aQ(s_{t+1},a)\)`）来更新当前的行为值函数
 
 注意，时间差分方法其实包括了异策略和同策略两种，异策略如Qlearning，而**同策略**如Sarsa强化学习算法 **（行为策略和目标策略都是`\(\epsilon \) -greedy`策略）**(书p77-79)
 
@@ -125,7 +125,11 @@ DQN的训练算法如下：
 >        1. 根据概率`\(\epsilon\)`随机选择一个动作`\(a_t\)`
 >        1. 如果小概率事件没有发生，就用贪婪策略选择当前行为值函数最大的那个动作：`\(a_t=argmax_a(Q(\phi(s_t),a;\theta))\)`【上面那行和这行就是所谓的行动策略，`\(\epsilon -greedy\)`策略】
 >        1. 在模拟器中执行动作`\(a_t\)`，得到回报`\(r_t\)`以及图片`\(x_{t+1}\)`
-> TODO
+>        1. 令`\(s_{t+1}=s_t,a_t,x_{t+1}\)`，然后预处理`\(\phi _{t+1}=\phi(s_{t+1})\)` 
+>        1. 将transition `\((\phi_t,a_t,r_t,\phi _{t+1})\)`存入`\(D\)`。
+>        1. 从`\(D\)`中随机sample出一个minibatch的transitions，`\((\phi _j,a_j,r_j,\phi _{j+1})\)`
+>        1. 令`\(y_j=\left\{\begin{matrix}r_j & if\ episode\ terminates\ at\ step\ j+1\\ r_j+\gamma max_{a'}Q(\phi_{j+1},a';\theta^{-}) & otherwise \end{matrix}\right.\)`
+>        1. xxx
 
 ### 2.2 Double DQN
 

@@ -295,7 +295,7 @@ Var(f(x))=E[(f(x)-E[f(x)])^2]
 \frac{\varepsilon}{|A(s)|} & otherwise
 \end{matrix}\right.
 \]`
-`\(\varepsilon -greedy\)`策略是强化学习**最基本最常用**的**随机策略**。该策略平衡了e&e，也就是**利用(exploitation)**和**探索(exploration)**，其中选取动作值函数最大的部分为利用，其他非最估动作仍然有概率的部分为探索部分。
+`\(\varepsilon -greedy\)`策略是强化学习**最基本最常用**的**随机策略**。该策略平衡了e&e，也就是**利用(exploitation)**和**探索(exploration)**，其中选取动作值函数最大的部分为利用，其他非最优动作仍然有概率的部分为探索部分。
 
 #### 2.2.3 高斯策略
 
