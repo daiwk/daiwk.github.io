@@ -129,7 +129,7 @@ DQN的训练算法如下：
 >        1. 将transition `\((\phi_t,a_t,r_t,\phi _{t+1})\)`存入`\(D\)`。
 >        1. 从`\(D\)`中随机sample出一个minibatch的transitions，`\((\phi _j,a_j,r_j,\phi _{j+1})\)`
 >        1. 令`\(y_j=\left\{\begin{matrix}r_j & if\ episode\ terminates\ at\ step\ j+1\\ r_j+\gamma max_{a'}\hat {Q}(\phi_{j+1},a';\theta^{-}) & otherwise \end{matrix}\right.\)`
->        1. 对`\(y_j-Q(\phi _j,a_j;\theta))^2\)`的参数`\(\theta\)`进行一个梯度下降step的更新，`\(\theta_{t+1}=\theta _t+\alpha [r+\gamma max_{a'}(\hat {Q}(s',a';\theta ^{-}))-Q(s,a;\theta)]\nabla Q(s,a;\theta)\)`
+>        1. 对`\((y_j-Q(\phi _j,a_j;\theta))^2\)`的参数`\(\theta\)`进行一个梯度下降step的更新，`\(\theta_{t+1}=\theta _t+\alpha [r+\gamma max_{a'}(\hat {Q}(s',a';\theta ^{-}))-Q(s,a;\theta)]\nabla Q(s,a;\theta)\)`
 >        1. 每`\(C\)`个step，令`\(\hat {Q}=Q\)`，即令`\(\theta ^{-}=\theta \)` 
 >    1. End For
 > 1. End For
