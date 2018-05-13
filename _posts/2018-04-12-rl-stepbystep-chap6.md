@@ -55,7 +55,10 @@ DeepMind发表在Nature上的文章[Human-level control through deep reinforceme
     + 要评估和改进的策略是**贪婪策略**（即`\(max_aQ(s_{t+1},a)\)`，当前状态`\(s_{t+1}\)`下，使用各种a使`\(Q(s_{t+1},a)\)`达到的**最大值**），即，是最大的`\(Q\)`，与行动策略里随机选一个`\(a\)`得到的`\(Q\)`不同
 + 时间差分（temporal difference, TD）：使用时间差分目标（即，`\(r_t+\gamma max_aQ(s_{t+1},a)\)`）来更新当前的行为值函数
 
-注意，时间差分方法其实包括了异策略和同策略两种，异策略如Qlearning，而**同策略**如Sarsa强化学习算法 **（行为策略和目标策略都是`\(\epsilon \) -greedy`策略）**(书p77-79)
+注意，时间差分方法其实包括了异策略和同策略两种，
+
++ **异策略(即off-policy)**，如Qlearning，
++ **同策略**如Sarsa强化学习算法 **（行为策略和目标策略都是`\(\epsilon \) -greedy`策略）**(书p77-79)
 
 Qlearning的算法流程如下：
 
