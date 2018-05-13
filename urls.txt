@@ -151,5 +151,6 @@ https://daiwk.github.io/posts/cv-object-detection.html
 https://daiwk.github.io/posts/platform-tensorflow-optimizations.html
 https://daiwk.github.io/posts/platform-mlperf.html
 https://daiwk.github.io/posts/rl-pytorch-rl-tutorial.html
+https://daiwk.github.io/posts/rl-summary.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/tags.html

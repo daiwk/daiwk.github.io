@@ -1,0 +1,10 @@
+// rl-overview1
+digraph {
+	xgjc [label="序贯决策问题" shape=box]
+	mdp [label="马尔科夫决策过程MDP(s,A,P,R,gamma)" shape=box]
+	xgjc -> mdp
+	model_dp [label="基于模型的动态规划方法" shape=box]
+	no_model_dp [label="无模型的强化学习方法" shape=box]
+	mdp -> model_dp [label="(S,A,P,R,gamma)"]
+	mdp -> no_model_dp [label="(S,A,P?,R?,gamma?)"]
+}

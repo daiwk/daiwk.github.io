@@ -1,13 +1,16 @@
 git config --global push.default matching
 git config --global push.default simple
 
+sh -x gen_dot.sh
 git add _posts
+git add dots
 git add _includes
 git add posts
 git add _config.yml
 git add assets
 git add index.html
 git add source_codes
+git add gen_dot.*
 git add commit.sh
 
 python='/c/Python27/python.exe'
