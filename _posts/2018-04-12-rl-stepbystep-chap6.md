@@ -154,6 +154,32 @@ Q^{\pi}(s,a)=V^{\pi}(s)+A^{\pi}(s,a)
 + 状态值函数`\(V^{\pi}(s)\)`表示静态的状态环境本身具有的价值。是一个scalar。
 + 依赖状态的动作优势函数`\(A^{\pi}(s,a)\)`(advantage function)，表示选择某个Action额外带来的价值。是一个vector。
 
+更详细地，**状态价值函数**表示为
+
+`\[
+V(s;\theta,\beta)
+\]`
+
+**动作优势函数**表示为
+
+`\[
+A(s,a;\theta,\alpha)
+\]`
+
+动作Q值为两者相加
+
+`\[
+Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta)+A(s,a;\theta,\alpha)
+\]`
+
+其中，`\(\theta\)`是卷积层的参数，`\(\beta\)`和`\(\alpha\)`是两个支路全连接层的参数。
+
+而在实际中，一般要将动作优势流设置为**单独动作优势**函数**减去**某状态下**所有动作优势函数的平均值**，这样做可以保证该状态下各动作的优势函数**相对排序不变**，而且可以**缩小Q值的范围**，去除多余的自由度，提高算法**稳定性**。 
+
+`\[
+Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta)+(A(s,a;\theta,\alpha)-\frac{1}{|A|}\sum_{a'}A(s,a';\theta,\alpha))
+\]`
+
 <html>
 <br/>
 
@@ -171,7 +197,6 @@ Q^{\pi}(s,a)=V^{\pi}(s)+A^{\pi}(s,a)
 <br/>
 
 </html>
-
 
 论文中dueling net结合了DDQN(double dqn)以及优先级采样（Prioritized Experience Replay）的训练方式。
 
