@@ -141,6 +141,8 @@ DQN的训练算法如下：
 
 ### 2.4 Dueling DQN
 
+参考书本，以及[https://blog.csdn.net/u013236946/article/details/73161586](https://blog.csdn.net/u013236946/article/details/73161586)
+
 竞争网络（dueling net）从网络结构上改进了DQN，将**动作值函数分解**为**状态值函数**和**优势函数**，即：
 
 `\[
@@ -149,8 +151,8 @@ Q^{\pi}(s,a)=V^{\pi}(s)+A^{\pi}(s,a)
 
 以往的DQN都是直接用神经网络逼近`\(Q^{\pi}(s,a)\)`，而Dueling DQN则是对`\(V^{\pi}(s)\)`和`\(A^{\pi}(s,a)\)`分别用神经网络来逼近。
 
-+ 状态值函数`\(V^{\pi}(s)\)`表示静态的状态环境本身具有的价值
-+ 依赖状态的动作优势函数`\(A^{\pi}(s,a)\)`(advantage function)，表示选择某个Action额外带来的价值。
++ 状态值函数`\(V^{\pi}(s)\)`表示静态的状态环境本身具有的价值。是一个scalar。
++ 依赖状态的动作优势函数`\(A^{\pi}(s,a)\)`(advantage function)，表示选择某个Action额外带来的价值。是一个vector。
 
 <html>
 <br/>
@@ -159,6 +161,21 @@ Q^{\pi}(s,a)=V^{\pi}(s)+A^{\pi}(s,a)
 <br/>
 
 </html>
+
+这种竞争结构能学到在**没有动作的影响**下**环境状态**的价值`\(V(s)\)`。如下图，在训练过程中，上下两行图表示不同时刻，左右两列表示属于`\(V(s)\)`和`\(A(a)\)`，（通过某种方法处理后）图中红色区域代表`\(V(s)\)` 和`\(A(a)\)`所关注的地方。`\(V(s)\)`关注于地平线上**是否有车辆出现**（此时动作的选择影响不大）以及分数；`\(A(a)\)`则更关心**会立即造成碰撞的车辆**，此时动作的选择很重要。 
+
+<html>
+<br/>
+
+<img src='../assets/dueling-dqn-attend.jpeg' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
+
+
+论文中dueling net结合了DDQN(double dqn)以及优先级采样（Prioritized Experience Replay）的训练方式。
+
+
 
 ## 3. 函数逼近方法
 
