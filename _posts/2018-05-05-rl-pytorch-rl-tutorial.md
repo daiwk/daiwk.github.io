@@ -26,3 +26,5 @@ tags: [rl tutorial, pytorch, ]
 
 ## pytorch tutorial
 
+参考[https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html](https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html)
+
