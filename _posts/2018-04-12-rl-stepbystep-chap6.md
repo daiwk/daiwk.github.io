@@ -141,6 +141,25 @@ DQN的训练算法如下：
 
 ### 2.4 Dueling DQN
 
+竞争网络（dueling net）从网络结构上改进了DQN，将**动作值函数分解**为**状态值函数**和**优势函数**，即：
+
+`\[
+Q^{\pi}(s,a)=V^{\pi}(s)+A^{\pi}(s,a)
+\]`
+
+以往的DQN都是直接用神经网络逼近`\(Q^{\pi}(s,a)\)`，而Dueling DQN则是对`\(V^{\pi}(s)\)`和`\(A^{\pi}(s,a)\)`分别用神经网络来逼近。
+
++ 状态值函数`\(V^{\pi}(s)\)`表示静态的状态环境本身具有的价值
++ 依赖状态的动作优势函数`\(A^{\pi}(s,a)\)`(advantage function)，表示选择某个Action额外带来的价值。
+
+<html>
+<br/>
+
+<img src='../assets/dueling-dqn.jpg' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
+
 ## 3. 函数逼近方法
 
 ### 3.1 基于非参数的函数逼近
