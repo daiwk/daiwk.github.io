@@ -204,7 +204,6 @@ Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta)+(A(s,a;\theta,\alpha)-\frac{1}{|A
 论文中dueling net结合了DDQN(double dqn)以及优先级采样（Prioritized Experience Replay）的训练方式。
 
 
-
 ## 3. 函数逼近方法
 
 ### 3.1 基于非参数的函数逼近
