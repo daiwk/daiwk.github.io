@@ -43,6 +43,12 @@ file locks                      (-x) unlimited
 
 ## core
 
+[https://blog.csdn.net/caspiansea/article/details/24450377](https://blog.csdn.net/caspiansea/article/details/24450377)
+
+```
+info proc  mappings
+```
+
 ## 堆、栈导致的core
 
 ### 栈空间不足
