@@ -84,7 +84,7 @@ $36 = {static npos = <optimized out>, _M_dataplus = {<std::allocator<char>> = {<
 $39 = 0x4e64189d8 "\351\243\216\345\260\232\345\244\247\347\211\207"
 ```
 
-**!!!大boss来了！！**，我们来学习一下下什么叫高科技：
+**!!!大boss来了！！**，我们来学习一下下什么叫高科技：(参考[https://www.zhihu.com/question/26902926](https://www.zhihu.com/question/26902926))
 
 ```python
 #encoding=utf8
