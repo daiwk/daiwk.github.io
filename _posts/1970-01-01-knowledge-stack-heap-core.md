@@ -84,6 +84,40 @@ $36 = {static npos = <optimized out>, _M_dataplus = {<std::allocator<char>> = {<
 $39 = 0x4e64189d8 "\351\243\216\345\260\232\345\244\247\347\211\207"
 ```
 
+**!!!大boss来了！！**，我们来学习一下下什么叫高科技：
+
+```python
+#encoding=utf8
+import re
+import urllib
+
+def ChangeCoding(s):
+    ''' 处理中文文件名的编码 '''
+#s='"\\346\\226\\260\\345\\273\\272\\346\\226\\207\\344\\273\\266\\345\\244\\271/\\345\\226\\260\\345\\273\\272\\346\\226\\207\\344\\273\\266\\345\\244\\271/\\346\\226\\260\\345\\273\\272\\346\\226\\207\\346\\234\\254\\346\\226\\207\\346\\241\\243.txt"'
+#pattern=re.compile(r'^".*?((\\\d\d\d){3,})(/(?P<s>(\\\d\d\d){3,}))*.+"$')
+#match=pattern.match(a)
+
+    p=re.compile(r'(?P<s>(\\\d\d\d){3,})')
+    for i in p.finditer(s):
+        old=i.group('s')
+        name=old.split('\\')
+        name=['%x' %int(g,8) for g in name if g.isdigit() ]
+        name='%'+'%'.join(name)
+        CN_name= urllib.unquote(name).decode('utf-8')
+        s = s.replace(old,CN_name)
+    print s.strip('"')
+
+s = "\347\251\272\345\247\220\350\201\224\347\233\237"
+ChangeCoding(s)
+```
+
+可以发现结果：
+
+```shell
+python /tmp/x.py    
+风尚大片
+```
+
 ## 基础命令
 
 ```shell
