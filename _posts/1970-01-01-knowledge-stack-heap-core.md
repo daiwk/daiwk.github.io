@@ -143,16 +143,14 @@ $10 = {rid = 6842219464, tag_w = {<std::__allow_copy_cons<true>> = {<No data fie
 
 然而问题并不在这里。。。后来仔细review代码发现：
 
-```C++
-
+```c++
 int func_aaa(TmpResultBuffer& tmp_res) {
 
 TmpResultBuffer mid_tmp_res;
 mid_tmp_res.init(200);
 if (!func_xxx(context, rid_sim_vec_trunc, mid_tmp_res)) {
-    FORK_LOG(WARNING) << "failed to get gcm data.";
     continue;
-}       
+}
 
 // ...
 
