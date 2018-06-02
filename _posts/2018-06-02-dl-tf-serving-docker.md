@@ -36,6 +36,12 @@ docker pull registry.cn-hangzhou.aliyuncs.com/denverdino/inception-serving
 docker run -d -p 9000:9000 --name inception-serving registry.cn-hangzhou.aliyuncs.com/denverdino/inception-serving
 ```
 
+可以发现实际的启动命令是：
+
+```shell
+/serving/bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server --port=9000 --model_name=inception --model_base_path=inception-export
+```
+
 启动 “tensorflow-serving” 镜像作为客户端，并定义容器link，允许在容器内部通过“serving”别名来访问“inception-serving”容器
 
 ```shell
