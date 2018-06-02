@@ -42,7 +42,7 @@ docker run -d -p 9000:9000 --name inception-serving registry.cn-hangzhou.aliyunc
 docker run -dti --name client --link inception-serving:serving        registry.cn-hangzhou.aliyuncs.com/denverdino/tensorflow-serving
 ```
 
-找到刚才的容器id，用docker-enter来搞：
+找到刚才的容器id，用docker-enter(参考[https://daiwk.github.io/posts/other-docker-cmds.html#install-docker-enter](https://daiwk.github.io/posts/other-docker-cmds.html#install-docker-enter))来搞：
 
 ```shell
 docker ps
