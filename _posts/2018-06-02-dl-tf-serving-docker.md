@@ -51,7 +51,14 @@ CONTAINER ID        IMAGE                                                       
 26d6fa778d23        registry.cn-hangzhou.aliyuncs.com/denverdino/inception-serving    "/serving/bazel-bin/t"   22 minutes ago      Up 22 minutes       0.0.0.0:9000->9000/tcp   inception-serving
 ```
 
-发现我们的client是471be814a041
+发现我们的client是471be814a041，所以
+
+```shell
+docker-enter 471be814a041
+root@471be814a041:~#
+```
+
+接下来
 
 ```shell
 root@471be814a041:~# curl http://f.hiphotos.baidu.com/baike/w%3D268%3Bg%3D0/sign=6268660aafec8a13141a50e6cf38f6b2/32fa828ba61ea8d3c85b36e1910a304e241f58dd.jpg -o persian_cat_image.jpg
