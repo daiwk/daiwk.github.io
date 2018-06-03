@@ -48,6 +48,8 @@ tags: [kubernetes, k8s ]
 [https://github.com/kubernetes/kubernetes](https://github.com/kubernetes/kubernetes)
 
 百度前员工刘杰写的《分布式系统原理介绍》【[https://daiwk.github.io/assets/分布式系统原理介绍.pdf](https://daiwk.github.io/assets/分布式系统原理介绍.pdf)】。
+
+参考[http://kubernetes.kansea.com/docs/whatisk8s/](http://kubernetes.kansea.com/docs/whatisk8s/)
 ## 背景
 
 ### 物理机时代

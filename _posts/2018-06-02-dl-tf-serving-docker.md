@@ -9,72 +9,203 @@ tags: [tf serving, docker, k8s ]
 
 <!-- TOC -->
 
-- [docker + tf-serving](#docker--tf-serving)
+- [tf-serving](#tf-serving)
+- [docker + tf-serving[from 阿里云]](#docker--tf-servingfrom-阿里云)
+- [docker + k8s + tf-serving[自己搞]](#docker--k8s--tf-serving自己搞)
+    - [docker+tf-serving](#dockertf-serving)
+        - [创建docker镜像](#创建docker镜像)
+        - [编译server](#编译server)
+        - [编译examples](#编译examples)
+            - [mnist example](#mnist-example)
+            - [inception example](#inception-example)
+        - [commit container](#commit-container)
+        - [在2个容器间进行访问](#在2个容器间进行访问)
 - [k8s](#k8s)
 
 <!-- /TOC -->
 
-## docker + tf-serving
+## tf-serving
+
+[https://github.com/tensorflow/serving](https://github.com/tensorflow/serving)
+
+安装方式见[https://github.com/tensorflow/serving/blob/master/tensorflow_serving/g3doc/setup.md](https://github.com/tensorflow/serving/blob/master/tensorflow_serving/g3doc/setup.md)
+
+
+## docker + tf-serving[from 阿里云]
 
 **注意：1.6版本的docker不行（没有--link参数，-p参数不是port），亲测1.9.1的docker可以。。**
 
 参考：[https://yq.aliyun.com/articles/60894](https://yq.aliyun.com/articles/60894)
 
-首先，获取两个镜像：
+这两个镜像[发现bazel是0.3.0，而serving是2016.9时的版本]：
 
 + registry.cn-hangzhou.aliyuncs.com/denverdino/tensorflow-serving : TensorFlow Serving的基础镜像
 + registry.cn-hangzhou.aliyuncs.com/denverdino/inception-serving : 基于上述基础镜像添加Inception模型实现的服务镜像
 
+## docker + k8s + tf-serving[自己搞]
+
+[https://www.tensorflow.org/serving/serving_inception](https://www.tensorflow.org/serving/serving_inception)
+
+### docker+tf-serving
+
+参考[https://www.tensorflow.org/serving/docker](https://www.tensorflow.org/serving/docker)
+
+#### 创建docker镜像
+
+首先把这个搞下来[https://github.com/tensorflow/serving/blob/master/tensorflow_serving/tools/docker/Dockerfile.devel](https://github.com/tensorflow/serving/blob/master/tensorflow_serving/tools/docker/Dockerfile.devel)：
+
+然后，把bazel的version改成0.11.0（编译1.7版本的serving需要），另外，我还补充了automake/libtool【**当然，目前可以work的是1.4版本的serving，要把bazel版本改成0.5.4**】：
+
 ```shell
-docker pull registry.cn-hangzhou.aliyuncs.com/denverdino/tensorflow-serving
-docker pull registry.cn-hangzhou.aliyuncs.com/denverdino/inception-serving
+FROM ubuntu:16.04
+
+MAINTAINER Jeremiah Harmsen <jeremiah@google.com>
+
+RUN apt-get update && apt-get install -y \
+        build-essential \
+        curl \
+        git \
+        libfreetype6-dev \
+        libpng12-dev \
+        libzmq3-dev \
+        mlocate \
+        pkg-config \
+        python-dev \
+        python-numpy \
+        python-pip \
+        software-properties-common \
+        swig \
+        zip \
+        zlib1g-dev \
+        libcurl3-dev \
+        openjdk-8-jdk\
+        openjdk-8-jre-headless \
+        wget \
+        automake \
+        libtool \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set up grpc
+
+RUN pip install mock grpcio
+
+# Set up Bazel.
+
+ENV BAZELRC /root/.bazelrc
+# Install the most recent bazel release.
+ENV BAZEL_VERSION 0.11.0
+WORKDIR /
+RUN mkdir /bazel && \
+    cd /bazel && \
+    curl -fSsL -O https://github.com/bazelbuild/bazel/releases/download/$BAZEL_VERSION/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh && \
+    curl -fSsL -o /bazel/LICENSE.txt https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE && \
+    chmod +x bazel-*.sh && \
+    ./bazel-$BAZEL_VERSION-installer-linux-x86_64.sh && \
+    cd / && \
+    rm -f /bazel/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh
+
+CMD ["/bin/bash"]
 ```
 
-我们利用Docker命令启动名为 “inception-serving” 容器作为TF Serving服务器
-
 ```shell
-docker run -d -p 9000:9000 --name inception-serving registry.cn-hangzhou.aliyuncs.com/denverdino/inception-serving
+docker build --pull -t $USER/tensorflow-serving-devel -f Dockerfile.tf-serving . 
 ```
 
-可以发现实际的启动命令是：
+启动docker并进入
 
 ```shell
-/serving/bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server --port=9000 --model_name=inception --model_base_path=inception-export
+docker run -idt -v /home/disk1/tf_space:/home/work/data $USER/tensorflow-serving-devel /bin/bash
 ```
 
-启动 “tensorflow-serving” 镜像作为客户端，并定义容器link，允许在容器内部通过“serving”别名来访问“inception-serving”容器
+#### 编译server
 
 ```shell
-docker run -dti --name client --link inception-serving:serving        registry.cn-hangzhou.aliyuncs.com/denverdino/tensorflow-serving
+root@cb189256755# cd /home/work/data/serving/serving_1.4/
+root@0cb189256755:/home/work/data/serving/serving_1.4# git clone -b r1.4 --recurse-submodules https://github.com/tensorflow/serving
+root@0cb189256755:/home/work/data/serving/serving_1.4# cd serving/tensorflow
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving/tensorflow# ./configure
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# cd ..
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# bazel build -c opt tensorflow_serving/model_servers:tensorflow_model_server
 ```
 
-找到刚才的容器id，用docker-enter(参考[https://daiwk.github.io/posts/other-docker-cmds.html#install-docker-enter](https://daiwk.github.io/posts/other-docker-cmds.html#install-docker-enter))来搞：
+这样，生成的```bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server```就是我们想要的啦
+
+#### 编译examples
+
+编译一下tf-serving的example:
 
 ```shell
-docker ps
-CONTAINER ID        IMAGE                                                             COMMAND                  CREATED             STATUS              PORTS                    NAMES
-471be814a041        registry.cn-hangzhou.aliyuncs.com/denverdino/tensorflow-serving   "/bin/bash"              4 seconds ago       Up 3 seconds        9000/tcp                 client
-26d6fa778d23        registry.cn-hangzhou.aliyuncs.com/denverdino/inception-serving    "/serving/bazel-bin/t"   22 minutes ago      Up 22 minutes       0.0.0.0:9000->9000/tcp   inception-serving
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# bazel build -c opt tensorflow_serving/example/...
 ```
 
-发现我们的client是471be814a041，所以
+##### mnist example
 
-```shell
-docker-enter 471be814a041
-root@471be814a041:~#
+训练并export一个模型
+
+```
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# rm /tmp/mnist_model/ -rf
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# bazel-bin/tensorflow_serving/example/mnist_saved_model /tmp/mnist_model
+Training model...
+Extracting /tmp/train-images-idx3-ubyte.gz
+Extracting /tmp/train-labels-idx1-ubyte.gz
+Extracting /tmp/t10k-images-idx3-ubyte.gz
+Extracting /tmp/t10k-labels-idx1-ubyte.gz
+2018-06-03 10:29:58.144101: I external/org_tensorflow/tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+training accuracy 0.9092
+Done training!
+Exporting trained model to /tmp/mnist_model/1
+Done exporting!
 ```
 
-接下来
+看到```/tmp/mnist_model```下面有一个文件夹1，就代表version，下面有两部分：
+
++ saved_model.pb： 序列化后的 tensorflow::SavedModel. It includes one or more graph definitions of the model, as well as metadata of the model such as signatures.
++ variables: files that hold the serialized variables of the graphs.
+
+启动server
 
 ```shell
-root@471be814a041:~# curl http://f.hiphotos.baidu.com/baike/w%3D268%3Bg%3D0/sign=6268660aafec8a13141a50e6cf38f6b2/32fa828ba61ea8d3c85b36e1910a304e241f58dd.jpg -o persian_cat_image.jpg
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# nohup bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server --port=9000 --model_name=mnist --model_base_path=/tmp/mnist_model/ &
+```
 
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0/serving/bazel-bin/tensorflow_serving/example/inception_client --server=serving:900100 10703  100 10703    0     0   232k      0 --:--:-- --:--:-- --:--:--  237k
-root@471be814a041:~# 
-root@471be814a041:~# /serving/bazel-bin/tensorflow_serving/example/inception_client --server=serving:9000 --image=$PWD/persian_cat_image.jpg
-D0602 12:58:22.647239059      43 ev_posix.c:101]             Using polling engine: poll
+启动client
+
+```shell
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# bazel-bin/tensorflow_serving/example/mnist_client --num_tests=1000 --server=localhost:9000
+Extracting /tmp/train-images-idx3-ubyte.gz
+Extracting /tmp/train-labels-idx1-ubyte.gz
+Extracting /tmp/t10k-images-idx3-ubyte.gz
+Extracting /tmp/t10k-labels-idx1-ubyte.gz
+........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+Inference error rate: 10.4%
+```
+
+##### inception example
+
+export一个训练好的模型并存储到```/tmp/inception-export```
+
+```shell
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# curl -O http://download.tensorflow.org/models/image/imagenet/inception-v3-2016-03-01.tar.gz
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# tar xzf inception-v3-2016-03-01.tar.gz
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# ls inception-v3
+README.txt  checkpoint  model.ckpt-157585
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# bazel-bin/tensorflow_serving/example/inception_saved_model --checkpoint_dir=inception-v3 --output_dir=/tmp/inception-export
+Successfully loaded model from inception-v3/model.ckpt-157585 at step=157585.
+Successfully exported model to /tmp/inception-export
+```
+
+启动server
+
+```shell
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# nohup bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server --port=9000 --model_name=inception --model_base_path=/tmp/inception-export &> inception_log &
+```
+
+启动client：
+
+```shell
+root@0cb189256755:/home/work/data/serving/serving_1.4/serving# bazel-bin/tensorflow_serving/example/inception_client --server=localhost:9000 --image=persian_cat_image.jpg   
 outputs {
   key: "classes"
   value {
@@ -90,8 +221,8 @@ outputs {
     string_val: "Persian cat"
     string_val: "lynx, catamount"
     string_val: "Egyptian cat"
-    string_val: "Angora, Angora rabbit"
     string_val: "tabby, tabby cat"
+    string_val: "Angora, Angora rabbit"
   }
 }
 outputs {
@@ -106,17 +237,78 @@ outputs {
         size: 5
       }
     }
-    float_val: 9.49124622345
-    float_val: 3.08905720711
-    float_val: 2.88204526901
-    float_val: 2.85937643051
-    float_val: 2.78746366501
+    float_val: 9.48267459869
+    float_val: 3.10385608673
+    float_val: 2.89405298233
+    float_val: 2.83001184464
+    float_val: 2.81639647484
   }
 }
-
-E0602 12:58:23.565837691      43 chttp2_transport.c:1810]    close_transport: {"created":"@1527944303.565790675","description":"FD shutdown","file":"src/core/lib/iomgr/ev_poll_posix.c","file_line":427}
 ```
 
+大功告成咯~~
 
+#### commit container
+
+```shell
+docker commit 0cb189256755 root/tf_serving_1.4
+```
+
+然后就可以看到
+
+```shell
+docker images
+REPOSITORY                                                        TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+root/tf_serving_1.4                                               latest              e6eae34c8754        41 seconds ago      3.014 GB
+```
+
+#### 在2个容器间进行访问
+
+然后启动两个容器：
+
+```shell
+## 谨慎使用，删除现有所有容器
+docker ps -aq| xargs docker stop | xargs docker rm
+
+docker run -dti \
+        -p 9001:9000 \
+        --name inception-serving \
+        root/tf_serving_1.4 \
+        /bin/bash
+
+
+docker run -dti \
+        --name client \
+        --link inception-serving:serving \
+        -v /home/disk1/tf_space:/home/work/data \
+        root/tf_serving_1.4 \
+        /bin/bash
+```
+
+启动客户端，并定义容器link，允许在容器内部通过“serving”别名来访问“inception-serving”容器
+
+此时，
+
+```shell
+ docker ps   
+CONTAINER ID        IMAGE                           COMMAND             CREATED             STATUS              PORTS                    NAMES
+910de959f1ae        root/tf_serving_1.4             "/bin/bash"         41 seconds ago      Up 40 seconds                                client
+3e3134158f9c        root/tf_serving_1.4             "/bin/bash"         41 seconds ago      Up 40 seconds       0.0.0.0:9001->9000/tcp   inception-serving
+```
+
+进入server ```3e3134158f9c```：
+
+```shell
+root@3e3134158f9c:~# cd /home/work/data/serving/serving_1.4/serving/
+root@3e3134158f9c:/home/work/data/serving/serving_1.4/serving# nohup bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server --port=9000 --model_name=inception --model_base_path=/tmp/inception-export &> inception_log &
+```
+
+进入client ```910de959f1ae```，注意，这里的```--server=serving:9000```，serving就是刚刚--link取的别名~
+
+```shell
+root@910de959f1ae:~# cd /home/work/data/serving/serving_1.4/serving/
+root@910de959f1ae:/home/work/data/serving/serving_1.4/serving# bazel-bin/tensorflow_serving/example/inception_client --server=serving:9000 --image=persian_cat_image.jpg 
+```
 
 ## k8s
+
