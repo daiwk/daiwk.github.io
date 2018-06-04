@@ -23,6 +23,7 @@ tags: [docker常用命令,]
 - [docker import](#docker-import)
 - [docker exec](#docker-exec)
 - [注意](#注意)
+- [一些疑难杂症](#一些疑难杂症)
 
 <!-- /TOC -->
 
@@ -154,3 +155,26 @@ ing/lp_spider/crawl.images8.log
 + 在win7安装时，要用docker toolbox([https://download.docker.com/win/stable/DockerToolbox.exe](https://download.docker.com/win/stable/DockerToolbox.exe))
 
 + win10以上时，用docker-ce([https://store.docker.com/editions/community/docker-ce-desktop-windows?tab=description](https://store.docker.com/editions/community/docker-ce-desktop-windows?tab=description))
+
+
+## 一些疑难杂症
+
+发现有的container没法stop/kill/rm的时候，例如
+
+```shell
+docker rm -f 316f2eca7a3b
+Error response from daemon: Could not kill running container, cannot remove - [2] Container does not exist: container destroyed
+Error: failed to remove containers: [316f2eca7a3b]
+```
+
+尝试找到docker的daemon进程，并kill，然后重启：
+
+```shell
+ps aux | grep docker
+root      4157  0.0  0.0 105352   832 pts/3    S+   13:26   0:00 grep docker
+root     32816  0.0  0.0 1562760 42500 ?       Sl   Jun02   1:36 /usr/bin/docker -d -b docker0 -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock --insecure-registry registry.xxxxx.com -g /home/work/docker
+kill -9 32816
+ nohup /usr/bin/docker -d -b docker0 -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock --insecure-registry registry.xxxxx.com -g /home/work/docker &
+```
+
+这个时候就发现container的状态已经是```exited (137) 7 seconds ago```了，再去rm，就可以啦
