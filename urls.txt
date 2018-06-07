@@ -65,6 +65,7 @@ https://daiwk.github.io/posts/dl-seq2seq.html
 https://daiwk.github.io/posts/platform-tensorflow-seq2seq.html
 https://daiwk.github.io/posts/other-install-wget-1.18.html
 https://daiwk.github.io/posts/nlp-fasttext.html
+https://daiwk.github.io/posts/platform-tensor-to-tensor-coding.html
 https://daiwk.github.io/posts/platform-tensor-to-tensor.html
 https://daiwk.github.io/posts/cv-img-txt-sim.html
 https://daiwk.github.io/posts/ml-tips.html

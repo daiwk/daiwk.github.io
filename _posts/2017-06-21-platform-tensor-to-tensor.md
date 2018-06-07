@@ -1,7 +1,7 @@
 ---
 layout: post
 category: "platform"
-title: "tensor-to-tensor"
+title: "tensor-to-tensor[理论篇]"
 tags: [tensor-to-tensor, t2t, tensor2tensor]
 ---
 
@@ -38,7 +38,7 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
 - [7. 代码解析](#7-代码解析)
     - [7.1 原版（tensor2tensor）](#71-原版tensor2tensor)
     - [7.2 单纯transformer](#72-单纯transformer)
-    - [8. 实践](#8-实践)
+    - [8. 简单实践](#8-简单实践)
 
 <!-- /TOC -->
 
@@ -379,7 +379,7 @@ pip install tensor2tensor[tensorflow]
 代码解析：
 [https://blog.csdn.net/mijiaoxiaosan/article/details/74909076](https://blog.csdn.net/mijiaoxiaosan/article/details/74909076)
 
-### 8. 实践
+### 8. 简单实践
 
 ```shell
 pip install tensor2tensor
@@ -388,5 +388,13 @@ pip install tensor2tensor
 然后就有了一个bin，名为```t2t-trainer```(其实是个python)。。然后执行
 
 ```shell
-
+t2t-trainer \
+  --generate_data \
+  --data_dir=~/t2t_data \
+  --output_dir=~/t2t_train/mnist \
+  --problem=image_mnist \
+  --model=shake_shake \
+  --hparams_set=shake_shake_quick \
+  --train_steps=1000 \
+  --eval_steps=100
 ```
