@@ -98,7 +98,7 @@ IMDB数据集：```--problem=sentiment_imdb```
 
 针对机器翻译问题的一个基本流程：
 
-```python
+```shell
 # See what problems, models, and hyperparameter sets are available.
 # You can easily swap between them (and add new ones).
 t2t-trainer --registry_help
