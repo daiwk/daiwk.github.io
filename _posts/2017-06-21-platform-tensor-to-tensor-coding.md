@@ -27,6 +27,8 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
 
 <!-- /TOC -->
 
+[https://github.com/tensorflow/tensor2tensor](https://github.com/tensorflow/tensor2tensor)
+
 ## 0. Suggested Datasets and Models
 
 建议的超参是在Cloud TPUs或者8-GPU machines上训练好的
