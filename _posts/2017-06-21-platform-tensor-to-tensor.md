@@ -33,12 +33,10 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
         - [4.4.3 English Constituency Parsing](#443-english-constituency-parsing)
 - [5. One Model To Learn Them All](#5-one-model-to-learn-them-all)
 - [6. 实践](#6-实践)
-    - [6.1 安装cuda 8.0](#61-安装cuda-80)
-    - [6.2 安装tensor2tensor](#62-安装tensor2tensor)
 - [7. 代码解析](#7-代码解析)
     - [7.1 原版（tensor2tensor）](#71-原版tensor2tensor)
     - [7.2 单纯transformer](#72-单纯transformer)
-    - [8. 简单实践](#8-简单实践)
+- [8. 改进](#8-改进)
 
 <!-- /TOC -->
 
@@ -348,12 +346,12 @@ Constituency: 选区；选区的选民；支持者；主顾
 
 ## 6. 实践
 
-### 6.1 安装cuda 8.0
+安装cuda 8.0，（现在的版本不强制啦）
 
 + 安装cuda 8.0
 + 安装cuda 8.0所需的对应cudnn版本（t2t要求cudnn5.0 for cuda 8.0）
 
-### 6.2 安装tensor2tensor
+安装tensor2tensor
 
 ```
 # Assumes tensorflow or tensorflow-gpu installed
@@ -364,6 +362,20 @@ pip install tensor2tensor[tensorflow_gpu]
 
 # Installs with tensorflow (cpu) requirement
 pip install tensor2tensor[tensorflow]
+```
+
+就有了一个bin，名为```t2t-trainer```(其实是个python)。。然后执行
+
+```shell
+t2t-trainer \
+  --generate_data \
+  --data_dir=~/t2t_data \
+  --output_dir=~/t2t_train/mnist \
+  --problem=image_mnist \
+  --model=shake_shake \
+  --hparams_set=shake_shake_quick \
+  --train_steps=1000 \
+  --eval_steps=100
 ```
 
 ## 7. 代码解析
@@ -379,22 +391,12 @@ pip install tensor2tensor[tensorflow]
 代码解析：
 [https://blog.csdn.net/mijiaoxiaosan/article/details/74909076](https://blog.csdn.net/mijiaoxiaosan/article/details/74909076)
 
-### 8. 简单实践
+## 8. 改进
 
-```shell
-pip install tensor2tensor
-```
+阿里的文章[专访 \| 大规模集成Transformer模型，阿里达摩院如何打造WMT 2018机器翻译获胜系统](https://mp.weixin.qq.com/s/lgGDTCF3qg84njv2IeHC9A)
 
-然后就有了一个bin，名为```t2t-trainer```(其实是个python)。。然后执行
+阿里机器翻译团队在 WMT 2018 竞赛上主要采用的还是 Transformer 模型，但是会根据最近的一些最新研究对标准 Transformer 模型进行一些修正。这些修正有两方面：
 
-```shell
-t2t-trainer \
-  --generate_data \
-  --data_dir=~/t2t_data \
-  --output_dir=~/t2t_train/mnist \
-  --problem=image_mnist \
-  --model=shake_shake \
-  --hparams_set=shake_shake_quick \
-  --train_steps=1000 \
-  --eval_steps=100
-```
++ 将 Transformer 中的 Multi-Head Attention 替换为**多个自注意力分支**，而模型会在训练阶段中将学习结合这些分支注意力模块。
++ 采用了一种**编码相对位置的表征**以扩展自注意力机制，并令模型能更好地理解**序列元素间的相对距离**。
+
