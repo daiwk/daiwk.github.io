@@ -15,6 +15,7 @@ tags: [word2vec, ngram, nnlm, cbow, c-skip-gram, 统计语言模型]
 - [2. CBOW(Continuous Bag-of-Words)](#2-cbowcontinuous-bag-of-words)
 - [3. Continuous skip-gram](#3-continuous-skip-gram)
 - [4. NCE](#4-nce)
+- [5. 面试常见问题](#5-面试常见问题)
 - [x. tensorflow的简单实现](#x-tensorflow的简单实现)
     - [简介](#简介)
     - [代码解读](#代码解读)
@@ -135,6 +136,10 @@ CBOW的好处是对上下文词语的分布在词向量上进行了平滑，去�
 # 4. NCE
 
 参考[https://blog.csdn.net/itplus/article/details/37998797](https://blog.csdn.net/itplus/article/details/37998797)
+
+# 5. 面试常见问题
+
+参考 [https://blog.csdn.net/zhangxb35/article/details/74716245](https://blog.csdn.net/zhangxb35/article/details/74716245)
 
 # x. tensorflow的简单实现
 
