@@ -1,5 +1,6 @@
 https://daiwk.github.io/posts/dl-dl-tips.html
 https://daiwk.github.io/posts/knowledge-git.html
+https://daiwk.github.io/posts/knowledge-gperftools.html
 https://daiwk.github.io/posts/knowledge-matrix.html
 https://daiwk.github.io/posts/knowledge-python.html
 https://daiwk.github.io/posts/knowledge-stack-heap-core.html

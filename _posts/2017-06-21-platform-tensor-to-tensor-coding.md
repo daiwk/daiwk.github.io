@@ -20,12 +20,14 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
     - [Datasets](#datasets)
     - [Problems and Modalities](#problems-and-modalities)
     - [Models](#models)
-    - [Hyperparameter Sets](#hyperparameter-sets)
-    - [Trainer](#trainer)
-- [2. 新增components](#2-新增components)
-- [3. 新增数据集](#3-新增数据集)
 
 <!-- /TOC -->
+
+[One model to learn them all](https://arxiv.org/abs/1706.05137)
+
+知乎专栏的讨论：[https://zhuanlan.zhihu.com/p/28680474](https://zhuanlan.zhihu.com/p/28680474)
+
+
 
 [https://github.com/tensorflow/tensor2tensor](https://github.com/tensorflow/tensor2tensor)
 
@@ -163,11 +165,36 @@ t2t-bleu --translation=translation.en --reference=ref-translation.de
 
 ### Datasets
 
++ 数据集都是```tensorflow.Example```的protobuf标准化处理过的```TFRecord```文件。
++ 所有数据集通[t2t-datagen](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/bin/t2t-datagen)进行注册与生成。
+
 ### Problems and Modalities
+
++ Problems，指的是训练时针对task和dataset的hyperparameters，主要设置的是输入和输出的modalities（例如，symbol, image, audio, label）以及vocabularies。
+
+所有的problem都在[problem_hparams.py](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/data_generators/problem_hparams.py)中定义了，或者通过```@registry.register_problem```进行注册。
+
+直接运行```t2t-datagen```可以查看目前支持的problems列表。
+
++ Modalities(形态)，将input和output的数据类型abstract away，从而使得model可以直接处理modality-independent tensors。
+
+所有的modalities定义在[modality.py](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/utils/modality.py)中。
 
 ### Models
 
+```T2TModel```定义了核心的tensor-to-tensor变换，与input/output的modality或者task无关。模型的输入是dense tensors，输出是dense tensors，可以在final step中被一个modality进行变换(例如通过一直final linear transform，产出logits供softmax over classes使用)。
+
+在models目录下的[__init__.py](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/models/__init__.py)中import了所有model。
+
+这些模型的基类是[T2TModel](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/utils/t2t_model.py)，都是通过[@registry.register_model](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/utils/registry.py)来进行注册的。
+
 ### Hyperparameter Sets
+
+超参数集合通过[@registry.register_hparams](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/utils/registry.py)进行注册，并通过[tf.contrib.training.HParams](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/training/python/training/hparam.py)编码成对象。
+
+HParams对model和problem都是可用的。
+
+[common_hparams.py](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/layers/common_hparams.py)中定义了基本的超参集，而且超参集的函数可以组成其他超参集的函数。
 
 ### Trainer
 
