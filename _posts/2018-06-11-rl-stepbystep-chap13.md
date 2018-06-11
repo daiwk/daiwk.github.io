@@ -50,16 +50,33 @@ Tamar等发现，**已经调优的深度神经网络，很难泛化到其他游�
 最常用的规划算法是值迭代算法，第3章讲了动态规划的思想。规划实际蕴含的是一个优化问题，基于贝尔曼优化原理：
 
 `\[
-\upsilon ^*(s)=\underset{a}{max}R^a_{ss'}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon ^*(s')
+\upsilon ^*(s)=\underset{a}{max}R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon ^*(s')
 \]`
 
 基于该原理，具体的算法实现是值迭代算法，在第3章中提到了[https://daiwk.github.io/posts/rl-stepbystep-chap3.html#13-%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%AD%E4%BB%A3%E7%AE%97%E6%B3%95](https://daiwk.github.io/posts/rl-stepbystep-chap3.html#13-%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%AD%E4%BB%A3%E7%AE%97%E6%B3%95)：
 
 
->1. 输入：状态转移概率`\(P^a_{ss'}\)`，回报函数`\(R^a_{ss'}\)`，折扣因子`\(\gamma\)`，初始化值函数`\(\upsilon(s)=0\)`，初始化策略`\(\pi_0\)`
+>1. 输入：状态转移概率`\(P^a_{ss'}\)`，回报函数`\(R^a_{s}\)`，折扣因子`\(\gamma\)`，初始化值函数`\(\upsilon(s)=0\)`，初始化策略`\(\pi_0\)`
 >1. Repeat `\(l=0,1,...\)`
 >1.    for every `\(s\)` do
->1.        `\(\upsilon ^*(s)=\underset{a}{max}R^a_{ss'}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon _l(s')\)` 
+>1.        `\(\upsilon _{l+1}(s)=\underset{a}{max}R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon _l(s')\)` 
 >1. Until `\(\upsilon _{l+1}=\upsilon _l\)`
->1. 输出：`\(\pi(s)=argmax_aR^a_{ss'}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon _l(s')\)`
+>1. 输出：`\(\pi(s)=argmax_aR^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon _l(s')\)`
 
+由于值迭代的计算过程与CNN的传播过程很相似，所以可以**利用CNN来表示值迭代过程。**
+
+先看看值迭代计算过程与CNN传播过程的相似之处：
+
+值迭代中，最关键的公式是：
+
+`\[
+\upsilon _{l+1}(s)=\underset{a}{max}R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon _l(s')
+\]`
+
+可以分解为两个步骤：
+
++ 遍历动作`\(a\)`，得到不同动作`\(a\)`对应的值函数更新，即：
+
+`\[
+\upsilon _{l+1}(s)=R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon _l(s')
+\]`

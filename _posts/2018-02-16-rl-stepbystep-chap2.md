@@ -149,13 +149,13 @@ q_{\pi}(s,a)=E_{\pi}[R_{t+1}+\gamma q(S_{t+1},A_{t+1})|S_t=s,A_t=a]
 而(其中，`\(P^a_{ss'}\)`表示从状态`\(s\)`开始，采取行动`\(a\)`，移动到状态`\(s'\)`的概率)
 
 `\[
-q_{\pi}(s,a)=R^a_{ss'}+\gamma \sum _{s'}P^a_{ss'}\upsilon _{\pi}(s')
+q_{\pi}(s,a)=R^a_{s}+\gamma \sum _{s'}P^a_{ss'}\upsilon _{\pi}(s')
 \]`
 
 因此，
 
 `\[
-\upsilon_{\pi}(s)=\sum_{a\in A}\pi(a|s)(R^a_{ss'}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_{\pi}(s'))
+\upsilon_{\pi}(s)=\sum_{a\in A}\pi(a|s)(R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_{\pi}(s'))
 \]`
 
 而
@@ -167,7 +167,7 @@ q_{\pi}(s,a)=R^a_{ss'}+\gamma \sum _{s'}P^a_{ss'}\upsilon _{\pi}(s')
 所以，状态-行为值函数是：
 
 `\[
-q_{\pi}(s,a)=R^a_{ss'}+\gamma \sum_{s'\in S}P^a_{ss'}\sum _{a'\in A}\pi(a'|s')q_{\pi}(s',a')
+q_{\pi}(s,a)=R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\sum _{a'\in A}\pi(a'|s')q_{\pi}(s',a')
 \]`
 
 示例：
@@ -199,13 +199,13 @@ q_{\pi}(s,a)=R^a_{ss'}+\gamma \sum_{s'\in S}P^a_{ss'}\sum _{a'\in A}\pi(a'|s')q_
 从而，**最优状态值函数**的**贝尔曼最优方程**(与前面的`\(\upsilon _{\pi}(s)\)`的区别是，少乘了一个`\(\pi(a|s)\)`)：
 
 `\[
-\upsilon ^*(s)=\underset{a}{max}R^a_{ss'}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon ^*(s')
+\upsilon ^*(s)=\underset{a}{max}R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon ^*(s')
 \]`
 
 **最优状态-行为值函数**的**贝尔曼最优方程**：
 
 `\[
-q^*(s,a)=R^a_{ss'}+\gamma \sum _{s'\in S}P^a_{ss'}\underset{a'}{max}q^*(s',a')
+q^*(s,a)=R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\underset{a'}{max}q^*(s',a')
 \]`
 
 若已各大最优状态-值函数，最优策略可以通过直接最大化`\(q^*(s,a)\)`来决定：

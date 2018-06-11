@@ -64,8 +64,8 @@ tags: [深入浅出强化学习, 基于模型的动态规划]
 第二章说到，强化学习可以利用马尔科夫决策过程来描述，利用贝尔曼最优性原理得到贝尔曼最优化方程：
 
 `\[
-\\\upsilon ^*(s)=\underset{a}{max}R^a_{ss'}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon ^*(s')
-\\q^*(s,a)=R^a_{ss'}+\gamma \sum _{s'\in S}P^a_{ss'}\underset{a}{max}q^*(s',a')
+\\\upsilon ^*(s)=\underset{a}{max}R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon ^*(s')
+\\q^*(s,a)=R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\underset{a}{max}q^*(s',a')
 \]`
 
 可见马尔科夫决策问题符合使用动态规划的两个条件，所以可以用动态规划来解决。
@@ -75,12 +75,12 @@ tags: [深入浅出强化学习, 基于模型的动态规划]
 由上一章可以得到如下状态值函数的计算方法：
 
 `\[
-\upsilon_{\pi}(s)=\sum_{a\in A}\pi(a|s)(R^a_{ss'}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_{\pi}(s'))
+\upsilon_{\pi}(s)=\sum_{a\in A}\pi(a|s)(R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_{\pi}(s'))
 \]`
 
 从上式中可见，**状态s处的值函数`\(\upsilon_{\pi}(s)\)`**可以用**后继状态的值函数`\(\upsilon_{\pi}(s')\)`**来表示，而**后继状态的值函数**是**未知**的，所以这就是**bootstrap算法**。
 
-上式中，对于**模型已知**的强化学习算法，`\(P^a_{ss'}\)`、`\(\gamma\)`和`\(R^a_{ss'}\)`都是已知的，`\(\pi(a|s)\)`是要评估的策略，是指定的，也是已知的。所以**未知数**就是**值函数**，未知数的个数为状态的总数，用`\(|S|\)`表示。
+上式中，对于**模型已知**的强化学习算法，`\(P^a_{ss'}\)`、`\(\gamma\)`和`\(R^a_{s}\)`都是已知的，`\(\pi(a|s)\)`是要评估的策略，是指定的，也是已知的。所以**未知数**就是**值函数**，未知数的个数为状态的总数，用`\(|S|\)`表示。
 
 下面介绍如何求解上述公式(其实就是**关于值函数**的**线性方程组**)
 
@@ -91,7 +91,7 @@ tags: [深入浅出强化学习, 基于模型的动态规划]
 使用高斯-赛德尔迭代算法：
 
 `\[
-\upsilon_{k+1}(s)=\sum_{a\in A}\pi(a|s)(R^a_{ss'}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon _{k}(s'))
+\upsilon_{k+1}(s)=\sum_{a\in A}\pi(a|s)(R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon _{k}(s'))
 \]`
 
 算法步骤如下：
@@ -100,7 +100,7 @@ tags: [深入浅出强化学习, 基于模型的动态规划]
 + 初始化值函数：`\(\upsilon(s)=0\)`
 + repeat k=0,1,...
     + for s in S:
-        + `\(\upsilon_{k+1}(s)=\sum _{a\in A}\pi(a|s)(R^a_{ss'}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_k(s'))\)`
+        + `\(\upsilon_{k+1}(s)=\sum _{a\in A}\pi(a|s)(R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_k(s'))\)`
 + until `\(\upsilon_{k+1}=\upsilon_k\)`
 + 输出：`\(\upsilon(s)\)`
 
