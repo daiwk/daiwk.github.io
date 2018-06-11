@@ -208,3 +208,64 @@ HParams对model和problem都是可用的。
 
 ## 3. 新增数据集
 
+
+## 4. 可视化
+
+参考：[https://github.com/tensorflow/tensor2tensor/tree/master/tensor2tensor/insights](https://github.com/tensorflow/tensor2tensor/tree/master/tensor2tensor/insights)
+
+首先，安装nodejs的npm：[https://nodejs.org/en/](https://nodejs.org/en/)
+
+然后用npm安装Bower：
+
+```shell
+npm install -g bower
+```
+
+然后用bower对本项目的insights部分进行安装：
+
+```shell
+pushd tensor2tensor/insights/polymer
+bower install
+popd
+```
+
+还需要
+
+```shell
+pip install oauth2client
+```
+
+然后写一个json，表示模型的各种配置：
+
+```shell
+  {
+    "configuration": [{
+      "source_language": "en",
+      "target_language": "de",
+      "label": "transformers_wmt32k",
+      "transformer": {
+        "model": "transformer",
+        "model_dir": "/tmp/t2t/train",
+        "data_dir": "/tmp/t2t/data",
+        "hparams": "",
+        "hparams_set": "transformer_base_single_gpu",
+        "problem": "translate_ende_wmt32k"
+      },
+    }],
+    "language": [{
+      "code": "en",
+      "name": "English",
+    },{
+      "code": "de",
+      "name": "German",
+    }]
+  }
+```
+
+然后启动：
+
+```shell
+t2t-insights-server \
+          --configuration=configuration.json \
+          --static_path=`pwd`/tensor2tensor/insights/polymer
+```
