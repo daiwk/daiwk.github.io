@@ -265,6 +265,7 @@ tags: [导引, navigation]
 
 #### 【站外资源汇总】
 
+API中文文档[https://www.w3cschool.cn/tensorflow_python/tensorflow_python-ctv72eru.html](https://www.w3cschool.cn/tensorflow_python/tensorflow_python-ctv72eru.html)
 
 #### 【站内资源汇总】
 暂无
