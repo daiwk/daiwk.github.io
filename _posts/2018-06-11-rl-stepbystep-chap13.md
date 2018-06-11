@@ -13,6 +13,7 @@ tags: [值迭代网络, value iteration network]
     - [1.1 DQN的缺陷](#11-dqn的缺陷)
     - [2.2 具有规划能力的策略网络](#22-具有规划能力的策略网络)
 - [2. 值迭代网络](#2-值迭代网络)
+- [3. 代码解读](#3-代码解读)
 
 <!-- /TOC -->
 
@@ -22,6 +23,9 @@ tags: [值迭代网络, value iteration network]
 
 ## 1. 背景
 
+[Value Iteration Networks](http://papers.nips.cc/paper/6046-value-iteration-networks.pdf)
+
+参考 [https://zhuanlan.zhihu.com/p/25515755](https://zhuanlan.zhihu.com/p/25515755)
 
 ### 1.1 DQN的缺陷
 
@@ -80,3 +84,113 @@ Tamar等发现，**已经调优的深度神经网络，很难泛化到其他游�
 `\[
 \upsilon _{l+1}(s)=R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon _l(s')
 \]`
+
+这一步相当于CNN中的卷积操作。相当于图中的，输入`\(\bar{R}\)`和`\(Prev.\ Value\)`，得到`\(\bar(Q)\)`
+
++ 遍历动作`\(a\)`，找到最大的`\(\upsilon_{l+1}(s,a)\)`：
+
+`\[
+\upsilon _{l+1}(s)=\underset{a}{max}\upsilon _{l+1}(s,a)
+\]`
+
+这一步相当于CNN中的池化操作。相当于图中的，输入`\(\bar{Q}\)`，得到`\(New\ Value\ \bar(V)\)`
+
+所以，可以将值迭代的过程用CNN嵌入到策略网络中，而与CNN有如下的不同：
+
++ 偏移量`\(R^a_s\)`对应着每个像素的偏移量(bias)
++ 状态转移函数`\(P^a_{ss'}\)`对应着卷积核，因为它要和`\(\bar(V)\)`进行点积再求和
++ 卷积核的个数对应着动作空间的维数
+
+<html>
+<br/>
+
+<img src='../assets/value-iteration-network-1.png' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
+
+这个网络迭代k次，可以理解为网络往后多看了k步之后的值函数。【相当于一个k个时间步的cnn(conv+maxpooling)，然后再和原始输入做个attention？】
+
+k步之后得到的最优策略为：
+
+`\[
+\pi ^*(s)=argmax_aR(s,a)+\gamma \sum _{s'} P(s'|s,a)V^*(s')
+\]`
+
+状态`\(s\)`处的策略只和它的邻域的值函数`\(V^*(s')\)`有关。而在nn中，当给定的标签只与输入特征的一个局部相关时，就是attention机制。所以，VIN在VI模块后，加了一个attention网络。
+
+训练方法的话，可以采用模仿学习（IL），也可以采用强化学习（RL）。模仿学习就是利用专家数据对网络参数进行训练，例如针对导航任务，专家数据可以来自传统的规划算法，如Dijkstra算法或者`\(A^*\)`算法。
+
+## 3. 代码解读 
+
+tf：[https://github.com/TheAbhiKumar/tensorflow-value-iteration-networks](https://github.com/TheAbhiKumar/tensorflow-value-iteration-networks)
+
+pytorch：[https://github.com/kentsommer/pytorch-value-iteration-networks](https://github.com/kentsommer/pytorch-value-iteration-networks)
+
+tf版本
+
+```python
+
+def flipkernel(kern):
+    return kern[(slice(None, None, -1),) * 2 + (slice(None), slice(None))]
+
+def conv2d_flipkernel(x, k, name=None):
+    return tf.nn.conv2d(x, flipkernel(k), name=name,
+                        strides=(1, 1, 1, 1), padding='SAME')
+
+def VI_Block(X, S1, S2, config):
+    k    = config.k    # Number of value iterations performed
+    ch_i = config.ch_i # Channels in input layer
+    ch_h = config.ch_h # Channels in initial hidden layer
+    ch_q = config.ch_q # Channels in q layer (~actions)
+    state_batch_size = config.statebatchsize # k+1 state inputs for each channel
+
+    bias  = tf.Variable(np.random.randn(1, 1, 1, ch_h)    * 0.01, dtype=tf.float32)
+    # weights from inputs to q layer (~reward in Bellman equation)
+    w0    = tf.Variable(np.random.randn(3, 3, ch_i, ch_h) * 0.01, dtype=tf.float32)
+    w1    = tf.Variable(np.random.randn(1, 1, ch_h, 1)    * 0.01, dtype=tf.float32)
+    w     = tf.Variable(np.random.randn(3, 3, 1, ch_q)    * 0.01, dtype=tf.float32)
+    # feedback weights from v layer into q layer (~transition probabilities in Bellman equation)
+    w_fb  = tf.Variable(np.random.randn(3, 3, 1, ch_q)    * 0.01, dtype=tf.float32)
+    w_o   = tf.Variable(np.random.randn(ch_q, 8)          * 0.01, dtype=tf.float32)
+
+    # initial conv layer over image+reward prior
+    h = conv2d_flipkernel(X, w0, name="h0") + bias
+
+    r = conv2d_flipkernel(h, w1, name="r")
+    q = conv2d_flipkernel(r, w, name="q")
+    v = tf.reduce_max(q, axis=3, keep_dims=True, name="v")
+
+    for i in range(0, k-1):
+        rv = tf.concat([r, v], 3)
+        wwfb = tf.concat([w, w_fb], 2)
+        q = conv2d_flipkernel(rv, wwfb, name="q")
+        v = tf.reduce_max(q, axis=3, keep_dims=True, name="v")
+
+    # do one last convolution
+    q = conv2d_flipkernel(tf.concat([r, v], 3),
+                          tf.concat([w, w_fb], 2), name="q")
+
+    # CHANGE TO THEANO ORDERING
+    # Since we are selecting over channels, it becomes easier to work with
+    # the tensor when it is in NCHW format vs NHWC
+    q = tf.transpose(q, perm=[0, 3, 1, 2])
+
+    # Select the conv-net channels at the state position (S1,S2).
+    # This intuitively corresponds to each channel representing an action, and the convnet the Q function.
+    # The tricky thing is we want to select the same (S1,S2) position *for each* channel and for each sample
+    # TODO: performance can be improved here by substituting expensive
+    #       transpose calls with better indexing for gather_nd
+    bs = tf.shape(q)[0]
+    rprn = tf.reshape(tf.tile(tf.reshape(tf.range(bs), [-1, 1]), [1, state_batch_size]), [-1])
+    ins1 = tf.cast(tf.reshape(S1, [-1]), tf.int32)
+    ins2 = tf.cast(tf.reshape(S2, [-1]), tf.int32)
+    idx_in = tf.transpose(tf.stack([ins1, ins2, rprn]), [1, 0])
+    q_out = tf.gather_nd(tf.transpose(q, [2, 3, 0, 1]), idx_in, name="q_out")
+
+    # add logits
+    logits = tf.matmul(q_out, w_o)
+    # softmax output weights
+    output = tf.nn.softmax(logits, name="output")
+    return logits, output
+```

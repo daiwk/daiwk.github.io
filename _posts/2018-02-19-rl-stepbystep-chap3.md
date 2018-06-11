@@ -96,13 +96,13 @@ tags: [深入浅出强化学习, 基于模型的动态规划]
 
 算法步骤如下：
 
-+ 输入：需要评估的策略`\(\pi\)`状态转移概率`\(P^a_{ss'}\)`回报函数`\(R^a_s\)`，折扣因子`\(\gamma\)`
-+ 初始化值函数：`\(\upsilon(s)=0\)`
-+ repeat k=0,1,...
-    + for s in S:
-        + `\(\upsilon_{k+1}(s)=\sum _{a\in A}\pi(a|s)(R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_k(s'))\)`
-+ until `\(\upsilon_{k+1}=\upsilon_k\)`
-+ 输出：`\(\upsilon(s)\)`
+>1. 输入：需要评估的策略`\(\pi\)`状态转移概率`\(P^a_{ss'}\)`回报函数`\(R^a_s\)`，折扣因子`\(\gamma\)`
+>1. 初始化值函数：`\(\upsilon(s)=0\)`
+>1. repeat k=0,1,...
+>1.     for s in S:
+>1.        `\(\upsilon_{k+1}(s)=\sum _{a\in A}\pi(a|s)(R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_k(s'))\)`
+>1. until `\(\upsilon_{k+1}=\upsilon_k\)`
+>1. 输出：`\(\upsilon(s)\)`
 
 注意：**每次迭代**都需要**对状态集进行一次遍历**，以评估每个状态的值函数。
 
@@ -111,6 +111,13 @@ tags: [深入浅出强化学习, 基于模型的动态规划]
 #### 1.2.3 策略迭代算法
 
 ### 1.3 值函数迭代算法
+
+>1. 输入：状态转移概率`\(P^a_{ss'}\)`，回报函数`\(R^a_{s}\)`，折扣因子`\(\gamma\)`，初始化值函数`\(\upsilon(s)=0\)`，初始化策略`\(\pi_0\)`
+>1. Repeat `\(l=0,1,...\)`
+>1.    for every `\(s\)` do
+>1.        `\(\upsilon _{l+1}(s)=\underset{a}{max}R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon _l(s')\)` 
+>1. Until `\(\upsilon _{l+1}=\upsilon _l\)`
+>1. 输出：`\(\pi(s)=argmax_aR^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon _l(s')\)`
 
 ### 1.4 解决最优控制问题的三种算法
 
