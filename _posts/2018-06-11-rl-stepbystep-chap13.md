@@ -27,6 +27,8 @@ tags: [值迭代网络, value iteration network]
 
 参考 [https://zhuanlan.zhihu.com/p/25515755](https://zhuanlan.zhihu.com/p/25515755)
 
+slide：[https://daiwk.github.io/assets/value-iteration-networks-slide.pdf](https://daiwk.github.io/assets/value-iteration-networks-slide.pdf)
+
 ### 1.1 DQN的缺陷
 
 先从以下几个角度来理解DQN：
@@ -128,6 +130,32 @@ tf：[https://github.com/TheAbhiKumar/tensorflow-value-iteration-networks](https
 pytorch：[https://github.com/kentsommer/pytorch-value-iteration-networks](https://github.com/kentsommer/pytorch-value-iteration-networks)
 
 tf版本
+
+基础知识：
+
++ python的slice函数
+
+```python
+class slice(stop)
+class slice(start, stop[, step])
+### start -- 起始位置
+### stop -- 结束位置
+### step -- 间距
+## 示例
+
+>>>myslice = slice(5)    # 设置截取5个元素的切片
+>>> myslice
+slice(None, 5, None)
+>>> arr = range(10)
+>>> arr
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+>>> arr[myslice]         # 截取 5 个元素
+[0, 1, 2, 3, 4]
+>>>
+
+```
+
+
 
 ```python
 
