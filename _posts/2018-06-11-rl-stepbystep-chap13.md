@@ -14,6 +14,10 @@ tags: [值迭代网络, value iteration network]
     - [2.2 具有规划能力的策略网络](#22-具有规划能力的策略网络)
 - [2. 值迭代网络](#2-值迭代网络)
 - [3. 代码解读](#3-代码解读)
+    - [3.1 基础知识：](#31-基础知识)
+        - [python的slice函数](#python的slice函数)
+        - [tf.reduce_*](#tfreduce_)
+    - [3.2 代码](#32-代码)
 
 <!-- /TOC -->
 
@@ -131,9 +135,9 @@ pytorch：[https://github.com/kentsommer/pytorch-value-iteration-networks](https
 
 tf版本
 
-基础知识：
+### 3.1 基础知识：
 
-+ python的slice函数
+#### python的slice函数
 
 ```python
 class slice(stop)
@@ -155,7 +159,93 @@ slice(None, 5, None)
 
 ```
 
+#### tf.reduce_*
 
+tensorflow中有一类在tensor的某一维度上求值的函数。
+
++ 求最大值tf.reduce_max()
++ 求平均值tf.reduce_mean()
+
+参数：
++ input_tensor:待求值的tensor。
++ keepdims:是否保持其他维不变。（之前叫keep_dims）
++ axis:要对哪一维进行操作(之前叫reduction_indices)，那么保证shape不变，只对这维求max/min，其他维删除。如果设置了keepdims=True，那么其他维的大小保持不变
+
+先看一个简单的例子：
+
+```python
+x=tf.constant([[1,4,3],[4,2,6]],dtype=tf.float32) # x.shape=(2, 3)
+y = tf.reduce_max(x,axis=1,keepdims=True) 
+# 2行3列，axis=1就在列维度操作，n列变成1列，即每一行求max，合到一列里
+# 相当于只有第1维有值其他几维没东西了，第1维存的是其他几维的max
+sess = tf.Session()
+print x.shape
+print sess.run(y)
+print y.shape
+
+y = tf.reduce_max(x,axis=0,keepdims=True) 
+# 2行3列，axis=0就在行维度操作，n行变成1行，即每一列求max，合到一行里
+# 相当于只有第0维有值其他几维没东西了，第0维存的是其他几维的max
+sess = tf.Session()
+print x.shape
+print sess.run(y)
+print y.shape
+```
+
+输出：
+
+```python
+(2, 3)
+[[4.]
+ [6.]]
+(2, 1)
+
+(2, 3)
+[[4. 4. 6.]]
+(1, 3)
+```
+
+再看个复杂一点的
+
+```python
+x=tf.constant([[[1,2,3],[4,5,6]],[[22,33,44],[55,66,77]]],dtype=tf.float32) # x.shape=(2, 2, 3)
+y = tf.reduce_max(x,axis=0,keepdims=True)
+sess = tf.Session()
+print sess.run(y) 
+print y.shape
+
+y = tf.reduce_max(x,axis=1,keepdims=True)
+sess = tf.Session()
+print sess.run(y)
+print y.shape
+
+y = tf.reduce_max(x,axis=2,keepdims=True)
+sess = tf.Session()
+print sess.run(y)
+print y.shape
+```
+
+输出：
+
+```python
+[[[22. 33. 44.]
+  [55. 66. 77.]]]
+(1, 2, 3)
+
+[[[ 4.  5.  6.]]
+
+ [[55. 66. 77.]]]
+(2, 1, 3)
+
+[[[ 3.]
+  [ 6.]]
+
+ [[44.]
+  [77.]]]
+(2, 2, 1)
+```
+
+### 3.2 代码
 
 ```python
 
@@ -175,9 +265,9 @@ def VI_Block(X, S1, S2, config):
 
     bias  = tf.Variable(np.random.randn(1, 1, 1, ch_h)    * 0.01, dtype=tf.float32)
     # weights from inputs to q layer (~reward in Bellman equation)
-    w0    = tf.Variable(np.random.randn(3, 3, ch_i, ch_h) * 0.01, dtype=tf.float32)
-    w1    = tf.Variable(np.random.randn(1, 1, ch_h, 1)    * 0.01, dtype=tf.float32)
-    w     = tf.Variable(np.random.randn(3, 3, 1, ch_q)    * 0.01, dtype=tf.float32)
+    w0    = tf.Variable(np.random.randn(3, 3, ch_i, ch_h) * 0.01, dtype=tf.float32) # 从X到h？
+    w1    = tf.Variable(np.random.randn(1, 1, ch_h, 1)    * 0.01, dtype=tf.float32) # 从h到reward？
+    w     = tf.Variable(np.random.randn(3, 3, 1, ch_q)    * 0.01, dtype=tf.float32) # 从reward到q？
     # feedback weights from v layer into q layer (~transition probabilities in Bellman equation)
     w_fb  = tf.Variable(np.random.randn(3, 3, 1, ch_q)    * 0.01, dtype=tf.float32)
     w_o   = tf.Variable(np.random.randn(ch_q, 8)          * 0.01, dtype=tf.float32)
@@ -187,10 +277,10 @@ def VI_Block(X, S1, S2, config):
 
     r = conv2d_flipkernel(h, w1, name="r")
     q = conv2d_flipkernel(r, w, name="q")
-    v = tf.reduce_max(q, axis=3, keep_dims=True, name="v")
+    v = tf.reduce_max(q, axis=3, keep_dims=True, name="v") # 相当于maxpooling
 
     for i in range(0, k-1):
-        rv = tf.concat([r, v], 3)
+        rv = tf.concat([r, v], 3) # reward和上一步的v一起，接下来进行卷积
         wwfb = tf.concat([w, w_fb], 2)
         q = conv2d_flipkernel(rv, wwfb, name="q")
         v = tf.reduce_max(q, axis=3, keep_dims=True, name="v")
