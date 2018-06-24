@@ -9,16 +9,27 @@ tags: [tf, ]
 
 <!-- TOC -->
 
-- [tf.reduce_*](#tfreduce_)
-- [tf.nn.conv2d](#tfnnconv2d)
-- [tf.nn.max_pool](#tfnnmax_pool)
-- [tf.nn.relu](#tfnnrelu)
-- [tf.contrib.layers.flatten](#tfcontriblayersflatten)
-- [tf.contrib.layers.fully_connected](#tfcontriblayersfully_connected)
+- [基本函数](#基本函数)
+    - [tf.reduce_*](#tfreduce_)
+- [tf.nn](#tfnn)
+    - [cost](#cost)
+        - [tf.nn.softmax_cross_entropy_with_logits](#tfnnsoftmax_cross_entropy_with_logits)
+    - [activations](#activations)
+        - [tf.nn.relu](#tfnnrelu)
+    - [ops](#ops)
+        - [tf.nn.conv2d](#tfnnconv2d)
+        - [tf.nn.max_pool](#tfnnmax_pool)
+- [tf.contrib.layers](#tfcontriblayers)
+    - [tf.contrib.layers.flatten](#tfcontriblayersflatten)
+    - [tf.contrib.layers.fully_connected](#tfcontriblayersfully_connected)
 
 <!-- /TOC -->
 
-## tf.reduce_*
+## 基本函数
+
+### tf.reduce_*
+
+**tf.reduce_mean:** computes the mean of elements across dimensions of a tensor. Use this to sum the losses over all the examples to get the overall cost. You can check the full documentation [here.](https://www.tensorflow.org/api_docs/python/tf/reduce_mean)
 
 实现代码在```tensorflow/python/ops/math_ops.py```
 
@@ -106,7 +117,24 @@ print y.shape
 (2, 2, 1)
 ```
 
-## tf.nn.conv2d
+## tf.nn
+
+### cost
+
+#### tf.nn.softmax_cross_entropy_with_logits
+
+**tf.nn.softmax_cross_entropy_with_logits(logits = Z3, labels = Y):** computes the softmax entropy loss. This function both computes the softmax activation function as well as the resulting loss. You can check the full documentation  [here.](https://www.tensorflow.org/api_docs/python/tf/nn/softmax_cross_entropy_with_logits)
+
+
+### activations
+
+#### tf.nn.relu
+
+**tf.nn.relu(Z1):** computes the elementwise ReLU of Z1 (which can be any shape). You can read the full documentation [here.](https://www.tensorflow.org/api_docs/python/tf/nn/relu)
+
+### ops
+
+#### tf.nn.conv2d
 
 **tf.nn.conv2d(X,W1, strides = [1,s,s,1], padding = 'SAME'):** given an input $X$ and a group of filters ```W1```, this function convolves ```W1```'s filters on X. The third input ([1,f,f,1]) represents the strides for each dimension of the input (m, n_H_prev, n_W_prev, n_C_prev). You can read the full documentation [here](https://www.tensorflow.org/api_docs/python/tf/nn/conv2d)
 
@@ -139,19 +167,17 @@ output[b, i, j, k] =
 
 必须满足```strides[0] = strides[3] = 1```，对于最common的case，也就是horizontal and vertices strides是一样的， ```strides = [1, stride, stride, 1]```
 
-## tf.nn.max_pool
+#### tf.nn.max_pool
 
 **tf.nn.max_pool(A, ksize = [1,f,f,1], strides = [1,s,s,1], padding = 'SAME'):** given an input A, this function uses a window of size (f, f) and strides of size (s, s) to carry out max pooling over each window. You can read the full documentation [here](https://www.tensorflow.org/api_docs/python/tf/nn/max_pool)
 
-## tf.nn.relu
+## tf.contrib.layers
 
-**tf.nn.relu(Z1):** computes the elementwise ReLU of Z1 (which can be any shape). You can read the full documentation [here.](https://www.tensorflow.org/api_docs/python/tf/nn/relu)
-
-## tf.contrib.layers.flatten
+### tf.contrib.layers.flatten
 
 **tf.contrib.layers.flatten(P)**: given an input P, this function flattens each example into a 1D vector it while maintaining the batch-size. It returns a flattened tensor with shape [batch_size, k]. You can read the full documentation [here.](https://www.tensorflow.org/api_docs/python/tf/contrib/layers/flatten)
 
-## tf.contrib.layers.fully_connected
+### tf.contrib.layers.fully_connected
 
 **tf.contrib.layers.fully_connected(F, num_outputs):** given a the flattened input F, it returns the output computed using a fully connected layer. You can read the full documentation [here.](https://www.tensorflow.org/api_docs/python/tf/contrib/layers/fully_connected)
 
