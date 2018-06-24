@@ -16,6 +16,7 @@ tags: [值迭代网络, value iteration network]
 - [3. 代码解读](#3-代码解读)
     - [3.1 基础知识：](#31-基础知识)
         - [python的slice函数](#python的slice函数)
+        - [tf.nn.conv2d](#tfnnconv2d)
         - [tf.reduce_*](#tfreduce_)
     - [3.2 代码](#32-代码)
 
@@ -159,7 +160,42 @@ slice(None, 5, None)
 
 ```
 
+#### tf.nn.conv2d
+
+实现代码在```tensorflow/python/ops/gen_nn_ops.py```中。
+
+```python
+tf.nn.conv2d(
+    input,
+    filter,
+    strides,
+    padding,
+    use_cudnn_on_gpu=True,
+    data_format='NHWC',
+    dilations=[1, 1, 1, 1],
+    name=None
+)
+```
+
+输入的shape是```[batch, in_height, in_width, in_channels]```，即『NHWC』，一个kernel或filter的shape是```[filter_height, filter_width, in_channels, out_channels]```。这个函数实现如下功能：
+
++ 对filter进行flatten，变成一个shape是```[filter_height * filter_width * in_channels, output_channels]```的2D矩阵
++ 将input tensor的image patches进行extract，并组成一个shape是```[batch, out_height, out_width, filter_height * filter_width * in_channels]```的virtual tensor。
++ 对于每一个patch，right-multiplies the filter matrix and the image patch vector.
+
+```python
+output[b, i, j, k] =
+    sum_{di, dj, q} input[b, strides[1] * i + di, strides[2] * j + dj, q] *
+                    filter[di, dj, q, k]
+```
+
+必须满足```strides[0] = strides[3] = 1```，对于最common的case，也就是horizontal and vertices strides是一样的， ```strides = [1, stride, stride, 1]```
+
+
+
 #### tf.reduce_*
+
+实现代码在```tensorflow/python/ops/math_ops.py```
 
 tensorflow中有一类在tensor的某一维度上求值的函数。
 
@@ -169,7 +205,7 @@ tensorflow中有一类在tensor的某一维度上求值的函数。
 参数：
 + input_tensor:待求值的tensor。
 + keepdims:是否保持其他维不变。（之前叫keep_dims）
-+ axis:要对哪一维进行操作(之前叫reduction_indices)，那么保证shape不变，只对这维求max/min，其他维删除。如果设置了keepdims=True，那么其他维的大小保持不变
++ axis:要对哪一维进行操作(之前叫reduction_indices)，只对这维求max/min，其他维删除。如果设置了keepdims=True，那么其他维的大小保持不变，要在[-rank(input_tensor), rank(input_tensor))范围内。
 
 先看一个简单的例子：
 
