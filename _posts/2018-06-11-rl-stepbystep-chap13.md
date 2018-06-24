@@ -162,11 +162,11 @@ slice(None, 5, None)
 
 #### tf.nn.conv2d
 
-参考
+参考[https://daiwk.github.io/posts/knowledge-tf-usage.html#tfnnconv2d](https://daiwk.github.io/posts/knowledge-tf-usage.html#tfnnconv2d)
 
 #### tf.reduce_*
 
-参考
+参考[https://daiwk.github.io/posts/knowledge-tf-usage.html#tfreduce_](https://daiwk.github.io/posts/knowledge-tf-usage.html#tfreduce_)
 
 ### 3.2 代码
 
