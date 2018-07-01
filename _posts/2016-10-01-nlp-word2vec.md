@@ -239,6 +239,13 @@ def build_dataset(words, n_words):
   return data, count, dictionary, reversed_dictionary
 ```
 
+而在NCE的实现中，使用的是log_uniform_candidate_sampler：
+
++ 会在[0, range_max)中采样出一个整数k
++ P(k) = (log(k + 2) - log(k + 1)) / log(range_max + 1)
+
+k越大，被采样到的概率越小。而我们的词典中，可以发现词频高的index小，所以高词频的词会被优先采样为负样本。
+
 其中的生成一个batch的方法如下：
 
 ```python

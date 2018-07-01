@@ -103,7 +103,7 @@ __label__4 13
 y.append(label_dict[line[0]])
 ```
 
-而使用的是nce_loss：
+而使用的是nce_loss(参考[https://daiwk.github.io/posts/knowledge-tf-usage.html#tfnnnceloss](https://daiwk.github.io/posts/knowledge-tf-usage.html#tfnnnceloss))：
 
 ```python
 ce_weights = tf.Variable(
