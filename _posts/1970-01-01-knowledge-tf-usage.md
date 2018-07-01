@@ -9,23 +9,35 @@ tags: [tf, ]
 
 <!-- TOC -->
 
-- [基本函数](#基本函数)
-    - [tf.reduce_*](#tfreduce_)
+- [基本函数](#%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0)
+    - [tf.truncated_normal](#tftruncatednormal)
+    - [tf.reduce_*](#tfreduce)
 - [tf.nn](#tfnn)
     - [cost](#cost)
-        - [tf.nn.softmax_cross_entropy_with_logits](#tfnnsoftmax_cross_entropy_with_logits)
+        - [tf.nn.softmax_cross_entropy_with_logits](#tfnnsoftmaxcrossentropywithlogits)
+        - [tf.nn.weighted_cross_entropy_with_logits](#tfnnweightedcrossentropywithlogits)
+        - [tf.nn.nce_loss](#tfnnnceloss)
     - [activations](#activations)
         - [tf.nn.relu](#tfnnrelu)
     - [ops](#ops)
         - [tf.nn.conv2d](#tfnnconv2d)
-        - [tf.nn.max_pool](#tfnnmax_pool)
+        - [tf.nn.max_pool](#tfnnmaxpool)
 - [tf.contrib.layers](#tfcontriblayers)
     - [tf.contrib.layers.flatten](#tfcontriblayersflatten)
-    - [tf.contrib.layers.fully_connected](#tfcontriblayersfully_connected)
+    - [tf.contrib.layers.fully_connected](#tfcontriblayersfullyconnected)
 
 <!-- /TOC -->
 
 ## 基本函数
+
+### tf.truncated_normal
+
+tf.truncated_normal(shape, mean=0.0, stddev=1.0, dtype=tf.float32, seed=None, name=None)
+
+从截断的正态分布中输出随机值。 
+生成的值服从具有指定平均值和标准偏差的正态分布，如果生成的值大于平均值2个标准偏差的值则丢弃重新选择。
+
+在tf.truncated_normal中如果x的取值在区间（μ-2σ，μ+2σ）之外则重新进行选择。这样**保证了生成的值都在均值附近。**
 
 ### tf.reduce_*
 
@@ -125,6 +137,30 @@ print y.shape
 
 **tf.nn.softmax_cross_entropy_with_logits(logits = Z3, labels = Y):** computes the softmax entropy loss. This function both computes the softmax activation function as well as the resulting loss. You can check the full documentation  [here.](https://www.tensorflow.org/api_docs/python/tf/nn/softmax_cross_entropy_with_logits)
 
+#### tf.nn.weighted_cross_entropy_with_logits
+
+正常的cross-entropy loss如下：
+
+```
+targets * -log(sigmoid(logits)) +
+    (1 - targets) * -log(1 - sigmoid(logits))
+```
+
+其实就是，`\(L(\hat y, y)=-(ylog\hat y+(1-y)log(1-\hat y))\)`
+
+而所谓的weighted，就是乘了一个pos_weight：
+
+```
+targets * -log(sigmoid(logits)) * pos_weight +
+    (1 - targets) * -log(1 - sigmoid(logits))
+```
+
+#### tf.nn.nce_loss
+
+原理和使用参考[https://daiwk.github.io/posts/nlp-word2vec.html#4-nce](https://daiwk.github.io/posts/nlp-word2vec.html#4-nce)
+[https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/nn/nce_loss](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/nn/nce_loss)
+
+nce的实现可以参考：[https://www.jianshu.com/p/fab82fa53e16](https://www.jianshu.com/p/fab82fa53e16)
 
 ### activations
 

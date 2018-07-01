@@ -9,18 +9,18 @@ tags: [word2vec, ngram, nnlm, cbow, c-skip-gram, 统计语言模型]
 
 <!-- TOC -->
 
-- [1. 统计语言模型](#1-统计语言模型)
-    - [N-gram模型](#n-gram模型)
-    - [神经网络语言模型（NNLM）](#神经网络语言模型nnlm)
+- [1. 统计语言模型](#1-%E7%BB%9F%E8%AE%A1%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B)
+  - [N-gram模型](#n-gram%E6%A8%A1%E5%9E%8B)
+  - [神经网络语言模型（NNLM）](#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%88nnlm%EF%BC%89)
 - [2. CBOW(Continuous Bag-of-Words)](#2-cbowcontinuous-bag-of-words)
 - [3. Continuous skip-gram](#3-continuous-skip-gram)
 - [4. NCE](#4-nce)
-- [5. 面试常见问题](#5-面试常见问题)
-- [x. tensorflow的简单实现](#x-tensorflow的简单实现)
-    - [简介](#简介)
-    - [代码解读](#代码解读)
-- [y1. tensorflow的高级实现1](#y1-tensorflow的高级实现1)
-- [y2. tensorflow的高级实现2](#y2-tensorflow的高级实现2)
+- [5. 面试常见问题](#5-%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+- [x. tensorflow的简单实现](#x-tensorflow%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0)
+  - [简介](#%E7%AE%80%E4%BB%8B)
+  - [代码解读](#%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB)
+- [y1. tensorflow的高级实现1](#y1-tensorflow%E7%9A%84%E9%AB%98%E7%BA%A7%E5%AE%9E%E7%8E%B01)
+- [y2. tensorflow的高级实现2](#y2-tensorflow%E7%9A%84%E9%AB%98%E7%BA%A7%E5%AE%9E%E7%8E%B02)
 
 <!-- /TOC -->
 
@@ -145,6 +145,8 @@ CBOW的好处是对上下文词语的分布在词向量上进行了平滑，去�
 
 讲解：[https://www.tensorflow.org/tutorials/word2vec](https://www.tensorflow.org/tutorials/word2vec)
 
+代码：[https://github.com/tensorflow/tensorflow/blob/r1.8/tensorflow/examples/tutorials/word2vec/word2vec_basic.py](https://github.com/tensorflow/tensorflow/blob/r1.8/tensorflow/examples/tutorials/word2vec/word2vec_basic.py)
+
 ## 简介
 
 使用maximum likelihood principle，最大化给定previous words `\(h\)`，下一个词`\(w_t\)`的概率（使用softmax定义）：
@@ -185,7 +187,7 @@ J_\text{NEG} = \log Q_\theta(D=1 |w_t, h) +
 
 其中，`\(Q_\theta(D=1 | w, h)\)`是使用学到的embedding vector `\(\theta\)`，在给定上下文h，预测词w的概率。
 
-直观地理解，这个目标就是希望预测为`\(w_t\)`的概率尽可能大，同时预测为非`\(\tilde w\)`的概率尽可能大，也就是，**希望预测为真实词的概率尽量磊，预测为noise word的概率尽量小**。在极限情况下，这可以近似为softmax，但这计算量比softmax小很多。这就是所谓的[negative sampling](https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf)。tensorflow有一个很类似的损失函数[noise-contrastive estimation(NCE)](https://papers.nips.cc/paper/5165-learning-word-embeddings-efficiently-with-noise-contrastive-estimation.pdf)```tf.nn.nce_loss()```。
+直观地理解，这个目标就是希望预测为`\(w_t\)`的概率尽可能大，同时预测为非`\(\tilde w\)`的概率尽可能大，也就是，**希望预测为真实词的概率尽量大，预测为noise word的概率尽量小**。在极限情况下，这可以近似为softmax，但这计算量比softmax小很多。这就是所谓的[negative sampling](https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf)。tensorflow有一个很类似的损失函数[noise-contrastive estimation(NCE)](https://papers.nips.cc/paper/5165-learning-word-embeddings-efficiently-with-noise-contrastive-estimation.pdf)```tf.nn.nce_loss()```。
 
 针对句子
 
@@ -214,6 +216,28 @@ the quick brown fox jumped over the lazy dog
 </html>
 
 ## 代码解读
+
+首先build一个dataset：
+
+```python
+def build_dataset(words, n_words):
+  """Process raw inputs into a dataset."""
+  count = [['UNK', -1]]
+  count.extend(collections.Counter(words).most_common(n_words - 1)) ## 取出词频top n_words-1的词，词频高的index小
+  dictionary = dict()
+  for word, _ in count:
+    dictionary[word] = len(dictionary)
+  data = list()
+  unk_count = 0
+  for word in words:
+    index = dictionary.get(word, 0)
+    if index == 0:  # dictionary['UNK']
+      unk_count += 1
+    data.append(index)
+  count[0][1] = unk_count
+  reversed_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
+  return data, count, dictionary, reversed_dictionary
+```
 
 其中的生成一个batch的方法如下：
 
