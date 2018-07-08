@@ -1,7 +1,7 @@
 ---
 layout: post
 category: "knowledge"
-title: "编译python"
+title: "python小技巧"
 tags: [python, ]
 ---
 
