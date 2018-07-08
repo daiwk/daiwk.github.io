@@ -163,5 +163,6 @@ https://daiwk.github.io/posts/dl-tf-serving-docker.html
 https://daiwk.github.io/posts/platform-bazel.html
 https://daiwk.github.io/posts/platform-ray.html
 https://daiwk.github.io/posts/rl-stepbystep-chap13.html
+https://daiwk.github.io/posts/platform-distributed-dl.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/tags.html

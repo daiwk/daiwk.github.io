@@ -9,8 +9,12 @@ tags: [python, ]
 
 <!-- TOC -->
 
+- [1. 编译安装python](#1-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85python)
+- [2. jupyter](#2-jupyter)
 
 <!-- /TOC -->
+
+## 1. 编译安装python
 
 python总体上有两个版本，cp27m是ucs2，cp27mu是ucs4，UCS2认为每个字符占用2个字节，UCS4认为每个字节占用4个字符，都是UNICODE的编码形式。
 
@@ -42,3 +46,15 @@ python总体上有两个版本，cp27m是ucs2，cp27mu是ucs4，UCS2认为每个
       curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 
       python get-pip.py
+
+## 2. jupyter
+
+小技巧：如何把整个notebook里的各级目录的东西一起下载？(我们发现在界面里一次只能下载一个文件。。。)
+
+打开一个python窗口，然后输入(google搜出来的啦。。)
+
+```shell
+!tar -czhvf notebook.tar.gz *
+```
+
+其中的-h参数，是把软链对应的真实文件搞过来哈~。。
