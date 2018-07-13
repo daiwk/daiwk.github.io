@@ -1,8 +1,8 @@
 ---
 layout: post
-category: "rl"
-title: "深入浅出强化学习-chap13 值迭代网络"
-tags: [值迭代网络, value iteration network]
+category: "dl"
+title: "分布式深度学习"
+tags: [分布式深度学习, ]
 ---
 
 目录
