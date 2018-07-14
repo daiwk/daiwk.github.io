@@ -217,11 +217,11 @@ DDPG的整体流程如下：
 
 注：
 
-+ critic是`\(Q\)`，actor是`\(\mu\)`
-+ `\(\theta ^Q\)`就是前面讲的`\(w\)`
-+ `\(\theta ^{Q'}\)`就是前面讲的`\(w^-\)`
-+ `\(\theta ^\mu\)`就是前面讲的`\(\theta\)`
-+ `\(\theta ^{\mu'}\)`就是前面讲的`\(\theta^-\)`
-
++ critic是`\(Q\)`，critic的目标网络是`\(Q'\)`
++ actor是`\(\mu\)`，actor的目标网络是`\(\mu'\)`
++ critic的参数`\(\theta ^Q\)`就是前面讲的`\(w\)`
++ critic的目标网络的参数`\(\theta ^{Q'}\)`就是前面讲的`\(w^-\)`
++ actor的参数`\(\theta ^\mu\)`就是前面讲的`\(\theta\)`
++ actor的目标网络的参数`\(\theta ^{\mu'}\)`就是前面讲的`\(\theta^-\)`
 
 
