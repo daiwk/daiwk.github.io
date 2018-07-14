@@ -2,29 +2,30 @@
 layout: post
 category: "rl"
 title: "深入浅出强化学习-chap9 基于确定性策略搜索的强化学习方法"
-tags: [深入浅出强化学习, DPG, DDPG]
+tags: [深入浅出强化学习, DPG, DDPG, AC, A3C]
 ---
 
 目录
 
 <!-- TOC -->
 
-- [1. 理论基础](#1-理论基础)
-    - [1.1 随机策略与确定性策略](#11-随机策略与确定性策略)
-        - [1.1.1 随机策略](#111-随机策略)
-        - [1.1.2 确定性策略](#112-确定性策略)
-        - [1.1.3 对比](#113-对比)
-    - [1.2 AC框架](#12-ac框架)
-        - [1.2.1 随机策略AC方法](#121-随机策略ac方法)
-        - [1.2.2 确定性策略AC方法（DPG）](#122-确定性策略ac方法dpg)
-        - [1.2.3 深度确定性策略梯度方法（DDPG）](#123-深度确定性策略梯度方法ddpg)
+- [1. 概述](#1-概述)
+- [2. 随机策略与确定性策略](#2-随机策略与确定性策略)
+    - [2.1 随机策略](#21-随机策略)
+    - [2.2 确定性策略](#22-确定性策略)
+    - [2.3 对比](#23-对比)
+- [3. AC框架](#3-ac框架)
+    - [3.1 随机策略AC方法](#31-随机策略ac方法)
+    - [3.2 确定性策略AC方法（DPG）](#32-确定性策略ac方法dpg)
+    - [3.3 深度确定性策略梯度方法（DDPG）](#33-深度确定性策略梯度方法ddpg)
+    - [3.3 A3C(asynchronous advantage actor-critic)](#33-a3casynchronous-advantage-actor-critic)
 
 <!-- /TOC -->
 
 
 参考**《深入浅出强化学习》**
 
-## 1. 理论基础
+## 1. 概述
 
 model-free的策略搜索方法可以分为随机策略搜索方法和确定性策略搜索方法。
 
@@ -33,9 +34,9 @@ model-free的策略搜索方法可以分为随机策略搜索方法和确定性�
 + 2015年DeepMind又将DPG与DQN的成功经验相结合，提出了[Continuous Control with Deep Reinforcement Learning](https://arxiv.org/abs/1509.02971)，即**DDPG**
 + ICML2016，提出了[Asynchronous Methods for Deep Reinforcement Learning](https://arxiv.org/abs/1602.01783)，即A3C（asynchronous advantage actor-critic）算法。
 
-### 1.1 随机策略与确定性策略
+## 2. 随机策略与确定性策略
 
-#### 1.1.1 随机策略
+### 2.1 随机策略
 
 随机策略公式为：
 
@@ -51,7 +52,7 @@ model-free的策略搜索方法可以分为随机策略搜索方法和确定性�
 
 在状态`\(s\)`处，采取的动作服从均值为`\(f_{\theta}(s)\)`，方差为`\(\sigma ^2\)`的正态分布。所以，即使相同的食碗面反碗底，每次采取的动作也可能不一样。
 
-#### 1.1.2 确定性策略
+### 2.2 确定性策略
 
 确定性策略的公式如下：
 
@@ -61,7 +62,7 @@ a=\mu_{\theta}(s)
 
 相同的策略（即相同`\(\theta\)`），在状态`\(s\)`时，动作是唯一确定的。
 
-#### 1.1.3 对比
+### 2.3 对比
 
 + 确定性策略的优点在于：**需要采样的数据少**，算法效率高
 
@@ -83,7 +84,7 @@ a=\mu_{\theta}(s)
 
 **确定性策略**无法探索环境，所以需要通过**异策略**（off-policy）方法来进行学习，即行动策略和评估策略不是同一个策略。**行动策略采用随机策略，而评估策略我要用确定性策略**。而整个确定性策略的学习框架采用的是AC方法。
 
-### 1.2 AC框架
+## 3. AC框架
 
 这里会参考[https://blog.csdn.net/jinzhuojun/article/details/72851548](https://blog.csdn.net/jinzhuojun/article/details/72851548)
 
@@ -99,7 +100,7 @@ Actor-Critic（AC）方法其实是policy-based和value-based方法的结合。�
 
 如果是Actor-only，那就是policy gradient，而如果是Critic-only，那就是Q-learning。
 
-#### 1.2.1 随机策略AC方法
+### 3.1 随机策略AC方法
 
 随机策略的梯度为
 
@@ -119,7 +120,7 @@ Critic方法逼近值函数`\(Q^{w}(s,a)\approx Q^{\pi}(s,a)\)`，其中`\(w\)`�
 
 和原公式的区别在于**采样策略为`\(\beta\)`**，即`\(a\sim \beta\)`，与行动策略不同，所以叫异策略。从而，多了一项`\(\frac{\pi_{\theta}(a|s)}{\beta_{\theta}(a|s)}\)`。
 
-#### 1.2.2 确定性策略AC方法（DPG）
+### 3.2 确定性策略AC方法（DPG）
 
 确定性的策略梯度为：
 
@@ -160,7 +161,7 @@ w_{t+1}=w_t+\alpha _w\delta_t\triangledown _wQ^w(s_t,a_t)\\
 
 第3行是用确定性策略梯度方法更新策略参数`\(\theta\)`
 
-#### 1.2.3 深度确定性策略梯度方法（DDPG）
+### 3.3 深度确定性策略梯度方法（DDPG）
 
 [Continuous Control with Deep Reinforcement Learning](https://arxiv.org/abs/1509.02971)
 
@@ -203,11 +204,11 @@ DDPG的整体流程如下：
 >        1. 执行动作`\(a_t\)`，得到回报`\(r_t\)`以及新的状态`\(s_{t+1}\)`
 >        1. 将transition `\((s_t,a_t,r_t,s_{t+1})\)`存入`\(R\)`。
 >        1. 从`\(R\)`中随机sample出一个minibatch(`\(N\)`个)的transitions，`\((s _i,a_i,r_i,s_{i+1})\)`
->        1. 令`\(y_i=r_i+\gamma {Q'}{(s_{i+1},{\mu'}(s_{i+1}|\theta ^{\mu'})|\theta ^{Q'}})\)`【即目标网络】
->        1. 通过最小化loss`\(L=\frac{1}{N}\sum_i(y_i-Q(s_i,a_i|\theta ^Q)^2)\)`对critic进行更新
->        1. 通过采样的梯度，对actor policy进行更新：
+>        1. 令`\(y_i=r_i+\gamma {Q'}{(s_{i+1},{\mu'}(s_{i+1}|\theta ^{\mu'})|\theta ^{Q'}})\)`【即使用两个目标网络得predict的值`\(y_i\)`】
+>        1. 通过最小化loss`\(L=\frac{1}{N}\sum_i(y_i-Q(s_i,a_i|\theta ^Q)^2)\)`对critic `\(Q\)`进行更新
+>        1. 通过采样的梯度，对actor policy`\(\mu\)`进行更新：
 >        `\[\triangledown _{\theta ^\mu} {J}\approx \frac{1}{N}\sum_i\triangledown_aQ(s,a|\theta ^Q)|_{s=s_i,a=\mu(s_i)}\triangledown _{\theta ^\mu} {\mu(s|\theta ^\mu)|_{s_i}}\]`
->        1. 更新目标网络： 
+>        1. 更新critic的目标网络`\(Q'\)`和actor的目标网络`\(\mu'\)`： 
 >        `\[\begin{matrix}
 \theta^{Q'}\leftarrow\tau \theta ^Q +(1-\tau)\theta^{Q'}
 \\\theta^{\mu}\leftarrow\tau \theta ^{\mu}+(1-\tau)\theta^{\mu'}
@@ -224,4 +225,12 @@ DDPG的整体流程如下：
 + actor的参数`\(\theta ^\mu\)`就是前面讲的`\(\theta\)`
 + actor的目标网络的参数`\(\theta ^{\mu'}\)`就是前面讲的`\(\theta^-\)`
 
+
+### 3.3 A3C(asynchronous advantage actor-critic)
+
+A3C不仅适用于**离散**也适用于**连续动作空间**的控制问题。DRL领域也确实有很成功的分布式机器学习系统，比如Google的Gorila。这篇文章另辟蹊径，发明了“平民版”的DRL算法，而且效果还不比前者差。
+
+传统经验认为，online的RL算法在和DNN简单结合后会不稳定。主要原因是观察数据往往波动很大且前后sample相互关联。像Neural fitted Q iteration和TRPO方法通过**将经验数据batch**，或者像DQN中通过**experience replay memory对之随机采样**，这些方法有效解决了前面所说的两个问题，但是也**将算法限定在了off-policy方法中**。
+
+而A3C是通过创建多个agent，在多个环境实例中并行且异步的执行和学习。于是，在DNN下，解锁了一大批online/offline的RL算法（如Sarsa, AC, Q-learning）。A3C不那么依赖于GPU或大型分布式系统，可以跑在一个多核CPU上。
 
