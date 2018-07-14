@@ -191,7 +191,7 @@ w_{t+1}=w_t+\alpha _w\delta_t\triangledown _wQ^w(s_t,a_t)\\
 DDPG的整体流程如下：
 
 >1. 使用权重`\(\theta ^Q\)`随机初始化critic网络`\(Q(s,a|\theta ^Q)\)`，使用权重`\(\theta ^{\mu}\)`随机初始化actor`\(\mu (s|\theta ^{\mu})\)`
->1. 使用权重`\({\theta ^Q'} \leftarrow \theta ^Q\)`初始化目标网络`\(Q'\)`，使用权重`\({\theta ^{\mu}'} \leftarrow \theta ^{\mu}\)`初始化`\(\mu'\)`
+>1. 使用权重`\({\theta ^Q'} \leftarrow \theta ^Q\)`初始化目标网络`\(Q'\)`，使用权重`\({\theta ^{\mu'}} \leftarrow \theta ^{\mu}\)`初始化`\(\mu'\)`
 >1. 初始化replay buffer `\(R\)`
 >1. For `\(episode = [1,...,M]\)` do
 >    1. 初始化一个随机过程`\(\mathcal {N}\)`，即noise，以用于action exploration
@@ -201,9 +201,15 @@ DDPG的整体流程如下：
 >        1. 执行动作`\(a_t\)`，得到回报`\(r_t\)`以及新的状态`\(s_{t+1}\)`
 >        1. 将transition `\((\s_t,a_t,r_t,s_{t+1})\)`存入`\(R\)`。
 >        1. 从`\(R\)`中随机sample出一个minibatch(`\(N\)`个)的transitions，`\((s _i,a_i,r_i,s_{i+1})\)`
->        1. 令`\(y_i=\)`
->        1. 对`\((y_j-Q(\phi _j,a_j;\theta))^2\)`的参数`\(\theta\)`进行一个梯度下降step的更新，`\(\theta_{t+1}=\theta _t+\alpha [r+\gamma max_{a'}(\hat {Q}(s',a';\theta ^{-}))-Q(s,a;\theta)]\nabla Q(s,a;\theta)\)`
->        1. 每`\(C\)`个step，令`\(\hat {Q}=Q\)`，即令`\(\theta ^{-}=\theta \)` 
+>        1. 令`\(y_i=r_i+\gamma {Q'}{(s_{i+1},{\mu'}(s_{i+1}|\theta ^{\mu'})|\theta ^{Q'}})\)`【即目标网络】
+>        1. 通过最小化loss`\(L=\frac{1}{N}\sum_i(y_i-Q(s_i,a_i|\theta ^Q)^2)\)`对critic进行更新
+>        1. 通过采样的梯度，对actor policy进行更新：
+>        `\[\triangledown _{\theta ^\mu} {J}\approx \frac{1}{N}\sum_i\triangledown_aQ(s,a|\theta ^Q)|_{s=s_i,a=\mu(s_i)}\triangledown _{\theta ^\mu} {\mu(s|\theta ^\mu)|_{s_i}}\]`
+>        1. 更新目标网络： 
+>        `\[\begin{matrix}
+\theta^{Q'}\leftarrow\tau \theta ^Q +(1-\tau)\theta^{Q'}
+\\\theta^{\mu}\leftarrow\tau \theta ^{\mu}+(1-\tau)\theta^{\mu'}
+\end{matrix}\]`
 >    1. End For
 > 1. End For
 
