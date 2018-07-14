@@ -164,3 +164,46 @@ w_{t+1}=w_t+\alpha _w\delta_t\triangledown _wQ^w(s_t,a_t)\\
 
 DDPG是深度确定性策略，复用DNN逼近行为值函数`\(Q^w(s,a)\)`和确定性策略`\(\mu_\theta (s)\)`。
 
+在讲DQN时，当利用DNN进行函数逼近时，强化学习算法常常不稳定。因为训练nn时往往假设输入数据是独立同分布的，而强化学习的数据 是顺序采集的，数据间存在马尔科夫性，所以这些数据并非独立同分布。
+
+为了打破数据间的相关性，DQN使用了两个技巧，经验回放和独立的目标网络。
+
+DDPG就是将这两个技巧用到DPG算法中，DDPG的经验回放和DQN完全相同，这里介绍DDPG中的独立目标网络。
+
+DDPG的目标值是上式中第一行的前两项，即
+
+`\[
+r_t+ \gamma Q^{w}(s_{t+1},\mu_{\theta}(s_{t+1}))
+\]`
+
+而所谓的独立目标网络，就是将上式的`\(w\)`和`\(\theta\)`单独拿出来，利用独立的网络对其进行更新，所以DDPG的更新公式为：
+
+`\[
+\begin{matrix}
+\delta _t=r_t+ \gamma Q^{w^-}(s_{t+1},\mu_{\theta^-}(s_{t+1}))-Q^{w}(s_t,a_t)\\ 
+w_{t+1}=w_t+\alpha _w\delta_t\triangledown _wQ^w(s_t,a_t)\\ 
+\theta _{t+1}=\theta _t+\alpha _\theta \triangledown _{\theta} \mu _{\theta}(s_t)\triangledown _aQ^w(s_t,a_t)|_{a=\mu_{\theta}(s)}
+\\ \theta^-=\tau \theta +(1-\tau)\theta^-
+\\w^-=\tau w+(1-\tau)w^-
+\end{matrix}
+\]`
+
+DDPG的整体流程如下：
+
+>1. 使用权重`\(\theta ^Q\)`随机初始化critic网络`\(Q(s,a|\theta ^Q)\)`，使用权重`\(\theta ^{\mu}\)`随机初始化actor`\(\mu (s|\theta ^{\mu})\)`
+>1. 使用权重`\({\theta ^Q'} \leftarrow \theta ^Q\)`初始化目标网络`\(Q'\)`，使用权重`\({\theta ^{\mu}'} \leftarrow \theta ^{\mu}\)`初始化`\(\mu'\)`
+>1. 初始化replay buffer `\(R\)`
+>1. For `\(episode = [1,...,M]\)` do
+>    1. 初始化一个随机过程`\(\mathcal {N}\)`，即noise，以用于action exploration
+>    1. 获取初始化的可观测状态`\(s_1\)`
+>    1. For `\(t=[1,...T]\)` do
+>        1. 根据当前的policy以用exploration noise，选择动作`\(a_t=\mu(s_t|\theta^{\mu})+\mathcal {N}_t\)`【这里体现了随机策略作为行动策略】
+>        1. 执行动作`\(a_t\)`，得到回报`\(r_t\)`以及新的状态`\(s_{t+1}\)`
+>        1. 将transition `\((\s_t,a_t,r_t,s_{t+1})\)`存入`\(R\)`。
+>        1. 从`\(R\)`中随机sample出一个minibatch(`\(N\)`个)的transitions，`\((s _i,a_i,r_i,s_{i+1})\)`
+>        1. 令`\(y_i=\)`
+>        1. 对`\((y_j-Q(\phi _j,a_j;\theta))^2\)`的参数`\(\theta\)`进行一个梯度下降step的更新，`\(\theta_{t+1}=\theta _t+\alpha [r+\gamma max_{a'}(\hat {Q}(s',a';\theta ^{-}))-Q(s,a;\theta)]\nabla Q(s,a;\theta)\)`
+>        1. 每`\(C\)`个step，令`\(\hat {Q}=Q\)`，即令`\(\theta ^{-}=\theta \)` 
+>    1. End For
+> 1. End For
+

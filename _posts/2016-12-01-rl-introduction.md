@@ -9,18 +9,18 @@ tags: [rl, reinforcement learning, 强化学习]
 
 <!-- TOC -->
 
-- [强化学习概述](#强化学习概述)
-- [价值函数（VALUE FUNCTION）](#价值函数value-function)
-- [贴现因子（DISCOUNTING FACTOR）](#贴现因子discounting-factor)
-- [策略函数（POLICY FUNCTION）](#策略函数policy-function)
-- [Q-函数（Q-FUNCTION）](#q-函数q-function)
-- [Q-学习（Q-Learning）](#q-学习q-learning)
-- [深度 Q-学习（DEEP Q-LEARNING）](#深度-q-学习deep-q-learning)
+- [强化学习概述](#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%BF%B0)
+- [价值函数（VALUE FUNCTION）](#%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%EF%BC%88value-function%EF%BC%89)
+- [贴现因子（DISCOUNTING FACTOR）](#%E8%B4%B4%E7%8E%B0%E5%9B%A0%E5%AD%90%EF%BC%88discounting-factor%EF%BC%89)
+- [策略函数（POLICY FUNCTION）](#%E7%AD%96%E7%95%A5%E5%87%BD%E6%95%B0%EF%BC%88policy-function%EF%BC%89)
+- [Q-函数（Q-FUNCTION）](#q-%E5%87%BD%E6%95%B0%EF%BC%88q-function%EF%BC%89)
+- [Q-学习（Q-Learning）](#q-%E5%AD%A6%E4%B9%A0%EF%BC%88q-learning%EF%BC%89)
+- [深度 Q-学习（DEEP Q-LEARNING）](#%E6%B7%B1%E5%BA%A6-q-%E5%AD%A6%E4%B9%A0%EF%BC%88deep-q-learning%EF%BC%89)
 - [AlphaGo](#alphago)
-- [其他](#其他)
-    - [q learning和policy gradient的区别](#q-learning和policy-gradient的区别)
-        - [回答1(by 俞扬)：](#回答1by-俞扬)
-        - [回答2：](#回答2)
+- [其他](#%E5%85%B6%E4%BB%96)
+    - [q learning和policy gradient的区别](#q-learning%E5%92%8Cpolicy-gradient%E7%9A%84%E5%8C%BA%E5%88%AB)
+        - [回答1(by 俞扬)：](#%E5%9B%9E%E7%AD%941by-%E4%BF%9E%E6%89%AC%EF%BC%9A)
+        - [回答2：](#%E5%9B%9E%E7%AD%942%EF%BC%9A)
     - [Actor-Critic](#actor-critic)
     - [PPO](#ppo)
 
@@ -228,5 +228,10 @@ Deep Deterministic Policy Gradient([Continuous control with deep reinforcement l
 
 [Proximal Policy Optimization Algorithms](https://openai-public.s3-us-west-2.amazonaws.com/blog/2017-07/ppo/ppo-arxiv.pdf)
 
+[https://github.com/openai/baselines](https://github.com/openai/baselines)
 
+策略梯度法（Policy gradient   methods）是近来使用深度神经网络进行控制的突破基础，不论是视频游戏还是   3D   移动或者围棋控制等，它们都基于策略梯度法。但但是通过策略梯度法获得优秀的结果是十分困难的，policy gradient有以下几点不足：
+
++ 它对步长大小的选择非常敏感。如果迭代步长太小，那么训练进展会非常慢，但如果迭代步长太大，那么信号将受到噪声的强烈干扰，因此我们会看到性能会急剧降低。
++ 策略梯度法有非常低的样本效率，它需要数百万（或数十亿）的时间步骤来学习一个简单的任务。
 
