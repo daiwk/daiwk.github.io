@@ -111,20 +111,20 @@ Actor-Critic（AC）方法其实是policy-based和value-based方法的结合。�
 
 Critic方法逼近值函数`\(Q^{w}(s,a)\approx Q^{\pi}(s,a)\)`，其中`\(w\)`为待逼近的参数，可以用TD学习的方法来评估值函数。
 
-异策略随机梯度为
+**异策略**随机梯度为
 
 `\[
-\triangledown _{\theta}J(\pi _{\theta})=E_{s\sim \rho ^{\pi},a\sim \beta}[\frac{\pi_{\theta}(a|s)}{\beta_{\theta}(a|s)}\triangledown _{\theta}log\pi_{\theta}(a|s)Q^{\pi}(s,a)]
+\triangledown _{\theta}J_{\beta}(\pi _{\theta})=E_{s\sim \rho ^{\pi},a\sim \beta}[\frac{\pi_{\theta}(a|s)}{\beta_{\theta}(a|s)}\triangledown _{\theta}log\pi_{\theta}(a|s)Q^{\pi}(s,a)]
 \]`
 
-和原公式的区别在于采样策略为`\(\beta\)`，即`\(a\sim \beta\)`，从而，多了一项`\(\frac{\pi_{\theta}(a|s)}{\beta_{\theta}(a|s)}\)`。
+和原公式的区别在于**采样策略为`\(\beta\)`**，即`\(a\sim \beta\)`，与行动策略不同，所以叫异策略。从而，多了一项`\(\frac{\pi_{\theta}(a|s)}{\beta_{\theta}(a|s)}\)`。
 
 #### 1.2.2 确定性策略AC方法（DPG）
 
 确定性的策略梯度为：
 
 `\[
-\triangledown _{\theta}J(\mu _{\theta})=E_{s\sim \rho ^{\mu}}[\triangledown _{\theta}\mu_{\theta}(s)\triangledown _{\theta}Q^{\mu}(s,a)|_{a=\mu_{\theta}(s)}]
+\triangledown _{\theta}J(\mu _{\theta})=E_{s\sim \rho ^{\mu}}[\triangledown _{\theta}\mu_{\theta}(s)\triangledown _{\a}Q^{\mu}(s,a)|_{a=\mu_{\theta}(s)}]
 \]`
 
 可见，区别如下：
@@ -133,7 +133,34 @@ Critic方法逼近值函数`\(Q^{w}(s,a)\approx Q^{\pi}(s,a)\)`，其中`\(w\)`�
 + 原来的`\(Q^{\pi}(s,a)\)`改成了`\(Q^{\mu}(s,a)|_{a=\mu_{\theta}(s)}\)`
 + 原来的`\(s\sim \rho ^{\pi}\)`变成了`\(s\sim \rho ^{\mu}\)`
 + 去掉了对于动作的采样`\(a\sim \pi _{\theta}\)`，而改成确定性的动作`\(a=\mu_{\theta}(s)\)`
++ 原来对`\(\pi\)`的梯度，即`\(\triangledown _{\theta}log\pi_{\theta}(a|s)\)`改成了对`\(\mu\)`的梯度`\(\triangledown _{\theta}\mu_{\theta}(s)\)`
++ 对于`\(Q\)`也要求一次关于`\(a\)`的梯度，即：`\(\triangledown _{\a}Q^{\mu}(s,a)|_{a=\mu_{\theta}(s)}\)`，即回报函数对动作的导数
 
+所以**异策略**确定性策略梯度为
+
+`\[
+\triangledown _{\theta}J_{\beta}(\mu _{\theta})=E_{s\sim \rho ^{\beta}}[\triangledown _{\theta}\mu_{\theta}(s)\triangledown _{\a}Q^{\mu}(s,a)|_{a=\mu_{\theta}(s)}]
+\]`
+
+与异策略的随机策略梯度进行对比，可以发现少了重要性权重，即`\(\frac{\pi_{\theta}(a|s)}{\beta_{\theta}(a|s)}\)`。因为重要性采样是用简单的概率分布估计复杂的概率分布，而确定性策略的动作是确定值；
+
+此外，确定性策略的值函数评估用的是Q-learning方法，也就是用TD(0)估计动作值函数，并且忽略重要性权重。
+
+然后看一下确定性策略异策略AC算法的更新过程：
+
+`\[
+\begin{matrix}
+\delta _t=r_t+ \gamma Q^{w}(s_{t+1},\mu_{\theta}(s_{t+1}))-Q^{w}(s_t,a_t)\\ 
+w_{t+1}=w_t+\alpha _w\delta_t\triangledown _wQ^w(s_t,a_t)\\ 
+\theta _{t+1}=\theta _t+\alpha _\theta \triangledown _{\theta} \mu _{\theta}(s_t)\triangledown _aQ^w(s_t,a_t)|_{a=\mu_{\theta}(s)}
+\end{matrix}
+\]`
+
+前两行是利用值函数逼近的方法更新值函数参数`\(\w\)`，使用的是TD，用Q-learning。
+
+第3行是用确定性策略梯度方法更新策略参数`\(\theta\)`
 
 #### 1.2.3 深度确定性策略梯度方法（DDPG）
+
+DDPG是深度确定性策略，复用DNN逼近行为值函数`\(Q^w(s,a)\)`和确定性策略`\(\mu_\theta (s)\)`。
 
