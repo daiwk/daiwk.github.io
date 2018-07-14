@@ -124,7 +124,7 @@ Critic方法逼近值函数`\(Q^{w}(s,a)\approx Q^{\pi}(s,a)\)`，其中`\(w\)`�
 确定性的策略梯度为：
 
 `\[
-\triangledown _{\theta}J(\mu _{\theta})=E_{s\sim \rho ^{\mu}}[\triangledown _{\theta}\mu_{\theta}(s)\triangledown _{\a}Q^{\mu}(s,a)|_{a=\mu_{\theta}(s)}]
+\triangledown _{\theta}J(\mu _{\theta})=E_{s\sim \rho ^{\mu}}[\triangledown _{\theta}\mu_{\theta}(s)\triangledown _{a}Q^{\mu}(s,a)|_{a=\mu_{\theta}(s)}]
 \]`
 
 可见，区别如下：
@@ -134,12 +134,12 @@ Critic方法逼近值函数`\(Q^{w}(s,a)\approx Q^{\pi}(s,a)\)`，其中`\(w\)`�
 + 原来的`\(s\sim \rho ^{\pi}\)`变成了`\(s\sim \rho ^{\mu}\)`
 + 去掉了对于动作的采样`\(a\sim \pi _{\theta}\)`，而改成确定性的动作`\(a=\mu_{\theta}(s)\)`
 + 原来对`\(\pi\)`的梯度，即`\(\triangledown _{\theta}log\pi_{\theta}(a|s)\)`改成了对`\(\mu\)`的梯度`\(\triangledown _{\theta}\mu_{\theta}(s)\)`
-+ 对于`\(Q\)`也要求一次关于`\(a\)`的梯度，即：`\(\triangledown _{\a}Q^{\mu}(s,a)|_{a=\mu_{\theta}(s)}\)`，即回报函数对动作的导数
++ 对于`\(Q\)`也要求一次关于`\(a\)`的梯度，即：`\(\triangledown _{a}Q^{\mu}(s,a)|_{a=\mu_{\theta}(s)}\)`，即回报函数对动作的导数
 
 所以**异策略**确定性策略梯度为
 
 `\[
-\triangledown _{\theta}J_{\beta}(\mu _{\theta})=E_{s\sim \rho ^{\beta}}[\triangledown _{\theta}\mu_{\theta}(s)\triangledown _{\a}Q^{\mu}(s,a)|_{a=\mu_{\theta}(s)}]
+\triangledown _{\theta}J_{\beta}(\mu _{\theta})=E_{s\sim \rho ^{\beta}}[\triangledown _{\theta}\mu_{\theta}(s)\triangledown _{a}Q^{\mu}(s,a)|_{a=\mu_{\theta}(s)}]
 \]`
 
 与异策略的随机策略梯度进行对比，可以发现少了重要性权重，即`\(\frac{\pi_{\theta}(a|s)}{\beta_{\theta}(a|s)}\)`。因为重要性采样是用简单的概率分布估计复杂的概率分布，而确定性策略的动作是确定值；
@@ -156,11 +156,13 @@ w_{t+1}=w_t+\alpha _w\delta_t\triangledown _wQ^w(s_t,a_t)\\
 \end{matrix}
 \]`
 
-前两行是利用值函数逼近的方法更新值函数参数`\(\w\)`，使用的是TD，用Q-learning。
+前两行是利用值函数逼近的方法更新值函数参数`\(w\)`，使用的是TD，用Q-learning。
 
 第3行是用确定性策略梯度方法更新策略参数`\(\theta\)`
 
 #### 1.2.3 深度确定性策略梯度方法（DDPG）
+
+[Continuous Control with Deep Reinforcement Learning](https://arxiv.org/abs/1509.02971)
 
 DDPG是深度确定性策略，复用DNN逼近行为值函数`\(Q^w(s,a)\)`和确定性策略`\(\mu_\theta (s)\)`。
 
@@ -191,7 +193,7 @@ w_{t+1}=w_t+\alpha _w\delta_t\triangledown _wQ^w(s_t,a_t)\\
 DDPG的整体流程如下：
 
 >1. 使用权重`\(\theta ^Q\)`随机初始化critic网络`\(Q(s,a|\theta ^Q)\)`，使用权重`\(\theta ^{\mu}\)`随机初始化actor`\(\mu (s|\theta ^{\mu})\)`
->1. 使用权重`\({\theta ^Q'} \leftarrow \theta ^Q\)`初始化目标网络`\(Q'\)`，使用权重`\({\theta ^{\mu'}} \leftarrow \theta ^{\mu}\)`初始化`\(\mu'\)`
+>1. 使用权重`\({\theta ^{Q'}} \leftarrow \theta ^Q\)`初始化目标网络`\(Q'\)`，使用权重`\({\theta ^{\mu'}} \leftarrow \theta ^{\mu}\)`初始化`\(\mu'\)`
 >1. 初始化replay buffer `\(R\)`
 >1. For `\(episode = [1,...,M]\)` do
 >    1. 初始化一个随机过程`\(\mathcal {N}\)`，即noise，以用于action exploration
@@ -199,7 +201,7 @@ DDPG的整体流程如下：
 >    1. For `\(t=[1,...T]\)` do
 >        1. 根据当前的policy以用exploration noise，选择动作`\(a_t=\mu(s_t|\theta^{\mu})+\mathcal {N}_t\)`【这里体现了随机策略作为行动策略】
 >        1. 执行动作`\(a_t\)`，得到回报`\(r_t\)`以及新的状态`\(s_{t+1}\)`
->        1. 将transition `\((\s_t,a_t,r_t,s_{t+1})\)`存入`\(R\)`。
+>        1. 将transition `\((s_t,a_t,r_t,s_{t+1})\)`存入`\(R\)`。
 >        1. 从`\(R\)`中随机sample出一个minibatch(`\(N\)`个)的transitions，`\((s _i,a_i,r_i,s_{i+1})\)`
 >        1. 令`\(y_i=r_i+\gamma {Q'}{(s_{i+1},{\mu'}(s_{i+1}|\theta ^{\mu'})|\theta ^{Q'}})\)`【即目标网络】
 >        1. 通过最小化loss`\(L=\frac{1}{N}\sum_i(y_i-Q(s_i,a_i|\theta ^Q)^2)\)`对critic进行更新
@@ -212,4 +214,14 @@ DDPG的整体流程如下：
 \end{matrix}\]`
 >    1. End For
 > 1. End For
+
+注：
+
++ critic是`\(Q\)`，actor是`\(\mu\)`
++ `\(\theta ^Q\)`就是前面讲的`\(\w\)`
++ `\(\theta ^{Q'}\)`就是前面讲的`\(\w^-\)`
++ `\(\theta ^\mu\)`就是前面讲的`\(\theta\)`
++ `\(\theta ^{\mu'}\)`就是前面讲的`\(\theta^-\)`
+
+
 
