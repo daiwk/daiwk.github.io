@@ -234,3 +234,5 @@ A3C不仅适用于**离散**也适用于**连续动作空间**的控制问题。
 
 而A3C是通过创建多个agent，在多个环境实例中并行且异步的执行和学习。于是，在DNN下，解锁了一大批online/offline的RL算法（如Sarsa, AC, Q-learning）。A3C不那么依赖于GPU或大型分布式系统，可以跑在一个多核CPU上。
 
+详见：[https://daiwk.github.io/posts/rl-distributed-rl.html#2-a3c](https://daiwk.github.io/posts/rl-distributed-rl.html#2-a3c)
+
