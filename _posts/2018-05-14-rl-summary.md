@@ -25,6 +25,8 @@ tags: [rl summary, ]
 
 ## 基于值函数的强化学习方法
 
+基于值函数的方法是间接方法，即通过学习值函数（value function）或者动作值函数（action-value function）来得到policy。
+
 <html>
 <br/>
 <img src='../assets/rl-overview-value-function.png' style='max-height: 300px'/>
@@ -33,6 +35,8 @@ tags: [rl summary, ]
 
 
 ## 策略搜索方法
+
+直接对policy进行建模和学习
 
 <html>
 <br/>
