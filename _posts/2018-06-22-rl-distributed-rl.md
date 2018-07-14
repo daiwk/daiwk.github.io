@@ -29,7 +29,11 @@ tags: [分布式强化学习, A3C, ape-x, rudder]
 
 ## 2. A3C
 
-参考[https://daiwk.github.io/posts/rl-stepbystep-chap9.html](https://daiwk.github.io/posts/rl-stepbystep-chap9.html)
+ICML2016，提出了[Asynchronous Methods for Deep Reinforcement Learning](https://arxiv.org/abs/1602.01783)，即A3C（asynchronous advantage actor-critic）算法。
+
+参考[https://daiwk.github.io/posts/rl-stepbystep-chap9.html#33-a3casynchronous-advantage-actor-critic](https://daiwk.github.io/posts/rl-stepbystep-chap9.html#33-a3casynchronous-advantage-actor-critic)
+
+
 
 ## 3. rainbow
 
