@@ -22,7 +22,6 @@ tags: [rl, reinforcement learning, 强化学习]
         - [回答1(by 俞扬)：](#%E5%9B%9E%E7%AD%941by-%E4%BF%9E%E6%89%AC%EF%BC%9A)
         - [回答2：](#%E5%9B%9E%E7%AD%942%EF%BC%9A)
     - [Actor-Critic](#actor-critic)
-    - [PPO](#ppo)
 
 <!-- /TOC -->
 
@@ -221,17 +220,3 @@ Deep Deterministic Policy Gradient([Continuous control with deep reinforcement l
 修改后的代码[https://github.com/wangshusen/deep-rl](https://github.com/wangshusen/deep-rl)以及对应的解读：
 
 视频解读：[https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/6-2-A-DDPG/](https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/6-2-A-DDPG/)
-
-### PPO
-
-参考[业界 \| OpenAI 提出强化学习近端策略优化，可替代策略梯度法](http://www.myzaker.com/article/597191731bc8e0a41b000004/)
-
-[Proximal Policy Optimization Algorithms](https://openai-public.s3-us-west-2.amazonaws.com/blog/2017-07/ppo/ppo-arxiv.pdf)
-
-[https://github.com/openai/baselines](https://github.com/openai/baselines)
-
-策略梯度法（Policy gradient   methods）是近来使用深度神经网络进行控制的突破基础，不论是视频游戏还是   3D   移动或者围棋控制等，它们都基于策略梯度法。但但是通过策略梯度法获得优秀的结果是十分困难的，policy gradient有以下几点不足：
-
-+ 它对步长大小的选择非常敏感。如果迭代步长太小，那么训练进展会非常慢，但如果迭代步长太大，那么信号将受到噪声的强烈干扰，因此我们会看到性能会急剧降低。
-+ 策略梯度法有非常低的样本效率，它需要数百万（或数十亿）的时间步骤来学习一个简单的任务。
-
