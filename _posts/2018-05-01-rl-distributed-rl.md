@@ -69,11 +69,21 @@ ray的a3c代码：[https://github.com/ray-project/ray/tree/master/python/ray/rll
 
 [Proximal Policy Optimization Algorithms](https://openai-public.s3-us-west-2.amazonaws.com/blog/2017-07/ppo/ppo-arxiv.pdf)
 
+openai的blog：[https://blog.openai.com/openai-baselines-ppo/](https://blog.openai.com/openai-baselines-ppo/)
+
 策略梯度法（Policy gradient methods）是近来使用深度神经网络进行控制的突破基础，不论是视频游戏还是   3D   移动或者围棋控制等，它们都基于策略梯度法。但但是通过策略梯度法获得优秀的结果是十分困难的，policy gradient有以下几点不足：
 
 + 它对步长大小的选择非常敏感。如果迭代步长太小，那么训练进展会非常慢，但如果迭代步长太大，那么信号将受到噪声的强烈干扰，因此我们会看到性能会急剧降低。
 + 策略梯度法有非常低的样本效率，它需要数百万（或数十亿）的时间步骤来学习一个简单的任务。
 
+研究人员希望能通过约束或其他优化策略更新（policy update）大小的方法来消除这些缺陷，如 TRPO 和 ACER 等方法。
+
++ ACER（[Sample Efficient Actor-Critic with Experience Replay](https://arxiv.org/abs/1611.01224)）方法要比PPO方法复杂得多，需要额外添加代码来**修正off-policy**和**重构缓冲器**，但它在Atari基准上仅仅比PPO好一点点
++ TRPO（[Trust region policy optimization](https://arxiv.org/abs/1502.05477)，置信域策略优化）虽然对**连续**控制任务非常有用，但它并不容易与那些在**策略**和**值函数或辅助损失函数**（auxiliary losses）间**共享参数**的算法兼容，即那些用于解决 Atari 和其他视觉输入很重要领域的算法。
+
+PPO 算法很好地权衡了实现简单性、样本复杂度和调参难度，它尝试在每一迭代步计算一个更新以最小化成本函数，在计算梯度时还需要确保与先前策略有相对较小的偏差。
+
+之前介绍过一个 PPO 变体（在NIPS2016上有一个talk [Deep Reinforcement Learning Through Policy Optimization](https://channel9.msdn.com/Events/Neural-Information-Processing-Systems-Conference/Neural-Information-Processing-Systems-Conference-NIPS-2016/Deep-Reinforcement-Learning-Through-Policy-Optimization)），即使用一个**适应性 KL 惩罚项**来控制**每一次迭代中的策略改变**。这次的目标函数实现了一种**与随机梯度下降相匹配的置信域（Trust Region）更新**方法，它同时还**移除了 KL 惩罚项**以简化算法和构建适应性更新。在测试中该算法在连续控制任务中取得了最好的性能，并且尽管实现起来非常简单，但它同样在 Atari 上获得了与 ACER 算法相匹配的性能。
 
 
 ## 4. rainbow
@@ -85,6 +95,40 @@ ray的a3c代码：[https://github.com/ray-project/ray/tree/master/python/ray/rll
 参考[最前沿：当我们以为Rainbow就是Atari游戏的巅峰时，Ape-X出来把Rainbow秒成了渣！](https://zhuanlan.zhihu.com/p/36375292)
 
 [Distributed Prioritized Experience Replay](https://openreview.net/pdf?id=H1Dy---0Z)
+
+只使用一个learner和一个Replay buffer，但是分布式的使用了多个Actor来生成数据，paper中实验使用了360个Actor（一个Actor一个CPU）。DeepMind产生专门做这个的想法主要是从Rainbow的研究中发现：```Prioritization was found to be the most important ingredient contributing
+to the agent’s performance.```
+
+**Replay的优先级对于性能影响是最大的**，而之前的Prioritised Replay Buffer只用单一Actor来采集数据，效率偏低。那么这篇文章中，加上分布式，并且**让每一个Actor都不完全一样**，用`\(\varepsilon -greedy\)`采样时的`\(\varepsilon \)`不一样。这样可以更好的做explore，并且更全面的寻找优先级最高的replay来训练。
+
++ 比以前方法**大得多得多的Replay Buffer**，毕竟同时用几百个actor来采集数据，充分挖掘了计算资源。这个本身可以大幅度加快训练速度。
++ 通过**不同的Actor得到不同优先级Priority的Replay**，如上面所说，**大幅度提升explore的能力，防止过拟合**。这是为什么Ape-X效果提升的最主要原因。
+
+<html>
+<br/>
+<img src='../assets/apex-arch.png' style='max-width: 400px'/>
+<br/>
+</html>
+
+整个算法也就是训练架构上发生改变，算法实质并没有变化。同时，由于**使用Replay Buffer是Off-Policy独有**，因此，这篇paper就在DQN和DDPG上进行改变验证。
+
+Actor的算法：
+
+Learner的算法：
+
+>1. procedure `\(ACTOR(B, T)\)` // 在environment instance中运行agent，并存储experiences
+>1. `\(\theta_0\leftarrow LEARNER.PARAMETERS( )\)` // remote call以获取最新的网络参数
+>1. xxx
+
+
+
+效果：
+
+<html>
+<br/>
+<img src='../assets/ape-x.png' style='max-width: 400px'/>
+<br/>
+</html>
 
 ## 6. rudder
 
