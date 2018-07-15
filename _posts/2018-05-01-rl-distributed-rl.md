@@ -17,6 +17,7 @@ tags: [分布式强化学习, A3C, ape-x, rudder]
     - [5.1 简介](#51-%E7%AE%80%E4%BB%8B)
     - [5.2 Actor的算法](#52-actor%E7%9A%84%E7%AE%97%E6%B3%95)
     - [5.3 Learner的算法](#53-learner%E7%9A%84%E7%AE%97%E6%B3%95)
+    - [代码](#%E4%BB%A3%E7%A0%81)
 - [6. rudder](#6-rudder)
 
 <!-- /TOC -->
@@ -165,7 +166,6 @@ to the agent’s performance.```
 >    1. endfor
 >1. end procedure
 
-
 效果：
 
 <html>
@@ -173,6 +173,10 @@ to the agent’s performance.```
 <img src='../assets/ape-x.png' style='max-width: 400px'/>
 <br/>
 </html>
+
+### 代码
+
+ray的ape-x代码：[https://github.com/ray-project/ray/blob/master/python/ray/rllib/agents/dqn/apex.py](https://github.com/ray-project/ray/blob/master/python/ray/rllib/agents/dqn/apex.py)
 
 ## 6. rudder
 
