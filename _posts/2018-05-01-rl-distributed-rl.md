@@ -120,19 +120,19 @@ to the agent’s performance.```
 ### 5.2 Actor的算法
 
 >1. procedure `\(ACTOR(B, T)\)` // 在environment instance中运行agent，并存储experiences
->1.    `\(\theta_0\leftarrow LEARNER.PARAMETERS()\)` // remote call以获取最新的网络参数
+>1.   `\(\theta_0\leftarrow LEARNER.PARAMETERS()\)` // remote call以获取最新的网络参数
 >1.   `\(s_0\leftarrow ENVIRONMENT.INITIALIZE() \)` // 从环境中获取初始状态
 >1.   for t = 1 to T do
->1.       `\(a_{t-1}\leftarrow \pi \theta _{t-1}(s_{t-1})\)` // 使用当前policy选择一个动作
->1.       `\(r_t,\gamma_t,s_t\leftarrow ENVIRONMENT.STEP(a_{t-1})\)` // 在环境中执行这个动作
->1.       `\(LOCALBUFFER.ADD((s_{t-1},a_{t-1},r_t,\gamma_t))\)` // 将data放入local buffer中
->1.       if `\(LOCALBUFFER.SIZE() \gt B\)` then // 在一个后台线程中，定期地send data to replay
->1.        `\(\tau \leftarrow LOCALBUFFER.GET(B)\)` // 获取buffered data(例如，batch of multi-step transitions)
->1.        `\(p \leftarrow COMPUTEPRIORITIES(\tau)\)` // 计算experience的优先级（例如，绝对TD error）
->1.        `\(REPLAY.ADD(\tau,p)\)` // remote call以将experience加入replay memory中
->1.       endif
->1.       `\(PERIODICALLY(\theta_t\leftarrow LEARNER.PARAMETERS())\)` // 获取最新的网络参数
->1.   endfor
+>1.      `\(a_{t-1}\leftarrow \pi \theta _{t-1}(s_{t-1})\)` // 使用当前policy选择一个动作
+>1.      `\(r_t,\gamma_t,s_t\leftarrow ENVIRONMENT.STEP(a_{t-1})\)` // 在环境中执行这个动作
+>1.      `\(LOCALBUFFER.ADD((s_{t-1},a_{t-1},r_t,\gamma_t))\)` // 将data放入local buffer中
+>1.      if `\(LOCALBUFFER.SIZE() \gt B\)` then // 在一个后台线程中，定期地send data to replay
+>1.         `\(\tau \leftarrow LOCALBUFFER.GET(B)\)` // 获取buffered data(例如，batch of multi-step transitions)
+>1.         `\(p \leftarrow COMPUTEPRIORITIES(\tau)\)` // 计算experience的优先级（例如，绝对TD error）
+>1.         `\(REPLAY.ADD(\tau,p)\)` // remote call以将experience加入replay memory中
+>1.      endif
+>1.      `\(PERIODICALLY(\theta_t\leftarrow LEARNER.PARAMETERS())\)` // 获取最新的网络参数
+>1.    endfor
 >1. end procedure
 
 
