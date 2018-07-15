@@ -14,6 +14,9 @@ tags: [分布式强化学习, A3C, ape-x, rudder]
 - [3. PPO](#3-ppo)
 - [4. rainbow](#4-rainbow)
 - [5. APE-X](#5-ape-x)
+    - [5.1 简介](#51-%E7%AE%80%E4%BB%8B)
+    - [5.2 Actor的算法](#52-actor%E7%9A%84%E7%AE%97%E6%B3%95)
+    - [5.3 Learner的算法：](#53-learner%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9A)
 - [6. rudder](#6-rudder)
 
 <!-- /TOC -->
@@ -92,6 +95,8 @@ PPO 算法很好地权衡了实现简单性、样本复杂度和调参难度，�
 
 ## 5. APE-X
 
+### 5.1 简介
+
 参考[最前沿：当我们以为Rainbow就是Atari游戏的巅峰时，Ape-X出来把Rainbow秒成了渣！](https://zhuanlan.zhihu.com/p/36375292)
 
 [Distributed Prioritized Experience Replay](https://openreview.net/pdf?id=H1Dy---0Z)
@@ -112,13 +117,30 @@ to the agent’s performance.```
 
 整个算法也就是训练架构上发生改变，算法实质并没有变化。同时，由于**使用Replay Buffer是Off-Policy独有**，因此，这篇paper就在DQN和DDPG上进行改变验证。
 
-Actor的算法：
-
-Learner的算法：
+### 5.2 Actor的算法
 
 >1. procedure `\(ACTOR(B, T)\)` // 在environment instance中运行agent，并存储experiences
->1. `\(\theta_0\leftarrow LEARNER.PARAMETERS( )\)` // remote call以获取最新的网络参数
->1. xxx
+>1.    `\(\theta_0\leftarrow LEARNER.PARAMETERS()\)` // remote call以获取最新的网络参数
+>1.   `\(s_0\leftarrow ENVIRONMENT.INITIALIZE() \)` // 从环境中获取初始状态
+>1.   for t = 1 to T do
+>1.       `\(a_{t-1}\leftarrow \pi \theta _{t-1}(s_{t-1})\)` // 使用当前policy选择一个动作
+>1.       `\(r_t,\gamma_t,s_t\leftarrow ENVIRONMENT.STEP(a_{t-1})\)` // 在环境中执行这个动作
+>1.       `\(LOCALBUFFER.ADD((s_{t-1},a_{t-1},r_t,\gamma_t))\)` // 将data放入local buffer中
+>1.       if `\(LOCALBUFFER.SIZE() \gt B\)` then // 在一个后台线程中，定期地send data to replay
+>1.        `\(\tau \leftarrow LOCALBUFFER.GET(B)\)` // 获取buffered data(例如，batch of multi-step transitions)
+>1.        `\(p \leftarrow COMPUTEPRIORITIES(\tau)\)` // 计算experience的优先级（例如，绝对TD error）
+>1.        `\(REPLAY.ADD(\tau,p)\)` // remote call以将experience加入replay memory中
+>1.       endif
+>1.       `\(PERIODICALLY(\theta_t\leftarrow LEARNER.PARAMETERS())\)` // 获取最新的网络参数
+>1.   endfor
+>1. end procedure
+
+
+
+### 5.3 Learner的算法：
+
+
+
 
 
 
