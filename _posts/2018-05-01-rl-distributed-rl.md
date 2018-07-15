@@ -16,7 +16,7 @@ tags: [分布式强化学习, A3C, ape-x, rudder]
 - [5. APE-X](#5-ape-x)
     - [5.1 简介](#51-%E7%AE%80%E4%BB%8B)
     - [5.2 Actor的算法](#52-actor%E7%9A%84%E7%AE%97%E6%B3%95)
-    - [5.3 Learner的算法：](#53-learner%E7%9A%84%E7%AE%97%E6%B3%95%EF%BC%9A)
+    - [5.3 Learner的算法](#53-learner%E7%9A%84%E7%AE%97%E6%B3%95)
 - [6. rudder](#6-rudder)
 
 <!-- /TOC -->
@@ -88,10 +88,20 @@ PPO 算法很好地权衡了实现简单性、样本复杂度和调参难度，�
 
 之前介绍过一个 PPO 变体（在NIPS2016上有一个talk [Deep Reinforcement Learning Through Policy Optimization](https://channel9.msdn.com/Events/Neural-Information-Processing-Systems-Conference/Neural-Information-Processing-Systems-Conference-NIPS-2016/Deep-Reinforcement-Learning-Through-Policy-Optimization)），即使用一个**适应性 KL 惩罚项**来控制**每一次迭代中的策略改变**。这次的目标函数实现了一种**与随机梯度下降相匹配的置信域（Trust Region）更新**方法，它同时还**移除了 KL 惩罚项**以简化算法和构建适应性更新。在测试中该算法在连续控制任务中取得了最好的性能，并且尽管实现起来非常简单，但它同样在 Atari 上获得了与 ACER 算法相匹配的性能。
 
-
 ## 4. rainbow
 
 [Rainbow: Combining improvements in deep reinforcement learning](https://arxiv.org/abs/1710.02298)
+
+参考[DeepMind提出Rainbow：整合DQN算法中的六种变体](https://www.jiqizhixin.com/articles/2017-10-10-2)
+
++ Double DQN（DDQN；van Hasselt、Guez&Silver；2016）通过解耦选择（decoupling selection）和引导行动评估解决了Q-learning过度估计偏差的问题。
++ Prioritized experience replay（Schaul 等人；2015）通过重放（replay）学习到更频繁的转换，提升了数据效率。
++ dueling 网络架构（Wang 等人；2016）可以通过分别表示状态值和动作奖励来概括各种动作。
++ 从多步骤引导程序目标中学习（Sutton；1988；Sutton & Barto 1998）如 A3C（Mnih 等人；2016）中使用偏差-方差权衡，而帮助将最新观察到的奖励快速传播到旧状态中。
++ 分布式 Q-learning（Bellemare、Dabney & Munos；2017）学习了折扣回报（discounted returns）的分类分布（代替了估计平均值）。
++ Noisy DQN（Fortunato 等人；2017）使用随机网络层进行exploration。
+
+以上这些算法各自都可以提升 DQN 性能的某个方面，因为它们都着力于解决不同的问题，而且都构建在同一个框架上，所以能够被我们整合起来。
 
 ## 5. APE-X
 
@@ -117,6 +127,12 @@ to the agent’s performance.```
 
 整个算法也就是训练架构上发生改变，算法实质并没有变化。同时，由于**使用Replay Buffer是Off-Policy独有**，因此，这篇paper就在DQN和DDPG上进行改变验证。
 
+如上图，
+
++ 多个actor，每个有自己的环境，并且可以产生experience，并将其写入一个共享的experience replay memory，并且能计算initial priorities
++ 一个learner，从memory中sample，然后更新memory中的experience的priorities，并更新网络参数
++ 每个actor的网络定期地从learner获取最新的网络参数
+
 ### 5.2 Actor的算法
 
 >1. procedure `\(ACTOR(B, T)\)` // 在environment instance中运行agent，并存储experiences
@@ -131,17 +147,23 @@ to the agent’s performance.```
 >            1. `\(p \leftarrow COMPUTEPRIORITIES(\tau)\)` // 计算experience的优先级（例如，绝对TD error）
 >            1. `\(REPLAY.ADD(\tau,p)\)` // remote call以将experience加入replay memory中
 >        1. endif
->    1. `\(PERIODICALLY(\theta_t\leftarrow LEARNER.PARAMETERS())\)` // 获取最新的网络参数
+>        1. `\(PERIODICALLY(\theta_t\leftarrow LEARNER.PARAMETERS())\)` // 获取最新的网络参数
 >    1. endfor
 >1. end procedure
 
+### 5.3 Learner的算法
 
-
-### 5.3 Learner的算法：
-
-
-
-
+>1. procedure `\(LEARNER(T)\)` // 使用从memory中sampled的batches来更新网络
+>    1. `\(\theta_0\leftarrow INITIALIZENETWORK()\)` 
+>    1. for t = 1 to T do // 更新参数T次
+>        1. `\(id,\tau \leftarrow REPLAY.SAMPLE()\)` // 在后台线程中sample一个 prioritized batch的transitions
+>        1. `\(l_t \leftarrow COMPUTELOSS(\tau;\theta_t)\)` // Apply learning rule，例如double Q-learning或者DDPG
+>        1. `\(\theta_{t+1}\leftarrow UPDATEPARAMETERS(l_t;\theta_t)\)` 
+>        1. `\(p \leftarrow COMPUTEPRIORITIES()\)` // 计算experience的优先级（例如，绝对TD error）【和Actor一样】
+>        1. `\(REPLAY.SETPRIORITY(id,p)\)` // remote call以更新优先级
+>        1. `\(PERIODICALLY(REPLAY.REMOVETOFIT())\)` // 从replay memory中删掉旧的experience
+>    1. endfor
+>1. end procedure
 
 
 效果：
