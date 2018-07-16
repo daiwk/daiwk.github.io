@@ -9,12 +9,12 @@ tags: [parameter server, pserver ]
 
 <!-- TOC -->
 
-- [1. 背景](#1-背景)
-- [2. 发展历程](#2-发展历程)
-- [3. 对比parameter server与通用分布式系统](#3-对比parameter-server与通用分布式系统)
-- [4. parameter server的优势](#4-parameter-server的优势)
-- [5. parameter server系统架构](#5-parameter-server系统架构)
-    - [5.1 总体架构](#51-总体架构)
+- [1. 背景](#1-%E8%83%8C%E6%99%AF)
+- [2. 发展历程](#2-%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B)
+- [3. 对比parameter server与通用分布式系统](#3-%E5%AF%B9%E6%AF%94parameter-server%E4%B8%8E%E9%80%9A%E7%94%A8%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F)
+- [4. parameter server的优势](#4-parameter-server%E7%9A%84%E4%BC%98%E5%8A%BF)
+- [5. parameter server系统架构](#5-parameter-server%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84)
+    - [5.1 总体架构](#51-%E6%80%BB%E4%BD%93%E6%9E%B6%E6%9E%84)
 - [5.2 (k,v), range push & pull](#52-kv-range-push--pull)
 - [5.3 Asynchronous Tasks and Dependency](#53-asynchronous-tasks-and-dependency)
 - [6. Implementation](#6-implementation)
@@ -22,7 +22,7 @@ tags: [parameter server, pserver ]
     - [6.2 Messages](#62-messages)
     - [6.3 Consistent Hashing](#63-consistent-hashing)
     - [6.4 Replication and Consistency](#64-replication-and-consistency)
-        - [6.4.1 默认的复制方式: **Chain replication (强一致性, 可靠)**：](#641-默认的复制方式-chain-replication-强一致性-可靠)
+        - [6.4.1 默认的复制方式: **Chain replication (强一致性, 可靠)**：](#641-%E9%BB%98%E8%AE%A4%E7%9A%84%E5%A4%8D%E5%88%B6%E6%96%B9%E5%BC%8F-chain-replication-%E5%BC%BA%E4%B8%80%E8%87%B4%E6%80%A7-%E5%8F%AF%E9%9D%A0%EF%BC%9A)
         - [6.4.2 Replication after Aggregation](#642-replication-after-aggregation)
 - [6.5 Server Management](#65-server-management)
 
@@ -35,7 +35,7 @@ tags: [parameter server, pserver ]
 
 ## 1. 背景
 
-现实中，训练数据的数量可能达到1TB到1PB之间，而训练过程中的参数可能会达到`\(10^9\)`（十亿）到`\(10^12\)`（千亿）。而往往这些模型的参数需要被所有的worker节点频繁的访问，就有如下问题与挑战：
+现实中，训练数据的数量可能达到1TB到1PB之间，而训练过程中的参数可能会达到`\(10^9\)`（十亿）到`\(10^{12}\)`（千亿）。而往往这些模型的参数需要被所有的worker节点频繁的访问，就有如下问题与挑战：
 
 + 需要大量的网络带宽支持
 + 很多机器学习算法都是连续型的，**只有上一次迭代完成（各个worker都完成）之后，才能进行下一次迭代，**这就导致了如果机器之间性能差距大（木桶理论），就会造成性能的极大损失；
