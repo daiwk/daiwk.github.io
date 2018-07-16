@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "rl"
+category: "cv"
 title: "gan landscape"
 tags: [gan landscape, ]
 ---
