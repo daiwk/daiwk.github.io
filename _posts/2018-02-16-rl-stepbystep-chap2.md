@@ -120,7 +120,7 @@ def qlearning(num_iter1, alpha, epsilon):
 
         #初始化初始状态
         s = grid.reset()
-        a = actions[int(random.random()*len(actions))]
+        a = actions[int(random.random()*len(actions))] # 应该改成epsilon-greedy?
         t = False
         count = 0
         while False == t and count <100:
