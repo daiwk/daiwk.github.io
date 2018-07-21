@@ -1,30 +1,17 @@
 ---
 layout: post
 category: "rl"
-title: "深入浅出强化学习-chap3 基于模型的动态规划方法"
-tags: [深入浅出强化学习, 基于模型的动态规划]
+title: "深入浅出强化学习-chap5 基于时间差分的强化学习方法"
+tags: [时间差分, TD, Q-learning, sarsa, ]
 ---
 
 目录
 
 <!-- TOC -->
 
-- [1. 基于模型的动态方法理论](#1-基于模型的动态方法理论)
-    - [1.1 动态规划](#11-动态规划)
-    - [1.2 策略迭代算法](#12-策略迭代算法)
-        - [1.2.1 策略评估算法](#121-策略评估算法)
-        - [1.2.2 贪婪策略](#122-贪婪策略)
-        - [1.2.3 策略迭代算法](#123-策略迭代算法)
-    - [1.3 值函数迭代算法](#13-值函数迭代算法)
-    - [1.4 解决最优控制问题的三种算法](#14-解决最优控制问题的三种算法)
-        - [1.4.1 变分法原理](#141-变分法原理)
-        - [1.4.2 庞特里亚金最大值原理](#142-庞特里亚金最大值原理)
-        - [1.4.3 动态规划方法](#143-动态规划方法)
-- [2. 动态规划中的数学基础](#2-动态规划中的数学基础)
-    - [2.1 线性方程组的迭代解法](#21-线性方程组的迭代解法)
-    - [2.2 压缩映射证明策略评估的收敛性](#22-压缩映射证明策略评估的收敛性)
-- [3. 基于gym的编程实例](#3-基于gym的编程实例)
-- [4. 最优控制与强化学习比较](#4-最优控制与强化学习比较)
+- [1. 基于时间差分的强化学习方法](#1-%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95)
+- [2. python和gym的实例](#2-python%E5%92%8Cgym%E7%9A%84%E5%AE%9E%E4%BE%8B)
+    - [2.1 Qlearning](#21-qlearning)
 
 <!-- /TOC -->
 
@@ -32,108 +19,203 @@ tags: [深入浅出强化学习, 基于模型的动态规划]
 
 参考**《深入浅出强化学习》**
 
-## 1. 基于模型的动态方法理论
+## 1. 基于时间差分的强化学习方法
 
-一个完整的已知模型的马尔科夫决策过程可以用元组`\(S,A,P,r,\gamma\)`表示。`\(S\)`为状态集，`\(A\)`为动作集，`\(P\)`为**转移概率**【对应环境和智能体的**模型**】，`\(r\)`为回报函数，`\(\gamma\)`为折扣因子，用于计算累积回报`\(R=\sum_{t=0}^T\gamma ^tr_t\)`。若`\(T\)`为有限值，强化学习过程称为有限范围强化学习。若`\(T=\infty\)`，称为无限范围强化学习。下面以有限范围强化学习为例。
 
-强化学习的目标是找到最优策略`\(\pi\)`，使得累积回报的期望最大。策略是状态到动作的映射`\(\pi:s\rightarrow a\)`，`\(\tau \)`表示从状态`\(s_t\)`到最终状态`\(s_T\)`的一个序列`\(\tau:s_t,s_{t+1},...,s_T\)`，目标函数是累积回报函数的期望`\(\int R(\tau)p_{\pi}(\tau)d\tau\)`。
+sarsa和Qlearning的最大区别在于:
 
-所以强化学习的目标是：`\(\underset{\pi}{max}\int R(\tau)p_{\pi}(\tau)d\tau\)`，最终目标是找到最优策略`\(\pi ^*:s\rightarrow u^*\)`。这里的`\(u\)`指的是决策序列`\(u_0^*\rightarrow u_1^*\rightarrow ...u_T^*\)`，所以，广义上来讲，强化学习就是**找到一个决策序列**，使得**目标函数最优**。
++ sarsa是用`\(\varepsilon -greedy\)`得到动作`\(a\)`回报`\(r\)`和下一个状态`\(s'\)`，并对`\(s'\)`也使用`\(\varepsilon -greedy\)`得到动作`\(a'\)`和状态行为值函数`\(Q(s',a')\)`，并计算TD目标`\(r+\gamma Q(s',a')\)`
++ Qlearning是用`\(\varepsilon -greedy\)`得到动作`\(a\)`回报`\(r\)`和下一个状态`\(s'\)`【这部分和sarsa一样】，然后计算TD目标`\(r+\gamma max_{a'}Q(s',a')\)`，可见这里不再是通过`\(\varepsilon-greedy\)`选出的`\(a'\)`来算的`\(Q(s',a')\)`，而是`\(max_{a'}Q(s',a')\)`，也就是强制选使Q最大的那个action带来的Q，而非随机策略。
++ 注意，这里二者的`\(Q(s',a')\)`都是基于第一个`\(\varepsilon-greedy\)`得到的新状态`\(s'\)`来搞的。
 
-强化学习的分类如下图所示：
+## 2. python和gym的实例
 
-<html>
-<br/>
-<img src='../assets/rl-classifications.jpg' style='max-height: 220px'/>
-<br/>
-</html>
+### 2.1 Qlearning
 
-根据转移概率`\(P\)`是否已知，可以分为**基于模型**的动态规划方法，和**基于无模型**的强化学习方法。
+[https://github.com/daiwk/reinforcement-learning-code/blob/master/qlearning.py](https://github.com/daiwk/reinforcement-learning-code/blob/master/qlearning.py)
 
-这两种方法都包括**策略迭代**算法、**值迭代**算法和**策略搜索**算法。而基于**无模型**的强化学习方法中，每类方法又分为**online**和**offline**。
+代码如下：
 
-### 1.1 动态规划
+```python
+import sys
+import gym
+import random
+random.seed(0)
+import time
+import matplotlib.pyplot as plt
 
-基于模型的强化学习可以用动态规划的思想来解决。“动态”，指序列和状态的变化;“规划”，指优化，如线性优化、二次优化或非线性优化。
+grid = gym.make('GridWorld-v0')
+#grid=env.env                     #创建网格世界
+states = grid.env.getStates()        #获得网格世界的状态空间
+actions = grid.env.getAction()      #获得网格世界的动作空间
+gamma = grid.env.getGamma()       #获得折扣因子
+#计算当前策略和最优策略之间的差
+best = dict() #储存最优行为值函数
+def read_best():
+    f = open("best_qfunc")
+    for line in f:
+        line = line.strip()
+        if len(line) == 0: continue
+        eles = line.split(":")
+        best[eles[0]] = float(eles[1])
+#计算值函数的误差
+def compute_error(qfunc):
+    sum1 = 0.0
+    for key in qfunc:
+        error = qfunc[key] -best[key]
+        sum1 += error *error
+    return sum1
 
-利用动态规划可解决的问题需要满足两个条件：
+#  贪婪策略
+def greedy(qfunc, state):
+    amax = 0
+    key = "%d_%s" % (state, actions[0])
+    qmax = qfunc[key]
+    for i in range(len(actions)):  # 扫描动作空间得到最大动作值函数Q(s,a)
+        key = "%d_%s" % (state, actions[i])
+        q = qfunc[key]
+        if qmax < q:
+            qmax = q
+            amax = i
+    return actions[amax]
 
-+ 整个优化问题可以**分解**为**多个子优化**问题。
-+ 子优化问题的**解**可以**被存储**和**重复利用**。
 
-第二章说到，强化学习可以利用马尔科夫决策过程来描述，利用贝尔曼最优性原理得到贝尔曼最优化方程：
+#######epsilon贪婪策略
+def epsilon_greedy(qfunc, state, epsilon):
+    amax = 0
+    key = "%d_%s"%(state, actions[0])
+    qmax = qfunc[key]
+    for i in range(len(actions)):    #扫描动作空间得到最大动作值函数
+        key = "%d_%s"%(state, actions[i])
+        q = qfunc[key]
+        if qmax < q:
+            qmax = q
+            amax = i
+    #概率部分，除了max的为加上1-epsilon，其他的概率一样
+    pro = [0.0 for i in range(len(actions))]
+    pro[amax] += 1-epsilon
+    for i in range(len(actions)):
+        pro[i] += epsilon/len(actions)
 
-`\[
-\\\upsilon ^*(s)=\underset{a}{max}R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon ^*(s')
-\\q^*(s,a)=R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\underset{a}{max}q^*(s',a')
-\]`
+    ##选择动作
+    r = random.random()
+    s = 0.0
+    for i in range(len(actions)):
+        s += pro[i]
+        if s>= r: return actions[i]
+    return actions[len(actions)-1]
 
-可见马尔科夫决策问题符合使用动态规划的两个条件，所以可以用动态规划来解决。
+def qlearning(num_iter1, alpha, epsilon):
+    x = []
+    y = []
+    qfunc = dict()   #行为值函数为字典
+    #初始化行为值函数为0
+    for s in states:
+        for a in actions:
+            key = "%d_%s"%(s,a)
+            qfunc[key] = 0.0
+    for iter1 in range(num_iter1):
+        x.append(iter1)
+        y.append(compute_error(qfunc))
 
-动态规划的核心是**找到最优值函数。**
+        #初始化初始状态
+        s = grid.reset()
+        a = actions[int(random.random()*len(actions))] # 应该改成epsilon-greedy?
+        t = False
+        count = 0
+        while False == t and count <100:
+            key = "%d_%s"%(s, a)
+            #与环境进行一次交互，从环境中得到新的状态及回报
+            s1, r, t1, i =grid.step(a)
+            key1 = ""
+            #s1处的最大动作
+            a1 = greedy(qfunc, s1)
+            key1 = "%d_%s"%(s1, a1) # 这个时候的qfunc[key1]就是max的
+            #利用qlearning方法更新值函数
+            qfunc[key] = qfunc[key] + alpha*(r + gamma * qfunc[key1]-qfunc[key])
+            #转到下一个状态
+            s = s1;
+            a = epsilon_greedy(qfunc, s1, epsilon)
+            count += 1
+    plt.plot(x,y,"-.,",label ="q alpha=%2.1f epsilon=%2.1f"%(alpha,epsilon))
+    return qfunc
 
-由上一章可以得到如下状态值函数的计算方法：
+```
 
-`\[
-\upsilon_{\pi}(s)=\sum_{a\in A}\pi(a|s)(R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_{\pi}(s'))
-\]`
+使用：
 
-从上式中可见，**状态s处的值函数`\(\upsilon_{\pi}(s)\)`**可以用**后继状态的值函数`\(\upsilon_{\pi}(s')\)`**来表示，而**后继状态的值函数**是**未知**的，所以这就是**bootstrap算法**。
+```python
+import sys
+import gym
+from qlearning import *
+import time
+from gym import wrappers
+#main函数
+if __name__ == "__main__":
+   # grid = grid_mdp.Grid_Mdp()  # 创建网格世界
+    #states = grid.getStates()  # 获得网格世界的状态空间
+    #actions = grid.getAction()  # 获得网格世界的动作空间
+    sleeptime=0.5
+    terminate_states= grid.env.getTerminate_states()
+    #读入最优值函数
+    read_best()
+#    plt.figure(figsize=(12,6))
+    #训练
+    qfunc = dict()
+    qfunc = qlearning(num_iter1=500, alpha=0.2, epsilon=0.2)
+    #画图
+    plt.xlabel("number of iterations")
+    plt.ylabel("square errors")
+    plt.legend()
+   # 显示误差图像
+    plt.show()
+    time.sleep(sleeptime)
+    #学到的值函数
+    for s in states:
+        for a in actions:
+            key = "%d_%s"%(s,a)
+            print("the qfunc of key (%s) is %f" %(key, qfunc[key]) )
+            qfunc[key]
+    #学到的策略为：
+    print("the learned policy is:")
+    for i in range(len(states)):
+        if states[i] in terminate_states:
+            print("the state %d is terminate_states"%(states[i]))
+        else:
+            print("the policy of state %d is (%s)" % (states[i], greedy(qfunc, states[i])))
+    # 设置系统初始状态
+    s0 = 1
+    grid.env.setAction(s0)
+    # 对训练好的策略进行测试
+    grid = wrappers.Monitor(grid, './robotfindgold', force=True)  # 记录回放动画
+   #随机初始化，寻找金币的路径
+    for i in range(20):
+        #随机初始化
+        s0 = grid.reset()
+        grid.render()
+        time.sleep(sleeptime)
+        t = False
+        count = 0
+        #判断随机状态是否在终止状态中
+        if s0 in terminate_states:
+            print("reach the terminate state %d" % (s0))
+        else:
+            while False == t and count < 100:
+                a1 = greedy(qfunc, s0)
+                print(s0, a1)
+                grid.render()
+                time.sleep(sleeptime)
+                key = "%d_%s" % (s0, a)
+                # 与环境进行一次交互，从环境中得到新的状态及回报
+                s1, r, t, i = grid.step(a1)
+                if True == t:
+                    #打印终止状态
+                    print(s1)
+                    grid.render()
+                    time.sleep(sleeptime)
+                    print("reach the terminate state %d" % (s1))
+                # s1处的最大动作
+                s0 = s1
+                count += 1
 
-上式中，对于**模型已知**的强化学习算法，`\(P^a_{ss'}\)`、`\(\gamma\)`和`\(R^a_{s}\)`都是已知的，`\(\pi(a|s)\)`是要评估的策略，是指定的，也是已知的。所以**未知数**就是**值函数**，未知数的个数为状态的总数，用`\(|S|\)`表示。
-
-下面介绍如何求解上述公式(其实就是**关于值函数**的**线性方程组**)
-
-### 1.2 策略迭代算法
-
-#### 1.2.1 策略评估算法
-
-使用高斯-赛德尔迭代算法：
-
-`\[
-\upsilon_{k+1}(s)=\sum_{a\in A}\pi(a|s)(R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon _{k}(s'))
-\]`
-
-算法步骤如下：
-
->1. 输入：需要评估的策略`\(\pi\)`状态转移概率`\(P^a_{ss'}\)`回报函数`\(R^a_s\)`，折扣因子`\(\gamma\)`
->1. 初始化值函数：`\(\upsilon(s)=0\)`
->1. repeat k=0,1,...
->1.     for s in S:
->1.        `\(\upsilon_{k+1}(s)=\sum _{a\in A}\pi(a|s)(R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_k(s'))\)`
->1. until `\(\upsilon_{k+1}=\upsilon_k\)`
->1. 输出：`\(\upsilon(s)\)`
-
-注意：**每次迭代**都需要**对状态集进行一次遍历**，以评估每个状态的值函数。
-
-#### 1.2.2 贪婪策略
-
-#### 1.2.3 策略迭代算法
-
-### 1.3 值函数迭代算法
-
->1. 输入：状态转移概率`\(P^a_{ss'}\)`，回报函数`\(R^a_{s}\)`，折扣因子`\(\gamma\)`，初始化值函数`\(\upsilon(s)=0\)`，初始化策略`\(\pi_0\)`
->1. Repeat `\(l=0,1,...\)`
->1.    for every `\(s\)` do
->1.        `\(\upsilon _{l+1}(s)=\underset{a}{max}R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon _l(s')\)` 
->1. Until `\(\upsilon _{l+1}=\upsilon _l\)`
->1. 输出：`\(\pi(s)=argmax_aR^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon _l(s')\)`
-
-### 1.4 解决最优控制问题的三种算法
-
-#### 1.4.1 变分法原理
-
-#### 1.4.2 庞特里亚金最大值原理
-
-#### 1.4.3 动态规划方法
-
-## 2. 动态规划中的数学基础
-
-### 2.1 线性方程组的迭代解法
-
-### 2.2 压缩映射证明策略评估的收敛性
-
-## 3. 基于gym的编程实例
-
-## 4. 最优控制与强化学习比较
-
+```

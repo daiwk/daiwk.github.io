@@ -1,17 +1,32 @@
 ---
 layout: post
 category: "rl"
-title: "深入浅出强化学习-chap5 基于时间差分的强化学习方法"
-tags: [时间差分, TD, Q-learning, sarsa, ]
+title: "深入浅出强化学习-chap2 马尔科夫决策过程"
+tags: [深入浅出强化学习, 马尔科夫决策过程, MDP, 值函数, 状态-行为值函数, 贝尔曼方程]
 ---
 
 目录
 
 <!-- TOC -->
 
-- [1. 基于时间差分的强化学习方法](#1-%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95)
-- [2. python和gym的实例](#2-python%E5%92%8Cgym%E7%9A%84%E5%AE%9E%E4%BE%8B)
-    - [2.1 Qlearning](#21-qlearning)
+- [1. 马尔科夫决策过程理论](#1-马尔科夫决策过程理论)
+    - [1.1 马尔科夫性](#11-马尔科夫性)
+    - [1.2 马尔科夫过程](#12-马尔科夫过程)
+    - [1.3 马尔科夫决策过程](#13-马尔科夫决策过程)
+    - [1.4 状态值函数与状态-行为值函数](#14-状态值函数与状态-行为值函数)
+    - [1.5 状态值函数与状态-行为值函数的贝尔曼方程](#15-状态值函数与状态-行为值函数的贝尔曼方程)
+    - [1.6 最优状态值函数与最优状态-行为值函数及其贝尔曼最优方程](#16-最优状态值函数与最优状态-行为值函数及其贝尔曼最优方程)
+    - [1.7 强化学习形式化描述](#17-强化学习形式化描述)
+- [2. MDP中的概率学基础](#2-mdp中的概率学基础)
+    - [2.1 期望与方差](#21-期望与方差)
+        - [期望](#期望)
+        - [方差](#方差)
+    - [2.2 随机策略](#22-随机策略)
+        - [2.2.1 贪婪策略](#221-贪婪策略)
+        - [2.2.2 `\(\varepsilon -greedy\)`策略](#222-\\varepsilon--greedy\策略)
+        - [2.2.3 高斯策略](#223-高斯策略)
+        - [2.2.4 玻尔兹曼分布](#224-玻尔兹曼分布)
+- [3. 基于gym的MDP实例](#3-基于gym的mdp实例)
 
 <!-- /TOC -->
 
@@ -19,203 +34,295 @@ tags: [时间差分, TD, Q-learning, sarsa, ]
 
 参考**《深入浅出强化学习》**
 
-## 1. 基于时间差分的强化学习方法
+## 1. 马尔科夫决策过程理论
 
+### 1.1 马尔科夫性
 
-sarsa和Qlearning的最大区别在于:
+系统的下一个状态`\(s_{t+1}\)`**仅与当前状态`\(s_t\)`有关**，与之前的状态无关。
 
-+ sarsa是用`\(\varepsilon -greedy\)`得到动作`\(a\)`回报`\(r\)`和下一个状态`\(s'\)`，并对`\(s'\)`也使用`\(\varepsilon -greedy\)`得到动作`\(a'\)`和状态行为值函数`\(Q(s',a')\)`，并计算TD目标`\(r+\gamma Q(s',a')\)`
-+ Qlearning是用`\(\varepsilon -greedy\)`得到动作`\(a\)`回报`\(r\)`和下一个状态`\(s'\)`【这部分和sarsa一样】，然后计算TD目标`\(r+\gamma max_{a'}Q(s',a')\)`，可见这里不再是通过`\(\varepsilon-greedy\)`选出的`\(a'\)`来算的`\(Q(s',a')\)`，而是`\(max_{a'}Q(s',a')\)`，也就是强制选使Q最大的那个action带来的Q，而非随机策略。
-+ 注意，这里二者的`\(Q(s',a')\)`都是基于第一个`\(\varepsilon-greedy\)`得到的新状态`\(s'\)`来搞的。
+定义：状态`\(s_t\)`是马尔科夫的，当且仅当`\(P[s_{t+1}|s_t]=P[s_{t+1}|s_1,...,s_t]\)`。
 
-## 2. python和gym的实例
+随机过程就是随机变量序列。如果随机变量序列的**每个状态**都是**马尔科夫**的，那么此随机过程就是**马尔科夫随机过程**。
 
-### 2.1 Qlearning
+### 1.2 马尔科夫过程
 
-[https://github.com/daiwk/reinforcement-learning-code/blob/master/qlearning.py](https://github.com/daiwk/reinforcement-learning-code/blob/master/qlearning.py)
+马尔科夫过程是一个二元组`\((S,P)\)`，且满足：`\(S\)`是有限状态集合，`\(P\)`是状态转移概率。状态转移概率矩阵如下：
 
-代码如下：
+`\[
+P=\begin{bmatrix}
+P_{11} & ... & P_{1n} \\ 
+\vdots  & \vdots  & \vdots \\ 
+P_{n1} & ... & P_{nn}
+\end{bmatrix}
+\]`
 
-```python
-import sys
-import gym
-import random
-random.seed(0)
-import time
-import matplotlib.pyplot as plt
+由若干个状态组成的序列称为马尔科夫链。当给定状态转移概率时，从某个状态出发存在多条马尔科夫链。
 
-grid = gym.make('GridWorld-v0')
-#grid=env.env                     #创建网格世界
-states = grid.env.getStates()        #获得网格世界的状态空间
-actions = grid.env.getAction()      #获得网格世界的动作空间
-gamma = grid.env.getGamma()       #获得折扣因子
-#计算当前策略和最优策略之间的差
-best = dict() #储存最优行为值函数
-def read_best():
-    f = open("best_qfunc")
-    for line in f:
-        line = line.strip()
-        if len(line) == 0: continue
-        eles = line.split(":")
-        best[eles[0]] = float(eles[1])
-#计算值函数的误差
-def compute_error(qfunc):
-    sum1 = 0.0
-    for key in qfunc:
-        error = qfunc[key] -best[key]
-        sum1 += error *error
-    return sum1
+### 1.3 马尔科夫决策过程
 
-#  贪婪策略
-def greedy(qfunc, state):
-    amax = 0
-    key = "%d_%s" % (state, actions[0])
-    qmax = qfunc[key]
-    for i in range(len(actions)):  # 扫描动作空间得到最大动作值函数Q(s,a)
-        key = "%d_%s" % (state, actions[i])
-        q = qfunc[key]
-        if qmax < q:
-            qmax = q
-            amax = i
-    return actions[amax]
+马尔科夫决策过程由元组`\((S,A,P,R,\gamma)\)`描述，其中：
 
++ `\(S\)`为有限的状态集
++ `\(A\)`为有限的动作集
++ `\(P\)`为状态转移概率
++ `\(R\)`为回报函数
++ `\(\gamma\)`为**折扣因子**，用于计算**累积回报**
 
-#######epsilon贪婪策略
-def epsilon_greedy(qfunc, state, epsilon):
-    amax = 0
-    key = "%d_%s"%(state, actions[0])
-    qmax = qfunc[key]
-    for i in range(len(actions)):    #扫描动作空间得到最大动作值函数
-        key = "%d_%s"%(state, actions[i])
-        q = qfunc[key]
-        if qmax < q:
-            qmax = q
-            amax = i
-    #概率部分，除了max的为加上1-epsilon，其他的概率一样
-    pro = [0.0 for i in range(len(actions))]
-    pro[amax] += 1-epsilon
-    for i in range(len(actions)):
-        pro[i] += epsilon/len(actions)
+区别于马尔科夫过程，马尔科夫决策过程的**态转移概率**是**包含动作**的，即`\(P^a_{ss'}=P[S_{t+1}=s'|S_t=s,A_t=a]\)`。
 
-    ##选择动作
-    r = random.random()
-    s = 0.0
-    for i in range(len(actions)):
-        s += pro[i]
-        if s>= r: return actions[i]
-    return actions[len(actions)-1]
+强化学习的目标是给定一个马尔科夫决策过程，寻找最优策略。**策略**指的是，**状态到动作的映射**，用符号`\(\pi\)`表示，给定状态`\(s\)`时，动作集上的一个分布，即：
 
-def qlearning(num_iter1, alpha, epsilon):
-    x = []
-    y = []
-    qfunc = dict()   #行为值函数为字典
-    #初始化行为值函数为0
-    for s in states:
-        for a in actions:
-            key = "%d_%s"%(s,a)
-            qfunc[key] = 0.0
-    for iter1 in range(num_iter1):
-        x.append(iter1)
-        y.append(compute_error(qfunc))
+`\[
+\pi (a|s)=p[A_i=a|S_t=s]
+\]`
 
-        #初始化初始状态
-        s = grid.reset()
-        a = actions[int(random.random()*len(actions))] # 应该改成epsilon-greedy?
-        t = False
-        count = 0
-        while False == t and count <100:
-            key = "%d_%s"%(s, a)
-            #与环境进行一次交互，从环境中得到新的状态及回报
-            s1, r, t1, i =grid.step(a)
-            key1 = ""
-            #s1处的最大动作
-            a1 = greedy(qfunc, s1)
-            key1 = "%d_%s"%(s1, a1)
-            #利用qlearning方法更新值函数
-            qfunc[key] = qfunc[key] + alpha*(r + gamma * qfunc[key1]-qfunc[key])
-            #转到下一个状态
-            s = s1;
-            a = epsilon_greedy(qfunc, s1, epsilon)
-            count += 1
-    plt.plot(x,y,"-.,",label ="q alpha=%2.1f epsilon=%2.1f"%(alpha,epsilon))
-    return qfunc
+含义是，策略`\(\pi\)`在每个状态`\(s\)`指定一个动作概率。如果给出的策略`\(\pi\)`是确定性的，那么策略`\(\pi\)`在每个状态`\(s\)`指定一个确定的动作。注，`\(\sum _{a\in A}\pi(s,a)=1\)`
 
-```
+概率在强化学习中的作用：
 
-使用：
++ 强化学习的策略往往是随机策略。可以将**探索**耦合到**采样**的过程中。**探索，指机器人尝试其他动作以便找到更好的策略**。
++ 实际应用中，存在各种噪声，这些噪声大都服从正态分布，可以用概率的知识**去掉噪声**。
 
-```python
-import sys
-import gym
-from qlearning import *
-import time
-from gym import wrappers
-#main函数
-if __name__ == "__main__":
-   # grid = grid_mdp.Grid_Mdp()  # 创建网格世界
-    #states = grid.getStates()  # 获得网格世界的状态空间
-    #actions = grid.getAction()  # 获得网格世界的动作空间
-    sleeptime=0.5
-    terminate_states= grid.env.getTerminate_states()
-    #读入最优值函数
-    read_best()
-#    plt.figure(figsize=(12,6))
-    #训练
-    qfunc = dict()
-    qfunc = qlearning(num_iter1=500, alpha=0.2, epsilon=0.2)
-    #画图
-    plt.xlabel("number of iterations")
-    plt.ylabel("square errors")
-    plt.legend()
-   # 显示误差图像
-    plt.show()
-    time.sleep(sleeptime)
-    #学到的值函数
-    for s in states:
-        for a in actions:
-            key = "%d_%s"%(s,a)
-            print("the qfunc of key (%s) is %f" %(key, qfunc[key]) )
-            qfunc[key]
-    #学到的策略为：
-    print("the learned policy is:")
-    for i in range(len(states)):
-        if states[i] in terminate_states:
-            print("the state %d is terminate_states"%(states[i]))
-        else:
-            print("the policy of state %d is (%s)" % (states[i], greedy(qfunc, states[i])))
-    # 设置系统初始状态
-    s0 = 1
-    grid.env.setAction(s0)
-    # 对训练好的策略进行测试
-    grid = wrappers.Monitor(grid, './robotfindgold', force=True)  # 记录回放动画
-   #随机初始化，寻找金币的路径
-    for i in range(20):
-        #随机初始化
-        s0 = grid.reset()
-        grid.render()
-        time.sleep(sleeptime)
-        t = False
-        count = 0
-        #判断随机状态是否在终止状态中
-        if s0 in terminate_states:
-            print("reach the terminate state %d" % (s0))
-        else:
-            while False == t and count < 100:
-                a1 = greedy(qfunc, s0)
-                print(s0, a1)
-                grid.render()
-                time.sleep(sleeptime)
-                key = "%d_%s" % (s0, a)
-                # 与环境进行一次交互，从环境中得到新的状态及回报
-                s1, r, t, i = grid.step(a1)
-                if True == t:
-                    #打印终止状态
-                    print(s1)
-                    grid.render()
-                    time.sleep(sleeptime)
-                    print("reach the terminate state %d" % (s1))
-                # s1处的最大动作
-                s0 = s1
-                count += 1
+**给定一个策略`\(\pi\)`**时，可以计算**累积回报**：
 
-```
+`\[
+G_t=R_{t+1}+\gamma R_{t+2}+...=\sum _{k=0}^{\infty }\gamma ^kR_{i+k+1}
+\]`
+
+当给定策略`\(\pi\)`时，假设从状态`\(s_t\)`出发，可能有很多个状态序列，所以对应的`\(G_t\)`也有多个可能值。为了评价状态`\(s_t\)`的价值，需要一个确定的量来描述。而**累积回报`\(G_t\)`是一个随机变量**，不是确定值，但其**期望**是一个**确定值**，因此可以做为状态值函数的定义。
+
+### 1.4 状态值函数与状态-行为值函数
+
+当智能体**采用策略`\(\pi\)`时**，累积回报服从一个分布，**累积回报**在**状态`\(s\)`处的期望值**定义**状态值函数**：
+
+`\[
+\upsilon _{\pi}(s)=E_{\pi}[\sum _{k=0}^{\infty }\gamma ^kR_{t+k+1}|S_t=s]
+\]`
+
+注：**状态值函数是与策略`\(\pi\)`相对应的**，因为策略`\(\pi\)`决定了累积回报`\(G\)`的状态分布。
+
+状态-行为值函数为：
+
+`\[
+q_{\pi}(s,a)=E_{\pi}[\sum _{k=0}^{\infty}\gamma ^kR_{t+k+1}|S_t=s,A_t=a]
+\]`
+
+### 1.5 状态值函数与状态-行为值函数的贝尔曼方程
+
+贝尔曼方程（Bellman Equation）也被称作动态规划方程（Dynamic Programming Equation）。
+
+状态值函数的贝尔曼方程：
+
+`\[
+\begin{split}
+\\\upsilon(S_t)&=\upsilon(s)=E[G_t|S_t=s]
+\\&=E[R_{t+1}+\gamma R_{t+2}+...|S_t=s]
+\\&=E[R_{t+1}+\gamma (R_{t+2}+\gamma R_{t+3}+...)|S_t=s]
+\\&=E[R_{t+1}+\gamma G_{t+1}|S_t=s]
+\\&=E[R_{t+1}+\gamma \upsilon(S_{t+1})|S_t=s]
+\end{split}
+\]`
+
+最后一个等号的证明（书P23，有小改……）
+
+`\[
+\begin{split}
+\\\upsilon(S_t)&=E_{S_t,S_{t+1},...}(R_{t+1}+\gamma G_{t+1}|S_t=s)
+\\&=E_{S_t}(R_{t+1})+\gamma E_{S_{t+1},...}(G_{t+1})
+\\&=E_{S_t}(R_{t+1}+\gamma \upsilon(S_{t+1}))
+\\&=E(R_{t+1}+\gamma\upsilon(S_{t+1}))
+\end{split}
+\]`
+
+同理，状态-行为值函数的贝尔曼方程：
+
+`\[
+q_{\pi}(s,a)=E_{\pi}[R_{t+1}+\gamma q(S_{t+1},A_{t+1})|S_t=s,A_t=a]
+\]`
+
+状态值函数与状态-行为值函数的关系：
+
+`\[
+\upsilon_{\pi}(s)=\sum_{a\in A}\pi(a|s)q_{\pi}(s,a)
+\]`
+
+而(其中，`\(P^a_{ss'}\)`表示从状态`\(s\)`开始，采取行动`\(a\)`，移动到状态`\(s'\)`的概率)
+
+`\[
+q_{\pi}(s,a)=R^a_{s}+\gamma \sum _{s'}P^a_{ss'}\upsilon _{\pi}(s')
+\]`
+
+因此，
+
+`\[
+\upsilon_{\pi}(s)=\sum_{a\in A}\pi(a|s)(R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\upsilon_{\pi}(s'))
+\]`
+
+而
+
+`\[
+\upsilon_{\pi}(s')=\sum _{a'\in A}\pi(a'|s')q_{\pi}(s',a')
+\]`
+
+所以，状态-行为值函数是：
+
+`\[
+q_{\pi}(s,a)=R^a_{s}+\gamma \sum_{s'\in S}P^a_{ss'}\sum _{a'\in A}\pi(a'|s')q_{\pi}(s',a')
+\]`
+
+示例：
+
+<html>
+<br/>
+<img src='../assets/state-value-function-demo.jpg' style='max-height: 200px'/>
+<br/>
+</html>
+
+图中，**空心**圆圈中的数值为该状态下的**值函数**，**实心**圆圈表示**状态-行为对**。除了实心圆圈部分，其他状态转移`\(\pi(a|s)=0.5,\gamma =1\)`。`\(s_4\)`通过睡觉，可以到达`\(s_5\)`，而通过发表，可以到达`\(s_3\)`、`\(s_2\)`和`\(s_4\)`
+
+`\[
+\begin{split}
+\\\upsilon (s_4)&=\pi(睡觉|s_4)R^{睡觉}_{s_4s_5}+\pi(发表|s_4)(R^{发表}_{s_4s_3}+\gamma (P^{发表}_{s_4s_2}\upsilon (s_2)+P^{发表}_{s_4s_3}\upsilon (s_3)+P^{发表}_{s_4s_4}\upsilon (s_4)))
+\\&=0.5*10+0.5*(1+1*(0.2*(-1.3)+0.4*2.7+0.4*7.4))
+\\&=7.39
+\end{split}
+\]`
+
+### 1.6 最优状态值函数与最优状态-行为值函数及其贝尔曼最优方程
+
+每个策略对应一个状态值函数，最优策略对应着最优状态值函数。
+
+定义：最优状态值函数`\(\upsilon ^*(s)\)`为在所有策略中值最大的值函数，即`\(\upsilon ^*(s)=\underset{\pi}{max}\upsilon_{\pi}(s)\)`。
+
+最优状态-行为值函数`\(q^*(s,a)\)`为在所有策略中最大的状态-行为值函数，即`\(q^*(s,a)=\underset{\pi}{max}q_{\pi}(s,a)\)`。
+
+从而，**最优状态值函数**的**贝尔曼最优方程**(与前面的`\(\upsilon _{\pi}(s)\)`的区别是，少乘了一个`\(\pi(a|s)\)`)：
+
+`\[
+\upsilon ^*(s)=\underset{a}{max}R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\upsilon ^*(s')
+\]`
+
+**最优状态-行为值函数**的**贝尔曼最优方程**：
+
+`\[
+q^*(s,a)=R^a_{s}+\gamma \sum _{s'\in S}P^a_{ss'}\underset{a'}{max}q^*(s',a')
+\]`
+
+若已各大最优状态-值函数，最优策略可以通过直接最大化`\(q^*(s,a)\)`来决定：
+
+`\[
+\pi_*(a|s)=\left\{\begin{matrix}
+1 &if\ a=\underset{a\in A}{argmax}q_*(s,a) \\ 
+0 & otherwise
+\end{matrix}\right.
+\]`
+
+### 1.7 强化学习形式化描述
+
+定义一个离散时间有限范围的折扣马尔科夫决策过程`\(M=(S,A,P,r,\rho_0,\gamma,T)\)`，
+
++ `\(S\)`为**状态集**
++ `\(A\)`为**动作集**
++ `\(P:S\times A\times S\rightarrow R\)`为**转移概率**
++ `\(r:S\times A\rightarrow [-R_{max},R_{max}]\)`为**立即回报函数**
++ `\(\rho_0:S\rightarrow R\)`是**初始状态分布**
++ `\(\gamma \in [0,1]\)`是**折扣因子**
++ `\(T\)`为**水平范围（即步数）**
+
+`\(\tau \)`为一个**轨迹序列**，`\(\tau =(s_0,a_0,s_1,a_1,...)\)`
+`\(R=\sum _{t=0}^T\gamma ^tr_t\)`为**累积回报**。
+
+强化学习的目标是找到**最优策略`\(\pi\)`**，使得该策略下的**累积回报期望最大**，即
+
+`\[
+\underset{\pi}{max}\int R(\tau )p_{\pi}(\tau )d\tau 
+\]`
+
+## 2. MDP中的概率学基础
+
+### 2.1 期望与方差
+
+#### 期望
+
+函数f(x)关于某分布P(x)的期望指，当x由分布P(x)产生，f作用于x时，f(x)的平均值。
+
++ 离散型随机变量的期望：
+
+`\[
+E_{x\sim P}[f(x)]=\sum _xP(x)f(x)
+\]`
+
++ 连续型随机变量的期望通过积分求得：
+
+`\[
+E_{x\sim P}[f(x)]=\int p(x)f(x)dx
+\]`
+
+期望的运算是线性的：
+
+`\[
+E_x(\alpha f(x)+\beta g(x))=\alpha E_x[f(x)]+\beta E_x[g(x)]
+\]`
+
+#### 方差
+
+方差衡量利用当前概率分布采样时，采样值差异的大小：
+
+`\[
+Var(f(x))=E[(f(x)-E[f(x)])^2]
+\]`
+
+方差越小，不确定性越小。
+
+### 2.2 随机策略
+
+#### 2.2.1 贪婪策略
+
+`\[
+\pi_*(a|s)=\left\{\begin{matrix}
+1 &if\ a=\underset{a\in A}{argmax}q_*(s,a) \\ 
+0 & otherwise
+\end{matrix}\right.
+\]`
+
+贪婪策略是一个**确定性策略**，只有动作值函数`\(q^*(s,a)\)`**最大**的动作时取**概率1**
+
+#### 2.2.2 `\(\varepsilon -greedy\)`策略
+
+`\[
+\pi (a|s)=\left\{\begin{matrix}
+1-\varepsilon + \frac{\varepsilon}{|A(s)|} &if\ a=\underset{a\in A}{argmax}q_*(s,a) \\ 
+\frac{\varepsilon}{|A(s)|} & otherwise
+\end{matrix}\right.
+\]`
+`\(\varepsilon -greedy\)`策略是强化学习**最基本最常用**的**随机策略**。该策略平衡了e&e，也就是**利用(exploitation)**和**探索(exploration)**，其中选取动作值函数最大的部分为利用，其他非最优动作仍然有概率的部分为探索部分。
+
+也就是说，所有的`\(\pi(a|s)\)`都初始化为`\(\frac{\varepsilon}{|A(s)|}\)`，而如果正好这个a能取到`\(max_aQ(s,a)\)`，那么给他加上`\((1-\varepsilon)\)`
+
+#### 2.2.3 高斯策略
+
+一般的高斯策略都可以写成
+
+`\[
+\pi_{\theta}=\mu_{\theta}+\varepsilon,\varepsilon \sim N(0,\sigma ^2)
+\]`
+
+其中`\(\mu_{\theta}\)`为**确定性部分**，`\(\varepsilon\)`为**零均值**的**高斯随机噪声**。这种策略也**平衡**了**利用**与**探索**，利用由确定性部分完成，探索由`\(\varepsilon\)`完成。
+
+#### 2.2.4 玻尔兹曼分布
+
+对于**动作空间是离散的，或者动作空间并不大**的情况，可以采用玻尔兹曼分布(吉布斯分布)作为随机策略，即：
+
+`\[
+\pi(a|s,\theta)=\frac{exp(Q(s,a,\theta))}{\sum_bexp(h(s,b,\theta))}
+\]`
+
+其中，`\(Q(s,a,\theta)\)`是动作值函数。**动作值函数大的动作被选中的概率大，小的动作被选中的概率小。**
+
+类似softmax，可以参考**[多类分类下为什么用softmax而不是用其他归一化方法?](https://www.zhihu.com/question/40403377)**。
+
+## 3. 基于gym的MDP实例
+
+详见书p29
+
+[https://github.com/daiwk/reinforcement-learning-code/blob/master/grid_mdp.py](https://github.com/daiwk/reinforcement-learning-code/blob/master/grid_mdp.py)
