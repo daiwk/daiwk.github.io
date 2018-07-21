@@ -128,7 +128,7 @@ def qlearning(num_iter1, alpha, epsilon):
             #s1处的最大动作
             a1 = greedy(qfunc, s1)
             key1 = "%d_%s"%(s1, a1) # 这个时候的qfunc[key1]就是max的
-            #利用qlearning方法更新值函数
+            #利用qlearning方法更新值函数，注意！！这里更新的是key，而不是key1
             qfunc[key] = qfunc[key] + alpha*(r + gamma * qfunc[key1]-qfunc[key])
             #转到下一个状态
             s = s1;

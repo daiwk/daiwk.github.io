@@ -112,7 +112,7 @@ Q(s_t,a_t)\leftarrow Q(s_t,a_t)+\alpha [r_t+\gamma max_a(Q(s_{t+1},a))-Q(s_t,a_t
 
 在DQN之前，计算TD目标的动作值函数所用的网络参数`\(\theta\)`与梯度计算中要逼近的动作值函数所用的网络参数相同，这样就容易导致数据间存在关联性，从而使训练不稳定。
 
-所以DQN的做法就是将TD目标的网络表示为`\(\theta ^{-}\)`，用于动作值函数逼近的网络`\(\theta\)`每一步都更新，而用于计算TD目标的网络`\(\theta ^{-}\)`则是每固定的步数才更新一次：
+所以DQN的做法就是将TD目标的网络表示为`\(\theta ^{-}\)`，用于动作值函数逼近的网络`\(\theta\)`每一步都更新，而用于计算TD目标的网络`\(\theta ^{-}\)`则是每固定的步数才更新一次【这就可以使得在一段时间里目标Q值是保持不变的】：
 
 `\[
 \theta_{t+1}=\theta _t+\alpha [r+\gamma max_{a'}(Q(s',a';\theta ^{-}))-Q(s,a;\theta)]\nabla Q(s,a;\theta)
@@ -161,7 +161,62 @@ Q(s_t,a_t)\leftarrow Q(s_t,a_t)+\alpha [r_t+\gamma \underset{a}{max}Q(s_{t+1},a)
 
 可以发现不管是表格型，还是基于值函数逼近的方法，更新公式中都有max操作，使得估计的值函数比值函数的真实值大。
 
-如果，值函数是
+**如果过估计是均匀的**，即值函数的每一点的值都被过估计了相同的幅度，那么由于最优策略是贪婪策略，即找最在的值函数所对应的动作，在这种情况下一不会影响最优策略（因为每个值函数都变大一样的幅度，所以原来最大的那个还是最大），这样因为强化学习的目标是找到最优策略，所以不会影响我们解决问题~
+
+但实际情况中，过估计量并不是均匀的，所以会影响最终策略，使得最终策略并非最优！！
+
+
+在Qlearning的值函数更新中，TD目标为：
+
+`\[
+Y^Q_t=R_{t+1}+\gamma max_aQ(S_{t+1},a;\theta_t)
+\]`
+
++ 动作选择
+
+在求TD目标`\(Y^Q_t\)`时，首先需要选择一个动作`\(a^*\)`，该动作`\(a^*\)`应该满足在状态`\(S_{t+1}\)`处使得`\(Q(s_{t+1},a)\)`最大，这就是**动作选择**。
+
++ 动作评估
+
+选出`\(a^*\)`后，利用`\(a^*\)`处的动作值函数构造TD目标。
+
+**一般的Qlearning使用同一个参数`\(\theta_t\)`来选择和评估动作。**
+
+Double Qlearning将动作的选择和动作的评估分别用不同的值函数来实现，从而其TD目标为：
+
+`\[
+Y^{DoubleQ}_t=R_{t+1}+\gamma Q(S_{t+1},argmax_aQ(S_{t+1},a;\theta_t);\theta_t')
+\]`
+
+所以，我们可以看出，动作的选择所选择的`\(a^*\)`为
+
+`\[
+a^*=argmax_aQ(S_{t+1},s;\theta_t)
+\]`
+
+动作值函数网络的参数是`\(\theta_t\)`。当选出最大动作`\(a^*\)`之后，动作评估的公式为：
+
+`\[
+Y^{DoubleQ}_t=R_{t+1}+\gamma Q(S_{t+1},a^*;\theta_t')
+\]`
+
+所以，引入DQN就是Double DQN：
+
+[Deep Reinforcement Learning with Double Q-learning](https://arxiv.org/abs/1509.06461)
+
+将TD error修改为：
+
+`\[
+r+\gamma Q(s',argmax_{a'}Q(s',a',\theta),\theta^-)-Q(s,a,\theta)
+\]`
+
+其中
+
++ `\(\theta\)`是当前的网络参数，用来选择动作
++ `\(\theta^-\)`是前一步的网络参数（`\(delayed theta\)`），用来评估动作
+
+因为原来的DQN就已经引入了目标网络`\(\theta^-\)`，所以其实改动不大。
+但注意！！区别在于，原来DQN的TD error是`\(r+\gamma Q(s',argmax_{a'}Q(s',a',\theta^-),\theta^-)\)`，即动作选择和动作评估都是`\(\theta^-\)`。而Double DQN动作选择是`\(\theta\)`，动作评估是`\(\theta^-\)`
 
 ### 2.3 优先回放(Prioritized Replay)
 
