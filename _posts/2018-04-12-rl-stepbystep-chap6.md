@@ -16,6 +16,7 @@ tags: [深入浅出强化学习, DQN]
         - [2.1.2 在强化学习的学习过程中引入经验回放](#212-在强化学习的学习过程中引入经验回放)
         - [2.1.3 设立了独立的目标网络单独处理时间差分算法中的TD偏差](#213-设立了独立的目标网络单独处理时间差分算法中的td偏差)
     - [2.2 Double DQN](#22-double-dqn)
+        - [2.2.1 Qlearning的过估计](#221-qlearning的过估计)
     - [2.3 优先回放(Prioritized Replay)](#23-优先回放prioritized-replay)
     - [2.4 Dueling DQN](#24-dueling-dqn)
 - [3. 函数逼近方法](#3-函数逼近方法)
@@ -139,6 +140,26 @@ DQN的训练算法如下：
 
 
 ### 2.2 Double DQN
+
+#### 2.2.1 Qlearning的过估计
+
+DQN无法克服Qlearning本身固有的缺点：过估计
+
+过估计指的是**估计的值函数比真实值函数大**，Qlearning出现过估计的问题，根源在于其中的**最大化操作**：
+
+对于表格型，值函数评估的更新公式：
+
+`\[
+Q(s_t,a_t)\leftarrow Q(s_t,a_t)+\alpha [r_t+\gamma \underset{a}{max}Q(s_{t+1},a)-Q(s_t,a_t)]
+\]`
+
+对于基于函数逼近的方法，值函数更新公式为：
+
+`\[
+\theta _{t+1}=\theta_t+\alpha(R_{t+1}+\gamma \underset{a}{max}Q(S_{t+1},a;\theta_t)-Q(S_t,A_t;\theta_t))\triangledown _{\theta_t}Q(S_t,A_t;\theta_t)
+\]`
+
+
 
 ### 2.3 优先回放(Prioritized Replay)
 
