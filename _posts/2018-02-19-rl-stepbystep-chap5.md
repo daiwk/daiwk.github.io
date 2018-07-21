@@ -11,7 +11,6 @@ tags: [时间差分, TD, Q-learning, sarsa, ]
 
 - [1. 基于时间差分的强化学习方法](#1-%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95)
 - [2. python和gym的实例](#2-python%E5%92%8Cgym%E7%9A%84%E5%AE%9E%E4%BE%8B)
-    - [2.1 Qlearning](#21-qlearning)
 
 <!-- /TOC -->
 
@@ -29,8 +28,6 @@ sarsa和Qlearning的最大区别在于:
 + 注意，这里二者的`\(Q(s',a')\)`都是基于第一个`\(\varepsilon-greedy\)`得到的新状态`\(s'\)`来搞的。
 
 ## 2. python和gym的实例
-
-### 2.1 Qlearning
 
 [https://github.com/daiwk/reinforcement-learning-code/blob/master/qlearning.py](https://github.com/daiwk/reinforcement-learning-code/blob/master/qlearning.py)
 
@@ -142,7 +139,7 @@ def qlearning(num_iter1, alpha, epsilon):
 
 ```
 
-使用：
+主流程的代码在[https://github.com/daiwk/reinforcement-learning-code/blob/master/learning_and_test.py](https://github.com/daiwk/reinforcement-learning-code/blob/master/learning_and_test.py)中。
 
 ```python
 import sys
