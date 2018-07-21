@@ -159,7 +159,9 @@ Q(s_t,a_t)\leftarrow Q(s_t,a_t)+\alpha [r_t+\gamma \underset{a}{max}Q(s_{t+1},a)
 \theta _{t+1}=\theta_t+\alpha(R_{t+1}+\gamma \underset{a}{max}Q(S_{t+1},a;\theta_t)-Q(S_t,A_t;\theta_t))\triangledown _{\theta_t}Q(S_t,A_t;\theta_t)
 \]`
 
+可以发现不管是表格型，还是基于值函数逼近的方法，更新公式中都有max操作，使得估计的值函数比值函数的真实值大。
 
+如果，值函数是
 
 ### 2.3 优先回放(Prioritized Replay)
 
