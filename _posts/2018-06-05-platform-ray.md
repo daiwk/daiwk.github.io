@@ -153,16 +153,39 @@ ray.init(redis_address=os.environ["REDIS_ADDRESS"]) ## 从刚init的那个环境
 使用```ui.object_search_bar()```可以查看objectid的信息，例如：
 
 ```python
-Search for an object: 4fc7f1f5b7a05060629b65daa57dc36f4142c2db
+Search for an object: 95f3bf18ee668c11d8f3d2c51861718daea2240d
 ## 输出
 {'DataSize': 516,
- 'Hash': 'cb38c7a61a24275500000000140000004fc7f1f5b7a05060629b65daa57dc36f',
+ 'Hash': '725b5c6d41876612000000001400000095f3bf18ee668c11d8f3d2c51861718d',
  'IsPut': False,
- 'ManagerIDs': ['897fa656adc4b7b9d7490502c77d97235146c871'],
- 'TaskID': '4ec7f1f5b7a05060629b65daa57dc36f4142c2db'}
+ 'ManagerIDs': ['ba72fda097848a8638b6b6d66a7eb58d65748e88'],
+ 'TaskID': '94f3bf18ee668c11d8f3d2c51861718daea2240d'}
 ```
 
-使用```ui.task_search_bar()```可以查看taskid的信息
+使用```ui.task_search_bar()```可以查看taskid的信息，例如：
+
+```python
+Search for a task: 94f3bf18ee668c11d8f3d2c51861718daea2240d
+{'ExecutionDependencies': [],
+ 'ExecutionDependenciesString': b'\x0c\x00\x00\x00\x00\x00\x06\x00'
+                                b'\x08\x00\x04\x00\x06\x00\x00\x00'
+                                b'\x04\x00\x00\x00\x00\x00\x00\x00',
+ 'LocalSchedulerID': 'd70027558552b191028c0fde93adc09114eb4c52',
+ 'SpillbackCount': 0,
+ 'State': 16,
+ 'TaskSpec': {'ActorCounter': 0,
+              'ActorCreationDummyObjectID': 'ffffffffffffffffffffffffffffffffffffffff',
+              'ActorCreationID': 'ffffffffffffffffffffffffffffffffffffffff',
+              'ActorID': 'ffffffffffffffffffffffffffffffffffffffff',
+              'Args': [1],
+              'DriverID': '6ed2713441d1e526abb1f1bc591727511c627f4b',
+              'FunctionID': 'e7ebc6e9f04fcacac3d998ac5c3b611067cc9b8d',
+              'ParentCounter': 25,
+              'ParentTaskID': 'b256658bf683d1525d52fb4a6b6faed08fba35ac',
+              'RequiredResources': {'CPU': 1.0},
+              'ReturnObjectIDs': [ObjectID(95f3bf18ee668c11d8f3d2c51861718daea2240d)],
+              'TaskID': '94f3bf18ee668c11d8f3d2c51861718daea2240d'}}
+```
 
 而使用```ui.task_timeline()```则稍微有点复杂。。点击"View task timeline"，会生成一个json文件，例如```/var/folders/9q/91xmxq4d1zl__l2w9lsp22mj6x47pl/T/tmpr6x81_js.json```，然后就需要执行：
 
