@@ -37,6 +37,8 @@ tags: [kubeflow, ]
 
 #### 安装kubernets
 
+参考[http://blog.sina.com.cn/s/blog_48c95a190102wqpq.html](http://blog.sina.com.cn/s/blog_48c95a190102wqpq.html)
+
 首先安装go：直接去官网[https://www.golangtc.com/download](https://www.golangtc.com/download)搞一个下来，然后解压，然后设置一下```export GOROOT=xxxxx```，再把bin目录下的go*丢到/usr/local/bin下面就行了。
 
 然后从[https://github.com/kubernetes/kubernetes/releases](https://github.com/kubernetes/kubernetes/releases)这里找一个版本的源码进行下载，例如kubernetes-1.9.7.tar.gz这个版本，然后解压
