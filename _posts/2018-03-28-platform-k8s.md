@@ -9,24 +9,24 @@ tags: [kubernetes, k8s ]
 
 <!-- TOC -->
 
-- [背景](#背景)
-    - [物理机时代](#物理机时代)
-    - [虚拟机时代](#虚拟机时代)
-    - [前容器时代](#前容器时代)
-    - [后容器时代](#后容器时代)
-    - [k8s起源](#k8s起源)
+- [背景](#%E8%83%8C%E6%99%AF)
+    - [物理机时代](#%E7%89%A9%E7%90%86%E6%9C%BA%E6%97%B6%E4%BB%A3)
+    - [虚拟机时代](#%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%B6%E4%BB%A3)
+    - [前容器时代](#%E5%89%8D%E5%AE%B9%E5%99%A8%E6%97%B6%E4%BB%A3)
+    - [后容器时代](#%E5%90%8E%E5%AE%B9%E5%99%A8%E6%97%B6%E4%BB%A3)
+    - [k8s起源](#k8s%E8%B5%B7%E6%BA%90)
         - [borg](#borg)
         - [omega](#omega)
         - [mesos](#mesos)
         - [nomad](#nomad)
-    - [CNCF基金会](#cncf基金会)
-    - [k8s现状](#k8s现状)
-    - [例子](#例子)
-- [架构&组件](#架构组件)
+    - [CNCF基金会](#cncf%E5%9F%BA%E9%87%91%E4%BC%9A)
+    - [k8s现状](#k8s%E7%8E%B0%E7%8A%B6)
+    - [例子](#%E4%BE%8B%E5%AD%90)
+- [架构&组件](#%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6)
     - [k8s & docker](#k8s--docker)
     - [k8s & Node](#k8s--node)
-    - [架构](#架构)
-- [基础概念&术语](#基础概念术语)
+    - [架构](#%E6%9E%B6%E6%9E%84)
+- [基础概念&术语](#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%E6%9C%AF%E8%AF%AD)
     - [Pod](#pod)
     - [ReplicationSet](#replicationset)
     - [Label](#label)
@@ -37,11 +37,12 @@ tags: [kubernetes, k8s ]
     - [Jobs](#jobs)
     - [service](#service)
     - [headless service](#headless-service)
-    - [k8s service对外提供访问](#k8s-service对外提供访问)
+    - [k8s service对外提供访问](#k8s-service%E5%AF%B9%E5%A4%96%E6%8F%90%E4%BE%9B%E8%AE%BF%E9%97%AE)
     - [DNS](#dns)
     - [native network model](#native-network-model)
     - [Volumes](#volumes)
 - [inf k8s](#inf-k8s)
+- [k8s示例](#k8s%E7%A4%BA%E4%BE%8B)
 
 <!-- /TOC -->
 
@@ -50,6 +51,7 @@ tags: [kubernetes, k8s ]
 百度前员工刘杰写的《分布式系统原理介绍》【[https://daiwk.github.io/assets/分布式系统原理介绍.pdf](https://daiwk.github.io/assets/分布式系统原理介绍.pdf)】。
 
 参考[http://kubernetes.kansea.com/docs/whatisk8s/](http://kubernetes.kansea.com/docs/whatisk8s/)
+
 ## 背景
 
 ### 物理机时代
@@ -224,3 +226,9 @@ dockerhub.baidubce.com
 自动伸缩
 使用supervisor,如果主进程被Kill了，会把这个信号量传给每个子进程，避免孤儿进程
 节点亲和&应用亲和：例如混布cpu+gpu（后来，1.6的k8s原生支持gpu了）
+
+## k8s示例
+
+使用minikube:
+
+[https://qii404.me/2018/01/06/minukube.html](https://qii404.me/2018/01/06/minukube.html)

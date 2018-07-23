@@ -11,14 +11,17 @@ tags: [kubeflow, ]
 
 - [kubeflow](#kubeflow)
   - [安装](#%E5%AE%89%E8%A3%85)
-    - [安装kubectl](#%E5%AE%89%E8%A3%85kubectl)
-    - [安装minikube(local安装)](#%E5%AE%89%E8%A3%85minikubelocal%08%E5%AE%89%E8%A3%85)
-    - [启动minikube](#%E5%90%AF%E5%8A%A8minikube)
+    - [安装kubernets](#%E5%AE%89%E8%A3%85kubernets)
     - [从bootstrapper安装kubeflow](#%E4%BB%8Ebootstrapper%E5%AE%89%E8%A3%85kubeflow)
 - [tf on k8s](#tf-on-k8s)
 - [tf on marathon](#tf-on-marathon)
 - [tf on hadoop](#tf-on-hadoop)
 - [tf on spark](#tf-on-spark)
+- [附录](#%E9%99%84%E5%BD%95)
+  - [使用minikube(没成功过…)](#%E4%BD%BF%E7%94%A8minikube%E6%B2%A1%E6%88%90%E5%8A%9F%E8%BF%87%E2%80%A6)
+    - [安装kubectl](#%E5%AE%89%E8%A3%85kubectl)
+    - [安装minikube(local安装)](#%E5%AE%89%E8%A3%85minikubelocal%08%E5%AE%89%E8%A3%85)
+    - [启动minikube](#%E5%90%AF%E5%8A%A8minikube)
 
 <!-- /TOC -->
 
@@ -31,6 +34,42 @@ tags: [kubeflow, ]
 [https://github.com/kubeflow/kubeflow](https://github.com/kubeflow/kubeflow)
 
 ### 安装
+
+#### 安装kubernets
+
+首先安装go：直接去官网[https://www.golangtc.com/download](https://www.golangtc.com/download)搞一个下来，然后解压，然后设置一下```export GOROOT=xxxxx```，再把bin目录下的go*丢到/usr/local/bin下面就行了。
+
+然后从[https://github.com/kubernetes/kubernetes/releases](https://github.com/kubernetes/kubernetes/releases)这里找一个版本的源码进行下载，例如kubernetes-1.9.7.tar.gz这个版本，然后解压
+
+然后进入解压后的目录，直接make就行了，这样会自己把最必需的kubectl、kubelet、kubeadm放到/usr/local/bin下，而且在_output目录下生成kube-apiserver、kube-proxy、kube-controller-manager、kube-scheduler等各种bin。
+
+
+#### 从bootstrapper安装kubeflow
+
+```shell
+curl -O https://raw.githubusercontent.com/kubeflow/kubeflow/master/bootstrap/bootstrapper.yaml
+```
+
+然后
+
+```shell
+kubectl create -f bootstrapper.yaml
+```
+
+## tf on k8s
+
+## tf on marathon
+
+marathon是基于mesos的
+
+## tf on hadoop
+
+## tf on spark
+
+
+## 附录
+
+### 使用minikube(没成功过…)
 
 #### 安装kubectl
 
@@ -103,6 +142,8 @@ minikube start --cpus 4 --memory 8096 --disk-size=40g
 minikube start --cpus 4 --memory 8096 --disk-size=40g --vm-driver=none
 ```
 
++ mac
+
 如果发现被墙，下不下来…就手动开浏览器下载提示出错的url，例如[ttps://storage.googleapis.com/minikube/iso/minikube-v0.28.0.iso](ttps://storage.googleapis.com/minikube/iso/minikube-v0.28.0.iso)
 
 ```
@@ -118,25 +159,11 @@ mv kubelet ~/.minikube/cache/v1.10.0/
 mv kubeadm ~/.minikube/cache/v1.10.0/
 ```
 
-#### 从bootstrapper安装kubeflow
++ ubuntu/centos
 
-```shell
-curl -O https://raw.githubusercontent.com/kubeflow/kubeflow/master/bootstrap/bootstrapper.yaml
+```shell 
+curl --output ./k8s_version_stable.txt https://storage.googleapis.com/kubernetes-release/release/stable.txt # v1.11.1
+curl --output ./kubectl "https://storage.googleapis.com/kubernetes-release/release/$(cat /tmp/kubectl_version)/bin/linux/amd64/kubectl"
+curl --output ./kubelet "https://storage.googleapis.com/kubernetes-release/release/$(cat /tmp/kubectl_version)/bin/linux/amd64/kubelet"
+curl --output ./kubeadm "https://storage.googleapis.com/kubernetes-release/release/$(cat /tmp/kubectl_version)/bin/linux/amd64/kubeadm"
 ```
-
-然后
-
-```shell
-kubectl create -f bootstrapper.yaml
-```
-
-## tf on k8s
-
-## tf on marathon
-
-marathon是基于mesos的
-
-## tf on hadoop
-
-## tf on spark
-
