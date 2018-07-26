@@ -45,6 +45,36 @@ tags: [kubeflow, ]
 
 然后进入解压后的目录，直接make就行了，这样会自己把最必需的kubectl、kubelet、kubeadm放到/usr/local/bin下，而且在_output目录下生成kube-apiserver、kube-proxy、kube-controller-manager、kube-scheduler等各种bin。
 
+然后把etcd和flannel搞下来
+
+```shell
+wget https://github.com/coreos/etcd/releases/download/v2.3.8/etcd-v2.3.8-linux-amd64.tar.gz
+wget https://github.com/coreos/flannel/releases/download/v0.6.2/flannel-v0.6.2-linux-amd64.tar.gz
+```
+
+放到/usr/local/bin下面去，然后修改 /etc/sysctl.conf
+
+```shell
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-arptables = 1
+```
+
+执行 
+
+```shell
+sysctl -p
+```
+
+```shell
+master_hostname=11.11.2.3
+
+nohup etcd --name infra0 --initial-advertise-peer-urls http://${master_hostname}:2380,http://${master_hostname}:7001 --listen-peer-urls http://${master_hostname}:2380,http://${master_hostname}:7001 --listen-client-urls http://${master_hostname}:2379,http://${master_hostname}:4001 --advertise-client-urls http://${master_hostname}:2379,http://${master_hostname}:4001 --initial-cluster-token etcd-cluster --initial-cluster infra0=http://${master_hostname}:2380,infra0=http://${master_hostname}:7001 --data-dir /root/data/etcd/data --initial-cluster-state new &
+
+nohup etcdctl --endpoints=http://${master_hostname}:2379,http://${master_hostname}:4001 mk /coreos.com/network/config '{"Network":"172.17.0.0/16", "SubnetMin": "172.17.1.0", "SubnetMax": "172.17.254.0"}' &
+
+nohup flanneld -etcd-endpoints=http://${master_hostname}:2379,http://${master_hostname}:4001 &
+```
 
 #### 从bootstrapper安装kubeflow
 

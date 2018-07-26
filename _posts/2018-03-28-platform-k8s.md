@@ -120,6 +120,14 @@ k8s会调度相应的app到对应的docker host上去运行
 
 ### 架构
 
+可以参考[https://www.kubernetes.org.cn/kubernetes%E8%AE%BE%E8%AE%A1%E6%9E%B6%E6%9E%84](https://www.kubernetes.org.cn/kubernetes%E8%AE%BE%E8%AE%A1%E6%9E%B6%E6%9E%84)
+
+<html>
+<br/>
+<img src='../assets/k8s-architecture.png' style='max-height: 300px'/>
+<br/>
+</html>
+
 单集群可以一次5000台机器上线
 
 有一个中心化的api server，然后把状态存储在etcd中
