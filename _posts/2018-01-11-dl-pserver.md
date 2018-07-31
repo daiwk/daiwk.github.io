@@ -139,7 +139,7 @@ Asynchronous Task：能够提高系统的效率（因为节省了很多等待的
 + **Eventual**： 跟 sequential 相反，所有任务之间没有顺序，各自独立完成自己的任务， 
 + **Bounded Delay**： 这是sequential 跟 eventual 之间的trade-off，可以设置一个`\(\tau \)`作为最大的延时时间。也就是说，只有`\(>\tau \)`之前的任务都被完成了，才能开始一个新的任务。极端的情况：
 + `\(\tau = 0\)`情况就是 Sequential； 
-+ `\(\tau = \infty \)`情况就是 Sequential； 
++ `\(\tau = \infty \)`情况就是 Eventual 
 
 一个bounded delay 的 PGD (proximal gradient descent)算法的系统运行流程：
 
