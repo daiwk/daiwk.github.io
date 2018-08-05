@@ -87,7 +87,7 @@ WS(V_i)=(1-d)+d*\sum _{V_j\in In(V_i)}\frac{w_{ji}}{\sum _{v_k \in Out(V_j)}w_{j
 　　（2）句子相似度计算：构建图G中的边集E，基于句子间的内容覆盖率，给定两个句子si,sj，采用如下公式进行计算： 
 
 `\[
-sim(S_i,S_j)=\frac{|\{w_k|w_k \in S_i & w_k \in S_j\}|}{log(|S_i|)+log(|S_j|)}
+sim(S_i,S_j)=\frac{|\{w_k|w_k \in S_i \& w_k \in S_j\}|}{log(|S_i|)+log(|S_j|)}
 \]`
 
 若两个句子之间的相似度大于给定的阈值，就认为这两个句子语义相关并将它们连接起来，即边的权值这里写图片描述 
