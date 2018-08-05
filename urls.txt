@@ -13,6 +13,7 @@ https://daiwk.github.io/posts/nlp-ltr.html
 https://daiwk.github.io/posts/nlp-ndcg.html
 https://daiwk.github.io/posts/other-docker-cmds.html
 https://daiwk.github.io/posts/other-scrapy.html
+https://daiwk.github.io/posts/platform-cache.html
 https://daiwk.github.io/posts/platform-paddle-code.html
 https://daiwk.github.io/posts/ml-pearson-correlation-coefficient.html
 https://daiwk.github.io/posts/ml-regularization.html
@@ -101,6 +102,7 @@ https://daiwk.github.io/posts/cv-gan-with-the-wind.html
 https://daiwk.github.io/posts/platform-horovod.html
 https://daiwk.github.io/posts/rl-alphago-zero.html
 https://daiwk.github.io/posts/nlp-nmt.html
+https://daiwk.github.io/posts/nlp-text-summary.html
 https://daiwk.github.io/posts/rl-pg-gan.html
 https://daiwk.github.io/posts/dl-pointer-network-copynet.html
 https://daiwk.github.io/posts/ml-feature-engineering.html
