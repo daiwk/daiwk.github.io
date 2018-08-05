@@ -11,6 +11,7 @@ tags: [python, ]
 
 - [1. 编译安装python](#1-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85python)
 - [2. jupyter](#2-jupyter)
+- [3. mkdocs](#3-mkdocs)
 
 <!-- /TOC -->
 
@@ -58,4 +59,13 @@ python总体上有两个版本，cp27m是ucs2，cp27mu是ucs4，UCS2认为每个
 ```
 
 其中的-h参数，是把软链对应的真实文件搞过来哈~。。
+
+
+## 3. mkdocs
+
+```shell
+pip install mkdocs
+```
+
+参考：[https://www.mkdocs.org/](https://www.mkdocs.org/)
 
