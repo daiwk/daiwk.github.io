@@ -9,6 +9,7 @@ https://daiwk.github.io/posts/knowledge-stack-heap-core.html
 https://daiwk.github.io/posts/knowledge-testing-tools.html
 https://daiwk.github.io/posts/knowledge-tf-usage.html
 https://daiwk.github.io/posts/knowledge-url.html
+https://daiwk.github.io/posts/ml-tree-models.html
 https://daiwk.github.io/posts/nlp-ltr.html
 https://daiwk.github.io/posts/nlp-ndcg.html
 https://daiwk.github.io/posts/other-docker-cmds.html
@@ -81,6 +82,7 @@ https://daiwk.github.io/posts/dl-youtube-video-recommendation.html
 https://daiwk.github.io/posts/ml-anormaly-detection.html
 https://daiwk.github.io/posts/ml-ftrl.html
 https://daiwk.github.io/posts/ml-topknn.html
+https://daiwk.github.io/posts/video-tsn.html
 https://daiwk.github.io/posts/dl-optimization-methods.html
 https://daiwk.github.io/posts/cv-cvpr2017-hekaiming.html
 https://daiwk.github.io/posts/knowledge-mr-shuffle.html
