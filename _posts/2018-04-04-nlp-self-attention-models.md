@@ -9,7 +9,7 @@ tags: [自注意力, self-attention,  ]
 
 <!-- TOC -->
 
-- [attention的本质](#attention的本质)
+- [attention的本质](#attention%E7%9A%84%E6%9C%AC%E8%B4%A8)
 - [multi-head attention](#multi-head-attention)
 - [self-attention](#self-attention)
 
@@ -53,6 +53,18 @@ attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt {d_k}})V
 所以说，机器翻译的attention，本质就是想给源语言的encoder输出的每一个元素`\(h_j\)` **(即V)** 搞一个权重，然后加权求和。而这个权重是通`\(h_j\)` 它自己 **(即K=V)** 与目标语言的隐层状态`\(z_i\)` **(即Q)** 进行变换得到的。所以：
 
 **k=v=源语言的encoder输出，q=目标语言的隐层状态。**
+
+
+再理解回nmt里（不理那个`\(\sqrt{d_k}\)`）。Q是mx1，K是nx1，i=1->m，j=1->n，`\(e_{ij}=QK^T\)`是一个m行目标语言，n列源语言的矩阵，那么`\(a_{ij}\)`是对`\(e_{ij}\)`求softmax，分母就是第i行每个元素的exp之和，分子就是第i行第j列的exp。
+
+再强调一次，一定要记得i、Q是目标语言的，j、K是源语言的，所以是`\(QK^T\)`，我们要拿attention来对源语言也就是V=K来做加权。做加权这步，就是一个mxn的矩阵，乘一个nx1的矩阵，得到最后mx1矩阵。就是第i行和nx1的这一列对应相乘相加，得到一个元素，最后总共得到m个元素。相当于对于目标语言的一个词来讲，他和源语言的每个词（共n个词）分别有个相关性（mxn矩阵的一行），然后作为这次输入的n个词的权重，求个和，当做这个目标语言的词的表示。
+
+类比一个分类任务，m行n列，m个样本，n个类别，每一行就是对这个样本而言，他在这个分类的概率，所以分子是这个类别，分母是所有类别（这一行求和）
+
+类似地，对于这个attention矩阵，一行就是一个目标语言的词，表示这个词和目标语言每个词的相关程度，所以分母是所有目标语言的词（这一行求和）。
+
+
+
 
 ## multi-head attention
 
