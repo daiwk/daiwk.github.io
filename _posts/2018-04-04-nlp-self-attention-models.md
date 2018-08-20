@@ -63,9 +63,6 @@ attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt {d_k}})V
 
 类似地，对于这个attention矩阵，一行就是一个目标语言的词，表示这个词和目标语言每个词的相关程度，所以分母是所有目标语言的词（这一行求和）。
 
-
-
-
 ## multi-head attention
 
 + Query，Key，Value最开始都是`\(d_{model}\)`维，各自通过h个线性变换拆成h部分，每一部分的大小是`\(d_k\)`，`\(d_k\)`和`\(d_v\)`（`\(d_k=d_v=d_{model}/h\)`）。
