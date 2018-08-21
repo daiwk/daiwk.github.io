@@ -36,7 +36,11 @@ P=1/m*m/(m+1)*(m+1)/(m+2)*...*(n-1)/n=1/n
 证明：第m个对象被选中的概率=选择m的概率\*（其后元素不被选择的概率+其后元素被选择的概率\*不替换第m个对象的概率），即
 
 `\[
-P=\frac{k}{m}*[(\frac{m+1-k}{m+1}+\frac{k}{m+1}*\frac{k-1}{k})*(\frac{m+2-k}{m+2}+\frac{k}{m+2}*\frac{k-1}{k})*...*(\frac{n-k}{n}+\frac{k}{n}*\frac{k-1}{k})]=k/m*m/n=k/n
+\begin{align*}
+P &=\frac{k}{m}*[(\frac{m+1-k}{m+1}+\frac{k}{m+1}*\frac{k-1}{k})*(\frac{m+2-k}{m+2}+\frac{k}{m+2}*\frac{k-1}{k})*...*(\frac{n-k}{n}+\frac{k}{n}*\frac{k-1}{k})] \\ 
+ &=k/m*m/n\\
+&=k/n
+\end{align*}
 \]`
 
 ```c++
