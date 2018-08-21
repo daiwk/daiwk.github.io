@@ -30,25 +30,37 @@ pip install fastai
 
 差分学习率（Differential Learning rates）意味着在训练时**变换网络层**比提高网络深度更重要。
 
+参考[https://github.com/fastai/fastai/blob/master/courses/dl1/lesson1-vgg.ipynb](https://github.com/fastai/fastai/blob/master/courses/dl1/lesson1-vgg.ipynb)
+
 例如：
 
 ```python
+from fastai.imports import *
+
+from fastai.transforms import *
 from fastai.conv_learner import *
+from fastai.model import *
+from fastai.dataset import *
+from fastai.sgdr import *
+from fastai.plots import *
 
 # import library for creating learning object for convolutional #networks
-model = VVG16()
+
+sz=224
+arch=vgg16
 
 # assign model to resnet, vgg, or even your own custom model
-PATH = './folder_containing_images' 
-data = ImageClassifierData.from_paths(PATH)
+PATH = './imgs' ##文件夹要是imgs/train/1/xx.jpg, images/valid/1/xx.jpg
+data = ImageClassifierData.from_paths(PATH, tfms=tfms_from_model(arch, sz))
 
 # create fast ai data object, in this method we use from_paths where 
 # inside PATH each image class is separated into different folders
 
-learn = ConvLearner.pretrained(model, data, precompute=True)
+learn = ConvLearner.pretrained(arch, data, precompute=True)
 
 # create a learn object to quickly utilise state of the art
 # techniques from the fast ai library
+
 ```
 
 然后，冻结前面网络层并微调后面网络层：
