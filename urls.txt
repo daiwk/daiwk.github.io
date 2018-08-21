@@ -1,4 +1,5 @@
 https://daiwk.github.io/posts/dl-dl-tips.html
+https://daiwk.github.io/posts/knowledge-algorithms.html
 https://daiwk.github.io/posts/knowledge-ctags.html
 https://daiwk.github.io/posts/knowledge-git.html
 https://daiwk.github.io/posts/knowledge-gperftools.html
@@ -172,6 +173,7 @@ https://daiwk.github.io/posts/dl-tf-serving-docker.html
 https://daiwk.github.io/posts/platform-bazel.html
 https://daiwk.github.io/posts/platform-ray.html
 https://daiwk.github.io/posts/rl-stepbystep-chap13.html
+https://daiwk.github.io/posts/platform-fastai.html
 https://daiwk.github.io/posts/platform-distributed-dl.html
 https://daiwk.github.io/posts/cv-gan-overview.html
 https://daiwk.github.io/posts/cv-glow.html
