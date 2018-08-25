@@ -113,9 +113,14 @@ tensorflow的embedding操作：
 
 ## 基于图的各种embedding
 
+参考[https://blog.csdn.net/u013527419/article/details/76017528/](https://blog.csdn.net/u013527419/article/details/76017528/)
+
 ### DeepWalk
 
+
+
 ### LINE
+
 
 ### node2vec
 
