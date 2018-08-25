@@ -172,6 +172,7 @@ https://daiwk.github.io/posts/dl-knowledge-distill.html
 https://daiwk.github.io/posts/dl-tf-serving-docker.html
 https://daiwk.github.io/posts/platform-bazel.html
 https://daiwk.github.io/posts/platform-ray-rllib.html
+https://daiwk.github.io/posts/platform-ray-tune.html
 https://daiwk.github.io/posts/platform-ray.html
 https://daiwk.github.io/posts/rl-stepbystep-chap13.html
 https://daiwk.github.io/posts/platform-fastai.html
