@@ -36,6 +36,8 @@ tags: [ray, rllib ]
 + **可扩展性。**RL是**计算密集型**的，并且在关键应用程序中开始使用RL时，可以选择以分布式方式运行。
 + **可组合性。**RL算法通常涉及模拟和许多其他组件。 您将需要一个库，允许您**重用与多种深度学习框架兼容的RL算法组件（例如策略图，走子演算[这是啥。。]等）**，并提供**可组合的分布式执行原语（嵌套并行）**。
 
+
+
 ## tune
 
 [https://daiwk.github.io/posts/platform-ray-tune.html](https://daiwk.github.io/posts/platform-ray-tune.html)
