@@ -17,7 +17,7 @@ tags: [sphinx, ]
 目录结构如下：
 
 ```
-./
+.
 ├── docs
 │   ├── Makefile
 │   ├── build
@@ -31,6 +31,7 @@ tags: [sphinx, ]
 │       ├── demo.rst
 │       ├── demo.tools.rst
 │       ├── index.rst
+│       ├── introduction.rst
 │       └── modules.rst
 ├── python
 │   └── demo
@@ -73,7 +74,7 @@ sphinx-apidoc -o ./source ../python -f
 ```shell
 .. toctree::
    :maxdepth: 1
-   :caption: xxx:
+   :caption: API docs
 
    modules
 ```
@@ -91,4 +92,13 @@ sphinx-apidoc -o ./source ../python -f
 然后只要一提交，就会自动触发构建啦
 
 然后去对应的网址看看，例如我的这个叫```https://demo-code.readthedocs.io/zh_CN/latest/```，当然，你应该取另一个名字，比如```https://yyy-demo-code.readthedocs.io/zh_CN/latest/```
+
+
+如果只想暴露某些函数/类（注意：只能链接到类Demo1，而没法到Demo1的get函数），当然，也可以直接在py文件里声明一个函数（不属于某个类），这样就可以暴露这个函数啦：
+
+```
+.. autofunction:: demo.models.demo1.Demo1
+```
+
+另外，类的private函数（```__xxx```开头的函数）以及类函数第一个变量self是不会生成文档的
 
