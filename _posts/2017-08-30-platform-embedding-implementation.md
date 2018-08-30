@@ -24,7 +24,7 @@ tags: [embedding,]
 - [应用](#%E5%BA%94%E7%94%A8)
     - [xx率预估](#xx%E7%8E%87%E9%A2%84%E4%BC%B0)
         - [模型结构](#%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84)
-        - [编码方式（embedding）](#%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%EF%BC%88embedding%EF%BC%89)
+        - [编码方式（embedding）](#%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8Fembedding)
             - [随机编码](#%E9%9A%8F%E6%9C%BA%E7%BC%96%E7%A0%81)
             - [挂靠编码](#%E6%8C%82%E9%9D%A0%E7%BC%96%E7%A0%81)
             - [分词编码](#%E5%88%86%E8%AF%8D%E7%BC%96%E7%A0%81)
@@ -101,7 +101,14 @@ w_{13}+w_{23}
 
 ## tensorflow
 
+代码（不止这些）：
+[https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/ops/lookup_ops.py](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/ops/lookup_ops.py)
+
+[https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/ops/embedding_ops.py](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/ops/embedding_ops.py)
+
+
 embedding_lookup和embedding_lookup_sparse: 
+
 [https://blog.csdn.net/huhu0769/article/details/71169346](https://blog.csdn.net/huhu0769/article/details/71169346)
 
 tensorflow的embedding操作：

@@ -19,6 +19,7 @@ https://daiwk.github.io/posts/other-docker-cmds.html
 https://daiwk.github.io/posts/other-scrapy.html
 https://daiwk.github.io/posts/platform-cache.html
 https://daiwk.github.io/posts/platform-paddle-code.html
+https://daiwk.github.io/posts/video-video-papers.html
 https://daiwk.github.io/posts/ml-pearson-correlation-coefficient.html
 https://daiwk.github.io/posts/ml-regularization.html
 https://daiwk.github.io/posts/ml-svm-3-levels.html
