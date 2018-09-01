@@ -308,3 +308,29 @@ if __name__ == "__main__":
     evaluate(X.iloc[test_index], y[test_index, :], model)
 ```
 
+其中:
+
++ Lambda是把一个表达式转换成一个Layer：[https://keras.io/layers/core/#lambda](https://keras.io/layers/core/#lambda)
++ batch_dot是有两组vectors，每组有batch个vector,对他们进行点积[https://keras.io/backend/#backend-functions](https://keras.io/backend/#backend-functions)
+
+简单示例：
+
+```x = [[1, 2], [3, 4]]```，```y = [[5, 6], [7, 8]]```那么，```batch_dot(x, y, axes=1) = [[17], [53]]```，也就是说一个2x2和一个2x2，对axes=1进行sum，得到的是一个2x1。如果是3维的，就比较复杂了：
+
+```python
+>>> x_batch = K.ones(shape=(32, 20, 1))
+>>> y_batch = K.ones(shape=(32, 30, 20))
+>>> xy_batch_dot = K.batch_dot(x_batch, y_batch, axes=[1, 2])
+>>> K.int_shape(xy_batch_dot)
+(32, 1, 30)
+```
+
+因为：
+
++ x.shape[0] : 32 : append to output shape
++ x.shape[1] : 20 : do not append to output shape, dimension 1 of x has been summed over. (dot_axes[0] = 1)
++ x.shape[2] : 1 : 为啥被ignore了呢 
++ y.shape[0] : 32 : do not append to output shape, always ignore first dimension of y
++ y.shape[1] : 30 : append to output shape
++ y.shape[2] : 20 : do not append to output shape, dimension 2 of y has been summed over. (dot_axes[1] = 2) output_shape = (100, 30)
+
