@@ -19,7 +19,9 @@ tags: [deep & cross network, DCN]
 - [网络结构](#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84)
     - [Embedding and Stacking Layer](#embedding-and-stacking-layer)
     - [Cross Network](#cross-network)
+        - [复杂度分析](#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90)
     - [Deep Network](#deep-network)
+        - [复杂度分析](#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90)
     - [Combination Layer](#combination-layer)
 
 <!-- /TOC -->
@@ -63,7 +65,7 @@ tags: [deep & cross network, DCN]
 
 <html>
 <br/>
-<img src='../assets/deepcross.jpg' style='max-height: 350px'/>
+<img src='../assets/deepcross.png' style='max-height: 350px'/>
 <br/>
 </html>
 
@@ -83,12 +85,76 @@ x_{embed,i}=W_{embed,i}x_i
 x_0=[x^T_{embed,1},...x^T_{embed,k},x^T_{dense}]
 \]`
 
-
-
 ### Cross Network
+
+显式地进行feature crossing，每一个cross layer的公式如下：
+
+`\[
+x_{l+1}=x_0x^T_lw_l+b_l+x_l=f(x_l,w_l,b_l)+x_l
+\]`
+
+其中，
+
++ `\(x_l,x_{l+1}\in R^d\)`是第l和第l+1层的cross layer输出的列向量
++ `\(w_l,b_l\in R^d\)`是第l层的权重和bias
++ 每一层的cross layer在进行完feature crossing的`\(f\)`之后，又把input加回来
++ 借鉴residual network的思想，映射函数`\(f:R^d \mapsto R^d\)`拟合残差`\(x_{l+1}-x{l}\)`
+
+<html>
+<br/>
+<img src='../assets/deep-cross-cross-layer.png' style='max-height: 150px'/>
+<br/>
+</html>
+
+可见，维数分别是dx1,1xd,dx1，最终输出得到的就是一个dx1的向量。所以第二项需要对上一层的输出转置成1xd。
+
+相当于考虑了从1到l+1阶的所有特征组合。
+
+#### 复杂度分析
+
+假设cross layer有`\(L_c\)`层，`\(d\)`是input的维数，那么，整个cross network的参数数量就是：
+
+`\[
+d\times L_c \times 2
+\]`
+
+这里乘了2，因为有w和b两个参数，每个参数在每一层里都是d维。时间和空间复杂度都是线性的。
 
 ### Deep Network
 
+dnn部分就是正常的dnn：
+
+`\[
+h_{l+1}=f(W_lh_l+b_l)
+\]`
+
++ `\(h_l \in R^{n_l},h_{l+1}\in R^{n_{l+1}}\)`
++ `\(W_l\in R^{n_{l+1}\times n_l},b_l\in R^{n_{l+1}}\)`
++ `\(f\)`是ReLU
+
+#### 复杂度分析
+
+假设所有层的size一样大，都是`\(m\)`。假设层数是`\(L_d\)`，总参数数量为：
+
+`\[
+d\times m+m+(m^2+m)\times (L_d-1)
+\]`
+
+其中，第一层是和embedding的`\(x_0\)`相连的，所以是`\(d\times m+m\)`
+
 ### Combination Layer
 
+combination layer如下：
+
+`\[
+p=\sigma ([x^T_{L_1},h^T_{L_2}]w_{logits})
+\]`
+
+其中，`\(x_{L_1}\in R^d\)`是cross network的输出，`\(h_{L_2}\in R^m\)`是dnn的输出。`\(w_{logits}\in R^{(d+m)}\)`是权重，`\(\sigma (x)=1/(1+exp(-x))\)`。
+
+损失函数是log loss加上l2正则：
+
+`\[
+loss=-\frac{1}{N}\sum ^N_{i=1}y_ilog(p_i)+(1-y_i)log(1-p_i)+\lambda \sum _l\parallel w_l \parallel ^2
+\]`
 
