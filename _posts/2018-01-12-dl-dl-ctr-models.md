@@ -108,6 +108,8 @@ LR 对于 DNN 模型的优势是对大规模稀疏特征的容纳能力，包括
 
 [DeepFM: A Factorization-Machine based Neural Network for CTR Prediction](https://www.ijcai.org/proceedings/2017/0239.pdf)
 
+DeepFM和之前模型相比优势在于两点，一个是相对于Wide&Deep不再需要手工构建wide部分，另一个相对于FNN把FM的隐向量参数直接作为网络参数学习。DeepFM将embedding层结果输入给FM和MLP，两者输出叠加，达到捕捉了低阶和高阶特征交叉的目的。
+
 ## Deep & Cross
 
 论文地址：[deep & cross network for ad click predictions](https://arxiv.org/abs/1708.05123)
