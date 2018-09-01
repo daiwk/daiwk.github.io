@@ -99,7 +99,7 @@ x_{l+1}=x_0x^T_lw_l+b_l+x_l=f(x_l,w_l,b_l)+x_l
 + `\(x_l,x_{l+1}\in R^d\)`是第l和第l+1层的cross layer输出的列向量
 + `\(w_l,b_l\in R^d\)`是第l层的权重和bias
 + 每一层的cross layer在进行完feature crossing的`\(f\)`之后，又把input加回来
-+ 借鉴residual network的思想，映射函数`\(f:R^d \mapsto R^d\)`拟合残差`\(x_{l+1}-x{l}\)`
++ 借鉴residual network的思想，映射函数`\(f:R^d \mapsto R^d\)`拟合残差`\(x_{l+1}-x_{l}\)`
 
 <html>
 <br/>
