@@ -9,16 +9,24 @@ tags: [deep & cross network, DCN]
 
 <!-- TOC -->
 
-- [概述](#概述)
+- [概述](#%E6%A6%82%E8%BF%B0)
 - [related work](#related-work)
-    - [embedding方法](#embedding方法)
+    - [embedding方法](#embedding%E6%96%B9%E6%B3%95)
         - [Factorization machines(FMs)](#factorization-machinesfms)
         - [Field-aware Factorization Machines(FFMs)](#field-aware-factorization-machinesffms)
-    - [神经网络](#神经网络)
+    - [神经网络](#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)
+- [贡献](#%E8%B4%A1%E7%8C%AE)
+- [网络结构](#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84)
+    - [Embedding and Stacking Layer](#embedding-and-stacking-layer)
+    - [Cross Network](#cross-network)
+    - [Deep Network](#deep-network)
+    - [Combination Layer](#combination-layer)
 
 <!-- /TOC -->
 
 ## 概述
+
+简称DCN。
 
 论文地址：[deep & cross network for ad click predictions](https://arxiv.org/abs/1708.05123)
 
@@ -34,7 +42,53 @@ tags: [deep & cross network, DCN]
 
 #### Factorization machines(FMs)
 
+将离散特征映射到低维的稠密vector，然后通过vector的内积学习特征交互。
+
 #### Field-aware Factorization Machines(FFMs)
 
+让每个feature可以学习更多的vectors，而每个vector与一个field有关。
+
 ### 神经网络
+
+如果有足够的隐层及隐单元，DNN能够近似任意函数。而现实问题所对应的函数往往不是『任意』的。
+
+## 贡献
+
++ 在cross network中，每一层都有feature crossing，能够学习交叉特征，并不需要人为设计的特征工程。
++ cross network简单有效。多项式度（polynomial degree）随着网络层数增加而增加
++ 十分节约内存，且易于使用
++ DCN相比于其他模型有更出色的效果，与DNN模型相比，较少的参数却取得了较好的效果。
+
+## 网络结构
+
+<html>
+<br/>
+<img src='../assets/deepcross.jpg' style='max-height: 350px'/>
+<br/>
+</html>
+
+### Embedding and Stacking Layer
+
+将sparse特征（例如类别型的特征，输入就是一个二进制的one-hot，如[0,1,0,0]）embedding成稠密向量：
+
+`\[
+x_{embed,i}=W_{embed,i}x_i
+\]`
+
+其中，`\(x_{embed,i}\)`是embedding后的向量，`\(x_i\)`是第i个类目的二进制输入，`\(W_{embed,i}\in R^{n_e\times n_v}\)`是一个embedding矩阵，`\(n_e\)`是embedding的size，`\(n_v\)`是词典的size。
+
+然后将embedding向量和归一化后的dense特征拼接成一个向量：
+
+`\[
+x_0=[x^T_{embed,1},...x^T_{embed,k},x^T_{dense}]
+\]`
+
+
+
+### Cross Network
+
+### Deep Network
+
+### Combination Layer
+
 
