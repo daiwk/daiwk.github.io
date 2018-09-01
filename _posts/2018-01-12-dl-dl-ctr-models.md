@@ -24,6 +24,11 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
 - [NFM](#nfm)
 - [AFM](#afm)
 - [xDeepFM](#xdeepfm)
+    - [背景](#%E8%83%8C%E6%99%AF)
+    - [预备知识](#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86)
+        - [embedding](#embedding)
+        - [隐式的高阶特征交互](#%E9%9A%90%E5%BC%8F%E7%9A%84%E9%AB%98%E9%98%B6%E7%89%B9%E5%BE%81%E4%BA%A4%E4%BA%92)
+        - [显式的高阶特征交互](#%E6%98%BE%E5%BC%8F%E7%9A%84%E9%AB%98%E9%98%B6%E7%89%B9%E5%BE%81%E4%BA%A4%E4%BA%92)
     - [CIN](#cin)
     - [xDeepFM](#xdeepfm)
 
@@ -78,7 +83,37 @@ FM模型：
 
 [Product-based Neural Networks for User Response Prediction](https://arxiv.org/pdf/1611.00144.pdf)
 
+<html>
+<br/>
+
+<img src='../assets/pnn.png' style='max-height: 300px'/>
+<br/>
+
+</html>
+
++ 首先对输入数据进行embedding处理，得到一个low-dimensional vector层
++ 对该层的任意两个feature进行内积或是外积处理就得到上图的蓝色节点，
++ 是把这些Feature直接和1相乘复制到上一层的Z中，
++ 然后把Z和P接在一起就可以作为神经网络的输入层，
++ 在此基础上我们就可以应用神经网络去模型了。
+
+假设有N个field，每个field是M维的embedding。
+
 ### IPNN
+
+field之间使用内积。左边的z就是一个NxM维的，而对于p来讲，p是NxN的。所以对p来讲，使用矩阵分解来简化问题：
+
+任意的 N×N 实对称矩阵都有 N 个线性无关的特征向量。并且这些特征向量都可以正交单位化而得到一组正交且模为1的向量。故实对称矩阵A可被分解成 `\(A=Q\Lambda Q^T\)`。其中，Q为正交矩阵，`\(\Lambda\)`为实对角矩阵。
+
+由于weight matrix是一个对称方阵，所以，如果进行一阶低秩矩阵分解，那么可以分解为`\(W^n_p=\theta ^n(\theta ^n)^T\)`，`\(\theta ^N\in R^N\)`。
+
+而如果进行K阶低秩矩阵分解，就有：
+
+`\[
+W^n_p\odot p=\sum ^N_{i=1}\sum ^N_{j=1}\left \langle \theta ^i_n,\theta ^j_n \right \rangle \left \langle f_i,f_j \right \rangle
+\]`
+
+其中，`\(\theta ^i_n\in R^K\)`。
 
 ### OPNN
 
@@ -108,7 +143,10 @@ LR 对于 DNN 模型的优势是对大规模稀疏特征的容纳能力，包括
 
 [DeepFM: A Factorization-Machine based Neural Network for CTR Prediction](https://www.ijcai.org/proceedings/2017/0239.pdf)
 
-DeepFM和之前模型相比优势在于两点，一个是相对于Wide&Deep不再需要手工构建wide部分，另一个相对于FNN把FM的隐向量参数直接作为网络参数学习。DeepFM将embedding层结果输入给FM和MLP，两者输出叠加，达到捕捉了低阶和高阶特征交叉的目的。
+DeepFM和之前模型相比优势在于两点:
+
++ 相对于Wide&Deep不再需要手工构建wide部分
++ 另一个相对于FNN，FNN把FM的隐向量参数直接作为网络参数学习。而DeepFM将embedding层结果输入给FM和MLP，两者输出叠加，达到捕捉了低阶和高阶特征交叉的目的。
 
 ## Deep & Cross
 
@@ -142,6 +180,108 @@ DeepFM和之前模型相比优势在于两点，一个是相对于Wide&Deep不�
 目前大部分相关的研究工作是**基于因子分解机**的框架，利用多层全连接神经网络去自动学习特征间的高阶交互关系，例如FNN、PNN和DeepFM等。其缺点是模型学习出的是**隐式的交互特征**，其形式是未知的、不可控的；同时它们的特征交互是发生在**元素级bit-wise**而不是**特征向量之间vector-wise**，这一点违背了因子分解机的初衷。
 
 同时以显式和隐式的方式自动学习高阶的特征交互，使特征交互发生在向量级，还兼具记忆与泛化的学习能力。
+
+### 背景
+
+FM将每个feature映射成一个D维的隐向量`\(v_i=[v_{i1},v_{i2},...,v_{iD}]\)`，然后将pairwise的特征交叉建模为隐向量的内积`\(f^{(2)}(i,j)=\left \langle v_i,v_j \right \rangle x_i x_j\)`，本文中**将隐向量`\(v_i\)`的一个元素（例如`\(v_{i1}\)`）称作『bit』。**。传统FM能扩展到任意高阶的特征交互，但同时对有用和无用的组合都建模了。而这些无用的组合可能会引入噪音并降低精度。
+
+FNN（ Factorisation-machine supported Neural Network）在使用DNN之前，为field embedding使用pre-trained的FM。
+
+PNN为embedding layer和DNN layer引入了product layer，从而不需要对pretrained FM的依赖。
+
+FNN和PNN的缺点是，**他们更多地关注高阶特征组合，而忽视了低阶的特征组合。**
+
+wide&deep和deepFM使用混合架构，在网络中有shallow part和deep part，保证memorization和generalization，从而克服了这个问题。
+
+而并没有理论上的结论来证明，DNN能够支持的最高阶的特征交互到底有多少。而且，DNN是bit-wise的交互，与FM的vector-wise交互是不同的。
+
+本文与DCN类似，但把cross network替换成了CIN。
+
+### 预备知识
+
+#### embedding
+
+假设有m个field，每个field都从原始特征映射成了一个D维的embedding向量`\(e_i\in R^D\)`，那么embedding就是一个concat到一起的vector：
+
+`\[
+e=[e_1,e_2,...,e_m]
+\]`
+
+如下图，就是D=4的embedding layer：
+
+<html>
+<br/>
+
+<img src='../assets/field-embedding.png' style='max-height: 300px'/>
+<br/>
+
+</html>
+
+#### 隐式的高阶特征交互
+
+FNN，Deep crossing，wide&deep的deep部分都是直接用DNN来隐式地进行高阶特征交互。这里的交互是bit-wise的，也就是说，**即使是同一个field里的feature，也会互相影响**。
+
+而PNN和DeepFM做的改进就是，加入了vector-wise的交互，区别如下：
+
++ PNN将product layer的输出直接做为DNN的输入
++ DeepFM将FM layer直接连到了output unit
+
+<html>
+<br/>
+
+<img src='../assets/implicit-high-order-interaction.png' style='max-height: 250px'/>
+<br/>
+
+</html>
+
+#### 显式的高阶特征交互
+
+cross network使用如下公式进行高阶特征组合：
+
+`\[
+x_k=x_0x^T_{k-1}w_k+b_k+x_{k-1}
+\]`
+
+其中，`\(w_k,x_k,b_k\in R^{m\times D}\)`，假设`\(d=m\times D\)`。可以通过证明发现，cross network其实是一种特殊的高阶特征交互，每一个hidden layer其实是`\(x_0\)`乘了一个scalar。。
+
+证明：
+
+k=1时，
+
+`\[
+\begin{align*}
+x_1 &= x_0(x_0)^Tw_1+x_0 \\ 
+ &=x_0(x_0^Tw_1+1) \\ 
+ &=\alpha ^1x_0
+\end{align*}
+\]`
+
+scalar`\(\alpha ^1\)`是`\(x_0\)`的一个线性变换(`\(x_0\)`是dx1，所以`\(x_0^T\)`是1xd，而`\(w_1\)`是dx1，所以`\(x_0^Tw_1\)`是一个标量。。然后假设k=i成立，即`\(x_i=\alpha ^i x_0\)`。对于k=i+1，
+
+`\[
+\begin{align*}
+x_{i+1} &= x_0(x_i)^Tw_{i+1}+x_i \\ 
+ &=x_0((\alpha ^ix_0)^Tw_1)+ \alpha ^ix_0 \\ 
+ &=\alpha ^{i+1}x_0
+\end{align*}
+\]`
+
+其中`\(\alpha ^{i+1}=\alpha ^i(x^T_0w_{i+1}+1)\)`同样是一个scalar。。
+
+当然了，这并不意味着`\(x_k\)`就是`\(x_0\)`的一个线性变换。`\(\alpha ^{i+1}\)`对`\(x_0\)`是敏感的。
+
+因此，cross network有两个缺点：
+
++ 每一层变成了`\(x_0\)`与一个标量相乘
++ 高阶的特征交互变成了bit-wise，而不是FM所期待的vector-wise
+
+<html>
+<br/>
+
+<img src='../assets/cross-network.png' style='max-height: 250px'/>
+<br/>
+
+</html>
 
 ### CIN
 
