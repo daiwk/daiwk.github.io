@@ -40,7 +40,7 @@ tags: [深入浅出强化学习, DPG, DDPG, AC, A3C]
 \eta (\tilde{\pi})=\eta (\pi)+E_{s_0,a_0,...\sim \tilde{\pi}}[\sum _{t=0}^{\infty }\gamma^t(A_{\pi}(s_t,a_t))]  
 \]`
 
-其中`\(\pi\)`表示旧策略，`\(\tilde(\pi)\)`表示新策略。其中的`\(A_{\pi}(s,a)\)`是优势函数。
+其中`\(\pi\)`表示旧策略，`\(\tilde{\pi}\)`表示新策略。其中的`\(A_{\pi}(s,a)\)`是优势函数。
 
 `\[
 A_{\pi}(s,a)=Q_\pi(s,a)-V_\pi(s)=E_{s'\sim P(s'|s,a)}[r(s)+\gamma V^{\pi}(s')-V^{\pi}(s)]

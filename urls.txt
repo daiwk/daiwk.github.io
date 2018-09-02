@@ -157,6 +157,7 @@ https://daiwk.github.io/posts/nlp-self-attention-models.html
 https://daiwk.github.io/posts/platform-tensorflow-code-analysis-overview.html
 https://daiwk.github.io/posts/dl-mtl.html
 https://daiwk.github.io/posts/rl-stepbystep-chap6.html
+https://daiwk.github.io/posts/rl-stepbystep-chap7.html
 https://daiwk.github.io/posts/rl-stepbystep-chap8.html
 https://daiwk.github.io/posts/rl-stepbystep-chap9.html
 https://daiwk.github.io/posts/dl-talk-to-book.html
