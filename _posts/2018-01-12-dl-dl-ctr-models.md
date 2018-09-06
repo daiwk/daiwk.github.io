@@ -148,6 +148,14 @@ DeepFM和之前模型相比优势在于两点:
 + 相对于Wide&Deep不再需要手工构建wide部分
 + 另一个相对于FNN，FNN把FM的隐向量参数直接作为网络参数学习。而DeepFM将embedding层结果输入给FM和MLP，两者输出叠加，达到捕捉了低阶和高阶特征交叉的目的。
 
+<html>
+<br/>
+
+<img src='../assets/deepfm.png' style='max-height: 200px'/>
+<br/>
+
+</html>
+
 ## Deep & Cross
 
 论文地址：[deep & cross network for ad click predictions](https://arxiv.org/abs/1708.05123)
@@ -335,7 +343,18 @@ u_4v_1 & u_4v_2 & u_4v_3
 
 </html>
 
-也就是说，这个时候把`\(Z^{k+1}\)`看成一个channel数是`\(D\)`的image，而把`\(W^{k,h}\)`看成一个`\(m*H^k\)`的卷积核（filter），这个卷积核大小和image一样，沿着embedding dimension(`\(D\)`)进行slide，一个卷积核处理后就映射成一个1x1xD的向量。使用`\(H^{k+1}\)`个的卷积核，就生成一个`\(H^{k+1}*D\)`的矩阵。
+也就是说，这个时候把`\(Z^{k+1}\)`看成一个channel数是`\(D\)`的image，而把`\(W^{k,h}\)`看成一个`\(H^k*m\)`的卷积核（filter），这个卷积核大小和image一样，沿着embedding dimension(`\(D\)`)进行slide，一个卷积核处理后就映射成一个1x1xD的向量。使用`\(H^{k+1}\)`个的卷积核，就生成一个`\(H^{k+1}*D\)`的矩阵。
+
+可以复习一下卷积的那些公式：
+
+<html>
+<br/>
+
+<img src='../assets/convolution-formulas.png' style='max-height: 200px'/>
+<br/>
+
+</html>
+
 
 大致逻辑[https://github.com/Leavingseason/xDeepFM/blob/master/exdeepfm/src/CIN.py#L295](https://github.com/Leavingseason/xDeepFM/blob/master/exdeepfm/src/CIN.py#L295)：
 
