@@ -8,20 +8,21 @@ tags: [fasttext, ]
 目录
 <!-- TOC -->
 
-- [0. 原理](#0-原理)
-    - [0.1 softmax回归](#01-softmax回归)
-    - [0.2 分层softmax](#02-分层softmax)
+- [0. 原理](#0-%E5%8E%9F%E7%90%86)
+    - [0.1 softmax回归](#01-softmax%E5%9B%9E%E5%BD%92)
+    - [0.2 分层softmax](#02-%E5%88%86%E5%B1%82softmax)
     - [0.4 n-gram](#04-n-gram)
     - [0.5 CBOW](#05-cbow)
-        - [0.5.1 前向传播](#051-前向传播)
-        - [0.5.2 反向传播](#052-反向传播)
+        - [0.5.1 前向传播](#051-%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD)
+        - [0.5.2 反向传播](#052-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD)
     - [0.6 skip-gram](#06-skip-gram)
     - [0.7 fasttext](#07-fasttext)
-- [1. bin使用方法](#1-bin使用方法)
-    - [训练](#训练)
-    - [预测](#预测)
-- [2. python使用方法](#2-python使用方法)
-    - [安装](#安装)
+- [1. bin使用方法](#1-bin%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
+    - [训练](#%E8%AE%AD%E7%BB%83)
+    - [预测](#%E9%A2%84%E6%B5%8B)
+    - [输出向量](#%E8%BE%93%E5%87%BA%E5%90%91%E9%87%8F)
+- [2. python使用方法](#2-python%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
+    - [安装](#%E5%AE%89%E8%A3%85)
 
 <!-- /TOC -->
 
@@ -265,6 +266,12 @@ cat test_demo_fasttext.txt | ./fasttext predict-prob haha.model.bin -
 
 ```
 key __label__xx probability
+```
+
+### 输出向量
+
+```
+cat test_demo_fasttext.txt | ./fasttext print-vectors haha.model.bin
 ```
 
 ## 2. python使用方法
