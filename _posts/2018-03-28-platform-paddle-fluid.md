@@ -844,7 +844,7 @@ Tensor是n维array的推广，LoDTensor是在Tensor基础上加了**序列信息
 
 一个mini-batch的输入数据是一个LoDTensor:
 +  rnn处理变长序列不需要padding
-+  LoD可以理解为vector<vector<int>>
++  LoD可以理解为```vector<vector<int>>```
 +  对于非序列数据，LoD信息为空
 
 <html>
