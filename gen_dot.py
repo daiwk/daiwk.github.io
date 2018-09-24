@@ -150,3 +150,4 @@ if __name__ == "__main__":
     gen_rl_overview()
     gen_rl_overview_value_function()
     gen_rl_overview_policy_search()
+    gen_tf_code_tensorshape()

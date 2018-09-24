@@ -1,0 +1,11 @@
+// tf_code_tensorshape
+digraph {
+	TensorShape [label=TensorShape shape=box style=rounded]
+	TensorShapeBase [label=TensorShapeBase shape=box style=rounded]
+	TensorShapeRep [label=TensorShapeRep shape=box style=rounded]
+	TensorShape -> TensorShapeBase
+	TensorShapeBase -> TensorShapeRep
+	TensorBuffer [label=TensorBuffer shape=box style=rounded]
+	RefCounted [label=RefCounted shape=box style=rounded]
+	TensorBuffer -> RefCounted
+}
