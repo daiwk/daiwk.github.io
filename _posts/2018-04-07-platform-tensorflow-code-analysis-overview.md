@@ -137,6 +137,15 @@ TensorShape shape_;
 TensorBuffer* buf_;
 ```
 
+<html>
+<br/>
+
+<img src='../assets/tf_code_tensorshape.png' style='max-height: 200px;max-width:500px'/>
+<br/>
+
+</html>
+
+
 + ```TensorShape```在```tensorflow/core/framework/tensor_shape.h```中定义，基类是```TensorShapeBase```
 
 ```c++
@@ -194,7 +203,7 @@ class TensorShape : public TensorShapeBase<TensorShape> {
 /// allow skipping known/unknown checks in the TensorShape case, but the
 /// representation is shared exactly for fast conversion.
 template <class Shape>
-class TensorShapeBase : public TensorShapeRep 
+class TensorShapeBase : public TensorShapeRep
 ```
 
 + ```TensorBuffer```是```tensorflow/core/lib/core/refcount.h```的```RefCounted```(引用计数器)的子类
@@ -202,3 +211,4 @@ class TensorShapeBase : public TensorShapeRep
 ```c++
 class TensorBuffer : public core::RefCounted
 ```
+
