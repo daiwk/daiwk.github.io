@@ -9,34 +9,34 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
 
 <!-- TOC -->
 
-- [1. 简介](#1-简介)
-- [2. 模块化多任务训练](#2-模块化多任务训练)
-- [3. 内置的最佳实践](#3-内置的最佳实践)
+- [1. 简介](#1-%E7%AE%80%E4%BB%8B)
+- [2. 模块化多任务训练](#2-%E6%A8%A1%E5%9D%97%E5%8C%96%E5%A4%9A%E4%BB%BB%E5%8A%A1%E8%AE%AD%E7%BB%83)
+- [3. 内置的最佳实践](#3-%E5%86%85%E7%BD%AE%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5)
 - [4. Attention Is All You Need](#4-attention-is-all-you-need)
-    - [4.1 背景](#41-背景)
-    - [4.2 架构](#42-架构)
-        - [4.2.1 encoder and decoder stacks](#421-encoder-and-decoder-stacks)
-        - [4.2.2 attention](#422-attention)
-        - [4.2.3 position-wise feed-forward networks](#423-position-wise-feed-forward-networks)
-        - [4.2.4 embeddings and softmax](#424-embeddings-and-softmax)
-        - [4.2.5 positional encoding](#425-positional-encoding)
-        - [4.2.6 why self-attention](#426-why-self-attention)
-        - [4.2.7 生成过程](#427-生成过程)
-    - [4.3 训练](#43-训练)
-        - [4.3.1 训练数据和batching](#431-训练数据和batching)
-        - [4.3.2 hardware & schedule](#432-hardware--schedule)
-        - [4.3.3 optimizer](#433-optimizer)
-        - [4.3.4 regularizatioin](#434-regularizatioin)
-    - [4.4 结果](#44-结果)
-        - [4.4.1 机器翻译](#441-机器翻译)
-        - [4.4.2 model variations](#442-model-variations)
-        - [4.4.3 English Constituency Parsing](#443-english-constituency-parsing)
+  - [4.1 背景](#41-%E8%83%8C%E6%99%AF)
+  - [4.2 架构](#42-%E6%9E%B6%E6%9E%84)
+    - [4.2.1 encoder and decoder stacks](#421-encoder-and-decoder-stacks)
+    - [4.2.2 attention](#422-attention)
+    - [4.2.3 position-wise feed-forward networks](#423-position-wise-feed-forward-networks)
+    - [4.2.4 embeddings and softmax](#424-embeddings-and-softmax)
+    - [4.2.5 positional encoding](#425-positional-encoding)
+    - [4.2.6 why self-attention](#426-why-self-attention)
+    - [4.2.7 生成过程](#427-%E7%94%9F%E6%88%90%E8%BF%87%E7%A8%8B)
+  - [4.3 训练](#43-%E8%AE%AD%E7%BB%83)
+    - [4.3.1 训练数据和batching](#431-%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E5%92%8Cbatching)
+    - [4.3.2 hardware & schedule](#432-hardware--schedule)
+    - [4.3.3 optimizer](#433-optimizer)
+    - [4.3.4 regularizatioin](#434-regularizatioin)
+  - [4.4 结果](#44-%E7%BB%93%E6%9E%9C)
+    - [4.4.1 机器翻译](#441-%E6%9C%BA%E5%99%A8%E7%BF%BB%E8%AF%91)
+    - [4.4.2 model variations](#442-model-variations)
+    - [4.4.3 English Constituency Parsing](#443-english-constituency-parsing)
 - [5. One Model To Learn Them All](#5-one-model-to-learn-them-all)
-- [6. 实践](#6-实践)
-- [7. 代码解析](#7-代码解析)
-    - [7.1 原版（tensor2tensor）](#71-原版tensor2tensor)
-    - [7.2 单纯transformer](#72-单纯transformer)
-- [8. 改进](#8-改进)
+- [6. 实践](#6-%E5%AE%9E%E8%B7%B5)
+- [7. 代码解析](#7-%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90)
+  - [7.1 原版（tensor2tensor）](#71-%E5%8E%9F%E7%89%88tensor2tensor)
+  - [7.2 单纯transformer](#72-%E5%8D%95%E7%BA%AFtransformer)
+- [8. 改进](#8-%E6%94%B9%E8%BF%9B)
 
 <!-- /TOC -->
 
@@ -333,11 +333,39 @@ self-attention需要的序列操作是常数级别的，而recurrent需要`\(O(n
 
 #### 4.4.1 机器翻译
 
+<html>
+<br/>
+
+<img src="../assets/tensor2tensor-bleu.png" style='max-height: 400px'/>
+<br/>
+
+</html>
+
+
 #### 4.4.2 model variations
+
+<html>
+<br/>
+
+<img src="../assets/tensor2tensor-variants.png" style='max-height: 400px'/>
+<br/>
+
+</html>
+
 
 #### 4.4.3 English Constituency Parsing
 
 Constituency: 选区；选区的选民；支持者；主顾
+
+
+<html>
+<br/>
+
+<img src="../assets/tensor2tensor-english-cons-parsing.png" style='max-height: 400px'/>
+<br/>
+
+</html>
+
 ## 5. One Model To Learn Them All
 
 单一模型同时在 ImageNet、多个翻译任务、image caption（COCO 数据集）、一个语音识别语料库和一个英文解析任务中获得训练。该模型架构整合了多个领域的组件。它包含卷基层、注意力机制和 sparsely-gated 层，其中的每个组件对于特定任务都是非常重要的，我们观察到添加这些组件并不会影响模型性能——在大多数情况下，它反而会改善任务中的表现。我们还展示了**多个任务联合训练会让仅含少量数据的任务收益颇丰，而大型任务的表现仅有少量性能衰减。**
