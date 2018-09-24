@@ -340,7 +340,24 @@ struct TTypes {
 
 ##### Eigen::Tensor
 
+eigen源码：
+
+[https://bitbucket.org/eigen/eigen/src/8dd2d6552a87?at=default](https://bitbucket.org/eigen/eigen/src/8dd2d6552a87?at=default)
+
+git上的源码：
+
+[https://github.com/eigenteam/eigen-git-mirror](https://github.com/eigenteam/eigen-git-mirror)
+
 Eigen::Tensor不属于Eigen官方维护的程序，由贡献者提供文档和维护，所以Tensor定义在Eigen unsupported模块中(```#include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"```)
+
+参考[http://eigen.tuxfamily.org/dox-devel/unsupported/classEigen_1_1Tensor.html](http://eigen.tuxfamily.org/dox-devel/unsupported/classEigen_1_1Tensor.html)
+
+[Tensor](http://eigen.tuxfamily.org/dox-devel/unsupported/Tensor_8h_source.html)主要包含一个变量```TensorStorage<Scalar, Dimensions, Options> m_storage```，而[TensorStorage](https://bitbucket.org/eigen/eigen/src/8dd2d6552a872b778fe46aca4033e294ff82fb86/unsupported/Eigen/CXX11/src/Tensor/TensorStorage.h?at=default&fileviewer=file-view-default)里有两个变量m_data和m_dimensions，m_data保存了Tensor的数据块，T是泛化的数据类型，m_dimensions保存了Tensor的维度信息。
+
+```c++
+EIGEN_ALIGN_MAX T m_data[MinSize];
+ FixedDimensions m_dimensions;
+```
 
 一元运算（Unary），如sqrt、square、exp、abs等。
 
