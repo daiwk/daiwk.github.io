@@ -129,7 +129,21 @@ def gen_rl_overview_policy_search():
 
     dot.render('dots/' + title)
 
+def gen_tf_code_tensorshape():
+    title = 'tf_code_tensorshape'
+    dot = Digraph(comment=title, format="png")
+    
+    dot.node('TensorShape', u'TensorShape', shape="box", style="rounded")
+    dot.node('TensorShapeBase', u'TensorShapeBase', shape="box", style="rounded")
+    dot.node('TensorShapeRep', u'TensorShapeRep', shape="box", style="rounded")
+    dot.edge('TensorShape', 'TensorShapeBase', )
+    dot.edge('TensorShapeBase', 'TensorShapeRep', )
 
+    dot.node('TensorBuffer', u'TensorBuffer', shape="box", style="rounded")
+    dot.node('RefCounted', u'RefCounted', shape="box", style="rounded")
+    dot.edge('TensorBuffer', 'RefCounted', )
+
+    dot.render('dots/' + title)
 
 
 if __name__ == "__main__":

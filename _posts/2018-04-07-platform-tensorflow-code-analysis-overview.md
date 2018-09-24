@@ -126,6 +126,79 @@ contract是tensor的运算，python实现可以看：```tensorflow/tensorflow/py
 
 Tensor在高维空间数学运算比Matrix计算复杂，计算量也非常大，**加速张量并行运算**是TF优先考虑的问题，如**add**, **contract**, **slice**, **reshape**, **reduce**, **shuffle**等运算。
 
-TF中Tensor支持的数据类型有很多，如**tf.float16**, **tf.float32**, **tf.float64**, **tf.uint8**, **tf.int8**, **tf.int16**, **tf.int32**, **tf.int64**, **tf.string**, **tf.bool**, **tf.complex64**等，所有Tensor运算都使用**泛化的数据类型**(可以重载\*和+运算咯)表示。
+TF中Tensor支持的数据类型有很多，如**tf.float16**, **tf.float32**, **tf.float64**, **tf.uint8**, **tf.int8**, **tf.int16**, **tf.int32**, **tf.int64**, **tf.string**, **tf.bool**, **tf.complex64**等，所有Tensor运算都使用**泛化的数据类型*`*(可以重载\*和+运算咯)表示。
 
+Tensor定义和运算主要是**调用Eigen**矩阵计算库完成的。
 
+Tensor的定义在```tensorflow/core/framework/tensor.h```中，有以下两个主要的成员变量：
+
+```c++
+TensorShape shape_;
+TensorBuffer* buf_;
+```
+
++ ```TensorShape```在```tensorflow/core/framework/tensor_shape.h```中定义，基类是```TensorShapeBase```
+
+```c++
+class TensorShape : public TensorShapeBase<TensorShape>
+```
+
+TensorShapeBase如下：
+
+```c++
+/// Represents the shape of a Tensor.
+///
+/// A tensor's shape is denoted by its number of dimensions and a size for each
+/// dimension.  For example, a Tensor represented by a 3 x 4 matrix would have
+/// a shape of 2-D, [3,4].
+///
+/// If you know the exact shape of your Tensor when you create the TensorShape
+/// object, you can specify it then, or you can create a TensorShape with
+/// zero dimensions and one element, and call AddDim() to add dimensions later.
+class TensorShape : public TensorShapeBase<TensorShape> {
+ public:
+  using TensorShapeBase<TensorShape>::TensorShapeBase;
+
+  /// Allow a TensorShape to be used as a PartialTensorShape without copying
+  operator const PartialTensorShape&() const;  // NOLINT(runtime/explicit)
+
+  /// Returns true if `*this` and `b` have the same sizes. Ignores
+  /// dimension names.
+  bool IsSameSize(const TensorShape& b) const;
+  bool operator==(const TensorShape& b) const { return IsSameSize(b); }
+  bool operator!=(const TensorShape& b) const { return !IsSameSize(b); }
+
+  /// Fill `*dsizes` from `*this`.
+  template <int NDIMS>
+  Eigen::DSizes<Eigen::DenseIndex, NDIMS> AsEigenDSizes() const;
+
+  /// Same as `AsEigenDSizes()` but allows for `NDIMS > dims()` -- in
+  /// which case we pad the rest of the sizes with 1.
+  template <int NDIMS>
+  Eigen::DSizes<Eigen::DenseIndex, NDIMS> AsEigenDSizesWithPadding() const;
+
+ private:
+  // These CHECK fail to ease debugging.
+  // REQUIRES: dims() == NDIMS
+  void CheckDimsEqual(int NDIMS) const;
+  // REQUIRES: dims() >= NDIMS
+  void CheckDimsAtLeast(int NDIMS) const;
+};
+```
+
+```TensorShapeBase```是```TensorShapeRep```的子类
+
+```c++
+/// Base class for TensorShape and PartialTensorShape.
+/// The class is templatized by either TensorShape or PartialTensorShape to
+/// allow skipping known/unknown checks in the TensorShape case, but the
+/// representation is shared exactly for fast conversion.
+template <class Shape>
+class TensorShapeBase : public TensorShapeRep 
+```
+
++ ```TensorBuffer```是```tensorflow/core/lib/core/refcount.h```的```RefCounted```(引用计数器)的子类
+
+```c++
+class TensorBuffer : public core::RefCounted
+```
