@@ -9,10 +9,18 @@ tags: [tensorflow代码, 代码解析, 概览 ]
 
 <!-- TOC -->
 
-- [简介](#简介)
-    - [总体结构](#总体结构)
-    - [代码结构](#代码结构)
+- [简介](#%E7%AE%80%E4%BB%8B)
+    - [总体结构](#%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84)
+    - [代码结构](#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84)
         - [tensorflow/core](#tensorflowcore)
+        - [tensorflow/stream_executor](#tensorflowstreamexecutor)
+        - [tensorflow/contrib](#tensorflowcontrib)
+        - [tensroflow/python](#tensroflowpython)
+        - [third_party](#thirdparty)
+- [tf核心概念](#tf%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5)
+    - [Tensor](#tensor)
+        - [tensor contraction](#tensor-contraction)
+        - [tensor实现](#tensor%E5%AE%9E%E7%8E%B0)
 
 <!-- /TOC -->
 
@@ -45,11 +53,11 @@ tags: [tensorflow代码, 代码解析, 概览 ]
 
 #### tensorflow/core
 
-```tensorflow/core```目录包含了TF核心模块代码：
+其中，```tensorflow/core```目录包含了TF核心模块代码：
 
 + ```public```: API接口头文件目录，用于外部接口调用的API定义，主要是```session.h```。
 + ```client```: API接口实现文件目录。（目前已经没有这个目录了…）
-+ ```platform```: ``OS系统``相关```接口文件```，如file system, env等。
++ ```platform```: ```OS系统```相关```接口文件```，如file system, env等。
 + ```protobuf```: 均为.proto文件，用于数据传输时的结构序列化。（都是proto3的语法）
 + ```common_runtime```: 公共运行库，包含```session```, ```executor```, ```threadpool```, ```rendezvous```, ```memory管理```, ```设备分配算法```等。
 + ```distributed_runtime```: 分布式执行模块，如```rpc session```, ```rpc master```, ```rpc worker```, ```graph manager```。
@@ -61,7 +69,7 @@ tags: [tensorflow代码, 代码解析, 概览 ]
 
 #### tensorflow/stream_executor
 
-Tensorflow/stream_executor目录是并行计算框架，由google stream executor团队开发。
+tensorflow/stream_executor目录是并行计算框架，由google stream executor团队开发。
 
 #### tensorflow/contrib
 
@@ -138,7 +146,7 @@ TensorBuffer* buf_;
 </html>
 
 
-+ ```TensorShape```在```tensorflow/core/framework/tensor_shape.h```中定义，基类是```TensorShapeBase```
++ ```TensorShape```在```tensorflow/core/framework/tensor_shape.h```中定义，基类是```TensorShapeBase```：
 
 ```c++
 class TensorShape : public TensorShapeBase<TensorShape>
@@ -204,3 +212,16 @@ class TensorShapeBase : public TensorShapeRep
 class TensorBuffer : public core::RefCounted
 ```
 
+
+
+一元运算（Unary），如sqrt、square、exp、abs等。
+
+二元运算（Binary），如add，sub，mul，div等
+
+选择运算（Selection），即if / else条件运算
+
+归纳运算（Reduce），如reduce_sum， reduce_mean等
+
+几何运算（Geometry），如reshape，slice，shuffle，chip，reverse，pad，concatenate，extract_patches，extract_image_patches等
+
+张量积（Contract）和卷积运算（Convolve）是重点运算，后续会详细讲解。
