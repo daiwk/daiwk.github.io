@@ -17,6 +17,10 @@ tags: [tensorflow代码, 代码解析, 概览 ]
         - [tensorflow/contrib](#tensorflowcontrib)
         - [tensroflow/python](#tensroflowpython)
         - [third_party](#thirdparty)
+- [tf核心概念](#tf%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5)
+    - [Tensor](#tensor)
+        - [tensor contraction](#tensor-contraction)
+        - [tensor实现](#tensor%E5%AE%9E%E7%8E%B0)
 
 <!-- /TOC -->
 
@@ -79,4 +83,49 @@ tensroflow/python目录是python API客户端脚本
 
 + eigen3：eigen矩阵运算库，tf基础ops调用
 + gpus: 封装了cuda/cudnn编程库
+
+## tf核心概念
+
+tf的核心是围绕Graph展开的，简而言之，就是**Tensor沿着Graph传递闭包完成Flow**的过程。
+
+### Tensor
+
+Matrix表示二维线性映射，Tensor表示多维线性映射。TF中Tensor的维数描述为阶，数值是0阶，向量是1阶，矩阵是2阶，以此类推，可以表示n阶高维数据。
+
+#### tensor contraction
+
+matrix的product和tensor的contract运算如下：
+
+<html>
+<br/>
+
+<img src='../assets/matrix_tensor.jpg' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
+
+可见，一个4x2的A与一个2x1的B矩阵相乘，可以变成两个矩阵相加，每一个是一个1x1与一个4x1相乘，就是A矩阵的两列分别与B的两列分别相乘，再相加
+
+contract是tensor的运算，python实现可以看：```tensorflow/tensorflow/python/ops/math_ops.py```，即```tensordot```（也称为张量收缩）对从a和b所指定的索引a_axes和b_axes**的元素的乘积**进行**求和**。a_axes和b_axes是两个数组，指定沿其收缩张量的那些轴对。对于所有range(0, len(a_axes))中的i，a的轴a_axes[i]必须与b的轴b_axes[i]具有相同的维度。列表a_axes和b_axes必须具有相同的长度，并由唯一的整数组成，用于为每个张量指定有效的坐标轴。
+
+该操作对应于```numpy.tensordot(a, b, axes)```，[numpy.tensordot文档](https://docs.scipy.org/doc/numpy/reference/generated/numpy.tensordot.html)。
+
++ 示例1：当a和b是矩阵（2阶）时，```axes = 1```相当于矩阵乘法。
++ 示例2：当a和b是矩阵（2阶）时，```axes = [[1], [0]]```相当于矩阵乘法。
++ 示例3：假设`\(a_ {ijk}\)`和`\(b_ {lmn}\)`表示3阶的两个张量。那么，```contract(a, b, [[0], [2]])```是4阶张量`\(c_ {jklm}\)`，其条目对应于索引`\((j,k,l,m)\)`由下式给出：
+
+`\[
+\( c_{jklm} = \sum_i a_{ijk} b_{lmi} \)
+\]`
+
+可见，因为传入的是[[0],[2]]，所以ijk的第0维，即i，和lmn的第2维，即n，都变成了i，然后求和~
+
+一般来说，```order(c) = order(a) + order(b) - 2*len(axes[0])```。
+
+#### tensor实现
+
+Tensor在高维空间数学运算比Matrix计算复杂，计算量也非常大，**加速张量并行运算**是TF优先考虑的问题，如**add**, **contract**, **slice**, **reshape**, **reduce**, **shuffle**等运算。
+
+TF中Tensor支持的数据类型有很多，如**tf.float16**, **tf.float32**, **tf.float64**, **tf.uint8**, **tf.int8**, **tf.int16**, **tf.int32**, **tf.int64**, **tf.string**, **tf.bool**, **tf.complex64**等，所有Tensor运算都使用**泛化的数据类型**(可以重载\*和+运算咯)表示。
+
 
