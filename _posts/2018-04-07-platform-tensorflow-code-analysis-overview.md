@@ -9,18 +9,10 @@ tags: [tensorflow代码, 代码解析, 概览 ]
 
 <!-- TOC -->
 
-- [简介](#%E7%AE%80%E4%BB%8B)
-    - [总体结构](#%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84)
-    - [代码结构](#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84)
+- [简介](#简介)
+    - [总体结构](#总体结构)
+    - [代码结构](#代码结构)
         - [tensorflow/core](#tensorflowcore)
-        - [tensorflow/stream_executor](#tensorflowstreamexecutor)
-        - [tensorflow/contrib](#tensorflowcontrib)
-        - [tensroflow/python](#tensroflowpython)
-        - [third_party](#thirdparty)
-- [tf核心概念](#tf%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5)
-    - [Tensor](#tensor)
-        - [tensor contraction](#tensor-contraction)
-        - [tensor实现](#tensor%E5%AE%9E%E7%8E%B0)
 
 <!-- /TOC -->
 
@@ -49,7 +41,7 @@ tags: [tensorflow代码, 代码解析, 概览 ]
 
 ### 代码结构
 
-```以2018.09.23的master为基准```:
+**以2018.09.23的master为基准**:
 
 #### tensorflow/core
 
@@ -115,7 +107,7 @@ contract是tensor的运算，python实现可以看：```tensorflow/tensorflow/py
 + 示例3：假设`\(a_ {ijk}\)`和`\(b_ {lmn}\)`表示3阶的两个张量。那么，```contract(a, b, [[0], [2]])```是4阶张量`\(c_ {jklm}\)`，其条目对应于索引`\((j,k,l,m)\)`由下式给出：
 
 `\[
-\( c_{jklm} = \sum_i a_{ijk} b_{lmi} \)
+c_{jklm} = \sum_i a_{ijk} b_{lmi}
 \]`
 
 可见，因为传入的是[[0],[2]]，所以ijk的第0维，即i，和lmn的第2维，即n，都变成了i，然后求和~
@@ -195,7 +187,7 @@ class TensorShape : public TensorShapeBase<TensorShape> {
 };
 ```
 
-```TensorShapeBase```是```TensorShapeRep```的子类
+其中，```TensorShapeBase```是```TensorShapeRep```的子类
 
 ```c++
 /// Base class for TensorShape and PartialTensorShape.
