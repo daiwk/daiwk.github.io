@@ -24,6 +24,8 @@ tags: [tensorflow代码, 代码解析, 概览 ]
             - [Tensor的两个主要的成员变量](#tensor%E7%9A%84%E4%B8%A4%E4%B8%AA%E4%B8%BB%E8%A6%81%E7%9A%84%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F)
             - [Tensor的主要函数](#tensor%E7%9A%84%E4%B8%BB%E8%A6%81%E5%87%BD%E6%95%B0)
             - [Eigen::Tensor](#eigentensor)
+    - [符号编程](#%E7%AC%A6%E5%8F%B7%E7%BC%96%E7%A8%8B)
+    - [梯度计算](#%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97)
 
 <!-- /TOC -->
 
@@ -359,14 +361,35 @@ EIGEN_ALIGN_MAX T m_data[MinSize];
  FixedDimensions m_dimensions;
 ```
 
-一元运算（Unary），如sqrt、square、exp、abs等。
+Eigen::Tensor的成员变量很简单，却支持非常多的基本运算，再借助Eigen的加速机制实现快速计算。Eigen::Tensor主要包含了
 
-二元运算（Binary），如add，sub，mul，div等
++ 一元运算（Unary），如sqrt、square、exp、abs等。
++ 二元运算（Binary），如add，sub，mul，div等
++ 选择运算（Selection），即if / else条件运算
++ 归纳运算（Reduce），如reduce_sum， reduce_mean等
++ 几何运算（Geometry），如reshape，slice，shuffle，chip，reverse，pad，concatenate，extract_patches，extract_image_patches等
++ 张量积（Contract）和卷积运算（Convolve）是重点运算，后续会详细讲解。
 
-选择运算（Selection），即if / else条件运算
 
-归纳运算（Reduce），如reduce_sum， reduce_mean等
+### 符号编程
 
-几何运算（Geometry），如reshape，slice，shuffle，chip，reverse，pad，concatenate，extract_patches，extract_image_patches等
+编程模式通常分为命令式编程（imperative style programs）和符号式编程（symbolic style programs）。
 
-张量积（Contract）和卷积运算（Convolve）是重点运算，后续会详细讲解。
++ **命令式编程**：**容易理解和调试**，命令语句基本没有优化，按**原有逻辑**执行。
++ **符号式编程**：涉及较多的**嵌入和优化**，不容易理解和调试，但**运行速度**有同比提升。
+
+命令式编程明确输入变量，并根据程序逻辑逐步运算，这种模式非常在调试程序时进行单步跟踪，分析中间变量。
+
+符号式编程将计算过程抽象为**计算图**，计算流图可以方便的描述计算过程，所有**输入节点**、**运算节点**、**输出节点**均**符号化处理**。
+
+和目前的符号语言比起来，TF最大的特点是强化了数据流图，引入了**mutation**的概念。所谓mutation，就是可以在**计算的过程中更改一个变量的值**，而这个变量在计算的过程中会**被带入到下一轮迭代里面去**。mutation是机器学习优化算法几乎必须要引入的东西（虽然也可以通过immutable replacement来代替，但是会有效率的问题），这一点会导致最后的API设计和使用需要特别小心，把mutation引入到数据流图中会带来一些新的问题，比如，**如何处理写与写之间的依赖**。
+
+### 梯度计算
+
+梯度计算涉及每个计算节点，每个自定义的前向计算图都包含一个**隐式的反向计算图**。从数据流向上看，正向计算图是数据从输入节点到输出节点的流向过程，反向计算图是数据**从输出节点到输入节点的流向过程**。
+
+可以参考[tensorflow实战 chap1的自动求导部分](https://daiwk.github.io/posts/platform-tf-step-by-step-1-basics.html#231-%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC)
+
+反向计算**限制了符号编程中内存空间复用的优势**，因为在**正向计算中的计算数据**在**反向计算中也可能要用到**。从这一点上讲，粗粒度的计算节点比细粒度的计算节点更有优势，而TF大部分为细粒度操作，虽然**灵活性很强**，但**细粒度操作涉及到更多的优化方案**，在**工程实现上开销较大**，不及粗粒度简单直接。在神经网络模型中，TF将逐步侧重粗粒度运算。
+
+
