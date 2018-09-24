@@ -20,7 +20,10 @@ tags: [tensorflow代码, 代码解析, 概览 ]
 - [tf核心概念](#tf%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5)
     - [Tensor](#tensor)
         - [tensor contraction](#tensor-contraction)
-        - [tensor实现](#tensor%E5%AE%9E%E7%8E%B0)
+        - [Tensor实现](#tensor%E5%AE%9E%E7%8E%B0)
+            - [Tensor的两个主要的成员变量](#tensor%E7%9A%84%E4%B8%A4%E4%B8%AA%E4%B8%BB%E8%A6%81%E7%9A%84%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F)
+            - [Tensor的主要函数](#tensor%E7%9A%84%E4%B8%BB%E8%A6%81%E5%87%BD%E6%95%B0)
+            - [Eigen::Tensor](#eigentensor)
 
 <!-- /TOC -->
 
@@ -122,7 +125,7 @@ c_{jklm} = \sum_i a_{ijk} b_{lmi}
 
 一般来说，```order(c) = order(a) + order(b) - 2*len(axes[0])```。
 
-#### tensor实现
+#### Tensor实现
 
 Tensor在高维空间数学运算比Matrix计算复杂，计算量也非常大，**加速张量并行运算**是TF优先考虑的问题，如**add**, **contract**, **slice**, **reshape**, **reduce**, **shuffle**等运算。
 
@@ -130,7 +133,9 @@ TF中Tensor支持的数据类型有很多，如**tf.float16**, **tf.float32**, *
 
 Tensor定义和运算主要是**调用Eigen**矩阵计算库完成的。
 
-Tensor的定义在```tensorflow/core/framework/tensor.h```中，有以下两个主要的成员变量：
+Tensor的定义在```tensorflow/core/framework/tensor.h```中。
+
+##### Tensor的两个主要的成员变量
 
 ```c++
 TensorShape shape_;
@@ -212,7 +217,130 @@ class TensorShapeBase : public TensorShapeRep
 class TensorBuffer : public core::RefCounted
 ```
 
+##### Tensor的主要函数
 
+返回Eigen::Tensor类型的主要函数：
+
+```c++
+  template <typename T>
+  typename TTypes<T>::Vec vec() {
+    return tensor<T, 1>();
+  }
+  // 其中，typedef Eigen::TensorMap<Eigen::Tensor<T, 1, Eigen::RowMajor, IndexType>, Eigen::Aligned> Vec;
+
+  template <typename T>
+  typename TTypes<T>::Matrix matrix() {
+    return tensor<T, 2>();
+  }
+  // 其中，typedef Eigen::TensorMap<Eigen::Tensor<T, 2, Eigen::RowMajor, IndexType>, Eigen::Aligned> Matrix;
+
+  template <typename T, size_t NDIMS>
+  typename TTypes<T, NDIMS>::Tensor tensor();
+  // 其中，typedef Eigen::TensorMap<Eigen::Tensor<T, NDIMS, Eigen::RowMajor, IndexType>, Eigen::Aligned> Tensor;
+```
+
+其中的```TTypes```定义在```tensorflow/core/framework/tensor_types.h```中，如下：
+
+```c++
+// Helper to define Tensor types given that the scalar is of type T.
+template <typename T, int NDIMS = 1, typename IndexType = Eigen::DenseIndex>
+struct TTypes {
+  // Rank-<NDIMS> tensor of scalar type T.
+  typedef Eigen::TensorMap<Eigen::Tensor<T, NDIMS, Eigen::RowMajor, IndexType>,
+                           Eigen::Aligned>
+      Tensor;
+  typedef Eigen::TensorMap<
+      Eigen::Tensor<const T, NDIMS, Eigen::RowMajor, IndexType>, Eigen::Aligned>
+      ConstTensor;
+
+  // Unaligned Rank-<NDIMS> tensor of scalar type T.
+  typedef Eigen::TensorMap<Eigen::Tensor<T, NDIMS, Eigen::RowMajor, IndexType> >
+      UnalignedTensor;
+  typedef Eigen::TensorMap<
+      Eigen::Tensor<const T, NDIMS, Eigen::RowMajor, IndexType> >
+      UnalignedConstTensor;
+
+  typedef Eigen::TensorMap<Eigen::Tensor<T, NDIMS, Eigen::RowMajor, int>,
+                           Eigen::Aligned>
+      Tensor32Bit;
+
+  // Scalar tensor (implemented as a rank-0 tensor) of scalar type T.
+  typedef Eigen::TensorMap<
+      Eigen::TensorFixedSize<T, Eigen::Sizes<>, Eigen::RowMajor, IndexType>,
+      Eigen::Aligned>
+      Scalar;
+  typedef Eigen::TensorMap<Eigen::TensorFixedSize<const T, Eigen::Sizes<>,
+                                                  Eigen::RowMajor, IndexType>,
+                           Eigen::Aligned>
+      ConstScalar;
+
+  // Unaligned Scalar tensor of scalar type T.
+  typedef Eigen::TensorMap<
+      Eigen::TensorFixedSize<T, Eigen::Sizes<>, Eigen::RowMajor, IndexType> >
+      UnalignedScalar;
+  typedef Eigen::TensorMap<Eigen::TensorFixedSize<const T, Eigen::Sizes<>,
+                                                  Eigen::RowMajor, IndexType> >
+      UnalignedConstScalar;
+
+  // Rank-1 tensor (vector) of scalar type T.
+  typedef Eigen::TensorMap<Eigen::Tensor<T, 1, Eigen::RowMajor, IndexType>,
+                           Eigen::Aligned>
+      Flat;
+  typedef Eigen::TensorMap<
+      Eigen::Tensor<const T, 1, Eigen::RowMajor, IndexType>, Eigen::Aligned>
+      ConstFlat;
+  typedef Eigen::TensorMap<Eigen::Tensor<T, 1, Eigen::RowMajor, IndexType>,
+                           Eigen::Aligned>
+      Vec;
+  typedef Eigen::TensorMap<
+      Eigen::Tensor<const T, 1, Eigen::RowMajor, IndexType>, Eigen::Aligned>
+      ConstVec;
+
+  // Unaligned Rank-1 tensor (vector) of scalar type T.
+  typedef Eigen::TensorMap<Eigen::Tensor<T, 1, Eigen::RowMajor, IndexType> >
+      UnalignedFlat;
+  typedef Eigen::TensorMap<
+      Eigen::Tensor<const T, 1, Eigen::RowMajor, IndexType> >
+      UnalignedConstFlat;
+  typedef Eigen::TensorMap<Eigen::Tensor<T, 1, Eigen::RowMajor, IndexType> >
+      UnalignedVec;
+  typedef Eigen::TensorMap<
+      Eigen::Tensor<const T, 1, Eigen::RowMajor, IndexType> >
+      UnalignedConstVec;
+
+  // Rank-2 tensor (matrix) of scalar type T.
+  typedef Eigen::TensorMap<Eigen::Tensor<T, 2, Eigen::RowMajor, IndexType>,
+                           Eigen::Aligned>
+      Matrix;
+  typedef Eigen::TensorMap<
+      Eigen::Tensor<const T, 2, Eigen::RowMajor, IndexType>, Eigen::Aligned>
+      ConstMatrix;
+
+  // Unaligned Rank-2 tensor (matrix) of scalar type T.
+  typedef Eigen::TensorMap<Eigen::Tensor<T, 2, Eigen::RowMajor, IndexType> >
+      UnalignedMatrix;
+  typedef Eigen::TensorMap<
+      Eigen::Tensor<const T, 2, Eigen::RowMajor, IndexType> >
+      UnalignedConstMatrix;
+};
+```
+
+用法如下：
+
+```c++
+    typedef float T;
+    Tensor my_mat(...built with Shape{rows: 3, cols: 5}...);
+    auto mat = my_mat.matrix<T>();    // 2D Eigen::Tensor, 3 x 5.
+    auto mat = my_mat.tensor<T, 2>(); // 2D Eigen::Tensor, 3 x 5.
+    auto vec = my_mat.vec<T>();       // CHECK fails as my_mat is 2D.
+    auto vec = my_mat.tensor<T, 3>(); // CHECK fails as my_mat is 2D.
+    auto mat = my_mat.matrix<int32>();// CHECK fails as type mismatch.
+
+```
+
+##### Eigen::Tensor
+
+Eigen::Tensor不属于Eigen官方维护的程序，由贡献者提供文档和维护，所以Tensor定义在Eigen unsupported模块中(```#include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"```)
 
 一元运算（Unary），如sqrt、square、exp、abs等。
 
