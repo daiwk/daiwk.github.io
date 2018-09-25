@@ -26,6 +26,7 @@ tags: [tensorflow代码, 代码解析, 概览 ]
             - [Eigen::Tensor](#eigentensor)
     - [符号编程](#%E7%AC%A6%E5%8F%B7%E7%BC%96%E7%A8%8B)
     - [梯度计算](#%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97)
+    - [控制流](#%E6%8E%A7%E5%88%B6%E6%B5%81)
 
 <!-- /TOC -->
 
@@ -393,3 +394,21 @@ Eigen::Tensor的成员变量很简单，却支持非常多的基本运算，再�
 反向计算**限制了符号编程中内存空间复用的优势**，因为在**正向计算中的计算数据**在**反向计算中也可能要用到**。从这一点上讲，粗粒度的计算节点比细粒度的计算节点更有优势，而TF大部分为细粒度操作，虽然**灵活性很强**，但**细粒度操作涉及到更多的优化方案**，在**工程实现上开销较大**，不及粗粒度简单直接。在神经网络模型中，TF将逐步侧重粗粒度运算。
 
 
+### 控制流
+
+TF的计算图如同数据流一样，数据流向表示计算过程。数据流图可以很好的表达计算过程，为了扩展TF的表达能力，TF中引入控制流。编程语言中，if…else…是最常见的逻辑控制，在TF的数据流中也可以通过这种方式控制数据流向。接口函数如下，pred为判别表达式，fn1和fn2为运算表达式。当pred为true是，执行fn1操作；当pred为false时，执行fn2操作。
+
+```python
+tf.cond(pred, fn1, fn2, name=None)
+```
+
+TF还可以协调**多个数据流**，在存在**依赖节点**的场景下非常有用，例如节点B要读取模型参数`\(\theta\)`更新后的值，而节点A负责更新参数`\(\theta\)`，则节点B必须等节点A完成后才能执行，否则读取的参数`\(\theta\)`为更新前的数值，这时需要一个运算控制器。接口函数如下，```tf.control_dependencies```函数可以控制**多个数据流执行完成后才能执行接下来的操作**，通常与```tf.group```函数结合使用。
+
+```python
+tf.control_dependencies(control_inputs)
+```
+
+TF支持的控制算子有```Switch```、```Merge```、```Enter```、```Leave```和```NextIteration```等。
+
+TF不仅支持逻辑控制，还支持**循环控制**。TF使用和MIT Token-Tagged machine（即[Executing a program
+on the MIT tagged-token dataflow architecture.](https://dl.acm.org/citation.cfm?id=78583.)）相似的表示系统，将循环的**每次迭代标记为一个tag**，**迭代的执行状态标记为一个frame**，但迭代**所需的数据准备好的时候**，就可以开始计算，从而**多个迭代可以同时执行**。
