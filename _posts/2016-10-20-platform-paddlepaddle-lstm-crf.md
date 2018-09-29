@@ -45,6 +45,8 @@ v2:
 [https://github.com/PaddlePaddle/models/tree/develop/legacy/sequence_tagging_for_ner](https://github.com/PaddlePaddle/models/tree/develop/legacy/sequence_tagging_for_ner)
 
 
+fluid文档：[http://paddlepaddle.org/documentation/docs/zh/0.14.0/new_docs/beginners_guide/basics/label_semantic_roles/README.cn.html](http://paddlepaddle.org/documentation/docs/zh/0.14.0/new_docs/beginners_guide/basics/label_semantic_roles/README.cn.html)
+
 掉渣天的徐老师已经在开源版本的paddlepaddle实现了[rnn+crf](https://github.com/baidu/Paddle/tree/develop/demo/sequence_tagging)，我们直接拿来学习学习就好啦！！！【此demo只在github版本有，且paddle的其他源都已经不维护了，诸君请自重~】
 
 
