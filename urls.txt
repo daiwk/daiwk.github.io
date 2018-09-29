@@ -147,6 +147,7 @@ https://daiwk.github.io/posts/platform-grpc.html
 https://daiwk.github.io/posts/platform-k8s.html
 https://daiwk.github.io/posts/platform-leveldb-rocksdb.html
 https://daiwk.github.io/posts/platform-linux-kernel.html
+https://daiwk.github.io/posts/platform-linux-memory.html
 https://daiwk.github.io/posts/platform-memcached.html
 https://daiwk.github.io/posts/platform-microservices.html
 https://daiwk.github.io/posts/platform-nginx.html
@@ -188,5 +189,6 @@ https://daiwk.github.io/posts/cv-gan-overview.html
 https://daiwk.github.io/posts/cv-glow.html
 https://daiwk.github.io/posts/platform-tf-frameworks.html
 https://daiwk.github.io/posts/platform-autokeras.html
+https://daiwk.github.io/posts/dl-recommender-systems-summary.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/tags.html

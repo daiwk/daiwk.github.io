@@ -12,13 +12,13 @@ tags: [nlp, natural language processing, lstm crf, lstm, crf]
 - [**1. 【2015】Bidirectional LSTM-CRF Models for Sequence Tagging**](#1-2015bidirectional-lstm-crf-models-for-sequence-tagging)
 - [**2. 【2016】Conditional Random Fields as Recurrent Neural Networks**](#2-2016conditional-random-fields-as-recurrent-neural-networks)
 - [**3. 【2016,ACL】Deep Recurrent Models with Fast-Forward Connections for Neural Machine Translation**](#3-2016acldeep-recurrent-models-with-fast-forward-connections-for-neural-machine-translation)
-- [**4. 在paddlepaddle上实现**](#4-在paddlepaddle上实现)
-    - [4.1 数据集说明](#41-数据集说明)
+- [**4. 在paddlepaddle上实现**](#4-%E5%9C%A8paddlepaddle%E4%B8%8A%E5%AE%9E%E7%8E%B0)
+    - [4.1 数据集说明](#41-%E6%95%B0%E6%8D%AE%E9%9B%86%E8%AF%B4%E6%98%8E)
     - [4.2 dataprovider](#42-dataprovider)
-        - [4.2.1 initializer的流程：](#421-initializer的流程)
-        - [4.2.1 process的流程：](#421-process的流程)
-    - [4.3 linear_crf](#43-linear_crf)
-    - [4.4 rnn_crf](#44-rnn_crf)
+        - [4.2.1 initializer的流程：](#421-initializer%E7%9A%84%E6%B5%81%E7%A8%8B)
+        - [4.2.1 process的流程：](#421-process%E7%9A%84%E6%B5%81%E7%A8%8B)
+    - [4.3 linear_crf](#43-linearcrf)
+    - [4.4 rnn_crf](#44-rnncrf)
 
 <!-- /TOC -->
 
@@ -35,6 +35,15 @@ tags: [nlp, natural language processing, lstm crf, lstm, crf]
 [论文地址](../assets/Deep Recurrent Models with Fast-Forward Connections for Neural Machine Translation.pdf)
 
 # **4. 在paddlepaddle上实现**
+
+fluid: 
+
+[https://github.com/PaddlePaddle/models/tree/develop/fluid/sequence_tagging_for_ner](https://github.com/PaddlePaddle/models/tree/develop/fluid/sequence_tagging_for_ner)
+
+v2:
+
+[https://github.com/PaddlePaddle/models/tree/develop/legacy/sequence_tagging_for_ner](https://github.com/PaddlePaddle/models/tree/develop/legacy/sequence_tagging_for_ner)
+
 
 掉渣天的徐老师已经在开源版本的paddlepaddle实现了[rnn+crf](https://github.com/baidu/Paddle/tree/develop/demo/sequence_tagging)，我们直接拿来学习学习就好啦！！！【此demo只在github版本有，且paddle的其他源都已经不维护了，诸君请自重~】
 
