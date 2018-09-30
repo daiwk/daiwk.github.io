@@ -1,7 +1,7 @@
 ---
 layout: post
-category: "platform"
-title: "推荐系统论文集合"
+category: "links"
+title: "【置顶】导引——推荐系统论文集合"
 tags: [推荐系统, ]
 ---
 
