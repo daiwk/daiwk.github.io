@@ -144,6 +144,7 @@ https://daiwk.github.io/posts/cv-tips.html
 https://daiwk.github.io/posts/platform-baidurpc.html
 https://daiwk.github.io/posts/platform-brpc-rdma.html
 https://daiwk.github.io/posts/platform-grpc.html
+https://daiwk.github.io/posts/platform-k8s-container.html
 https://daiwk.github.io/posts/platform-k8s.html
 https://daiwk.github.io/posts/platform-leveldb-rocksdb.html
 https://daiwk.github.io/posts/platform-linux-kernel.html
