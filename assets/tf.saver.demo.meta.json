@@ -1,0 +1,4199 @@
+meta_info_def {
+  stripped_op_list {
+    op {
+      name: "Add"
+      input_arg {
+        name: "x"
+        type_attr: "T"
+      }
+      input_arg {
+        name: "y"
+        type_attr: "T"
+      }
+      output_arg {
+        name: "z"
+        type_attr: "T"
+      }
+      attr {
+        name: "T"
+        type: "type"
+        allowed_values {
+          list {
+            type: DT_BFLOAT16
+            type: DT_HALF
+            type: DT_FLOAT
+            type: DT_DOUBLE
+            type: DT_UINT8
+            type: DT_INT8
+            type: DT_INT16
+            type: DT_INT32
+            type: DT_INT64
+            type: DT_COMPLEX64
+            type: DT_COMPLEX128
+            type: DT_STRING
+          }
+        }
+      }
+    }
+    op {
+      name: "Assign"
+      input_arg {
+        name: "ref"
+        type_attr: "T"
+        is_ref: true
+      }
+      input_arg {
+        name: "value"
+        type_attr: "T"
+      }
+      output_arg {
+        name: "output_ref"
+        type_attr: "T"
+        is_ref: true
+      }
+      attr {
+        name: "T"
+        type: "type"
+      }
+      attr {
+        name: "validate_shape"
+        type: "bool"
+        default_value {
+          b: true
+        }
+      }
+      attr {
+        name: "use_locking"
+        type: "bool"
+        default_value {
+          b: true
+        }
+      }
+      allows_uninitialized_input: true
+    }
+    op {
+      name: "AssignSub"
+      input_arg {
+        name: "ref"
+        type_attr: "T"
+        is_ref: true
+      }
+      input_arg {
+        name: "value"
+        type_attr: "T"
+      }
+      output_arg {
+        name: "output_ref"
+        type_attr: "T"
+        is_ref: true
+      }
+      attr {
+        name: "T"
+        type: "type"
+        allowed_values {
+          list {
+            type: DT_FLOAT
+            type: DT_DOUBLE
+            type: DT_INT32
+            type: DT_UINT8
+            type: DT_INT16
+            type: DT_INT8
+            type: DT_COMPLEX64
+            type: DT_INT64
+            type: DT_QINT8
+            type: DT_QUINT8
+            type: DT_QINT32
+            type: DT_BFLOAT16
+            type: DT_UINT16
+            type: DT_COMPLEX128
+            type: DT_HALF
+            type: DT_UINT32
+            type: DT_UINT64
+          }
+        }
+      }
+      attr {
+        name: "use_locking"
+        type: "bool"
+        default_value {
+          b: false
+        }
+      }
+    }
+    op {
+      name: "Const"
+      output_arg {
+        name: "output"
+        type_attr: "dtype"
+      }
+      attr {
+        name: "value"
+        type: "tensor"
+      }
+      attr {
+        name: "dtype"
+        type: "type"
+      }
+    }
+    op {
+      name: "Identity"
+      input_arg {
+        name: "input"
+        type_attr: "T"
+      }
+      output_arg {
+        name: "output"
+        type_attr: "T"
+      }
+      attr {
+        name: "T"
+        type: "type"
+      }
+    }
+    op {
+      name: "IsVariableInitialized"
+      input_arg {
+        name: "ref"
+        type_attr: "dtype"
+        is_ref: true
+      }
+      output_arg {
+        name: "is_initialized"
+        type: DT_BOOL
+      }
+      attr {
+        name: "dtype"
+        type: "type"
+      }
+      allows_uninitialized_input: true
+    }
+    op {
+      name: "Merge"
+      input_arg {
+        name: "inputs"
+        type_attr: "T"
+        number_attr: "N"
+      }
+      output_arg {
+        name: "output"
+        type_attr: "T"
+      }
+      output_arg {
+        name: "value_index"
+        type: DT_INT32
+      }
+      attr {
+        name: "T"
+        type: "type"
+      }
+      attr {
+        name: "N"
+        type: "int"
+        has_minimum: true
+        minimum: 1
+      }
+    }
+    op {
+      name: "Mul"
+      input_arg {
+        name: "x"
+        type_attr: "T"
+      }
+      input_arg {
+        name: "y"
+        type_attr: "T"
+      }
+      output_arg {
+        name: "z"
+        type_attr: "T"
+      }
+      attr {
+        name: "T"
+        type: "type"
+        allowed_values {
+          list {
+            type: DT_BFLOAT16
+            type: DT_HALF
+            type: DT_FLOAT
+            type: DT_DOUBLE
+            type: DT_UINT8
+            type: DT_INT8
+            type: DT_UINT16
+            type: DT_INT16
+            type: DT_INT32
+            type: DT_INT64
+            type: DT_COMPLEX64
+            type: DT_COMPLEX128
+          }
+        }
+      }
+      is_commutative: true
+    }
+    op {
+      name: "NoOp"
+    }
+    op {
+      name: "RefSwitch"
+      input_arg {
+        name: "data"
+        type_attr: "T"
+        is_ref: true
+      }
+      input_arg {
+        name: "pred"
+        type: DT_BOOL
+      }
+      output_arg {
+        name: "output_false"
+        type_attr: "T"
+        is_ref: true
+      }
+      output_arg {
+        name: "output_true"
+        type_attr: "T"
+        is_ref: true
+      }
+      attr {
+        name: "T"
+        type: "type"
+      }
+      allows_uninitialized_input: true
+    }
+    op {
+      name: "RestoreV2"
+      input_arg {
+        name: "prefix"
+        type: DT_STRING
+      }
+      input_arg {
+        name: "tensor_names"
+        type: DT_STRING
+      }
+      input_arg {
+        name: "shape_and_slices"
+        type: DT_STRING
+      }
+      output_arg {
+        name: "tensors"
+        type_list_attr: "dtypes"
+      }
+      attr {
+        name: "dtypes"
+        type: "list(type)"
+        has_minimum: true
+        minimum: 1
+      }
+      is_stateful: true
+    }
+    op {
+      name: "SaveV2"
+      input_arg {
+        name: "prefix"
+        type: DT_STRING
+      }
+      input_arg {
+        name: "tensor_names"
+        type: DT_STRING
+      }
+      input_arg {
+        name: "shape_and_slices"
+        type: DT_STRING
+      }
+      input_arg {
+        name: "tensors"
+        type_list_attr: "dtypes"
+      }
+      attr {
+        name: "dtypes"
+        type: "list(type)"
+        has_minimum: true
+        minimum: 1
+      }
+      is_stateful: true
+    }
+    op {
+      name: "Sub"
+      input_arg {
+        name: "x"
+        type_attr: "T"
+      }
+      input_arg {
+        name: "y"
+        type_attr: "T"
+      }
+      output_arg {
+        name: "z"
+        type_attr: "T"
+      }
+      attr {
+        name: "T"
+        type: "type"
+        allowed_values {
+          list {
+            type: DT_BFLOAT16
+            type: DT_HALF
+            type: DT_FLOAT
+            type: DT_DOUBLE
+            type: DT_UINT8
+            type: DT_INT8
+            type: DT_UINT16
+            type: DT_INT16
+            type: DT_INT32
+            type: DT_INT64
+            type: DT_COMPLEX64
+            type: DT_COMPLEX128
+          }
+        }
+      }
+    }
+    op {
+      name: "Switch"
+      input_arg {
+        name: "data"
+        type_attr: "T"
+      }
+      input_arg {
+        name: "pred"
+        type: DT_BOOL
+      }
+      output_arg {
+        name: "output_false"
+        type_attr: "T"
+      }
+      output_arg {
+        name: "output_true"
+        type_attr: "T"
+      }
+      attr {
+        name: "T"
+        type: "type"
+      }
+    }
+    op {
+      name: "VariableV2"
+      output_arg {
+        name: "ref"
+        type_attr: "dtype"
+        is_ref: true
+      }
+      attr {
+        name: "shape"
+        type: "shape"
+      }
+      attr {
+        name: "dtype"
+        type: "type"
+      }
+      attr {
+        name: "container"
+        type: "string"
+        default_value {
+          s: ""
+        }
+      }
+      attr {
+        name: "shared_name"
+        type: "string"
+        default_value {
+          s: ""
+        }
+      }
+      is_stateful: true
+    }
+  }
+  tensorflow_version: "1.9.0"
+  tensorflow_git_version: "v1.9.0-0-g25c197e023"
+}
+graph_def {
+  node {
+    name: "v/initial_value"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_FLOAT
+          tensor_shape {
+          }
+          float_val: 0.0
+        }
+      }
+    }
+  }
+  node {
+    name: "v"
+    op: "VariableV2"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "container"
+      value {
+        s: ""
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "shape"
+      value {
+        shape {
+        }
+      }
+    }
+    attr {
+      key: "shared_name"
+      value {
+        s: ""
+      }
+    }
+  }
+  node {
+    name: "v/Assign"
+    op: "Assign"
+    input: "v"
+    input: "v/initial_value"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "v/read"
+    op: "Identity"
+    input: "v"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "IsVariableInitialized"
+    op: "IsVariableInitialized"
+    input: "v"
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+  }
+  node {
+    name: "cond/Switch"
+    op: "Switch"
+    input: "IsVariableInitialized"
+    input: "IsVariableInitialized"
+    attr {
+      key: "T"
+      value {
+        type: DT_BOOL
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "cond/switch_t"
+    op: "Identity"
+    input: "cond/Switch:1"
+    attr {
+      key: "T"
+      value {
+        type: DT_BOOL
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "cond/switch_f"
+    op: "Identity"
+    input: "cond/Switch"
+    attr {
+      key: "T"
+      value {
+        type: DT_BOOL
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "cond/pred_id"
+    op: "Identity"
+    input: "IsVariableInitialized"
+    attr {
+      key: "T"
+      value {
+        type: DT_BOOL
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "cond/read"
+    op: "Identity"
+    input: "cond/read/Switch:1"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "cond/read/Switch"
+    op: "RefSwitch"
+    input: "v"
+    input: "cond/pred_id"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "cond/Switch_1"
+    op: "Switch"
+    input: "v/initial_value"
+    input: "cond/pred_id"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v/initial_value"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "cond/Merge"
+    op: "Merge"
+    input: "cond/Switch_1"
+    input: "cond/read"
+    attr {
+      key: "N"
+      value {
+        i: 2
+      }
+    }
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage"
+    op: "VariableV2"
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "container"
+      value {
+        s: ""
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "shape"
+      value {
+        shape {
+        }
+      }
+    }
+    attr {
+      key: "shared_name"
+      value {
+        s: ""
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/IsVariableInitialized"
+    op: "IsVariableInitialized"
+    input: "v"
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/cond/Switch"
+    op: "Switch"
+    input: "v/ExponentialMovingAverage/IsVariableInitialized"
+    input: "v/ExponentialMovingAverage/IsVariableInitialized"
+    attr {
+      key: "T"
+      value {
+        type: DT_BOOL
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/cond/switch_t"
+    op: "Identity"
+    input: "v/ExponentialMovingAverage/cond/Switch:1"
+    attr {
+      key: "T"
+      value {
+        type: DT_BOOL
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/cond/switch_f"
+    op: "Identity"
+    input: "v/ExponentialMovingAverage/cond/Switch"
+    attr {
+      key: "T"
+      value {
+        type: DT_BOOL
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/cond/pred_id"
+    op: "Identity"
+    input: "v/ExponentialMovingAverage/IsVariableInitialized"
+    attr {
+      key: "T"
+      value {
+        type: DT_BOOL
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/cond/read"
+    op: "Identity"
+    input: "v/ExponentialMovingAverage/cond/read/Switch:1"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/cond/read/Switch"
+    op: "RefSwitch"
+    input: "v"
+    input: "v/ExponentialMovingAverage/cond/pred_id"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/cond/Switch_1"
+    op: "Switch"
+    input: "v/initial_value"
+    input: "v/ExponentialMovingAverage/cond/pred_id"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v/initial_value"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/cond/Merge"
+    op: "Merge"
+    input: "v/ExponentialMovingAverage/cond/Switch_1"
+    input: "v/ExponentialMovingAverage/cond/read"
+    attr {
+      key: "N"
+      value {
+        i: 2
+      }
+    }
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/cond/read/Switch_v/ExponentialMovingAverage_0"
+    op: "Switch"
+    input: "v/ExponentialMovingAverage/cond/Merge"
+    input: "cond/pred_id"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/cond/read_v/ExponentialMovingAverage_0"
+    op: "Identity"
+    input: "v/ExponentialMovingAverage/cond/read/Switch_v/ExponentialMovingAverage_0:1"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/cond/Merge_v/ExponentialMovingAverage_0"
+    op: "Merge"
+    input: "cond/Switch_1"
+    input: "v/ExponentialMovingAverage/cond/read_v/ExponentialMovingAverage_0"
+    attr {
+      key: "N"
+      value {
+        i: 2
+      }
+    }
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/Assign"
+    op: "Assign"
+    input: "v/ExponentialMovingAverage"
+    input: "v/ExponentialMovingAverage/cond/Merge_v/ExponentialMovingAverage_0"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "v/ExponentialMovingAverage/read"
+    op: "Identity"
+    input: "v/ExponentialMovingAverage"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "ExponentialMovingAverage/decay"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_FLOAT
+          tensor_shape {
+          }
+          float_val: 0.9900000095367432
+        }
+      }
+    }
+  }
+  node {
+    name: "ExponentialMovingAverage/AssignMovingAvg/sub/x"
+    op: "Const"
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_FLOAT
+          tensor_shape {
+          }
+          float_val: 1.0
+        }
+      }
+    }
+  }
+  node {
+    name: "ExponentialMovingAverage/AssignMovingAvg/sub"
+    op: "Sub"
+    input: "ExponentialMovingAverage/AssignMovingAvg/sub/x"
+    input: "ExponentialMovingAverage/decay"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "ExponentialMovingAverage/AssignMovingAvg/sub_1"
+    op: "Sub"
+    input: "v/ExponentialMovingAverage/read"
+    input: "v/read"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "ExponentialMovingAverage/AssignMovingAvg/mul"
+    op: "Mul"
+    input: "ExponentialMovingAverage/AssignMovingAvg/sub_1"
+    input: "ExponentialMovingAverage/AssignMovingAvg/sub"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "ExponentialMovingAverage/AssignMovingAvg"
+    op: "AssignSub"
+    input: "v/ExponentialMovingAverage"
+    input: "ExponentialMovingAverage/AssignMovingAvg/mul"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: false
+      }
+    }
+  }
+  node {
+    name: "ExponentialMovingAverage"
+    op: "NoOp"
+    input: "^ExponentialMovingAverage/AssignMovingAvg"
+  }
+  node {
+    name: "save/Const"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+          }
+          string_val: "model"
+        }
+      }
+    }
+  }
+  node {
+    name: "save/SaveV2/tensor_names"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 2
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 2
+            }
+          }
+          string_val: "v"
+          string_val: "v/ExponentialMovingAverage"
+        }
+      }
+    }
+  }
+  node {
+    name: "save/SaveV2/shape_and_slices"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 2
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 2
+            }
+          }
+          string_val: ""
+          string_val: ""
+        }
+      }
+    }
+  }
+  node {
+    name: "save/SaveV2"
+    op: "SaveV2"
+    input: "save/Const"
+    input: "save/SaveV2/tensor_names"
+    input: "save/SaveV2/shape_and_slices"
+    input: "v"
+    input: "v/ExponentialMovingAverage"
+    attr {
+      key: "dtypes"
+      value {
+        list {
+          type: DT_FLOAT
+          type: DT_FLOAT
+        }
+      }
+    }
+  }
+  node {
+    name: "save/control_dependency"
+    op: "Identity"
+    input: "save/Const"
+    input: "^save/SaveV2"
+    attr {
+      key: "T"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@save/Const"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "save/RestoreV2/tensor_names"
+    op: "Const"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 2
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 2
+            }
+          }
+          string_val: "v"
+          string_val: "v/ExponentialMovingAverage"
+        }
+      }
+    }
+  }
+  node {
+    name: "save/RestoreV2/shape_and_slices"
+    op: "Const"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 2
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 2
+            }
+          }
+          string_val: ""
+          string_val: ""
+        }
+      }
+    }
+  }
+  node {
+    name: "save/RestoreV2"
+    op: "RestoreV2"
+    input: "save/Const"
+    input: "save/RestoreV2/tensor_names"
+    input: "save/RestoreV2/shape_and_slices"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            unknown_rank: true
+          }
+          shape {
+            unknown_rank: true
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtypes"
+      value {
+        list {
+          type: DT_FLOAT
+          type: DT_FLOAT
+        }
+      }
+    }
+  }
+  node {
+    name: "save/Assign"
+    op: "Assign"
+    input: "v"
+    input: "save/RestoreV2"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save/Assign_1"
+    op: "Assign"
+    input: "v/ExponentialMovingAverage"
+    input: "save/RestoreV2:1"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save/restore_all"
+    op: "NoOp"
+    input: "^save/Assign"
+    input: "^save/Assign_1"
+  }
+  node {
+    name: "init"
+    op: "NoOp"
+    input: "^v/Assign"
+    input: "^v/ExponentialMovingAverage/Assign"
+  }
+  node {
+    name: "Assign/value"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_FLOAT
+          tensor_shape {
+          }
+          float_val: 10.0
+        }
+      }
+    }
+  }
+  node {
+    name: "Assign"
+    op: "Assign"
+    input: "v"
+    input: "Assign/value"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save_1/Const"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+          }
+          string_val: "model"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_1/SaveV2/tensor_names"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: "v/ExponentialMovingAverage"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_1/SaveV2/shape_and_slices"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: ""
+        }
+      }
+    }
+  }
+  node {
+    name: "save_1/SaveV2"
+    op: "SaveV2"
+    input: "save_1/Const"
+    input: "save_1/SaveV2/tensor_names"
+    input: "save_1/SaveV2/shape_and_slices"
+    input: "v"
+    attr {
+      key: "dtypes"
+      value {
+        list {
+          type: DT_FLOAT
+        }
+      }
+    }
+  }
+  node {
+    name: "save_1/control_dependency"
+    op: "Identity"
+    input: "save_1/Const"
+    input: "^save_1/SaveV2"
+    attr {
+      key: "T"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@save_1/Const"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "save_1/RestoreV2/tensor_names"
+    op: "Const"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: "v/ExponentialMovingAverage"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_1/RestoreV2/shape_and_slices"
+    op: "Const"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: ""
+        }
+      }
+    }
+  }
+  node {
+    name: "save_1/RestoreV2"
+    op: "RestoreV2"
+    input: "save_1/Const"
+    input: "save_1/RestoreV2/tensor_names"
+    input: "save_1/RestoreV2/shape_and_slices"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            unknown_rank: true
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtypes"
+      value {
+        list {
+          type: DT_FLOAT
+        }
+      }
+    }
+  }
+  node {
+    name: "save_1/Assign"
+    op: "Assign"
+    input: "v"
+    input: "save_1/RestoreV2"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save_1/restore_all"
+    op: "NoOp"
+    input: "^save_1/Assign"
+  }
+  node {
+    name: "save_2/Const"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+          }
+          string_val: "model"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_2/SaveV2/tensor_names"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: "v/ExponentialMovingAverage"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_2/SaveV2/shape_and_slices"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: ""
+        }
+      }
+    }
+  }
+  node {
+    name: "save_2/SaveV2"
+    op: "SaveV2"
+    input: "save_2/Const"
+    input: "save_2/SaveV2/tensor_names"
+    input: "save_2/SaveV2/shape_and_slices"
+    input: "v"
+    attr {
+      key: "dtypes"
+      value {
+        list {
+          type: DT_FLOAT
+        }
+      }
+    }
+  }
+  node {
+    name: "save_2/control_dependency"
+    op: "Identity"
+    input: "save_2/Const"
+    input: "^save_2/SaveV2"
+    attr {
+      key: "T"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@save_2/Const"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "save_2/RestoreV2/tensor_names"
+    op: "Const"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: "v/ExponentialMovingAverage"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_2/RestoreV2/shape_and_slices"
+    op: "Const"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: ""
+        }
+      }
+    }
+  }
+  node {
+    name: "save_2/RestoreV2"
+    op: "RestoreV2"
+    input: "save_2/Const"
+    input: "save_2/RestoreV2/tensor_names"
+    input: "save_2/RestoreV2/shape_and_slices"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            unknown_rank: true
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtypes"
+      value {
+        list {
+          type: DT_FLOAT
+        }
+      }
+    }
+  }
+  node {
+    name: "save_2/Assign"
+    op: "Assign"
+    input: "v"
+    input: "save_2/RestoreV2"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save_2/restore_all"
+    op: "NoOp"
+    input: "^save_2/Assign"
+  }
+  node {
+    name: "save_3/Const"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+          }
+          string_val: "model"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_3/SaveV2/tensor_names"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: "v/ExponentialMovingAverage"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_3/SaveV2/shape_and_slices"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: ""
+        }
+      }
+    }
+  }
+  node {
+    name: "save_3/SaveV2"
+    op: "SaveV2"
+    input: "save_3/Const"
+    input: "save_3/SaveV2/tensor_names"
+    input: "save_3/SaveV2/shape_and_slices"
+    input: "v"
+    attr {
+      key: "dtypes"
+      value {
+        list {
+          type: DT_FLOAT
+        }
+      }
+    }
+  }
+  node {
+    name: "save_3/control_dependency"
+    op: "Identity"
+    input: "save_3/Const"
+    input: "^save_3/SaveV2"
+    attr {
+      key: "T"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@save_3/Const"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "save_3/RestoreV2/tensor_names"
+    op: "Const"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: "v/ExponentialMovingAverage"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_3/RestoreV2/shape_and_slices"
+    op: "Const"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          string_val: ""
+        }
+      }
+    }
+  }
+  node {
+    name: "save_3/RestoreV2"
+    op: "RestoreV2"
+    input: "save_3/Const"
+    input: "save_3/RestoreV2/tensor_names"
+    input: "save_3/RestoreV2/shape_and_slices"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            unknown_rank: true
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtypes"
+      value {
+        list {
+          type: DT_FLOAT
+        }
+      }
+    }
+  }
+  node {
+    name: "save_3/Assign"
+    op: "Assign"
+    input: "v"
+    input: "save_3/RestoreV2"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save_3/restore_all"
+    op: "NoOp"
+    input: "^save_3/Assign"
+  }
+  node {
+    name: "Const"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_FLOAT
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          float_val: 1.0
+        }
+      }
+    }
+  }
+  node {
+    name: "v1"
+    op: "VariableV2"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "container"
+      value {
+        s: ""
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "shape"
+      value {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+    attr {
+      key: "shared_name"
+      value {
+        s: ""
+      }
+    }
+  }
+  node {
+    name: "v1/Assign"
+    op: "Assign"
+    input: "v1"
+    input: "Const"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v1"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "v1/read"
+    op: "Identity"
+    input: "v1"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v1"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "Const_1"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_FLOAT
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          float_val: 2.0
+        }
+      }
+    }
+  }
+  node {
+    name: "v2"
+    op: "VariableV2"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "container"
+      value {
+        s: ""
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "shape"
+      value {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+    attr {
+      key: "shared_name"
+      value {
+        s: ""
+      }
+    }
+  }
+  node {
+    name: "v2/Assign"
+    op: "Assign"
+    input: "v2"
+    input: "Const_1"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v2"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "v2/read"
+    op: "Identity"
+    input: "v2"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v2"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "add"
+    op: "Add"
+    input: "v1/read"
+    input: "v2/read"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "init_1"
+    op: "NoOp"
+    input: "^v/Assign"
+    input: "^v/ExponentialMovingAverage/Assign"
+    input: "^v1/Assign"
+    input: "^v2/Assign"
+  }
+  node {
+    name: "import/v1"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_FLOAT
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          float_val: 1.0
+        }
+      }
+    }
+  }
+  node {
+    name: "import/v1/read"
+    op: "Identity"
+    input: "import/v1"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@import/v1"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "import/v2"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_FLOAT
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          float_val: 2.0
+        }
+      }
+    }
+  }
+  node {
+    name: "import/v2/read"
+    op: "Identity"
+    input: "import/v2"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@import/v2"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "import/add"
+    op: "Add"
+    input: "import/v1/read"
+    input: "import/v2/read"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v1_1"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_FLOAT
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          float_val: 1.0
+        }
+      }
+    }
+  }
+  node {
+    name: "Variable"
+    op: "VariableV2"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "container"
+      value {
+        s: ""
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "shape"
+      value {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+    attr {
+      key: "shared_name"
+      value {
+        s: ""
+      }
+    }
+  }
+  node {
+    name: "Variable/Assign"
+    op: "Assign"
+    input: "Variable"
+    input: "v1_1"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@Variable"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "Variable/read"
+    op: "Identity"
+    input: "Variable"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@Variable"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "v2_1"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_FLOAT
+          tensor_shape {
+            dim {
+              size: 1
+            }
+          }
+          float_val: 13.800000190734863
+        }
+      }
+    }
+  }
+  node {
+    name: "Variable_1"
+    op: "VariableV2"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "container"
+      value {
+        s: ""
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "shape"
+      value {
+        shape {
+          dim {
+            size: 1
+          }
+        }
+      }
+    }
+    attr {
+      key: "shared_name"
+      value {
+        s: ""
+      }
+    }
+  }
+  node {
+    name: "Variable_1/Assign"
+    op: "Assign"
+    input: "Variable_1"
+    input: "v2_1"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@Variable_1"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "Variable_1/read"
+    op: "Identity"
+    input: "Variable_1"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@Variable_1"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "add_1"
+    op: "Add"
+    input: "Variable/read"
+    input: "Variable_1/read"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "save_4/Const"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+          }
+          string_val: "model"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_4/SaveV2/tensor_names"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 6
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 6
+            }
+          }
+          string_val: "Variable"
+          string_val: "Variable_1"
+          string_val: "v"
+          string_val: "v/ExponentialMovingAverage"
+          string_val: "v1"
+          string_val: "v2"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_4/SaveV2/shape_and_slices"
+    op: "Const"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 6
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 6
+            }
+          }
+          string_val: ""
+          string_val: ""
+          string_val: ""
+          string_val: ""
+          string_val: ""
+          string_val: ""
+        }
+      }
+    }
+  }
+  node {
+    name: "save_4/SaveV2"
+    op: "SaveV2"
+    input: "save_4/Const"
+    input: "save_4/SaveV2/tensor_names"
+    input: "save_4/SaveV2/shape_and_slices"
+    input: "Variable"
+    input: "Variable_1"
+    input: "v"
+    input: "v/ExponentialMovingAverage"
+    input: "v1"
+    input: "v2"
+    attr {
+      key: "dtypes"
+      value {
+        list {
+          type: DT_FLOAT
+          type: DT_FLOAT
+          type: DT_FLOAT
+          type: DT_FLOAT
+          type: DT_FLOAT
+          type: DT_FLOAT
+        }
+      }
+    }
+  }
+  node {
+    name: "save_4/control_dependency"
+    op: "Identity"
+    input: "save_4/Const"
+    input: "^save_4/SaveV2"
+    attr {
+      key: "T"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@save_4/Const"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+  }
+  node {
+    name: "save_4/RestoreV2/tensor_names"
+    op: "Const"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 6
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 6
+            }
+          }
+          string_val: "Variable"
+          string_val: "Variable_1"
+          string_val: "v"
+          string_val: "v/ExponentialMovingAverage"
+          string_val: "v1"
+          string_val: "v2"
+        }
+      }
+    }
+  }
+  node {
+    name: "save_4/RestoreV2/shape_and_slices"
+    op: "Const"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 6
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtype"
+      value {
+        type: DT_STRING
+      }
+    }
+    attr {
+      key: "value"
+      value {
+        tensor {
+          dtype: DT_STRING
+          tensor_shape {
+            dim {
+              size: 6
+            }
+          }
+          string_val: ""
+          string_val: ""
+          string_val: ""
+          string_val: ""
+          string_val: ""
+          string_val: ""
+        }
+      }
+    }
+  }
+  node {
+    name: "save_4/RestoreV2"
+    op: "RestoreV2"
+    input: "save_4/Const"
+    input: "save_4/RestoreV2/tensor_names"
+    input: "save_4/RestoreV2/shape_and_slices"
+    device: "/device:CPU:0"
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            unknown_rank: true
+          }
+          shape {
+            unknown_rank: true
+          }
+          shape {
+            unknown_rank: true
+          }
+          shape {
+            unknown_rank: true
+          }
+          shape {
+            unknown_rank: true
+          }
+          shape {
+            unknown_rank: true
+          }
+        }
+      }
+    }
+    attr {
+      key: "dtypes"
+      value {
+        list {
+          type: DT_FLOAT
+          type: DT_FLOAT
+          type: DT_FLOAT
+          type: DT_FLOAT
+          type: DT_FLOAT
+          type: DT_FLOAT
+        }
+      }
+    }
+  }
+  node {
+    name: "save_4/Assign"
+    op: "Assign"
+    input: "Variable"
+    input: "save_4/RestoreV2"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@Variable"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save_4/Assign_1"
+    op: "Assign"
+    input: "Variable_1"
+    input: "save_4/RestoreV2:1"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@Variable_1"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save_4/Assign_2"
+    op: "Assign"
+    input: "v"
+    input: "save_4/RestoreV2:2"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save_4/Assign_3"
+    op: "Assign"
+    input: "v/ExponentialMovingAverage"
+    input: "save_4/RestoreV2:3"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save_4/Assign_4"
+    op: "Assign"
+    input: "v1"
+    input: "save_4/RestoreV2:4"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v1"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save_4/Assign_5"
+    op: "Assign"
+    input: "v2"
+    input: "save_4/RestoreV2:5"
+    attr {
+      key: "T"
+      value {
+        type: DT_FLOAT
+      }
+    }
+    attr {
+      key: "_class"
+      value {
+        list {
+          s: "loc:@v2"
+        }
+      }
+    }
+    attr {
+      key: "_output_shapes"
+      value {
+        list {
+          shape {
+            dim {
+              size: 1
+            }
+          }
+        }
+      }
+    }
+    attr {
+      key: "use_locking"
+      value {
+        b: true
+      }
+    }
+    attr {
+      key: "validate_shape"
+      value {
+        b: true
+      }
+    }
+  }
+  node {
+    name: "save_4/restore_all"
+    op: "NoOp"
+    input: "^save_4/Assign"
+    input: "^save_4/Assign_1"
+    input: "^save_4/Assign_2"
+    input: "^save_4/Assign_3"
+    input: "^save_4/Assign_4"
+    input: "^save_4/Assign_5"
+  }
+  versions {
+  }
+}
+saver_def {
+  filename_tensor_name: "save_4/Const:0"
+  save_tensor_name: "save_4/control_dependency:0"
+  restore_op_name: "save_4/restore_all"
+  max_to_keep: 5
+  keep_checkpoint_every_n_hours: 10000.0
+  version: V2
+}
+collection_def {
+  key: "cond_context"
+  value {
+    bytes_list {
+      value: "\n\016cond/cond_text\022\016cond/pred_id:0\032\017cond/switch_t:0 \001*\204\001\n\016cond/pred_id:0\n\022cond/read/Switch:1\n\013cond/read:0\n\017cond/switch_t:0\n\003v:0\022\031\n\003v:0\022\022cond/read/Switch:1\022 \n\016cond/pred_id:0\022\016cond/pred_id:0"
+      value: "\n\020cond/cond_text_1\022\016cond/pred_id:0\032\017cond/switch_f:0*\236\001\n\017cond/Switch_1:0\n\017cond/Switch_1:1\n\016cond/pred_id:0\n\017cond/switch_f:0\n\021v/initial_value:0\022 \n\016cond/pred_id:0\022\016cond/pred_id:0\022$\n\021v/initial_value:0\022\017cond/Switch_1:0"
+      value: "\n)v/ExponentialMovingAverage/cond/cond_text\022)v/ExponentialMovingAverage/cond/pred_id:0\032*v/ExponentialMovingAverage/cond/switch_t:0 \001*\301\002\n)v/ExponentialMovingAverage/cond/pred_id:0\n-v/ExponentialMovingAverage/cond/read/Switch:1\n&v/ExponentialMovingAverage/cond/read:0\n*v/ExponentialMovingAverage/cond/switch_t:0\n\003v:0\0224\n\003v:0\022-v/ExponentialMovingAverage/cond/read/Switch:1\022V\n)v/ExponentialMovingAverage/cond/pred_id:0\022)v/ExponentialMovingAverage/cond/pred_id:0"
+      value: "\n+v/ExponentialMovingAverage/cond/cond_text_1\022)v/ExponentialMovingAverage/cond/pred_id:0\032*v/ExponentialMovingAverage/cond/switch_f:0*\333\002\n*v/ExponentialMovingAverage/cond/Switch_1:0\n*v/ExponentialMovingAverage/cond/Switch_1:1\n)v/ExponentialMovingAverage/cond/pred_id:0\n*v/ExponentialMovingAverage/cond/switch_f:0\n\021v/initial_value:0\022?\n\021v/initial_value:0\022*v/ExponentialMovingAverage/cond/Switch_1:0\022V\n)v/ExponentialMovingAverage/cond/pred_id:0\022)v/ExponentialMovingAverage/cond/pred_id:0"
+    }
+  }
+}
+collection_def {
+  key: "moving_average_variables"
+  value {
+    bytes_list {
+      value: "\n\003v:0\022\010v/Assign\032\010v/read:02\021v/initial_value:08\001"
+    }
+  }
+}
+collection_def {
+  key: "trainable_variables"
+  value {
+    bytes_list {
+      value: "\n\003v:0\022\010v/Assign\032\010v/read:02\021v/initial_value:08\001"
+      value: "\n\004v1:0\022\tv1/Assign\032\tv1/read:02\007Const:08\001"
+      value: "\n\004v2:0\022\tv2/Assign\032\tv2/read:02\tConst_1:08\001"
+      value: "\n\nVariable:0\022\017Variable/Assign\032\017Variable/read:02\006v1_1:08\001"
+      value: "\n\014Variable_1:0\022\021Variable_1/Assign\032\021Variable_1/read:02\006v2_1:08\001"
+    }
+  }
+}
+collection_def {
+  key: "variables"
+  value {
+    bytes_list {
+      value: "\n\003v:0\022\010v/Assign\032\010v/read:02\021v/initial_value:08\001"
+      value: "\n\034v/ExponentialMovingAverage:0\022!v/ExponentialMovingAverage/Assign\032!v/ExponentialMovingAverage/read:02\014cond/Merge:0"
+      value: "\n\004v1:0\022\tv1/Assign\032\tv1/read:02\007Const:08\001"
+      value: "\n\004v2:0\022\tv2/Assign\032\tv2/read:02\tConst_1:08\001"
+      value: "\n\nVariable:0\022\017Variable/Assign\032\017Variable/read:02\006v1_1:08\001"
+      value: "\n\014Variable_1:0\022\021Variable_1/Assign\032\021Variable_1/read:02\006v2_1:08\001"
+    }
+  }
+}
+
+​
