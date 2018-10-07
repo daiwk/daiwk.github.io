@@ -892,3 +892,13 @@ all_model_checkpoint_paths: "model.ckpt"
 + model_checkpoint_path属性保存了最新模型文件的文件名
 + all_model_checkpoint_paths列出了当前还没有被删除的所有模型文件的文件名
 
+如果有多个checkpoint，则文件内容如下：
+
+```shell
+model_checkpoint_path: "model.ckpt-29001"
+all_model_checkpoint_paths: "model.ckpt-25001"
+all_model_checkpoint_paths: "model.ckpt-26001"
+all_model_checkpoint_paths: "model.ckpt-27001"
+all_model_checkpoint_paths: "model.ckpt-28001"
+all_model_checkpoint_paths: "model.ckpt-29001"
+```
