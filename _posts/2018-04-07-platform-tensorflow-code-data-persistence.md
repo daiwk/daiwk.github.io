@@ -9,12 +9,11 @@ tags: [tensorflow代码, 数据持久化]
 
 <!-- TOC -->
 
-    - [MetaGraphDef](#metagraphdef)
-        - [meta_info_def](#meta_info_def)
-        - [graph_def](#graph_def)
-        - [saver_def](#saver_def)
-        - [collection_def](#collection_def)
-- [输出：](#输出)
+- [MetaGraphDef](#metagraphdef)
+  - [meta_info_def](#metainfodef)
+  - [graph_def](#graphdef)
+  - [saver_def](#saverdef)
+  - [collection_def](#collectiondef)
 
 <!-- /TOC -->
 
@@ -819,7 +818,7 @@ collection_def {
 
 持久化得到以下5个文件：
 
-```
+```shell
 demo/model
 ├── checkpoint
 ├── model.ckpt.data-00000-of-00001
@@ -830,7 +829,7 @@ demo/model
 
 上面讲到的都是```model.ckpt.meta```的明文文件即```model.ckpt.meta.json```的内容，持久化了计算图的结构。
 
-```model.ckpt.index```和```model.ckpt.data-xxxx-of-xxxx```文件保存了**变量的取值**，其中的```model.ckpt.data-xxxx-of-xxxx```是用SSTable格式存储的，大致理解为一个kv列表。可以通过tf.train.NewCheckpointReader类来查看保存的变量：
+其中，```model.ckpt.index```和```model.ckpt.data-xxxx-of-xxxx```文件保存了**变量的取值**，其中的```model.ckpt.data-xxxx-of-xxxx```是用SSTable格式存储的，大致理解为一个kv列表。可以通过tf.train.NewCheckpointReader类来查看保存的变量：
 
 ```python
 import tensorflow as tf
@@ -854,7 +853,6 @@ v1
 [1]
 Value for variable v1 is  [1.]
 '''
-
 ```
 
 而```checkpoint```文件维护了一个由tf.train.Saver类持久化的所有tf模型文件的文件名。当某个文件被删除时，此模型对应的文件名也会从checkpoint文件中删除。checkpoint文件的格式为CheckpointState，定义在```tensorflow/python/training/checkpoint_state.proto```中：
