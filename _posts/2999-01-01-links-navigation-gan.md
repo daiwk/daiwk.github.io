@@ -20,6 +20,7 @@ tags: [gan论文集合, ]
 - [dcgan](#dcgan)
 - [irgan](#irgan)
 - [BigGAN](#biggan)
+- [TreeGAN](#treegan)
 
 <!-- /TOC -->
 
@@ -67,3 +68,6 @@ tags: [gan论文集合, ]
 
 [https://daiwk.github.io/posts/cv-biggan.html](https://daiwk.github.io/posts/cv-biggan.html)
 
+## TreeGAN
+
+[https://daiwk.github.io/posts/nlp-treegan.html](https://daiwk.github.io/posts/nlp-treegan.html))
