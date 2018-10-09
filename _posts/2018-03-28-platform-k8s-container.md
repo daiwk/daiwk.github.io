@@ -80,7 +80,142 @@ int pid = clone(main_function, stack_size, CLONE_NEWPID | SIGCHLD, NULL);
 
 参考[06 \| 白话容器基础（二）：隔离与限制](https://time.geekbang.org/column/article/14653)
 
+Linux Cgroups是Linux内核中用来**为进程设置资源限制**的一个重要功能，可以限制一个进程能够使用的资源上限，包括CPU、内存、磁盘、网络带宽等。
+
+如果是centos，先```yum install libcgroup```，然后```service cgconfig start```，可以发现
+
+```shell
+root@xx:ll /cgroup/
+total 0
+drwxr-xr-x 4 root root 0 Jul 19  2017 blkio
+drwxr-xr-x 7 root root 0 Jul 19  2017 cpu
+drwxr-xr-x 4 root root 0 Jul 19  2017 cpuacct
+drwxr-xr-x 4 root root 0 Jul 19  2017 cpuset
+drwxr-xr-x 4 root root 0 Jun 21 20:25 devices
+drwxr-xr-x 5 root root 0 Jul 19  2017 freezer
+drwxr-xr-x 5 root root 0 Jul 19  2017 memory
+drwxr-xr-x 2 root root 0 Oct  8 20:34 net_cls
+```
+
+类似的目录，ubuntu是在```/sys/fs/cgroup/```目录下。例如，cpu目录下：
+
+```shell
+root@xx:ll /cgroup/cpu
+total 0
+drwxr-xr-x 2 root root 0 May 25 07:02 agent-webdir
+-rw-r--r-- 1 root root 0 Jul 19  2017 cgroup.clone_children
+--w--w--w- 1 root root 0 Jul 19  2017 cgroup.event_control
+-r--r--r-- 1 root root 0 Jul 19  2017 cgroup.procs
+-rw-r--r-- 1 root root 0 Jul 19  2017 cpu.cfs_period_us
+-rw-r--r-- 1 root root 0 Jul 19  2017 cpu.cfs_quota_us
+-rw-r--r-- 1 root root 0 Jul 19  2017 cpu.shares
+-r--r--r-- 1 root root 0 Jul 19  2017 cpu.stat
+drwxr-xr-x 7 root root 0 Jul 19  2017 idle
+-rw-r--r-- 1 root root 0 Jul 19  2017 notify_on_release
+drwxr-xr-x 7 root root 0 Jul 19  2017 offline
+-rw-r--r-- 1 root root 0 Jul 19  2017 release_agent
+drwxr-xr-x 2 root root 0 Oct  8 20:30 small
+drwxr-xr-x 2 root root 0 Jul 19  2017 system
+-rw-r--r-- 1 root root 0 Oct  8 20:06 tasks
+```
+
+cfs_quota和cfs_period是组合使用的参数，限制进程在长度为cfs_period的一段时间内，只能被分配到总量为cfs_quota的cpu时间。试着建一个文件夹，就会生成一堆文件，这个目录称为一个『控制组』：
+
+```shell
+root@xx:mkdir /cgroup/cpu/container
+root@xx:ll /cgroup/cpu/container/  
+total 0
+-rw-r--r-- 1 root root 0 Oct  8 20:43 cgroup.clone_children
+--w--w--w- 1 root root 0 Oct  8 20:43 cgroup.event_control
+-r--r--r-- 1 root root 0 Oct  8 20:43 cgroup.procs
+-rw-r--r-- 1 root root 0 Oct  8 20:43 cpu.cfs_period_us
+-rw-r--r-- 1 root root 0 Oct  8 20:43 cpu.cfs_quota_us
+-rw-r--r-- 1 root root 0 Oct  8 20:43 cpu.shares
+-r--r--r-- 1 root root 0 Oct  8 20:43 cpu.stat
+-rw-r--r-- 1 root root 0 Oct  8 20:43 notify_on_release
+-rw-r--r-- 1 root root 0 Oct  8 20:43 tasks
+```
+
+可以看下默认值：
+
+```shell
+==> /cgroup/cpu/container/cpu.cfs_period_us <==
+100000
+
+==> /cgroup/cpu/container/cpu.cfs_quota_us <==
+-1
+```
+
+文件```/cgroup/cpu/container/cpu.cfs_quota_us```的默认值是-1，如果改成20000（即20000us，也就是20ms），那么，在每100ms的时间内(cpu.cfs_period_us文件指定)，被这个控制组限制的进程只能用20%的CPU带宽。如何指定进程呢？把pid写到```tasks```文件里就行啦。。
+
+几个cgroups常用的子系统：
+
++ blkio：为块设备设定I/O限制，一般用于磁盘等设备
++ cpuset：为进程分配单独的CPU核和对应的内存节点
++ memory：为进程设定内存使用的限制
+
+对于docker等linux容器项目来说，只需要在每个子系统下，为每个容器创建一个控制组（即创建一个新目录），然后在启动容器进程后，把这个进程的pid写入对应控制组的tasks文件中就行啦~
+
+例如：
+
+```shell
+$ docker run -it --cpu-period=100000 --cpu-quota=20000 ubuntu /bin/bash
+```
+
+然后可以看到：
+
+```shell
+root@xx:docker ps
+CONTAINER ID        IMAGE                                  COMMAND             CREATED             STATUS              PORTS                              NAMES
+edc3dad98449        ubuntu                                 "/bin/bash"         14 minutes ago      Up 14 minutes                                          evil_shaw
+```
+
+然后我们拿containerid去找：
+
+```shell
+root@xx:ll /cgroup/cpu/docker/*edc3dad98449*
+total 0
+-rw-r--r-- 1 root root 0 Oct  8 20:59 cgroup.clone_children
+--w--w--w- 1 root root 0 Oct  8 20:59 cgroup.event_control
+-rw-r--r-- 1 root root 0 Oct  8 20:59 cgroup.procs
+-rw-r--r-- 1 root root 0 Oct  8 20:59 cpu.cfs_period_us
+-rw-r--r-- 1 root root 0 Oct  8 20:59 cpu.cfs_quota_us
+-rw-r--r-- 1 root root 0 Oct  8 20:59 cpu.rt_period_us
+-rw-r--r-- 1 root root 0 Oct  8 20:59 cpu.rt_runtime_us
+-rw-r--r-- 1 root root 0 Oct  8 20:59 cpu.shares
+-r--r--r-- 1 root root 0 Oct  8 20:59 cpu.stat
+-rw-r--r-- 1 root root 0 Oct  8 20:59 notify_on_release
+-rw-r--r-- 1 root root 0 Oct  8 20:59 tasks
+```
+
+进一步地，可以发现cfs_period_us和cfs_quota_us确实都设成了我们想要的值啦：
+
+```shell
+root@xx:head /cgroup/cpu/docker/*edc3dad98449*/*cpu*
+==> /cgroup/cpu/docker/edc3dad98449c401fc53e684bb14242dcba2ccd5ac56024ed330aa54d5b3642d/cpu.cfs_period_us <==
+100000
+
+==> /cgroup/cpu/docker/edc3dad98449c401fc53e684bb14242dcba2ccd5ac56024ed330aa54d5b3642d/cpu.cfs_quota_us <==
+20000
+
+==> /cgroup/cpu/docker/edc3dad98449c401fc53e684bb14242dcba2ccd5ac56024ed330aa54d5b3642d/cpu.rt_period_us <==
+1000000
+
+==> /cgroup/cpu/docker/edc3dad98449c401fc53e684bb14242dcba2ccd5ac56024ed330aa54d5b3642d/cpu.rt_runtime_us <==
+0
+
+==> /cgroup/cpu/docker/edc3dad98449c401fc53e684bb14242dcba2ccd5ac56024ed330aa54d5b3642d/cpu.shares <==
+1024
+
+==> /cgroup/cpu/docker/edc3dad98449c401fc53e684bb14242dcba2ccd5ac56024ed330aa54d5b3642d/cpu.stat <==
+nr_periods 5
+nr_throttled 1
+throttled_time 27232386
+```
+
+总之，容器是一个『单进程』模型。所以，在一个容器中，不能同时运行两个不同的应用，除非可以事先找到一个公共的pid=1来充当两个不同应用的父进程。所以很多人会用systemd或者supervisord等软件来代替应用本身作为容器的启动进程。当然，还有其他的解决方法，使容器和应用能**同生命周期**，因为如果『容器正常运行，但里面的应用已经挂了』这种情况出现，容器编排就很麻烦了。。
 
 
 ## rootfs文件系统
 
+Mount Namespace和其他Namespace的不同之处在于：它对容器进程视图的改变，一定要伴随着挂载操作(mount)才能生效。
