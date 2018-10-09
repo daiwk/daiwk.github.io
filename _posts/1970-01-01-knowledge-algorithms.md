@@ -192,7 +192,7 @@ int *judge_random_location(float *sum_array, int length)
 	
 	return count;
 }
-void main()
+int main()
 {
 	int i=0;
  
@@ -212,6 +212,23 @@ void main()
 			printf("\b");
 	}
 	printf("\n");
+	return 0;
 }
 
+```
+
+输出：
+
+```shell
+一共有4个概率数据
+sum=0.100000
+sum=0.300000
+sum=0.600000
+sum=1.000000
+sum_array[0] = 0.000000
+sum_array[1] = 0.100000
+sum_array[2] = 0.300000
+sum_array[3] = 0.600000
+sum_array[4] = 1.000000
+96:194:321:389:
 ```
