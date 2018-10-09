@@ -37,6 +37,8 @@ tags: [推荐系统, ]
 
 [Deep Learning based Recommender System: A Survey and New Perspectives](https://daiwk.github.io/assets/DL_on_RS.pdf)
 
+[Deep Learning for Matching in Search and Recommendation](https://www.comp.nus.edu.sg/~xiangnan/sigir18-deep.pdf)
+
 ## 最新paper
 
 参考[想了解推荐系统最新研究进展？请收好这16篇论文](https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247491818&idx=1&sn=311962e2e41119a565c252a19037dd76&chksm=96ea3f6aa19db67c3fbfa77fbec65797d0ccc8f2930290d57c2016a3e55a8bb18b77fd10180b&mpshare=1&scene=1&srcid=0928qyE33GaHUFg2ddzaDfmw&pass_ticket=QWrkCW0n7ulxJGBU0GG41I42RJFST5los9jWx8%2B%2BvEjJLwDxvQFM9Vs9mfvzCdFq#rd)
