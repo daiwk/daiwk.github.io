@@ -10,11 +10,12 @@ tags: [paddle, tips]
 <!-- TOC -->
 
 - [1. tips](#1-tips)
-    - [1.1 学习率](#11-学习率)
-    - [1.2 日志解释](#12-日志解释)
-    - [1.3 集群设置](#13-集群设置)
-    - [1.4 正则](#14-正则)
-    - [1.5 初始化](#15-初始化)
+    - [1.1 学习率](#11-%E5%AD%A6%E4%B9%A0%E7%8E%87)
+    - [1.2 日志解释](#12-%E6%97%A5%E5%BF%97%E8%A7%A3%E9%87%8A)
+    - [1.3 集群设置](#13-%E9%9B%86%E7%BE%A4%E8%AE%BE%E7%BD%AE)
+    - [1.4 正则](#14-%E6%AD%A3%E5%88%99)
+    - [1.5 初始化](#15-%E5%88%9D%E5%A7%8B%E5%8C%96)
+    - [1.6 输出中间层](#16-%E8%BE%93%E5%87%BA%E4%B8%AD%E9%97%B4%E5%B1%82)
 
 <!-- /TOC -->
 
@@ -67,4 +68,10 @@ W = np.random.randn(ndim, ndim)
 u, s, v = np.linalg.svd(W)
 ```
 求正交要 svd ，可以用numpy算好之后，用u做初始化
+
+### 1.6 输出中间层
+
+参考issue：
+
+[https://github.com/PaddlePaddle/Paddle/issues/4153](https://github.com/PaddlePaddle/Paddle/issues/4153)
 
