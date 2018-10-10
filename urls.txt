@@ -185,6 +185,7 @@ https://daiwk.github.io/posts/platform-ray-rllib.html
 https://daiwk.github.io/posts/platform-ray-tune.html
 https://daiwk.github.io/posts/platform-ray.html
 https://daiwk.github.io/posts/rl-stepbystep-chap13.html
+https://daiwk.github.io/posts/nlp-elmo.html
 https://daiwk.github.io/posts/platform-fastai.html
 https://daiwk.github.io/posts/platform-distributed-dl.html
 https://daiwk.github.io/posts/cv-gan-overview.html

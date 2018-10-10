@@ -9,17 +9,23 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
 
 <!-- TOC -->
 
+- [-1. paddle的实现](#1-paddle%E7%9A%84%E5%AE%9E%E7%8E%B0)
 - [0. Suggested Datasets and Models](#0-suggested-datasets-and-models)
-    - [Image Classification](#image-classification)
-    - [Language Modeling](#language-modeling)
-    - [Sentiment Analysis](#sentiment-analysis)
-    - [Speech Recognition](#speech-recognition)
-    - [Summarization](#summarization)
-    - [Translation](#translation)
+  - [Image Classification](#image-classification)
+  - [Language Modeling](#language-modeling)
+  - [Sentiment Analysis](#sentiment-analysis)
+  - [Speech Recognition](#speech-recognition)
+  - [Summarization](#summarization)
+  - [Translation](#translation)
 - [1. overview](#1-overview)
-    - [Datasets](#datasets)
-    - [Problems and Modalities](#problems-and-modalities)
-    - [Models](#models)
+  - [Datasets](#datasets)
+  - [Problems and Modalities](#problems-and-modalities)
+  - [Models](#models)
+  - [Hyperparameter Sets](#hyperparameter-sets)
+  - [Trainer](#trainer)
+- [2. 新增components](#2-%E6%96%B0%E5%A2%9Ecomponents)
+- [3. 新增数据集](#3-%E6%96%B0%E5%A2%9E%E6%95%B0%E6%8D%AE%E9%9B%86)
+- [4. 可视化](#4-%E5%8F%AF%E8%A7%86%E5%8C%96)
 
 <!-- /TOC -->
 
@@ -27,9 +33,11 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
 
 知乎专栏的讨论：[https://zhuanlan.zhihu.com/p/28680474](https://zhuanlan.zhihu.com/p/28680474)
 
-
-
 [https://github.com/tensorflow/tensor2tensor](https://github.com/tensorflow/tensor2tensor)
+
+## -1. paddle的实现
+
+[https://github.com/PaddlePaddle/Paddle/blob/develop/python/paddle/trainer_config_helpers/networks.py#L1498](https://github.com/PaddlePaddle/Paddle/blob/develop/python/paddle/trainer_config_helpers/networks.py#L1498)
 
 ## 0. Suggested Datasets and Models
 
