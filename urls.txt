@@ -179,6 +179,7 @@ https://daiwk.github.io/posts/platform-mlperf.html
 https://daiwk.github.io/posts/rl-pytorch-rl-tutorial.html
 https://daiwk.github.io/posts/rl-summary.html
 https://daiwk.github.io/posts/dl-knowledge-distill.html
+https://daiwk.github.io/posts/ml-crf-softmax.html
 https://daiwk.github.io/posts/dl-tf-serving-docker.html
 https://daiwk.github.io/posts/platform-bazel.html
 https://daiwk.github.io/posts/platform-ray-rllib.html
