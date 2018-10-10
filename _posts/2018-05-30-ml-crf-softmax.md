@@ -9,8 +9,13 @@ tags: [crf, softmax]
 
 <!-- TOC -->
 
+- [softmax与crf对比](#softmax%E4%B8%8Ecrf%E5%AF%B9%E6%AF%94)
+- [Optimal Hyperparameters for Deep LSTM-Networks for Sequence Labeling Tasks](#optimal-hyperparameters-for-deep-lstm-networks-for-sequence-labeling-tasks)
 
 <!-- /TOC -->
+
+
+## softmax与crf对比
 
 参考[https://www.jiqizhixin.com/articles/2018-05-23-3](https://www.jiqizhixin.com/articles/2018-05-23-3)
 
@@ -20,4 +25,8 @@ tags: [crf, softmax]
 
 
 参考[https://blog.csdn.net/bobobe/article/details/80489303](https://blog.csdn.net/bobobe/article/details/80489303)
+
+## Optimal Hyperparameters for Deep LSTM-Networks for Sequence Labeling Tasks
+
+[Optimal Hyperparameters for Deep LSTM-Networks for Sequence Labeling Tasks](https://arxiv.org/abs/1707.06799)
 
