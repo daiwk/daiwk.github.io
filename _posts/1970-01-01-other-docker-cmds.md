@@ -90,6 +90,8 @@ root@e56da0385825:/notebooks#
 
 ### install docker-enter
 
+注：mac似乎不能用此方法，因为那个bin是在linux下编的
+
 参考[使用nsenter进入Docker容器](http://blog.csdn.net/fenglailea/article/details/44900401)
 
 ```
