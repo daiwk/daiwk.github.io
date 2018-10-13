@@ -10,6 +10,7 @@ tags: [ctr预估, lr+gbdt, ]
 <!-- TOC -->
 
 - [0. 基础知识](#0-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86)
+    - [特征离散化](#%E7%89%B9%E5%BE%81%E7%A6%BB%E6%95%A3%E5%8C%96)
     - [特征抽取](#%E7%89%B9%E5%BE%81%E6%8A%BD%E5%8F%96)
         - [特征文件](#%E7%89%B9%E5%BE%81%E6%96%87%E4%BB%B6)
         - [ins](#ins)
@@ -37,7 +38,7 @@ tags: [ctr预估, lr+gbdt, ]
                 - [OWLQN步骤](#owlqn%E6%AD%A5%E9%AA%A4)
         - [ftrl](#ftrl)
     - [gbrank](#gbrank)
-    - [ranksvm](#ranksvm)
+    - [ranksvm和IRsvm](#ranksvm%E5%92%8Cirsvm)
     - [lr+gbdt](#lrgbdt)
         - [LR](#lr)
         - [GBDT](#gbdt)
@@ -46,12 +47,17 @@ tags: [ctr预估, lr+gbdt, ]
             - [GBDT](#gbdt)
             - [参数设置](#%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE)
         - [LR+GBDT](#lrgbdt)
-        - [1.1.4 引入id类特征](#114-%E5%BC%95%E5%85%A5id%E7%B1%BB%E7%89%B9%E5%BE%81)
+        - [引入id类特征](#%E5%BC%95%E5%85%A5id%E7%B1%BB%E7%89%B9%E5%BE%81)
 - [2. 基于深度学习的ctr预估模型](#2-%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84ctr%E9%A2%84%E4%BC%B0%E6%A8%A1%E5%9E%8B)
 
 <!-- /TOC -->
 
 ## 0. 基础知识
+
+### 特征离散化
+
+[https://blog.csdn.net/u013385925/article/details/80143784](https://blog.csdn.net/u013385925/article/details/80143784)
+
 
 ### 特征抽取
 
@@ -207,7 +213,11 @@ ID映射的输出有三个文件：
 
 ### gbrank
 
-### ranksvm
+[https://www.cnblogs.com/bentuwuying/p/6684585.html](https://www.cnblogs.com/bentuwuying/p/6684585.html)
+
+### ranksvm和IRsvm
+
+[https://www.cnblogs.com/bentuwuying/p/6683832.html](https://www.cnblogs.com/bentuwuying/p/6683832.html)
 
 ### lr+gbdt
 
@@ -220,6 +230,8 @@ LR映射后的函数值就是CTR的预估值。这种线性模型很容易并行
 LR模型中的特征组合很关键，但又无法直接通过特征笛卡尔积 解决，只能依靠人工经验，耗时耗力同时并不一定会带来效果提升。
 
 #### GBDT
+
+参考[https://www.cnblogs.com/ScorpioLu/p/8296994.html](https://www.cnblogs.com/ScorpioLu/p/8296994.html)
 
 参考[http://www.jianshu.com/p/005a4e6ac775](http://www.jianshu.com/p/005a4e6ac775)
 
@@ -346,7 +358,7 @@ GBDT与LR的融合方式，Facebook的paper有个例子如下图2所示，图中
 
 另外，RF也是多棵树，但从效果上有实践证明不如GBDT。且GBDT前面的树，特征分裂主要体现对多数样本有区分度的特征；后面的树，主要体现的是经过前N颗树，残差仍然较大的少数样本。**优先选用在整体上有区分度的特征，再选用针对少数样本有区分度的特征**，思路更加合理，这应该也是用GBDT的原因。
 
-#### 1.1.4 引入id类特征
+#### 引入id类特征
 
 综合考虑方案如下，使用GBDT建两类树，非ID建一类树，ID建一类树。
 
