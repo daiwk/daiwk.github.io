@@ -79,7 +79,7 @@ Feature作用如下：
 
 格式
 
-```shsell
+```shell
 { Show_num clk_num fea1_sign64:1 fea2_sign64:1 ….fean_sign64:1}
 ```
 
