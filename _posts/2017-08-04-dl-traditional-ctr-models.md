@@ -113,6 +113,8 @@ ID映射的输出有三个文件：
 
 一台机器只计算本地的所有的ins下的特征权重，和bitmap对应后，将各个权重平均。再分到各个机器上，继续进行迭代计算新的特征权重。----感觉描述得不清楚。。
 
+参考[https://blog.csdn.net/qq_32742009/article/details/81839071](https://blog.csdn.net/qq_32742009/article/details/81839071)
+
 对于sigmoid`\(y=\frac{1}{1+e^{-wx}}\)`，它的导数是`\(\frac{\partial y}{\partial w}=y(1-y)\cdot (-x)\)`
 
 对于LR，假设有`\(N\)`条样本，`\(n=1,2,...N\)`，那么对于第`\(n\)`条样本`\(y_n=sigmoid(wx_n)=\frac{1}{1+e^{-wx_n}}\)`，假设label是`\(t_n\)`，`\(t_n \in\{0,1\}\)`。交叉熵损失函数是：
