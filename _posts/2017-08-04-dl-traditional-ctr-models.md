@@ -37,8 +37,6 @@ tags: [ctr预估, lr+gbdt, ]
                 - [Line Search时限定象限](#line-search%E6%97%B6%E9%99%90%E5%AE%9A%E8%B1%A1%E9%99%90)
                 - [OWLQN步骤](#owlqn%E6%AD%A5%E9%AA%A4)
         - [ftrl](#ftrl)
-    - [gbrank](#gbrank)
-    - [ranksvm和IRsvm](#ranksvm%E5%92%8Cirsvm)
     - [lr+gbdt](#lrgbdt)
         - [LR](#lr)
         - [GBDT](#gbdt)
@@ -141,7 +139,9 @@ ID映射的输出有三个文件：
 
 ##### 预估ctr计算
 
-针对LR场景，比如总共有fea_size个特征，如果一条ins有其中的3个特征，比如`\(w_1,w_{23},w_{652}\)`，那就是在这fea_size的bitmap里，有3个位置是1，其他位置都是0，因为做了这个从原始特征值到sign的映射后，就不再看原始值了，所以，我们的`\(w_1x_1+w_{23}x_{23}+w_{652}x_{652}\)`其实就是`\(w_1+w_{23}+w_{652}\)`。所以，对于一条ins，它的预估ctr就是`\(\frac{1}{1+e^{\sum weight}}\)`。为了计算方便，将CTR放大`\(10^{16}\)`倍，变成一个uint64的整数。
+针对LR场景，比如总共有fea_size个特征，如果一条ins有其中的3个特征，比如`\(w_1,w_{23},w_{652}\)`，那就是在这fea_size的bitmap里，有3个位置是1，其他位置都是0，因为做了这个从原始特征值到sign的映射后，就不再看原始值了，所以，我们的`\(w_1x_1+w_{23}x_{23}+w_{652}x_{652}\)`其实就是`\(w_1+w_{23}+w_{652}\)`。所以，对于一条ins，它的预估ctr就是`\(\frac{1}{1+e^{-\sum {weight}}}\)`。为了计算方便，将CTR放大`\(10^16\)`倍，变成一个uint64的整数。
+
+embed的时候 不就是在那个fea_size\*emb_size(比如10亿特征，8维向量，就是10亿\*8)的大矩阵里，比如你这条样本命中了3个feasign，就是取这3个对应的8维向量出来嘛。lr就是emb_size=1，所以是10亿\*1。
 
 ##### AUC计算
 
@@ -178,8 +178,8 @@ ID映射的输出有三个文件：
 
 使用每个桶输出的`\(qauc_i\)`，`\(query\_num_i\)`，`\(wqauc_i\)`，`\(sum\_show_i\)`，使用如下公式计算整体的Qauc和Wqauc。
 
-`\(Qauc= \sum (qauc_i * query\_nun_i ) / \sum(query\_num_i)\)`
-`\(Wqauc= \sum (wqauc_i * sum\_show_i ) / \sum( sum\_show_i)\)`
+`\(QAUC= \sum (qauc_i * query\_num_i ) / \sum(query\_num_i)\)`
+`\(WQAUC= \sum (wqauc_i * sum\_show_i ) / \sum( sum\_show_i)\)`
 
 
 #### 模型校验
@@ -211,13 +211,7 @@ ID映射的输出有三个文件：
 #### ftrl
 
 
-### gbrank
 
-[https://www.cnblogs.com/bentuwuying/p/6684585.html](https://www.cnblogs.com/bentuwuying/p/6684585.html)
-
-### ranksvm和IRsvm
-
-[https://www.cnblogs.com/bentuwuying/p/6683832.html](https://www.cnblogs.com/bentuwuying/p/6683832.html)
 
 ### lr+gbdt
 
