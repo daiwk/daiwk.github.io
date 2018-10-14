@@ -29,6 +29,18 @@ blog原文：[https://blog.openai.com/language-unsupervised/](https://blog.opena
 + 首先以无监督的方式在大型数据集上训练一个 Transformer，即使用语言建模作为训练信号，
 + 然后在小得多的有监督数据集上精调模型以解决具体任务。
 
+
+<html>
+<br/>
+
+<img src='../assets/openai-gpt.png' style='max-height: 200px;max-width:500px'/>
+<br/>
+
+</html>
+
++ 左图是transformer的结构，有两个目标
++ 右图是不同应用场景下的fine-tuning方法
+
 这一项研究任务建立在[Semi-supervised Sequence Learning](https://arxiv.org/abs/1511.01432)论文中所提出的方法，该方法展示了如何通过无监督预训练的 LSTM 与有监督的精调提升文本分类性能。这一项研究还扩展了论文[Universal Language Model Fine-tuning for Text Classification](https://arxiv.org/abs/1801.06146)所提出的 ULMFiT 方法，它展示了单个与数据集无关的 LSTM 语言模型如何进行精调以在各种文本分类数据集上获得当前最优的性能。
 
 OpenAI 的研究工作展示了如何使用基于 Transformer 的模型，并在精调后能适应于除文本分类外其它更多的任务，例如常识推理、语义相似性和阅读理解。
