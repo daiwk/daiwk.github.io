@@ -14,7 +14,7 @@ git add gen_dot.*
 git add commit.sh
 
 python ./gen_urls.py
-#git add ./urls.txt
+git add ./urls.txt
 git add ./commit_windows.sh
 
 git commit -m "xx"
