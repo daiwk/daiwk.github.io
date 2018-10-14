@@ -106,6 +106,7 @@ https://daiwk.github.io/posts/platform-pytorch-anniversary.html
 https://daiwk.github.io/posts/dl-mtl.html
 https://daiwk.github.io/posts/platform-storm.html
 https://daiwk.github.io/posts/dl-wasserstein-autoencoders.html
+https://daiwk.github.io/posts/nlp-openai-gpt.html
 https://daiwk.github.io/posts/knowledge-url.html
 https://daiwk.github.io/posts/rl-stepbystep-chap7.html
 https://daiwk.github.io/posts/dl-2017-introductions.html
