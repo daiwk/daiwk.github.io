@@ -9,19 +9,25 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
 
 <!-- TOC -->
 
-- [-2. paddle的实现](#-2-paddle的实现)
-- [-1. pytorch的实现](#-1-pytorch的实现)
+- [-2. paddle的实现](#2-paddle%E7%9A%84%E5%AE%9E%E7%8E%B0)
+- [-1. pytorch的实现](#1-pytorch%E7%9A%84%E5%AE%9E%E7%8E%B0)
 - [0. Suggested Datasets and Models](#0-suggested-datasets-and-models)
-    - [Image Classification](#image-classification)
-    - [Language Modeling](#language-modeling)
-    - [Sentiment Analysis](#sentiment-analysis)
-    - [Speech Recognition](#speech-recognition)
-    - [Summarization](#summarization)
-    - [Translation](#translation)
+  - [Image Classification](#image-classification)
+  - [Language Modeling](#language-modeling)
+  - [Sentiment Analysis](#sentiment-analysis)
+  - [Speech Recognition](#speech-recognition)
+  - [Summarization](#summarization)
+  - [Translation](#translation)
 - [1. overview](#1-overview)
-    - [Datasets](#datasets)
-    - [Problems and Modalities](#problems-and-modalities)
-    - [Models](#models)
+  - [Datasets](#datasets)
+  - [Problems and Modalities](#problems-and-modalities)
+  - [Models](#models)
+  - [Hyperparameter Sets](#hyperparameter-sets)
+  - [Trainer](#trainer)
+- [2. 新增components](#2-%E6%96%B0%E5%A2%9Ecomponents)
+- [3. 新增数据集](#3-%E6%96%B0%E5%A2%9E%E6%95%B0%E6%8D%AE%E9%9B%86)
+- [4. 可视化](#4-%E5%8F%AF%E8%A7%86%E5%8C%96)
+- [x. 备注](#x-%E5%A4%87%E6%B3%A8)
 
 <!-- /TOC -->
 
@@ -277,3 +283,22 @@ t2t-insights-server \
           --configuration=configuration.json \
           --static_path=`pwd`/tensor2tensor/insights/polymer
 ```
+
+
+## x. 备注
+
+当显存不是很够用的时候，可以参考[https://stackoverflow.com/questions/39465503/cuda-error-out-of-memory-in-tensorflow](https://stackoverflow.com/questions/39465503/cuda-error-out-of-memory-in-tensorflow)
+
+可以试着把```lib/python3.6/site-packages/tensor2tensor/utils/trainer_lib.py```里的
+
+```python
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=gpu_mem_fraction)
+```
+
+改成
+
+```python
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=gpu_mem_fraction, allow_growth=True)
+```
+
+不过好像还是没啥用。。
