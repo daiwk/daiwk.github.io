@@ -12,6 +12,7 @@ tags: [python, ]
 - [1. 编译安装python](#1-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85python)
 - [2. jupyter](#2-jupyter)
 - [3. mkdocs](#3-mkdocs)
+- [mac版python3的tf](#mac%E7%89%88python3%E7%9A%84tf)
 
 <!-- /TOC -->
 
@@ -69,3 +70,13 @@ pip install mkdocs
 
 参考：[https://www.mkdocs.org/](https://www.mkdocs.org/)
 
+
+## mac版python3的tf
+
+在[https://pypi.org/project/tensorflow/1.11.0/#files](https://pypi.org/project/tensorflow/1.11.0/#files)找到tensorflow-1.8.0-cp36-cp36m-macosx_10_11_x86_64.whl这个版本的，下下来(注，如果macosx的版本是10.11以下，好像最高只能装1.8的tf，macosx版本高的话，再试试咯~)
+
+然后
+
+```shell
+sudo -H pip3 install ./tensorflow-1.8.0-cp36-cp36m-macosx_10_11_x86_64.whl
+```
