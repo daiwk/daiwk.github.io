@@ -14,6 +14,7 @@ tags: [autokeras, ]
 
 参考[https://mp.weixin.qq.com/s/NAjaco_dC1y3Eo_-UfAsbg](https://mp.weixin.qq.com/s/NAjaco_dC1y3Eo_-UfAsbg)
 
+[超参数搜索不够高效？这几大策略了解一下](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650749988&idx=1&sn=59b5486b3c70489d91712bc438ce3961&chksm=871af85ab06d714c26f3e2a44385b5513d3da24ef268ff61e2d2a0fc6fc429a54530d37721a0&mpshare=1&scene=1&srcid=1017LFiazN82maBp8SiVlofH&pass_ticket=SszanYxD5OWcgQT%2B0DDH7ckogHOwJlBON1eETcKdrqvcCwwsdmrx3DePGS5Lponk#rd)
 
 官网：[http://autokeras.com/](http://autokeras.com/)
 
