@@ -191,7 +191,7 @@ FFN(x)=ReLU(xW_1+b_1)W_2+b_2=max(0, xW_1+b_1)W_2+b_2
 
 **不同位置的线性变换是一样的，不同层的变换是不同的。**
 
-另一种理解方法其实就是，2个卷积层（kernel size=1）。本文中，`\(d_{model}=512\)`，inner-layer的维度是`\(d_ff=2048\)`。其实，这种position-wise的前馈网络实际上可以看作是另一种attention（附录里有说明。。。。）
+另一种理解方法其实就是，2个卷积层（kernel size=1）。本文中，`\(d_{model}=512\)`，inner-layer的维度是`\(d_{ff}=2048\)`。其实，这种position-wise的前馈网络实际上可以看作是另一种attention（附录里有说明。。。。）
 
 #### 4.2.4 embeddings and softmax
 
