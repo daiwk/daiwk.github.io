@@ -212,7 +212,20 @@ FFN(x)=ReLU(xW_1+b_1)W_2+b_2=max(0, xW_1+b_1)W_2+b_2
 \\PE_{(pos,2i+1)}=cos(pos/10000^{2i/d_{model}})
 \]`
 
-pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\)`能被表示为`\(PE_{pos}\)`的线性函数 。
+pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\)`能被表示为`\(PE_{pos}\)`的线性函数。即把id为`\(pos\)`的位置，映射成一个`\(d_{model}\)`维的向量，这个向量的第i个元素的数值是`\(PE_(pos,i)\)`。
+
+参考[https://kexue.fm/archives/4765#Position%20Embedding](https://kexue.fm/archives/4765#Position%20Embedding)
+
+将每个位置编号，然后**每个编号对应一个向量**，通过结合位置向量和词向量，就给每个词都引入了一定的位置信息，这样Attention就可以分辨出不同位置的词了。
+
+与以往的position embedding的区别如下：
+
++ 以前在RNN、CNN模型中其实都出现过Position Embedding，但在那些模型中，Position Embedding是**锦上添花**的辅助手段，也就是“有它会更好、没它也就差一点点”的情况，因为**RNN、CNN本身就能捕捉到位置信息**。但是在这个纯Attention模型中，**Position Embedding是位置信息的唯一来源**，因此它是模型的核心成分之一，并非仅仅是简单的辅助手段。
++ 在以往的Position Embedding中，基本都是根据任务训练出来的向量。而Google**直接给出了一个构造Position Embedding的公式**。
++ Position Embedding本身是一个**绝对位置**的信息，但在语言中，**相对位置**也很重要，Google选择前述的位置向量公式的一个重要原因是：有`\(\sin(\alpha+\beta)=\sin\alpha\cos\beta+\cos\alpha\sin\beta\)`，也有`\(\cos(\alpha+\beta)=\cos\alpha\cos\beta-\sin\alpha\sin\beta\)`，所以，位置p+k的向量可以表示成位置p的向量的线性变换，这提供了表达相对位置信息的可能性。例如，假设p是奇数(它的pe是cosp)，k是偶数(它的pe是sink)，那p+k是奇数，所以他的pe是`\(cos(p+k)=cosp\cdot cosk-sinp\cdot sink=C_1\cdot cosp-C_2\cdot sink\)`，是p和k的pe的各自的线性变换。类似的p是奇数，k是奇数，p+k是偶数,`\(sin(p+k)=sinp\cdot cosk+cosp\cdot sink=C_1\cdot cosk+C_2\cdot cosp\)`。
+
+结合位置向量和词向量有几个可选方案，可以把它们拼接起来作为一个新向量，也可以**把位置向量定义为跟词向量一样大小，然后两者加起来。**FaceBook的论文和Google论文中用的都是后者。
+
 
 #### 4.2.6 why self-attention
 
