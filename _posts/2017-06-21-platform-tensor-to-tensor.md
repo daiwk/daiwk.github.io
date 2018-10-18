@@ -212,7 +212,7 @@ FFN(x)=ReLU(xW_1+b_1)W_2+b_2=max(0, xW_1+b_1)W_2+b_2
 \\PE_{(pos,2i+1)}=cos(pos/10000^{2i/d_{model}})
 \]`
 
-pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\)`能被表示为`\(PE_{pos}\)`的线性函数。即把id为`\(pos\)`的位置，映射成一个`\(d_{model}\)`维的向量，这个向量的第i个元素的数值是`\(PE_(pos,i)\)`。
+pos是位置，i是维度。因为对于任意固定的offset k，`\(PE_{pos+k}\)`能被表示为`\(PE_{pos}\)`的线性函数。即把id为`\(pos\)`的位置，映射成一个`\(d_{model}\)`维的向量，这个向量的第i个元素的数值是`\(PE_{(pos,i)}\)`。
 
 参考[https://kexue.fm/archives/4765#Position%20Embedding](https://kexue.fm/archives/4765#Position%20Embedding)
 
