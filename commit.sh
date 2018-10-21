@@ -13,7 +13,7 @@ git add source_codes
 git add gen_dot.*
 git add commit.sh
 
-python ./gen_urls.py
+python2 ./gen_urls.py
 git add ./urls.txt
 git add ./commit_windows.sh
 
