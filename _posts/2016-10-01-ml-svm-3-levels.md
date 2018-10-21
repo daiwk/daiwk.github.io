@@ -9,6 +9,7 @@ tags: [深入理解svm, ]
 
 <!-- TOC -->
 
+- [0. 推导](#0-推导)
 - [1. 最大间隔分类器](#1-最大间隔分类器)
     - [1.1 logistic regression](#11-logistic-regression)
     - [1.2 +1/-1分类](#12-1-1分类)
@@ -50,6 +51,16 @@ tags: [深入理解svm, ]
 + **支持向量机：Kernel II**
 [http://blog.pluskid.org/?p=723](http://blog.pluskid.org/?p=723)
 
+
+## 0. 推导
+
+参考[https://blog.csdn.net/u014433413/article/details/78427574](https://blog.csdn.net/u014433413/article/details/78427574)
+
+[https://blog.csdn.net/lijil168/article/details/69395023](https://blog.csdn.net/lijil168/article/details/69395023)
+
+其中，`\(L=1/2w^2+\sum _{i=1}^m\alpha _i[1-y_i(w^Tx+b)]\)`，`\(1-y_i(w^Tx+b)\)`这项<=0，`\(alpha\)`>=0，所以`\(L=1/2*w^2-CC\)`，CC>=0，所以`\(L<=1/2*w^2\)`，`\(max_{\alpha} L=1/2*w^2\)`
+
+原问题是`\(min_{w,b}1/2*w^2\)`，所以就是`\(min_{w,b}max_{\alpha}L\)`
 
 ## 1. 最大间隔分类器
 
