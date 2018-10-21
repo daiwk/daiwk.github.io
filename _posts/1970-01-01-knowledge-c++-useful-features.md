@@ -84,17 +84,17 @@ shared_ptr的额外开销：
 可以使用模板函数 make_shared 创建对象, make_shared 需指定类型('<>'中)及参数('()'内), 传递的参数必须与指定的类型的构造函数匹配:
 
 ```c++
-　　std::shared_ptr<int> sp1 = std::make_shared<int>(10);
-　　std::shared_ptr<std::string> sp2 = std::make_shared<std::string>("Hello c++");
+std::shared_ptr<int> sp1 = std::make_shared<int>(10);
+std::shared_ptr<std::string> sp2 = std::make_shared<std::string>("Hello c++");
 ```
 
 也可以定义 auto 类型的变量来保存 make_shared 的结果。
 
 ```c++
-　　auto sp3 = std::make_shared<int>(11);
-　　printf("sp3=%d\n", *sp3);
-　　auto sp4 = std::make_shared<std::string>("C++11");
-　　printf("sp4=%s\n", (*sp4).c_str());
+auto sp3 = std::make_shared<int>(11);
+printf("sp3=%d\n", *sp3);
+auto sp4 = std::make_shared<std::string>("C++11");
+printf("sp4=%s\n", (*sp4).c_str());
 ```
 
 成员函数：
