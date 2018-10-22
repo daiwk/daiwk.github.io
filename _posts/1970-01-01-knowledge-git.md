@@ -25,6 +25,7 @@ tags: [git, ]
 ```shell
 git remote -v 
 git remote add upstream git@github.com:xxx/xxx.git
+## 例如： git remote add upstream https://github.com/codertimo/BERT-pytorch.git
 git fetch upstream
 git merge upstream/master
 git push 
