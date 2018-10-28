@@ -9,7 +9,7 @@ tags: [自注意力, self-attention,  ]
 
 <!-- TOC -->
 
-- [attention的本质](#attention%E7%9A%84%E6%9C%AC%E8%B4%A8)
+- [attention的本质](#attention的本质)
 - [multi-head attention](#multi-head-attention)
 - [self-attention](#self-attention)
 
@@ -66,6 +66,12 @@ attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt {d_k}})V
 类比一个分类任务，m行n列，m个样本，n个类别，每一行就是对这个样本而言，他在这个分类的概率，所以分子是这个类别，分母是所有类别（这一行求和）
 
 类似地，对于这个attention矩阵，m行n列，m个目标语言，n个源语言，一行就是一个目标语言的词，表示这个词和源语言每个词的相关程度，所以分母是所有源语言的词（这一行求和）。
+
+<html>
+<br/>
+<img src='../assets/attention-explanation.jpg' style='max-height: 300px'/>
+<br/>
+</html>
 
 ## multi-head attention
 
