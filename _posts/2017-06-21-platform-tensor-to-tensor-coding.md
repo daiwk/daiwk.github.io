@@ -45,6 +45,10 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
 
 [http://nlp.seas.harvard.edu/2018/04/03/attention.html](http://nlp.seas.harvard.edu/2018/04/03/attention.html)
 
+代码解析见：
+
+[https://daiwk.github.io/posts/nlp-bert.html#pytorch%E7%89%88%E6%9C%AC](https://daiwk.github.io/posts/nlp-bert.html#pytorch%E7%89%88%E6%9C%AC)
+
 ## 0. Suggested Datasets and Models
 
 建议的超参是在Cloud TPUs或者8-GPU machines上训练好的
