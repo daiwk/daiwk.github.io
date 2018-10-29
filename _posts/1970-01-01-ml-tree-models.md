@@ -2,7 +2,7 @@
 layout: post
 category: "knowledge"
 title: "树模型"
-tags: [gbdt, ]
+tags: [gbdt, id3, c4.5, cart, ensemble, ]
 ---
 
 目录
@@ -86,5 +86,11 @@ CART，又名分类回归树，是在ID3的基础上进行优化的决策树，�
 ## gbdt
 
 gbdt 是通过采用**加法模型**（即**对基函数进行线性组合**），以及不断减小训练过程产生的残差来达到将数据分类或者回归的算法。
+
+
+参考[https://www.cnblogs.com/pinard/p/6140514.html](https://www.cnblogs.com/pinard/p/6140514.html)
+
+
+参考[https://www.zybuluo.com/yxd/note/611571](https://www.zybuluo.com/yxd/note/611571)
 
 
