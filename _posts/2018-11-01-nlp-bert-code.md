@@ -283,3 +283,5 @@ INFO:tensorflow:  next_sentence_loss = 0.0002133457
 + optimization
 + tokenization
 
+高仿[https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/layers/transformer_layers.py#L99](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/layers/transformer_layers.py#L99)的transformer_encoder部分。
+
