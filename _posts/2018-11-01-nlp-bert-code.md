@@ -104,6 +104,8 @@ python run_classifier.py \
 
 ### pretraining
 
+#### step1. create_pretraining_data
+
 paper的源码是用c++写的，这里用py又实现了一遍。。实现masked lm和next sentence prediction。
 
 输入文件的格式：一行一句话（对于next sentence prediction这很重要），不同文档间用空行分隔。例如```sample_text.txt```：
@@ -125,9 +127,7 @@ She revealed to me the glorious fact, that I am a spark of Divinity itself.
 
 输出是一系列的```TFRecord```的```tf.train.Example```。
 
-注意：这个脚本把整个输入文件都放到内存里了，所以对于大文件，需要
-
-#### step1. create_pretraining_data
+注意：这个脚本把整个输入文件都放到内存里了，所以对于大文件，你可能需要把文件分片，然后跑多次这个脚本，得到一堆```tf_examples.tf_record*```，然后把这些文件都作为下一个脚本```run_pretraining.py```的输入。
 
 参数：
 
