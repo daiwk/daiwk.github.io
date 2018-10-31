@@ -195,7 +195,7 @@ python run_pretraining.py \
   --learning_rate=2e-5
 ```
 
-跑的时候发现会充分利用显存，具体不是特别清楚，显存太小应该也跑不了吧。由于sample_text.txt很小，所以会overfit。log如下：
+跑的时候发现会充分利用显存，具体不是特别清楚，显存太小应该也跑不了吧。由于sample_text.txt很小，所以会overfit。log如下(最后会生成一个```eval_results.txt```文件，记录```***** Eval results *****```部分)：
 
 ```
 INFO:tensorflow:Done running local_init_op.
