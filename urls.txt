@@ -202,6 +202,7 @@ https://daiwk.github.io/posts/cv-biggan.html
 https://daiwk.github.io/posts/nlp-treegan.html
 https://daiwk.github.io/posts/nlp-bert.html
 https://daiwk.github.io/posts/platform-googlecloud-k8s.html
+https://daiwk.github.io/posts/nlp-bert-code.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-recommender-system.html
