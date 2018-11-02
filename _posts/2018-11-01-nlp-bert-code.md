@@ -10,12 +10,12 @@ tags: [bert代码, bert code]
 <!-- TOC -->
 
 - [运行](#%E8%BF%90%E8%A1%8C)
-    - [pretrained model](#pretrained-model)
-    - [glue data数据集](#glue-data%E6%95%B0%E6%8D%AE%E9%9B%86)
-    - [Sentence (and sentence-pair) classification tasks](#sentence-and-sentence-pair-classification-tasks)
-    - [pretraining](#pretraining)
-        - [step1. create_pretraining_data](#step1-createpretrainingdata)
-        - [step2. run_pretraining](#step2-runpretraining)
+  - [pretrained model](#pretrained-model)
+  - [glue data数据集](#glue-data%E6%95%B0%E6%8D%AE%E9%9B%86)
+  - [Sentence (and sentence-pair) classification tasks](#sentence-and-sentence-pair-classification-tasks)
+  - [pretraining](#pretraining)
+    - [step1. create_pretraining_data](#step1-createpretrainingdata)
+    - [step2. run_pretraining](#step2-runpretraining)
 - [pretrain tips and caveats](#pretrain-tips-and-caveats)
 - [代码解读](#%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB)
 
@@ -26,6 +26,9 @@ tags: [bert代码, bert code]
 [https://github.com/google-research/bert](https://github.com/google-research/bert)
 
 原文的解读和pytorch版本的解读参考：[https://daiwk.github.io/posts/nlp-bert.html](https://daiwk.github.io/posts/nlp-bert.html)
+
+参考参考机器之心发的[谷歌终于开源BERT代码：3 亿参数量，机器之心全面解读](https://mp.weixin.qq.com/s/vFdm-UHns7Nhbmdoiu6jWg)
+
 
 
 ## 运行
