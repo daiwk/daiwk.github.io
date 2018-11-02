@@ -10,11 +10,12 @@ tags: [stack, heap, core, 栈, 堆, gdb, ]
 <!-- TOC -->
 
 - [gdb](#gdb)
-- [基础命令](#基础命令)
-- [堆与栈](#堆与栈)
+- [基础命令](#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4)
+- [堆与栈](#%E5%A0%86%E4%B8%8E%E6%A0%88)
 - [core](#core)
-- [堆、栈导致的core](#堆栈导致的core)
-    - [栈空间不足](#栈空间不足)
+- [堆、栈导致的core](#%E5%A0%86%E6%A0%88%E5%AF%BC%E8%87%B4%E7%9A%84core)
+  - [栈空间不足](#%E6%A0%88%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3)
+- [其他容易core的点](#%E5%85%B6%E4%BB%96%E5%AE%B9%E6%98%93core%E7%9A%84%E7%82%B9)
 
 <!-- /TOC -->
 
@@ -269,3 +270,49 @@ Stack level 1, frame at 0x7f7ed3284310:
 例如，程序中有两个大小为`\(2048*2048\)`的char数组，算下来，一个char是一个字节，两个`\(2048*2048\)`的数组便是`\(2*2048*2048=8388608=8*1024*1024=8MB\)`的空间。所以，如果这个时候还有别的栈上的变量，而栈空间如果 只有8MB，那么，就会core!!!
 
 linux限制了栈空间大小，自己定义的变量都是在栈空间上分配的，子函数在调用时才会装入栈中，当定义的变量过大则会超出栈空间，从而段错误。所以，尽可能使用堆空间，比如用new malloc vector等
+
+
+## 其他容易core的点
+
++ 类定义时会给这个指针默认分配一个地址，不是0=NULL=nullptr，如果没有new一个这个类型的，就直接用，会core
+
+另外，了解一下nullptr和NULL等的区别：[https://www.cnblogs.com/DswCnblog/p/5629073.html](https://www.cnblogs.com/DswCnblog/p/5629073.html)
+
+```c++
+#include <iostream>
+
+using namespace std;
+
+class A {
+    public:
+        int* a;
+        A * b;
+};
+
+int main()
+{
+    A xx;
+    if (xx.a == 0) {
+        cout << xx.a << "is 0" << endl; //<< nullptr << xx.a << endl;
+    }
+    if (xx.a == NULL) {
+        cout << xx.a << "is NULL" << endl; //<< nullptr << xx.a << endl;
+    }
+    if (nullptr == NULL) {
+        cout << "nullptr==NULL" << endl; //<< nullptr << xx.a << endl;
+    }
+    if (nullptr == 0) {
+        cout << "nullptr==0" << endl; //<< nullptr << xx.a << endl;
+    }
+
+    if (xx.a != nullptr) {
+        cout << xx.a << "before not nullptr" << endl; //<< nullptr << xx.a << endl;
+        *(xx.a) = 4; // 这里ok
+        *((xx.b)->a)=444; // 这里会core..
+        cout << xx.a << "after not nullptr" << endl; //<< nullptr << xx.a << endl;
+    } else {
+        cout << xx.a << "nullptr" << endl; //<< nullptr << xx.a << endl;
+    }
+    return 0;
+}
+```
