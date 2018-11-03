@@ -67,6 +67,8 @@ class BertConfig(object):
     self.initializer_range = initializer_range
 ```
 
+参数如下：
+
 + vocab_size：```inputs_ids```的vocabulary size
 + hidden_size：encoder layers和pooler layer的size
 + num_hidden_layers：Transformer encoder的hidden layer数
@@ -289,6 +291,8 @@ class BertModel(object):
                use_one_hot_embeddings=True,
                scope=None):
 ```
+
+参数如下：
 
 + config
 + is_training
