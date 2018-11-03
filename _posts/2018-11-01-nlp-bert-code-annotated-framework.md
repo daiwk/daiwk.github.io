@@ -13,28 +13,30 @@ tags: [bert代码解读, bert code, framework]
   - [公共函数](#%E5%85%AC%E5%85%B1%E5%87%BD%E6%95%B0)
     - [assert-rank](#assert-rank)
     - [get-shape-list](#get-shape-list)
-    - [create_initializer](#createinitializer)
-    - [embedding_lookup](#embeddinglookup)
-    - [embedding_postprocessor](#embeddingpostprocessor)
+    - [create-initializer](#create-initializer)
+    - [embedding-lookup](#embedding-lookup)
+    - [embedding-postprocessor](#embedding-postprocessor)
   - [BertConfig](#bertconfig)
     - [BertConfig初始化](#bertconfig%E5%88%9D%E5%A7%8B%E5%8C%96)
     - [BertConfig方法](#bertconfig%E6%96%B9%E6%B3%95)
-    - [from_dict(classmethod)](#fromdictclassmethod)
-    - [from_json_file(classmethod)](#fromjsonfileclassmethod)
-    - [to_dict](#todict)
-    - [to_json_string](#tojsonstring)
+    - [from-dict(classmethod)](#from-dictclassmethod)
+    - [from-json-file(classmethod)](#from-json-fileclassmethod)
+    - [to-dict](#to-dict)
+    - [to-json-string](#to-json-string)
   - [BertModel](#bertmodel)
     - [初始化](#%E5%88%9D%E5%A7%8B%E5%8C%96)
-    - [get_pooled_output](#getpooledoutput)
-    - [get_sequence_output](#getsequenceoutput)
-    - [get_all_encoder_layers](#getallencoderlayers)
-    - [get_embedding_output](#getembeddingoutput)
-    - [get_embedding_table](#getembeddingtable)
-- [extract_features.py](#extractfeaturespy)
+    - [get-pooled-output](#get-pooled-output)
+    - [get-sequence-output](#get-sequence-output)
+    - [get-all-encoder-layers](#get-all-encoder-layers)
+    - [get-embedding-output](#get-embedding-output)
+    - [get-embedding-table](#get-embedding-table)
+- [extract-features.py](#extract-featurespy)
 - [optimization.py](#optimizationpy)
 - [tokenization.py](#tokenizationpy)
 
 <!-- /TOC -->
+
+**注：由于标题不能有下划线，所以把函数名/文件名里的_换成了-**
 
 ## modeling.py
 
@@ -116,7 +118,7 @@ def get_shape_list(tensor, expected_rank=None, name=None):
   return shape
 ```
 
-#### create_initializer
+#### create-initializer
 
 对```tf.truncated_normal_initializer```的简单封装
 
@@ -126,7 +128,7 @@ def create_initializer(initializer_range=0.02):
   return tf.truncated_normal_initializer(stddev=initializer_range)
 ```
 
-#### embedding_lookup
+#### embedding-lookup
 
 返回一个shape是```[batch_size, seq_length, embedding_size]```的tensor，还有shape为```[vocab_size, embedding_size]```的整个embedding_table
 
@@ -176,7 +178,7 @@ def embedding_lookup(input_ids,
   return (output, embedding_table)
 ```
 
-#### embedding_postprocessor
+#### embedding-postprocessor
 
 参数：
 
@@ -297,7 +299,7 @@ print A.__dict__
 
 看看BertConfig的方法们：
 
-#### from_dict(classmethod)
+#### from-dict(classmethod)
 
 ```python
   @classmethod
@@ -327,7 +329,7 @@ print A.__dict__
 ('b', 9)
 ```
 
-#### from_json_file(classmethod)
+#### from-json-file(classmethod)
 
 ```python
   @classmethod
@@ -338,7 +340,7 @@ print A.__dict__
     return cls.from_dict(json.loads(text))
 ```
 
-#### to_dict
+#### to-dict
 
 注：
 
@@ -426,7 +428,7 @@ False
     return output
 ```
 
-#### to_json_string
+#### to-json-string
 
 ```python
   def to_json_string(self):
@@ -551,7 +553,7 @@ class BertModel(object):
 
 ```
 
-#### get_pooled_output
+#### get-pooled-output
 
 返回pooled_output
 
@@ -560,7 +562,7 @@ class BertModel(object):
     return self.pooled_output
 ```
 
-#### get_sequence_output
+#### get-sequence-output
 
 返回encoder的最后一个隐层
 
@@ -575,7 +577,7 @@ class BertModel(object):
     return self.sequence_output
 ```
 
-#### get_all_encoder_layers
+#### get-all-encoder-layers
 
 返回all_encoder_layers
 
@@ -584,7 +586,7 @@ class BertModel(object):
     return self.all_encoder_layers
 ```
 
-#### get_embedding_output
+#### get-embedding-output
 
 返回embedding_output，shape是```[batch_size, seq_length, hidden_size]```，是加好了positional embeddings和token type embeddings，然后过了layer norm的结果，即transformer的input。
 
@@ -601,7 +603,7 @@ class BertModel(object):
     return self.embedding_output
 ```
 
-#### get_embedding_table
+#### get-embedding-table
 
 返回embedding_table
 
@@ -610,7 +612,7 @@ class BertModel(object):
     return self.embedding_table
 ```
 
-## extract_features.py
+## extract-features.py
 
 ## optimization.py
 
