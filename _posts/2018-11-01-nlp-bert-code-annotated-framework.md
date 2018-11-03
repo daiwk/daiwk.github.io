@@ -10,6 +10,11 @@ tags: [bert代码解读, bert code, framework]
 <!-- TOC -->
 
 - [modeling.py](#modelingpy)
+  - [公共函数](#%E5%85%AC%E5%85%B1%E5%87%BD%E6%95%B0)
+    - [assert_rank](#assertrank)
+    - [get_shape_list](#getshapelist)
+    - [create_initializer](#createinitializer)
+    - [embedding_lookup](#embeddinglookup)
   - [BertConfig](#bertconfig)
     - [BertConfig初始化](#bertconfig%E5%88%9D%E5%A7%8B%E5%8C%96)
     - [BertConfig方法](#bertconfig%E6%96%B9%E6%B3%95)
@@ -33,6 +38,143 @@ tags: [bert代码解读, bert code, framework]
 ## modeling.py
 
 高仿[https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/layers/transformer_layers.py#L99](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/layers/transformer_layers.py#L99)的transformer_encoder部分。
+
+### 公共函数
+
+#### assert_rank
+
+注意：
+
+tensor的rank表示一个tensor**需要的索引数目**来唯一表示任何一个元素。也就是通常所说的 “order”, “degree”或”ndims”，不是矩阵的秩。。参考[https://blog.csdn.net/lenbow/article/details/52152766](https://blog.csdn.net/lenbow/article/details/52152766)
+
+例如：
+
+```python
+#’t’ is [[[1, 1, 1], [2, 2, 2]], [[3, 3, 3], [4, 4, 4]]]
+# shape of tensor ‘t’ is [2, 2, 3]
+rank(t) = 3
+```
+
+函数的功能：如果输入tensor的rank和预期的不一样，就抛异常
+
+参数：
+
++ tensor：输入的tf.Tensor
++ expected_rank：Python integer or list of integers，期望的rank
++ name：error message中的tensor的名字
+
+```python
+def assert_rank(tensor, expected_rank, name=None):
+  if name is None:
+    name = tensor.name
+
+  expected_rank_dict = {}
+  if isinstance(expected_rank, six.integer_types):
+    expected_rank_dict[expected_rank] = True
+  else:
+    for x in expected_rank:
+      expected_rank_dict[x] = True
+
+  actual_rank = tensor.shape.ndims
+  if actual_rank not in expected_rank_dict:
+    scope_name = tf.get_variable_scope().name
+    raise ValueError(
+        "For the tensor `%s` in scope `%s`, the actual rank "
+        "`%d` (shape = %s) is not equal to the expected rank `%s`" %
+        (name, scope_name, actual_rank, str(tensor.shape), str(expected_rank)))
+```
+
+#### get_shape_list
+
+参数：
+
++ tensor：一个需要返回shape的tf.Tensor
++ expected_rank：int。输入tensor期望的rank，如果输入tensor的rank不等于这个数，会抛异常
+
+```python
+def get_shape_list(tensor, expected_rank=None, name=None):
+  if name is None:
+    name = tensor.name
+
+  if expected_rank is not None:
+    assert_rank(tensor, expected_rank, name)
+
+  shape = tensor.shape.as_list()
+
+  non_static_indexes = []
+  for (index, dim) in enumerate(shape):
+    if dim is None:
+      non_static_indexes.append(index)
+
+  if not non_static_indexes:
+    return shape
+
+  dyn_shape = tf.shape(tensor)
+  for index in non_static_indexes:
+    shape[index] = dyn_shape[index]
+  return shape
+```
+
+#### create_initializer
+
+对```tf.truncated_normal_initializer```的简单封装
+
+```python
+def create_initializer(initializer_range=0.02):
+  """Creates a `truncated_normal_initializer` with the given range."""
+  return tf.truncated_normal_initializer(stddev=initializer_range)
+```
+
+#### embedding_lookup
+
+返回一个shape是```[batch_size, seq_length, embedding_size]```的tensor
+
+参数：
+
++ input_ids：shape为包含了word ids的```[batch_size, seq_length]```的tensor
++ vocab_size：embedding vocabulary的size
++ embedding_size：word embeddings的width
++ initializer_range：Embedding初始化的range
++ word_embedding_name：embedding table的名字
++ use_one_hot_embeddings：true: 使用one-hot的embedding；false：使用```tf.nn.embedding_lookup()```，如下所述，tpu用one-hot好，cpu/gpu用非one-hot好
+
+
+```python
+def embedding_lookup(input_ids,
+                     vocab_size,
+                     embedding_size=128,
+                     initializer_range=0.02,
+                     word_embedding_name="word_embeddings",
+                     use_one_hot_embeddings=False):
+  ## 此函数假设输入的shape是[batch_size, seq_length, num_inputs]。如果是[batch_size, seq_length]，会reshape成[batch_size, seq_length, 1]
+  if input_ids.shape.ndims == 2:
+    ## tf.expand_dims在axis处插入维度1进入一个tensor中
+    input_ids = tf.expand_dims(input_ids, axis=[-1])
+
+  ## shape是[vocab_size, embedding_size]的embedding table
+  embedding_table = tf.get_variable(
+      name=word_embedding_name,
+      shape=[vocab_size, embedding_size],
+      initializer=create_initializer(initializer_range))
+
+  if use_one_hot_embeddings:
+    ## 把[batch_size, seq_length, 1]的input_ids变成[batch_size*seq_length]的一个tensor
+    flat_input_ids = tf.reshape(input_ids, [-1])
+    ## 变成一个[batch_size*seq_length, vocab_size]的one-hot的tensor
+    one_hot_input_ids = tf.one_hot(flat_input_ids, depth=vocab_size)
+    ## [batch_size*seq_length, vocab_size]的one_hot_input_ids和[vocab_size, embedding_size]的embedding_table矩阵相乘，得到[batch_size*seq_length,embedding_size]的output
+    output = tf.matmul(one_hot_input_ids, embedding_table)
+  else:
+    ## [batch_size, seq_length, 1]的input_ids去[vocab_size, embedding_size]的embedding_table中lookup，得到一个[batch_size, seq_length, 1, embedding_size]的output
+    output = tf.nn.embedding_lookup(embedding_table, input_ids)
+
+  input_shape = get_shape_list(input_ids)
+
+  ## reshape成[batch_size, seq_length, 1 * embedding_size]的输出
+  output = tf.reshape(output,
+                      input_shape[0:-1] + [input_shape[-1] * embedding_size])
+  return (output, embedding_table)
+```
 
 ### BertConfig
 
@@ -294,13 +436,104 @@ class BertModel(object):
 
 参数如下：
 
-+ config
-+ is_training
-+ input_ids
-+ input_mask
-+ token_type_ids
-+ use_one_hot_embeddings
-+ scope
++ config：```BertConfig```instance.
++ is_training：true: training model；false：eval model。用于控制是否dropout。
++ input_ids：shape是```[batch_size, seq_length]```的int32 Tensor。
++ input_mask：shape是```[batch_size, seq_length]```的int32 Tensor。
++ token_type_ids：shape是```[batch_size, seq_length]```的int32 Tensor。
++ use_one_hot_embeddings：使用one-hot embedding，还是```tf.embedding_lookup()```。TPU上设成True会更快，cpu/gpu上设成False更快。
++ scope：variable scope，默认是```bert```。
+
+实现分成以下几步：
+
+首先是input_mask/token_type_ids/batch_size/seq_length的确定：
+
+```python
+    config = copy.deepcopy(config)
+    if not is_training:
+      config.hidden_dropout_prob = 0.0
+      config.attention_probs_dropout_prob = 0.0
+    # 期望input_ids的shape是两维，即[batch_size, seq_length]
+    input_shape = get_shape_list(input_ids, expected_rank=2)
+    batch_size = input_shape[0]
+    seq_length = input_shape[1]
+
+    if input_mask is None:
+      ## 默认input_mask全是1
+      input_mask = tf.ones(shape=[batch_size, seq_length], dtype=tf.int32)
+
+    if token_type_ids is None:
+      ## 默认token_type_ids全是0
+      token_type_ids = tf.zeros(shape=[batch_size, seq_length], dtype=tf.int32)
+```
+
+然后确定网络结构：
+
+```python
+    with tf.variable_scope("bert", scope):
+      with tf.variable_scope("embeddings"):
+        # Perform embedding lookup on the word ids.
+        (self.embedding_output, self.embedding_table) = embedding_lookup(
+            input_ids=input_ids,
+            vocab_size=config.vocab_size,
+            embedding_size=config.hidden_size,
+            initializer_range=config.initializer_range,
+            word_embedding_name="word_embeddings",
+            use_one_hot_embeddings=use_one_hot_embeddings)
+
+        # Add positional embeddings and token type embeddings, then layer
+        # normalize and perform dropout.
+        self.embedding_output = embedding_postprocessor(
+            input_tensor=self.embedding_output,
+            use_token_type=True,
+            token_type_ids=token_type_ids,
+            token_type_vocab_size=config.type_vocab_size,
+            token_type_embedding_name="token_type_embeddings",
+            use_position_embeddings=True,
+            position_embedding_name="position_embeddings",
+            initializer_range=config.initializer_range,
+            max_position_embeddings=config.max_position_embeddings,
+            dropout_prob=config.hidden_dropout_prob)
+
+      with tf.variable_scope("encoder"):
+        # This converts a 2D mask of shape [batch_size, seq_length] to a 3D
+        # mask of shape [batch_size, seq_length, seq_length] which is used
+        # for the attention scores.
+        attention_mask = create_attention_mask_from_input_mask(
+            input_ids, input_mask)
+
+        # Run the stacked transformer.
+        # `sequence_output` shape = [batch_size, seq_length, hidden_size].
+        self.all_encoder_layers = transformer_model(
+            input_tensor=self.embedding_output,
+            attention_mask=attention_mask,
+            hidden_size=config.hidden_size,
+            num_hidden_layers=config.num_hidden_layers,
+            num_attention_heads=config.num_attention_heads,
+            intermediate_size=config.intermediate_size,
+            intermediate_act_fn=get_activation(config.hidden_act),
+            hidden_dropout_prob=config.hidden_dropout_prob,
+            attention_probs_dropout_prob=config.attention_probs_dropout_prob,
+            initializer_range=config.initializer_range,
+            do_return_all_layers=True)
+
+      self.sequence_output = self.all_encoder_layers[-1]
+      # The "pooler" converts the encoded sequence tensor of shape
+      # [batch_size, seq_length, hidden_size] to a tensor of shape
+      # [batch_size, hidden_size]. This is necessary for segment-level
+      # (or segment-pair-level) classification tasks where we need a fixed
+      # dimensional representation of the segment.
+      with tf.variable_scope("pooler"):
+        # We "pool" the model by simply taking the hidden state corresponding
+        # to the first token. We assume that this has been pre-trained
+        first_token_tensor = tf.squeeze(self.sequence_output[:, 0:1, :], axis=1)
+        self.pooled_output = tf.layers.dense(
+            first_token_tensor,
+            config.hidden_size,
+            activation=tf.tanh,
+            kernel_initializer=create_initializer(config.initializer_range))
+
+```
 
 #### get_pooled_output
 
