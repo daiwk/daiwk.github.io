@@ -13,6 +13,7 @@ tags: [python, ]
 - [2. jupyter](#2-jupyter)
 - [3. mkdocs](#3-mkdocs)
 - [mac版python3的tf](#mac%E7%89%88python3%E7%9A%84tf)
+- [copy deepcopy](#copy-deepcopy)
 - [gc](#gc)
       - [引用计数（主要）](#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E4%B8%BB%E8%A6%81)
       - [标记-清除](#%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4)
@@ -83,6 +84,87 @@ pip install mkdocs
 
 ```shell
 sudo -H pip3 install ./tensorflow-1.8.0-cp36-cp36m-macosx_10_11_x86_64.whl
+```
+
+## copy deepcopy
+
+参考[https://iaman.actor/blog/2016/04/17/copy-in-python](https://iaman.actor/blog/2016/04/17/copy-in-python)
+
+Python中的对象之间赋值(=运算)时是按引用传递的，如果需要拷贝对象，需要使用标准库中的copy模块。
+
+copy.copy 浅拷贝 vs copy.deepcopy 深拷贝：
+
++ 对于简单的 object，用 shallow copy 和 deep copy 没区别
+
+```python
+>>> import copy
+>>> origin = 1
+>>> cop1 = copy.copy(origin) 
+#cop1 是 origin 的shallow copy
+>>> cop2 = copy.deepcopy(origin) 
+#cop2 是 origin 的 deep copy
+>>> origin = 2
+>>> origin
+2
+>>> cop1
+1
+>>> cop2
+1
+#cop1 和 cop2 都不会随着 origin 改变自己的值
+>>> cop1 == cop2
+True
+>>> cop1 is cop2
+True
+```
+
++ 复杂的object， 如list中套着list的情况，**shallow copy中的子list，并未从原object真的「独立」出来。**
+
+```python
+>>> import copy
+>>> origin = [1, 2, [3, 4]]
+#origin 里边有三个元素：1， 2，[3, 4]
+>>> cop1 = copy.copy(origin)
+>>> cop2 = copy.deepcopy(origin)
+>>> cop1 == cop2
+True
+>>> cop1 is cop2
+False 
+#cop1 和 cop2 看上去相同，但已不再是同一个object
+>>> origin[2][0] = "hey!" 
+>>> origin
+[1, 2, ['hey!', 4]]
+>>> cop1
+[1, 2, ['hey!', 4]]
+>>> cop2
+[1, 2, [3, 4]]
+#把origin内的子list [3, 4] 改掉了一个元素，观察 cop1 和 cop2
+```
+
+浅copy容易遇到的『坑』：
+
+```python
+# 把 [1, 2, 3] 看成一个物品。a = [1, 2, 3] 就相当于给这个物品上贴上 a 这个标签。而 b = a 就是给这个物品又贴上了一个 b 的标签。
+>>> a = [1, 2, 3]
+>>> b = a
+>>> a = [4, 5, 6] # 赋新的值给 a
+>>> a
+[4, 5, 6]
+>>> b
+[1, 2, 3]
+# a 的值改变后，b 并没有随着 a 变。
+# a = [4, 5, 6] 就相当于把 a 标签从 [1 ,2, 3] 上撕下来，贴到了 [4, 5, 6] 上。
+# 在这个过程中，[1, 2, 3] 这个物品并没有消失。 b 自始至终都好好的贴在 [1, 2, 3] 上，既然这个 reference 也没有改变过。 b 的值自然不变。
+
+>>> a = [1, 2, 3]
+>>> b = a
+>>> a[0], a[1], a[2] = 4, 5, 6 # 改变原来 list 中的元素
+>>> a
+[4, 5, 6]
+>>> b
+[4, 5, 6]
+# a 的值改变后，b 随着 a 变了
+# a[0], a[1], a[2] = 4, 5, 6 则是直接改变了 [1, 2, 3] 这个物品本身。把它内部的每一部分都重新改装了一下。内部改装完毕后，[1, 2, 3] 本身变成了 [4, 5, 6]。
+# 而在此过程当中，a 和 b 都没有动，他们还贴在那个物品上。因此自然 a b 的值都变成了 [4, 5, 6]。
 ```
 
 ## gc
