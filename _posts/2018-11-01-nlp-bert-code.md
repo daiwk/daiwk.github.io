@@ -17,7 +17,6 @@ tags: [bert代码, bert code]
     - [step1. create_pretraining_data](#step1-createpretrainingdata)
     - [step2. run_pretraining](#step2-runpretraining)
 - [pretrain tips and caveats](#pretrain-tips-and-caveats)
-- [代码解读](#%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB)
 
 <!-- /TOC -->
 
@@ -30,6 +29,29 @@ tags: [bert代码, bert code]
 参考参考机器之心发的[谷歌终于开源BERT代码：3 亿参数量，机器之心全面解读](https://mp.weixin.qq.com/s/vFdm-UHns7Nhbmdoiu6jWg)
 
 
+代码结构：
+
+```
+`-- bert
+    |-- CONTRIBUTING.md
+    |-- create_pretraining_data.py
+    |-- extract_features.py
+    |-- __init__.py
+    |-- LICENSE
+    |-- modeling.py
+    |-- modeling_test.py
+    |-- optimization.py
+    |-- optimization_test.py
+    |-- README.md
+    |-- run_classifier.py
+    |-- run_pretraining.py
+    |-- run_squad.py
+    |-- sample_text.txt
+    |-- tokenization.py
+    `-- tokenization_test.py
+
+1 directory, 16 files
+```
 
 ## 运行
 
@@ -252,39 +274,4 @@ INFO:tensorflow:  next_sentence_loss = 0.0002133457
 + 当前的bert模型只是English的，2018年11月底会放出更多语言的！！
 + 更长的序列的计算代价会非常大，因为attention是序列长度平方的复杂度。例如，一个长度是512的minibatch-size=64的batch，比一个长度为128的minibatch-size=256的batch计算代码要大得多。对于全连接或者cnn来讲，其实这个计算代价是一样的。但对attention而言，长度是512的计算代价会大得多。所以，建议对长度为128的序列进行9w个step的预训练，然后对长度为512的序列再做1w个step的预训练是更好的~对于非常长的序列，最需要的是学习positional embeddings，这是很快就能学到的啦。注意，这样做就需要使用不同的max_seq_length来生成两次数据。
 + 如果你从头开始pretrain，计算代价是很大的，特别是在gpu上。建议的是在一个preemptible Cloud TPU v2上pretrain一个bert-base（2周要500美刀…）。如果在一个single cloud TPU上的话，需要把batchsize scale down。建议使用能占满TPU内存的最大batchsize...
-
-
-## 代码解读
-
-代码结构：
-
-```
-`-- bert
-    |-- CONTRIBUTING.md
-    |-- create_pretraining_data.py
-    |-- extract_features.py
-    |-- __init__.py
-    |-- LICENSE
-    |-- modeling.py
-    |-- modeling_test.py
-    |-- optimization.py
-    |-- optimization_test.py
-    |-- README.md
-    |-- run_classifier.py
-    |-- run_pretraining.py
-    |-- run_squad.py
-    |-- sample_text.txt
-    |-- tokenization.py
-    `-- tokenization_test.py
-
-1 directory, 16 files
-```
-
-核心文件：
-
-+ modeling
-+ optimization
-+ tokenization
-
-高仿[https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/layers/transformer_layers.py#L99](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/layers/transformer_layers.py#L99)的transformer_encoder部分。
 
