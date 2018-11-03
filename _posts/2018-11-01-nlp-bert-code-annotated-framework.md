@@ -11,10 +11,11 @@ tags: [bert代码解读, bert code, framework]
 
 - [modeling.py](#modelingpy)
   - [公共函数](#%E5%85%AC%E5%85%B1%E5%87%BD%E6%95%B0)
-    - [assert_rank](#assertrank)
-    - [get_shape_list](#getshapelist)
+    - [assert-rank](#assert-rank)
+    - [get-shape-list](#get-shape-list)
     - [create_initializer](#createinitializer)
     - [embedding_lookup](#embeddinglookup)
+    - [embedding_postprocessor](#embeddingpostprocessor)
   - [BertConfig](#bertconfig)
     - [BertConfig初始化](#bertconfig%E5%88%9D%E5%A7%8B%E5%8C%96)
     - [BertConfig方法](#bertconfig%E6%96%B9%E6%B3%95)
@@ -41,7 +42,7 @@ tags: [bert代码解读, bert code, framework]
 
 ### 公共函数
 
-#### assert_rank
+#### assert-rank
 
 注意：
 
@@ -84,7 +85,7 @@ def assert_rank(tensor, expected_rank, name=None):
         (name, scope_name, actual_rank, str(tensor.shape), str(expected_rank)))
 ```
 
-#### get_shape_list
+#### get-shape-list
 
 参数：
 
@@ -127,7 +128,7 @@ def create_initializer(initializer_range=0.02):
 
 #### embedding_lookup
 
-返回一个shape是```[batch_size, seq_length, embedding_size]```的tensor
+返回一个shape是```[batch_size, seq_length, embedding_size]```的tensor，还有shape为```[vocab_size, embedding_size]```的整个embedding_table
 
 参数：
 
@@ -137,7 +138,6 @@ def create_initializer(initializer_range=0.02):
 + initializer_range：Embedding初始化的range
 + word_embedding_name：embedding table的名字
 + use_one_hot_embeddings：true: 使用one-hot的embedding；false：使用```tf.nn.embedding_lookup()```，如下所述，tpu用one-hot好，cpu/gpu用非one-hot好
-
 
 ```python
 def embedding_lookup(input_ids,
@@ -175,6 +175,22 @@ def embedding_lookup(input_ids,
                       input_shape[0:-1] + [input_shape[-1] * embedding_size])
   return (output, embedding_table)
 ```
+
+#### embedding_postprocessor
+
+参数：
+
++ input_tensor,
++ use_token_type=False,
++ token_type_ids=None,
++ token_type_vocab_size=16,
++ token_type_embedding_name="token_type_embeddings",
++ use_position_embeddings=True,
++ position_embedding_name="position_embeddings",
++ initializer_range=0.02,
++ max_position_embeddings=512,
++ dropout_prob=0.1
+
 
 ### BertConfig
 
