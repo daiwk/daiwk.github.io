@@ -112,6 +112,12 @@ tags: [导引, navigation]
 
 <!-- /TOC -->
 
+学习学习
+
+[https://www.jianshu.com/u/511ba5d71aef](https://www.jianshu.com/u/511ba5d71aef)
+
+[https://www.cnblogs.com/pinard/](https://www.cnblogs.com/pinard/)
+
 # **1. Basic Knowledges**
  
 ## 1.1 Machine Learning
