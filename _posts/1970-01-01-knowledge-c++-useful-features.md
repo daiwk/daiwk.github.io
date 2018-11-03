@@ -9,17 +9,40 @@ tags: [c++, ]
 
 <!-- TOC -->
 
-- [各种智能指针](#各种智能指针)
-    - [unique_ptr](#unique_ptr)
-    - [shared_ptr](#shared_ptr)
-    - [weak_ptr](#weak_ptr)
-- [各种多线程](#各种多线程)
-    - [thread基本用法](#thread基本用法)
-    - [thread_local](#thread_local)
+- [各种容器](#%E5%90%84%E7%A7%8D%E5%AE%B9%E5%99%A8)
+    - [map与unordered map对比](#map%E4%B8%8Eunordered-map%E5%AF%B9%E6%AF%94)
+- [各种智能指针](#%E5%90%84%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88)
+    - [unique_ptr](#uniqueptr)
+    - [shared_ptr](#sharedptr)
+    - [weak_ptr](#weakptr)
+- [各种多线程](#%E5%90%84%E7%A7%8D%E5%A4%9A%E7%BA%BF%E7%A8%8B)
+    - [thread基本用法](#thread%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
+    - [thread_local](#threadlocal)
     - [atomic](#atomic)
-    - [unique_lock与lock_guard](#unique_lock与lock_guard)
+    - [unique_lock与lock_guard](#uniquelock%E4%B8%8Elockguard)
+- [其他](#%E5%85%B6%E4%BB%96)
+    - [值/引用/指针](#%E5%80%BC%E5%BC%95%E7%94%A8%E6%8C%87%E9%92%88)
 
 <!-- /TOC -->
+
+## 各种容器
+
+### map与unordered map对比
+
+[https://blog.csdn.net/ljp1919/article/details/50463761](https://blog.csdn.net/ljp1919/article/details/50463761)
+
+效率上：
+
++ boost::unordered_map （34s）插入比map(49s)快。
++ boost::unordered_map （15s）查找操作比map(23s)快。
+
+内存空间占用上：
+
++ boost::unordered_map 内存占用26%。7.6GB*0.26=1.976GB。
++ map内存占用29%。7.6GB*0.29=2.2GB。
+
+所以，**在效率和内存占用上面，boost::unordered_map 都更具有优势**。
+
 
 ## 各种智能指针
 
@@ -175,3 +198,8 @@ C++多线程编程中通常会对共享的数据进行写保护，以防止多�
 
 针对以上的问题，C++11中引入了std::unique_lock与std::lock_guard两种数据结构。通过对lock和unlock进行一次薄的封装，实现**自动unlock**的功能。
 
+## 其他
+
+### 值/引用/指针
+
+[https://segmentfault.com/a/1190000006812825](https://segmentfault.com/a/1190000006812825)
