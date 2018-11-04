@@ -844,16 +844,20 @@ class BertModel(object):
             initializer_range=config.initializer_range,
             do_return_all_layers=True)
 
+      # sequence_output只取all_encoder_layers的最后一个元素，shape是[batch_size, seq_length, hidden_size]
       self.sequence_output = self.all_encoder_layers[-1]
-      # The "pooler" converts the encoded sequence tensor of shape
-      # [batch_size, seq_length, hidden_size] to a tensor of shape
-      # [batch_size, hidden_size]. This is necessary for segment-level
-      # (or segment-pair-level) classification tasks where we need a fixed
-      # dimensional representation of the segment.
+      # 对于segment-level或者segment-pair-level的分类任务，我们需要对segment的一个
+      # fixed dimensional representation，所以需要这么一个"pool"操作，
+      # 把shape是[batch_size, seq_length, hidden_size]的tensor变成
+      # shape是[batch_size, hidden_size]的输出
       with tf.variable_scope("pooler"):
         # We "pool" the model by simply taking the hidden state corresponding
         # to the first token. We assume that this has been pre-trained
+        # 假设已经pretrained:
+        # 只拿出batchsize个序列的每个序列的第一个token的向量(下面的[:,0:1,:])出来
+        # 从[batch_size, seq_length, hidden_size]变成了[batch_size, hidden_size]
         first_token_tensor = tf.squeeze(self.sequence_output[:, 0:1, :], axis=1)
+        # 接一个size是hidden_size的fc，输出的shape还是[batch_size, hidden_size]
         self.pooled_output = tf.layers.dense(
             first_token_tensor,
             config.hidden_size,

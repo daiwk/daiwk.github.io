@@ -210,6 +210,23 @@ def gen_bert_flow_transformer():
     dot.edge('transformer_model', 'sequence_output', )
     dot.render('dots/' + title)
 
+
+def gen_bert_flow_pool():
+    title = "bert_flow_pool"
+    dot = Digraph(comment=title, format="png")
+    
+    dot.node('sequence_output', u'sequence_output\n[batch_size, seq_length, hidden_size]\nall_encoder_layers[-1],encoder的最后一层', shape="box", style="rounded")
+    dot.node('first_token_tensor', u'first_token_tensor\n[batch_size, hidden_size]', shape="box", style="rounded")
+    dot.node('pooled_output', u'pooled_output\n[batch_size, hidden_size]', shape="box", style="rounded")
+ 
+    dot.node('tf_squeeze', u'tf.squeeze\nsequence_output[:, 0:1, :], axis=1\n只拿出batchsize个序列的每个序列的第一个token的向量', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
+    dot.node('tf_dense', u'\ntf.layers.dense\nsize=hidden_size,activation=tf.tanh', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
+
+    dot.edge('sequence_output', 'tf_squeeze', )
+    dot.edge('tf_squeeze', 'first_token_tensor', )
+    dot.edge('first_token_tensor', 'tf_dense', )
+    dot.edge('tf_dense', 'pooled_output', )
+
 if __name__ == "__main__":
     gen_rl_overview()
     gen_rl_overview_value_function()
@@ -217,4 +234,5 @@ if __name__ == "__main__":
     gen_tf_code_tensorshape()
     d = gen_bert_flow_embedding()
     gen_bert_flow_transformer()
+    gen_bert_flow_pool()
 
