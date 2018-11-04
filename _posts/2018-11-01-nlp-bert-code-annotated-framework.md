@@ -44,6 +44,7 @@ tags: [bert代码解读, bert code, framework]
 - [小结](#%E5%B0%8F%E7%BB%93)
   - [embedding部分](#embedding%E9%83%A8%E5%88%86)
   - [transformer部分](#transformer%E9%83%A8%E5%88%86)
+  - [pool部分](#pool%E9%83%A8%E5%88%86)
 
 <!-- /TOC -->
 
@@ -950,6 +951,16 @@ class BertModel(object):
 <br/>
 
 <img src='../assets/bert_flow_transformer.png' style='max-height: 350px'/>
+<br/>
+
+</html>
+
+### pool部分
+
+<html>
+<br/>
+
+<img src='../assets/bert_flow_pool.png' style='max-height: 350px'/>
 <br/>
 
 </html>
