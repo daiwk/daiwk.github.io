@@ -11,6 +11,8 @@ tags: [bert代码解读, bert code, framework]
 
 - [modeling.py](#modelingpy)
   - [公共函数](#%E5%85%AC%E5%85%B1%E5%87%BD%E6%95%B0)
+    - [reshape-to-matrix](#reshape-to-matrix)
+    - [reshape-from-matrix](#reshape-from-matrix)
     - [assert-rank](#assert-rank)
     - [get-shape-list](#get-shape-list)
     - [gelu](#gelu)
@@ -41,6 +43,7 @@ tags: [bert代码解读, bert code, framework]
 - [tokenization.py](#tokenizationpy)
 - [小结](#%E5%B0%8F%E7%BB%93)
   - [embedding部分](#embedding%E9%83%A8%E5%88%86)
+  - [transformer部分](#transformer%E9%83%A8%E5%88%86)
 
 <!-- /TOC -->
 
@@ -51,6 +54,39 @@ tags: [bert代码解读, bert code, framework]
 高仿[https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/layers/transformer_layers.py#L99](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/layers/transformer_layers.py#L99)的transformer_encoder部分。
 
 ### 公共函数
+
+#### reshape-to-matrix
+
+```python
+def reshape_to_matrix(input_tensor):
+  """Reshapes a >= rank 2 tensor to a rank 2 tensor (i.e., a matrix)."""
+  ndims = input_tensor.shape.ndims
+  if ndims < 2:
+    raise ValueError("Input tensor must have at least rank 2. Shape = %s" %
+                     (input_tensor.shape))
+  if ndims == 2:
+    return input_tensor
+
+  width = input_tensor.shape[-1]
+  output_tensor = tf.reshape(input_tensor, [-1, width])
+  return output_tensor
+```
+
+#### reshape-from-matrix
+
+```python
+def reshape_from_matrix(output_tensor, orig_shape_list):
+  """Reshapes a rank 2 tensor back to its original rank >= 2 tensor."""
+  if len(orig_shape_list) == 2:
+    return output_tensor
+
+  output_shape = get_shape_list(output_tensor)
+
+  orig_dims = orig_shape_list[0:-1]
+  width = output_shape[-1]
+
+  return tf.reshape(output_tensor, orig_dims + [width])
+```
 
 #### assert-rank
 
@@ -536,10 +572,12 @@ def transformer_model(input_tensor,
   if do_return_all_layers:
     final_outputs = []
     for layer_output in all_layer_outputs:
+      ## 将输出reshape成和input_shape一样的shape，即[batch_size, seq_length, hidden_size]
       final_output = reshape_from_matrix(layer_output, input_shape)
       final_outputs.append(final_output)
     return final_outputs
   else:
+    ## 将输出reshape成和input_shape一样的shape，即[batch_size, seq_length, hidden_size]
     final_output = reshape_from_matrix(prev_output, input_shape)
     return final_output
 ```
@@ -785,7 +823,8 @@ class BertModel(object):
             dropout_prob=config.hidden_dropout_prob)
 
       with tf.variable_scope("encoder"):
-        # 将shape是[batch_size, seq_length]的input_ids转成
+        # 将shape是[batch_size, seq_length]的input_ids和
+        # shape是[batch_size, seq_length]的input_mask转成
         # shape是[batch_size, seq_length, seq_length]的3D mask，给attention scores用
         attention_mask = create_attention_mask_from_input_mask(
             input_ids, input_mask)
@@ -897,6 +936,16 @@ class BertModel(object):
 <br/>
 
 <img src='../assets/bert_flow_embedding.png' style='max-height: 350px'/>
+<br/>
+
+</html>
+
+### transformer部分
+
+<html>
+<br/>
+
+<img src='../assets/bert_flow_transformer.png' style='max-height: 350px'/>
 <br/>
 
 </html>

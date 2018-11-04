@@ -1,0 +1,26 @@
+// bert_flow_transformer
+digraph {
+	input_ids [label="input_ids
+[batch_size, seq_length]" shape=box]
+	input_mask [label="input_mask
+[batch_size, seq_length]" shape=box]
+	attention_mask [label="attention_mask
+[batch_size, seq_length, seq_length]" shape=box style=rounded]
+	embedding_output [label="embedding_output
+[batch_size, seq_length, embedding_size]" shape=box style=rounded]
+	all_encoder_layers [label="all_encoder_layers
+一个list，每个元素的shape都是
+[batch_size, seq_length, hidden_size]" shape=box style=rounded]
+	sequence_output [label="sequence_output
+[batch_size, seq_length, hidden_size]
+all_encoder_layers[-1],encoder的最后一层" shape=box style=rounded]
+	create_attention_mask_from_input_mask [label=create_attention_mask_from_input_mask fillcolor=yellow fontcolor=red shape=box style="rounded,filled"]
+	transformer_model [label=transformer_model fillcolor=yellow fontcolor=red shape=box style="rounded,filled"]
+	input_ids -> create_attention_mask_from_input_mask
+	input_mask -> create_attention_mask_from_input_mask
+	create_attention_mask_from_input_mask -> attention_mask
+	attention_mask -> transformer_model
+	embedding_output -> transformer_model
+	transformer_model -> all_encoder_layers
+	transformer_model -> sequence_output
+}

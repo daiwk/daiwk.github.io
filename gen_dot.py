@@ -145,7 +145,7 @@ def gen_tf_code_tensorshape():
 
     dot.render('dots/' + title)
 
-def gen_bert_flow():
+def gen_bert_flow_embedding():
     title = "bert_flow_embedding"
     dot = Digraph(comment=title, format="png")
     
@@ -186,10 +186,35 @@ def gen_bert_flow():
     dot.render('dots/' + title)
 
 
+def gen_bert_flow_transformer():
+    title = "bert_flow_transformer"
+    dot = Digraph(comment=title, format="png")
+    
+    dot.node('input_ids', u'input_ids\n[batch_size, seq_length]', shape="box")
+    dot.node('input_mask', u'input_mask\n[batch_size, seq_length]', shape="box")
+    dot.node('attention_mask', u'attention_mask\n[batch_size, seq_length, seq_length]', shape="box", style='rounded')
+    ## output of embedding
+    dot.node('embedding_output', u'embedding_output\n[batch_size, seq_length, embedding_size]', shape="box", style="rounded")
+    dot.node('all_encoder_layers', u'all_encoder_layers\n一个list，每个元素的shape都是\n[batch_size, seq_length, hidden_size]', shape="box", style="rounded")
+    dot.node('sequence_output', u'sequence_output\n[batch_size, seq_length, hidden_size]\nall_encoder_layers[-1],encoder的最后一层', shape="box", style="rounded")
+
+    dot.node('create_attention_mask_from_input_mask', u'create_attention_mask_from_input_mask', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
+    dot.node('transformer_model', u'transformer_model', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
+
+    dot.edge('input_ids', 'create_attention_mask_from_input_mask', )
+    dot.edge('input_mask', 'create_attention_mask_from_input_mask', )
+    dot.edge('create_attention_mask_from_input_mask', 'attention_mask', )
+    dot.edge('attention_mask', 'transformer_model', )
+    dot.edge('embedding_output', 'transformer_model', )
+    dot.edge('transformer_model', 'all_encoder_layers', )
+    dot.edge('transformer_model', 'sequence_output', )
+    dot.render('dots/' + title)
+
 if __name__ == "__main__":
     gen_rl_overview()
     gen_rl_overview_value_function()
     gen_rl_overview_policy_search()
     gen_tf_code_tensorshape()
-    gen_bert_flow()
+    d = gen_bert_flow_embedding()
+    gen_bert_flow_transformer()
 
