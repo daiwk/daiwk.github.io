@@ -38,6 +38,16 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/flowchart-latest.js"> </script>
     <script src="/js/raphael-min.js"> </script>
+
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="/js/jquery.toTop.min.js"></script>
+    
+    <script>
+    $(function() {
+      $('.to-top').toTop();
+    });
+    </script>
+
     <!--<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>-->
     <script src="/js/MathJax-master/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">
@@ -66,6 +76,7 @@
   </head>
   
   <body>
+    <a class="to-top" style="cursor: pointer; position: fixed; right: 15px; bottom: 30px;">返回顶部</a>
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
