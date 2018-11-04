@@ -8,6 +8,7 @@ digraph {
 	embedding_postprocessor [label=embedding_postprocessor fillcolor=yellow fontcolor=red shape=box style="rounded,filled"]
 	add_op [label="add_op
 +" fillcolor=yellow fontcolor=red shape=box style="rounded,filled"]
+	layer_norm_and_dropout [label=layer_norm_and_dropout fillcolor=yellow fontcolor=red shape=box style="rounded,filled"]
 	word_embeddings [label="word_embeddings
 [batch_size, seq_length, embedding_size]" shape=box style=rounded]
 	token_type_embeddings [label="token_type_embeddings

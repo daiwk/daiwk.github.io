@@ -155,6 +155,7 @@ def gen_bert_flow():
     dot.node('embedding_lookup', u'embedding_lookup', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
     dot.node('embedding_postprocessor', u'embedding_postprocessor', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
     dot.node('add_op', u'add_op\n+', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
+    dot.node('layer_norm_and_dropout', u'layer_norm_and_dropout', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
 
 
     dot.node('word_embeddings', u'word_embeddings\n[batch_size, seq_length, embedding_size]', shape="box", style="rounded")
