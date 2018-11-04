@@ -226,6 +226,7 @@ def gen_bert_flow_pool():
     dot.edge('tf_squeeze', 'first_token_tensor', )
     dot.edge('first_token_tensor', 'tf_dense', )
     dot.edge('tf_dense', 'pooled_output', )
+    dot.render('dots/' + title)
 
 if __name__ == "__main__":
     gen_rl_overview()
