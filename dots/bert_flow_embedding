@@ -35,5 +35,6 @@ digraph {
 	word_embeddings -> add_op
 	token_type_embeddings -> add_op
 	position_embeddings -> add_op
-	add_op -> embedding_output
+	add_op -> layer_norm_and_dropout
+	layer_norm_and_dropout -> embedding_output
 }

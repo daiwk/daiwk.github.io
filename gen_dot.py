@@ -180,7 +180,8 @@ def gen_bert_flow():
     dot.edge('word_embeddings', 'add_op', )
     dot.edge('token_type_embeddings', 'add_op', )
     dot.edge('position_embeddings', 'add_op', )
-    dot.edge('add_op', 'embedding_output', )
+    dot.edge('add_op', 'layer_norm_and_dropout', )
+    dot.edge('layer_norm_and_dropout', 'embedding_output', )
 
     dot.render('dots/' + title)
 
