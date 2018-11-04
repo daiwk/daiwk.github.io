@@ -18,6 +18,7 @@ tags: [regularization, 正则化]
     - [概述](#概述-1)
     - [l2的好处](#l2的好处)
 - [常用图解释](#常用图解释)
+- [不可导点的处理](#不可导点的处理)
 
 <!-- /TOC -->
 
@@ -125,3 +126,16 @@ f(w1,w2)和```a|w1|+b|w2|+c```最先相交的点 就是w1=0,w2>0的时候，就�
 <img src='../assets/l1l2-pictures.png' style='max-height: 300px'/>
 <br/>
 </html>
+
+
+## 不可导点的处理
+
+使用Proximal Gradient Descent，参考[https://www.cnblogs.com/breezedeus/p/3426757.html](https://www.cnblogs.com/breezedeus/p/3426757.html)
+
+**西瓜书p252-254**
+
+整个loss变为soft thresholding：
+
+`\[
+\text{prox}_{\mu g} (z) = \text{sign}(z) \max\{|z| - \mu, \ 0\}
+\]`
