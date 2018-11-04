@@ -1,0 +1,38 @@
+// bert_flow_embedding
+digraph {
+	input_ids [label="input_ids
+[batch_size, seq_length]" shape=box]
+	token_type_ids [label="token_type_ids
+[batch_size, seq_length]" shape=box]
+	embedding_lookup [label=embedding_lookup fillcolor=yellow fontcolor=red shape=box style="rounded,filled"]
+	embedding_postprocessor [label=embedding_postprocessor fillcolor=yellow fontcolor=red shape=box style="rounded,filled"]
+	add_op [label="add_op
++" fillcolor=yellow fontcolor=red shape=box style="rounded,filled"]
+	word_embeddings [label="word_embeddings
+[batch_size, seq_length, embedding_size]" shape=box style=rounded]
+	token_type_embeddings [label="token_type_embeddings
+[batch_size, seq_length, embedding_size]" shape=box style=rounded]
+	position_embeddings [label="position_embeddings
+[batch_size, seq_length, embedding_size]" shape=box style=rounded]
+	embedding_output [label="embedding_output
+[batch_size, seq_length, embedding_size]" shape=box style=rounded]
+	word_embeddings_table [label="word_embeddings_table
+[vocab_size, embedding_size]" fillcolor=gray shape=box style="rounded,filled"]
+	token_type_embeddings_table [label="token_type_embeddings_table
+[token_type_vocab_size, embedding_size]" fillcolor=gray shape=box style="rounded,filled"]
+	position_embeddings_table [label="position_embeddings_table
+[max_position_embeddings, embedding_size]" fillcolor=gray shape=box style="rounded,filled"]
+	input_ids -> embedding_lookup
+	embedding_lookup -> word_embeddings
+	embedding_lookup -> word_embeddings_table
+	word_embeddings -> embedding_postprocessor
+	token_type_ids -> embedding_postprocessor
+	embedding_postprocessor -> token_type_embeddings
+	embedding_postprocessor -> position_embeddings
+	embedding_postprocessor -> token_type_embeddings_table
+	embedding_postprocessor -> position_embeddings_table
+	word_embeddings -> add_op
+	token_type_embeddings -> add_op
+	position_embeddings -> add_op
+	add_op -> embedding_output
+}

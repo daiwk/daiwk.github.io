@@ -145,9 +145,49 @@ def gen_tf_code_tensorshape():
 
     dot.render('dots/' + title)
 
+def gen_bert_flow():
+    title = "bert_flow_embedding"
+    dot = Digraph(comment=title, format="png")
+    
+    dot.node('input_ids', u'input_ids\n[batch_size, seq_length]', shape="box")
+    dot.node('token_type_ids', u'token_type_ids\n[batch_size, seq_length]', shape="box")
+
+    dot.node('embedding_lookup', u'embedding_lookup', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
+    dot.node('embedding_postprocessor', u'embedding_postprocessor', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
+    dot.node('add_op', u'add_op\n+', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
+
+
+    dot.node('word_embeddings', u'word_embeddings\n[batch_size, seq_length, embedding_size]', shape="box", style="rounded")
+    dot.node('token_type_embeddings', u'token_type_embeddings\n[batch_size, seq_length, embedding_size]', shape="box", style="rounded")
+    dot.node('position_embeddings', u'position_embeddings\n[batch_size, seq_length, embedding_size]', shape="box", style="rounded")
+    dot.node('embedding_output', u'embedding_output\n[batch_size, seq_length, embedding_size]', shape="box", style="rounded")
+
+    ## tables
+    dot.node('word_embeddings_table', u'word_embeddings_table\n[vocab_size, embedding_size]', shape="box", style="rounded,filled", fillcolor="gray")
+    dot.node('token_type_embeddings_table', u'token_type_embeddings_table\n[token_type_vocab_size, embedding_size]', shape="box", style="rounded,filled", fillcolor="gray")
+    dot.node('position_embeddings_table', u'position_embeddings_table\n[max_position_embeddings, embedding_size]', shape="box", style="rounded,filled", fillcolor="gray")
+
+    dot.edge('input_ids', 'embedding_lookup', )
+    dot.edge('embedding_lookup', 'word_embeddings', )
+    dot.edge('embedding_lookup', 'word_embeddings_table', )
+    dot.edge('word_embeddings', 'embedding_postprocessor', )
+    dot.edge('token_type_ids', 'embedding_postprocessor', )
+    dot.edge('embedding_postprocessor', 'token_type_embeddings', )
+    dot.edge('embedding_postprocessor', 'position_embeddings', )
+    dot.edge('embedding_postprocessor', 'token_type_embeddings_table', )
+    dot.edge('embedding_postprocessor', 'position_embeddings_table', )
+    dot.edge('word_embeddings', 'add_op', )
+    dot.edge('token_type_embeddings', 'add_op', )
+    dot.edge('position_embeddings', 'add_op', )
+    dot.edge('add_op', 'embedding_output', )
+
+    dot.render('dots/' + title)
+
 
 if __name__ == "__main__":
     gen_rl_overview()
     gen_rl_overview_value_function()
     gen_rl_overview_policy_search()
     gen_tf_code_tensorshape()
+    gen_bert_flow()
+

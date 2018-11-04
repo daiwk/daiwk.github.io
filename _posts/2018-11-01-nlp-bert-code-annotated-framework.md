@@ -39,6 +39,8 @@ tags: [bert代码解读, bert code, framework]
 - [extract-features.py](#extract-featurespy)
 - [optimization.py](#optimizationpy)
 - [tokenization.py](#tokenizationpy)
+- [小结](#小结)
+    - [embedding部分](#embedding部分)
 
 <!-- /TOC -->
 
@@ -444,13 +446,14 @@ def transformer_model(input_tensor,
                       attention_probs_dropout_prob=0.1,
                       initializer_range=0.02,
                       do_return_all_layers=False):
-  ## 还没看。。。
+  ## 首先保证hidden_size能被num_attention_heads整除，因为后面要hidden_size / num_attention_heads
   if hidden_size % num_attention_heads != 0:
     raise ValueError(
         "The hidden size (%d) is not a multiple of the number of attention "
         "heads (%d)" % (hidden_size, num_attention_heads))
 
   attention_head_size = int(hidden_size / num_attention_heads)
+  ## 输入的shape是[batch_size, seq_length, hidden_size]
   input_shape = get_shape_list(input_tensor, expected_rank=3)
   batch_size = input_shape[0]
   seq_length = input_shape[1]
@@ -881,3 +884,16 @@ class BertModel(object):
 ## optimization.py
 
 ## tokenization.py
+
+
+## 小结
+
+### embedding部分
+
+<html>
+<br/>
+
+<img src='../assets/bert_flow_embedding.png' style='max-height: 350px'/>
+<br/>
+
+</html>
