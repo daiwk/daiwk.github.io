@@ -1,7 +1,13 @@
+# copy rouge.css from css/all_highlights_css/xx.css currently native.css
+
+cp css/all_highlights_css/monokai.css ./css/rouge.css
+
 git config --global push.default matching
+
 git config --global push.default simple
 
 sh -x gen_dot.sh
+git add ./css
 git add _posts
 git add dots
 git add _includes
