@@ -10,37 +10,37 @@ tags: [bert代码解读, bert code, framework]
 <!-- TOC -->
 
 - [modeling.py](#modelingpy)
-    - [公共函数](#公共函数)
-        - [assert-rank](#assert-rank)
-        - [get-shape-list](#get-shape-list)
-        - [gelu](#gelu)
-        - [create-initializer](#create-initializer)
-        - [dropout](#dropout)
-        - [layer-norm](#layer-norm)
-        - [layer-norm-and-dropout](#layer-norm-and-dropout)
-        - [embedding-lookup](#embedding-lookup)
-        - [embedding-postprocessor](#embedding-postprocessor)
-        - [create-attention-mask-from-input-mask](#create-attention-mask-from-input-mask)
-        - [transformer-model](#transformer-model)
-    - [BertConfig](#bertconfig)
-        - [BertConfig初始化](#bertconfig初始化)
-        - [BertConfig方法](#bertconfig方法)
-        - [from-dict(classmethod)](#from-dictclassmethod)
-        - [from-json-file(classmethod)](#from-json-fileclassmethod)
-        - [to-dict](#to-dict)
-        - [to-json-string](#to-json-string)
-    - [BertModel](#bertmodel)
-        - [初始化](#初始化)
-        - [get-pooled-output](#get-pooled-output)
-        - [get-sequence-output](#get-sequence-output)
-        - [get-all-encoder-layers](#get-all-encoder-layers)
-        - [get-embedding-output](#get-embedding-output)
-        - [get-embedding-table](#get-embedding-table)
+  - [公共函数](#%E5%85%AC%E5%85%B1%E5%87%BD%E6%95%B0)
+    - [assert-rank](#assert-rank)
+    - [get-shape-list](#get-shape-list)
+    - [gelu](#gelu)
+    - [create-initializer](#create-initializer)
+    - [dropout](#dropout)
+    - [layer-norm](#layer-norm)
+    - [layer-norm-and-dropout](#layer-norm-and-dropout)
+    - [embedding-lookup](#embedding-lookup)
+    - [embedding-postprocessor](#embedding-postprocessor)
+    - [create-attention-mask-from-input-mask](#create-attention-mask-from-input-mask)
+    - [transformer-model](#transformer-model)
+  - [BertConfig](#bertconfig)
+    - [BertConfig初始化](#bertconfig%E5%88%9D%E5%A7%8B%E5%8C%96)
+    - [BertConfig方法](#bertconfig%E6%96%B9%E6%B3%95)
+    - [from-dict(classmethod)](#from-dictclassmethod)
+    - [from-json-file(classmethod)](#from-json-fileclassmethod)
+    - [to-dict](#to-dict)
+    - [to-json-string](#to-json-string)
+  - [BertModel](#bertmodel)
+    - [初始化](#%E5%88%9D%E5%A7%8B%E5%8C%96)
+    - [get-pooled-output](#get-pooled-output)
+    - [get-sequence-output](#get-sequence-output)
+    - [get-all-encoder-layers](#get-all-encoder-layers)
+    - [get-embedding-output](#get-embedding-output)
+    - [get-embedding-table](#get-embedding-table)
 - [extract-features.py](#extract-featurespy)
 - [optimization.py](#optimizationpy)
 - [tokenization.py](#tokenizationpy)
-- [小结](#小结)
-    - [embedding部分](#embedding部分)
+- [小结](#%E5%B0%8F%E7%BB%93)
+  - [embedding部分](#embedding%E9%83%A8%E5%88%86)
 
 <!-- /TOC -->
 
@@ -179,6 +179,9 @@ def dropout(input_tensor, dropout_prob):
 ```
 
 #### layer-norm
+
+只在shape的最后一维做layer norm
+
 
 ```python
 def layer_norm(input_tensor, name=None):
@@ -332,7 +335,7 @@ def embedding_postprocessor(input_tensor,
     position_embeddings = tf.reshape(position_embeddings,
                                      position_broadcast_shape)
     output += position_embeddings
-
+  # 注意,layer_norm里只对最后一维做norm，即只对embedding_size这一维做norm
   output = layer_norm_and_dropout(output, dropout_prob)
   return output
 ```
