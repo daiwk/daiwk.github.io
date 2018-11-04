@@ -220,7 +220,7 @@ def gen_bert_flow_pool():
     dot.node('pooled_output', u'pooled_output\n[batch_size, hidden_size]', shape="box", style="rounded")
  
     dot.node('tf_squeeze', u'tf.squeeze\nsequence_output[:, 0:1, :], axis=1\n只拿出batchsize个序列的每个序列的第一个token的向量', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
-    dot.node('tf_dense', u'\ntf.layers.dense\nsize=hidden_size,activation=tf.tanh', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
+    dot.node('tf_dense', u'tf.layers.dense\nsize=hidden_size,activation=tf.tanh', shape="box", style="rounded,filled", fillcolor="yellow", fontcolor="red")
 
     dot.edge('sequence_output', 'tf_squeeze', )
     dot.edge('tf_squeeze', 'first_token_tensor', )

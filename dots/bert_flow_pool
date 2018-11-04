@@ -10,8 +10,7 @@ all_encoder_layers[-1],encoder的最后一层" shape=box style=rounded]
 	tf_squeeze [label="tf.squeeze
 sequence_output[:, 0:1, :], axis=1
 只拿出batchsize个序列的每个序列的第一个token的向量" fillcolor=yellow fontcolor=red shape=box style="rounded,filled"]
-	tf_dense [label="
-tf.layers.dense
+	tf_dense [label="tf.layers.dense
 size=hidden_size,activation=tf.tanh" fillcolor=yellow fontcolor=red shape=box style="rounded,filled"]
 	sequence_output -> tf_squeeze
 	tf_squeeze -> first_token_tensor
