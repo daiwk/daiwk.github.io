@@ -9,6 +9,7 @@ tags: [特征工程, ]
 
 <!-- TOC -->
 
+- [0. 工具包](#0-工具包)
 - [1. 概述](#1-概述)
     - [1.1 数据预处理(单一特征)](#11-数据预处理单一特征)
     - [1.2 特征选择(多特征)](#12-特征选择多特征)
@@ -24,9 +25,16 @@ tags: [特征工程, ]
 
 <!-- /TOC -->
 
-参考[https://www.cnblogs.com/jasonfreak/p/5448385.html](https://www.cnblogs.com/jasonfreak/p/5448385.html)
+
+## 0. 工具包
+
+代码: [https://github.com/abhayspawar/featexp](https://github.com/abhayspawar/featexp)
+说明: [业界 \| 如何达到Kaggle竞赛top 2%？这里有一篇特征探索经验帖](https://mp.weixin.qq.com/s/SDCon7Uy-E4NlLN8JxzkFg)
+
 
 ## 1. 概述
+
+参考[https://www.cnblogs.com/jasonfreak/p/5448385.html](https://www.cnblogs.com/jasonfreak/p/5448385.html)
 
 本质是一项工程活动，目的是最大限度地从原始数据中提取特征以供算法和模型使用。
 
