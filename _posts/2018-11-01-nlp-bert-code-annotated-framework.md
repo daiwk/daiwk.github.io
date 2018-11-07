@@ -138,7 +138,7 @@ def assert_rank(tensor, expected_rank, name=None):
 参数：
 
 + tensor：一个需要返回shape的tf.Tensor
-+ expected_rank：int。输入tensor期望的rank，如果输入tensor的rank不等于这个数，会抛异常
++ expected_rank：int或者是一个int的list。输入tensor期望的rank，如果输入tensor的rank不等于这个数，或者不是这个list的元素之一，会抛异常
 
 ```python
 def get_shape_list(tensor, expected_rank=None, name=None):
