@@ -512,6 +512,7 @@ def attention_layer(from_tensor,
     output_tensor = tf.transpose(output_tensor, [0, 2, 1, 3])
     return output_tensor
 
+  # from_tensor和to_tensor的shape要么是2([from_seq_length * seq_length, from_width])，要么是3([batch_size, seq_length, from_width]) -->详见reshape_to_matrix和reshape_from_matrix，，应该是这样吧2D的时候。。
   from_shape = get_shape_list(from_tensor, expected_rank=[2, 3])
   to_shape = get_shape_list(to_tensor, expected_rank=[2, 3])
 
