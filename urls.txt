@@ -207,6 +207,7 @@ https://daiwk.github.io/posts/nlp-bert-code-annotated-application.html
 https://daiwk.github.io/posts/nlp-bert-code-annotated-framework.html
 https://daiwk.github.io/posts/nlp-bert-code.html
 https://daiwk.github.io/posts/platform-adanet.html
+https://daiwk.github.io/posts/platform-horizon.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-recommender-system.html
