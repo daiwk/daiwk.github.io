@@ -459,22 +459,35 @@ array([[[-0.79036561, -0.6795738 , -0.80898213],
 
 #### attention-layer
 
+如果```from_tensor```和```to_tensor```一样，那就是self-attention。```from_tensor```的每一个timestep会attend to ```to_tensor```的对应序列，然后返回一个fixed-with vector。
+
+首先，将```from_tensor```映射到一个"query" tensor，并把```to_tensor```映射成"key" tensors和"value" tensors。这些是一个长度为```num_attention_heads```的list的tensors，每个tensor的shape是```[batch_size, seq_length, size_per_head]```。
+
+然后，对query和key tensors进行dot-product，然后scale。这是通过softmax来获得attention probabilities。然后把value tensors通过这些probabilities进行interpolate(插值？。。)，再然后concate到一起形成一个single tensor并返回。
+
+**实践中，multi-head attention通过transpose和reshape，而非真正地将tensors进行separate。。**
+
 参数如下：
 
-+ from_tensor,
-+ to_tensor,
-+ attention_mask=None,
-+ num_attention_heads=1,
-+ size_per_head=512,
-+ query_act=None,
-+ key_act=None,
-+ value_act=None,
-+ attention_probs_dropout_prob=0.0,
-+ initializer_range=0.02,
-+ do_return_2d_tensor=False,
-+ batch_size=None,
-+ from_seq_length=None,
-+ to_seq_length=None
++ from_tensor：float Tensor，shape是```[batch_size, from_seq_length, from_width]```
++ to_tensor：float Tensor，shape是```[batch_size, to_seq_length, to_width]```
++ attention_mask：int32 Tensor，shape是```[batch_size, from_seq_length, to_seq_length]```，每个元素的值要是0/1。如果mask的值是0，那它对应的attention score会被设成**-infinity**，如果是mask的值是1，那么attention score不变。
++ num_attention_heads：attention heads的个数
++ size_per_head：每个attention head的size
++ query_act：query transform的激活函数
++ key_act：key transform的激活函数
++ value_act：value transform的激活函数
++ attention_probs_dropout_prob：attention probabilities的dropout rate
++ initializer_range：weight初始化的range
++ do_return_2d_tensor：是否返回2d tensor。具体取值和对应的返回shape如下所述
++ batch_size：如果输入是2D，这个参数是3D版本的```from_tensor```和```to_tensor```的batch_size
++ from_seq_length：如果输入是2D，这个参数是3D版本的```from_tensor```的seq_length
++ to_seq_length：如果输入是2D，这个参数是```to_tensor```的seq_length
+
+返回值：
+
++ 如果```do_return_2d_tensor```是true，那么返回一个shape是```[batch_size, from_seq_length,num_attention_heads * size_per_head]```的float Tensor
++ 反之，返回一个shape是```[batch_size * from_seq_length, num_attention_heads * size_per_head]```的float Tensor。
 
 ```python
 def attention_layer(from_tensor,
