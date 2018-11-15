@@ -789,7 +789,8 @@ class Solution {
 public:
     bool isMirror(TreeNode* t1, TreeNode* t2) {
         if (t1 == NULL && t2 == NULL) return true;
-        // 如果两个不都是NULL，这个时候，如果一个是NULL,另一个不是，那么肯定不镜像！！如果两个都不是NULL,那还有可能，可以等下一次递归
+        // 如果两个不都是NULL，这个时候，如果一个是NULL,另一个不是，那么肯定不镜像！！
+        // 如果两个都不是NULL,那还有可能，可以等下一次递归
         if (t1 == NULL || t2 == NULL) return false;
         return (t1->val == t2->val &&
                isMirror(t1->left, t2->right) &&
