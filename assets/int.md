@@ -612,7 +612,7 @@ public:
 **方法一：set+双指针**
 双指针，记得理清楚什么时候两个指针后移就行，记得用new ListNode(xx)，还有insert的时间点
 
-```
+```c++
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -775,7 +775,7 @@ public:
 * 它们的两个根结点具有相同的值。
 * 每个树的右子树都与另一个树的左子树镜像对称。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -878,7 +878,7 @@ public:
 
 空间复杂度：在最糟糕的情况下，树是完全不平衡的，例如每个结点只剩下左子结点，递归将会被调用 N 次，因此保持调用栈的存储将是O(N)。但在最好的情况下（树是完全平衡的），树的高度将是 log(N)。因此，在这种情况下的空间复杂度将是O(log(N))。
 
-```
+```c++
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -1038,11 +1038,12 @@ public:
 
 **解答：**
 
-我们需要找到**最小的谷之后的最大的峰**。 我们可以维持两个变量——
+我们需要找到**最小的谷之后的最大的峰**。 我们可以维持两个变量
+
 + minprice ：**迄今为止**所得到的**最小的谷值**。初始化为int_max，如果当前价格有比它小，那就更新它为当前价格
 + maxprofit，**迄今为止**所得到的**最大的利润**（卖出价格与最低价格之间的最大差值）。如果当前价格与minprice的差比它大，那就更新它
 
-```
+```c++
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
