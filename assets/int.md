@@ -64,7 +64,7 @@ public:
 * while的条件是或，处理两个链表不等长的情况
 * while外面，如果还有carry，要再new一个
 
-```
+```c++
 /**
  * Definition for singly-linked list.
  * struct ListNode {

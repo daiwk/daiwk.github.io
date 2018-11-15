@@ -8,7 +8,7 @@ git config --global push.default simple
 
 sh -x gen_dot.sh
 
-pandoc -N -s --toc --smart --latex-engine=xelatex -V CJKmainfont='黑体' -V mainfont='Times New Roman' -V geometry:margin=1in ./assets/int.md -o ./assets/int.pdf
+sh -x gen_pdf.sh
 
 git add ./css
 git add _posts
