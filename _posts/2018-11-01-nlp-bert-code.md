@@ -299,6 +299,8 @@ python extract_features.py \
 
 例如输入的内容是『大家』，那么输出的```output.json```格式如下：
 
+其中的"linex_index"表示第几行
+
 ```shell
 {
   "linex_index": 0,

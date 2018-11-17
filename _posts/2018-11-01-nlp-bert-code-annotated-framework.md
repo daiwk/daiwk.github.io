@@ -11,6 +11,7 @@ tags: [bert代码解读, bert code, framework]
 
 - [modeling.py](#modelingpy)
   - [公共函数](#%E5%85%AC%E5%85%B1%E5%87%BD%E6%95%B0)
+    - [get-assignment-map-from-checkpoint](#get-assignment-map-from-checkpoint)
     - [reshape-to-matrix](#reshape-to-matrix)
     - [reshape-from-matrix](#reshape-from-matrix)
     - [assert-rank](#assert-rank)
@@ -55,6 +56,39 @@ tags: [bert代码解读, bert code, framework]
 高仿[https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/layers/transformer_layers.py#L99](https://github.com/tensorflow/tensor2tensor/blob/master/tensor2tensor/layers/transformer_layers.py#L99)的transformer_encoder部分。
 
 ### 公共函数
+
+#### get-assignment-map-from-checkpoint
+
+从checkpoint的list_variables中，获取tvars（一般是```tvars = tf.trainable_variables()```）中的变量
+
+```python
+def get_assignment_map_from_checkpoint(tvars, init_checkpoint):
+  """Compute the union of the current variables and checkpoint variables."""
+  assignment_map = {}
+  initialized_variable_names = {}
+
+  name_to_variable = collections.OrderedDict()
+  for var in tvars:
+    name = var.name
+    m = re.match("^(.*):\\d+$", name)
+    if m is not None:
+      name = m.group(1)
+    name_to_variable[name] = var
+  # 返回一个list，每个元素是(name, shape)
+  init_vars = tf.train.list_variables(init_checkpoint)
+
+  assignment_map = collections.OrderedDict()
+  for x in init_vars:
+    (name, var) = (x[0], x[1])
+    if name not in name_to_variable:
+      continue
+    assignment_map[name] = name
+    initialized_variable_names[name] = 1
+    initialized_variable_names[name + ":0"] = 1
+
+  return (assignment_map, initialized_variable_names)
+
+```
 
 #### reshape-to-matrix
 
