@@ -16,8 +16,10 @@ tags: [python, ]
 - [copy deepcopy](#copy-deepcopy)
 - [gc](#gc)
       - [引用计数（主要）](#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E4%B8%BB%E8%A6%81)
-      - [标记-清除](#%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4)
+      - [标记清除](#%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4)
       - [分代回收](#%E5%88%86%E4%BB%A3%E5%9B%9E%E6%94%B6)
+- [collections](#collections)
+      - [OrderedDict](#ordereddict)
 
 <!-- /TOC -->
 
@@ -195,7 +197,7 @@ DEL a
 DEL b
 ```
 
-### 标记-清除
+### 标记清除
 
 标记清除就是用来解决循环引用的问题的只有容器对象才会出现引用循环，比如列表、字典、类、元组。
 首先，为了追踪容器对象，需要每个容器对象维护两个额外的指针，
@@ -240,3 +242,59 @@ del a
 
 分代回收思想将对象分为三代（generation 0,1,2），0代表幼年对象，1代表青年对象，2代表老年对象。根据弱代假说（越年轻的对象越容易死掉，老的对象通常会存活更久。）
 新生的对象被放入0代，如果该对象在第0代的一次gc垃圾回收中活了下来，那么它就被放到第1代里面（它就升级了）。如果第1代里面的对象在第1代的一次gc垃圾回收中活了下来，它就被放到第2代里面。```gc.set_threshold(threshold0[,threshold1[,threshold2]])```设置gc每一代垃圾回收所触发的阈值。从上一次第0代gc后，如果分配对象的个数减去释放对象的个数大于threshold0，那么就会对第0代中的对象进行gc垃圾回收检查。 从上一次第1代gc后，如过第0代被gc垃圾回收的次数大于threshold1，那么就会对第1代中的对象进行gc垃圾回收检查。同样，从上一次第2代gc后，如过第1代被gc垃圾回收的次数大于threshold2，那么就会对第2代中的对象进行gc垃圾回收检查。
+
+## collections
+
+### OrderedDict
+
+使用OrderedDict会根据**放入元素的先后顺序**进行排序。所以输出的值是排好序的。
+
+```python
+import collections
+d1 = collections.OrderedDict()
+d1['a'] = 'A'
+d1['2'] = '2'
+d1['c'] = 'C'
+d1['b'] = 'B'
+d1['1'] = '1'
+for k,v in d1.items():
+    print k,v
+
+d1 = {}
+d1['a'] = 'A'
+d1['2'] = '2'
+d1['c'] = 'C'
+d1['b'] = 'B'
+d1['1'] = '1'
+print "xxx"
+for k,v in d1.items():
+    print k,v
+
+#输出
+a A
+2 2
+c C
+b B
+1 1
+xxx
+a A
+1 1
+c C
+2 2
+b B
+```
+
+OrderedDict对象的字典对象，如果其顺序不同那么Python也会把他们当做是两个不同的对象
+
+```python
+import collections
+d1 = collections.OrderedDict()
+d1['a'] = 'A'
+d1['2'] = '2'
+
+d2 = collections.OrderedDict()
+d2['2'] = '2'
+d2['a'] = 'A'
+
+print d2 == d1 ## False
+```

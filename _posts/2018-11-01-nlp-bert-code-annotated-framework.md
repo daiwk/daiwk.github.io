@@ -39,7 +39,6 @@ tags: [bert代码解读, bert code, framework]
     - [get-all-encoder-layers](#get-all-encoder-layers)
     - [get-embedding-output](#get-embedding-output)
     - [get-embedding-table](#get-embedding-table)
-- [extract-features.py](#extract-featurespy)
 - [optimization.py](#optimizationpy)
 - [tokenization.py](#tokenizationpy)
 - [小结](#%E5%B0%8F%E7%BB%93)
@@ -1099,8 +1098,6 @@ class BertModel(object):
   def get_embedding_table(self):
     return self.embedding_table
 ```
-
-## extract-features.py
 
 ## optimization.py
 
