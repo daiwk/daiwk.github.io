@@ -92,16 +92,30 @@ $$R_{emp}(f)=\frac{1}{N}\sum ^N_{i=1}{L(y_i,f(x_i))}$$
 
 $$min_{f\in \mathcal{F}}R_{erm}=min_{f\in \mathcal{F}}\frac{1}{N}L(y_i,f(x_i))$$
 
-当满足以下两个条件时，经验风险最小化就等价于**极大似然估计**（maximum likelihood estimation）：
+当满足以下两个条件时，**经验风险最小化**就等价于**极大似然估计**（maximum likelihood estimation）：
 
 + 模型是**条件概率分布**
 + 损失函数是**对数损失函数**
 
 当样本量足够大时，ERM能有很好的效果，但样本量不够多时，为了防止过拟合，需要用下面的方法。
 
-**结构风险最小化（structual risk minimization, SRM）**：结构风险=经验风险+表示**模型复杂度**的正则化项(regularizer)或罚项(penalty term)。结构风险定义如下：
+**结构风险最小化（structual risk minimization, SRM）**：结构风险=经验风险+表示**模型复杂度**的正则化项(regularizer)或罚项(penalty term)。结构风险定义如下：
 
 $$R_{srm}(f)=\frac{1}{N}\sum^N_{i=1}L(y_i,f(x_i))+\lambda J(f)$$
+
+$J(f)$是模型的复杂度，模型越复杂，$J(f)$越大。$\lambda\ge 0$是用于权衡经验mqbv和模型复杂度的系数。
+
+当满足以下3个条件时，**结构化风险最小化**等价于）**贝叶斯估计中的最大后验概率估计**(maximum posterior probability estimation, MAP)：
+
++ 模型是**条件概率分布**
++ 损失函数是**对数损失函数**
++ 模型复杂度由**模型的先验概率**表示
+
+所以结构风险最小化就是求解优化问题：
+
+$$
+min_{f\in\mathcal{F}}\frac{1}{N}\sum ^N_{i=1}L(y_i,f(x_i))+\lambda J(f)
+$$
 
 
 ### 算法
@@ -112,3 +126,8 @@ $$R_{srm}(f)=\frac{1}{N}\sum^N_{i=1}L(y_i,f(x_i))+\lambda J(f)$$
 
 + 如果有显式的解析解，此最优化问题就比较简单
 + 如果没有，需要用数值计算方法求解，需要考虑如何**保证找到全局最优解，并使求解过程高效**
+
+## 模型评估与模型选择
+
+### 训练误差与测试误差
+
