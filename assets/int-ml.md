@@ -103,7 +103,7 @@ $$min_{f\in \mathcal{F}}R_{erm}=min_{f\in \mathcal{F}}\frac{1}{N}L(y_i,f(x_i))$$
 
 $$R_{srm}(f)=\frac{1}{N}\sum^N_{i=1}L(y_i,f(x_i))+\lambda J(f)$$
 
-$J(f)$是模型的复杂度，模型越复杂，$J(f)$越大。$\lambda\ge 0$是用于权衡经验mqbv和模型复杂度的系数。
+$J(f)$是模型的复杂度，模型越复杂，$J(f)$越大。$\lambda\ge 0$是用于权衡经验风险和模型复杂度的系数。
 
 当满足以下3个条件时，**结构化风险最小化**等价于）**贝叶斯估计中的最大后验概率估计**(maximum posterior probability estimation, MAP)：
 
