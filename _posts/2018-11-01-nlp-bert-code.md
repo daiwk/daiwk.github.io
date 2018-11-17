@@ -285,7 +285,7 @@ INFO:tensorflow:  next_sentence_loss = 0.0002133457
 + 如果是两个句子，那就是```sentence A ||| sentence B```
 + 如果是一个句子，那就是```sentence A```，不要分隔符
 
-```python
+```shell
 python extract_features.py \
   --input_file=input.txt \
   --output_file=/tmp/output.json \
