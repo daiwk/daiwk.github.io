@@ -26,6 +26,10 @@ tags: [others,]
 
 ## 机器学习
 
+拉格朗日乘子法：
+
+[http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/](http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/)
+
 gbdt:
 
 [https://www.jianshu.com/p/0e5ccc88d2cb](https://www.jianshu.com/p/0e5ccc88d2cb)
