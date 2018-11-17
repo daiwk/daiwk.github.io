@@ -9,14 +9,15 @@ tags: [bert代码, bert code]
 
 <!-- TOC -->
 
-- [运行](#%E8%BF%90%E8%A1%8C)
-  - [pretrained model](#pretrained-model)
+- [pretrained model](#pretrained-model)
+- [Sentence (and sentence-pair) classification tasks](#sentence-and-sentence-pair-classification-tasks)
   - [glue data数据集](#glue-data%E6%95%B0%E6%8D%AE%E9%9B%86)
-  - [Sentence (and sentence-pair) classification tasks](#sentence-and-sentence-pair-classification-tasks)
-  - [pretraining](#pretraining)
-    - [step1. create_pretraining_data](#step1-createpretrainingdata)
-    - [step2. run_pretraining](#step2-runpretraining)
-- [pretrain tips and caveats](#pretrain-tips-and-caveats)
+  - [运行](#%E8%BF%90%E8%A1%8C)
+- [pretraining](#pretraining)
+  - [step1. create_pretraining_data](#step1-createpretrainingdata)
+  - [step2. run_pretraining](#step2-runpretraining)
+  - [pretrain tips and caveats](#pretrain-tips-and-caveats)
+- [抽取feature vector(类似ELMo)](#%E6%8A%BD%E5%8F%96feature-vector%E7%B1%BB%E4%BC%BCelmo)
 
 <!-- /TOC -->
 
@@ -53,9 +54,7 @@ tags: [bert代码, bert code]
 1 directory, 16 files
 ```
 
-## 运行
-
-### pretrained model
+## pretrained model
 
 有这几个版本（在进行WordPiece分词之前是否区分大小写：是：cased，否：uncased(即全部转为小写)）：
 
@@ -63,6 +62,8 @@ tags: [bert代码, bert code]
 + BERT-Large, Uncased: 24-layer, 1024-hidden, 16-heads, 340M parameters
 + BERT-Base, Cased: 12-layer, 768-hidden, 12-heads , 110M parameters
 + BERT-Large, Cased: 24-layer, 1024-hidden, 16-heads, 340M parameters (Not available yet. Needs to be re-generated).
++ BERT-Base, Multilingual: 102 languages, 12-layer, 768-hidden, 12-heads, 110M parameters
++ BERT-Base, Chinese: Chinese Simplified and Traditional, 12-layer, 768-hidden, 12-heads, 110M parameters
 
 每个zip中包含如下三个文件：
 
@@ -85,6 +86,8 @@ uncased_L-12_H-768_A-12
 0 directories, 6 files
 ```
 
+## Sentence (and sentence-pair) classification tasks
+
 ### glue data数据集
 
 下载glue数据，使用[https://gist.github.com/W4ngatang/60c2bdb54d156a41194446737ce03e2e](https://gist.github.com/W4ngatang/60c2bdb54d156a41194446737ce03e2e)的py，执行【记住要是python3!!!!!】。。不过在墙内好像怎么都下不下来。。
@@ -93,7 +96,7 @@ uncased_L-12_H-768_A-12
 python download_glue_data.py --data_dir glue_data --tasks all
 ```
 
-### Sentence (and sentence-pair) classification tasks
+### 运行
 
 ```shell
 export BERT_BASE_DIR=/path/to/bert/uncased_L-12_H-768_A-12
@@ -127,9 +130,9 @@ python run_classifier.py \
 表示dev set上有84.55%的准确率，像MRPC（glue_data中的一个数据集）这样的小数据集，即使从pretrained的checkpoint开始，仍然可能在dev set的accuracy上会有很高的variance（跑多次，可能结果在84-88%之间）。
 
 
-### pretraining
+## pretraining
 
-#### step1. create_pretraining_data
+### step1. create_pretraining_data
 
 paper的源码是用c++写的，这里用py又实现了一遍。。实现masked lm和next sentence prediction。
 
@@ -196,7 +199,7 @@ INFO:tensorflow:next_sentence_labels: 1
 INFO:tensorflow:Wrote 60 total instances
 ```
 
-#### step2. run_pretraining
+### step2. run_pretraining
 
 + 如果你是从头开始pretrain，不要include init_checkpoint
 + 模型配置（包括vocab size）在bert_config_file中设置
@@ -267,7 +270,7 @@ INFO:tensorflow:  next_sentence_loss = 0.0002133457
 
 </html>
 
-## pretrain tips and caveats
+### pretrain tips and caveats
 
 + 如果你的任务有很大的domain-specific语料，最好从bert的checkpoint开始，在你的语料上进行多一些的pre-train
 + paper中的学习率设为1e-4，如果基于已有bert checkpoint继续pretrain，建议把学习率调小（如2e-5）
@@ -275,3 +278,87 @@ INFO:tensorflow:  next_sentence_loss = 0.0002133457
 + 更长的序列的计算代价会非常大，因为attention是序列长度平方的复杂度。例如，一个长度是512的minibatch-size=64的batch，比一个长度为128的minibatch-size=256的batch计算代码要大得多。对于全连接或者cnn来讲，其实这个计算代价是一样的。但对attention而言，长度是512的计算代价会大得多。所以，建议对长度为128的序列进行9w个step的预训练，然后对长度为512的序列再做1w个step的预训练是更好的~对于非常长的序列，最需要的是学习positional embeddings，这是很快就能学到的啦。注意，这样做就需要使用不同的max_seq_length来生成两次数据。
 + 如果你从头开始pretrain，计算代价是很大的，特别是在gpu上。建议的是在一个preemptible Cloud TPU v2上pretrain一个bert-base（2周要500美刀…）。如果在一个single cloud TPU上的话，需要把batchsize scale down。建议使用能占满TPU内存的最大batchsize...
 
+## 抽取feature vector(类似ELMo)
+
+输入文件```input.txt```格式：
+
++ 如果是两个句子，那就是```sentence A ||| sentence B```
++ 如果是一个句子，那就是```sentence A```，不要分隔符
+
+```python
+python extract_features.py \
+  --input_file=input.txt \
+  --output_file=/tmp/output.json \
+  --vocab_file=$BERT_BASE_DIR/vocab.txt \
+  --bert_config_file=$BERT_BASE_DIR/bert_config.json \
+  --init_checkpoint=$BERT_BASE_DIR/bert_model.ckpt \
+  --layers=-1,-2,-3,-4 \
+  --max_seq_length=128 \
+  --batch_size=8
+```
+
+例如输入的内容是『大家』，那么输出的```output.json```格式如下：
+
+```shell
+{
+	"linex_index": 0,
+	"features": [{
+		"token": "[CLS]",
+		"layers": [{
+			"index": -1,
+			"values": [1.507966, -0.155272, 0.108119, ..., 0.111],
+    }, {
+			"index": -2,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+    }, {
+			"index": -3,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+    }, {
+			"index": -4,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+    }, {
+		"token": "大",
+		"layers": [{
+			"index": -1,
+			"values": [1.507966, -0.155272, 0.108119, ..., 0.111],
+    }, {
+			"index": -2,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+    }, {
+			"index": -3,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+    }, {
+			"index": -4,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+    }, {
+		"token": "家",
+		"layers": [{
+			"index": -1,
+			"values": [1.507966, -0.155272, 0.108119, ..., 0.111],
+    }, {
+			"index": -2,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+    }, {
+			"index": -3,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+    }, {
+			"index": -4,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+    }, {
+		"token": "[SEP]",
+		"layers": [{
+			"index": -1,
+			"values": [1.507966, -0.155272, 0.108119, ..., 0.111],
+    }, {
+			"index": -2,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+    }, {
+			"index": -3,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+    }, {
+			"index": -4,
+			"values": [1.39443, 0.307064, 0.483496, ..., 0.332],
+		}]
+	}]
+}
+```
