@@ -30,6 +30,8 @@ tags: [others,]
 
 [http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/](http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/)
 
+[https://blog.csdn.net/lijil168/article/details/69395023](https://blog.csdn.net/lijil168/article/details/69395023)
+
 gbdt:
 
 [https://www.jianshu.com/p/0e5ccc88d2cb](https://www.jianshu.com/p/0e5ccc88d2cb)
