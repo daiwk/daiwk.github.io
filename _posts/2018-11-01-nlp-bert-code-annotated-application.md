@@ -18,7 +18,7 @@ tags: [bert代码解读, bert code, application]
   - [extract-features.py](#extract-featurespy)
     - [InputExample](#inputexample)
     - [InputFeatures](#inputfeatures)
-    - [-truncate-seq-pair](#truncate-seq-pair)
+    - [truncate-seq-pair](#truncate-seq-pair)
     - [read-examples](#read-examples)
     - [convert-examples-to-features](#convert-examples-to-features)
     - [input-fn-builder](#input-fn-builder)
@@ -147,7 +147,7 @@ class InputFeatures(object):
     self.input_type_ids = input_type_ids
 ```
 
-#### -truncate-seq-pair
+#### truncate-seq-pair
 
 ```python
 def _truncate_seq_pair(tokens_a, tokens_b, max_length):
