@@ -237,7 +237,11 @@ c
 
 拉格朗日乘子法(Lagrange multipliers)是一种寻找多元函数在**一组约束下**的极值的方法。通过引入拉格朗日乘子，将$d$个变量和$k$个约束条件的最优化问题转化为具有$d+k$个变量的无约束优化问题求解。
 
+先考虑
 
+<html>
+<img src="https://daiwk.github.io/assets/wide-and-deep-model.png" style="max-height:100"/>
+</html>
 
 ### 梯度下降
 
