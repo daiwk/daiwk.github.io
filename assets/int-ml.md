@@ -243,6 +243,14 @@ c
 <img src="https://daiwk.github.io/assets/wide-and-deep-model.png" style="max-height:100"/>
 </html>
 
+<html>
+<br/>
+
+<img src='../assets/dueling-dqn-attend.jpeg' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
+
 ### 梯度下降
 
 #### 《统计学习方法》的视角
