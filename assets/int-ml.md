@@ -237,19 +237,73 @@ c
 
 拉格朗日乘子法(Lagrange multipliers)是一种寻找多元函数在**一组约束下**的极值的方法。通过引入拉格朗日乘子，将$d$个变量和$k$个约束条件的最优化问题转化为具有$d+k$个变量的无约束优化问题求解。
 
-先考虑
+#### 等式约束
 
-<html>
-<img src="https://daiwk.github.io/assets/wide-and-deep-model.png" style="max-height:100"/>
-</html>
+假设$x$是$d$维向量，要寻找$x$的某个取值$x^*$，使目标函数$f(x)$最小且同时满足$g(x)=0$的约束。
 
-<html>
-<br/>
+从几何角度看，目标是在由方程$g(x)=0$确定的$d-1$维曲面上，寻找能使目标函数$f(x)$最小化的点。
 
-<img src='../assets/dueling-dqn-attend.jpeg' style='max-height: 350px;max-width:500px'/>
-<br/>
+1. 对于约束曲面$g(x)=0$上的**任意点**$x$，该点的梯度$\nabla g(x)$正交于约束曲面
+1. 在**最优点**$x^*$，目标函数$f(x)$在该点的梯度$\nabla f(x^*)$正交于约束曲面
 
-</html>
+对于**第1条**，梯度本身就与曲面的切向量垂直，**是曲面的法向量**，并且**指向数值更高的等值线**。
+
+证明：
+
+参考[http://xuxzmail.blog.163.com/blog/static/251319162010328103227654/](http://xuxzmail.blog.163.com/blog/static/251319162010328103227654/)
+
+$z=f(x,y)$的等值线：$\Gamma :f(x,y)=c$，两边求微分：
+
+$$
+\begin{matrix}
+df(x,y)=dc & \\ 
+\frac{\partial f}{\partial x} dx + \frac{\partial f}{\partial y} dy =0 & \\ 
+ & 
+\end{matrix}
+$$
+
+看成两个向量的内积：
+
+$$
+\frac{\partial f}{\partial x} dx + \frac{\partial f}{\partial y} dy = \{\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\}\cdot \{dx,dy\}=0
+$$
+
+而内积$a\cdot b=|a||b|cos\theta$为0说明夹角是90度，而$\{\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\}$是梯度向量，$\{dx,dy\}$是等值线的切向量，所以梯度向量和切向量是垂直的。
+
+对于**第2条**，可以用反证法，如下图，蓝色是$g(x)=0$，橙色是$f(x)$的等值线(图里假设$f(x)=x^2+y^2$)，交点的$\nabla f(x^*)$的梯度和$g(x)$的切面不垂直，那么，可以找到更小的等值线，使夹角更接近90度，也就是说，这个点不是真正的最优点$x^*$。
+
+![等式约束-非相切](./assets/lagrange-equal-1.png){ max-height=50 }
+
+所以，在最优点$x^*$处，梯度$\nabla g(x)$和$\nabla f(x)$的方向必然**相同或相反**，也就是存在$\lambda \neq 0$，使得：
+
+$$\nabla f(x^*)+\lambda \nabla g(x^*)=0$$
+
+$\lambda$是拉格朗日乘子，定义拉格朗日函数
+
+$$L(x,\lambda)=f(x)+\lambda g(x)$$
+
+$L(x,\lambda)$对x的偏导$\nabla _xL(x,\lambda)$置0，就得到：
+
+$$\nabla f(x)+\lambda \nabla g(x)=0$$
+
+而$L(x,\lambda)$对$\lambda$的偏导$\nabla _{\lambda}L(x,\lambda)$置0，就得到
+
+$$g(x)=0$$
+
+所以，原约束问题可以转化为对$L(x,\lambda)$的无约束优化问题。
+
+#### 不等式约束
+
+考虑不等式约束$g(x)\le 0$，最优点或者在边界$g(x)=0$上，或者在区域$g(x)<0$中。
+
+![(a)是等式约束，(b)是不等式约束](./assets/lagrange-equal-not-equal.png){ max-height=50 }
+
++ 对于$g(x)<0$
+
+因为
+
++ 对于$g(x)=0$
+
 
 ### 梯度下降
 

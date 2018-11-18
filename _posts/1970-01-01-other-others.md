@@ -26,9 +26,31 @@ tags: [others,]
 
 ## 机器学习
 
-拉格朗日乘子法：
+网盘链接
 
-[http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/](http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/)
+[https://blog.csdn.net/q361239731/article/details/81012904](https://blog.csdn.net/q361239731/article/details/81012904)
+
+
+周志华机器学习+统计学习基础PDF
+链接: https://pan.baidu.com/s/1xIl6Zz1sd6F92EByNUCoCg 密码: 5c47
+林轩田机器学习基石&机器学习技法（带字幕）
+链接: https://pan.baidu.com/s/1PhKT9TWM3kBSNQcV3H2JXA 提取码: 3j2j
+吴恩达-机器学习-斯坦福大学课堂（带字幕，黄海广翻译）
+链接: https://pan.baidu.com/s/1RJXPPWJKSdxe0xfz0WDtdg 密码: zi6t
+网易云链接：https://study.163.com/course/courseMain.htm?courseId=1004570029
+吴恩达-深度学习（带中文字幕）
+网易云链接：https://mooc.study.163.com/smartSpec/detail/1001319001.htm
+徐亦达-机器学习（开源）
+链接: https://pan.baidu.com/s/1M1reV0pIcbVwTcXKq7qZbw 密码: mw3i
+自然语言处理NLP&机器学习导论（中科院宗成庆&哈工大关毅&上交大张志华）
+链接: https://pan.baidu.com/s/1xF7iK0Zk_9tLeiUr3g7TpA 密码: v8yk
+
+
+kkt:
+
+[https://www.cnblogs.com/liaohuiqiang/p/7805954.html](https://www.cnblogs.com/liaohuiqiang/p/7805954.html)
+
+拉格朗日乘子法：
 
 [https://blog.csdn.net/lijil168/article/details/69395023](https://blog.csdn.net/lijil168/article/details/69395023)
 
