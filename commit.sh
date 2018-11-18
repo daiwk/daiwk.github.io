@@ -9,6 +9,7 @@ git config --global push.default simple
 sh -x gen_dot.sh
 
 sh -x gen_pdf.sh
+git add gen_pdf.sh
 
 git add ./css
 git add _posts
