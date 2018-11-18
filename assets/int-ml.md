@@ -239,7 +239,46 @@ c
 
 ### 梯度下降
 
-x
+假设$f(x)$有一阶连续偏导，对于无约束的最优化问题而言：
+
+$$\min _{x\in R^n}f(x)$$
+
+$f(x)$在$x^{(k)}$附近的一阶泰勒展开如下，其中$g_k=g(x^{(k)})=\nabla f(x^{(k)})$是$f(x)$在$x^{(k)}$的梯度：
+
+$$f(x)=f(x^{(k)})+g^T_k(x-x^{(k)})$$
+
+所以对于$x=x^{(k+1)}$：
+
+$$f(x^{(k+1)})=f(x^{(k)})+g^T_k(x^{(k+1)}-x^{(k)})$$
+
+令$x^{(k+1)}=x^{(k)}+\lambda _kp_k$，$p_k$是搜索方向，$\lambda _k$是步长，代入上式，有
+
+$$\begin{aligned}
+f(x^{(k+1)})&=f(x^{(k)})+g^T_k(x^{(k)}+\lambda _kp_k-x^{(k)})  \\ 
+ &=f(x^{(k)})+g^T_k\lambda _kp_k  \\ 
+\end{aligned}$$
+
+为了让每次迭代的函数值变小，可以取$p_k=-\nabla f(x^{(k)})$
+
+把$\lambda_k$看成是可变化的，所以需要搜索$\lambda _k$使得
+
+$$f(x^{(k)}+\lambda_kp_k)=\min_{\lambda \ge0}f(x^{(k)}+\lambda p_k)$$
+
+**梯度下降法：**
+
+输入：目标函数$f(x)$，梯度$g(x)=\nabla f(x)$，精度要求$\varepsilon$。
+
+输出：$f(x)$的极小点$x^*$。
+
+1. 取初始值$x^{(0)}\in R^n$，置$k=0$
+1. 计算$f(x^{(k)})$
+1. 计算梯度$g_k=g(x^{(k)})$，当$\left \| g_k \right \|<\varepsilon$，则停止计算，得到近似解$x^*=x^{(k)}$；否则，令$p_k=-g(x^{(k)})$，求$\lambda_k$使得
+$$f(x^{(k)}+\lambda_kp_k)=\min_{\lambda \ge0}f(x^{(k)}+\lambda p_k)$$
+1. 置$x^{(k+1)}=x^{(k)}+\lambda_kp_k$，计算$f(x^{(k+1)})$
+当$\left \| f(x^{(k+1)}) -f(x^{(k)}) \right \|<\varepsilon$或$\left \| x^{(k+1)}-x^{(k)} \right \|<\varepsilon$时，停止迭代，令$x^*=x^{(k+1)}$
+1. 否则，置$k=k+1$，转第3步
+
+只有当目标函数是**凸函数**时，梯度下降得到的才是**全局最优解**。
 
 ### 牛顿法
 
@@ -318,7 +357,7 @@ $$H_kp_k=-g_k$$
 
 ### 拟牛顿法的思路
 
-x
+基本想法就是通过一个$n$阶矩阵$G_k=G(x^{(k)})$来近似代替$H^{-1}(x^{(k)})$。
 
 ### DFP(Davidon-Fletcher-Powell)
 
