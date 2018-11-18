@@ -10,27 +10,27 @@ tags: [bert代码解读, bert code, application]
 <!-- TOC -->
 
 - [basics](#basics)
-  - [TPUEstimator](#tpuestimator)
-    - [train](#train)
-    - [predict](#predict)
-    - [evaluate](#evaluate)
+    - [TPUEstimator](#tpuestimator)
+        - [train](#train)
+        - [predict](#predict)
+        - [evaluate](#evaluate)
 - [extract-features](#extract-features)
-  - [extract-features.py](#extract-featurespy)
-    - [InputExample](#inputexample)
-    - [InputFeatures](#inputfeatures)
-    - [truncate-seq-pair](#truncate-seq-pair)
-    - [read-examples](#read-examples)
-    - [convert-examples-to-features](#convert-examples-to-features)
-    - [input-fn-builder](#input-fn-builder)
-    - [model-fn-builder](#model-fn-builder)
-    - [main](#main)
+    - [extract-features.py](#extract-featurespy)
+        - [InputExample](#inputexample)
+        - [InputFeatures](#inputfeatures)
+        - [truncate-seq-pair](#truncate-seq-pair)
+        - [read-examples](#read-examples)
+        - [convert-examples-to-features](#convert-examples-to-features)
+        - [input-fn-builder](#input-fn-builder)
+        - [model-fn-builder](#model-fn-builder)
+        - [main](#main)
 - [pretrain](#pretrain)
-  - [create-pretraining-data.py](#create-pretraining-datapy)
-  - [run-pretraining.py](#run-pretrainingpy)
+    - [create-pretraining-data.py](#create-pretraining-datapy)
+    - [run-pretraining.py](#run-pretrainingpy)
 - [classification](#classification)
-  - [run-classifier.py](#run-classifierpy)
+    - [run-classifier.py](#run-classifierpy)
 - [squad](#squad)
-  - [run-squad.py](#run-squadpy)
+    - [run-squad.py](#run-squadpy)
 
 <!-- /TOC -->
 
@@ -472,6 +472,8 @@ def model_fn_builder(bert_config, init_checkpoint, layer_indexes, use_tpu,
 ```python
   with codecs.getwriter("utf-8")(tf.gfile.Open(FLAGS.output_file,
                                                "w")) as writer:
+    # yield_single_examples参数是True时，会把一个batch的结果拆成batch条结果。
+    # 如果是False，不分解，当结果的第一维不是batch_size时要这么用~
     for result in estimator.predict(input_fn, yield_single_examples=True):
       unique_id = int(result["unique_id"])
       feature = unique_id_to_feature[unique_id]
