@@ -92,7 +92,7 @@ $$R_{emp}(f)=\frac{1}{N}\sum ^N_{i=1}{L(y_i,f(x_i))}$$
 
 **经验风险最小化（empirical risk minimization, ERM）**：**经验风险最小**的模型就是最优模型。所以需要求解的最优化问题是：
 
-$$min_{f\in \mathcal{F}}R_{erm}=min_{f\in \mathcal{F}}\frac{1}{N}L(y_i,f(x_i))$$
+$$\min_{f\in \mathcal{F}}R_{erm}=min_{f\in \mathcal{F}}\frac{1}{N}L(y_i,f(x_i))$$
 
 当满足以下两个条件时，**经验风险最小化**就等价于**极大似然估计**（maximum likelihood estimation）：
 
@@ -300,9 +300,62 @@ $$g(x)=0$$
 
 + 对于$g(x)<0$
 
-因为
+相当于使$f(x)$取得最小值的点落在可行域内，所以**约束条件相当于没有用**，所以，直接对$f(x)$求极小值即可。因为$L(x,\lambda)=f(x)+\lambda g(x)$，所以
+
+$$\nabla _xL(x,\lambda)=\nabla f(x)+\lambda \nabla g(x)$$
+
+因为$g(x)<0$，想要只让$\nabla f(x)=0$，那么令 **$\lambda = 0$** 即可。
 
 + 对于$g(x)=0$
+
+这就变成了等式约束，且此时$\nabla f(x^*)$和$\nabla g(x^*)$反向相反。因为在$g(x)=0$越往里值是越小的，而梯度是指向等值线高的方向，所以梯度是指向外的。而$f(x)$的可行域又在$g(x)$的里面和边界上，我们要找的是$f(x)$的最小值，所以$f(x)$的梯度是指向内部的。
+
+而$\nabla f(x)+\lambda \nabla g(x)=0$，两个又是反向的，所以$\lambda>0$。
+
+结合$g(x)\le 0$和$g(x)=0$两种情况的结论，就得到了KKT（Karush-Kuhn-Tucker）条件
+
+$$\left.\begin{matrix}
+g(x)=0, \lambda >0  \\
+g(x)<0, \lambda = 0
+\end{matrix}\right\}\Rightarrow \left\{\begin{matrix}
+g(x)\le 0 \\
+\lambda \ge 0\\ 
+\lambda g(x)=0
+\end{matrix}\right.$$
+
+其中$\lambda g(x)=0$是因为$\lambda$和$g(x)$**至少一个是0，而且不能都不是0。**
+
+以上三个条件有各自的名字：
+
++ Primal feasibility(原始可行性)：$g(x)\le 0$
++ Dual feasibility(对偶可行性)：$\lambda \ge 0$
++ Complementary slackness：$\lambda g(x)=0$
+
+#### 带等式和不等式约束的拉格朗日乘子法
+
+对于多个约束的情形，$m$个等式约束和$n$个不等式约束，可行域$\mathbb{D}\subset \mathbb{R}^d$非空的优化问题：
+
+$$
+\min_{x}f(x)\\
+\begin{matrix}
+s.t & h_i(x)=0,i=1,...,m \\ 
+ & g_j(x)\le 0,j=1,...,n
+\end{matrix}
+$$
+
+引入拉格朗日乘子$\lambda=(\lambda_1,\lambda_2,...,\lambda_m)^T$和$\mu=(\mu_1,\mu_2,...,\mu_n)^T$，相应的拉格朗日函数为：
+
+$$L(x,\lambda, \mu)=f(x)+\sum^m_{i=1}\lambda_ih_i(x)+\sum^n_{j=1}\mu_jg_j(x)$$
+
+由不等式约束引入的KKT条件$(j=1,2,...n)$为
+
+$$
+\left\{\begin{matrix}
+g_j(x)\le 0\\ 
+\mu_j\ge 0\\ 
+\mu_jg_j(x)=0
+\end{matrix}\right.$$
+
 
 
 ### 梯度下降
