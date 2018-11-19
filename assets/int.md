@@ -590,6 +590,85 @@ public:
 
 # 链表
 
+## 环形链表
+
+给定一个链表，判断链表中是否有环。
+
+**分析：**
+
+**方法一：哈希表**
+
+检查一个结点此前是否被访问过来判断链表。常用的方法是使用哈希表。
+
+我们遍历所有结点并在哈希表中存储每个结点的引用（或内存地址）。如果当前结点为空结点 null（即已检测到链表尾部的下一个结点），那么我们已经遍历完整个链表，并且该链表不是环形链表。如果当前结点的引用已经存在于哈希表中，那么返回 true（即该链表为环形链表）。
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        set<ListNode*> set_link;
+        ListNode* p = head;
+        while (p != NULL) {
+            if (set_link.find(p) != set_link.end()) {
+                return true;
+            }
+            set_link.insert(p);
+            p = p->next;
+        }
+        return false;
+    }
+};
+```
+
+**方法二：双指针**
+
+使用具有 不同速度 的快、慢两个指针遍历链表，空间复杂度可以被降低至 O(1)O(1)。慢指针每次移动一步，而快指针每次移动两步。
+
+如果列表中不存在环，最终快指针将会最先到达尾部，此时我们可以返回 false
+
+时间复杂度的分析见[https://leetcode-cn.com/problems/linked-list-cycle/solution/](https://leetcode-cn.com/problems/linked-list-cycle/solution/)
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if (head == NULL || head->next == NULL) {
+            return false;
+        }
+        ListNode* fast = head->next;// fast初始化为next，起点就比slow快了
+        ListNode* slow = head;
+        while(fast != slow) {
+            if (fast == NULL || fast->next == NULL) {
+                // 如果fast到终点了，或者fast的下一个节点是终点，说明slow肯定追不上来了
+                return false;
+            }
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return true;
+    }
+};
+```
+
+
+
+
 ## 删除排序链表中的重复元素
 
 **题目：**
