@@ -10,7 +10,8 @@ tags: [youtube视频推荐系统, ]
 
 <!-- TOC -->
 
-- [候选生成网络（Candidate Generation Network）](#%E5%80%99%E9%80%89%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%EF%BC%88candidate-generation-network%EF%BC%89)
+- [候选生成网络（Candidate Generation Network）](#%E5%80%99%E9%80%89%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9Ccandidate-generation-network)
+    - [将推荐看成分类问题](#%E5%B0%86%E6%8E%A8%E8%8D%90%E7%9C%8B%E6%88%90%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98)
     - [4.2 Modeling Expected Watch Time](#42-modeling-expected-watch-time)
 - [代码实现](#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0)
 
@@ -27,6 +28,27 @@ YouTube是世界上最大的视频上传、分享和发现网站，YouTube推荐
 ## 候选生成网络（Candidate Generation Network）
 
 候选生成网络将推荐问题建模为一个**类别数极大的多分类问题**：对于一个Youtube用户，使用其观看历史（视频ID）、搜索词记录（search tokens）、人口学信息（如地理位置、用户登录设备）、二值特征（如性别，是否登录）和连续特征（如用户年龄）等，对视频库中所有视频进行多分类，得到每一类别的分类结果（即每一个视频的推荐概率），最终输出概率较高的几百个视频。===>即，【使用**用户特征**，对所有视频进行分类，得到**和这个用户最相关的几百个候选结果。**】
+
+### 将推荐看成分类问题
+
+用户`\(U\)`在上下文`\(C\)`中，选择视频`\(i\)`的概率是：
+
+`\[
+P(w_t=i|U,C)=\frac{e^{v_iu}}{\sum _{j\in V}e^{v_ju}}
+\]`
+
+其中，`\(v_i\in R^N\)`是第i个视频的emb，`\(u\in R^N\)`是用户的emb，两个emb都是N维的，这里看起来是用内积`\(v_iu\)`把它们变成一个数。
+
+由于视频有百万量级，所以做这么一个超大规模的分类，需要，并且使用的是到的样本**通过importance sampling进行负采样**(参考[On using very large target vocabulary for neural machine translation](http://www.aclweb.org/anthology/P15-1001))。对每一个example而言，他的cross-entropy是在true label和采样的负类中求min。在实践中，采样了数千个负类，比传统的softmax有将近100倍的速度提升。
+
+另一种做法是hierarchical softmax(参考[Hierarchical probabilistic neural network language model](https://www.iro.umontreal.ca/~lisa/pointeurs/hierarchical-nnlm-aistats05.pdf))，但实践中效果没那么好。因为在hsoftmax中，遍历树里的每一个节点时，会引入对经常是毫无联系的类别的分辨，使得分类问题变得更困难以至于效果变差。
+
+在线serving时，由于低延迟的要求，需要有对类别数是sublinear的时间复杂度的近邻检索方法，之前youtube的系统使用的是hashing的方法，即[Label partitioning for sublinear ranking](http://www.thespermwhale.com/jaseweston/papers/label_partitioner.pdf)。因为在线的时候，softmax的输出没啥用，所以打分问题就变成了一个在点积的空间上进行最近邻检索的问题，有很多通用库可以用，例如基于LSH的ann算法：[ An Investigation of Practical Approximate Nearest Neighbor Algorithms](http://papers.nips.cc/paper/2666-an-investigation-of-practical-approximate-nearest-neighbor-algorithms.pdf)。
+
+注：
+
+item-embedding也可以参考[https://zhuanlan.zhihu.com/p/24339183?refer=deeplearning-surfing](https://zhuanlan.zhihu.com/p/24339183?refer=deeplearning-surfing)里说的[Item2vec: Neural Item Embedding for Collaborative Filtering](https://arxiv.org/abs/1603.04259)的想法，把item视为word，用户的行为序列视为一个集合，item间的共现为正样本，并按照item的频率分布进行负样本采样，相似度的计算还只是利用到了item共现信息，缺点是：忽略了user行为序列信息; 没有建模用户对不同item的喜欢程度高低。
+
 
 ### 4.2 Modeling Expected Watch Time
 
