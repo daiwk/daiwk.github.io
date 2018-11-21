@@ -12,7 +12,7 @@ tags: [python, ]
 - [1. 编译安装python](#1-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85python)
 - [2. jupyter](#2-jupyter)
 - [3. mkdocs](#3-mkdocs)
-- [线程池](#%E7%BA%BF%E7%A8%8B%E6%B1%A0)
+- [线程池threadpool](#%E7%BA%BF%E7%A8%8B%E6%B1%A0threadpool)
 - [mac版python3的tf](#mac%E7%89%88python3%E7%9A%84tf)
 - [copy deepcopy](#copy-deepcopy)
 - [gc](#gc)
@@ -78,7 +78,7 @@ pip install mkdocs
 
 参考：[https://www.mkdocs.org/](https://www.mkdocs.org/)
 
-## 线程池
+## 线程池threadpool
 
 参考[http://www.cnblogs.com/Eva-J/p/5106564.html](http://www.cnblogs.com/Eva-J/p/5106564.html)
 
@@ -99,6 +99,14 @@ pip install mkdocs
 <br/>
 
 </html>
+
+如果遇到『most likely raised during interpreter』问题，可以参考[https://blog.csdn.net/daijiguo/article/details/79488548](https://blog.csdn.net/daijiguo/article/details/79488548)
+
+写成：
+
+```python
+pool = threadpool.ThreadPool(20, poll_timeout=None)
+```
 
 ## mac版python3的tf
 
