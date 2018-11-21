@@ -12,6 +12,7 @@ tags: [python, ]
 - [1. 编译安装python](#1-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85python)
 - [2. jupyter](#2-jupyter)
 - [3. mkdocs](#3-mkdocs)
+- [线程池](#%E7%BA%BF%E7%A8%8B%E6%B1%A0)
 - [mac版python3的tf](#mac%E7%89%88python3%E7%9A%84tf)
 - [copy deepcopy](#copy-deepcopy)
 - [gc](#gc)
@@ -77,6 +78,27 @@ pip install mkdocs
 
 参考：[https://www.mkdocs.org/](https://www.mkdocs.org/)
 
+## 线程池
+
+参考[http://www.cnblogs.com/Eva-J/p/5106564.html](http://www.cnblogs.com/Eva-J/p/5106564.html)
+
+在初始化中，它会根据我们的需求，启动相应数量的线程，这些线程是初始化好的，一直到程序结束，不会停止。
+
+它们从任务队列中获取任务，在没有任务的时候就阻塞，
+
+他们当我们有任务的时候，对任务进行初始化，放入任务队列，
+
+拿到任务的线程结束了自己的阻塞人生，欢欢喜喜的拿回去执行，
+
+并在执行完毕之后，将结果放入结果队列，继续到任务队列中取任务，如果没有任务就进入阻塞状态。
+
+<html>
+<br/>
+
+<img src='../assets/py-threadpool.png' style='max-height: 300px'/>
+<br/>
+
+</html>
 
 ## mac版python3的tf
 
@@ -169,7 +191,6 @@ False
 # 而在此过程当中，a 和 b 都没有动，他们还贴在那个物品上。因此自然 a b 的值都变成了 [4, 5, 6]。
 ```
 
-好
 
 ## gc
 
