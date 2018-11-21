@@ -12,6 +12,7 @@ tags: [python, ]
 - [1. 编译安装python](#1-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85python)
 - [2. jupyter](#2-jupyter)
 - [3. mkdocs](#3-mkdocs)
+- [进程池multiprocessing.Pool](#%E8%BF%9B%E7%A8%8B%E6%B1%A0multiprocessingpool)
 - [线程池threadpool](#%E7%BA%BF%E7%A8%8B%E6%B1%A0threadpool)
 - [mac版python3的tf](#mac%E7%89%88python3%E7%9A%84tf)
 - [copy deepcopy](#copy-deepcopy)
@@ -78,6 +79,28 @@ pip install mkdocs
 
 参考：[https://www.mkdocs.org/](https://www.mkdocs.org/)
 
+## 进程池multiprocessing.Pool
+
+[https://www.cnblogs.com/gengyi/p/8620853.html](https://www.cnblogs.com/gengyi/p/8620853.html)
+
+demo代码
+
+```python
+import multiprocessing as mp
+
+def test(msg):
+    print msg
+
+p = mp.Pool(processes = 5) # 创建5条进程
+
+for i in range(10):
+    msg = 'hello-%d'%i
+    p.apply_async(test, (msg, )) # 向进程池添加任务
+
+p.close() # 关闭进程池，不再接受请求
+p.join() # 等待所有的子进程结束
+```
+
 ## 线程池threadpool
 
 参考[http://www.cnblogs.com/Eva-J/p/5106564.html](http://www.cnblogs.com/Eva-J/p/5106564.html)
@@ -99,6 +122,24 @@ pip install mkdocs
 <br/>
 
 </html>
+
+demo代码
+
+```python
+import threadpool
+def func(a, b, c):
+      print a, b, c
+pool = threadpool.ThreadPool(20, poll_timeout=None)
+lst = []
+for i in range(500):
+      dic = {"a": i, "b": i+1, "c": i}
+      pair = (None, dic)
+      lst.append(pair)
+
+requests = threadpool.makeRequests(func, lst)
+[pool.putRequest(req) for req in requests]
+pool.wait()
+```
 
 如果遇到『most likely raised during interpreter』问题，可以参考[https://blog.csdn.net/daijiguo/article/details/79488548](https://blog.csdn.net/daijiguo/article/details/79488548)
 
