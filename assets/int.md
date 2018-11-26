@@ -1,3 +1,138 @@
+# c++基础
+
+## 实现单例模式
+
+参考[https://www.cnblogs.com/qiaoconglovelife/p/5851163.html](https://www.cnblogs.com/qiaoconglovelife/p/5851163.html)
+
+### 线程不安全版本的经典实现(懒汉实现)
+
++ **构造函数**声明为**private或protect**防止被外部函数实例化
++ 内部保存一个**private static的类指针p**保存唯一的实例
++ 由一个**public**的类方法 **(instance函数)**返回单例类唯一的**static实例指针**
++ 全局范围内给p赋**初始值NULL**
++ insance函数里判断指针p是否为NULL，如果是就new一个，反之直接return p
+
+如果两个线程同时首次调用instance方法且**同时检测到p是NULL值**，则两个线程会**同时构造一个实例给p**，因此是线程不安全的！！
+
+```c++
+class singleton
+{
+protected:
+    singleton(){}
+private:
+    static singleton* p;
+public:
+    static singleton* instance();
+};
+singleton* singleton::p = NULL;
+singleton* singleton::instance()
+{
+    if (p == NULL)
+        p = new singleton();
+    return p;
+}
+```
+
+单例大约有两种实现方法：懒汉与饿汉。
+
++ **懒汉**：故名思义，**不到万不得已就不会去实例化类**，也就是说在**第一次用到类实例的时候才会去实例化**，所以上边的经典方法被归为懒汉实现；
++ **饿汉**：饿了肯定要饥不择食。所以在**单例类定义的时候就进行实例化**。
+　　
+特点与选择：
+
++ 由于要进行**线程同步**，所以在**访问量比较大，或者可能访问的线程比较多时**，采用**饿汉**实现，可以实现更好的性能。这是**以空间换时间**。
++ 在**访问量较小时**，采用**懒汉**实现。这是**以时间换空间**。
+
+### 加锁的经典版本懒汉实现
+
+```c++
+class singleton
+{
+protected:
+    singleton()
+    {
+        pthread_mutex_init(&mutex);
+    }
+private:
+    static singleton* p;
+public:
+    static pthread_mutex_t mutex;
+    static singleton* initance();
+};
+
+pthread_mutex_t singleton::mutex;
+singleton* singleton::p = NULL;
+singleton* singleton::initance()
+{
+    if (p == NULL)
+    {
+        pthread_mutex_lock(&mutex);
+        if (p == NULL)
+            p = new singleton();
+        pthread_mutex_unlock(&mutex);
+    }
+    return p;
+}
+```
+
+### 加锁的懒汉实现
+
++ 定义一个**静态**的pthread_mutex_t类型的**类变量mutex**
++ **构造函数**中对这个mutex进行**pthread_mutex_init**
++ **instance函数里**
+    + 先加锁pthread_mutex_lock
+    + 定义一个**静态的实例**
+    + 释放锁pthread_mutex_unlock
+    + **返回其静态实例的地址**
+
+```c++
+class singleton
+{
+protected:
+    singleton()
+    {
+        pthread_mutex_init(&mutex);
+    }
+public:
+    static pthread_mutex_t mutex;
+    static singleton* initance();
+    int a;
+};
+
+pthread_mutex_t singleton::mutex;
+singleton* singleton::initance()
+{
+    pthread_mutex_lock(&mutex);
+    static singleton obj;
+    pthread_mutex_unlock(&mutex);
+    return &obj;
+}
+```
+
+### 不用加锁的饿汉版本实现
+
++ **构造函数**声明为**private或protect**防止被外部函数实例化
++ 内部保存一个**private static的类指针p**保存唯一的实例
++ 由一个**public**的类方法 **(instance函数)**返回单例类唯一的**static实例指针**，实现时**直接返回p**
++ 全局范围内**new一个对象给p**
+
+```c++
+class singleton
+{
+protected:
+    singleton()
+    {}
+private:
+    static singleton* p;
+public:
+    static singleton* initance();
+};
+singleton* singleton::p = new singleton;
+singleton* singleton::initance()
+{
+    return p;
+}
+```
 
 # 字符串
 
