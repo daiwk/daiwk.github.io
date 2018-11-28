@@ -173,7 +173,7 @@ Loss=\sum_{n=1}^{N}(t_nlogy_n+(1-t_n)log(1-y_n))
 <html>
 <br/>
 
-<img src='../assets/auc-calc.png' style='max-height: 300px'/>
+<img src='../assets/auc-calc.jpg' style='max-height: 300px'/>
 <br/>
 
 </html>
