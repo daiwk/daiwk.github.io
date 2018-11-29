@@ -943,7 +943,33 @@ public:
 
 输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。
 
+解析：
 
+直接按顺序扔到一个vec里，然后返回前调用```std::reverse```把这个vec反转一下
+
+```c++
+/**
+*  struct ListNode {
+*        int val;
+*        struct ListNode *next;
+*        ListNode(int x) :
+*              val(x), next(NULL) {
+*        }
+*  };
+*/
+class Solution {
+public:
+    vector<int> printListFromTailToHead(ListNode* head) {
+        vector<int> vec;
+        while (head != NULL) {
+            vec.emplace_back(head->val);
+            head = head->next;
+        }
+        std::reverse(vec.begin(), vec.end());
+        return vec;
+    }
+};
+```
 
 ## 环形链表
 
@@ -1225,6 +1251,12 @@ public:
 
 
 # 树
+
+## 重建二叉树(offerNo4)
+
+输入某二叉树的**前序遍历**和**中序遍历**的结果，请**重建**出该二叉树。假设输入的前序遍历和中序遍历的结果中都**不含重复的数字**。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+
+
 
 ## 对称二叉树
 
