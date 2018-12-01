@@ -7,11 +7,91 @@ tags: [pytorch, ]
 
 目录
 
+<!-- TOC -->
 
+- [torch.nn](#torchnn)
+    - [torch.nn.functional](#torchnnfunctional)
+    - [torch.nn.Conv2d](#torchnnconv2d)
+    - [torch.nn.MaxPool2d](#torchnnmaxpool2d)
+    - [torch.nn.Embedding](#torchnnembedding)
+- [torch](#torch)
+    - [torch.addmm](#torchaddmm)
+    - [torch.mm](#torchmm)
+    - [torch.bmm](#torchbmm)
+    - [torch.unsqueeze](#torchunsqueeze)
+- [torch.Tensor](#torchtensor)
+    - [view](#view)
+    - [masked_fill_](#maskedfill)
+
+<!-- /TOC -->
 
 ## torch.nn
 
 [https://pytorch-cn.readthedocs.io/zh/latest/package_references/torch-nn/](https://pytorch-cn.readthedocs.io/zh/latest/package_references/torch-nn/)
+
+### torch.nn.functional
+
+### torch.nn.Conv2d
+
+```torch.nn.Conv2d(in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1, groups=1, bias=True)```
+
++ in_channels(int) – 输入信号的通道
++ out_channels(int) – 卷积产生的通道
++ kerner_size(int or tuple) - 卷积核的尺寸
++ stride(int or tuple, optional) - 卷积步长
++ padding(int or tuple, optional) - 输入的每一条边补充0的层数
++ dilation(int or tuple, optional) – 卷积核元素之间的间距（空洞卷积时使用）
++ groups(int, optional) – 从输入通道到输出通道的阻塞连接数
++ bias(bool, optional) - 如果bias=True，添加偏置
+
+输入的尺度是(N, C_in,H,W)，输出尺度（N,C_out,H_out,W_out）
+
+`\[
+out(N_i, C_{out_j})=bias(C_{out_j})+\sum^{C_{in}-1}{k=0}weight(C{out_j},k)\bigotimes input(N_i,k)
+\]`
+
++ bigotimes: 表示二维的相关系数计算 stride: 控制相关系数的计算步长 
++ dilation(空洞卷积): 用于控制内核点之间的距离，详细描述在[https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md](https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md)
++ groups: 控制输入和输出之间的连接： group=1，输出是所有的输入的卷积；group=2，此时相当于有并排的两个卷积层，每个卷积层计算输入通道的一半，并且产生的输出是输出通道的一半，随后将这两个输出连接起来。
+
+参数kernel_size，stride,padding，dilation也可以是一个int的数据，此时卷积height和width值相同;也可以是一个tuple数组，tuple的第一维度表示height的数值，tuple的第二维度表示width的数值
+
+shape：
+
++ input: (N,C_in,H_in,W_in) 
++ output: (N,C_out,H_out,W_out)
+    + `\(H_{out}=floor((H_{in}+2padding[0]-dilation[0](kernerl_size[0]-1)-1)/stride[0]+1)\)`
+    + `\(W_{out}=floor((W_{in}+2padding[1]-dilation[1](kernerl_size[1]-1)-1)/stride[1]+1)\)`
+
+### torch.nn.MaxPool2d
+
+```torch.nn.MaxPool2d(kernel_size, stride=None, padding=0, dilation=1, return_indices=False, ceil_mode=False)```
+
+如果输入的大小是(N,C,H,W)，那么输出的大小是(N,C,H_out,W_out)和池化窗口大小(kH,kW)的关系是：
+
+`\[
+out(N_i, C_j,k)=max^{kH-1}{m=0}max^{kW-1}{m=0}input(N_{i},C_j,stride[0]h+m,stride[1]w+n)
+\]`
+
+如果padding不是0，会在输入的每一边添加相应数目0 
+dilation用于控制内核点之间的距离，详细描述在这里
+
+参数kernel_size，stride, padding，dilation数据类型： 可以是一个int类型的数据，此时卷积height和width值相同; 也可以是一个tuple数组（包含来两个int类型的数据），第一个int数据表示height的数值，tuple的第二个int类型的数据表示width的数值
+
++ kernel_size(int or tuple) - max pooling的窗口大小
++ stride(int or tuple, optional) - max pooling的窗口移动的步长。**!!!!默认值是kernel_size!!!!!!**
++ padding(int or tuple, optional) - 输入的每一条边补充0的层数
++ dilation(int or tuple, optional) – 一个控制窗口中元素步幅的参数
++ return_indices - 如果等于True，会返回输出最大值的序号，对于上采样操作会有帮助
++ ceil_mode - 如果等于True，计算输出信号大小的时候，会使用向上取整，代替默认的向下取整的操作
+
+shape: 
+
++ 输入: (N,C,H_{in},W_in) 
++ 输出: (N,C,H_out,W_out) 
+    + `\(H_{out}=floor((H_{in} + 2padding[0] - dilation[0](kernel_size[0] - 1) - 1)/stride[0] + 1\)`
+    + `\(W_{out}=floor((W_{in} + 2padding[1] - dilation[1](kernel_size[1] - 1) - 1)/stride[1] + 1\)`
+
 
 ### torch.nn.Embedding
 
