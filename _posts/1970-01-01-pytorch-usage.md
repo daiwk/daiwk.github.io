@@ -44,22 +44,24 @@ tags: [pytorch, ]
 + groups(int, optional) – 从输入通道到输出通道的阻塞连接数
 + bias(bool, optional) - 如果bias=True，添加偏置
 
-输入的尺度是(N, C_in,H,W)，输出尺度（N,C_out,H_out,W_out）
+输入的尺度是`\((N, C_{in},H,W)\)`，输出尺度`\((N,C_out,H_out,W_out)\)`
 
 `\[
-out(N_i, C_{out_j})=bias(C_{out_j})+\sum^{C_{in}-1}_{k=0}weight(C{out_j},k)\bigotimes input(N_i,k)
+out(N_i, C_{out_j})=bias(C_{out_j})+\sum^{C_{in}-1}_{k=0}weight(C_{out_j},k)\bigotimes input(N_i,k)
 \]`
 
-+ bigotimes: 表示二维的相关系数计算 stride: 控制相关系数的计算步长 
++ `\(\bigotimes\)`: 表示二维的相关系数计算 stride: 控制相关系数的计算步长 
 + dilation(空洞卷积): 用于控制内核点之间的距离，详细描述在[https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md](https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md)
-+ groups: 控制输入和输出之间的连接： group=1，输出是所有的输入的卷积；group=2，此时相当于有并排的两个卷积层，每个卷积层计算输入通道的一半，并且产生的输出是输出通道的一半，随后将这两个输出连接起来。
++ groups: 控制输入和输出之间的连接： 
+    + group=1，输出是所有的输入的卷积；
+    + group=2，此时相当于有并排的两个卷积层，每个卷积层计算输入通道的一半，并且产生的输出是输出通道的一半，随后将这两个输出连接起来。
 
 参数kernel_size，stride,padding，dilation也可以是一个int的数据，此时卷积height和width值相同;也可以是一个tuple数组，tuple的第一维度表示height的数值，tuple的第二维度表示width的数值
 
 shape：
 
-+ input: (N,C_in,H_in,W_in) 
-+ output: (N,C_out,H_out,W_out)
++ input: `\((N,C_{in},H_in,W_{in})\)`
++ output: `\((N,C_{out},H_out,W_{out})\)`
     + `\(H_{out}=floor((H_{in}+2padding[0]-dilation[0](kernerl\_size[0]-1)-1)/stride[0]+1)\)`
     + `\(W_{out}=floor((W_{in}+2padding[1]-dilation[1](kernerl\_size[1]-1)-1)/stride[1]+1)\)`
 
@@ -73,8 +75,9 @@ shape：
 out(N_i, C_j,k)=\max^{kH-1}_{m=0}\max^{kW-1}_{m=0}input(N_{i},C_j,stride[0]h+m,stride[1]w+n)
 \]`
 
-如果padding不是0，会在输入的每一边添加相应数目0 
-dilation用于控制内核点之间的距离，详细描述在这里
+如果padding不是0，会在输入的每一边添加相应数目0
+
+dilation用于控制内核点之间的距离，详细描述在[https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md](https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md)
 
 参数kernel_size，stride, padding，dilation数据类型： 可以是一个int类型的数据，此时卷积height和width值相同; 也可以是一个tuple数组（包含来两个int类型的数据），第一个int数据表示height的数值，tuple的第二个int类型的数据表示width的数值
 
@@ -87,8 +90,8 @@ dilation用于控制内核点之间的距离，详细描述在这里
 
 shape: 
 
-+ 输入: (N,C,H_{in},W_in) 
-+ 输出: (N,C,H_out,W_out) 
++ 输入: `\((N,C,H_{in},W_{in})\)`
++ 输出: `\((N,C,H_{out},W_{out})\)`
     + `\(H_{out}=floor((H_{in} + 2padding[0] - dilation[0](kernel\_size[0] - 1) - 1)/stride[0] + 1\)`
     + `\(W_{out}=floor((W_{in} + 2padding[1] - dilation[1](kernel\_size[1] - 1) - 1)/stride[1] + 1\)`
 
