@@ -23,6 +23,7 @@ https://daiwk.github.io/posts/other-others.html
 https://daiwk.github.io/posts/other-scrapy.html
 https://daiwk.github.io/posts/platform-cache.html
 https://daiwk.github.io/posts/platform-paddle-code.html
+https://daiwk.github.io/posts/pytorch-usage.html
 https://daiwk.github.io/posts/video-video-papers.html
 https://daiwk.github.io/posts/ml-pearson-correlation-coefficient.html
 https://daiwk.github.io/posts/ml-regularization.html
