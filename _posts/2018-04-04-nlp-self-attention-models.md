@@ -61,8 +61,6 @@ attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt {d_k}})V
 
 类似地，对于这个attention矩阵，m行n列，m个目标语言，n个源语言，一行就是一个目标语言的词，表示这个词和源语言每个词的相关程度，所以分母是所有源语言的词（这一行求和）。
 
-勘误。。下图中，『我在』是目标语言，『I am here』是源语言。。
-
 <html>
 <br/>
 <img src='../assets/attention-explanation.jpg' style='max-height: 300px'/>
