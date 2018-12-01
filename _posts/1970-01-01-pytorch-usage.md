@@ -44,7 +44,16 @@ tags: [pytorch, ]
 + groups(int, optional) – 从输入通道到输出通道的阻塞连接数
 + bias(bool, optional) - 如果bias=True，添加偏置
 
-输入的尺度是`\((N, C_{in},H,W)\)`，输出尺度`\((N,C_out,H_out,W_out)\)`
+正常的卷积如下：
+
++ 输入图片的shape是(height, width, in_channels)，
++ filter的shape是(height_f, width_f, in_channels)，**filter和输入的第三维必须相等**。
++ 对于一个filter而言，输出的图片是(height_o, width_o)，**注意，并没有第三维！！**
++ 所谓的outchannels就是filter的个数，所以输出是(height_o, width_o, out_channels)
+
+卷积操作就是，将这个三维的filter（例如3x3x3）与输入图像的对应位置相乘，再将这27个数相加，得到的结果就是output的一个元素。
+
+对于复杂的卷积，假设输入的尺度是`\((N, C_{in},H,W)\)`，输出尺度`\((N,C_out,H_out,W_out)\)`
 
 `\[
 out(N_i, C_{out_j})=bias(C_{out_j})+\sum^{C_{in}-1}_{k=0}weight(C_{out_j},k)\bigotimes input(N_i,k)
@@ -68,6 +77,10 @@ shape：
 ### torch.nn.MaxPool2d
 
 ```torch.nn.MaxPool2d(kernel_size, stride=None, padding=0, dilation=1, return_indices=False, ceil_mode=False)```
+
+pooling的基本思想，与卷积的运算基本一样，区别在于，filter和原图像做的不是卷积操作，而是对原图像的filter大小的区域做max/min之类的操作，而且filter并没有第三维，输入和输出的第三维是一样的。
+
+针对pooling，并没有需要学习的参数。
 
 如果输入的大小是(N,C,H,W)，那么输出的大小是(N,C,H_out,W_out)和池化窗口大小(kH,kW)的关系是：
 
