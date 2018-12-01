@@ -47,7 +47,7 @@ tags: [pytorch, ]
 输入的尺度是(N, C_in,H,W)，输出尺度（N,C_out,H_out,W_out）
 
 `\[
-out(N_i, C_{out_j})=bias(C_{out_j})+\sum^{C_{in}-1}{k=0}weight(C{out_j},k)\bigotimes input(N_i,k)
+out(N_i, C_{out_j})=bias(C_{out_j})+\sum^{C_{in}-1}_{k=0}weight(C{out_j},k)\bigotimes input(N_i,k)
 \]`
 
 + bigotimes: 表示二维的相关系数计算 stride: 控制相关系数的计算步长 
@@ -60,8 +60,8 @@ shape：
 
 + input: (N,C_in,H_in,W_in) 
 + output: (N,C_out,H_out,W_out)
-    + `\(H_{out}=floor((H_{in}+2padding[0]-dilation[0](kernerl_size[0]-1)-1)/stride[0]+1)\)`
-    + `\(W_{out}=floor((W_{in}+2padding[1]-dilation[1](kernerl_size[1]-1)-1)/stride[1]+1)\)`
+    + `\(H_{out}=floor((H_{in}+2padding[0]-dilation[0](kernerl\_size[0]-1)-1)/stride[0]+1)\)`
+    + `\(W_{out}=floor((W_{in}+2padding[1]-dilation[1](kernerl\_size[1]-1)-1)/stride[1]+1)\)`
 
 ### torch.nn.MaxPool2d
 
@@ -70,7 +70,7 @@ shape：
 如果输入的大小是(N,C,H,W)，那么输出的大小是(N,C,H_out,W_out)和池化窗口大小(kH,kW)的关系是：
 
 `\[
-out(N_i, C_j,k)=max^{kH-1}{m=0}max^{kW-1}{m=0}input(N_{i},C_j,stride[0]h+m,stride[1]w+n)
+out(N_i, C_j,k)=\max^{kH-1}_{m=0}\max^{kW-1}_{m=0}input(N_{i},C_j,stride[0]h+m,stride[1]w+n)
 \]`
 
 如果padding不是0，会在输入的每一边添加相应数目0 
@@ -89,8 +89,8 @@ shape:
 
 + 输入: (N,C,H_{in},W_in) 
 + 输出: (N,C,H_out,W_out) 
-    + `\(H_{out}=floor((H_{in} + 2padding[0] - dilation[0](kernel_size[0] - 1) - 1)/stride[0] + 1\)`
-    + `\(W_{out}=floor((W_{in} + 2padding[1] - dilation[1](kernel_size[1] - 1) - 1)/stride[1] + 1\)`
+    + `\(H_{out}=floor((H_{in} + 2padding[0] - dilation[0](kernel\_size[0] - 1) - 1)/stride[0] + 1\)`
+    + `\(W_{out}=floor((W_{in} + 2padding[1] - dilation[1](kernel\_size[1] - 1) - 1)/stride[1] + 1\)`
 
 
 ### torch.nn.Embedding
