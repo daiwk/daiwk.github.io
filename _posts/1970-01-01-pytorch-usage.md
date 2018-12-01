@@ -60,8 +60,8 @@ out(N_i, C_{out_j})=bias(C_{out_j})+\sum^{C_{in}-1}_{k=0}weight(C_{out_j},k)\big
 
 shape：
 
-+ input: `\((N,C_{in},H_in,W_{in})\)`
-+ output: `\((N,C_{out},H_out,W_{out})\)`
++ input: `\((N,C_{in},H_{in},W_{in})\)`
++ output: `\((N,C_{out},H_{out},W_{out})\)`
     + `\(H_{out}=floor((H_{in}+2padding[0]-dilation[0](kernerl\_size[0]-1)-1)/stride[0]+1)\)`
     + `\(W_{out}=floor((W_{in}+2padding[1]-dilation[1](kernerl\_size[1]-1)-1)/stride[1]+1)\)`
 
