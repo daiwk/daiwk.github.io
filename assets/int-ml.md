@@ -527,3 +527,78 @@ x
 ## 拉格朗日对偶性
 
 x
+
+## 信息论相关
+
+### KL散度
+
+**相对熵**（relative entropy）又称为**KL散度**（Kullback–Leibler divergence，简称KLD），**信息散度（information divergence）**，**信息增益（information gain）**。
+
+KL散度是两个概率分布P和Q差别的**非对称性**的度量。 KL散度是用来度量使用**基于Q的编码**来编码**来自P的样本** **平均所需的额外的位元数**。 典型情况下，**P表示数据的真实分布**，**Q表示数据的理论分布，模型分布，或P的近似分布**。
+
+注意：$D_{KL}(P||Q)$是指的用**分布Q**来**近似**数据的**真实分布P**，先写P再写Q，公式里没有-ln的时候，就是p/q
+
+对于离散随机变量：
+
+$$
+D_{KL}(P||Q)=\sum_{i}P(i)ln\frac{P(i)}{Q(i)}=-\sum _{i}P(i)ln\frac{Q(i)}{P(i)}
+$$
+
+KL散度仅当**概率P和Q各自总和均为1**，且对于任何i皆满足$Q(i)>0$及$P(i)>0$时，才有定义。如果出现$0ln0$，当做0
+
+对于连续随机变量：
+
+$$
+D_{KL}(P||Q)=\int ^{\infty }_{-\infty}p(x)ln\frac{p(x)}{q(x)}dx
+$$
+
+性质：
+
+KL散度大于等于0
+
+证明：
+
+先了解一下Jensen不等式：
+
+上任意两点所作割线（与函数图像有两个不同交点的直线，如果只有一个交点，那就是切线）一定在这两点间的函数图象的上方：
+
+$$tf(x_1)+(1-t)f(x_2)\ge f(tx_1+(1-t)x_2),0\le t \le 1$$
+
+如果$\varphi$是一个凸函数，那么有：
+
+$$\varphi(E(x))\le E(\varphi(x))$$
+
+对于**离散随机变量**，$\sum_{i=1}^n \lambda_i=1$：
+
+$$\varphi(\sum _{i=1}^n g(x_i)\lambda_i)\le \sum^{n}_{i=1}\varphi(g(x_i))\lambda_i$$
+
+当我们取$g(x)=x$，$\lambda_i=1/n$，$\varphi(x)=log(x)$时，就有
+
+$$log(\sum^{n}_{i=1}\frac{x_i}{n})\ge \sum^{n}_{i=1}\frac{log(x_i)}{n}$$
+
+
+对于**连续随机变量**，如果f(x)是非负函数，且满足（f(x)是概率密度函数）：
+
+$$\int^{\infty}_{-\infty}f(x)dx=1$$
+
+如果$\varphi$在g(x)的值域中是凸函数，那么
+
+$$\varphi(\int^{\infty}_{-\infty}g(x)f(x)dx)\le \int ^{\infty}_{-\infty}\varphi(g(x))f(x)dx$$
+
+特别地，当$g(x)=x$时，有
+
+$$\varphi(\int^{\infty}_{-\infty}xf(x)dx)\le \int ^{\infty}_{-\infty}\varphi(x)f(x)dx$$
+
+回到这个问题中，$g(x)=\frac{q(x)}{p(x)}$，$\varphi(x)=-logx$是一个严格凸函数，那么$\varphi(g(x))=-log\frac{q(x)}{p(x)}$，所以
+
+$$
+\begin{aligned}
+D_{KL}(P||Q)&=\int ^{\infty }_{-\infty}p(x)ln\frac{p(x)}{q(x)}dx \\
+ &=\int ^{\infty }_{-\infty}p(x)(-ln\frac{q(x)}{p(x)})dx  \\ 
+ &=\int ^{\infty }_{-\infty}(-ln\frac{q(x)}{p(x)})p(x)dx  \\ 
+ &\ge -ln(\int^{\infty }_{-\infty}\frac{q(x)}{p(x)}p(x)dx) \\ 
+ &\ge -ln(\int^{\infty }_{-\infty}q(x)dx) \\ 
+ &=-ln1=0
+\end{aligned}
+$$
+
