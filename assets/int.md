@@ -1353,6 +1353,81 @@ public:
 };
 ```
 
+## 后序遍历
+
+左-》右-》根
+
+递归：
+
+```c++
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void postOrder(TreeNode *root, vector<int>& vec){
+        if (root != NULL) {
+            postOrder(root->left, vec);
+            postOrder(root->right, vec);
+            vec.push_back(root->val);
+        }
+    }
+    vector<int> postorderTraversal(TreeNode *root) {
+        vector<int> vec;
+        postOrder(root, vec);
+        return vec;  
+    }
+};
+```
+
+非递归：
+
+参考非递归的前序遍历，然后做如下改动：
+
+前序遍历 根->左->右 变成 根->右->左 结果再reverse一下
+
+```c++
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode *root) {
+       vector<int> res;
+       if(!root)
+           return res;
+       stack<TreeNode*> st;
+       st.push(root);
+       TreeNode *temp;
+       while( st.size()) {
+           temp = st.top();
+           st.pop();
+           res.push_back(temp->val);
+           if (temp->left) {
+               st.push(temp->left);
+           }
+           if (temp->right) {
+               st.push(temp->right);
+           }
+       }
+       std::reverse(res.begin(),res.end());
+       return res;
+    }
+};
+```
+
 ## 重建二叉树(offerNo4)
 
 输入某二叉树的**前序遍历**和**中序遍历**的结果，请**重建**出该二叉树。假设输入的前序遍历和中序遍历的结果中都**不含重复的数字**。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
