@@ -1291,6 +1291,34 @@ public:
 
 方法1：
 
+注意，先扔右子树再扔左子树，因为栈是后进先出，前序是先左再右。但是这种方法好像会爆内存…
+
+```c++
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode *root) {
+        vector<int> res;
+        stack<TreeNode *> s;
+        if (root == NULL){
+            return res;
+        }
+        s.push(root);
+        while (!s.empty()){
+            TreeNode *cur = s.top();
+            s.pop();
+            res.push_back(cur->val);
+            if (cur->right!=NULL)
+                s.push(cur->right);
+            if (cur->left!=NULL)
+                s.push(cur->left);
+        }
+        return res;
+    }
+};
+```
+
+方法2：
+
 不是非常非常懂。。先记着
 
 ```c++
@@ -1325,33 +1353,7 @@ public:
 };
 ```
 
-方法2：
 
-注意，先扔右子树再扔左子树，因为栈是后进先出，前序是先左再右。但是这种方法好像会爆内存…
-
-```c++
-class Solution {
-public:
-    vector<int> preorderTraversal(TreeNode *root) {
-        vector<int> res;
-        stack<TreeNode *> s;
-        if (root == NULL){
-            return res;
-        }
-        s.push(root);
-        while (!s.empty()){
-            TreeNode *cur = s.top();
-            s.pop();
-            res.push_back(cur->val);
-            if (cur->right!=NULL)
-                s.push(cur->right);
-            if (cur->left!=NULL)
-                s.push(cur->left);
-        }
-        return res;
-    }
-};
-```
 
 ## 后序遍历
 
@@ -1387,6 +1389,8 @@ public:
 ```
 
 非递归：
+
+方法1：
 
 参考非递归的前序遍历，然后做如下改动：
 
@@ -1424,6 +1428,57 @@ public:
        }
        std::reverse(res.begin(),res.end());
        return res;
+    }
+};
+```
+
+方法2：
+
+先从根往左一直入栈，直到为空，然后判断栈顶元素的右孩子，如果不为空且未被访问过，则从它开始重复左孩子入栈的过程；否则说明此时栈顶为要访问的节点（因为左右孩子都是要么为空要么已访问过了），出栈然后访问即可，接下来再判断栈顶元素的右孩子...直到栈空。
+
+```c++
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode *root) {
+        vector<int> postorder;
+        stack<TreeNode*> st;
+        TreeNode *p = root;
+        TreeNode *r = NULL;// r用来记录上一次访问的节点
+        while (p || !st.empty()) {
+            if (p) { //左孩子一直入栈，直到左孩子为
+                st.push(p);
+                p=p->left;
+            } else {
+                p=st.top();
+                p = p->right;
+                if (p!=NULL && p != r) {
+                    //如果栈顶元素的右孩子不为空，且未被访问
+                    //则右孩子进栈，
+                    //然后重复左孩子一直进栈直到为空的过程
+                    st.push(p);
+                    p = p->left;
+                } else {
+                    //否则取出栈顶元素，放到结果数组中，
+                    //然后pop，
+                    //r记录刚刚访问的节点
+                    p = st.top();
+                    postorder.push_back(p->val);
+                    st.pop();
+                    r = p;
+                    p = NULL;
+                }
+            }
+        }
+        return postorder;
     }
 };
 ```
