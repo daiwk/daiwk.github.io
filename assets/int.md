@@ -1252,6 +1252,107 @@ public:
 
 # 树
 
+## 前序遍历
+
+根-》左-》右这样遍历
+
+递归：
+
+```c++
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> res;
+    void helper(TreeNode* root) {
+        if (root == NULL) return ;
+        res.push_back(root->val);
+        helper(root->left);
+        helper(root->right);
+    }
+     
+    vector<int> preorderTraversal(TreeNode *root) {
+        helper(root);
+        return res;
+    }
+};
+```
+
+非递归：
+
+使用栈：
+
+方法1：
+
+不是非常非常懂。。先记着
+
+```c++
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode *root) {
+        vector<int> preorder;
+        stack<TreeNode*> st;
+        TreeNode *p = root;
+        while (p || !st.empty()) {
+            if (p) {
+                preorder.push_back(p->val);
+                st.push(p);
+                p=p->left;
+            } else {
+                p=st.top();
+                st.pop();
+                p=p->right;
+            }
+        }
+        return preorder;
+    }
+};
+```
+
+方法2：
+
+注意，先扔右子树再扔左子树，因为栈是后进先出，前序是先左再右。但是这种方法好像会爆内存…
+
+```c++
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode *root) {
+        vector<int> res;
+        stack<TreeNode *> s;
+        if (root == NULL){
+            return res;
+        }
+        s.push(root);
+        while (!s.empty()){
+            TreeNode *cur = s.top();
+            s.pop();
+            res.push_back(cur->val);
+            if (cur->right!=NULL)
+                s.push(cur->right);
+            if (cur->left!=NULL)
+                s.push(cur->left);
+        }
+        return res;
+    }
+};
+```
+
 ## 重建二叉树(offerNo4)
 
 输入某二叉树的**前序遍历**和**中序遍历**的结果，请**重建**出该二叉树。假设输入的前序遍历和中序遍历的结果中都**不含重复的数字**。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
