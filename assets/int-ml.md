@@ -530,7 +530,7 @@ x
 
 ## 信息论相关
 
-### 凸集
+### 凸集
 
 假设$S$为在实或复向量空间的集。若对于所有$x,y\in S$和所有的$t\in [0,1]$都有$tx+(1-t)y\in S$，则$S$称为凸集。
 
@@ -538,7 +538,7 @@ x
 
 性质：
 
-如果$S$凸集，对于任意的$u_1,u_2,...,u_r\in S$，以及所有的非负$\lambda_1,\lambda_2,...,\lambda_r$满足$\lambda_1+\lambda_2+...+\lambda_r=1$，都有
+如果$S$是凸集，对于任意的$u_1,u_2,...,u_r\in S$，以及所有的非负$\lambda_1,\lambda_2,...,\lambda_r$满足$\lambda_1+\lambda_2+...+\lambda_r=1$，都有$\sum_{k=1}^{r}\lambda_ku_k\in S$。这个组合称为$u_1,u_2,...,u_r$的凸组合。
 
 ### 凸函数
 
