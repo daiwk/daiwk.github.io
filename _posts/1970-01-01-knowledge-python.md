@@ -81,6 +81,8 @@ pip install mkdocs
 
 ## 进程池multiprocessing.Pool
 
+官方文档：[https://docs.python.org/2.7/library/multiprocessing.html](https://docs.python.org/2.7/library/multiprocessing.html)
+
 [https://www.cnblogs.com/gengyi/p/8620853.html](https://www.cnblogs.com/gengyi/p/8620853.html)
 
 demo代码
