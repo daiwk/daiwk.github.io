@@ -1,8 +1,8 @@
 ---
 layout: post
-category: "nlp"
-title: "bert"
-tags: [bert, ]
+category: "platform"
+title: "TensorFlow Serving的深度学习在线预估优化"
+tags: [tf serving, tensorflow serving, ]
 ---
 
 目录
