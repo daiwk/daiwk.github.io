@@ -21,6 +21,9 @@ tags: [gan论文集合, ]
 - [irgan](#irgan)
 - [BigGAN](#biggan)
 - [TreeGAN](#treegan)
+- [stackGAN](#stackgan)
+- [cycleGAN](#cyclegan)
+- [deblurGAN](#deblurgan)
 
 <!-- /TOC -->
 
@@ -71,3 +74,16 @@ tags: [gan论文集合, ]
 ## TreeGAN
 
 [https://daiwk.github.io/posts/nlp-treegan.html](https://daiwk.github.io/posts/nlp-treegan.html))
+
+## stackGAN
+
+[https://daiwk.github.io/posts/cv-stackgan.html](https://daiwk.github.io/posts/cv-stackgan.html))
+
+## cycleGAN
+
+[https://daiwk.github.io/posts/cv-cyclegan.html](https://daiwk.github.io/posts/cv-cyclegan.html))
+
+## deblurGAN
+
+[https://daiwk.github.io/posts/cv-deblurgan.html](https://daiwk.github.io/posts/cv-deblurgan.html))
+
