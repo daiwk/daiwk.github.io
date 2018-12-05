@@ -2,7 +2,7 @@
 layout: post
 category: "cv"
 title: "cycleGAN"
-tags: [b, ]
+tags: [cyclegan, ]
 ---
 
 目录
