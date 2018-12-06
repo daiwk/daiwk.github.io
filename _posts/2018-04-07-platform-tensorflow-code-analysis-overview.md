@@ -32,6 +32,7 @@ tags: [tensorflow代码, 代码解析, 概览 ]
 
 参考：
 
++ **强行置顶！！！！**[https://github.com/horance-liu/tensorflow-internals](https://github.com/horance-liu/tensorflow-internals)
 + [A tour through the TensorFlow codebase](http://public.kevinrobinsonblog.com/docs/A%20tour%20through%20the%20TensorFlow%20codebase%20-%20v4.pdf)
 + [『深度长文』Tensorflow代码解析（一）](https://zhuanlan.zhihu.com/p/25646408)
 + [『深度长文』Tensorflow代码解析（二）](https://zhuanlan.zhihu.com/p/25927956)
