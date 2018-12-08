@@ -10,27 +10,33 @@ tags: [bert代码解读, bert code, application]
 <!-- TOC -->
 
 - [basics](#basics)
-    - [TPUEstimator](#tpuestimator)
-        - [train](#train)
-        - [predict](#predict)
-        - [evaluate](#evaluate)
+  - [TPUEstimator](#tpuestimator)
+    - [train](#train)
+    - [predict](#predict)
+    - [evaluate](#evaluate)
 - [extract-features](#extract-features)
-    - [extract-features.py](#extract-featurespy)
-        - [InputExample](#inputexample)
-        - [InputFeatures](#inputfeatures)
-        - [truncate-seq-pair](#truncate-seq-pair)
-        - [read-examples](#read-examples)
-        - [convert-examples-to-features](#convert-examples-to-features)
-        - [input-fn-builder](#input-fn-builder)
-        - [model-fn-builder](#model-fn-builder)
-        - [main](#main)
+  - [extract-features.py](#extract-featurespy)
+    - [InputExample](#inputexample)
+    - [InputFeatures](#inputfeatures)
+    - [truncate-seq-pair](#truncate-seq-pair)
+    - [read-examples](#read-examples)
+    - [convert-examples-to-features](#convert-examples-to-features)
+    - [input-fn-builder](#input-fn-builder)
+    - [model-fn-builder](#model-fn-builder)
+    - [main](#main)
 - [pretrain](#pretrain)
-    - [create-pretraining-data.py](#create-pretraining-datapy)
-    - [run-pretraining.py](#run-pretrainingpy)
+  - [create-pretraining-data.py](#create-pretraining-datapy)
+    - [工具函数与类](#%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E4%B8%8E%E7%B1%BB)
+      - [TrainingInstance](#traininginstance)
+      - [create-int-feature](#create-int-feature)
+      - [create-float-feature](#create-float-feature)
+      - [write-instance-to-example-files](#write-instance-to-example-files)
+    - [main](#main-1)
+  - [run-pretraining.py](#run-pretrainingpy)
 - [classification](#classification)
-    - [run-classifier.py](#run-classifierpy)
+  - [run-classifier.py](#run-classifierpy)
 - [squad](#squad)
-    - [run-squad.py](#run-squadpy)
+  - [run-squad.py](#run-squadpy)
 
 <!-- /TOC -->
 
@@ -498,14 +504,186 @@ def model_fn_builder(bert_config, init_checkpoint, layer_indexes, use_tpu,
       writer.write(json.dumps(output_json) + "\n")
 ```
 
-
 ## pretrain
 
 ### create-pretraining-data.py
 
+将输入文件转换成tfrecords格式
+
+#### 工具函数与类
+
+##### TrainingInstance
+
+有以下几个成员变量：
+
++ tokens
++ segment_ids
++ is_random_next
++ masked_lm_positions
++ masked_lm_labels
+
+```python
+class TrainingInstance(object):
+  """A single training instance (sentence pair)."""
+
+  def __init__(self, tokens, segment_ids, masked_lm_positions, masked_lm_labels,
+               is_random_next):
+    self.tokens = tokens
+    self.segment_ids = segment_ids
+    self.is_random_next = is_random_next
+    self.masked_lm_positions = masked_lm_positions
+    self.masked_lm_labels = masked_lm_labels
+
+  def __str__(self):
+    s = ""
+    s += "tokens: %s\n" % (" ".join(
+        [tokenization.printable_text(x) for x in self.tokens]))
+    s += "segment_ids: %s\n" % (" ".join([str(x) for x in self.segment_ids]))
+    s += "is_random_next: %s\n" % self.is_random_next
+    s += "masked_lm_positions: %s\n" % (" ".join(
+        [str(x) for x in self.masked_lm_positions]))
+    s += "masked_lm_labels: %s\n" % (" ".join(
+        [tokenization.printable_text(x) for x in self.masked_lm_labels]))
+    s += "\n"
+    return s
+
+  def __repr__(self):
+    return self.__str__()
+```
+
+##### create-int-feature
+
+生成int特征
+
+```python
+def create_int_feature(values):
+  feature = tf.train.Feature(int64_list=tf.train.Int64List(value=list(values)))
+  return feature
+```
+
+##### create-float-feature
+
+生成float特征
+
+```python
+def create_float_feature(values):
+  feature = tf.train.Feature(float_list=tf.train.FloatList(value=list(values)))
+  return feature
+```
+
+##### write-instance-to-example-files
+
+将结果落盘
+
+```python
+def write_instance_to_example_files(instances, tokenizer, max_seq_length,
+                                    max_predictions_per_seq, output_files):
+  """Create TF example files from `TrainingInstance`s."""
+  writers = []
+  for output_file in output_files:
+    writers.append(tf.python_io.TFRecordWriter(output_file))
+
+  writer_index = 0
+
+  total_written = 0
+  for (inst_index, instance) in enumerate(instances):
+    # 使用convert_tokens_to_ids将tokens转换为对应的input_ids
+    input_ids = tokenizer.convert_tokens_to_ids(instance.tokens)
+    input_mask = [1] * len(input_ids)
+    segment_ids = list(instance.segment_ids)
+    assert len(input_ids) <= max_seq_length
+
+    while len(input_ids) < max_seq_length:
+      input_ids.append(0)
+      input_mask.append(0)
+      segment_ids.append(0)
+
+    assert len(input_ids) == max_seq_length
+    assert len(input_mask) == max_seq_length
+    assert len(segment_ids) == max_seq_length
+
+    masked_lm_positions = list(instance.masked_lm_positions)
+    masked_lm_ids = tokenizer.convert_tokens_to_ids(instance.masked_lm_labels)
+    masked_lm_weights = [1.0] * len(masked_lm_ids)
+
+    while len(masked_lm_positions) < max_predictions_per_seq:
+      masked_lm_positions.append(0)
+      masked_lm_ids.append(0)
+      masked_lm_weights.append(0.0)
+
+    next_sentence_label = 1 if instance.is_random_next else 0
+
+    features = collections.OrderedDict()
+    features["input_ids"] = create_int_feature(input_ids)
+    features["input_mask"] = create_int_feature(input_mask)
+    features["segment_ids"] = create_int_feature(segment_ids)
+    features["masked_lm_positions"] = create_int_feature(masked_lm_positions)
+    features["masked_lm_ids"] = create_int_feature(masked_lm_ids)
+    features["masked_lm_weights"] = create_float_feature(masked_lm_weights)
+    features["next_sentence_labels"] = create_int_feature([next_sentence_label])
+
+    tf_example = tf.train.Example(features=tf.train.Features(feature=features))
+
+    writers[writer_index].write(tf_example.SerializeToString())
+    writer_index = (writer_index + 1) % len(writers)
+
+    total_written += 1
+
+    if inst_index < 20:
+      tf.logging.info("*** Example ***")
+      tf.logging.info("tokens: %s" % " ".join(
+          [tokenization.printable_text(x) for x in instance.tokens]))
+
+      for feature_name in features.keys():
+        feature = features[feature_name]
+        values = []
+        if feature.int64_list.value:
+          values = feature.int64_list.value
+        elif feature.float_list.value:
+          values = feature.float_list.value
+        tf.logging.info(
+            "%s: %s" % (feature_name, " ".join([str(x) for x in values])))
+
+  for writer in writers:
+    writer.close()
+
+  tf.logging.info("Wrote %d total instances", total_written)
+```
+
+#### main
+
+首先建立tokenizer
+
+```python
+  tokenizer = tokenization.FullTokenizer(
+      vocab_file=FLAGS.vocab_file, do_lower_case=FLAGS.do_lower_case)
+```
+
+然后create_training_instances
+
+```python
+  rng = random.Random(FLAGS.random_seed)
+  instances = create_training_instances(
+      input_files, tokenizer, FLAGS.max_seq_length, FLAGS.dupe_factor,
+      FLAGS.short_seq_prob, FLAGS.masked_lm_prob, FLAGS.max_predictions_per_seq,
+      rng)
+```
+
+然后把结果落盘：
+
+```python
+  write_instance_to_example_files(instances, tokenizer, FLAGS.max_seq_length,
+                                  FLAGS.max_predictions_per_seq, output_files)
+```
+
 ### run-pretraining.py
 
+读入tfrecords格式的训练样本，进行训练
+
+
 ## classification
+
+使用自己的数据集基于现有模型进行finetune
 
 ### run-classifier.py
 

@@ -14,8 +14,8 @@ tags: [bert代码, bert code]
   - [glue data数据集](#glue-data%E6%95%B0%E6%8D%AE%E9%9B%86)
   - [运行](#%E8%BF%90%E8%A1%8C)
 - [pretraining](#pretraining)
-  - [step1. create_pretraining_data](#step1-createpretrainingdata)
-  - [step2. run_pretraining](#step2-runpretraining)
+  - [step1. create-pretraining-data](#step1-create-pretraining-data)
+  - [step2. run-pretraining](#step2-run-pretraining)
   - [pretrain tips and caveats](#pretrain-tips-and-caveats)
 - [抽取feature vector(类似ELMo)](#%E6%8A%BD%E5%8F%96feature-vector%E7%B1%BB%E4%BC%BCelmo)
 
@@ -132,7 +132,7 @@ python run_classifier.py \
 
 ## pretraining
 
-### step1. create_pretraining_data
+### step1. create-pretraining-data
 
 paper的源码是用c++写的，这里用py又实现了一遍。。实现masked lm和next sentence prediction。
 
@@ -199,7 +199,7 @@ INFO:tensorflow:next_sentence_labels: 1
 INFO:tensorflow:Wrote 60 total instances
 ```
 
-### step2. run_pretraining
+### step2. run-pretraining
 
 + 如果你是从头开始pretrain，不要include init_checkpoint
 + 模型配置（包括vocab size）在bert_config_file中设置

@@ -42,6 +42,11 @@ tags: [bert代码解读, bert code, framework]
     - [get-embedding-table](#get-embedding-table)
 - [optimization.py](#optimizationpy)
 - [tokenization.py](#tokenizationpy)
+  - [常用函数](#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0)
+    - [convert-to-unicode](#convert-to-unicode)
+    - [printable-text](#printable-text)
+    - [load-vocab](#load-vocab)
+    - [](#)
 - [小结](#%E5%B0%8F%E7%BB%93)
   - [embedding部分](#embedding%E9%83%A8%E5%88%86)
   - [transformer部分](#transformer%E9%83%A8%E5%88%86)
@@ -1137,6 +1142,85 @@ class BertModel(object):
 
 ## tokenization.py
 
+### 常用函数
+
+#### convert-to-unicode
+
+从utf8转成unicode
+
+```python
+def convert_to_unicode(text):
+  """Converts `text` to Unicode (if it's not already), assuming utf-8 input."""
+  if six.PY3:
+    if isinstance(text, str):
+      return text
+    elif isinstance(text, bytes):
+      return text.decode("utf-8", "ignore")
+    else:
+      raise ValueError("Unsupported string type: %s" % (type(text)))
+  elif six.PY2:
+    if isinstance(text, str):
+      return text.decode("utf-8", "ignore")
+    elif isinstance(text, unicode):
+      return text
+    else:
+      raise ValueError("Unsupported string type: %s" % (type(text)))
+  else:
+    raise ValueError("Not running on Python2 or Python 3?")
+```
+
+#### printable-text
+
+将输入变成tf.logging可以打印的类型：
+
++ 如果是python3，那就是str或者unicode
++ 如果是python2，那就是str或者utf8
+
+```python
+def printable_text(text):
+  """Returns text encoded in a way suitable for print or `tf.logging`."""
+
+  # These functions want `str` for both Python2 and Python3, but in one case
+  # it's a Unicode string and in the other it's a byte string.
+  if six.PY3:
+    if isinstance(text, str):
+      return text
+    elif isinstance(text, bytes):
+      return text.decode("utf-8", "ignore")
+    else:
+      raise ValueError("Unsupported string type: %s" % (type(text)))
+  elif six.PY2:
+    if isinstance(text, str):
+      return text
+    elif isinstance(text, unicode):
+      return text.encode("utf-8")
+    else:
+      raise ValueError("Unsupported string type: %s" % (type(text)))
+  else:
+    raise ValueError("Not running on Python2 or Python 3?")
+```
+
+#### load-vocab
+
+加载vocab，每行是一词，转成unicode，行号是词的id
+
+```python
+def load_vocab(vocab_file):
+  """Loads a vocabulary file into a dictionary."""
+  vocab = collections.OrderedDict()
+  index = 0
+  with tf.gfile.GFile(vocab_file, "r") as reader:
+    while True:
+      token = convert_to_unicode(reader.readline())
+      if not token:
+        break
+      token = token.strip()
+      vocab[token] = index
+      index += 1
+  return vocab
+```
+
+#### 
 
 ## 小结
 
