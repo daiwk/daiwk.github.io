@@ -270,6 +270,19 @@ INFO:tensorflow:  next_sentence_loss = 0.0002133457
 
 </html>
 
+左边可以选哪个模型的哪一层
+
+然后在中间的图中可以选中一个点，这样在最右边会显示出与这个点最近的n个点，度量方式可以选择cos或者欧氏距离。
+
+<html>
+<br/>
+
+<img src='../assets/bert-projector-ann.png' style='max-height: 350px'/>
+<br/>
+
+</html>
+
+
 ### pretrain tips and caveats
 
 + 如果你的任务有很大的domain-specific语料，最好从bert的checkpoint开始，在你的语料上进行多一些的pre-train
