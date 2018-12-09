@@ -46,7 +46,7 @@ tags: [bert代码解读, bert code, framework]
     - [convert-to-unicode](#convert-to-unicode)
     - [printable-text](#printable-text)
     - [load-vocab](#load-vocab)
-    - [](#)
+    - [xxx](#xxx)
 - [小结](#%E5%B0%8F%E7%BB%93)
   - [embedding部分](#embedding%E9%83%A8%E5%88%86)
   - [transformer部分](#transformer%E9%83%A8%E5%88%86)
@@ -1220,7 +1220,7 @@ def load_vocab(vocab_file):
   return vocab
 ```
 
-#### 
+#### xxx
 
 ## 小结
 
