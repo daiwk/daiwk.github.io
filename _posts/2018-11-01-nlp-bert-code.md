@@ -18,6 +18,7 @@ tags: [bert代码, bert code]
   - [step2. run-pretraining](#step2-run-pretraining)
   - [pretrain tips and caveats](#pretrain-tips-and-caveats)
 - [抽取feature vector(类似ELMo)](#%E6%8A%BD%E5%8F%96feature-vector%E7%B1%BB%E4%BC%BCelmo)
+- [自己尝试](#%E8%87%AA%E5%B7%B1%E5%B0%9D%E8%AF%95)
 
 <!-- /TOC -->
 
@@ -378,3 +379,164 @@ python extract_features.py \
 }
 ```
 
+## 自己尝试
+
+基于预训练的中文模型中的vocab，把网络改小，基于190w的中文语料（还是用默认的wordpiece分词）进行单机cpu训练，一个句子当成一篇文档，这个句子当成sentence2，这个句子的tag当成sentence1：
+
+模型配置如下：
+
+```shell
+{
+  "attention_probs_dropout_prob": 0.1, 
+  "directionality": "bidi", 
+  "hidden_act": "gelu", 
+  "hidden_dropout_prob": 0.1, 
+  "hidden_size": 64, 
+  "initializer_range": 0.02, 
+  "intermediate_size": 3072, 
+  "max_position_embeddings": 512, 
+  "num_attention_heads": 8, 
+  "num_hidden_layers": 2, 
+  "pooler_fc_size": 64, 
+  "pooler_num_attention_heads": 12, 
+  "pooler_num_fc_layers": 3, 
+  "pooler_size_per_head": 32, 
+  "pooler_type": "first_token_transform", 
+  "type_vocab_size": 2, 
+  "vocab_size": 21128
+}
+```
+
+参数设置如下：
+
+```shell
+## g_max_predictions_per_seq approx_to g_max_seq_length * g_masked_lm_prob
+
+# online or offline
+export train_mode=offline
+export param_name=param1
+export g_train_batch_size=128
+export g_num_train_steps=10000
+export g_max_seq_length=128
+export g_max_predictions_per_seq=20
+export g_masked_lm_prob=0.15
+export g_dupe_factor=3
+
+sh -x scripts/run_train_bert.sh  > log/$param_name.log &
+
+# online or offline
+export train_mode=offline
+export param_name=param2
+export g_train_batch_size=64
+export g_num_train_steps=10000
+export g_max_seq_length=128
+export g_max_predictions_per_seq=20
+export g_masked_lm_prob=0.15
+export g_dupe_factor=3
+
+sh -x scripts/run_train_bert.sh  > log/$param_name.log &
+
+# online or offline
+export train_mode=offline
+export param_name=param3
+export g_train_batch_size=128
+export g_num_train_steps=10000
+export g_max_seq_length=128
+export g_max_predictions_per_seq=8
+export g_masked_lm_prob=0.05
+export g_dupe_factor=5
+
+sh -x scripts/run_train_bert.sh  > log/$param_name.log &
+
+# online or offline
+export train_mode=offline
+export param_name=param4
+export g_train_batch_size=64
+export g_num_train_steps=10000
+export g_max_seq_length=128
+export g_max_predictions_per_seq=8
+export g_masked_lm_prob=0.05
+export g_dupe_factor=5
+
+sh -x scripts/run_train_bert.sh  > log/$param_name.log &
+
+# online or offline
+export train_mode=offline
+export param_name=param5
+export g_train_batch_size=32
+export g_num_train_steps=10000
+export g_max_seq_length=128
+export g_max_predictions_per_seq=20
+export g_masked_lm_prob=0.15
+export g_dupe_factor=3
+
+sh -x scripts/run_train_bert.sh  > log/$param_name.log &
+
+# online or offline
+export train_mode=offline
+export param_name=param6
+export g_train_batch_size=32
+export g_num_train_steps=10000
+export g_max_seq_length=128
+export g_max_predictions_per_seq=8
+export g_masked_lm_prob=0.05
+export g_dupe_factor=5
+
+sh -x scripts/run_train_bert.sh  > log/$param_name.log &
+
+wait
+
+```
+
+跑1w个step，效果如下（图中训了2w步的那个忘了是啥配置了…）：
+
+<html>
+<br/>
+
+<img src='../assets/bert-self-train-loss.png' style='max-height: 350px'/>
+<br/>
+
+</html>
+
+可见，同为1w个step，参数1训练时间最久，但loss最低
+
+每秒的example数：
+
+<html>
+<br/>
+
+<img src='../assets/bert-self-train-loss-examples-per-second.png' style='max-height: 350px'/>
+<br/>
+
+</html>
+
+每秒的global-steps：
+
+<html>
+<br/>
+
+<img src='../assets/bert-self-train-global-steps-per-second.png' style='max-height: 350px'/>
+<br/>
+
+</html>
+
+拿来eval时，next sentence的准确率：
+
+<html>
+<br/>
+
+<img src='../assets/bert-self-train-next-sentence-acc.png' style='max-height: 350px'/>
+<br/>
+
+</html>
+
+
+拿来eval时，masked lm的准确率就比较。。。了：
+
+<html>
+<br/>
+
+<img src='../assets/bert-self-train-maskedlm-acc.png' style='max-height: 350px'/>
+<br/>
+
+</html>
