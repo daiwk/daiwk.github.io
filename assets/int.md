@@ -1490,10 +1490,17 @@ public:
 
 思路：
 
-+ 创建根节点，根节点肯定是前序遍历的第一个数
-+ 把根节点在中序遍历结果的『第几位』存放于变量gen中
-+ 对于中序遍历，根节点左边的节点位于二叉树的左边，根节点右边的节点位于二叉树的右边
-
++ 创建根节点，根节点肯定是前序遍历的第一个数，new一个head节点，值是根
++ 把根节点在中序遍历结果的『第几位』存放于变量root中
++ 对于中序遍历，根节点左边的节点位于二叉树的左边，根节点右边的节点位于二叉树的右边。所以
+    + 把根节点左边的元素（i->root-1）依次扔到left_in数组中，作为左子树的中序遍历结果；
+    + 把(i+1->root-1)的元素扔到left_pre这个数组中，当做左子树的前序遍历结果
++ 同样地：
+    + 把根节点右边的元素（root+1->inlen）依次扔到right_in数组中，作为右子树的中序遍历结果；
+    + 把(i->inlen)的元素扔到right_pre这个数组中，当做右子树的前序遍历结果
++ head->left就是递归left_pre,left_in的返回结果
++ head->right就是递归rightt_pre,right_in的返回结果
++ 返回head
 
 ```c++
 /**
@@ -1514,21 +1521,21 @@ public:
         vector<int> left_pre, right_pre, left_in, right_in;
         // 创建根节点，根节点肯定是前序遍历的第一个数
         TreeNode* head = new TreeNode(pre[0]);
-        // 找到中序遍历根节点所在位置,存放于变量gen中
-        int gen = 0;
+        // 找到中序遍历根节点所在位置,存放于变量root中
+        int root = 0;
         for(int i=0; i < inlen; i++) {
             if (vin[i] == pre[0]) {
-                gen = i;
+                root = i;
                 break;
             }
         }
         // 对于中序遍历，根节点左边的节点位于二叉树的左边，根节点右边的节点位于二叉树的右边
         // 利用上述这点，对二叉树节点进行归并
-        for(int i = 0; i < gen; i++) {
+        for(int i = 0; i < root; i++) {
             left_in.push_back(vin[i]);
             left_pre.push_back(pre[i + 1]);//前序第一个为根节点
         }
-        for(int i = gen + 1; i < inlen; i++) {
+        for(int i = root + 1; i < inlen; i++) {
             right_in.push_back(vin[i]);
             right_pre.push_back(pre[i]);
         }
