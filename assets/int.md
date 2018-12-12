@@ -567,6 +567,92 @@ public:
 
 # 数组、栈、队列
 
+## 旋转数组的最小数字（offerNo6）
+
+把一个数组**最开始的若干个元素搬到数组的末尾**，我们称之为数组的旋转。 输入一个**非减排序**的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+
+旋转之后的数组实际上可以划分成**两个有序的子数组**：**前面子数组**的大小**都大于后面子数组**中的元素
+
+实际上**最小的元素就是两个子数组的分界线**。
+
+
+方法一：直接找到后一个数比上一个小的位置，那这后一个数就是我们要的了：
+
+```c++
+class Solution {
+public:
+    int minNumberInRotateArray(vector<int> rotateArray) {
+        if (rotateArray.size() == 0) return 0;
+        int tmp = rotateArray[0];
+        for (int i = 0; i < rotateArray.size(); ++i) {
+            if (tmp > rotateArray[i]) {
+                return rotateArray[i];
+            }
+            tmp = rotateArray[i];
+        } 
+        return tmp;
+    }
+};
+```
+
+方法二：二分法：
+
+数组一定程度上是排序的，因此我们试着用**二分查找法**寻找这个最小的元素。拿mid和high做比较，考虑以下三种情况：
+
++ array[mid] > array[high]:
+
+出现这种情况的array类似[3,4,5,6,0,1,2]，此时最小数字**一定在mid的右边**。
+
+```
+low = mid + 1
+```
+
++ array[mid] == array[high]:
+
+出现这种情况的array类似 [1,0,1,1,1] 或者[1,1,1,0,1]，此时最小数字不好判断在mid左边还是右边,这时只好一个一个试 ，所以**high左移一格**
+
+```
+high = high - 1
+```
+
++ array[mid] < array[high]:
+
+出现这种情况的array类似[2,2,3,4,5,6,6],此时最小数字一定就**是array[mid]**或者**在mid的左边**。因为右边必然都是递增的。所以**往左半边找。**
+
+```
+high = mid
+```
+
+注意这里有个坑：如果待查询的范围**最后只剩两个数**，那么mid 一定会指向下标靠前的数字
+比如 array = [4,6]
+array[low] = 4 ;array[mid] = 4 ; array[high] = 6 ;
+**如果high = mid - 1，就会产生错误， 因此high = mid**
+
+但情形(1)中low = mid + 1就不会错误
+
++ 最终返回array[low]或者array[high]都行
+
+```c++
+class Solution {
+public:
+    int minNumberInRotateArray(vector<int> rotateArray) {
+        int low = 0;
+        int high = rotateArray.size() - 1;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (rotateArray[mid] > rotateArray[high]) {
+                low = mid + 1;
+            } else if (rotateArray[mid] == rotateArray[high]) {
+                high = high - 1;
+            } else if (rotateArray[mid] < rotateArray[high]) {
+                high = mid;
+            }
+        }
+        return rotateArray[high];
+    }
+};
+```
+
 ## 用两个栈来实现一个队列（offerNo5）
 
 用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
@@ -576,7 +662,33 @@ public:
     + 如果为空，则将栈A中所有元素pop，并push进栈B，栈B出栈；
     + 如果不为空，栈B直接出栈。
 
+```c++
+class Solution
+{
+public:
+    void push(int node) {
+       stack1.push(node); 
+    }
 
+    int pop() {
+        int a;
+        if (stack2.empty()) {
+            while (!stack1.empty()) {
+                a = stack1.top();
+                stack2.push(a);
+                stack1.pop();
+            }
+        }
+        a = stack2.top();
+        stack2.pop();
+        return a;
+    }
+
+private:
+    stack<int> stack1;
+    stack<int> stack2;
+};
+```
 
 **变形**：用两个队列实现一个栈的功能
 
