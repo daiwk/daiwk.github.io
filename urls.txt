@@ -6,6 +6,7 @@ https://daiwk.github.io/posts/knowledge-git.html
 https://daiwk.github.io/posts/knowledge-gperftools.html
 https://daiwk.github.io/posts/knowledge-linux.html
 https://daiwk.github.io/posts/knowledge-matrix.html
+https://daiwk.github.io/posts/knowledge-mmr.html
 https://daiwk.github.io/posts/knowledge-numpy-usage.html
 https://daiwk.github.io/posts/knowledge-python.html
 https://daiwk.github.io/posts/knowledge-sphinx.html
