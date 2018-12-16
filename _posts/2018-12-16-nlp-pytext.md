@@ -9,15 +9,14 @@ tags: [pytext, caffe2, pytext-nlp]
 
 <!-- TOC -->
 
-    - [安装](#安装)
-    - [训练](#训练)
-    - [导出模型](#导出模型)
-    - [c++的predictor部分](#c的predictor部分)
-        - [thrift api](#thrift-api)
-- [...](#)
-- [Copy local files to /app](#copy-local-files-to-app)
-- [Compile app](#compile-app)
-- [Add library search paths](#add-library-search-paths)
+- [安装](#安装)
+- [训练](#训练)
+- [导出模型](#导出模型)
+- [c++的predictor部分](#c的predictor部分)
+    - [thrift api](#thrift-api)
+    - [实现server](#实现server)
+    - [编译](#编译)
+- [部署predictor服务](#部署predictor服务)
 
 <!-- /TOC -->
 
@@ -52,7 +51,7 @@ pytext export --output-path ./models/demo.c2 < ./demo/configs/docnn.json
 
 ### thrift api
 
-```predictor.thrift```如下
+其中```predictor.thrift```如下
 
 ```c++
 namespace cpp predictor_service

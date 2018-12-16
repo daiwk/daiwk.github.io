@@ -93,7 +93,7 @@ $$R_{emp}(f)=\frac{1}{N}\sum ^N_{i=1}{L(y_i,f(x_i))}$$
 
 **经验风险最小化（empirical risk minimization, ERM）**：**经验风险最小**的模型就是最优模型。所以需要求解的最优化问题是：
 
-$$\min_{f\in \mathcal{F}}R_{erm}=min_{f\in \mathcal{F}}\frac{1}{N}L(y_i,f(x_i))$$
+$$\min_{f\in \mathcal{F}}R_{erm}=\min_{f\in \mathcal{F}}\frac{1}{N}L(y_i,f(x_i))$$
 
 当满足以下两个条件时，**经验风险最小化**就等价于**极大似然估计**（maximum likelihood estimation）：
 
@@ -111,13 +111,17 @@ $J(f)$是模型的复杂度，模型越复杂，$J(f)$越大。$\lambda\ge 0$是
 当满足以下3个条件时，**结构化风险最小化**等价于）**贝叶斯估计中的最大后验概率估计**(maximum posterior probability estimation, MAP)：
 
 + 模型是**条件概率分布**
-+ 损失函数是**对数损失函数**
++ 损失函数是**对数损失函数**，对应后验估计中的**似然函数**
 + 模型复杂度由**模型的先验概率**表示
+
+**似然函数**和**先验概率**的**乘积**即对应**贝叶斯最大后验估计**的形式
+
+参考[https://www.zhihu.com/question/23536142](https://www.zhihu.com/question/235361420)
 
 所以结构风险最小化就是求解优化问题：
 
 $$
-min_{f\in\mathcal{F}}\frac{1}{N}\sum ^N_{i=1}L(y_i,f(x_i))+\lambda J(f)
+\min_{f\in\mathcal{F}}\frac{1}{N}\sum ^N_{i=1}L(y_i,f(x_i))+\lambda J(f)
 $$
 
 ### 算法
@@ -155,6 +159,16 @@ $$e_{test}(\hat{f})=\frac{1}{N'}\sum ^{N'}_{i=1}L(y_i,\hat{f}(x_i))$$
 ### 正则化
 
 模型选择的典型方法是正则化（regularization）。正则化是**结构风险最小化**策略的实现，即在经验上加一个正则化项（regularizer）或罚项（penalty term）。
+
+正则化项一般是**模型复杂度**的**单调递增函数**，模型越复杂，正则化值越大。比如，正则化项可以是模型参数向量的范数。
+
+$$\min_{f\in \mathcal{F}}\frac{1}{N}\sum^N_{i=1}L(y_i,f(x_i))+\lambda J(f)$$
+
+其中$\lambda \ge 0$
+
+正则化符合奥卡姆剃刀（Occam's razor）原理：在所有可能选择的模型中，能够**很好地解释已知数据**并且**十分简单**才是最好的模型，也就是应该选择的模型。
+
+从贝叶斯估计的角度来看，**正则化项**对应于模型的**先验概率**。可以假设复杂的模型有较小的先验概率，简的模型有较大的先验概率。
 
 ### 交叉验证
 
