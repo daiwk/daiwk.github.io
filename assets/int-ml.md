@@ -336,7 +336,7 @@ $$
 r_{ti} = -\bigg[\frac{\partial L(y_i, f(x_i)))}{\partial f(x_i)}\bigg]_{f(x) = f_{t-1}(x)}
 $$
 
-
+利用
 
 # EM算法及其推广
 
@@ -684,6 +684,8 @@ $$tf(x)+(1-t)f(y)\ge f(tx+(1-t)y),0\le t \le 1$$
 
 
 ### KL散度
+
+熵的小结：[https://blog.csdn.net/haolexiao/article/details/70142571](https://blog.csdn.net/haolexiao/article/details/70142571)
 
 **相对熵**（relative entropy）又称为**KL散度**（Kullback–Leibler divergence，简称KLD），**信息散度（information divergence）**，**信息增益（information gain）**。
 
