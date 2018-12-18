@@ -314,7 +314,29 @@ u
 
 # 提升方法
 
-q
+## gbdt
+
+参考[https://www.cnblogs.com/pinard/p/6140514.html](https://www.cnblogs.com/pinard/p/6140514.html)
+
+梯度提升树(Gradient Boosting Decison Tree, 以下简称GBDT)有很多简称，有GBT（Gradient Boosting Tree）, GTB（Gradient Tree Boosting ）， GBRT（Gradient Boosting Regression Tree）, MART(Multiple Additive Regression Tree)等等。
+
+### gbdt概述
+
+在Adaboost中，我们是利用前一轮迭代弱学习器的误差率来更新训练集的权重，这样一轮轮的迭代下去。
+
+GBDT也是迭代，但是弱学习器限定了只能使用CART回归树模型，同时迭代思路和Adaboost也有所不同。
+
+假设我们前一轮迭代得到的强学习器是$f_{t-1}(x)$，损失函数是$L(y, f_{t-1}(x))$，本轮迭代的目标是找到一个CART回归树模型的弱学习器$h_t(x)$，使得本轮的损失函数$L(y, f_{t}(x)) =L(y, f_{t-1}(x)+ h_t(x))$最小。也就是说，要找到一个决策树，使得样本的损失$L(y-f_{t-1}(x), h_t(x))$最小。
+
+### gbdt的负梯度拟合
+
+第$t$轮的第$i$个样本的损失函数的负梯度：
+
+$$
+r_{ti} = -\bigg[\frac{\partial L(y_i, f(x_i)))}{\partial f(x_i)}\bigg]_{f(x) = f_{t-1}(x)}
+$$
+
+
 
 # EM算法及其推广
 
