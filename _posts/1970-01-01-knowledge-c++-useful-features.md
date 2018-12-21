@@ -9,23 +9,23 @@ tags: [c++, ]
 
 <!-- TOC -->
 
-- [字符串相关](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3)
-    - [缓冲区溢出问题](#%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA%E9%97%AE%E9%A2%98)
+- [字符串相关](#字符串相关)
+    - [缓冲区溢出问题](#缓冲区溢出问题)
         - [strncpy/strncat](#strncpystrncat)
         - [snprintf](#snprintf)
-- [各种容器](#%E5%90%84%E7%A7%8D%E5%AE%B9%E5%99%A8)
-    - [map与unordered map对比](#map%E4%B8%8Eunordered-map%E5%AF%B9%E6%AF%94)
-- [各种智能指针](#%E5%90%84%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88)
-    - [unique_ptr](#uniqueptr)
-    - [shared_ptr](#sharedptr)
-    - [weak_ptr](#weakptr)
-- [各种多线程](#%E5%90%84%E7%A7%8D%E5%A4%9A%E7%BA%BF%E7%A8%8B)
-    - [thread基本用法](#thread%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
-    - [thread_local](#threadlocal)
+- [各种容器](#各种容器)
+    - [map与unordered map对比](#map与unordered-map对比)
+- [各种智能指针](#各种智能指针)
+    - [unique_ptr](#unique_ptr)
+    - [shared_ptr](#shared_ptr)
+    - [weak_ptr](#weak_ptr)
+- [各种多线程](#各种多线程)
+    - [thread基本用法](#thread基本用法)
+    - [thread_local](#thread_local)
     - [atomic](#atomic)
-    - [unique_lock与lock_guard](#uniquelock%E4%B8%8Elockguard)
-- [其他](#%E5%85%B6%E4%BB%96)
-    - [值/引用/指针](#%E5%80%BC%E5%BC%95%E7%94%A8%E6%8C%87%E9%92%88)
+    - [unique_lock与lock_guard](#unique_lock与lock_guard)
+- [其他](#其他)
+    - [值/引用/指针](#值引用指针)
 
 <!-- /TOC -->
 
@@ -179,7 +179,9 @@ printf("sp4=%s\n", (*sp4).c_str());
 + reset 放弃内部对象的所有权或拥有对象的变更, 会引起原有对象的引用计数的减少
 + get 返回内部对象(指针), 由于已经重载了()方法, 因此和直接使用对象是一样的.如 shared_ptr<int> sp(new int(1)); sp 与 sp.get()是等价的
 
+shared_ptr是线程安全的，但get函数不是：
 
+[https://www.zhihu.com/question/56836057](https://www.zhihu.com/question/56836057)
 
 [https://www.cnblogs.com/lsgxeva/p/7788061.html](https://www.cnblogs.com/lsgxeva/p/7788061.html)
 

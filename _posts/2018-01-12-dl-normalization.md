@@ -9,6 +9,7 @@ tags: [normalization, bn, ln]
 
 <!-- TOC -->
 
+- [tags: [normalization, bn, ln]](#tags-normalization-bn-ln)
 - [batch normalization](#batch-normalization)
 - [layer normalization](#layer-normalization)
 
@@ -28,6 +29,7 @@ tags: [normalization, bn, ln]
 + 神经网络学习过程本质就是为了学习数据分布，一旦**训练数据与测试数据的分布**不同，那么网络的泛化能力也大大降低
 + 一旦**每批训练数据的分布**各不相同(batch 梯度下降)，那么网络就要在每次迭代都去学习适应不同的分布，这样将会大大降低网络的训练速度。
 
+参考[https://blog.csdn.net/qq_25737169/article/details/79048516](https://blog.csdn.net/qq_25737169/article/details/79048516)
 
 
 ## layer normalization
