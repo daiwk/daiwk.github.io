@@ -113,6 +113,29 @@ tags: [特征工程, ]
 </table></center>
 </html>
 
+简单的方差的方法
+
+`\[
+D(x) = E(x^2)-[E(x)]^2
+\]`
+
+所以用python来写就是：
+
+```python
+N = len(nlist)
+narray = numpy.array(nlist)
+sum1 = narray.sum()
+narray2 = narray * narray
+sum2 = narray2.sum()
+mean = sum1 / N
+var = sum2 / N - mean ** 2
+stdv = math.sqrt(var)
+
+print mean
+print var
+print stdv
+```
+
 ### 1.2 特征选择(多特征)
 
 <html>
