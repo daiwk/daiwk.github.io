@@ -187,6 +187,11 @@ shared_ptr是线程安全的，但get函数不是：
 
 [https://www.cnblogs.com/diysoul/p/5930361.html](https://www.cnblogs.com/diysoul/p/5930361.html)
 
+**当做函数返回值的时候，返回值就好，不要返回引用 ！！！！**
+
+[https://stackoverflow.com/questions/24440613/c-how-to-return-a-shared-ptr-from-function](https://stackoverflow.com/questions/24440613/c-how-to-return-a-shared-ptr-from-function)
+
+[https://stackoverflow.com/questions/10643563/how-to-return-smart-pointers-shared-ptr-by-reference-or-by-value](https://stackoverflow.com/questions/10643563/how-to-return-smart-pointers-shared-ptr-by-reference-or-by-value)
 
 ### weak_ptr
 

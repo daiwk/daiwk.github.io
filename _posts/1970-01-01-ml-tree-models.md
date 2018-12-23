@@ -9,19 +9,21 @@ tags: [gbdt, id3, c4.5, cart, ensemble, ]
 
 <!-- TOC -->
 
+- [tags: [gbdt, id3, c4.5, cart, ensemble, ]](#tags-gbdt-id3-c45-cart-ensemble)
 - [基础树模型](#%E5%9F%BA%E7%A1%80%E6%A0%91%E6%A8%A1%E5%9E%8B)
-    - [ID3](#id3)
-    - [C4.5](#c45)
-    - [CART](#cart)
+  - [ID3](#id3)
+  - [C4.5](#c45)
+  - [CART](#cart)
 - [ensemble](#ensemble)
-    - [ensemble的背景](#ensemble%E7%9A%84%E8%83%8C%E6%99%AF)
-        - [1.模型选择（Model Selection）](#1%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9model-selection)
-        - [2.数据集过小或过大（Too much or too little data）](#2%E6%95%B0%E6%8D%AE%E9%9B%86%E8%BF%87%E5%B0%8F%E6%88%96%E8%BF%87%E5%A4%A7too-much-or-too-little-data)
-        - [3.分治（Divide and Conquer）](#3%E5%88%86%E6%B2%BBdivide-and-conquer)
-        - [4.数据融合（Data Fusion）](#4%E6%95%B0%E6%8D%AE%E8%9E%8D%E5%90%88data-fusion)
-    - [boosting](#boosting)
-    - [bagging](#bagging)
+  - [ensemble的背景](#ensemble%E7%9A%84%E8%83%8C%E6%99%AF)
+    - [1.模型选择（Model Selection）](#1%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9model-selection)
+    - [2.数据集过小或过大（Too much or too little data）](#2%E6%95%B0%E6%8D%AE%E9%9B%86%E8%BF%87%E5%B0%8F%E6%88%96%E8%BF%87%E5%A4%A7too-much-or-too-little-data)
+    - [3.分治（Divide and Conquer）](#3%E5%88%86%E6%B2%BBdivide-and-conquer)
+    - [4.数据融合（Data Fusion）](#4%E6%95%B0%E6%8D%AE%E8%9E%8D%E5%90%88data-fusion)
+  - [boosting](#boosting)
+  - [bagging](#bagging)
 - [gbdt](#gbdt)
+- [xgboost](#xgboost)
 
 <!-- /TOC -->
 
@@ -99,3 +101,9 @@ gbdt 是通过采用**加法模型**（即**对基函数进行线性组合**）�
 参考[https://zhuanlan.zhihu.com/p/29765582](https://zhuanlan.zhihu.com/p/29765582)
 
 再看一个很6的pdf：[https://daiwk.github.io/assets/gbdt.pdf](https://daiwk.github.io/assets/gbdt.pdf)
+
+
+## xgboost
+
+[https://github.com/dmlc/xgboost/issues/311](https://github.com/dmlc/xgboost/issues/311)
+
