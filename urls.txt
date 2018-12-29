@@ -12,6 +12,7 @@ https://daiwk.github.io/posts/knowledge-python.html
 https://daiwk.github.io/posts/knowledge-sphinx.html
 https://daiwk.github.io/posts/knowledge-stack-heap-core.html
 https://daiwk.github.io/posts/knowledge-testing-tools.html
+https://daiwk.github.io/posts/knowledge-tf-install.html
 https://daiwk.github.io/posts/knowledge-tf-usage.html
 https://daiwk.github.io/posts/knowledge-url.html
 https://daiwk.github.io/posts/ml-loss-functions.html
