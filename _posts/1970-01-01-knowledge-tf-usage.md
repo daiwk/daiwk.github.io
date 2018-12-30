@@ -15,18 +15,18 @@ tags: [tf, ]
   - [tf.reduce_*](#tfreduce)
 - [tf.nn](#tfnn)
   - [cost](#cost)
-    - [tf.nn.softmax_cross_entropy_with_logits](#tfnnsoftmaxcrossentropywithlogits)
-    - [tf.nn.weighted_cross_entropy_with_logits](#tfnnweightedcrossentropywithlogits)
-    - [tf.nn.nce_loss](#tfnnnceloss)
+    - [tf.nn.softmax-cross-entropy-with-logits](#tfnnsoftmax-cross-entropy-with-logits)
+    - [tf.nn.weighted-cross-entropy-with-logits](#tfnnweighted-cross-entropy-with-logits)
+    - [tf.nn.nce-loss](#tfnnnce-loss)
   - [activations](#activations)
     - [tf.nn.relu](#tfnnrelu)
   - [ops](#ops)
-    - [tf.nn.embedding_lookup](#tfnnembeddinglookup)
+    - [tf.nn.embedding-lookup](#tfnnembedding-lookup)
     - [tf.nn.conv2d](#tfnnconv2d)
-    - [tf.nn.max_pool](#tfnnmaxpool)
+    - [tf.nn.max-pool](#tfnnmax-pool)
 - [tf.contrib.layers](#tfcontriblayers)
   - [tf.contrib.layers.flatten](#tfcontriblayersflatten)
-  - [tf.contrib.layers.fully_connected](#tfcontriblayersfullyconnected)
+  - [tf.contrib.layers.fully-connected](#tfcontriblayersfully-connected)
 
 <!-- /TOC -->
 
@@ -135,11 +135,11 @@ print y.shape
 
 ### cost
 
-#### tf.nn.softmax_cross_entropy_with_logits
+#### tf.nn.softmax-cross-entropy-with-logits
 
 **tf.nn.softmax_cross_entropy_with_logits(logits = Z3, labels = Y):** computes the softmax entropy loss. This function both computes the softmax activation function as well as the resulting loss. You can check the full documentation  [here.](https://www.tensorflow.org/api_docs/python/tf/nn/softmax_cross_entropy_with_logits)
 
-#### tf.nn.weighted_cross_entropy_with_logits
+#### tf.nn.weighted-cross-entropy-with-logits
 
 正常的cross-entropy loss如下：
 
@@ -157,7 +157,7 @@ targets * -log(sigmoid(logits)) * pos_weight +
     (1 - targets) * -log(1 - sigmoid(logits))
 ```
 
-#### tf.nn.nce_loss
+#### tf.nn.nce-loss
 
 原理和使用参考[https://daiwk.github.io/posts/nlp-word2vec.html#4-nce](https://daiwk.github.io/posts/nlp-word2vec.html#4-nce)
 
@@ -189,7 +189,7 @@ nce的实现可以参考：[https://www.jianshu.com/p/fab82fa53e16](https://www.
 
 ### ops
 
-#### tf.nn.embedding_lookup
+#### tf.nn.embedding-lookup
 
 ```python
 tf.nn.embedding_lookup(
@@ -266,7 +266,7 @@ output[b, i, j, k] =
 
 必须满足```strides[0] = strides[3] = 1```，对于最common的case，也就是horizontal and vertices strides是一样的， ```strides = [1, stride, stride, 1]```
 
-#### tf.nn.max_pool
+#### tf.nn.max-pool
 
 **tf.nn.max_pool(A, ksize = [1,f,f,1], strides = [1,s,s,1], padding = 'SAME'):** given an input A, this function uses a window of size (f, f) and strides of size (s, s) to carry out max pooling over each window. You can read the full documentation [here](https://www.tensorflow.org/api_docs/python/tf/nn/max_pool)
 
@@ -276,7 +276,7 @@ output[b, i, j, k] =
 
 **tf.contrib.layers.flatten(P)**: given an input P, this function flattens each example into a 1D vector it while maintaining the batch-size. It returns a flattened tensor with shape [batch_size, k]. You can read the full documentation [here.](https://www.tensorflow.org/api_docs/python/tf/contrib/layers/flatten)
 
-### tf.contrib.layers.fully_connected
+### tf.contrib.layers.fully-connected
 
 **tf.contrib.layers.fully_connected(F, num_outputs):** given a the flattened input F, it returns the output computed using a fully connected layer. You can read the full documentation [here.](https://www.tensorflow.org/api_docs/python/tf/contrib/layers/fully_connected)
 
