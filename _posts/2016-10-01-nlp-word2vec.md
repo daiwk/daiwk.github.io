@@ -9,18 +9,29 @@ tags: [word2vec, ngram, nnlm, cbow, c-skip-gram, 统计语言模型]
 
 <!-- TOC -->
 
-- [1. 统计语言模型](#1-%E7%BB%9F%E8%AE%A1%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B)
-  - [N-gram模型](#n-gram%E6%A8%A1%E5%9E%8B)
-  - [神经网络语言模型（NNLM）](#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%88nnlm%EF%BC%89)
+- [1. 统计语言模型](#1-统计语言模型)
+    - [N-gram模型](#n-gram模型)
+    - [神经网络语言模型（NNLM）](#神经网络语言模型nnlm)
 - [2. CBOW(Continuous Bag-of-Words)](#2-cbowcontinuous-bag-of-words)
 - [3. Continuous skip-gram](#3-continuous-skip-gram)
 - [4. NCE](#4-nce)
-- [5. 面试常见问题](#5-%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
-- [x. tensorflow的简单实现](#x-tensorflow%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0)
-  - [简介](#%E7%AE%80%E4%BB%8B)
-  - [代码解读](#%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB)
-- [y1. tensorflow的高级实现1](#y1-tensorflow%E7%9A%84%E9%AB%98%E7%BA%A7%E5%AE%9E%E7%8E%B01)
-- [y2. tensorflow的高级实现2](#y2-tensorflow%E7%9A%84%E9%AB%98%E7%BA%A7%E5%AE%9E%E7%8E%B02)
+- [5. 面试常见问题](#5-面试常见问题)
+- [x. tensorflow的简单实现](#x-tensorflow的简单实现)
+    - [简介](#简介)
+    - [代码解读](#代码解读)
+        - [读数据](#读数据)
+        - [建立数据集](#建立数据集)
+        - [生成skipgram的一个batch](#生成skipgram的一个batch)
+        - [定义模型](#定义模型)
+            - [placeholder等](#placeholder等)
+            - [网络参数](#网络参数)
+            - [loss](#loss)
+            - [计算cos](#计算cos)
+            - [其他](#其他)
+        - [训练](#训练)
+        - [可视化](#可视化)
+- [y1. tensorflow的高级实现1](#y1-tensorflow的高级实现1)
+- [y2. tensorflow的高级实现2](#y2-tensorflow的高级实现2)
 
 <!-- /TOC -->
 
@@ -185,9 +196,11 @@ J_\text{NEG} = \log Q_\theta(D=1 |w_t, h) +
      \left[ \log Q_\theta(D = 0 |\tilde w, h) \right]
 \]`
 
-其中，`\(Q_\theta(D=1 | w, h)\)`是使用学到的embedding vector `\(\theta\)`，在给定上下文h，预测词w的概率。
+其中，`\(Q_\theta(D=1 | w, h)\)`是使用学到的embedding vector `\(\theta\)`，在给定数据集`\(D\)`中的上下文`\(h\)`，看到词`\(w\)`的概率。在实践中，我们通过从噪声分布中抽取`\(k\)`个对比词来逼近期望值（即计算[蒙特卡洛平均值](https://en.wikipedia.org/wiki/Monte_Carlo_integration)）。
 
-直观地理解，这个目标就是希望预测为`\(w_t\)`的概率尽可能大，同时预测为非`\(\tilde w\)`的概率尽可能大，也就是，**希望预测为真实词的概率尽量大，预测为noise word的概率尽量小**。在极限情况下，这可以近似为softmax，但这计算量比softmax小很多。这就是所谓的[negative sampling](https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf)。tensorflow有一个很类似的损失函数[noise-contrastive estimation(NCE)](https://papers.nips.cc/paper/5165-learning-word-embeddings-efficiently-with-noise-contrastive-estimation.pdf)```tf.nn.nce_loss()```。
+直观地理解，这个目标就是希望预测为`\(w_t\)`的概率尽可能大，同时预测为非`\(\tilde w\)`的概率尽可能大，也就是，**希望预测为真实词的概率尽量大，预测为noise word的概率尽量小**。在极限情况下，这可以近似为softmax，但这计算量比softmax小很多。这就是所谓的[negative sampling](https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf)。
+
+tensorflow有一个很类似的损失函数[noise-contrastive estimation(NCE)](https://papers.nips.cc/paper/5165-learning-word-embeddings-efficiently-with-noise-contrastive-estimation.pdf)，即『噪声对比估算』，```tf.nn.nce_loss()```。
 
 针对句子
 
@@ -195,7 +208,7 @@ J_\text{NEG} = \log Q_\theta(D=1 |w_t, h) +
 the quick brown fox jumped over the lazy dog
 ```
 
-如果使用window_size=1，那么对于CBOW，就有：
+如果使用window_size=1（一个词**左右各**采一个词），那么对于CBOW，就有：
 
 ```
 ([the, brown], quick), ([quick, fox], brown), ([brown, jumped], fox), ...
@@ -207,6 +220,15 @@ the quick brown fox jumped over the lazy dog
 (quick, the), (quick, brown), (brown, quick), (brown, fox), ...
 ```
 
+在训练步`\(t\)`中，例如要用```quick```来预测```the```，我们从某个噪声分布（通常为一元分布`\(P(w)\)`）中抽取```num_noise```个噪声对比样本。假设num_noise=1，并且将```sheep```选为噪声样本。那么在`\(t\)`时刻的目标是：
+
+`\[
+J^{(t)}_\text{NEG} = \log Q_\theta(D=1 | \text{the, quick}) +
+  \log(Q_\theta(D=0 | \text{sheep, quick}))
+\]`
+
+
+
 画图时，可以使用[t-SNE](https://lvdmaaten.github.io/tsne/)的降维方法，将高维向量映射到2维空间。
 
 <html>
@@ -217,7 +239,26 @@ the quick brown fox jumped over the lazy dog
 
 ## 代码解读
 
-首先build一个dataset：
+### 读数据
+
+```python
+# Read the data into a list of strings.
+def read_data(filename):
+  """Extract the first file enclosed in a zip file as a list of words."""
+  with zipfile.ZipFile(filename) as f:
+    data = tf.compat.as_str(f.read(f.namelist()[0])).split()
+  return data
+```
+
+调用：
+
+```python
+vocabulary = read_data(filename)
+```
+
+### 建立数据集
+
+build一个dataset：
 
 ```python
 def build_dataset(words, n_words):
@@ -239,14 +280,16 @@ def build_dataset(words, n_words):
   return data, count, dictionary, reversed_dictionary
 ```
 
-而在NCE的实现中，使用的是log_uniform_candidate_sampler：
+调用：
 
-+ 会在[0, range_max)中采样出一个整数k
-+ P(k) = (log(k + 2) - log(k + 1)) / log(range_max + 1)
+```python
+data, count, dictionary, reverse_dictionary = build_dataset(
+    vocabulary, vocabulary_size)
+```
 
-k越大，被采样到的概率越小。而我们的词典中，可以发现词频高的index小，所以高词频的词会被优先采样为负样本。
+### 生成skipgram的一个batch
 
-其中的生成一个batch的方法如下：
+生成一个batch的方法如下：
 
 ```python
 def generate_batch(batch_size, num_skips, skip_window):
@@ -278,12 +321,251 @@ def generate_batch(batch_size, num_skips, skip_window):
   return batch, labels
 ```
 
+调用：
+
+```python
+batch, labels = generate_batch(batch_size=8, num_skips=2, skip_window=1)
+```
+
+### 定义模型
+
+#### placeholder等
+
+先定义一下validation set
+
+```python
+valid_size = 16  # Random set of words to evaluate similarity on.
+valid_window = 100  # Only pick dev samples in the head of the distribution.
+valid_examples = np.random.choice(valid_window, valid_size, replace=False)
+```
+
+然后定义一下input和label的placeholder：
+
+```python
+graph = tf.Graph()
+
+with graph.as_default():
+
+  # Input data.
+  with tf.name_scope('inputs'):
+    train_inputs = tf.placeholder(tf.int32, shape=[batch_size])
+    train_labels = tf.placeholder(tf.int32, shape=[batch_size, 1])
+    valid_dataset = tf.constant(valid_examples, dtype=tf.int32)
+```
+
+#### 网络参数
+
+定义：
+
++ vocabulary_size x embedding_size的embedding
++ vocabulary_size x embedding_size的nce_weights
++ vocabulary_size的nce_biases
+
+```python
+  # Ops and variables pinned to the CPU because of missing GPU implementation
+  with tf.device('/cpu:0'):
+    # Look up embeddings for inputs.
+    with tf.name_scope('embeddings'):
+      embeddings = tf.Variable(
+          tf.random_uniform([vocabulary_size, embedding_size], -1.0, 1.0))
+      embed = tf.nn.embedding_lookup(embeddings, train_inputs)
+
+    # Construct the variables for the NCE loss
+    with tf.name_scope('weights'):
+      nce_weights = tf.Variable(
+          tf.truncated_normal(
+              [vocabulary_size, embedding_size],
+              stddev=1.0 / math.sqrt(embedding_size)))
+    with tf.name_scope('biases'):
+      nce_biases = tf.Variable(tf.zeros([vocabulary_size]))
+```
+
+#### loss
+
+在NCE的实现中，使用的是log_uniform_candidate_sampler：
+
++ 会在[0, range_max)中采样出一个整数k(**k相当于词的id**)
++ P(k) = (log(k + 2) - log(k + 1)) / log(range_max + 1)
+
+`\[
+\begin{aligned}
+P(k)&=\frac{1}{log(range\_max+1)}log(\frac{k+2}{k+1}) \\ 
+ &= \frac{1}{log(range\_max+1)}log(1+\frac{1}{k+1}) \\
+\end{aligned}
+\]`
+
+**k越大，被采样到的概率越小。**而我们的词典中，可以发现**词频高**的**index小**，所以高词频的词会被**优先**采样为负样本。
+
+下面定义loss
+
+```python
+  with tf.name_scope('loss'):
+    loss = tf.reduce_mean(
+        tf.nn.nce_loss(
+            weights=nce_weights,
+            biases=nce_biases,
+            labels=train_labels,
+            inputs=embed,
+            num_sampled=num_sampled,
+            num_classes=vocabulary_size))
+  # Construct the SGD optimizer using a learning rate of 1.0.
+  with tf.name_scope('optimizer'):
+    optimizer = tf.train.GradientDescentOptimizer(1.0).minimize(loss)
+```
+
+#### 计算cos
+
+只是为了看看迭代过程中，validtion set里每个词最近的topk词，看看效果。
+
+```python
+  # Compute the cosine similarity between minibatch examples and all embeddings.
+  norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), 1, keep_dims=True))
+  normalized_embeddings = embeddings / norm
+  ## 使用valid_dataset做输入，normalized_embeddings做参数，进行lookup得到的emb
+  valid_embeddings = tf.nn.embedding_lookup(normalized_embeddings,
+                                            valid_dataset)
+  # (valid_size, emb_size) x (emb_size, vocab_size) = (valid_size, vocab_size)
+  # 因为valid_emb和norm_emb都是emb/norm(emb)，所以两者的乘积就是cos
+  similarity = tf.matmul(
+      valid_embeddings, normalized_embeddings, transpose_b=True)
+```
+
+#### 其他
+
+```python
+  # Merge all summaries.
+  merged = tf.summary.merge_all()
+
+  # Add variable initializer.
+  init = tf.global_variables_initializer()
+
+  # Create a saver.
+  saver = tf.train.Saver()
+```
+
+### 训练
+
+```python
+with tf.Session(graph=graph) as session:
+  # Open a writer to write summaries.
+  writer = tf.summary.FileWriter(FLAGS.log_dir, session.graph)
+
+  # We must initialize all variables before we use them.
+  init.run()
+  print('Initialized')
+
+  average_loss = 0
+  for step in xrange(num_steps):
+    batch_inputs, batch_labels = generate_batch(batch_size, num_skips,
+                                                skip_window)
+    feed_dict = {train_inputs: batch_inputs, train_labels: batch_labels}
+
+    # Define metadata variable.
+    run_metadata = tf.RunMetadata()
+
+    # We perform one update step by evaluating the optimizer op (including it
+    # in the list of returned values for session.run()
+    # Also, evaluate the merged op to get all summaries from the returned "summary" variable.
+    # Feed metadata variable to session for visualizing the graph in TensorBoard.
+    _, summary, loss_val = session.run(
+        [optimizer, merged, loss],
+        feed_dict=feed_dict,
+        run_metadata=run_metadata)
+    average_loss += loss_val
+
+    # Add returned summaries to writer in each step.
+    writer.add_summary(summary, step)
+    # Add metadata to visualize the graph for the last run.
+    if step == (num_steps - 1):
+      writer.add_run_metadata(run_metadata, 'step%d' % step)
+
+    if step % 2000 == 0:
+      if step > 0:
+        average_loss /= 2000
+      # The average loss is an estimate of the loss over the last 2000 batches.
+      print('Average loss at step ', step, ': ', average_loss)
+      average_loss = 0
+
+    # Note that this is expensive (~20% slowdown if computed every 500 steps)
+    if step % 10000 == 0:
+      sim = similarity.eval()
+      for i in xrange(valid_size):
+        valid_word = reverse_dictionary[valid_examples[i]]
+        top_k = 8  # number of nearest neighbors
+        nearest = (-sim[i, :]).argsort()[1:top_k + 1]
+        log_str = 'Nearest to %s:' % valid_word
+        for k in xrange(top_k):
+          close_word = reverse_dictionary[nearest[k]]
+          log_str = '%s %s,' % (log_str, close_word)
+        print(log_str)
+  final_embeddings = normalized_embeddings.eval()
+
+  # Write corresponding labels for the embeddings.
+  with open(FLAGS.log_dir + '/metadata.tsv', 'w') as f:
+    for i in xrange(vocabulary_size):
+      f.write(reverse_dictionary[i] + '\n')
+
+  # Save the model for checkpoints.
+  saver.save(session, os.path.join(FLAGS.log_dir, 'model.ckpt'))
+
+  # Create a configuration for visualizing embeddings with the labels in TensorBoard.
+  config = projector.ProjectorConfig()
+  embedding_conf = config.embeddings.add()
+  embedding_conf.tensor_name = embeddings.name
+  embedding_conf.metadata_path = os.path.join(FLAGS.log_dir, 'metadata.tsv')
+  projector.visualize_embeddings(writer, config)
+
+writer.close()
+```
+
+### 可视化
+
+```python
+# Function to draw visualization of distance between embeddings.
+def plot_with_labels(low_dim_embs, labels, filename):
+  assert low_dim_embs.shape[0] >= len(labels), 'More labels than embeddings'
+  plt.figure(figsize=(18, 18))  # in inches
+  for i, label in enumerate(labels):
+    x, y = low_dim_embs[i, :]
+    plt.scatter(x, y)
+    plt.annotate(
+        label,
+        xy=(x, y),
+        xytext=(5, 2),
+        textcoords='offset points',
+        ha='right',
+        va='bottom')
+
+  plt.savefig(filename)
+
+
+try:
+  # pylint: disable=g-import-not-at-top
+  from sklearn.manifold import TSNE
+  import matplotlib.pyplot as plt
+
+  tsne = TSNE(
+      perplexity=30, n_components=2, init='pca', n_iter=5000, method='exact')
+  plot_only = 500
+  low_dim_embs = tsne.fit_transform(final_embeddings[:plot_only, :])
+  labels = [reverse_dictionary[i] for i in xrange(plot_only)]
+  plot_with_labels(low_dim_embs, labels, os.path.join(gettempdir(), 'tsne.png'))
+
+except ImportError as ex:
+  print('Please install sklearn, matplotlib, and scipy to show embeddings.')
+  print(ex)
+```
+
 # y1. tensorflow的高级实现1
+
+如果您发现模型在**输入数据方面**存在严重**瓶颈**，您可能需要针对您的问题实现**自定义数据读取器**
 
 [https://github.com/tensorflow/models/blob/master/tutorials/embedding/word2vec.py](https://github.com/tensorflow/models/blob/master/tutorials/embedding/word2vec.py)
 
 
 # y2. tensorflow的高级实现2
+
+如果您的模型不再受 I/O 限制，但您仍希望提高性能，则可以通过**编写自己的 TensorFlow 操作**（如[添加新操作](https://www.tensorflow.org/guide/extend/op)中所述）进一步采取措施：
 
 [https://github.com/tensorflow/models/blob/master/tutorials/embedding/word2vec_optimized.py](https://github.com/tensorflow/models/blob/master/tutorials/embedding/word2vec_optimized.py)
 

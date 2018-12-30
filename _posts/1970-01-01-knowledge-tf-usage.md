@@ -9,22 +9,24 @@ tags: [tf, ]
 
 <!-- TOC -->
 
+- [tags: [tf, ]](#tags-tf)
 - [基本函数](#%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0)
-    - [tf.truncated_normal](#tftruncatednormal)
-    - [tf.reduce_*](#tfreduce)
+  - [tf.truncated_normal](#tftruncatednormal)
+  - [tf.reduce_*](#tfreduce)
 - [tf.nn](#tfnn)
-    - [cost](#cost)
-        - [tf.nn.softmax_cross_entropy_with_logits](#tfnnsoftmaxcrossentropywithlogits)
-        - [tf.nn.weighted_cross_entropy_with_logits](#tfnnweightedcrossentropywithlogits)
-        - [tf.nn.nce_loss](#tfnnnceloss)
-    - [activations](#activations)
-        - [tf.nn.relu](#tfnnrelu)
-    - [ops](#ops)
-        - [tf.nn.conv2d](#tfnnconv2d)
-        - [tf.nn.max_pool](#tfnnmaxpool)
+  - [cost](#cost)
+    - [tf.nn.softmax_cross_entropy_with_logits](#tfnnsoftmaxcrossentropywithlogits)
+    - [tf.nn.weighted_cross_entropy_with_logits](#tfnnweightedcrossentropywithlogits)
+    - [tf.nn.nce_loss](#tfnnnceloss)
+  - [activations](#activations)
+    - [tf.nn.relu](#tfnnrelu)
+  - [ops](#ops)
+    - [tf.nn.embedding_lookup](#tfnnembeddinglookup)
+    - [tf.nn.conv2d](#tfnnconv2d)
+    - [tf.nn.max_pool](#tfnnmaxpool)
 - [tf.contrib.layers](#tfcontriblayers)
-    - [tf.contrib.layers.flatten](#tfcontriblayersflatten)
-    - [tf.contrib.layers.fully_connected](#tfcontriblayersfullyconnected)
+  - [tf.contrib.layers.flatten](#tfcontriblayersflatten)
+  - [tf.contrib.layers.fully_connected](#tfcontriblayersfullyconnected)
 
 <!-- /TOC -->
 
@@ -158,7 +160,24 @@ targets * -log(sigmoid(logits)) * pos_weight +
 #### tf.nn.nce_loss
 
 原理和使用参考[https://daiwk.github.io/posts/nlp-word2vec.html#4-nce](https://daiwk.github.io/posts/nlp-word2vec.html#4-nce)
+
 [https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/nn/nce_loss](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/nn/nce_loss)
+
+抄过来：
+
+在NCE的实现中，使用的是log_uniform_candidate_sampler：
+
++ 会在[0, range_max)中采样出一个整数k(**k相当于词的id**)
++ P(k) = (log(k + 2) - log(k + 1)) / log(range_max + 1)
+
+`\[
+\begin{aligned}
+P(k)&=\frac{1}{log(range\_max+1)}log(\frac{k+2}{k+1}) \\ 
+ &= \frac{1}{log(range\_max+1)}log(1+\frac{1}{k+1}) \\
+\end{aligned}
+\]`
+
+**k越大，被采样到的概率越小。**而我们的词典中，可以发现**词频高**的**index小**，所以高词频的词会被**优先**采样为负样本。
 
 nce的实现可以参考：[https://www.jianshu.com/p/fab82fa53e16](https://www.jianshu.com/p/fab82fa53e16)
 
@@ -169,6 +188,50 @@ nce的实现可以参考：[https://www.jianshu.com/p/fab82fa53e16](https://www.
 **tf.nn.relu(Z1):** computes the elementwise ReLU of Z1 (which can be any shape). You can read the full documentation [here.](https://www.tensorflow.org/api_docs/python/tf/nn/relu)
 
 ### ops
+
+#### tf.nn.embedding_lookup
+
+```python
+tf.nn.embedding_lookup(
+    params,
+    ids,
+    partition_strategy='mod',
+    name=None,
+    validate_indices=True,
+    max_norm=None
+)
+```
+
+是```tf.gather```的generalization。
+
++ ```params```: 
++ ```ids```: 一个int32或者int64的tensor，包括了需要lookup的ids
++ ```partition_strategy```: 如果```len(params) > 1```，这个参数有用。有```div```和```mod```两种取值，默认是```mod```
++ ```name```: 这个op的名字
++ ```validate_indices```: 已经没用了
++ ```max_norm```：如果非None，如果emb的l2 norm比这个值大，就clip掉
+
+
+详解：
+
+```params```是一个list的tensors。
+
++ 如果这个list的size是1，也就是说只有一个vocab_size x emb_size的tensor，那就是普通的emb。
++ 如果这个list的size大于1，即```len(params) > 1```，**这个list里每个tensor第二维要一样（emb的size），第一维可以不一样（每个partition里有多少个词）**。其实就是一个大型embedding tensor的partitioning，可以是```PartitionedVariable```。
+
+如果，那么会根据partition_strategy来进行partition：
+
++ mod的切分方式：
+
+partition号是```p = id % len(params)```。所以如果有5个id，要分成3个partition，那么结果就是```[[0, 3], [1, 4], [2]]```。所以这个时候，输入的params的shape就是```[(2, emb_size), (2, emb_size), (1, emb_size)]```。
+
++ div的切分方式：
+
+partition是连续的。
+
+所以如果有5个id，要分成3个partition，那么结果就是```[[0, 1], [2, 3], [4]]```。所以这个时候，输入的params的shape就是```[(2, emb_size), (2, emb_size), (1, emb_size)]```。
+
+返回的shape：```shape(ids) + shape(params)[1:]```，即ids的size x emb_size
 
 #### tf.nn.conv2d
 
