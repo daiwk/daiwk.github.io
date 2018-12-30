@@ -11,8 +11,8 @@ tags: [tf, ]
 
 - [tags: [tf, ]](#tags-tf)
 - [基本函数](#%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0)
-  - [tf.truncated_normal](#tftruncatednormal)
-  - [tf.reduce_*](#tfreduce)
+  - [tf.truncated-normal](#tftruncated-normal)
+  - [tf.reduce-*](#tfreduce)
 - [tf.nn](#tfnn)
   - [cost](#cost)
     - [tf.nn.softmax-cross-entropy-with-logits](#tfnnsoftmax-cross-entropy-with-logits)
@@ -32,7 +32,7 @@ tags: [tf, ]
 
 ## 基本函数
 
-### tf.truncated_normal
+### tf.truncated-normal
 
 tf.truncated_normal(shape, mean=0.0, stddev=1.0, dtype=tf.float32, seed=None, name=None)
 
@@ -41,7 +41,7 @@ tf.truncated_normal(shape, mean=0.0, stddev=1.0, dtype=tf.float32, seed=None, na
 
 在tf.truncated_normal中如果x的取值在区间（μ-2σ，μ+2σ）之外则重新进行选择。这样**保证了生成的值都在均值附近。**
 
-### tf.reduce_*
+### tf.reduce-*
 
 **tf.reduce_mean:** computes the mean of elements across dimensions of a tensor. Use this to sum the losses over all the examples to get the overall cost. You can check the full documentation [here.](https://www.tensorflow.org/api_docs/python/tf/reduce_mean)
 
