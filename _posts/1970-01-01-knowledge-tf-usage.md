@@ -214,7 +214,7 @@ tf.nn.embedding_lookup(
 
 详解：
 
-```params```是一个list的tensors。
+其中的```params```是一个list的tensors。
 
 + 如果这个list的size是1，也就是说只有一个vocab_size x emb_size的tensor，那就是普通的emb。
 + 如果这个list的size大于1，即```len(params) > 1```，**这个list里每个tensor第二维要一样（emb的size），第一维可以不一样（每个partition里有多少个词）**。其实就是一个大型embedding tensor的partitioning，可以是```PartitionedVariable```。
