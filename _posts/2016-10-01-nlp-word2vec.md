@@ -180,7 +180,7 @@ P(w_t | h) &= \text{softmax} (\text{score} (w_t, h)) \\
 \end{align}
 \]`
 
-如果直接硬算，对于每个时间步，都需要遍历词典大小的空间，显然效率是不行的。在word2vec中，将这样一个多分类问题，变成了一个区分目标词`\(w_t\)`和k个noise words`\(\tilde w\)`的二分类问题。下图是cbow的示例，skipgram正好是倒过来。
+如果直接硬算，对于每个时间步，都需要遍历词典大小的空间，显然效率是不行的。在word2vec中，将这样一个多分类问题，变成了一个区分目标词`\(w_t\)`和k个noise words `\(\tilde w\)`的二分类问题。下图是cbow的示例，skipgram正好是倒过来。
 
 <html>
 <br/>
@@ -201,6 +201,18 @@ J_\text{NEG} = \log Q_\theta(D=1 |w_t, h) +
 直观地理解，这个目标就是希望预测为`\(w_t\)`的概率尽可能大，同时预测为非`\(\tilde w\)`的概率尽可能大，也就是，**希望预测为真实词的概率尽量大，预测为noise word的概率尽量小**。在极限情况下，这可以近似为softmax，但这计算量比softmax小很多。这就是所谓的[negative sampling](https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf)。
 
 tensorflow有一个很类似的损失函数[noise-contrastive estimation(NCE)](https://papers.nips.cc/paper/5165-learning-word-embeddings-efficiently-with-noise-contrastive-estimation.pdf)，即『噪声对比估算』，```tf.nn.nce_loss()```。
+
+上面讲的是cbow，而skipgram其实也类似，假设拿一个词去预测周围的`\(2C\)`个词：
+
+`\[
+\begin{align*}
+J &= -\log p(w_{t-C},...,w_{t+C}|w_t) \\
+  &= -\log \prod ^{2C}_{c=1}\frac{\exp(u_{c,j^{*}_c})}{\sum ^V_{j=1} \exp(u_j)} \\
+  &= -\sum ^{2C}_{c=1}u_{j^{*}_c} + 2C \log\sum ^{V}_{j=1}\exp(u_j)
+\end{align*}
+\]`
+
+其中的`\(\log\sum ^{V}_{j=1}\exp(u_j)\)`部分，也可以用负采样和nce去搞。
 
 针对句子
 
