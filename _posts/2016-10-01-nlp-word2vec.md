@@ -232,6 +232,8 @@ L= log \prod_{j=2}^{l_w}P(d_j^w|x_w, \theta_{j-1}^w) = \sum\limits_{j=2}^{l_w} (
 \frac{\partial L}{\partial x_w} = \sum\limits_{j=2}^{l_w}(1-d_j^w-\sigma(x_w^T\theta_{j-1}^w))\theta_{j-1}^w
 \]`
 
+可以发现，都有`\((1-d_j^w-\sigma(x_w^T\theta_{j-1}^w))\)`这一项，只是对`\(\theta_{j-1}^w\)`，要乘`\(x_w\)`，而对于`\(x_w\)`，要乘`\(\)`
+
 ### 基于Hierarchical Softmax的CBOW
 
 对于从输入层到隐藏层（投影层）：对`\(w\)`周围的`\(2c\)`个词向量求和取平均即可：
@@ -254,24 +256,24 @@ x_w &= x_w +\eta \sum\limits_{j=2}^{l_w}(1-d_j^w-\sigma(x_w^T\theta_{j-1}^w))\th
 + 输入：词向量的维度大小为`\(M\)`，CBOW的上下文大小为`\(2c\)`，步长`\(\eta\)`
 + 输出：哈夫曼树内部节点模型参数`\(\theta\)`，所有词向量`\(w\)`
 
-1. 基于语料训练样本建立哈夫曼树。
-1. 随机初始化所有的模型参数`\(\theta\)`，所有的词向量`\(w\)`。
-1. 对于训练集中的每一个样本`\((context(w), w)\)`：
-  1. `\(e=0\)`计算`\(x_w= \frac{1}{2c}\sum\limits_{i=1}^{2c}x_i\)`
-  1. for `\(j=2,3,...,l_w\)`，计算
-    `\[
-      \begin{align*}
-      f &= \sigma(x_w^T\theta_{j-1}^w) \\
-      g &= (1-d_j^w-f)\eta \\
-      e = e + g\theta_{j-1}^w \\
-      \theta_{j-1}^w= \theta_{j-1}^w + gx_w \\
-      \end{align*}
-    \]`
-  1. 对于`\(context(w)\)`中的每一个词向量`\(x_i\)`（共有`\(2c\)`个）进行更新：
-    `\[
-    x_i = x_i + e
-    \]`
-  1. 如果梯度收敛，则结束梯度迭代，否则回到步骤3继续迭代。
+>1. 基于语料训练样本建立哈夫曼树。
+>1. 随机初始化所有的模型参数`\(\theta\)`，所有的词向量`\(w\)`。
+>1. 对于训练集中的每一个样本`\((context(w), w)\)`：
+>    1. `\(e=0\)`计算`\(x_w= \frac{1}{2c}\sum\limits_{i=1}^{2c}x_i\)`
+>    1. for `\(j=2,3,...,l_w\)`，计算
+>    `\[
+>      \begin{align*}
+>      f &= \sigma(x_w^T\theta_{j-1}^w) \\
+>      g &= (1-d_j^w-f)\eta \\
+>      e &= e + g\theta_{j-1}^w \\
+>      \theta_{j-1}^w&= \theta_{j-1}^w + gx_w \\
+>      \end{align*}
+>    \]`
+>    1. 对于`\(context(w)\)`中的每一个词向量`\(x_i\)`（共有`\(2c\)`个）进行更新：
+>    `\[
+>    x_i = x_i + e
+>    \]`
+>    1. 如果梯度收敛，则结束梯度迭代，否则回到步骤3继续迭代。
 
 ### 基于Hierarchical Softmax的Skip-Gram
 
