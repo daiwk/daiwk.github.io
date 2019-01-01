@@ -495,7 +495,7 @@ len(w) = \frac{count(w)^{3/4}}{\sum\limits_{u \in vocab} count(u)^{3/4}}
 >          \theta^{w_j} &= \theta^{w_j} + gx_{w_{0i}} \\
 >          \end{align*}
 >        \]`
->        1. 进行完`\(j\)`的for循环后，更新一次`\(x_w_{0i}\)`
+>        1. 进行完`\(j\)`的for循环后，更新一次`\(x_{w_{0i}}\)`
 >        `\[
 >        x_{w_{0i}} = x_{w_{0i}} + e
 >        \]`
