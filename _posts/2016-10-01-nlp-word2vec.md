@@ -323,7 +323,6 @@ word2vec中，使用了`\(P(x_w|x_i)\)`。这样一来，在一个迭代窗口�
 
 代码：[https://github.com/tmikolov/word2vec/blob/master/word2vec.c](https://github.com/tmikolov/word2vec/blob/master/word2vec.c)
 
-
 + ```neu1e```：相当于上面的`\(e\)`
 + ```syn0```：相当于上面的`\(x_w\)`
 + ```syn1```：相当于上面的`\(\theta_{j-1}^i\)`
@@ -332,7 +331,7 @@ word2vec中，使用了`\(P(x_w|x_i)\)`。这样一来，在一个迭代窗口�
 + ```vocab[word].code[d]```：当前单词word的，第d个编码，编码不含Root结点
 + ```vocab[word].point[d]```：当前单词word，第d个编码下，前置的结点
 
-cbow+hs：
+cbow + hs：
 
 ```c++
         for (c = 0; c < layer1_size; c++) neu1[c] /= cw;
@@ -352,7 +351,7 @@ cbow+hs：
           for (c = 0; c < layer1_size; c++) syn1[c + l2] += g * neu1[c];
 ```
 
-skipgram+hs:
+skipgram + hs:
 
 ```c++
         if (hs) for (d = 0; d < vocab[word].codelen; d++) {
@@ -374,7 +373,7 @@ skipgram+hs:
 
 ## 4.2 负采样和nce
 
-下文有大概的讲解。
+下文对nce有大概的讲解。先来重点看下负采样。
 
 参考[https://www.cnblogs.com/pinard/p/7249903.html](https://www.cnblogs.com/pinard/p/7249903.html)
 
@@ -479,11 +478,92 @@ len(w) = \frac{count(w)^{3/4}}{\sum\limits_{u \in vocab} count(u)^{3/4}}
 
 ### 基于Negative Sampling的Skip-Gram模型
 
++ 输入：基于Skip-Gram的语料训练样本，词向量的维度大小`\(M\)`，Skip-Gram的上下文大小`\(2c\)`，步长`\(\eta\)`，负采样的个数neg
++ 输出：词汇表每个词对应的模型参数`\(\theta\)`，所有的词向量`\(x_w\)`
 
+>1. 随机初始化所有的模型参数`\(\theta\)`，所有的词向量`\(w\)`。
+>1. 对于训练集中的每一个样本`\((context(w_0), w_0)\)`，负采样出neg个负例中心词`\(w_i, i=1,2,...neg\)`
+>1. 进行梯度上升迭代过程，对于训练集中的每一个样本`\((context(w_0), w_0,w_1,...w_{neg})\)`做如下处理：
+>    1. for `\(i=1,2,...,2c\)`
+>        1. `\(e=0\)`
+>        1. for `\(j=0,1,...,neg\)`，计算
+>        `\[
+>          \begin{align*}
+>          f &= \sigma(x_{w_{0i}}^T\theta^{w_j}) \\
+>          g &= (y_j-f)\eta \\
+>          e &= e + g\theta^{w_j} \\
+>          \theta^{w_j} &= \theta^{w_j} + gx_{w_{0i}} \\
+>          \end{align*}
+>        \]`
+>        1. 进行完`\(j\)`的for循环后，更新一次`\(x_w_{0i}\)`
+>        `\[
+>        x_{w_{0i}} = x_{w_{0i}} + e
+>        \]`
+>    1. 进行完`\(i\)`的for循环后，如果梯度收敛，则结束梯度迭代，否则回到步骤3.1继续迭代。
 
 ### negative sampling源码解析
 
+代码：[https://github.com/tmikolov/word2vec/blob/master/word2vec.c](https://github.com/tmikolov/word2vec/blob/master/word2vec.c)
 
++ ```neu1e```：相当于上面的`\(e\)`
++ ```syn0```：相当于上面的`\(x_w\)`
++ ```syn1neg```：相当于上面的`\(\theta^{w_i}\)`
++ ```layer1_size```：相当于上面的词向量的维度`\(M\)`
++ ```window```：相当于上面的`\(c\)`
++ ```negative```：相当于上面的neg
++ ```table_size```：相当于上面讲负采样时提到的划分数`\(M\)`
++ ```vocab[word].code[d]```：当前单词word的，第d个编码，编码不含Root结点
++ ```vocab[word].point[d]```：当前单词word，第d个编码下，前置的结点
+
+cbow + negative sampling:
+
+```c++
+        if (negative > 0) for (d = 0; d < negative + 1; d++) {
+          if (d == 0) {
+            target = word;
+            label = 1;
+          } else {
+            next_random = next_random * (unsigned long long)25214903917 + 11;
+            target = table[(next_random >> 16) % table_size];
+            if (target == 0) target = next_random % (vocab_size - 1) + 1;
+            if (target == word) continue;
+            label = 0;
+          }
+          l2 = target * layer1_size;
+          f = 0;
+          for (c = 0; c < layer1_size; c++) f += neu1[c] * syn1neg[c + l2];
+          if (f > MAX_EXP) g = (label - 1) * alpha;
+          else if (f < -MAX_EXP) g = (label - 0) * alpha;
+          else g = (label - expTable[(int)((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]) * alpha;
+          for (c = 0; c < layer1_size; c++) neu1e[c] += g * syn1neg[c + l2];
+          for (c = 0; c < layer1_size; c++) syn1neg[c + l2] += g * neu1[c];
+        }
+```
+
+skipgram + negative sampling:
+
+```c++
+        if (negative > 0) for (d = 0; d < negative + 1; d++) {
+          if (d == 0) {
+            target = word;
+            label = 1;
+          } else {
+            next_random = next_random * (unsigned long long)25214903917 + 11;
+            target = table[(next_random >> 16) % table_size];
+            if (target == 0) target = next_random % (vocab_size - 1) + 1;
+            if (target == word) continue;
+            label = 0;
+          }
+          l2 = target * layer1_size;
+          f = 0;
+          for (c = 0; c < layer1_size; c++) f += syn0[c + l1] * syn1neg[c + l2];
+          if (f > MAX_EXP) g = (label - 1) * alpha;
+          else if (f < -MAX_EXP) g = (label - 0) * alpha;
+          else g = (label - expTable[(int)((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]) * alpha;
+          for (c = 0; c < layer1_size; c++) neu1e[c] += g * syn1neg[c + l2];
+          for (c = 0; c < layer1_size; c++) syn1neg[c + l2] += g * syn0[c + l1];
+        }
+```
 
 # 5. 面试常见问题
 
