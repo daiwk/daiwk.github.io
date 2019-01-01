@@ -303,7 +303,7 @@ word2vec中，使用了`\(P(x_w|x_i)\)`。这样一来，在一个迭代窗口�
 >          \begin{align*}
 >          f &= \sigma(x_w^T\theta_{j-1}^w) \\
 >          g &= (1-d_j^w-f)\eta \\
->          e &= e + g\theta_{j-1}
+>          e &= e + g\theta_{j-1} \\
 >          \theta_{j-1}^w&= \theta_{j-1}^w + gx_i \\
 >          \end{align*}
 >        \]`
