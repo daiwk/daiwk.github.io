@@ -384,6 +384,54 @@ hs的一个缺点就是，如果我们的训练样本里的**中心词`\(w\)`是
 
 ### Negative Sampling梯度计算
 
+定义正例为`\(w_0\)`，neg个负例为`\(w_i, i=1,2,..neg\)`。
+
+正例的概率和label是：
+
+`\[
+P(context(w_0), w_i) = \sigma(x_{w_0}^T\theta^{w_i}) ,y_i=1, i=0
+\]`
+
+负例的概率和label是：
+
+`\[
+P(context(w_0), w_i) =1-  \sigma(x_{w_0}^T\theta^{w_i}), y_i = 0, i=1,2,..neg
+\]`
+
+期望能最大化：
+
+`\[
+\prod_{i=0}^{neg}P(context(w_0), w_i) = \sigma(x_{w_0}^T\theta^{w_0})\prod_{i=1}^{neg}(1-  \sigma(x_{w_0}^T\theta^{w_i}))
+\]`
+
+所以似然函数是：
+
+`\[
+\prod_{i=0}^{neg} \sigma(x_{w_0}^T\theta^{w_i})^{y_i}(1-  \sigma(x_{w_0}^T\theta^{w_i}))^{1-y_i}
+\]`
+
+对应的对数似然函数就是：
+
+`\[
+L = \sum\limits_{i=0}^{neg}y_i log(\sigma(x_{w_0}^T\theta^{w_i})) + (1-y_i) log(1-  \sigma(x_{w_0}^T\theta^{w_i}))
+\]`
+
+与hs类似，需要对`\(x_{w_i}\)`和`\(\theta^{w_i},  i=0,1,..neg\)`这两大参数进行更新：
+
+`\(\theta^{w_i}\)`的梯度如下：
+
+`\[
+\begin{align*}
+\frac{\partial L}{\partial \theta^{w_i} } &= y_i(1-  \sigma(x_{w_0}^T\theta^{w_i}))x_{w_0}-(1-y_i)\sigma(x_{w_0}^T\theta^{w_i})x_{w_0} \\
+& = (y_i -\sigma(x_{w_0}^T\theta^{w_i})) x_{w_0}
+\end{align*}
+\]`
+
+同样地，`\(x_{w_0}\)`的梯度如下：
+
+`\[
+\frac{\partial L}{\partial x^{w_0} } = \sum\limits_{i=0}^{neg}(y_i -\sigma(x_{w_0}^T\theta^{w_i}))\theta^{w_i}
+\]`
 
 ### Negative Sampling负采样方法
 
