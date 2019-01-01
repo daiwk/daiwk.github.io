@@ -430,14 +430,56 @@ L = \sum\limits_{i=0}^{neg}y_i log(\sigma(x_{w_0}^T\theta^{w_i})) + (1-y_i) log(
 同样地，`\(x_{w_0}\)`的梯度如下：
 
 `\[
-\frac{\partial L}{\partial x^{w_0} } = \sum\limits_{i=0}^{neg}(y_i -\sigma(x_{w_0}^T\theta^{w_i}))\theta^{w_i}
+\frac{\partial L}{\partial x_{w_0} } = \sum\limits_{i=0}^{neg}(y_i -\sigma(x_{w_0}^T\theta^{w_i}))\theta^{w_i}
 \]`
 
 ### Negative Sampling负采样方法
 
+如果词汇表的大小为`\(V\)`，那么我们将一段长度为1的线段分成`\(V\)`份，每份对应词汇表中的一个词。高频词对应的线段长，低频词对应的线段短(和[轮盘赌](https://daiwk.github.io/posts/knowledge-algorithms.html#%E8%BD%AE%E7%9B%98%E8%B5%8C)有异曲同工之妙)。每个词`\(w\)`的线段长度由下式决定：
+
+`\[
+len(w) = \frac{count(w)}{\sum\limits_{u \in vocab} count(u)}
+\]`
+
+word2vec中，分子和分母都取了3/4次幂：
+
+`\[
+len(w) = \frac{count(w)^{3/4}}{\sum\limits_{u \in vocab} count(u)^{3/4}}
+\]`
+
+采样前，我们将这段长度为1的线段划分`\(M\)`**等份**，`\(M >> V\)`。这样可以保证每个词对应的线段都会划分成对应的小块。M份中的每一份都会落在某一个词对应的线段上。
+
+采样的时候，我们只需要从`\(M\)`个位置中**采样出neg个位置**就行，此时采样到的每一个位置对应到的线段所属的词就是我们的负例词。
+
+在word2vec中，`\(M\)`取值默认为`\(10^8\)`。
+
 ### 基于Negative Sampling的CBOW模型
 
++ 输入：基于CBOW的语料训练样本，词向量的维度大小`\(M\)`，CBOW的上下文大小`\(2c\)`，步长`\(\eta\)`, 负采样的个数neg
++ 输出：词汇表每个词对应的模型参数`\(\theta\)`，所有的词向量`\(x_w\)`
+
+>1. 随机初始化所有的模型参数`\(\theta\)`，所有的词向量`\(w\)`。
+>1. 对于训练集中的每一个样本`\((context(w_0), w_0)\)`，负采样出neg个负例中心词`\(w_i, i=1,2,...neg\)`
+>1. 进行梯度上升迭代过程，对于训练集中的每一个样本`\((context(w_0), w_0,w_1,...w_{neg})\)`做如下处理：
+>    1. `\(e=0\)`计算`\(x_{w_0}= \frac{1}{2c}\sum\limits_{i=1}^{2c}x_i\)`
+>    1. for `\(i=0,1,...,neg\)`，计算
+>    `\[
+>      \begin{align*}
+>      f &= \sigma(x_{w_0}^T\theta^{w_i}) \\
+>      g &= (y_i-f)\eta \\
+>      e &= e + g\theta^{w_i} \\
+>      \theta^{w_i}&= \theta^{w_i} + gx_{w_0} \\
+>      \end{align*}
+>    \]`
+>    1. 对于`\(context(w)\)`中的每一个词向量`\(x_k\)`（共有`\(2c\)`个）进行更新：
+>    `\[
+>    x_k = x_k + e
+>    \]`
+>    1. 如果梯度收敛，则结束梯度迭代，否则回到步骤3继续迭代。
+
 ### 基于Negative Sampling的Skip-Gram模型
+
+
 
 ### negative sampling源码解析
 
