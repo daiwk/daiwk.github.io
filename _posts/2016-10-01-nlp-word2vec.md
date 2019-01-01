@@ -19,6 +19,7 @@ tags: [word2vec, ngram, nnlm, cbow, c-skip-gram, 统计语言模型]
     - [梯度计算](#%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97)
     - [基于Hierarchical Softmax的CBOW](#%E5%9F%BA%E4%BA%8Ehierarchical-softmax%E7%9A%84cbow)
     - [基于Hierarchical Softmax的Skip-Gram](#%E5%9F%BA%E4%BA%8Ehierarchical-softmax%E7%9A%84skip-gram)
+    - [源码解析](#%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
   - [4.2 nce](#42-nce)
 - [5. 面试常见问题](#5-%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
 - [x. tensorflow的简单实现](#x-tensorflow%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0)
@@ -242,7 +243,7 @@ L= log \prod_{j=2}^{l_w}P(d_j^w|x_w, \theta_{j-1}^w) = \sum\limits_{j=2}^{l_w} (
 x_w = \frac{1}{2c}\sum\limits_{i=1}^{2c}x_i
 \]`
 
-然后通过梯度上升法来更新`\(\theta_{j-1}^w\)`和`\(x_w\)`，因为`\(x_w\)`是`\(2c\)`个向量求和得到的，所以梯度更新后，会用梯度项直接更新原始的**各个**`\(x_i(i=1,2,...,2c)\)`，即：
+然后通过梯度上升法来更新`\(\theta_{j-1}^w\)`和`\(x_w\)`，因为`\(x_w\)`是`\(2c\)`个向量求和得到的，所以梯度更新后，会用**同一个梯度项**(即下面提到的`\(e\)`)直接更新原始的**各个**`\(x_i(i=1,2,...,2c)\)`，即：
 
 `\[
 \begin{align*}
@@ -283,8 +284,8 @@ x_w &= x_w +\eta \sum\limits_{j=2}^{l_w}(1-d_j^w-\sigma(x_w^T\theta_{j-1}^w))\th
 
 然后通过梯度上升法来更新`\(\theta_{j-1}^w\)`和`\(x_w\)`，这里的`\(x_w\)`周围有`\(2c\)`个词向量，有两种处理方式：
 
-+ 期望`\(P(x_i|x_w), i=1,2...2c\)`最大。
-+ 期望`\(P(x_w|x_i), i=1,2...2c\)`最大。这是因为，上下文是相互的。
++ 期望`\(P(x_i|x_w), i=1,2...2c\)`最大。也就是从`\(x_w\)`出发，走到第`\(i\)`个词，需要走`\(2c\)`条路径
++ 期望`\(P(x_w|x_i), i=1,2...2c\)`最大。也就是对于每个`\(i\)`，从`\(x_i\)`出发，走到**同一个终点`\(x_w\)`**，同样是`\(2c\)`条路径。
 
 word2vec中，使用了`\(P(x_w|x_i)\)`。这样一来，在一个迭代窗口内，不是只更新`\(x_w\)`一个词，而是`\(x_i,i=1,2,...,2c\)`共`\(2c\)`个词。这样整体的迭代会更加的均衡。因此，Skip-Gram模型并没有和CBOW模型一样对输入进行迭代更新，而是对`\(2c\)`个输出进行迭代更新。
 
@@ -301,7 +302,7 @@ word2vec中，使用了`\(P(x_w|x_i)\)`。这样一来，在一个迭代窗口�
 >        1. for `\(j=2,3,...,l_w\)`，计算
 >        `\[
 >          \begin{align*}
->          f &= \sigma(x_w^T\theta_{j-1}^w) \\
+>          f &= \sigma(x_i^T\theta_{j-1}^w) \\
 >          g &= (1-d_j^w-f)\eta \\
 >          e &= e + g\theta_{j-1} \\
 >          \theta_{j-1}^w&= \theta_{j-1}^w + gx_i \\
@@ -313,9 +314,66 @@ word2vec中，使用了`\(P(x_w|x_i)\)`。这样一来，在一个迭代窗口�
 >        \]`
 >    1. 进行完`\(i\)`的for循环后，如果梯度收敛，则结束梯度迭代，否则回到步骤3.1继续迭代。
 
+### 源码解析
+
+代码：[https://github.com/tmikolov/word2vec/blob/master/word2vec.c](https://github.com/tmikolov/word2vec/blob/master/word2vec.c)
+
+
++ ```neu1e```：相当于上面的`\(e\)`
++ ```syn0```：相当于上面的`\(x_w\)`
++ ```syn1```：相当于上面的`\(\theta_{j-1}^i\)`
++ ```layer1_size```：相当于上面的词向量的维度`\(M\)`
++ ```window```：相当于上面的`\(c\)`
++ ```vocab[word].code[d]```：当前单词word的，第d个编码，编码不含Root结点
++ ```vocab[word].point[d]```：当前单词word，第d个编码下，前置的结点
+
+cbow+hs：
+
+```c++
+        for (c = 0; c < layer1_size; c++) neu1[c] /= cw;
+        if (hs) for (d = 0; d < vocab[word].codelen; d++) {
+          f = 0;
+          l2 = vocab[word].point[d] * layer1_size;
+          // Propagate hidden -> output
+          for (c = 0; c < layer1_size; c++) f += neu1[c] * syn1[c + l2];
+          if (f <= -MAX_EXP) continue;
+          else if (f >= MAX_EXP) continue;
+          else f = expTable[(int)((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))];
+          // 'g' is the gradient multiplied by the learning rate
+          g = (1 - vocab[word].code[d] - f) * alpha;
+          // Propagate errors output -> hidden
+          for (c = 0; c < layer1_size; c++) neu1e[c] += g * syn1[c + l2];
+          // Learn weights hidden -> output
+          for (c = 0; c < layer1_size; c++) syn1[c + l2] += g * neu1[c];
+```
+
+skipgram+hs:
+
+```c++
+        if (hs) for (d = 0; d < vocab[word].codelen; d++) {
+          f = 0;
+          l2 = vocab[word].point[d] * layer1_size;
+          // Propagate hidden -> output
+          for (c = 0; c < layer1_size; c++) f += syn0[c + l1] * syn1[c + l2];
+          if (f <= -MAX_EXP) continue;
+          else if (f >= MAX_EXP) continue;
+          else f = expTable[(int)((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))];
+          // 'g' is the gradient multiplied by the learning rate
+          g = (1 - vocab[word].code[d] - f) * alpha;
+          // Propagate errors output -> hidden
+          for (c = 0; c < layer1_size; c++) neu1e[c] += g * syn1[c + l2];
+          // Learn weights hidden -> output
+          for (c = 0; c < layer1_size; c++) syn1[c + l2] += g * syn0[c + l1];
+        }
+```
+
 ## 4.2 nce
 
 下文有大概的讲解。
+
+参考[https://www.cnblogs.com/pinard/p/7249903.html](https://www.cnblogs.com/pinard/p/7249903.html)
+
+
 
 # 5. 面试常见问题
 
