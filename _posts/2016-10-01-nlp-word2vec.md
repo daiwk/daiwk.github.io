@@ -16,11 +16,16 @@ tags: [word2vec, ngram, nnlm, cbow, c-skip-gram, 统计语言模型]
 - [3. Continuous skip-gram](#3-continuous-skip-gram)
 - [4. HS & NCE](#4-hs--nce)
   - [4.1 hierachical softmax](#41-hierachical-softmax)
-    - [梯度计算](#%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97)
+    - [Hierarchical Softmax梯度计算](#hierarchical-softmax%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97)
     - [基于Hierarchical Softmax的CBOW](#%E5%9F%BA%E4%BA%8Ehierarchical-softmax%E7%9A%84cbow)
     - [基于Hierarchical Softmax的Skip-Gram](#%E5%9F%BA%E4%BA%8Ehierarchical-softmax%E7%9A%84skip-gram)
-    - [源码解析](#%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
-  - [4.2 nce](#42-nce)
+    - [hierarchical softmax源码解析](#hierarchical-softmax%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
+  - [4.2 负采样和nce](#42-%E8%B4%9F%E9%87%87%E6%A0%B7%E5%92%8Cnce)
+    - [Negative Sampling梯度计算](#negative-sampling%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97)
+    - [Negative Sampling负采样方法](#negative-sampling%E8%B4%9F%E9%87%87%E6%A0%B7%E6%96%B9%E6%B3%95)
+    - [基于Negative Sampling的CBOW模型](#%E5%9F%BA%E4%BA%8Enegative-sampling%E7%9A%84cbow%E6%A8%A1%E5%9E%8B)
+    - [基于Negative Sampling的Skip-Gram模型](#%E5%9F%BA%E4%BA%8Enegative-sampling%E7%9A%84skip-gram%E6%A8%A1%E5%9E%8B)
+    - [negative sampling源码解析](#negative-sampling%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90)
 - [5. 面试常见问题](#5-%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
 - [x. tensorflow的简单实现](#x-tensorflow%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0)
   - [简介](#%E7%AE%80%E4%BB%8B)
@@ -183,7 +188,7 @@ P(-) &=  1-P(+) \\
 + 计算量由`\(V\)`变为`\(log_2V\)`
 + **高频的词靠近树根**，这样高频词需要**更少的时间会被找到**
 
-### 梯度计算
+### Hierarchical Softmax梯度计算
 
 假设我们要的一个叶子是通过『左、左、右』三步得到的，那么我们期望最大化如下的似然函数：
 
@@ -314,7 +319,7 @@ word2vec中，使用了`\(P(x_w|x_i)\)`。这样一来，在一个迭代窗口�
 >        \]`
 >    1. 进行完`\(i\)`的for循环后，如果梯度收敛，则结束梯度迭代，否则回到步骤3.1继续迭代。
 
-### 源码解析
+### hierarchical softmax源码解析
 
 代码：[https://github.com/tmikolov/word2vec/blob/master/word2vec.c](https://github.com/tmikolov/word2vec/blob/master/word2vec.c)
 
@@ -367,11 +372,26 @@ skipgram+hs:
         }
 ```
 
-## 4.2 nce
+## 4.2 负采样和nce
 
 下文有大概的讲解。
 
 参考[https://www.cnblogs.com/pinard/p/7249903.html](https://www.cnblogs.com/pinard/p/7249903.html)
+
+hs的一个缺点就是，如果我们的训练样本里的**中心词`\(w\)`是一个很生僻的词**，那么就得在哈夫曼树中辛苦的向下走很久。
+
+对于中心词`\(w\)`和他的上下文`\(context(w)\)`，这是一个正例。可以采集neg个`\(w_i, i=1,2,..neg\)`，这样分别和`\(context(w)\)`可以构成neg个负例。然后利用这些正负例，进行二元logistic regression，得到负采样的每个`\(w_i\)`对应的模型参数`\(\theta_i\)`，和每个词的词向量。
+
+### Negative Sampling梯度计算
+
+
+### Negative Sampling负采样方法
+
+### 基于Negative Sampling的CBOW模型
+
+### 基于Negative Sampling的Skip-Gram模型
+
+### negative sampling源码解析
 
 
 
