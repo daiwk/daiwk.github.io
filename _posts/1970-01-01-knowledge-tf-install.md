@@ -20,8 +20,11 @@ tags: [tf安装, ]
         - [gpu](#gpu)
     - [生成whl](#生成whl)
     - [安装c++库](#安装c库)
-        - [c++版本](#c版本)
-        - [c版本](#c版本)
+        - [手动下载依赖库](#手动下载依赖库)
+        - [重新configure](#重新configure)
+        - [编译cc的so](#编译cc的so)
+        - [拷贝所需头文件](#拷贝所需头文件)
+        - [拷贝所需lib文件](#拷贝所需lib文件)
 
 <!-- /TOC -->
 
@@ -71,7 +74,51 @@ bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 
 ### 安装c++库
 
-#### c++版本
+参考：
+
+[https://github.com/hemajun815/tutorial/blob/master/tensorflow/compilling-tensorflow-source-code-into-C++-library-file.md](https://github.com/hemajun815/tutorial/blob/master/tensorflow/compilling-tensorflow-source-code-into-C++-library-file.md)
+
+#### 手动下载依赖库
+
+进入目录：
+
+```shell
+cd tensorflow/contrib/makefile
+```
+
+执行文件：
+
+```shell
+sh -x ./build_all_linux.sh
+```
+
+注意：
+
+必要时修改```download_dependencies.sh```文件：
+
++ curl需要支持https(可以升级)，比如，我们发现jumbo的curl是符合预期的，那可以在```build_all_linux.sh```一开头就加上```export PATH=~/.jumbo/bin/:$PATH```
++ wget加上```--no-check-certificate```参数，还有```--secure-protocol=TLSv1.2 ```参数，当然如果版本不够高就升级wget。如果不好升级可以做如下改动：
+
+把
+
+```shell
+wget -P "${tempdir}" "${url}"
+```
+
+改成
+
+```shell
+curl -Ls "${url}" > "${tempdir}"/xxx
+```
+
+#### 重新configure
+
+```shell
+cd tensorflow
+./configure
+```
+
+#### 编译cc的so
 
 ```shell
 cd tensorflow
@@ -80,11 +127,24 @@ bazel build :libtensorflow_cc.so
 
 产出在```bazel-bin/tensorflow/libtensorflow_cc.so```
 
-#### c版本
+#### 拷贝所需头文件
 
 ```shell
-cd tensorflow
-bazel build :libtensorflow.so
+mkdir /usr/local/tensorflow/include
+cp -r tensorflow/contrib/makefile/downloads/eigen/Eigen /usr/local/tensorflow/include/
+cp -r tensorflow/contrib/makefile/downloads/eigen/unsupported /usr/local/tensorflow/include/
+cp -r tensorflow/contrib/makefile/gen/protobuf/include/google /usr/local/tensorflow/include/
+cp tensorflow/contrib/makefile/downloads/nsync/public/* /usr/local/tensorflow/include/
+cp -r bazel-genfiles/tensorflow /usr/local/tensorflow/include/
+cp -r tensorflow/cc /usr/local/tensorflow/include/tensorflow
+cp -r tensorflow/core /usr/local/tensorflow/include/tensorflow
+mkdir /usr/local/tensorflow/include/third_party
+cp -r third_party/eigen3 /usr/local/tensorflow/include/third_party/
 ```
 
-产出在```bazel-bin/tensorflow/libtensorflow.so```
+#### 拷贝所需lib文件
+
+```shell
+mkdir /usr/local/tensorflow/lib
+cp bazel-bin/tensorflow/libtensorflow_*.so /usr/local/tensorflow/lib
+```
