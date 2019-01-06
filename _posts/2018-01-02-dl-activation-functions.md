@@ -7,7 +7,37 @@ tags: [激活函数, activation function ]
 
 目录
 
-<!-- TOC -->autoauto- [1. Step](#1-step)auto- [2. Identity](#2-identity)auto- [3. ReLU](#3-relu)auto- [4. Sigmoid](#4-sigmoid)auto- [5. Tanh](#5-tanh)auto- [6. Leaky Relu](#6-leaky-relu)auto- [7. PReLU](#7-prelu)auto- [8. RReLU](#8-rrelu)auto- [9. ELU](#9-elu)auto- [10. SELU](#10-selu)auto- [11. SReLU](#11-srelu)auto- [12. Hard Sigmoid](#12-hard-sigmoid)auto- [13. Hard Tanh](#13-hard-tanh)auto- [14. LeCun Tanh](#14-lecun-tanh)auto- [15. ArcTan](#15-arctan)auto- [16. SoftSign](#16-softsign)auto- [17. SoftPlus](#17-softplus)auto- [18. Signum](#18-signum)auto- [19. Bent Identity](#19-bent-identity)auto- [20. Symmetrical Sigmoid](#20-symmetrical-sigmoid)auto- [21. Log Log](#21-log-log)auto- [22. Gaussian](#22-gaussian)auto- [23. Absolute](#23-absolute)auto- [24. Sinusoid](#24-sinusoid)auto- [25. Cos](#25-cos)auto- [26. Sinc](#26-sinc)autoauto<!-- /TOC -->
+<!-- TOC -->
+
+- [tags: [激活函数, activation function ]](#tags-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0-activation-function)
+- [1. Step](#1-step)
+- [2. Identity](#2-identity)
+- [3. ReLU](#3-relu)
+- [4. Sigmoid](#4-sigmoid)
+- [5. Tanh](#5-tanh)
+- [6. Leaky Relu](#6-leaky-relu)
+- [7. PReLU](#7-prelu)
+- [8. RReLU](#8-rrelu)
+- [9. ELU](#9-elu)
+- [10. SELU](#10-selu)
+- [11. SReLU](#11-srelu)
+- [12. Hard Sigmoid](#12-hard-sigmoid)
+- [13. Hard Tanh](#13-hard-tanh)
+- [14. LeCun Tanh](#14-lecun-tanh)
+- [15. ArcTan](#15-arctan)
+- [16. SoftSign](#16-softsign)
+- [17. SoftPlus](#17-softplus)
+- [18. Signum](#18-signum)
+- [19. Bent Identity](#19-bent-identity)
+- [20. Symmetrical Sigmoid](#20-symmetrical-sigmoid)
+- [21. Log Log](#21-log-log)
+- [22. Gaussian](#22-gaussian)
+- [23. Absolute](#23-absolute)
+- [24. Sinusoid](#24-sinusoid)
+- [25. Cos](#25-cos)
+- [26. Sinc](#26-sinc)
+
+<!-- /TOC -->
 
 参考[26种神经网络激活函数可视化](https://www.jiqizhixin.com/articles/2017-10-10-3)，原文[Visualising Activation Functions in Neural Networks](https://dashee87.github.io/data%20science/deep%20learning/visualising-activation-functions-in-neural-networks/)【可以在里面选择不同的激活函数，看图】
 
