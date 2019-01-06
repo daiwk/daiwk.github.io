@@ -9,24 +9,30 @@ tags: [推荐系统, ]
 
 <!-- TOC -->
 
+- [tags: [推荐系统, ]](#tags-%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F)
 - [各种综述](#%E5%90%84%E7%A7%8D%E7%BB%BC%E8%BF%B0)
+- [一些经典论文](#%E4%B8%80%E4%BA%9B%E7%BB%8F%E5%85%B8%E8%AE%BA%E6%96%87)
+  - [dssm](#dssm)
+  - [youtube](#youtube)
+  - [序列建模](#%E5%BA%8F%E5%88%97%E5%BB%BA%E6%A8%A1)
+  - [标签体系](#%E6%A0%87%E7%AD%BE%E4%BD%93%E7%B3%BB)
 - [最新paper](#%E6%9C%80%E6%96%B0paper)
-    - [A review on deep learning for recommender systems: challenges and remedies](#a-review-on-deep-learning-for-recommender-systems-challenges-and-remedies)
-    - [Next Item Recommendation with Self-Attention](#next-item-recommendation-with-self-attention)
-    - [Metric Factorization: Recommendation beyond Matrix Factorization](#metric-factorization-recommendation-beyond-matrix-factorization)
-    - [Collaborative Memory Network for Recommendation Systems](#collaborative-memory-network-for-recommendation-systems)
-    - [Evaluation of Session-based Recommendation Algorithms](#evaluation-of-session-based-recommendation-algorithms)
-    - [RippleNet: Propagating User Preferences on the Knowledge Graph for Recommender Systems](#ripplenet-propagating-user-preferences-on-the-knowledge-graph-for-recommender-systems)
-    - [Content-Based Citation Recommendation](#content-based-citation-recommendation)
-    - [Explainable Recommendation: A Survey and New Perspectives](#explainable-recommendation-a-survey-and-new-perspectives)
-    - [STAMP: Short-Term Attention/Memory Priority Model for Session-based Recommendation](#stamp-short-term-attentionmemory-priority-model-for-session-based-recommendation)
-    - [Real-time Personalization using Embeddings for Search Ranking at Airbnb](#real-time-personalization-using-embeddings-for-search-ranking-at-airbnb)
-    - [Billion-scale Commodity Embedding for E-commerce Recommendation in Alibaba](#billion-scale-commodity-embedding-for-e-commerce-recommendation-in-alibaba)
-    - [Sequential Recommendation with User Memory Networks](#sequential-recommendation-with-user-memory-networks)
-    - [Aesthetic-based Clothing Recommendation](#aesthetic-based-clothing-recommendation)
-    - [Multi-Pointer Co-Attention Networks for Recommendation](#multi-pointer-co-attention-networks-for-recommendation)
-    - [ATRank: An Attention-Based User Behavior Modeling Framework for Recommendation](#atrank-an-attention-based-user-behavior-modeling-framework-for-recommendation)
-    - [Deep Matrix Factorization Models for Recommender Systems](#deep-matrix-factorization-models-for-recommender-systems)
+  - [A review on deep learning for recommender systems: challenges and remedies](#a-review-on-deep-learning-for-recommender-systems-challenges-and-remedies)
+  - [Next Item Recommendation with Self-Attention](#next-item-recommendation-with-self-attention)
+  - [Metric Factorization: Recommendation beyond Matrix Factorization](#metric-factorization-recommendation-beyond-matrix-factorization)
+  - [Collaborative Memory Network for Recommendation Systems](#collaborative-memory-network-for-recommendation-systems)
+  - [Evaluation of Session-based Recommendation Algorithms](#evaluation-of-session-based-recommendation-algorithms)
+  - [RippleNet: Propagating User Preferences on the Knowledge Graph for Recommender Systems](#ripplenet-propagating-user-preferences-on-the-knowledge-graph-for-recommender-systems)
+  - [Content-Based Citation Recommendation](#content-based-citation-recommendation)
+  - [Explainable Recommendation: A Survey and New Perspectives](#explainable-recommendation-a-survey-and-new-perspectives)
+  - [STAMP: Short-Term Attention/Memory Priority Model for Session-based Recommendation](#stamp-short-term-attentionmemory-priority-model-for-session-based-recommendation)
+  - [Real-time Personalization using Embeddings for Search Ranking at Airbnb](#real-time-personalization-using-embeddings-for-search-ranking-at-airbnb)
+  - [Billion-scale Commodity Embedding for E-commerce Recommendation in Alibaba](#billion-scale-commodity-embedding-for-e-commerce-recommendation-in-alibaba)
+  - [Sequential Recommendation with User Memory Networks](#sequential-recommendation-with-user-memory-networks)
+  - [Aesthetic-based Clothing Recommendation](#aesthetic-based-clothing-recommendation)
+  - [Multi-Pointer Co-Attention Networks for Recommendation](#multi-pointer-co-attention-networks-for-recommendation)
+  - [ATRank: An Attention-Based User Behavior Modeling Framework for Recommendation](#atrank-an-attention-based-user-behavior-modeling-framework-for-recommendation)
+  - [Deep Matrix Factorization Models for Recommender Systems](#deep-matrix-factorization-models-for-recommender-systems)
 
 <!-- /TOC -->
 
@@ -39,6 +45,27 @@ tags: [推荐系统, ]
 [Deep Learning based Recommender System: A Survey and New Perspectives](https://daiwk.github.io/assets/DL_on_RS.pdf)
 
 [Deep Learning for Matching in Search and Recommendation](https://www.comp.nus.edu.sg/~xiangnan/sigir18-deep.pdf)
+
+## 一些经典论文
+
+### dssm
+
+[https://daiwk.github.io/posts/nlp-dssm.html](https://daiwk.github.io/posts/nlp-dssm.html)
+
+### youtube
+
+[https://daiwk.github.io/posts/dl-youtube-video-recommendation.html](https://daiwk.github.io/posts/dl-youtube-video-recommendation.html)
+
+### 序列建模
+
+[Session-based Recommendations with Recurrent Neural Networks](https://arxiv.org/abs/1511.06939)
+
+paddle实现：[https://github.com/PaddlePaddle/models/tree/develop/fluid/PaddleRec/gru4rec](https://github.com/PaddlePaddle/models/tree/develop/fluid/PaddleRec/gru4rec)
+
+### 标签体系
+
+[#TagSpace: Semantic Embeddings from Hashtags](http://emnlp2014.org/papers/pdf/EMNLP2014194.pdf)
+[https://research.fb.com/publications/tagspace-semantic-embeddings-from-hashtags/](https://research.fb.com/publications/tagspace-semantic-embeddings-from-hashtags/)
 
 ## 最新paper
 
