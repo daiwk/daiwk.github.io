@@ -124,6 +124,7 @@ https://daiwk.github.io/posts/nlp-new-nmt.html
 https://daiwk.github.io/posts/dl-activation-functions.html
 https://daiwk.github.io/posts/dl-deep-cross-network.html
 https://daiwk.github.io/posts/knowledge-c++11.html
+https://daiwk.github.io/posts/nlp-tagspaces.html
 https://daiwk.github.io/posts/rl-irgan.html
 https://daiwk.github.io/posts/dl-pserver.html
 https://daiwk.github.io/posts/dl-dl-ctr-models.html

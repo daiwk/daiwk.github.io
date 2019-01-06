@@ -64,8 +64,7 @@ paddle实现：[https://github.com/PaddlePaddle/models/tree/develop/fluid/Paddle
 
 ### 标签体系
 
-[#TagSpace: Semantic Embeddings from Hashtags](http://emnlp2014.org/papers/pdf/EMNLP2014194.pdf)
-[https://research.fb.com/publications/tagspace-semantic-embeddings-from-hashtags/](https://research.fb.com/publications/tagspace-semantic-embeddings-from-hashtags/)
+[https://daiwk.github.io/posts/nlp-tagspaces.html](https://daiwk.github.io/posts/nlp-tagspaces.html)
 
 ## 最新paper
 
