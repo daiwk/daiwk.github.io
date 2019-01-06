@@ -90,6 +90,7 @@ cd tensorflow/contrib/makefile
 
 ```shell
 sh -x ./build_all_linux.sh
+cd -
 ```
 
 注意：
@@ -130,21 +131,23 @@ bazel build :libtensorflow_cc.so
 #### 拷贝所需头文件
 
 ```shell
-mkdir /usr/local/tensorflow/include
-cp -r tensorflow/contrib/makefile/downloads/eigen/Eigen /usr/local/tensorflow/include/
-cp -r tensorflow/contrib/makefile/downloads/eigen/unsupported /usr/local/tensorflow/include/
-cp -r tensorflow/contrib/makefile/gen/protobuf/include/google /usr/local/tensorflow/include/
-cp tensorflow/contrib/makefile/downloads/nsync/public/* /usr/local/tensorflow/include/
-cp -r bazel-genfiles/tensorflow /usr/local/tensorflow/include/
-cp -r tensorflow/cc /usr/local/tensorflow/include/tensorflow
-cp -r tensorflow/core /usr/local/tensorflow/include/tensorflow
-mkdir /usr/local/tensorflow/include/third_party
-cp -r third_party/eigen3 /usr/local/tensorflow/include/third_party/
+tensorflow_include=./tensorflow_include
+mkdir $tensorflow_include
+cp -r tensorflow/contrib/makefile/downloads/eigen/Eigen $tensorflow_include/
+cp -r tensorflow/contrib/makefile/downloads/eigen/unsupported $tensorflow_include/
+cp -r tensorflow/contrib/makefile/gen/protobuf/include/google $tensorflow_include/
+cp tensorflow/contrib/makefile/downloads/nsync/public/* $tensorflow_include/
+cp -r bazel-genfiles/tensorflow $tensorflow_include/
+cp -r tensorflow/cc $tensorflow_include/tensorflow
+cp -r tensorflow/core $tensorflow_include/tensorflow
+mkdir $tensorflow_include/third_party
+cp -r third_party/eigen3 $tensorflow_include/third_party/
 ```
 
 #### 拷贝所需lib文件
 
 ```shell
-mkdir /usr/local/tensorflow/lib
-cp bazel-bin/tensorflow/libtensorflow_*.so /usr/local/tensorflow/lib
+tensorflow_lib=./tensorflow_lib
+mkdir $tensorflow_lib
+cp bazel-bin/tensorflow/libtensorflow_*.so $tensorflow_lib
 ```
