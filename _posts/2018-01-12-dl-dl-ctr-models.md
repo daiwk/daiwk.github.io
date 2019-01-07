@@ -11,40 +11,44 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
 
 - [FM](#fm)
 - [FFM](#ffm)
+- [embedding + mlp](#embedding--mlp)
 - [FNN, SNN](#fnn-snn)
     - [FNN](#fnn)
     - [SNN](#snn)
 - [CCPM](#ccpm)
+- [NFM](#nfm)
+- [AFM](#afm)
 - [PNN](#pnn)
     - [IPNN](#ipnn)
     - [OPNN](#opnn)
+    - [PNN小结](#pnn小结)
 - [Wide & Deep](#wide--deep)
 - [DeepFM](#deepfm)
 - [Deep & Cross](#deep--cross)
-- [NFM](#nfm)
-- [AFM](#afm)
 - [xDeepFM](#xdeepfm)
-    - [背景](#%E8%83%8C%E6%99%AF)
-    - [预备知识](#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86)
+    - [背景](#背景)
+    - [预备知识](#预备知识)
         - [embedding](#embedding)
-        - [隐式的高阶特征交互](#%E9%9A%90%E5%BC%8F%E7%9A%84%E9%AB%98%E9%98%B6%E7%89%B9%E5%BE%81%E4%BA%A4%E4%BA%92)
-        - [显式的高阶特征交互](#%E6%98%BE%E5%BC%8F%E7%9A%84%E9%AB%98%E9%98%B6%E7%89%B9%E5%BE%81%E4%BA%A4%E4%BA%92)
+        - [隐式的高阶特征交互](#隐式的高阶特征交互)
+        - [显式的高阶特征交互](#显式的高阶特征交互)
     - [CIN](#cin)
-    - [xDeepFM](#xdeepfm)
+    - [xDeepFM](#xdeepfm-1)
 
 <!-- /TOC -->
 
 参考：
+
 [深度学习在 CTR 中应用](http://www.mamicode.com/info-detail-1990002.html)
 
 [ctr模型汇总](https://zhuanlan.zhihu.com/p/32523455)
 
 基于lr和gbdt的可以参考[传统ctr预估模型](https://daiwk.github.io/posts/dl-traditional-ctr-models.html)
 
+参考：[从FM推演各深度CTR预估模型(附代码)](https://www.jiqizhixin.com/articles/2018-07-16-17)
+
 ## FM
 
 二阶多项式模型：
-
 
 `\[
 \phi(x) = w_0+\sum _{i}w_ix_i+\sum_{i}\sum_{j<i}w_{ij}x_ix_j
@@ -65,19 +69,210 @@ FM模型：
 + `\(\hat{w_{ij}}=\mathbf{v}_i\mathbf{v}_j^T=\sum _{l=1}^kv_{il}v_{jl}\)`
 所以上式中的`\(\mathbf{v}_i\)`就表示`\(\mathbf{V}\)`这个矩阵的第i行（有k列），而`\(\left \langle \mathbf{v}_i,\mathbf{v}_j  \right \rangle\)`就表示第i行和和j行这两个向量的内积（得到一个数），而得到的正好就是权重矩阵的第i行第j列的元素`\(\hat{w}_{ij}\)`，而`\(\hat{w}\)`这个矩阵是`\((n-1)\times(n-1)\)`维的矩阵，刻画的是相邻两个x【`\(x_i\)`和`\(x_{i+1}\)`】之间的系数。因此，可以理解为，将这个`\((n-1)\times(n-1)\)`维的矩阵用一个`\(n\times k\)`维的低秩矩阵来表示。
 
+在计算特征组合的时候，会用如下一个小trick：
+
+因为`\((ax+by)^2=a^2x^2+b^2y^2+2axby\)`，所以，
+
+`\[
+\sum ^n_{i=1}\sum ^n_{j=i+1}x_ix_j=\frac{1}{2}[(\sum ^n_{i=1}x_i)^2-\sum^n_{i=1}x_i^2]
+\]`
+
+考虑了v，其实就是：
+
+`\[
+\sum xxv=\frac{1}{2}[\sum (xv)^2-\sum x^2v^2]
+\]`
+
+tf实现：
+
+```python
+class FM(Model):
+    def __init__(self, input_dim=None, output_dim=1, factor_order=10, init_path=None, opt_algo='gd', learning_rate=1e-2,
+                 l2_w=0, l2_v=0, random_seed=None):
+        Model.__init__(self)
+        # 一次、二次交叉、偏置项
+        init_vars = [('w', [input_dim, output_dim], 'xavier', dtype),
+                     ('v', [input_dim, factor_order], 'xavier', dtype),
+                     ('b', [output_dim], 'zero', dtype)]
+        self.graph = tf.Graph()
+        with self.graph.as_default():
+            if random_seed is not None:
+                tf.set_random_seed(random_seed)
+            self.X = tf.sparse_placeholder(dtype)
+            self.y = tf.placeholder(dtype)
+            self.vars = init_var_map(init_vars, init_path)
+
+            w = self.vars['w']
+            v = self.vars['v']
+            b = self.vars['b']
+
+            # [(x1+x2+x3)^2 - (x1^2+x2^2+x3^2)]/2
+            # 先计算所有的交叉项，再减去平方项(自己和自己相乘)
+            X_square = tf.SparseTensor(self.X.indices, tf.square(self.X.values), tf.to_int64(tf.shape(self.X)))
+            xv = tf.square(tf.sparse_tensor_dense_matmul(self.X, v))
+            p = 0.5 * tf.reshape(
+                tf.reduce_sum(xv - tf.sparse_tensor_dense_matmul(X_square, tf.square(v)), 1),
+                [-1, output_dim])
+            xw = tf.sparse_tensor_dense_matmul(self.X, w)
+            logits = tf.reshape(xw + b + p, [-1])
+            self.y_prob = tf.sigmoid(logits)
+
+            self.loss = tf.reduce_mean(
+                tf.nn.sigmoid_cross_entropy_with_logits(logits=logits, labels=self.y)) + \
+                        l2_w * tf.nn.l2_loss(xw) + \
+                        l2_v * tf.nn.l2_loss(xv)
+            self.optimizer = get_optimizer(opt_algo, learning_rate, self.loss)
+
+            #GPU设定
+            config = tf.ConfigProto()
+            config.gpu_options.allow_growth = True
+            self.sess = tf.Session(config=config)
+            # 图中所有variable初始化
+            tf.global_variables_initializer().run(session=self.sess)
+```
+
+将FM的公式稍微变形，写成内积形式，可以发现：
+
+`\[
+\hat{y} = w_0+\left \langle w,x \right  \rangle + \left \langle xV,xV \right  \rangle
+\]`
+
+发现，`\(xV\)`就是将离散稀疏特征`\(x\)`降维成一个低维稠密向量，所以**其实就是一种embedding**。
+
+所以，其实FM就是：
+
++ 先对离散特征进行embedding
++ 然后对embedding后的向量进行内积来做二阶特征组合
+
 ## FFM
+
+[Field-aware Factorization Machines for CTR Prediction](https://www.csie.ntu.edu.tw/~cjlin/papers/ffm.pdf)
+
+参考[https://blog.csdn.net/john_xyz/article/details/78933253#field-aware-factorization-machinesffm](https://blog.csdn.net/john_xyz/article/details/78933253#field-aware-factorization-machinesffm)
+
+FFM把**相同性质的特征**归于**同一个field**。每一维特征`\(x_i\)`，针对**其他特征**的每一种field `\(f_j\)`，都会学习一个隐向量`\(V_{i,f_j}\)`。所以隐向量不仅与特征有关，也与field相关。假设有`\(n\)`个特征，`\(f\)`个field，那么FFM的二次项总共有`\(nf\)`个隐向量，而FM中，每一维特征的隐向量只有一个。公式如下：
+
+`\[
+y=w_0+\sum^n_{i=1}w_ix_i+\sum^n_{i=1}\sum ^n_{j=i+1}\rangle + \left \langle V_{i,f_j}, V_{j,f_i} \right  \rangle x_i x_j
+\]`
+
+如果隐向量的长度是`\(k\)`，那么FFM的二次参数有`\(nfk\)`个，远多于FM的`\(nk\)`个，二次项并不能化简，所以时间复杂度是`\(O(kn^2)\)`。由于FFM中的latent vector只需要学习特定的field，所以通常要求`\(k_{FFM}<< k_{FM}\)`
+
+## embedding + mlp
+
+是ctr预估的通用框架，各种field的特征进行emb，然后concat到一起，然后堆一堆mlp。
+
+缺点：只学习高阶特征组合，对于**低阶**或者**手动的特征组合**不够兼容，而且参数较多，学习较困难
 
 ## FNN, SNN
 
 [Deep Learning over Multi-field Categorical Data - A Case Study on User Response Prediction in Display Ads](https://arxiv.org/pdf/1601.02376.pdf)
 
+这篇文章里提出了FNN和SNN。
+
 ### FNN
 
+将**FM与MLP**进行了结合。它有着十分显著的特点：
+
++ 采用**FM预训练**得到的隐含层及其权重作为神经网络的**第一层的初始值**，之后再不断堆叠全连接层，最终输出预测的点击率。
++ 可以将FNN理解成一种特殊的embedding+MLP，其要求第一层嵌入后的**各领域特征维度一致**，并且emb权重的初始化是FM预训练好的。
++ 不是一个端到端的训练过程，有**贪心预训练**的思路。而且如果不考虑预训练过程，模型网络结构也没有考虑低阶特征组合。 
+
+<html>
+<br/>
+
+<img src='../assets/fnn.png' style='max-height: 300px'/>
+<br/>
+
+</html>
+
+tf代码：
+
+```python
+class FNN(Model):
+    def __init__(self, field_sizes=None, embed_size=10, layer_sizes=None, layer_acts=None, drop_out=None,
+                 embed_l2=None, layer_l2=None, init_path=None, opt_algo='gd', learning_rate=1e-2, random_seed=None):
+        Model.__init__(self)
+        init_vars = []
+        num_inputs = len(field_sizes)
+        for i in range(num_inputs):
+            init_vars.append(('embed_%d' % i, [field_sizes[i], embed_size], 'xavier', dtype))
+        node_in = num_inputs * embed_size
+        for i in range(len(layer_sizes)):
+            init_vars.append(('w%d' % i, [node_in, layer_sizes[i]], 'xavier', dtype))
+            init_vars.append(('b%d' % i, [layer_sizes[i]], 'zero', dtype))
+            node_in = layer_sizes[i]
+        self.graph = tf.Graph()
+        with self.graph.as_default():
+            if random_seed is not None:
+                tf.set_random_seed(random_seed)
+            self.X = [tf.sparse_placeholder(dtype) for i in range(num_inputs)]
+            self.y = tf.placeholder(dtype)
+            self.keep_prob_train = 1 - np.array(drop_out)
+            self.keep_prob_test = np.ones_like(drop_out)
+            self.layer_keeps = tf.placeholder(dtype)
+            self.vars = init_var_map(init_vars, init_path)
+            w0 = [self.vars['embed_%d' % i] for i in range(num_inputs)]
+            xw = tf.concat([tf.sparse_tensor_dense_matmul(self.X[i], w0[i]) for i in range(num_inputs)], 1)
+            l = xw
+
+            #全连接部分
+            for i in range(len(layer_sizes)):
+                wi = self.vars['w%d' % i]
+                bi = self.vars['b%d' % i]
+                print(l.shape, wi.shape, bi.shape)
+                l = tf.nn.dropout(
+                    activate(
+                        tf.matmul(l, wi) + bi,
+                        layer_acts[i]),
+                    self.layer_keeps[i])
+
+            l = tf.squeeze(l)
+            self.y_prob = tf.sigmoid(l)
+
+            self.loss = tf.reduce_mean(
+                tf.nn.sigmoid_cross_entropy_with_logits(logits=l, labels=self.y))
+            if layer_l2 is not None:
+                self.loss += embed_l2 * tf.nn.l2_loss(xw)
+                for i in range(len(layer_sizes)):
+                    wi = self.vars['w%d' % i]
+                    self.loss += layer_l2[i] * tf.nn.l2_loss(wi)
+            self.optimizer = get_optimizer(opt_algo, learning_rate, self.loss)
+
+            config = tf.ConfigProto()
+            config.gpu_options.allow_growth = True
+            self.sess = tf.Session(config=config)
+            tf.global_variables_initializer().run(session=self.sess)
+```
+
+
 ### SNN
+
+和FNN的不同就是最底层的结构和预训练方式。**其最底层是全连接的**，用**RBM和DAE预训练**。预训练的时候，因为特征数量太多，为了减少计算量，**每个field**里**值为0的特征**抽取**m个**，没有抽中的特征在该次权重更新就会被完全忽略。
+
+<html>
+<br/>
+
+<img src='../assets/snn.png' style='max-height: 300px'/>
+<br/>
+
+</html>
+
+FNN比SNN-DAE和SNN-RBM好，两种SNN结果总是差不多，但都比LR和FM好。
+
+文章还指出一点，钻石型网络结构比常数型结构好，常数型又比增加型，减少型结构好
 
 ## CCPM
 
 [A Convolutional Click Prediction Model](https://dl.acm.org/citation.cfm?id=2806603)
+
+## NFM
+
+[Neural Factorization Machines for Sparse Predictive Analytics](https://arxiv.org/pdf/1708.05027.pdf)
+
+## AFM
+
+[Attentional Factorization Machines:Learning theWeight of Feature Interactions via Attention Networks](https://arxiv.org/pdf/1708.04617.pdf)
 
 ## PNN
 
@@ -117,6 +312,18 @@ W^n_p\odot p=\sum ^N_{i=1}\sum ^N_{j=1}\left \langle \theta ^i_n,\theta ^j_n \ri
 
 ### OPNN
 
+和IPNN唯一不同的是构造交叉项的方式：
+
+
+### PNN小结
+
++ 利用二阶向量积层（Pair-wisely Connected Product Layer）对FM嵌入后的向量两两进行向量积，形成的结果作为之后MLP的输入。PNN采用的向量积有内积与外积两种形式。
++ PNN中向量与常数1进行的乘法运算其实与FNN类似，不是PNN的主要创新点。
++ 对于内积形式的PNN，因为两个向量相乘的结果为标量，可以直接把各个标量“拼接”成一个大向量，就可以作为MLP的输入了。
++ 当MLP的全连接层都是恒等变换且最后一层参数全为1时，内积形式的PNN就退化成了FM。
++ 对于外积形式的PNN，因为两个向量相乘相当于列向量与行向量进行矩阵相乘，得到的结果为一个矩阵。各个矩阵向之前内积形式的操作一样直接拼接起来维数太多，论文的简化方案是直接对各个矩阵进行求和，得到的新矩阵（可以理解成之后对其拉长成向量）就直接作为MLP的输入。
++ 观察计算图发现外积形式的PNN与**NFM**很像，其实就是PNN把NFM的逐元素乘法换成了外积。
+
 ## Wide & Deep
 
 [Wide & deep learning for recommender systems](https://arxiv.org/pdf/1606.07792.pdf)
@@ -149,7 +356,6 @@ LR 对于 DNN 模型的优势是对大规模稀疏特征的容纳能力，包括
 + deep侧：每个categorical产出一个32维的emb，然后concate到一起，再和连续值特征concate到一起得到一个约1200维的vec，再接3层fc和relu(1024->512->256)
 + wide和deep的输出加起来（如果是2分类问题，wide和deep的输出就都是一维，如果是n分类问题，那就是n维），加完的结果再丢给sigmoid或者softmax，去和label算交叉熵
 
-
 用于ctr预估[https://github.com/PaddlePaddle/models/tree/develop/ctr](https://github.com/PaddlePaddle/models/tree/develop/ctr)
 
 特征的生成：[https://github.com/PaddlePaddle/models/blob/develop/ctr/dataset.md](https://github.com/PaddlePaddle/models/blob/develop/ctr/dataset.md)
@@ -171,21 +377,11 @@ DeepFM和之前模型相比优势在于两点:
 
 </html>
 
-
-
 ## Deep & Cross
 
 论文地址：[deep & cross network for ad click predictions](https://arxiv.org/abs/1708.05123)
 
 参考：[https://daiwk.github.io/posts/dl-deep-cross-network.html](https://daiwk.github.io/posts/dl-deep-cross-network.html)
-
-## NFM
-
-[Neural Factorization Machines for Sparse Predictive Analytics](https://arxiv.org/pdf/1708.05027.pdf)
-
-## AFM
-
-[Attentional Factorization Machines:Learning theWeight of Feature Interactions via Attention Networks](https://arxiv.org/pdf/1708.04617.pdf)
 
 ## xDeepFM
 
