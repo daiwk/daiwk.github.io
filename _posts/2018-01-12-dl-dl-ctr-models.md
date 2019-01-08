@@ -9,30 +9,34 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
 
 <!-- TOC -->
 
+- [tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccpm, opnn, nfm, afm ]](#tags-ctr%E6%A8%A1%E5%9E%8B-deepfm-wide--deep-deep--cross-ffm-fm-fnn-pnn-snn-ccpm-opnn-nfm-afm)
 - [FM](#fm)
 - [FFM](#ffm)
 - [embedding + mlp](#embedding--mlp)
 - [FNN, SNN](#fnn-snn)
-    - [FNN](#fnn)
-    - [SNN](#snn)
+  - [FNN](#fnn)
+  - [SNN](#snn)
 - [CCPM](#ccpm)
+  - [Convolution Layer](#convolution-layer)
+  - [Flexible p-Max Pooling](#flexible-p-max-pooling)
+  - [feature maps](#feature-maps)
 - [NFM](#nfm)
 - [AFM](#afm)
 - [PNN](#pnn)
-    - [IPNN](#ipnn)
-    - [OPNN](#opnn)
-    - [PNN小结](#pnn小结)
+  - [IPNN](#ipnn)
+  - [OPNN](#opnn)
+  - [PNN小结](#pnn%E5%B0%8F%E7%BB%93)
 - [Wide & Deep](#wide--deep)
 - [DeepFM](#deepfm)
 - [Deep & Cross](#deep--cross)
 - [xDeepFM](#xdeepfm)
-    - [背景](#背景)
-    - [预备知识](#预备知识)
-        - [embedding](#embedding)
-        - [隐式的高阶特征交互](#隐式的高阶特征交互)
-        - [显式的高阶特征交互](#显式的高阶特征交互)
-    - [CIN](#cin)
-    - [xDeepFM](#xdeepfm-1)
+  - [背景](#%E8%83%8C%E6%99%AF)
+  - [预备知识](#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86)
+    - [embedding](#embedding)
+    - [隐式的高阶特征交互](#%E9%9A%90%E5%BC%8F%E7%9A%84%E9%AB%98%E9%98%B6%E7%89%B9%E5%BE%81%E4%BA%A4%E4%BA%92)
+    - [显式的高阶特征交互](#%E6%98%BE%E5%BC%8F%E7%9A%84%E9%AB%98%E9%98%B6%E7%89%B9%E5%BE%81%E4%BA%A4%E4%BA%92)
+  - [CIN](#cin)
+  - [xDeepFM](#xdeepfm-1)
 
 <!-- /TOC -->
 
@@ -264,7 +268,54 @@ FNN比SNN-DAE和SNN-RBM好，两种SNN结果总是差不多，但都比LR和FM�
 
 ## CCPM
 
-[A Convolutional Click Prediction Model](https://dl.acm.org/citation.cfm?id=2806603)
+CIKM2015的文章[A Convolutional Click Prediction Model](http://nlpr-web.ia.ac.cn/english/irds/People/sw/Liu2015CCPM.pdf)
+
+为了充分利用**历史的顺序点击**的信息，可以有基于RNN的预测模型，把用户所浏览的历史记录作为序列，通过用户在**不同的时间间隔**内来划分用户的历史点击序列。然而在**真实的场景**下，用户对商品的**兴趣会随时间而改变**，RNN模型在此刻的场景下就受到限制。本文用cnn来解决。
+
++ 在单条广告展示中（single ad impression），包括许多元素：```element = (user; query; ad, impression time, site category, device type, etc)```。用户是否点击一个广告与用户的历史ad impression有关。
++ 一系列的ad impression组成sequential ad impression。
+
+基于以上两种情况来预测点击概率。
+
+ccpm包括convolutional layers和flexible p-max pooling layers两种layer：
+
+<html>
+<br/>
+
+<img src='../assets/ccpm.png' style='max-height: 300px'/>
+<br/>
+
+</html>
+
+### Convolution Layer
+
+每个样本有`\(n\)`个特征，对每个特征使用embeding得到定长为`\(d\)`的向量`\(e_i\in R^d\)`。构成矩阵`\(s\in R^{d\times n}\)`(一列是一个`\(d\)`维的向量`\(e_i\)`)：
+
+`\[
+\begin{bmatrix}
+\vdots & \vdots  &\vdots \\
+e_1 & ... & e_n \\
+\vdots & \vdots & \vdots
+\end{bmatrix}
+\]`
+
+然后就可以用cnn了：
+
+
+
+### Flexible p-Max Pooling
+
+由于**输入的长度是可变**的，为了降低这种影响，对应的池化层的参数应该也是灵活可变的，定义：
+
+`\[
+p_i=\left\{\begin{matrix}
+(1-(i/l)^{l-i})n, & i = 1,...,l-1 \\
+3, & i=l
+\end{matrix}\right.
+\]`
+
+### feature maps
+
 
 ## NFM
 
