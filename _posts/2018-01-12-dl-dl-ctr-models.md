@@ -920,7 +920,7 @@ CIN+DNN+linear
 <html>
 <br/>
 
-<img src='../assets/esmm.jpg' style='max-height: 300px'/>
+<img src='../assets/esmm.png' style='max-height: 300px'/>
 <br/>
 
 </html>
