@@ -272,7 +272,7 @@ CIKM2015的文章[A Convolutional Click Prediction Model](http://nlpr-web.ia.ac.
 
 为了充分利用**历史的顺序点击**的信息，可以有基于RNN的预测模型，把用户所浏览的历史记录作为序列，通过用户在**不同的时间间隔**内来划分用户的历史点击序列。然而在**真实的场景**下，用户对商品的**兴趣会随时间而改变**，RNN模型在此刻的场景下就受到限制。本文用cnn来解决。
 
-+ 在单条广告展示中（single ad impression），包括许多元素：```element = (user; query; ad, impression time, site category, device type, etc)```。用户是否点击一个广告与用户的历史ad impression有关。
++ 在单条广告展示中（single ad impression），包括许多元素：```element = (user, query, ad, impression time, site category, device type, etc)```。用户是否点击一个广告与用户的历史ad impression有关。
 + 一系列的ad impression组成sequential ad impression。
 
 基于以上两种情况来预测点击概率。
@@ -301,7 +301,23 @@ e_1 & ... & e_n \\
 
 然后就可以用cnn了：
 
+搞一个`\(w\in R^{d\times \omega}\)`的权重矩阵进行卷积，卷积完得到的矩阵`\(r\in R^{d\times (n+\omega -1)}\)`。给定各矩阵的第`\(i\)`行：`\(w_i\in R^{\omega}\)`，和`\(s_i\in R^n\)`，还有`\(r_i\in R^{(n+\omega -1)}\)`。那么：
 
+`\[
+r_i=w_i^Ts_{i,j-\omega +1:j}
+\]`
+
+其中`\(j=1,...,n+\omega -1\)`。将out-of-range的值`\(s_{i,k}\)`，即`\(k<1\ or\ k>n\)`全部置为0(即不要padding)。
+
+解释一下下：`\(w\in R^{d\times \omega}\)`，所以，`\(w^T\in R^{\omega \times d}\)`，`\(w_i^T\)`就是这个矩阵的第`\(i\)`行这个长度为`\(d\)`的向量。`\(s_{i,j-\omega +1:j}\)`指的是`\(s\)`中的大小为`\(d\times \omega\)`的小矩阵的第`\(i\)`行（因为卷积是**element-wise的乘积**，所以这里也是**『行』！**）,这行有`\(\omega\)`个元素（`\(j-(j-\omega+1)+1=\omega\)`），而start的范围是`\(1-w+1,...,n\)`，也就是`\(1-\omega+1\le j-\omega -1 \le n\)`，所以，`\(1\le \omega \le n+\omega -1\)`：
+
+<html>
+<br/>
+
+<img src='../assets/ccpm-analysis-cnn.JPG' style='max-height: 100px'/>
+<br/>
+
+</html>
 
 ### Flexible p-Max Pooling
 
@@ -313,6 +329,8 @@ p_i=\left\{\begin{matrix}
 3, & i=l
 \end{matrix}\right.
 \]`
+
+其中，`\(l\)`代表卷积层的层数，`\(n\)`表示输入的长度（特征数），`\(p_i\)`表示第`\(i\)`个池化层的参数
 
 ### feature maps
 
