@@ -309,7 +309,7 @@ r_i=w_i^Ts_{i,j-\omega +1:j}
 
 其中`\(j=1,...,n+\omega -1\)`。将out-of-range的值`\(s_{i,k}\)`，即`\(k<1\ or\ k>n\)`全部置为0(即不要padding)。
 
-解释一下下：`\(w\in R^{d\times \omega}\)`，所以，`\(w^T\in R^{\omega \times d}\)`，`\(w_i^T\)`就是这个矩阵的第`\(i\)`行这个长度为`\(d\)`的向量。`\(s_{i,j-\omega +1:j}\)`指的是`\(s\)`中的大小为`\(d\times \omega\)`的小矩阵的第`\(i\)`行（因为卷积是**element-wise的乘积**，所以这里也是**『行』！**）,这行有`\(\omega\)`个元素（`\(j-(j-\omega+1)+1=\omega\)`），而start的范围是`\(1-w+1,...,n\)`，也就是`\(1-\omega+1\le j-\omega -1 \le n\)`，所以，`\(1\le \omega \le n+\omega -1\)`：
+解释一下下：`\(w\in R^{d\times \omega}\)`，所以，`\(w^T\in R^{\omega \times d}\)`，`\(w_i^T\)`就是这个矩阵的第`\(i\)`行这个长度为`\(d\)`的向量。`\(s_{i,j-\omega +1:j}\)`指的是`\(s\)`中的大小为`\(d\times \omega\)`的小矩阵的第`\(i\)`行（因为卷积是**element-wise的乘积**，所以这里也是**『行』！**）,这行有`\(\omega\)`个元素（`\(j-(j-\omega+1)+1=\omega\)`），而start的范围是`\(1-w+1,...,n\)`，也就是`\(1-\omega+1\le j-\omega -1 \le n\)`，所以，`\(1\le j \le n+\omega -1\)`：
 
 <html>
 <br/>
