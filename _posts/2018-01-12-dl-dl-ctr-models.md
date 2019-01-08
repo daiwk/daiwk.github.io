@@ -20,6 +20,7 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
   - [Convolution Layer](#convolution-layer)
   - [Flexible p-Max Pooling](#flexible-p-max-pooling)
   - [feature maps](#feature-maps)
+  - [ccpm小结](#ccpm%E5%B0%8F%E7%BB%93)
 - [NFM](#nfm)
 - [AFM](#afm)
 - [PNN](#pnn)
@@ -279,14 +280,6 @@ CIKM2015的文章[A Convolutional Click Prediction Model](http://nlpr-web.ia.ac.
 
 ccpm包括convolutional layers和flexible p-max pooling layers两种layer：
 
-<html>
-<br/>
-
-<img src='../assets/ccpm.png' style='max-height: 300px'/>
-<br/>
-
-</html>
-
 ### Convolution Layer
 
 每个样本有`\(n\)`个特征，对每个特征使用embeding得到定长为`\(d\)`的向量`\(e_i\in R^d\)`。构成矩阵`\(s\in R^{d\times n}\)`(一列是一个`\(d\)`维的向量`\(e_i\)`)：
@@ -309,7 +302,7 @@ r_i=w_i^Ts_{i,j-\omega +1:j}
 
 其中`\(j=1,...,n+\omega -1\)`。将out-of-range的值`\(s_{i,k}\)`，即`\(k<1\ or\ k>n\)`全部置为0(即不要padding)。
 
-解释一下下：`\(w\in R^{d\times \omega}\)`，所以，`\(w^T\in R^{\omega \times d}\)`，`\(w_i^T\)`就是这个矩阵的第`\(i\)`行这个长度为`\(d\)`的向量。`\(s_{i,j-\omega +1:j}\)`指的是`\(s\)`中的大小为`\(d\times \omega\)`的小矩阵的第`\(i\)`行（因为卷积是**element-wise的乘积**，所以这里也是**『行』！**）,这行有`\(\omega\)`个元素（`\(j-(j-\omega+1)+1=\omega\)`），而start的范围是`\(1-w+1,...,n\)`，也就是`\(1-\omega+1\le j-\omega -1 \le n\)`，所以，`\(1\le j \le n+\omega -1\)`：
+解释一下下：`\(w\in R^{d\times \omega}\)`，所以，`\(w^T\in R^{\omega \times d}\)`，`\(w_i^T\)`就是这个矩阵的第`\(i\)`行这个长度为`\(d\)`的向量。`\(s_{i,j-\omega +1:j}\)`指的是`\(s\)`中的大小为`\(d\times \omega\)`的小矩阵的第`\(i\)`行（因为卷积是**element-wise的乘积**再相加，也就是两个相同维度的向量做内积，所以这里也是**『行』！**）,这行有`\(\omega\)`个元素（`\(j-(j-\omega+1)+1=\omega\)`），而start的范围是`\(1-w+1,...,n\)`，也就是`\(1-\omega+1\le j-\omega -1 \le n\)`，所以，`\(1\le j \le n+\omega -1\)`：
 
 <html>
 <br/>
@@ -321,7 +314,7 @@ r_i=w_i^Ts_{i,j-\omega +1:j}
 
 ### Flexible p-Max Pooling
 
-由于**输入的长度是可变**的，为了降低这种影响，对应的池化层的参数应该也是灵活可变的，定义：
+由于**输入的长度是可变**的，为了降低这种影响，对应的池化层的参数应该也是灵活可变的。给定一个vector `\(r_i\in R^n\)`，所谓的p-max pooling就是取出一个sub-vector `\(s^p_i\in R^p\)`，取出原vector里最大的p个值。因为输入的instance是变长的，所以卷积层输出的长度也会随着变化，所以pooling层需要足够灵活地平滑地取出这p个数。因此，定义p为一个与输入数据长度及网络深度有关的参数：
 
 `\[
 p_i=\left\{\begin{matrix}
@@ -330,10 +323,42 @@ p_i=\left\{\begin{matrix}
 \end{matrix}\right.
 \]`
 
-其中，`\(l\)`代表卷积层的层数，`\(n\)`表示输入的长度（特征数），`\(p_i\)`表示第`\(i\)`个池化层的参数
+其中，`\(l\)`代表卷积层的层数，`\(n\)`表示输入的长度（特征数），`\(p_i\)`表示第`\(i\)`个池化层的参数。例如，`\(n=18\)`，有3个卷积层，那么`\(p_1=16,p_2=6,p_3=3\)`。好处：
+
++ 最后一个pooling层输出固定是3，不论输入长度怎么变化，都是固定的
++ 这是一个power-exponential函数，与线性函数相比，一开始变化很慢，避免了一开始损失太多重要特征
+
+我们看一下图像就一目了然了，假设有5层，我们看`\(n\)`前面的系数，也就是把层数`\(i\)`当成变量`\(x\)`。可以看到，一开始系数很接近1，所以变化很慢，后面就衰减得比较快，在5的时候衰减到0，所以我们要手动把最后一层设成一个固定的数：
+
+<html>
+<br/>
+
+<img src='../assets/ccpm-p-max-pooling.png' style='max-height: 150px'/>
+<br/>
+
+</html>
 
 ### feature maps
 
+pooling完了后，接的是tanh。本文里把经过了卷积、pooling和tanh的结果叫1阶feature map。定义第`\(i\)`阶feature map为`\(F^i\)`。对于中间的某一层，里面其实有很多个feature map，完全可以并行计算。例如，定义`\(F^i_j\)`是`\(i\)`阶feature maps里的第`\(j\)`个feature map，是通过如下方式计算的：将distinct的权重矩阵`\(w^i_{j,k}\)`和低阶`\(i-1\)`的每个feature map `\(F^{i-1}_k\)`的卷积结果加起来：
+
+`\[
+F^i_j=\sum ^{m_i}_{k=1}w^i_{j,k}* F^{i-1}_j
+\]`
+
+其中，`\(m_i\)`是第`\(i\)`阶的feature map数，`\(*\)`是卷积。类似地，`\(F^i_j\)`后面可以接pooling。最后接fc再接softmax得到最终输出。
+
+### ccpm小结
+
+<html>
+<br/>
+
+<img src='../assets/ccpm.png' style='max-height: 300px'/>
+<br/>
+
+</html>
+
+如上图，embed的维数`\(d=4\)`，有2个卷积层，每个卷积层分别生成了2个feature map。第一个卷积层的filter的宽度即`\(\omega _1=k_1=3\)`，也就是图中左边的蓝色部分，长度为3，第二个卷积层的filter的宽度即`\(w_2=k_2=2\)`，也就是图中中间的蓝色部分长度为2。这里把最后一个pooling层的`\(p_2\)`设成固定的2。
 
 ## NFM
 
