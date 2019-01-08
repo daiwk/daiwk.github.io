@@ -16,17 +16,17 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
 - [FNN, SNN](#fnn-snn)
   - [FNN](#fnn)
   - [SNN](#snn)
-- [CCPM](#ccpm)
-  - [Convolution Layer](#convolution-layer)
-  - [Flexible p-Max Pooling](#flexible-p-max-pooling)
-  - [feature maps](#feature-maps)
-  - [ccpm小结](#ccpm%E5%B0%8F%E7%BB%93)
 - [NFM](#nfm)
 - [AFM](#afm)
 - [PNN](#pnn)
   - [IPNN](#ipnn)
   - [OPNN](#opnn)
   - [PNN小结](#pnn%E5%B0%8F%E7%BB%93)
+- [CCPM](#ccpm)
+  - [Convolution Layer](#convolution-layer)
+  - [Flexible p-Max Pooling](#flexible-p-max-pooling)
+  - [feature maps](#feature-maps)
+  - [ccpm小结](#ccpm%E5%B0%8F%E7%BB%93)
 - [Wide & Deep](#wide--deep)
 - [DeepFM](#deepfm)
 - [Deep & Cross](#deep--cross)
@@ -38,6 +38,8 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
     - [显式的高阶特征交互](#%E6%98%BE%E5%BC%8F%E7%9A%84%E9%AB%98%E9%98%B6%E7%89%B9%E5%BE%81%E4%BA%A4%E4%BA%92)
   - [CIN](#cin)
   - [xDeepFM](#xdeepfm-1)
+- [DIN](#din)
+- [ESMM](#esmm)
 
 <!-- /TOC -->
 
@@ -267,6 +269,192 @@ FNN比SNN-DAE和SNN-RBM好，两种SNN结果总是差不多，但都比LR和FM�
 
 文章还指出一点，钻石型网络结构比常数型结构好，常数型又比增加型，减少型结构好
 
+## NFM
+
+[Neural Factorization Machines for Sparse Predictive Analytics](https://arxiv.org/pdf/1708.05027.pdf)
+
+NFM的基本特点：
+
++ 利用**二阶交互池化层**（Bi-Interaction Pooling）对FM嵌入后的向量**两两进行元素级别的乘法**，形成**同维度的向量求和**后作为前馈神经网络的输入。
++ NFM与DeepFM的区别是**没有单独的FM的浅层网络**进行联合训练，而是将其整合后**直接输出给前馈神经网络**。
++ 当MLP的全连接层都是恒等变换且最后一层参数全为1时，NFM就退化成了FM。可见，NFM是FM的推广，它推迟了FM的实现过程，并在其中加入了更多非线性运算。
++ NFM与FNN非常相似。它们的主要区别是NFM在embedding之后对特征进行了两两逐元素乘法。因为逐元素相乘的向量维数不变，之后对这些向量求和的维数仍然与embedding的维数一致。因此**输入到MLP的参数比起直接concatenate的FNN更少。**
+
+tf实现：
+
+```python
+def model_fn(features, labels, mode, params):
+    """Bulid Model function f(x) for Estimator."""
+    #------hyperparameters----
+    field_size = params["field_size"]
+    feature_size = params["feature_size"]
+    embedding_size = params["embedding_size"]
+    l2_reg = params["l2_reg"]
+    learning_rate = params["learning_rate"]
+    #optimizer = params["optimizer"]
+    layers = map(int, params["deep_layers"].split(','))
+    dropout = map(float, params["dropout"].split(','))
+
+    #------bulid weights------
+    Global_Bias = tf.get_variable(name='bias', shape=[1], initializer=tf.constant_initializer(0.0))
+    Feat_Bias = tf.get_variable(name='linear', shape=[feature_size], initializer=tf.glorot_normal_initializer())
+    Feat_Emb = tf.get_variable(name='emb', shape=[feature_size,embedding_size], initializer=tf.glorot_normal_initializer())
+
+    #------build feaure-------
+    feat_ids  = features['feat_ids']
+    feat_ids = tf.reshape(feat_ids,shape=[-1,field_size])
+    feat_vals = features['feat_vals']
+    feat_vals = tf.reshape(feat_vals,shape=[-1,field_size])
+
+    #------build f(x)------
+    with tf.variable_scope("Linear-part"):
+        feat_wgts = tf.nn.embedding_lookup(Feat_Bias, feat_ids)         # None * F * 1
+        y_linear = tf.reduce_sum(tf.multiply(feat_wgts, feat_vals),1)
+
+    with tf.variable_scope("BiInter-part"):
+        embeddings = tf.nn.embedding_lookup(Feat_Emb, feat_ids)         # None * F * K
+        feat_vals = tf.reshape(feat_vals, shape=[-1, field_size, 1])
+        embeddings = tf.multiply(embeddings, feat_vals)                 # vij * xi
+        sum_square_emb = tf.square(tf.reduce_sum(embeddings,1))
+        square_sum_emb = tf.reduce_sum(tf.square(embeddings),1)
+        deep_inputs = 0.5*tf.subtract(sum_square_emb, square_sum_emb)   # None * K
+
+    with tf.variable_scope("Deep-part"):
+        if mode == tf.estimator.ModeKeys.TRAIN:
+            train_phase = True
+        else:
+            train_phase = False
+
+        if mode == tf.estimator.ModeKeys.TRAIN:
+            deep_inputs = tf.nn.dropout(deep_inputs, keep_prob=dropout[0])                      # None * K
+        for i in range(len(layers)):
+            deep_inputs = tf.contrib.layers.fully_connected(inputs=deep_inputs, num_outputs=layers[i], \
+                weights_regularizer=tf.contrib.layers.l2_regularizer(l2_reg), scope='mlp%d' % i)
+
+            if FLAGS.batch_norm:
+                deep_inputs = batch_norm_layer(deep_inputs, train_phase=train_phase, scope_bn='bn_%d' %i)   #放在RELU之后 https://github.com/ducha-aiki/caffenet-benchmark/blob/master/batchnorm.md#bn----before-or-after-relu
+            if mode == tf.estimator.ModeKeys.TRAIN:
+                deep_inputs = tf.nn.dropout(deep_inputs, keep_prob=dropout[i])                              #Apply Dropout after all BN layers and set dropout=0.8(drop_ratio=0.2)
+                #deep_inputs = tf.layers.dropout(inputs=deep_inputs, rate=dropout[i], training=mode == tf.estimator.ModeKeys.TRAIN)
+
+        y_deep = tf.contrib.layers.fully_connected(inputs=deep_inputs, num_outputs=1, activation_fn=tf.identity, \
+            weights_regularizer=tf.contrib.layers.l2_regularizer(l2_reg), scope='deep_out')
+        y_d = tf.reshape(y_deep,shape=[-1])
+
+    with tf.variable_scope("NFM-out"):
+        #y_bias = Global_Bias * tf.ones_like(labels, dtype=tf.float32)  # None * 1  warning;这里不能用label，否则调用predict/export函数会出错，train/evaluate正常；初步判断estimator做了优化，用不到label时不传
+        y_bias = Global_Bias * tf.ones_like(y_d, dtype=tf.float32)      # None * 1
+        y = y_bias + y_linear + y_d
+        pred = tf.sigmoid(y)
+
+    predictions={"prob": pred}
+    export_outputs = {tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY: tf.estimator.export.PredictOutput(predictions)}
+    # Provide an estimator spec for `ModeKeys.PREDICT`
+    if mode == tf.estimator.ModeKeys.PREDICT:
+        return tf.estimator.EstimatorSpec(
+                mode=mode,
+                predictions=predictions,
+                export_outputs=export_outputs)
+
+    #------bulid loss------
+    loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=y, labels=labels)) + \
+        l2_reg * tf.nn.l2_loss(Feat_Bias) + l2_reg * tf.nn.l2_loss(Feat_Emb)
+
+    # Provide an estimator spec for `ModeKeys.EVAL`
+    eval_metric_ops = {
+        "auc": tf.metrics.auc(labels, pred)
+    }
+    if mode == tf.estimator.ModeKeys.EVAL:
+        return tf.estimator.EstimatorSpec(
+                mode=mode,
+                predictions=predictions,
+                loss=loss,
+                eval_metric_ops=eval_metric_ops)
+
+    #------bulid optimizer------
+    if FLAGS.optimizer == 'Adam':
+        optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate, beta1=0.9, beta2=0.999, epsilon=1e-8)
+    elif FLAGS.optimizer == 'Adagrad':
+        optimizer = tf.train.AdagradOptimizer(learning_rate=learning_rate, initial_accumulator_value=1e-8)
+    elif FLAGS.optimizer == 'Momentum':
+        optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate, momentum=0.95)
+    elif FLAGS.optimizer == 'ftrl':
+        optimizer = tf.train.FtrlOptimizer(learning_rate)
+
+    train_op = optimizer.minimize(loss, global_step=tf.train.get_global_step())
+
+    # Provide an estimator spec for `ModeKeys.TRAIN` modes
+    if mode == tf.estimator.ModeKeys.TRAIN:
+        return tf.estimator.EstimatorSpec(
+                mode=mode,
+                predictions=predictions,
+                loss=loss,
+                train_op=train_op)
+```
+
+## AFM
+
+[Attentional Factorization Machines:Learning theWeight of Feature Interactions via Attention Networks](https://arxiv.org/pdf/1708.04617.pdf)
+
+NFM的主要创新点是在FM过程中添加了逐元素相乘的运算来增加模型的复杂度。但没有在此基础上添加更复杂的运算过程，比如对加权求和。
+
+AFM的特点是：
+
++ AFM与NFM都是致力于充分利用二阶特征组合的信息，对嵌入后的向量两两进行逐元素乘法，形成同维度的向量。而且**AFM没有MLP部分**。
++ AFM通过在**逐元素乘法之后**形成的向量进行**加权求和**，而且权重是基于网络自身来产生的。其方法是引入一个注意力子网络（Attention Net）。
++ 当**权重都相等**时，AFM退化成**无全连接层的NFM**。
++ “注意力子网络”的主要操作是进行矩阵乘法，其最终输出结果为softmax，以保证各分量的权重本身是一个概率分布。
+
+## PNN
+
+[Product-based Neural Networks for User Response Prediction](https://arxiv.org/pdf/1611.00144.pdf)
+
+<html>
+<br/>
+
+<img src='../assets/pnn.png' style='max-height: 300px'/>
+<br/>
+
+</html>
+
++ 首先对输入数据进行embedding处理，得到一个low-dimensional vector层
++ 对该层的任意两个feature进行内积或是外积处理就得到上图的蓝色节点，
++ 是把这些Feature直接和1相乘复制到上一层的Z中，
++ 然后把Z和P接在一起就可以作为神经网络的输入层，
++ 在此基础上我们就可以应用神经网络去模型了。
+
+假设有N个field，每个field是M维的embedding。
+
+### IPNN
+
+field之间使用内积。左边的z就是一个NxM维的，而对于p来讲，p是NxN的。所以对p来讲，使用矩阵分解来简化问题：
+
+任意的 N×N 实对称矩阵都有 N 个线性无关的特征向量。并且这些特征向量都可以正交单位化而得到一组正交且模为1的向量。故实对称矩阵A可被分解成 `\(A=Q\Lambda Q^T\)`。其中，Q为正交矩阵，`\(\Lambda\)`为实对角矩阵。
+
+由于weight matrix是一个对称方阵，所以，如果进行一阶低秩矩阵分解，那么可以分解为`\(W^n_p=\theta ^n(\theta ^n)^T\)`，`\(\theta ^N\in R^N\)`。
+
+而如果进行K阶低秩矩阵分解，就有：
+
+`\[
+W^n_p\odot p=\sum ^N_{i=1}\sum ^N_{j=1}\left \langle \theta ^i_n,\theta ^j_n \right \rangle \left \langle f_i,f_j \right \rangle
+\]`
+
+其中，`\(\theta ^i_n\in R^K\)`。
+
+### OPNN
+
+和IPNN唯一不同的是构造交叉项的方式：
+
+
+### PNN小结
+
++ 利用二阶向量积层（Pair-wisely Connected Product Layer）对FM嵌入后的向量两两进行向量积，形成的结果作为之后MLP的输入。PNN采用的向量积有内积与外积两种形式。
++ PNN中向量与常数1进行的乘法运算其实与FNN类似，不是PNN的主要创新点。
++ 对于内积形式的PNN，因为两个向量相乘的结果为标量，可以直接把各个标量“拼接”成一个大向量，就可以作为MLP的输入了。
++ 当MLP的全连接层都是恒等变换且最后一层参数全为1时，内积形式的PNN就退化成了FM。
++ 对于外积形式的PNN，因为两个向量相乘相当于列向量与行向量进行矩阵相乘，得到的结果为一个矩阵。各个矩阵向之前内积形式的操作一样直接拼接起来维数太多，论文的简化方案是直接对各个矩阵进行求和，得到的新矩阵（可以理解成之后对其拉长成向量）就直接作为MLP的输入。
++ 观察计算图发现外积形式的PNN与**NFM**很像，其实就是PNN把NFM的逐元素乘法换成了外积。
+
 ## CCPM
 
 CIKM2015的文章[A Convolutional Click Prediction Model](http://nlpr-web.ia.ac.cn/english/irds/People/sw/Liu2015CCPM.pdf)
@@ -360,64 +548,6 @@ F^i_j=\sum ^{m_i}_{k=1}w^i_{j,k}* F^{i-1}_j
 
 如上图，embed的维数`\(d=4\)`，有2个卷积层，每个卷积层分别生成了2个feature map。第一个卷积层的filter的宽度即`\(\omega _1=k_1=3\)`，也就是图中左边的蓝色部分，长度为3，第二个卷积层的filter的宽度即`\(w_2=k_2=2\)`，也就是图中中间的蓝色部分长度为2。这里把最后一个pooling层的`\(p_2\)`设成固定的2。
 
-## NFM
-
-[Neural Factorization Machines for Sparse Predictive Analytics](https://arxiv.org/pdf/1708.05027.pdf)
-
-## AFM
-
-[Attentional Factorization Machines:Learning theWeight of Feature Interactions via Attention Networks](https://arxiv.org/pdf/1708.04617.pdf)
-
-## PNN
-
-[Product-based Neural Networks for User Response Prediction](https://arxiv.org/pdf/1611.00144.pdf)
-
-<html>
-<br/>
-
-<img src='../assets/pnn.png' style='max-height: 300px'/>
-<br/>
-
-</html>
-
-+ 首先对输入数据进行embedding处理，得到一个low-dimensional vector层
-+ 对该层的任意两个feature进行内积或是外积处理就得到上图的蓝色节点，
-+ 是把这些Feature直接和1相乘复制到上一层的Z中，
-+ 然后把Z和P接在一起就可以作为神经网络的输入层，
-+ 在此基础上我们就可以应用神经网络去模型了。
-
-假设有N个field，每个field是M维的embedding。
-
-### IPNN
-
-field之间使用内积。左边的z就是一个NxM维的，而对于p来讲，p是NxN的。所以对p来讲，使用矩阵分解来简化问题：
-
-任意的 N×N 实对称矩阵都有 N 个线性无关的特征向量。并且这些特征向量都可以正交单位化而得到一组正交且模为1的向量。故实对称矩阵A可被分解成 `\(A=Q\Lambda Q^T\)`。其中，Q为正交矩阵，`\(\Lambda\)`为实对角矩阵。
-
-由于weight matrix是一个对称方阵，所以，如果进行一阶低秩矩阵分解，那么可以分解为`\(W^n_p=\theta ^n(\theta ^n)^T\)`，`\(\theta ^N\in R^N\)`。
-
-而如果进行K阶低秩矩阵分解，就有：
-
-`\[
-W^n_p\odot p=\sum ^N_{i=1}\sum ^N_{j=1}\left \langle \theta ^i_n,\theta ^j_n \right \rangle \left \langle f_i,f_j \right \rangle
-\]`
-
-其中，`\(\theta ^i_n\in R^K\)`。
-
-### OPNN
-
-和IPNN唯一不同的是构造交叉项的方式：
-
-
-### PNN小结
-
-+ 利用二阶向量积层（Pair-wisely Connected Product Layer）对FM嵌入后的向量两两进行向量积，形成的结果作为之后MLP的输入。PNN采用的向量积有内积与外积两种形式。
-+ PNN中向量与常数1进行的乘法运算其实与FNN类似，不是PNN的主要创新点。
-+ 对于内积形式的PNN，因为两个向量相乘的结果为标量，可以直接把各个标量“拼接”成一个大向量，就可以作为MLP的输入了。
-+ 当MLP的全连接层都是恒等变换且最后一层参数全为1时，内积形式的PNN就退化成了FM。
-+ 对于外积形式的PNN，因为两个向量相乘相当于列向量与行向量进行矩阵相乘，得到的结果为一个矩阵。各个矩阵向之前内积形式的操作一样直接拼接起来维数太多，论文的简化方案是直接对各个矩阵进行求和，得到的新矩阵（可以理解成之后对其拉长成向量）就直接作为MLP的输入。
-+ 观察计算图发现外积形式的PNN与**NFM**很像，其实就是PNN把NFM的逐元素乘法换成了外积。
-
 ## Wide & Deep
 
 [Wide & deep learning for recommender systems](https://arxiv.org/pdf/1606.07792.pdf)
@@ -454,6 +584,47 @@ LR 对于 DNN 模型的优势是对大规模稀疏特征的容纳能力，包括
 
 特征的生成：[https://github.com/PaddlePaddle/models/blob/develop/ctr/dataset.md](https://github.com/PaddlePaddle/models/blob/develop/ctr/dataset.md)
 
+tf代码：
+
+```python
+def get_model(model_type, model_dir):
+    print("Model directory = %s" % model_dir)
+
+    # 对checkpoint去做设定
+    runconfig = tf.contrib.learn.RunConfig(
+        save_checkpoints_secs=None,
+        save_checkpoints_steps = 100,
+    )
+
+    m = None
+
+    # 宽模型
+    if model_type == 'WIDE':
+        m = tf.contrib.learn.LinearClassifier(
+            model_dir=model_dir, 
+            feature_columns=wide_columns)
+
+    # 深度模型
+    if model_type == 'DEEP':
+        m = tf.contrib.learn.DNNClassifier(
+            model_dir=model_dir,
+            feature_columns=deep_columns,
+            hidden_units=[100, 50, 25])
+
+    # 宽度深度模型
+    if model_type == 'WIDE_AND_DEEP':
+        m = tf.contrib.learn.DNNLinearCombinedClassifier(
+            model_dir=model_dir,
+            linear_feature_columns=wide_columns,
+            dnn_feature_columns=deep_columns,
+            dnn_hidden_units=[100, 70, 50, 25],
+            config=runconfig)
+
+    print('estimator built')
+
+    return m
+```
+
 ## DeepFM
 
 [DeepFM: A Factorization-Machine based Neural Network for CTR Prediction](https://www.ijcai.org/proceedings/2017/0239.pdf)
@@ -476,6 +647,15 @@ DeepFM和之前模型相比优势在于两点:
 论文地址：[deep & cross network for ad click predictions](https://arxiv.org/abs/1708.05123)
 
 参考：[https://daiwk.github.io/posts/dl-deep-cross-network.html](https://daiwk.github.io/posts/dl-deep-cross-network.html)
+
+DCN的特点如下：
+
++ Deep部分就是普通的MLP网络，主要是全连接。
++ 与DeepFM类似，DCN是由embedding+MLP部分与cross部分进行联合训练的。Cross部分是对FM部分的推广。
++ 可以证明，cross网络是**FM**的过程在**高阶特征组合**的**推广**。
++ 只有两层，且**第一层**与**最后一层权重参数相**等时的Cross网络与**简化版FM等价**。
++ 简化版的FM指的是，将拼接好的稠密向量作为输入向量，且不做领域方面的区分（但产生这些稠密向量的过程是考虑领域信息的，相对全特征维度的全连接层减少了大量参数，可以视作稀疏链接思想的体现）。而且之后进行embedding权重矩阵W只有一列——是退化成列向量的情形
++ 与MLP网络相比，Cross部分在增加高阶特征组合的同时减少了参数的个数，并省去了非线性激活函数。
 
 ## xDeepFM
 
@@ -709,3 +889,44 @@ CIN+DNN+linear
 
 集成的CIN和DNN两个模块能够帮助模型同时以显式和隐式的方式学习高阶的特征交互，而集成的线性模块和深度神经模块也让模型兼具记忆与泛化的学习能力。值得一提的是，为了提高模型的通用性，**xDeepFM中不同的模块共享相同的输入数据**。而在具体的应用场景下，不同的模块**也可以接入各自不同的输入数据**，例如，线性模块中依旧可以接入很多根据先验知识提取的交叉特征来提高记忆能力，而在CIN或者DNN中，为了减少模型的计算复杂度，可以只导入一部分稀疏的特征子集。
 
+## DIN
+
+[Deep Interest Network for Click-Through Rate Prediction](https://arxiv.org/abs/1706.06978)
+
+以上神经网络对同领域离散特征的处理基本是将其**嵌入后直接求和**，这在一般情况下没太大问题。但其实可以做得更加精细。比如对于历史统计类特征。
+
+以用户历史浏览的商户id为例，假设用户历史浏览了**10个商户**，这些商户id的常规处理方法是**作为同一个领域的特征**嵌入后**直接求和**得到一个嵌入向量。但这10个商户**只有一两个商户**与**当前被预测的**广告所在的**商户相似**，其他商户关系不大。**增加这两个商户**在求和过程中的**权重**，应该能够更好地提高模型的表现力。而增加求和权重的思路就是典型的注意力机制思路。DIN主要关注用户在**同一领域**的**历史行为特征**，如浏览了多个商家、多个商品等。DIN可以对这些特征分配不同的权重进行求和。
+
++ 用户的每个领域的历史特征权重则由该历史特征及其对应备选广告特征通过一个子网络得到。即用户**历史浏览的商户特征**与**当前浏览商户特征**对应，**历史浏览的商品特征**与**当前浏览商品特征**对应。
++ 权重子网络主要包括特征之间的元素级别的乘法、加法和全连接等操作。
++ AFM也引入了注意力机制。但是AFM是将注意力机制与FM同领域特征**求和之后**进行结合，DIN直接是将注意力机制与同领域特征**求和之前**进行结合。
+
+<html>
+<br/>
+
+<img src='../assets/din.jpg' style='max-height: 300px'/>
+<br/>
+
+</html>
+
+## ESMM
+
+[Entire Space Multi-Task Model: An Effective Approach for Estimating Post-Click Conversion Rate](https://arxiv.org/abs/1804.07931)
+
+传统CVR预估模型会有比较明显的样本选择偏差（sample selection bias）和训练数据过于稀疏（data sparsity ）的问题，而ESMM模型利用**用户行为序列数据**，在完整的样本数据空间**同时学习点击率和转化率**（post-view clickthrough&conversion rate，CTCVR），在一定程度上解决了这个问题。
+
+定义：`\(pctcvr=pctr*pcvr\)`
+
+<html>
+<br/>
+
+<img src='../assets/esmm.jpg' style='max-height: 300px'/>
+<br/>
+
+</html>
+
+主任务是pCVR。引入两个辅助任务，分别拟合pCTR和pCTCVR，把pCVR当做一个中间变量。
+
+实际操作中，由于pCTR通常很小，pCTCVR除这个很小的数，容易溢出。故ESMM采用了乘法的形式，避免了除法。且能够使pCVR的值在```[0,1]```区间。
+
+ESMM模型是在整个样本空间建模，而不像传统CVR预估模型那样只在点击样本空间建模。
