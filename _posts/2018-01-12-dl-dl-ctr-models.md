@@ -3,13 +3,13 @@ layout: post
 category: "dl"
 title: "基于深度学习的ctr预估模型集合（持续更新）"
 tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccpm, opnn, nfm, afm ]
+
 ---
 
 目录
 
 <!-- TOC -->
 
-- [tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccpm, opnn, nfm, afm ]](#tags-ctr%E6%A8%A1%E5%9E%8B-deepfm-wide--deep-deep--cross-ffm-fm-fnn-pnn-snn-ccpm-opnn-nfm-afm)
 - [FM](#fm)
 - [FFM](#ffm)
 - [embedding + mlp](#embedding--mlp)

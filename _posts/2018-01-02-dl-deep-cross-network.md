@@ -9,25 +9,27 @@ tags: [deep & cross network, DCN]
 
 <!-- TOC -->
 
+- [tags: [deep & cross network, DCN]](#tags-deep--cross-network-dcn)
 - [概述](#%E6%A6%82%E8%BF%B0)
 - [related work](#related-work)
-    - [embedding方法](#embedding%E6%96%B9%E6%B3%95)
-        - [Factorization machines(FMs)](#factorization-machinesfms)
-        - [Field-aware Factorization Machines(FFMs)](#field-aware-factorization-machinesffms)
-    - [神经网络](#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)
+  - [embedding方法](#embedding%E6%96%B9%E6%B3%95)
+    - [Factorization machines(FMs)](#factorization-machinesfms)
+    - [Field-aware Factorization Machines(FFMs)](#field-aware-factorization-machinesffms)
+  - [神经网络](#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)
 - [贡献](#%E8%B4%A1%E7%8C%AE)
 - [网络结构](#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84)
-    - [Embedding and Stacking Layer](#embedding-and-stacking-layer)
-    - [Cross Network](#cross-network)
-        - [复杂度分析](#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90)
-    - [Deep Network](#deep-network)
-        - [复杂度分析](#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90)
-    - [Combination Layer](#combination-layer)
+  - [Embedding and Stacking Layer](#embedding-and-stacking-layer)
+  - [Cross Network](#cross-network)
+    - [复杂度分析](#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90)
+  - [Deep Network](#deep-network)
+    - [复杂度分析](#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-1)
+  - [Combination Layer](#combination-layer)
 - [代码](#%E4%BB%A3%E7%A0%81)
 
 <!-- /TOC -->
 
 ## 概述
+
 
 简称DCN。
 
