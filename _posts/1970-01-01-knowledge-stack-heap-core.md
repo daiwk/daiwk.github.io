@@ -78,6 +78,25 @@ class StdBaiduHashtableIterator(Iterator):
 
 详见[printers_gcc484.py](https://daiwk.github.io/assets/printers_gcc484.py)
 
+使用，对于stl的容器，直接
+
+```shell
+(gdb) p readlist_news_map 
+$1 = std::unordered_map with 10 elements = {[8864685184] = 0x8543617bfa8c2937, [3804931840] = 0x8428a52bfb582cc6, [3804933984] = 0x817f3dc8fc9e848d, 
+  [8439304704] = 0x8110aa60f1427cc9, [4423265216] = 0x805d8bb4f52237b1, [3804936096] = 0x7e62c3c6f3cf8d3f, [7306666144] = 0x7c48ae06f7f01dbe, 
+  [7539760352] = 0x795521bef39933c4, [8117337472] = 0x76ad9da8f303a5e6, [0] = 0x91065e8a053cc5be}
+```
+
+如果不想要pretty的格式，直接
+
+```shell
+(gdb) p /r readlist_news_map   
+$4 = (std::unordered_map<unsigned long, rec::common::RecNewsInfo*, std::hash<unsigned long>, std::equal_to<unsigned long>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> > > &) @0x29688320: {<std::__allow_copy_cons<true>> = {<No data fields>}, 
+  _M_h = {<std::__detail::_Hashtable_base<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >> = {<std::__detail::_Hash_code_base<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::__detail::_Select1st, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>> = {<std::__detail::_Hashtable_ebo_helper<0, std::__detail::_Select1st, true>> = {<std::__detail::_Select1st> = {<No data fields>}, <No data fields>}, <std::__detail::_Hashtable_ebo_helper<1, std::hash<unsigned long>, true>> = {<std::hash<unsigned long>> = {<std::__hash_base<unsigned long, unsigned long>> = {<No data fields>}, <No data fields>}, <No data fields>}, <std::__detail::_Hashtable_ebo_helper<2, std::__detail::_Mod_range_hashing, true>> = {<std::__detail::_Mod_range_hashing> = {<No data fields>}, <No data fields>}, <No data fields>}, <std::__detail::_Hashtable_ebo_helper<0, std::equal_to<unsigned long>, true>> = {<std::equal_to<unsigned long>> = {<std::binary_function<unsigned long, unsigned long, bool>> = {<No data fields>}, <No data fields>}, <No data fields>}, <No data fields>}, <std::__detail::_Map_base<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>> = {<No data fields>}, <std::__detail::_Insert<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, false, true>> = {<std::__detail::_Insert_base<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >> = {<No data fields>}, <No data fields>}, <std::__detail::_Rehash_base<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >> = {<No data fields>}, <std::__detail::_Equality<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>> = {<No data fields>}, _M_buckets = 0x1ce392a80, _M_bucket_count = 47, 
+    _M_bbegin = {<std::allocator<std::__detail::_Hash_node<std::pair<unsigned long const, rec::common::RecNewsInfo*>, false> >> = {<__gnu_cxx::new_allocator<std::__detail::_Hash_node<std::pair<unsigned long const, rec::common::RecNewsInfo*>, false> >> = {<No data fields>}, <No data fields>}, _M_node = {
+        _M_nxt = 0xe2cabcc0}}, _M_element_count = 10, _M_rehash_policy = {static _S_growth_factor = 2, _M_max_load_factor = 1, _M_next_resize = 47}}}
+```
+
 ### gogogo
 
 首先，我们需要把讨厌的```"Type <return> to continue, or q <return> to quit"```给去掉：
