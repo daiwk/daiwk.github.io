@@ -135,6 +135,26 @@ class StdBaiduHashtableIterator(Iterator):
 
 对应的脚本在[https://github.com/gcc-mirror/gcc/blob/gcc-4_8-branch/libstdc%2B%2B-v3/python/libstdcxx/v6/printers.py](https://github.com/gcc-mirror/gcc/blob/gcc-4_8-branch/libstdc%2B%2B-v3/python/libstdcxx/v6/printers.py)
 
+我们发现。。直接有_M_v的。。有点神奇
+
+```python
+class Tr1HashtableIterator(Iterator):
+    def __init__ (self, hash):
+        self.node = hash['_M_bbegin']['_M_node']['_M_nxt']
+        self.node_type = find_type(hash.type, '__node_type').pointer()
+
+    def __iter__ (self): 
+        return self
+
+    def __next__ (self): 
+        if self.node == 0:
+            raise StopIteration
+        node = self.node.cast(self.node_type)
+        result = node.dereference()['_M_v']
+        self.node = node.dereference()['_M_nxt']
+        return result
+```
+
 使用，对于stl的容器，直接
 
 ```shell
