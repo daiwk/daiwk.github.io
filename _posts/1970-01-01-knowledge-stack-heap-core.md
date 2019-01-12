@@ -10,6 +10,7 @@ tags: [stack, heap, core, 栈, 堆, gdb, ]
 <!-- TOC -->
 
 - [gdb](#gdb)
+- [打印内存](#打印内存)
     - [pretty stl](#pretty-stl)
     - [gogogo](#gogogo)
 - [基础命令](#基础命令)
@@ -22,6 +23,57 @@ tags: [stack, heap, core, 栈, 堆, gdb, ]
 <!-- /TOC -->
 
 ## gdb
+
+## 打印内存
+
+参考[https://blog.csdn.net/allenlinrui/article/details/5964046](https://blog.csdn.net/allenlinrui/article/details/5964046)
+
+u 表示从当前地址往后请求的字节数，如果不指定的话，GDB**默认是4个bytes**。u参数可以用下面的字符来代替，b表示单字节，h表示双字节，w表示四字 节，g表示八字节。当我们指定了字节长度后，GDB会从指内存定的内存地址开始，读写指定字节，并把其当作一个值取出来。
+
+例如，假设有一个unordered_map a，
+
+```c++
+#include <unordered_map>
+
+int main()
+{
+    std::unordered_map<int, int> a; 
+    //a[222] = 333;
+    a.insert(std::make_pair(888, 4444)); 
+    a.insert(std::make_pair(777888, 44449999));
+    return 0;
+}
+```
+
+那么
+
+```shell
+(gdb)  p a._M_h           
+$19 = {<std::__detail::_Hashtable_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<false, false, true> >> = {<std::__detail::_Hash_code_base<int, std::pair<int const, int>, std::__detail::_Select1st, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>> = {<std::__detail::_Hashtable_ebo_helper<0, std::__detail::_Select1st, true>> = {<std::__detail::_Select1st> = {<No data fields>}, <No data fields>}, <std::__detail::_Hashtable_ebo_helper<1, std::hash<int>, true>> = {<std::hash<int>> = {<std::__hash_base<unsigned long, int>> = {<No data fields>}, <No data fields>}, <No data fields>}, <std::__detail::_Hashtable_ebo_helper<2, std::__detail::_Mod_range_hashing, true>> = {<std::__detail::_Mod_range_hashing> = {<No data fields>}, <No data fields>}, <No data fields>}, <std::__detail::_Hashtable_ebo_helper<0, std::equal_to<int>, true>> = {<std::equal_to<int>> = {<std::binary_function<int, int, bool>> = {<No data fields>}, <No data fields>}, <No data fields>}, <No data fields>}, <std::__detail::_Map_base<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>> = {<No data fields>}, <std::__detail::_Insert<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, false, true>> = {<std::__detail::_Insert_base<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >> = {<No data fields>}, <No data fields>}, <std::__detail::_Rehash_base<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >> = {<No data fields>}, <std::__detail::_Equality<int, std::pair<int const, int>, std::allocator<std::pair<int const, int> >, std::__detail::_Select1st, std::equal_to<int>, std::hash<int>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>, true>> = {<No data fields>}, _M_buckets = 0x60d140, _M_bucket_count = 11, 
+  _M_bbegin = {<std::allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> >> = {<__gnu_cxx::new_allocator<std::__detail::_Hash_node<std::pair<int const, int>, false> >> = {<No data fields>}, <No data fields>}, _M_node = {_M_nxt = 0x60d1c0}}, _M_element_count = 2, _M_rehash_policy = {
+    static _S_growth_factor = 2, _M_max_load_factor = 1, _M_next_resize = 11}}
+```
+
+可以看到```_M_buckets```的地址是```0x60d140```，所以我们沿着这个地址一直打看看
+
+```shell
+(gdb) x/240w 0x60d140
+0x60d140:       0       0       4294958720      32767
+0x60d150:       0       0       0       0
+0x60d160:       0       0       0       0
+0x60d170:       0       0       0       0
+0x60d180:       6345152 0       0       0
+0x60d190:       0       0       33      0
+0x60d1a0:       0       0       888     4444
+0x60d1b0:       0       0       33      0
+0x60d1c0:       6345120 0       777888  44449999
+0x60d1d0:       0       0       134705  0
+0x60d1e0:       0       0       0       0
+0x60d1f0:       0       0       0       0
+0x60d200:       0       0       0       0
+0x60d210:       0       0       0       0
+...
+```
 
 ### pretty stl
 
@@ -96,6 +148,121 @@ $4 = (std::unordered_map<unsigned long, rec::common::RecNewsInfo*, std::hash<uns
     _M_bbegin = {<std::allocator<std::__detail::_Hash_node<std::pair<unsigned long const, rec::common::RecNewsInfo*>, false> >> = {<__gnu_cxx::new_allocator<std::__detail::_Hash_node<std::pair<unsigned long const, rec::common::RecNewsInfo*>, false> >> = {<No data fields>}, <No data fields>}, _M_node = {
         _M_nxt = 0xe2cabcc0}}, _M_element_count = 10, _M_rehash_policy = {static _S_growth_factor = 2, _M_max_load_factor = 1, _M_next_resize = 47}}}
 ```
+
+继续探究一下：
+
+```shell
+(gdb) p (readlist_news_map._M_h._M_bbegin._M_node._M_nxt) 
+$7 = (std::__detail::_Hash_node_base *) 0xe2cabcc0
+(gdb) p *(readlist_news_map._M_h._M_bbegin._M_node._M_nxt) 
+$8 = {_M_nxt = 0x210605c80}
+(gdb) p *(readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt
+$9 = {_M_nxt = 0xe2caa700}
+(gdb) p *(readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt._M_nxt
+$10 = {_M_nxt = 0xe2caaf60}
+(gdb) p *(readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt._M_nxt._M_nxt
+$11 = {_M_nxt = 0x1f7059200}
+(gdb) p *(readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt._M_nxt._M_nxt._M_nxt
+$12 = {_M_nxt = 0x107a5abc0}
+(gdb) p *(readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt
+$13 = {_M_nxt = 0xe2cab7a0}
+(gdb) p *(readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt
+$14 = {_M_nxt = 0x1b382e0a0}
+(gdb) p *(readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt
+$15 = {_M_nxt = 0x1c1679ce0}
+(gdb) p *(readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt
+$16 = {_M_nxt = 0x1e3d4bd80}
+(gdb) p *(readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt
+$17 = {_M_nxt = 0x0}
+```
+
+如果不要中间的星号，那么
+
+```shell
+(gdb) p ((readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt) 
+$33 = (std::__detail::_Hash_node_base *) 0x1c1679ce0
+(gdb) p ((readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt)._M_nxt
+$34 = (std::__detail::_Hash_node_base *) 0x1e3d4bd80
+(gdb) p ((readlist_news_map._M_h._M_bbegin._M_node._M_nxt)._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt._M_nxt)._M_nxt._M_nxt
+$35 = (std::__detail::_Hash_node_base *) 0x0
+```
+
+其实_Hash_node_base就只是一个里面只有一个指针的结构体。。没啥用的样子，我们看看另一个变量
+
+```shell
+(gdb) p readlist_news_map._M_h._M_buckets
+$46 = (std::_Hashtable<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::__bucket_type *) 0x1ce392a80
+```
+
+然后我们参考[https://www2.cs.duke.edu/csed/cplus/gcc-4.8.4/libstdc++-api-html/a00406.html](https://www2.cs.duke.edu/csed/cplus/gcc-4.8.4/libstdc++-api-html/a00406.html)，会发现_M_buckets『好像』是一个数组！
+
+```shell
+Each _Hashtable data structure has:
+
+_Bucket[] _M_buckets
+_Hash_node_base _M_bbegin
+size_type _M_bucket_count
+size_type _M_element_count
+
+with _Bucket being _Hash_node* and _Hash_node containing:
+
+_Hash_node* _M_next
+Tp _M_value
+size_t _M_hash_code if cache_hash_code is true
+```
+
+别被骗了。。这是个指针，不是数组[https://www2.cs.duke.edu/csed/cplus/gcc-4.8.4/libstdc++-api-html/a00955_source.html](https://www2.cs.duke.edu/csed/cplus/gcc-4.8.4/libstdc++-api-html/a00955_source.html)：
+
+```c++
+__bucket_type*        _M_buckets;
+```
+
+```shell
+(gdb) p readlist_news_map._M_h._M_buckets[0]
+$47 = (std::_Hashtable<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::__bucket_type) 0x0
+(gdb) p readlist_news_map._M_h._M_buckets[1]
+$48 = (std::_Hashtable<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::__bucket_type) 0x210605c80
+(gdb) p readlist_news_map._M_h._M_buckets[2]
+$49 = (std::_Hashtable<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::__bucket_type) 0x0
+(gdb) p readlist_news_map._M_h._M_buckets[3]
+$50 = (std::_Hashtable<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::__bucket_type) 0x0
+(gdb) p readlist_news_map._M_h._M_buckets[4]
+$51 = (std::_Hashtable<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::__bucket_type) 0x0
+(gdb) p readlist_news_map._M_h._M_buckets[5]
+$52 = (std::_Hashtable<unsigned long, std::pair<unsigned long const, rec::common::RecNewsInfo*>, std::allocator<std::pair<unsigned long const, rec::common::RecNewsInfo*> >, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::__bucket_type) 0x1b382e0a0
+```
+
+
+再然后看看_Hash_node的定义：[https://www2.cs.duke.edu/csed/cplus/gcc-4.8.4/libstdc++-api-html/a00957_source.html](https://www2.cs.duke.edu/csed/cplus/gcc-4.8.4/libstdc++-api-html/a00957_source.html)
+
+```c++
+struct _Hash_node_base
+{
+  _Hash_node_base* _M_nxt;
+
+  _Hash_node_base() : _M_nxt() { }
+
+  _Hash_node_base(_Hash_node_base* __next) : _M_nxt(__next) { }
+};
+
+template<typename _Value>
+    struct _Hash_node<_Value, false> : _Hash_node_base
+    {
+      _Value       _M_v;
+
+      template<typename... _Args>
+    _Hash_node(_Args&&... __args)
+    : _M_v(std::forward<_Args>(__args)...) { }
+
+      _Hash_node*
+      _M_next() const { return static_cast<_Hash_node*>(_M_nxt); }
+    };
+
+using __node_base = __detail::_Hash_node_base;
+using __bucket_type = __node_base*;
+```
+
+......绝望了。。一切都是_Hash_node_base。。。只有个next指针，，玩毛啊
 
 ### gogogo
 
