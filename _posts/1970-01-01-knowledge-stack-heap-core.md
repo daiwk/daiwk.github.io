@@ -10,21 +10,96 @@ tags: [stack, heap, core, 栈, 堆, gdb, ]
 <!-- TOC -->
 
 - [gdb](#gdb)
-- [基础命令](#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4)
-- [堆与栈](#%E5%A0%86%E4%B8%8E%E6%A0%88)
+    - [pretty stl](#pretty-stl)
+    - [gogogo](#gogogo)
+- [基础命令](#基础命令)
+- [堆与栈](#堆与栈)
 - [core](#core)
-- [堆、栈导致的core](#%E5%A0%86%E6%A0%88%E5%AF%BC%E8%87%B4%E7%9A%84core)
-  - [栈空间不足](#%E6%A0%88%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3)
-- [其他容易core的点](#%E5%85%B6%E4%BB%96%E5%AE%B9%E6%98%93core%E7%9A%84%E7%82%B9)
+- [堆、栈导致的core](#堆栈导致的core)
+    - [栈空间不足](#栈空间不足)
+- [其他容易core的点](#其他容易core的点)
 
 <!-- /TOC -->
 
 ## gdb
 
+### pretty stl
+
+[https://sourceware.org/gdb/wiki/STLSupport](https://sourceware.org/gdb/wiki/STLSupport)
+
+首先的首先！！！确定gdb的版本在7.x以上！！！
+
+首先，例如进入```/home/maude/gdb_printers/```这个文件夹，
+
+```shell
+svn co svn://gcc.gnu.org/svn/gcc/trunk/libstdc++-v3/python
+```
+
+然后把下面这段贴到```~/.gdbinit``里：
+
+```shell
+python
+import sys
+sys.path.insert(0, '/home/maude/gdb_printers/python')
+from libstdcxx.v6.printers import register_libstdcxx_printers
+register_libstdcxx_printers (None)
+end
+```
+
+如果是某个奇葩版本的gcc，例如是4.8.4的[https://www2.cs.duke.edu/csed/cplus/gcc-4.8.4/libstdc++-api-html/a00955_source.html](https://www2.cs.duke.edu/csed/cplus/gcc-4.8.4/libstdc++-api-html/a00955_source.html)，可以修改```libstdcxx/v6/printers.py```：
+
+```python
+class StdBaiduHashtableIterator(Iterator):
+    def __init__(self, hash):
+        self.node = hash['_M_bbegin']['_M_node']['_M_nxt']
+        self.node_type = find_type(hash.type, '__node_type').pointer()
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.node == 0:
+            raise StopIteration
+        elt = self.node.cast(self.node_type).dereference()
+        self.node = elt['_M_nxt']
+        #valptr = elt['_M_storage'].address
+        valptr = elt.address
+        valptr = valptr.cast(elt.type.template_argument(0).pointer())
+        #return valptr.dereference()
+        return valptr.dereference()
+```
+
+调用的时候
+
+```python
+        ##data = self.flatten (imap (self.format_one, StdHashtableIterator (self.hashtable())))
+        data = self.flatten (imap (self.format_one, StdBaiduHashtableIterator (self.hashtable())))
+```
+
+详见[printers_gcc484.py](https://daiwk.github.io/assets/printers_gcc484.py)
+
+### gogogo
+
 首先，我们需要把讨厌的```"Type <return> to continue, or q <return> to quit"```给去掉：
 
 ```shell
 set pagination off
+```
+
+我们可以发现如果字符串较长，会有"..."，因此可以这么搞：
+
+```shell
+(gdb) show print elements
+Limit on string chars or array elements to print is 200.
+(gdb) set print elements 0
+(gdb) show print elements
+Limit on string chars or array elements to print is unlimited.
+```
+
+另外，可以进行如下设置，这样就可以有缩进地打印了
+
+```shell
+set print pretty on 
 ```
 
 然后一步步打印vector中的元素：
