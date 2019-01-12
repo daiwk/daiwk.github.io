@@ -155,7 +155,20 @@ class Tr1HashtableIterator(Iterator):
         return result
 ```
 
-使用，对于stl的容器，直接
+来深入了解一下这个神奇的『dereference』：[https://stackoverflow.com/questions/4955198/what-does-dereferencing-a-pointer-mean](https://stackoverflow.com/questions/4955198/what-does-dereferencing-a-pointer-mean)
+
+算了。。还是学习一下python的gdb库：[https://segmentfault.com/a/1190000005718889](https://segmentfault.com/a/1190000005718889)
+
+打印一个string\*，假设它的地址是```0x21d4b4910```:
+
+```shell
+(gdb) p *(char**)0x21d4b4910
+$3 = 0x20f0e6578 "社232"
+```
+
+同样地，我也进行了一顿乱改。。参考[printers_gcc48_dwk.py](https://daiwk.github.io/assets/printers_gcc48_dwk.py)
+
+对于stl的容器，直接
 
 ```shell
 (gdb) p readlist_news_map 
