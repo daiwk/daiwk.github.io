@@ -130,13 +130,18 @@ class StdBaiduHashtableIterator(Iterator):
 
 详见[printers_gcc484.py](https://daiwk.github.io/assets/printers_gcc484.py)
 
+
+当然，更直接的，我们可以用github上的分支！！[https://github.com/gcc-mirror/gcc/tree/gcc-4_8-branch](https://github.com/gcc-mirror/gcc/tree/gcc-4_8-branch)。。。。比较大。。要下好久，建议直接把zip下下来试试。
+
+对应的脚本在[https://github.com/gcc-mirror/gcc/blob/gcc-4_8-branch/libstdc%2B%2B-v3/python/libstdcxx/v6/printers.py](https://github.com/gcc-mirror/gcc/blob/gcc-4_8-branch/libstdc%2B%2B-v3/python/libstdcxx/v6/printers.py)
+
 使用，对于stl的容器，直接
 
 ```shell
 (gdb) p readlist_news_map 
-$1 = std::unordered_map with 10 elements = {[8864685184] = 0x8543617bfa8c2937, [3804931840] = 0x8428a52bfb582cc6, [3804933984] = 0x817f3dc8fc9e848d, 
-  [8439304704] = 0x8110aa60f1427cc9, [4423265216] = 0x805d8bb4f52237b1, [3804936096] = 0x7e62c3c6f3cf8d3f, [7306666144] = 0x7c48ae06f7f01dbe, 
-  [7539760352] = 0x795521bef39933c4, [8117337472] = 0x76ad9da8f303a5e6, [0] = 0x91065e8a053cc5be}
+$1 = std::unordered_map with 10 elements = {[9602626015596390711] = 0x204a8bc08, [9523043020393950406] = 0x1a7b47188, [9331244886375957645] = 0x204a8cd88, 
+  [9300120563861322953] = 0x11c951508, [9249702819011901361] = 0x204a8ca08, [9107056655757970751] = 0x1a9e1fb88, [8955599203978976702] = 0x19ab1f488, 
+  [8742931355624092612] = 0x204a8ae08, [8551664616403609062] = 0xe0285f88, [10450143932246181310] = 0xe840ae08}
 ```
 
 如果不想要pretty的格式，直接
