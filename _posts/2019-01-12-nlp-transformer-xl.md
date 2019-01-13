@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "nlp"
-title: "分词工具"
-tags: [分词, 切词]
+title: "transformer-xl"
+tags: [transformer-xl, ]
 ---
 
 目录
@@ -54,11 +54,11 @@ Transformer-XL在5个数据集上都获得了强大的结果。研究人员在en
 
 <html>
 <br/>
-<img src='../assets/transformer-xl-old.png' style='max-height: 400px'/>
+<img src='../assets/transformer-xl-old.png' style='max-height: 200px'/>
 <br/>
 </html>
 
-一种可行但比较粗略的近似方法是将**整个语料库**分割成**可管理大小**的**更短的片段**，只在**每个片段中训练模型**，**忽略**来自**前一段的所有上下文信息**。这是上面讲到的[对比论文](xx)提出的想法，我们称之为原始模型(vanilla model)，它的图示如图1a。
+一种可行但比较粗略的近似方法是将**整个语料库**分割成**可管理大小**的**更短的片段**，只在**每个片段中训练模型**，**忽略**来自**前一段的所有上下文信息**。这是上面讲到的[对比论文](https://daiwk.github.io/posts/nlp-transformer-xl.html#%E5%AF%B9%E6%AF%94%E8%AE%BA%E6%96%87)提出的想法，我们称之为原始模型(vanilla model)，它的图示如图1a。
 
 在**评估**过程中，vanilla 模型在每个步骤都消耗与训练期间相同长度的一个segment，但是**在最后一个位置**只是进行**一次**预测。然后，在**下一步**中，这个segment**只向右移动一个位置**，**新的segment必须从头开始**处理。
 
@@ -71,7 +71,7 @@ Transformer-XL在5个数据集上都获得了强大的结果。研究人员在en
 
 <html>
 <br/>
-<img src='../assets/transformer-xl-new.png' style='max-height: 400px'/>
+<img src='../assets/transformer-xl-new.png' style='max-height: 200px'/>
 <br/>
 </html>
 
