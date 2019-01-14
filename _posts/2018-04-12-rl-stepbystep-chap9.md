@@ -211,7 +211,7 @@ DDPG的整体流程如下：
 >        1. 更新critic的目标网络`\(Q'\)`和actor的目标网络`\(\mu'\)`： 
 >        `\[\begin{matrix}
 \theta^{Q'}\leftarrow\tau \theta ^Q +(1-\tau)\theta^{Q'}
-\\\theta^{\mu}\leftarrow\tau \theta ^{\mu}+(1-\tau)\theta^{\mu'}
+\\\theta^{\mu'}\leftarrow\tau \theta ^{\mu}+(1-\tau)\theta^{\mu'}
 \end{matrix}\]`
 >    1. End For
 > 1. End For
@@ -225,6 +225,78 @@ DDPG的整体流程如下：
 + actor的参数`\(\theta ^\mu\)`就是前面讲的`\(\theta\)`
 + actor的目标网络的参数`\(\theta ^{\mu'}\)`就是前面讲的`\(\theta^-\)`
 
+来看看ddpg的代码：[https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/blob/master/contents/9_Deep_Deterministic_Policy_Gradient_DDPG/DDPG_update.py](https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/blob/master/contents/9_Deep_Deterministic_Policy_Gradient_DDPG/DDPG_update.py)
+
+代码里有几个点可以注释下咯：
+
++ 需要求导的参数定义
+
+```python
+        self.ae_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='Actor/eval')
+        self.at_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='Actor/target')
+        self.ce_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='Critic/eval')
+        self.ct_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='Critic/target')
+```
+
++ actor和critic的定义
+
+```python
+        with tf.variable_scope('Actor'):
+            self.a = self._build_a(self.S, scope='eval', trainable=True) # 是用来训练的
+            a_ = self._build_a(self.S_, scope='target', trainable=False) # 目标网络只是隔tau后会直接更新参数
+        with tf.variable_scope('Critic'):
+            # assign self.a = a in memory when calculating q for td_error,
+            # otherwise the self.a is from Actor when updating Actor
+            q = self._build_c(self.S, self.a, scope='eval', trainable=True) # 是用来训练的
+            q_ = self._build_c(self.S_, a_, scope='target', trainable=False) # 目标网络只是隔tau后会直接更新参数
+```
+
+actor网络，输入状态`\(s\)`，输出动作`\(a\)`，由于是连续动作空间，所以`\(a\)`是一个```a_dim```维的向量，在tanh后，是-1到1之间，乘一个```a_bound```把输出值缩放到正确的值域里。
+
+```python
+    def _build_a(self, s, scope, trainable):
+        with tf.variable_scope(scope):
+            net = tf.layers.dense(s, 30, activation=tf.nn.relu, name='l1', trainable=trainable)
+            a = tf.layers.dense(net, self.a_dim, activation=tf.nn.tanh, name='a', trainable=trainable)
+            return tf.multiply(a, self.a_bound, name='scaled_a')
+```
+
+critic网络，输入有两个参数，状态`\(s\)`和动作`\(a\)`，输出q值(是一个数字)：
+
+```python
+    def _build_c(self, s, a, scope, trainable):
+        with tf.variable_scope(scope):
+            n_l1 = 30
+            w1_s = tf.get_variable('w1_s', [self.s_dim, n_l1], trainable=trainable)
+            w1_a = tf.get_variable('w1_a', [self.a_dim, n_l1], trainable=trainable)
+            b1 = tf.get_variable('b1', [1, n_l1], trainable=trainable)
+            net = tf.nn.relu(tf.matmul(s, w1_s) + tf.matmul(a, w1_a) + b1)
+            return tf.layers.dense(net, 1, trainable=trainable)  # Q(s,a)
+```
+
++ critic的loss：当前reward加上gamma乘以目标critic网络输出的q，是我们的td目标（即上面提到的`\(y_i\)`），而critic网络输出的q，则是我们当前critic网络的输出，两者之差的mse就是td_error，而我们需要对critic的参数求导，所以```ar_list=self.ce_params```
+
+```python
+        q_target = self.R + GAMMA * q_
+        # in the feed_dic for the td_error, the self.a should change to actions in memory
+        td_error = tf.losses.mean_squared_error(labels=q_target, predictions=q)
+        self.ctrain = tf.train.AdamOptimizer(LR_C).minimize(td_error, var_list=self.ce_params)
+```
+
++ actor的loss：可以发现上面讲的`\(\triangledown_aQ(s,a|\theta ^Q)|_{s=s_i,a=\mu(s_i)}\triangledown _{\theta ^\mu} {\mu(s|\theta ^\mu)|_{s_i}}\)`，其实就是`\(\frac{\partial Q(s,a)}{\partial a} \frac{\partial a}{\partial \theta ^\mu}\)`，也就是`\(\frac{\partial Q(s,a)}{\partial \theta ^\mu}\)`，所以就是以critic网络的输出q，对actor的参数进行求导，所以```var_list=self.ae_params```
+
+```python
+        a_loss = - tf.reduce_mean(q)    # maximize the q
+        self.atrain = tf.train.AdamOptimizer(LR_A).minimize(a_loss, var_list=self.ae_params)
+```
+
++ 更新目标网络的操作
+
+```python
+        # target net replacement
+        self.soft_replace = [tf.assign(t, (1 - TAU) * t + TAU * e)
+                             for t, e in zip(self.at_params + self.ct_params, self.ae_params + self.ce_params)]
+```
 
 ### 3.3 A3C(asynchronous advantage actor-critic)
 
