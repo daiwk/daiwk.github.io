@@ -9,6 +9,7 @@ tags: [python, ]
 
 <!-- TOC -->
 
+- [tags: [python, ]](#tags-python)
 - [1. 编译安装python](#1-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85python)
 - [2. jupyter](#2-jupyter)
 - [3. mkdocs](#3-mkdocs)
@@ -17,11 +18,11 @@ tags: [python, ]
 - [mac版python3的tf](#mac%E7%89%88python3%E7%9A%84tf)
 - [copy deepcopy](#copy-deepcopy)
 - [gc](#gc)
-      - [引用计数（主要）](#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E4%B8%BB%E8%A6%81)
-      - [标记清除](#%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4)
-      - [分代回收](#%E5%88%86%E4%BB%A3%E5%9B%9E%E6%94%B6)
+  - [引用计数（主要）](#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E4%B8%BB%E8%A6%81)
+  - [标记清除](#%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4)
+  - [分代回收](#%E5%88%86%E4%BB%A3%E5%9B%9E%E6%94%B6)
 - [collections](#collections)
-      - [OrderedDict](#ordereddict)
+  - [OrderedDict](#ordereddict)
 
 <!-- /TOC -->
 
@@ -38,19 +39,51 @@ python总体上有两个版本，cp27m是ucs2，cp27mu是ucs4，UCS2认为每个
 
 3、编译：
 
+首先，手动安装tk
+
+如果是64位系统，可能需要修改
+
+```shell
+LIB_RUNTIME_DIR = $(libdir):/usr/X11R6/lib64
+X11_LIB_SWITCHES = $(XFT_LIBS) -L/usr/X11R6/lib64 -lX11
+```
+
+然后在python解压出来的路径里
+
+```shell
 ./configure --enable-unicode=ucs4
-      打开Makefile，
+```
 
-      修改36行为CC=/opt/compiler/gcc-4.8.2/bin/gcc -pthread
+打开Makefile，
 
-      修改37行为CXX=/opt/compiler/gcc-4.8.2/bin/g++ -pthread
+```shell
+#修改36行为
+CC=/opt/compiler/gcc-4.8.2/bin/gcc -pthread
 
-      修改101行(prefix=)为想要编译生成python的位置
-      例如 prefix=     /home/work/xxx/exp_space/python-2.7.14
+#修改37行为
+CXX=/opt/compiler/gcc-4.8.2/bin/g++ -pthread
 
-      make
+#修改101行(prefix=)为想要编译生成python的位置，例如 
+prefix=     /home/work/xxx/exp_space/python-2.7.14
 
-      make install
+## 如果要安装支持tk的（matplot.pyplot需要！！）
+## 那么就修改以下两个地方
+TCLTK_INCLUDES=-I/home/work/.jumbo/include/ -I/usr/X11R6/include/
+TCLTK_LIBS=-L/home/work/.jumbo/lib/ -ltk8.6 -ltcl8.6
+```
+
+然后还需要！！！！
+
+```shell
+export LD_LIBRARY_PATH=/home/work/.jumbo/lib/:$LD_LIBRARY_PATH
+```
+
+然后：
+
+```shell
+make
+make install
+```
 
 4、安装pip
 
