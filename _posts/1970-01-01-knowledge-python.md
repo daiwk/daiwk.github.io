@@ -85,11 +85,19 @@ make
 make install
 ```
 
+然后记得把tk的so拷过来，例如：
+
+```shell
+cp ~/.jumbo/lib/libtcl8.6.so /home/disk2/daiwenkai/tools/python-2.7.14-tk/lib/python2.7/lib-dynload/
+cp ~/.jumbo/lib/libtcl/home/disk2/daiwenkai/tools/python-2.7.14-tk/lib/python2.7/lib-dynload/
+```
+
 4、安装pip
 
-      curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-
-      python get-pip.py
+```shell
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py
+```
 
 ## 2. jupyter
 
