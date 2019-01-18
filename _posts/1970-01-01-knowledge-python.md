@@ -28,7 +28,7 @@ tags: [python, ]
 
 ## 1. 编译安装python
 
-python总体上有两个版本，cp27m是ucs2，cp27mu是ucs4，UCS2认为每个字符占用2个字节，UCS4认为每个字节占用4个字符，都是UNICODE的编码形式。
+python总体上有两个版本，cp27m是ucs2，cp27**mu**是**ucs4**，UCS2认为每个字符占用2个字节，UCS4认为每个字节占用4个字符，都是UNICODE的编码形式。
 
 一般基于python的深度学习框架大多默认提供ucs4版本（当然也有ucs2版本），为了以后使用方便，下面我们会用gcc482编译生成python-ucs4版本
 
@@ -78,6 +78,19 @@ TCLTK_LIBS=-L/home/work/.jumbo/lib/ -ltk8.6 -ltcl8.6
 export LD_LIBRARY_PATH=/home/work/.jumbo/lib/:$LD_LIBRARY_PATH
 ```
 
+如果需要支持**sqlite3**，那得先装一下，然后修改当前目录的setup.py：
+
+```shell
+        sqlite_inc_paths = [ '/usr/include',
+                             '/usr/include/sqlite',
+                             '/usr/include/sqlite3',
+                             '/usr/local/include',
+                             '/usr/local/include/sqlite',
+                             '/usr/local/include/sqlite3',
+
+                           ] 
+```
+
 然后：
 
 ```shell
@@ -89,7 +102,13 @@ make install
 
 ```shell
 cp ~/.jumbo/lib/libtcl8.6.so /home/disk2/daiwenkai/tools/python-2.7.14-tk/lib/python2.7/lib-dynload/
-cp ~/.jumbo/lib/libtcl/home/disk2/daiwenkai/tools/python-2.7.14-tk/lib/python2.7/lib-dynload/
+cp ~/.jumbo/lib/libtk8.6.so /home/disk2/daiwenkai/tools/python-2.7.14-tk/lib/python2.7/lib-dynload/
+```
+
+编完之后，发现可能编出来的_sqlite3.so是不能用的，，这个时候就需要这样了：
+
+```shell
+ cp /home/work/.jumbo/lib/python2.7/lib-dynload/_sqlite3.so ./python-2.7.14-latest/lib/python2.7/lib-dynload/_sqlite3.so
 ```
 
 4、安装pip

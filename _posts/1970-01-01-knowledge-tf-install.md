@@ -2,7 +2,7 @@
 layout: post
 category: "knowledge"
 title: "tf安装"
-tags: [tf安装, ]
+tags: [tf安装, tensorflow 安装, ]
 ---
 
 目录
