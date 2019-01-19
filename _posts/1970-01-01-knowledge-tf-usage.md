@@ -3,13 +3,13 @@ layout: post
 category: "knowledge"
 title: "tf常用函数"
 tags: [tf, ]
+
 ---
 
 目录
 
 <!-- TOC -->
 
-- [tags: [tf, ]](#tags-tf)
 - [基本函数](#%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0)
   - [tf.truncated-normal](#tftruncated-normal)
   - [tf.reduce-*](#tfreduce)
@@ -27,6 +27,10 @@ tags: [tf, ]
 - [tf.contrib.layers](#tfcontriblayers)
   - [tf.contrib.layers.flatten](#tfcontriblayersflatten)
   - [tf.contrib.layers.fully-connected](#tfcontriblayersfully-connected)
+- [常见问题](#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+  - [nan](#nan)
+    - [情况1：loss出现nan](#%E6%83%85%E5%86%B51loss%E5%87%BA%E7%8E%B0nan)
+    - [情况2：更新网络时出现Nan值](#%E6%83%85%E5%86%B52%E6%9B%B4%E6%96%B0%E7%BD%91%E7%BB%9C%E6%97%B6%E5%87%BA%E7%8E%B0nan%E5%80%BC)
 
 <!-- /TOC -->
 
@@ -280,3 +284,81 @@ output[b, i, j, k] =
 
 **tf.contrib.layers.fully_connected(F, num_outputs):** given a the flattened input F, it returns the output computed using a fully connected layer. You can read the full documentation [here.](https://www.tensorflow.org/api_docs/python/tf/contrib/layers/fully_connected)
 
+
+## 常见问题
+
+### nan
+
+[https://blog.csdn.net/qq_22291287/article/details/82712050](https://blog.csdn.net/qq_22291287/article/details/82712050)
+
+#### 情况1：loss出现nan
+
+大致的解决办法就是，在出现Nan值的loss中一般是使用的TensorFlow的log函数，然后计算得到的Nan，一般是输入的值中出现了负数值或者0值，在TensorFlow的官网上的教程中，使用其调试器调试Nan值的出现，也是查到了计算log的传参为0；而解决的办法也很简单，假设传参给log的参数为y，那么在调用log前，进行一次数值剪切，修改调用如下：
+
+```python
+loss = tf.log(tf.clip_by_value(y,1e-8,1.0))
+```
+
+这样，y的最小值为0的情况就被替换成了一个极小值，1e-8，这样就不会出现Nan值了
+
+tf.clip_by_value这个函数，是将第一个参数，限制在第二、三个参数指定的范围之内，使用这个函数的原意是要避免0值，并没有限制最大值，可以稍加修改，就确保了对于y值的剪切，不会影响到其数值的上限：
+
+```python
+loss = tf.log(tf.clip_by_value(y,1e-8,tf.reduce_max(y)))
+```
+
+但是在实际的神经网络中使用的时候，我发现这样修改后，虽然loss的数值一直在变化，可是优化后的结果几乎是保持不变的，这就存在问题了。
+
+经过检查，其实并不能这么简单的为了持续训练，而修改计算损失函数时的输入值。这样修改后，loss的数值很可能（存在0的话确定就是）假的数值，会对优化器优化的过程造成一定的影响，导致优化器并不能正常的工作。
+
+要解决这个假的loss的方法很简单，就是人为的改造神经网络，来控制输出的结果，不会存在0。这就需要设计好最后一层输出层的激活函数，每个激活函数都是存在值域的。
+
+比如要给一个在(0,1)之间的输出（不包含0），那么显然sigmoid是最好的选择。不过需要注意的是，在TensorFlow中，tf.nn.sigmoid函数，在输出的参数非常大，或者非常小的情况下，会给出边界值1或者0的输出，这就意味着，改造神经网络的过程，并不只是最后一层输出层的激活函数，你必须确保自己大致知道每一层的输出的一个范围，这样才能彻底的解决Nan值的出现。
+
+举例说明就是TensorFlow的官网给的教程，其输出层使用的是softmax激活函数，其数值在[0,1]，这在设计的时候，基本就确定了会出现Nan值的情况，只是发生的时间罢了。
+
+#### 情况2：更新网络时出现Nan值
+
+更新网络中出现Nan值很难发现，但是一般调试程序的时候，会用summary去观测权重等网络中的值的更新，因而，此时出现Nan值的话，会报错类似如下：
+
+```shell
+InvalidArgumentError (see above for traceback): Nan in summary histogram for: weight_1
+```
+
+这样的情况，一般是由于优化器的学习率设置不当导致的，而且一般是学习率设置过高导致的，因而此时可以尝试使用更小的学习率进行训练来解决这样的问题。
+
++ 数据本身，是否存在Nan,可以用numpy.any(numpy.isnan(x))检查一下input和target
++ 在训练的时候，整个网络随机初始化，很容易出现Nan，这时候需要把学习率调小，可以尝试0.1，0.01，0.001，直到不出现Nan为止，如果一直都有，那可能是网络实现问题。学习率和网络的层数一般成反比，层数越多，学习率通常要减小。有时候可以先用较小的学习率训练5000或以上次迭代，得到参数输出，手动kill掉训练，用前面的参数fine tune，这时候可以加大学习率，能更快收敛哦
++ 如果是图片，那么得转化为float 也就是/255.
++ relu和softmax两层不要连着用，最好将relu改成tanh,什么原因呢
++ 参数初始化
++ batch size 选择过小
++ 最后还没有排除问题的话，TensorFlow有专门的内置调试器(tfdbg)来帮助调试此类问题
+[https://www.tensorflow.org/guide/debugger](https://www.tensorflow.org/guide/debugger)
+
+```python
+from tensorflow.python import debug as tf_debug
+
+# 建立原来的Session
+
+sess = tf.Session()
+
+# 用tfdbg的Wrapper包裹原来的Session对象：
+
+sess = tf_debug.LocalCLIDebugWrapperSession(sess)
+
+sess.add_tensor_filter("has_inf_or_nan", tf_debug.has_inf_or_nan)
+
+# 以上为所有需要的代码变动，其余的代码可以保留不变，因为包裹有的sess和原来的界面一致。
+# 但是每次执行`sess.run`的时候，自动进入调试器命令行环境。
+
+sess.run(train_op, feed_dict=...)
+```
+
+在tfdbg命令行环境里面，输入如下命令，可以让程序执行到inf或nan第一次出现。
+
+```shell
+tfdbg> run -f has_inf_or_nan
+```
+
+一旦inf/nan出现，界面现实所有包含此类病态数值的张量，按照时间排序。所以第一个就最有可能是最先出现inf/nan的节点。可以用node_info, list_inputs等命令进一步查看节点的类型和输入，来发现问题的缘由。
