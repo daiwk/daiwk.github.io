@@ -354,6 +354,8 @@ sess.add_tensor_filter("has_inf_or_nan", tf_debug.has_inf_or_nan)
 sess.run(train_op, feed_dict=...)
 ```
 
+！！！**目前看，只能在mac或者windows这种有图形界面的地方玩的哈！！**
+
 在tfdbg命令行环境里面，输入如下命令，可以让程序执行到inf或nan第一次出现。
 
 ```shell
@@ -361,3 +363,58 @@ tfdbg> run -f has_inf_or_nan
 ```
 
 一旦inf/nan出现，界面现实所有包含此类病态数值的张量，按照时间排序。所以第一个就最有可能是最先出现inf/nan的节点。可以用node_info, list_inputs等命令进一步查看节点的类型和输入，来发现问题的缘由。
+
+来看个简单demo（假设是demo.py）：
+
+```python
+from __future__ import print_function
+import numpy as np
+import tensorflow as tf
+
+from tensorflow.python import debug as tf_debug
+
+def test_deubg_nan():
+    a_1 = tf.constant([[2, 2, 2], [3, 3, 3]], dtype=tf.float32)
+    b_1 = tf.constant([[0., 1, 1], [2, 2, 2]], dtype=tf.float32)
+    init = tf.global_variables_initializer()
+    sess = tf.Session()
+    ## add this
+    sess = tf_debug.LocalCLIDebugWrapperSession(sess)
+    sess.add_tensor_filter("has_inf_or_nan", tf_debug.has_inf_or_nan)
+    sess.run(init)
+
+    m = sess.run(tf.divide(a_1, b_1))
+
+test_deubg_nan()
+
+```
+
+执行```python demo.py```，出现如下界面时，输入```run -f has_inf_or_nan```：
+
+<html>
+<br/>
+
+<img src='../assets/tfdebug-1.png' style='max-height: 200px'/>
+<br/>
+
+</html>
+
+然后在这个页面里，就可以拿鼠标乱点了。。
+
+<html>
+<br/>
+
+<img src='../assets/tfdebug-2.png' style='max-height: 200px'/>
+<br/>
+
+</html>
+
+比如点```true:div:0```，就会出现详情，也可以点左上角的返回啥的，继续看其他tensor啦。。
+
+<html>
+<br/>
+
+<img src='../assets/tfdebug-3.png' style='max-height: 200px'/>
+<br/>
+
+</html>
