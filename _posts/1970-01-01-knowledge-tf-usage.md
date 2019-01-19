@@ -333,8 +333,7 @@ InvalidArgumentError (see above for traceback): Nan in summary histogram for: we
 + relu和softmax两层不要连着用，最好将relu改成tanh,什么原因呢
 + 参数初始化
 + batch size 选择过小
-+ 最后还没有排除问题的话，TensorFlow有专门的内置调试器(tfdbg)来帮助调试此类问题
-[https://www.tensorflow.org/guide/debugger](https://www.tensorflow.org/guide/debugger)
++ 最后还没有排除问题的话，TensorFlow有专门的内置调试器(tf_debug)来帮助调试此类问题[https://www.tensorflow.org/guide/debugger](https://www.tensorflow.org/guide/debugger)
 
 ```python
 from tensorflow.python import debug as tf_debug

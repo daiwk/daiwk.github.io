@@ -39,7 +39,11 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
   - [CIN](#cin)
   - [xDeepFM](#xdeepfm-1)
 - [DIN](#din)
+- [DIEN](#dien)
+  - [兴趣提取](#%E5%85%B4%E8%B6%A3%E6%8F%90%E5%8F%96)
+  - [兴趣演化](#%E5%85%B4%E8%B6%A3%E6%BC%94%E5%8C%96)
 - [ESMM](#esmm)
+- [TDM](#tdm)
 
 <!-- /TOC -->
 
@@ -909,6 +913,69 @@ CIN+DNN+linear
 
 </html>
 
+## DIEN
+
+参考[https://github.com/alibaba/x-deeplearning/wiki/%E7%94%A8%E6%88%B7%E5%85%B4%E8%B6%A3%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B(DIEN)](https://github.com/alibaba/x-deeplearning/wiki/%E7%94%A8%E6%88%B7%E5%85%B4%E8%B6%A3%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B(DIEN))
+
+这篇工作中我们提出用户的兴趣是一个抽象的概念，用户的**历史行为**只是**抽象的兴趣**的**一个具体的体现**。 在DIEN中我们提出了**兴趣抽取**和**兴趣演化**两个模块共同组成的CTR预估模型。
+
+<html>
+<br/>
+
+<img src='../assets/dien-arch.png' style='max-height: 300px'/>
+<br/>
+
+</html>
+
+### 兴趣提取
+
+传统的算法**直接**将**用户的历史行为**当做用户的兴趣。同时整个建模过程中的**监督**信息**全部集中**于广告**点击样本**上。而单纯的广告点击样本只能体现用户在决策**是否点击广告时的兴趣**，**很难**建模好用户**历史每个行为时刻**的兴趣。
+
+本文提出了**auxiliary loss**用于兴趣提取模块，约束模型在对用户**每一个历史行为时刻**的隐层表达能够**推测出后续的行为**，我们希望这样的隐层表达能更好的体现用户在每一个行为时刻的兴趣。
+
+兴趣提取层部分我们主要采用GRU结构来对用户行为序列进行建模，获取得到用户在不同时刻的兴趣表达。同时我们在**每个时间点**约束**当前兴趣表达**可以**预测**下一个时刻的**点击**以及用户下时刻**采样的不点击**行为。我们将这样的约束方式作为模型的辅助loss的方式引入学习。通过加入辅助loss的方式不仅能够**引入用户的反馈信息**并且还能够帮助长序列的学习，降低梯度回传难度，同时还能够提供更多的语义信息帮助embedding部分的学习。
+
+### 兴趣演化
+
+传统的RNN类似的方法只能建模**一个单一的序列**，然而在电商场景 用户**不同的兴趣**其实有**不同的演化过程**。本文中提出了AUGRU（Activation Unit GRU），让GRU的**update门**和**预估的商品相关**。在建模用户的兴趣演化过程中，AUGRU会**根据不同的预估目标商品**构建**不同的兴趣演化路径**，推断出用户和此商品相关的兴趣。
+
+用户的兴趣是多种多样的，其同时存在多个兴趣轨迹，我们在预测**当前AD**时，只需要关心和**这个目标AD相关的兴趣的演化状态**。在DIN算法里我们采用的是attention的方式得到用户和当前ad相关的兴趣状态，但是没有考虑到用户兴趣间的演化关系。所以我们在兴趣演化层部分首先将和**当前ad相关的子兴趣**提取出来，然后把这些**子兴趣进行序列建模**，从而能够获取得到和当前ad相关的兴趣演化信息。 在这里我们将GRU结构进行了改进，将**ad和兴趣的相关信息**引入了门更新，实现了对不同的目标AD，用户都有一条独有的兴趣演化轨迹。
+
+`\[
+\begin{matrix}
+r_t=\sigma(W^ri_t+U^rh_{t-1}+b^r) \\ 
+u_t=\sigma(W^ui_t+U^uh_{t-1}+b^u) \\ 
+u'_t=u_t*a_t \\ 
+\hat{h_t}=tanh(W^hi_t+r_t\circ U^hh_{t-1}+b^h)\\ 
+h_t=(1-u'_t)\circ h_{t-1}+u'_t\circ \hat{h_t}
+\end{matrix}
+\]`
+
+是不是有点晕。。没事，我们对比一下正常gru的公式。。[https://daiwk.github.io/posts/nlp-nmt.html#12-gru](https://daiwk.github.io/posts/nlp-nmt.html#12-gru)
+
+
+`\[
+\\ z_t=\sigma(W_zx_t+U_zh_{t-1}+b_z)
+\\ r_t=\sigma(W_rx_t+U_rh_{t-1}+b_r)
+\\ h_t=z_t \circ h_{t-1}+(1-z_t) \circ tanh(W_hx_t+ U_h(r_t \circ h_{t-1}) + b_h)
+\]`
+
+就会发现其实一毛一样。。只是把更新门多乘了一个attention权重而已。。。
+
+`\(a_t\)`是ad和**当前时间点兴趣**(由兴趣提取层提取得到)的**相关度权重**
+
+`\[
+a_i=\frac{exp(h_iWe_{ad})}{\sum^T_{i=0}exp(h_jWe_{ad})}
+\]`
+
+然后，将兴趣演化层的最后一个时刻的兴趣表达`\(h'(T)\)`作为用户兴趣，因为它捕捉了用户兴趣的演化信息，并且是和**ad相关的子兴趣表达**。最后将`\(h'(T)\)`和ad特征、上下文特征、用户静态信息特征一起拼接在一起，输出多层dnn进行预测。
+
+代码实现：[https://github.com/alibaba/x-deeplearning/blob/master/xdl-algorithm-solution/DIEN/script/model.py](https://github.com/alibaba/x-deeplearning/blob/master/xdl-algorithm-solution/DIEN/script/model.py)
+
+其中augru的实现如下：
+
+[https://github.com/alibaba/x-deeplearning/blob/master/xdl-algorithm-solution/DIEN/script/utils.py#L139](https://github.com/alibaba/x-deeplearning/blob/master/xdl-algorithm-solution/DIEN/script/utils.py#L139)
+
 ## ESMM
 
 [Entire Space Multi-Task Model: An Effective Approach for Estimating Post-Click Conversion Rate](https://arxiv.org/abs/1804.07931)
@@ -927,6 +994,21 @@ CIN+DNN+linear
 
 主任务是pCVR。引入两个辅助任务，分别拟合pCTR和pCTCVR，把pCVR当做一个中间变量。
 
+`\[
+L(\theta_{cvr},\theta_{ctr})=\sum ^N_{i=1}l(y_i,f(x_i;\theta_{ctr}))+\sum ^N_{i=1}l(y_i\&z_i,f(x_i;\theta_{ctr})\times f(x_i;\theta_{cvr}))
+\]`
+
+其中，`\(l\)`是交叉熵。可以参考[https://github.com/alibaba/x-deeplearning/blob/master/xdl-algorithm-solution/ESMM/script/esmm.py#L269](https://github.com/alibaba/x-deeplearning/blob/master/xdl-algorithm-solution/ESMM/script/esmm.py#L269)
+
 实际操作中，由于pCTR通常很小，pCTCVR除这个很小的数，容易溢出。故ESMM采用了乘法的形式，避免了除法。且能够使pCVR的值在```[0,1]```区间。
 
 ESMM模型是在整个样本空间建模，而不像传统CVR预估模型那样只在点击样本空间建模。
+
+创新点其实是，一方面在**特征间**传统mtl的**隐式共享**，另一方面，在**label间**找到了**显式的关联**（在此模型中，就是**连乘关系**）
+
+代码：[https://github.com/alibaba/x-deeplearning/blob/master/xdl-algorithm-solution/ESMM/script/esmm.py#L228](https://github.com/alibaba/x-deeplearning/blob/master/xdl-algorithm-solution/ESMM/script/esmm.py#L228)
+
+## TDM
+
+严格来说，tdm是个召回模型，这里一起看一看
+
