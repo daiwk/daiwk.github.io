@@ -960,7 +960,6 @@ h_t=(1-u'_t)\circ h_{t-1}+u'_t\circ \hat{h_t}
 
 是不是有点晕。。没事，我们对比一下正常gru的公式。。[https://daiwk.github.io/posts/nlp-nmt.html#12-gru](https://daiwk.github.io/posts/nlp-nmt.html#12-gru)
 
-
 `\[
 \\ z_t=\sigma(W_zx_t+U_zh_{t-1}+b_z)
 \\ r_t=\sigma(W_rx_t+U_rh_{t-1}+b_r)

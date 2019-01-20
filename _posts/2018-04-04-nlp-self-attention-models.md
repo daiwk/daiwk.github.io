@@ -15,6 +15,8 @@ tags: [自注意力, self-attention,  ]
 - [self-attention](#self-attention)
 - [对比rnn/cnn/transformer](#%E5%AF%B9%E6%AF%94rnncnntransformer)
   - [rnn](#rnn)
+    - [SRU](#sru)
+    - [SRNN](#srnn)
   - [cnn](#cnn)
   - [transformer](#transformer)
 
@@ -105,8 +107,60 @@ Self-Attention即**K=V=Q**，例如输入一个句子，那么里面的**每个�
 
 不过，我们可以参考[放弃幻想，全面拥抱Transformer：自然语言处理三大特征抽取器（CNN/RNN/TF）比较](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650755575&idx=2&sn=86fe97ff3d3b345eaeba92fbcf74ca99&chksm=871a9589b06d1c9fa48f2a471f50777980472464d576440d76d858cae6a9f1a305a9489de091&mpshare=1&scene=1&srcid=0114HOKLy2c4NGYKZEsHUxA8&pass_ticket=aXFgueLD%2BxWMZCVaAWnXvtEoEpLmG3oXS8xAbcmCXkgLYGoJ9eVER7nGjjDlztRz#rd)再来对比一下~
 
+nlp问题的特点：
+
++ 输入是**一维线性序列**
++ 输入是**不定长**的
++ 单词或子句的**相对位置**关系很重要
+
+主要的nlp任务：
+
++ **序列标注**：句子中**每一个单词**要求模型根据上下文给出一个**分类类别**。如中文分词、词性标注、命名实体识别、语义角色标注。
++ **分类任务**：整个句子输出一个分类值。如文本分类。
++ **句子关系推断**：给定**两个句子**，判断这两个句子是否具备某种名义关系。例如entilment、QA、语义改写、自然语言推断
++ **生成式任务**：输出一段文本，生成另一段文本。如机器翻译、文本摘要、写诗造句、看图说话。
+
 ### rnn
 
+基本原理不再赘述，看看rnn并行化的两个主要套路
+
+#### SRU
+
+[Simple Recurrent Units for Highly Parallelizable Recurrence](https://arxiv.org/pdf/1709.02755.pdf)
+
+在nmt上，transformer+sru比单纯transformer的bleu提升约0.7个点。
+
+SRU的核心思想就是仍然保留任意连续时间步（T-1和T）之间的隐层连接，然后在网络结构上做了一些改变，可以参考知乎的讨论：[如何评价新提出的RNN变种SRU?](https://www.zhihu.com/question/65244705)
+
+先看下原始的gru：[https://daiwk.github.io/posts/nlp-nmt.html#12-gru](https://daiwk.github.io/posts/nlp-nmt.html#12-gru)
+
+`\[
+\\ z_t=\sigma(W_zx_t+U_zh_{t-1}+b_z)
+\\ r_t=\sigma(W_rx_t+U_rh_{t-1}+b_r)
+\\ h_t=z_t \circ h_{t-1}+(1-z_t) \circ tanh(W_hx_t+ U_h(r_t \circ h_{t-1}) + b_h)
+\]`
+
+然后从知乎偷个图：
+
+<html>
+<br/>
+<img src='../assets/sru.jpg' style='max-height: 200px'/>
+<br/>
+</html>
+
+在gru的基础上进行修改，将各个时间步的**gate**和**transformed input**的计算**只依赖**于**当前时间步**的输入，然后在recurrent layers之间添加了**skip
+connections（严格来说是highway connections）**
+
+所以，
+
++ 各个时间步的transformed input、forget gate 以及reset gate的值可以并行处理，因为不依赖上一个时间步了。
++ 还**存在时间步依赖**的计算也只是比较简单和快速的**element-wise**操作，它们还可以在dimension上进行并行。
+
+因此这个RNN单元现在的计算瓶颈就在三个矩阵乘法了，最后将这三个矩阵乘法可以归并成一个矩阵乘法。
+
+作者为了进一步的加速，将上面的各个时间步之间的element-wise的操作优化实现成了CUDA kernel functions。
+
+#### SRNN
 
 ### cnn
 
