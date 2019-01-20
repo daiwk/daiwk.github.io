@@ -224,6 +224,8 @@ https://daiwk.github.io/posts/platform-tf-ranking.html
 https://daiwk.github.io/posts/dl-gnn.html
 https://daiwk.github.io/posts/nlp-wordseg-tools.html
 https://daiwk.github.io/posts/nlp-transformer-xl.html
+https://daiwk.github.io/posts/platform-erpo.html
+https://daiwk.github.io/posts/audio-smlta.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-nlp.html

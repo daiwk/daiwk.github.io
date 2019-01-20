@@ -3,11 +3,22 @@ layout: post
 category: "nlp"
 title: "自然语言处理中的自注意力机制（Self-Attention Mechanism）"
 tags: [自注意力, self-attention,  ]
+
 ---
 
 目录
 
-<!-- TOC -->autoauto- [attention的本质](#attention的本质)auto- [multi-head attention](#multi-head-attention)auto- [self-attention](#self-attention)autoauto<!-- /TOC -->
+<!-- TOC -->
+
+- [attention的本质](#attention%E7%9A%84%E6%9C%AC%E8%B4%A8)
+- [multi-head attention](#multi-head-attention)
+- [self-attention](#self-attention)
+- [对比rnn/cnn/transformer](#%E5%AF%B9%E6%AF%94rnncnntransformer)
+  - [rnn](#rnn)
+  - [cnn](#cnn)
+  - [transformer](#transformer)
+
+<!-- /TOC -->
 
 attention is all you need的解读可以参考
 
@@ -87,3 +98,18 @@ Self-Attention即**K=V=Q**，例如输入一个句子，那么里面的**每个�
     + 当n比较大时，作者也给出了一种解决方案Self-Attention(restricted)即每个词不是和所有词计算Attention，而是只与限制的r个词去计算Attention。
 + 是否可以并行: multi-head Attention和CNN一样不依赖于前一时刻的计算，可以很好的并行，优于 RNN。
 + 长距离依赖: 由于Self-Attention是每个词和所有词都要计算Attention，所以不管他们中间有多长距离，最大的路径长度也都只是 1。可以捕获长距离依赖关系。
+
+## 对比rnn/cnn/transformer
+
+当然，在讲t2t的时候，就讲到了[https://daiwk.github.io/posts/platform-tensor-to-tensor.html#426-why-self-attention](https://daiwk.github.io/posts/platform-tensor-to-tensor.html#426-why-self-attention)
+
+不过，我们可以参考[放弃幻想，全面拥抱Transformer：自然语言处理三大特征抽取器（CNN/RNN/TF）比较](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650755575&idx=2&sn=86fe97ff3d3b345eaeba92fbcf74ca99&chksm=871a9589b06d1c9fa48f2a471f50777980472464d576440d76d858cae6a9f1a305a9489de091&mpshare=1&scene=1&srcid=0114HOKLy2c4NGYKZEsHUxA8&pass_ticket=aXFgueLD%2BxWMZCVaAWnXvtEoEpLmG3oXS8xAbcmCXkgLYGoJ9eVER7nGjjDlztRz#rd)再来对比一下~
+
+### rnn
+
+
+### cnn
+
+
+### transformer
+
