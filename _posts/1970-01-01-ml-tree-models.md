@@ -3,13 +3,13 @@ layout: post
 category: "knowledge"
 title: "树模型"
 tags: [gbdt, id3, c4.5, cart, ensemble, ]
+
 ---
 
 目录
 
 <!-- TOC -->
 
-- [tags: [gbdt, id3, c4.5, cart, ensemble, ]](#tags-gbdt-id3-c45-cart-ensemble)
 - [基础树模型](#%E5%9F%BA%E7%A1%80%E6%A0%91%E6%A8%A1%E5%9E%8B)
   - [ID3](#id3)
   - [C4.5](#c45)
@@ -105,5 +105,11 @@ gbdt 是通过采用**加法模型**（即**对基函数进行线性组合**）�
 
 ## xgboost
 
-[https://github.com/dmlc/xgboost/issues/311](https://github.com/dmlc/xgboost/issues/311)
+xgboost的predict函数线程不安全：[https://github.com/dmlc/xgboost/issues/311](https://github.com/dmlc/xgboost/issues/311)
+
+解决：可以将handle放到一个pool里，每次要predict的时候，从pool里去拿。
+
+xgboost调参：[https://segmentfault.com/a/1190000014040317](https://segmentfault.com/a/1190000014040317)
+
+注意，```grid_scores_```这个参数改名了，改成了````cv_results_```。
 

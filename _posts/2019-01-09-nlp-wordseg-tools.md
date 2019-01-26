@@ -22,3 +22,11 @@ github：[https://github.com/lancopku/PKUSeg-python](https://github.com/lancopku
 + **多领域分词**：研究组训练了多种不同领域的分词模型。根据待分词的领域特点，用户可以自由地选择不同的模型。
 + **支持用户自训练模型**：支持用户使用全新的标注数据进行训练。
 
+目前仅支持python3...不支持python2
+
+安装
+
+```shell
+git clone https://github.com/lancopku/pkuseg-python.git
+python setup.py install
+```
