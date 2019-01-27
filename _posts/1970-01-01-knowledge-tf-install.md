@@ -9,22 +9,23 @@ tags: [tf安装, tensorflow 安装, ]
 
 <!-- TOC -->
 
-- [装备工作](#装备工作)
-    - [bazel](#bazel)
-    - [jdk1.8](#jdk18)
-- [源码安装](#源码安装)
-    - [clone](#clone)
-    - [configure](#configure)
-    - [生成pip_package](#生成pip_package)
-        - [仅cpu](#仅cpu)
-        - [gpu](#gpu)
-    - [生成whl](#生成whl)
-    - [安装c++库](#安装c库)
-        - [手动下载依赖库](#手动下载依赖库)
-        - [重新configure](#重新configure)
-        - [编译cc的so](#编译cc的so)
-        - [拷贝所需头文件](#拷贝所需头文件)
-        - [拷贝所需lib文件](#拷贝所需lib文件)
+- [装备工作](#%E8%A3%85%E5%A4%87%E5%B7%A5%E4%BD%9C)
+  - [bazel](#bazel)
+  - [jdk1.8](#jdk18)
+- [源码安装](#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85)
+  - [clone](#clone)
+  - [configure](#configure)
+  - [生成pip_package](#%E7%94%9F%E6%88%90pippackage)
+    - [仅cpu](#%E4%BB%85cpu)
+    - [gpu](#gpu)
+  - [生成whl](#%E7%94%9F%E6%88%90whl)
+  - [安装c++库](#%E5%AE%89%E8%A3%85c%E5%BA%93)
+    - [手动下载依赖库](#%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E4%BE%9D%E8%B5%96%E5%BA%93)
+    - [重新configure](#%E9%87%8D%E6%96%B0configure)
+    - [编译cc的so](#%E7%BC%96%E8%AF%91cc%E7%9A%84so)
+    - [拷贝所需头文件](#%E6%8B%B7%E8%B4%9D%E6%89%80%E9%9C%80%E5%A4%B4%E6%96%87%E4%BB%B6)
+    - [拷贝所需lib文件](#%E6%8B%B7%E8%B4%9D%E6%89%80%E9%9C%80lib%E6%96%87%E4%BB%B6)
+- [源码安装tf-serving](#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85tf-serving)
 
 <!-- /TOC -->
 
@@ -151,3 +152,28 @@ tensorflow_lib=./tensorflow_lib
 mkdir $tensorflow_lib
 cp bazel-bin/tensorflow/libtensorflow_*.so $tensorflow_lib
 ```
+
+## 源码安装tf-serving
+
+github地址：[https://github.com/tensorflow/serving](https://github.com/tensorflow/serving)
+
+如果要clone某个版本，可以直接
+
+```shell
+git clone -b r1.12 https://github.com/tensorflow/serving.git
+```
+
+如果在docker内安装：
+
+```shell
+./tools/run_in_docker.sh  bazel build tensorflow_serving/model_servers:tensorflow_model_server
+```
+
+如果在非docker内安装：
+
+```shell
+bazel build tensorflow_serving/model_servers:tensorflow_model_server
+```
+
+然后我们就发现产出了这么一个bin文件：```./bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server```。
+
