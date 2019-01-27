@@ -3,13 +3,13 @@ layout: post
 category: "links"
 title: "【置顶】导引——推荐系统论文集合"
 tags: [推荐系统, ]
+
 ---
 
 目录
 
 <!-- TOC -->
 
-- [tags: [推荐系统, ]](#tags-%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F)
 - [各种综述](#%E5%90%84%E7%A7%8D%E7%BB%BC%E8%BF%B0)
 - [一些经典论文](#%E4%B8%80%E4%BA%9B%E7%BB%8F%E5%85%B8%E8%AE%BA%E6%96%87)
   - [dssm](#dssm)
@@ -40,11 +40,13 @@ tags: [推荐系统, ]
 
 [https://daiwk.github.io/posts/ml-recommender-systems.html](https://daiwk.github.io/posts/ml-recommender-systems.html)
 
-[Batmaz2018_Article_AReviewOnDeepLearningForRecomm](https://daiwk.github.io/assets/Batmaz2018_Article_AReviewOnDeepLearningForRecomm.pdf)
+[Batmaz2018\_Article\_AReviewOnDeepLearningForRecomm](https://daiwk.github.io/assets/Batmaz2018_Article_AReviewOnDeepLearningForRecomm.pdf)
 
 [Deep Learning based Recommender System: A Survey and New Perspectives](https://daiwk.github.io/assets/DL_on_RS.pdf)
 
 [Deep Learning for Matching in Search and Recommendation](https://www.comp.nus.edu.sg/~xiangnan/sigir18-deep.pdf)
+
+个人小结(更新中)：[https://daiwk.github.io/posts/dl-match-for-search-recommendation.html](https://daiwk.github.io/posts/dl-match-for-search-recommendation.html)
 
 ## 一些经典论文
 
