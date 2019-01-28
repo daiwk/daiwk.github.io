@@ -37,6 +37,7 @@ tags: [bert代码解读, bert code, application]
   - [run-classifier.py](#run-classifierpy)
 - [squad](#squad)
   - [run-squad.py](#run-squadpy)
+- [可视化分析](#%E5%8F%AF%E8%A7%86%E5%8C%96%E5%88%86%E6%9E%90)
 
 <!-- /TOC -->
 
@@ -690,3 +691,9 @@ def write_instance_to_example_files(instances, tokenizer, max_seq_length,
 ## squad
 
 ### run-squad.py
+
+## 可视化分析
+
+参考[https://towardsdatascience.com/deconstructing-bert-part-2-visualizing-the-inner-workings-of-attention-60a16d86b5c1](https://towardsdatascience.com/deconstructing-bert-part-2-visualizing-the-inner-workings-of-attention-60a16d86b5c1)
+
+github：[https://github.com/jessevig/bertviz](https://github.com/jessevig/bertviz)
