@@ -13,22 +13,15 @@ tags: [embedding,]
 - [keras](#keras)
 - [paddle](#paddle)
 - [tensorflow](#tensorflow)
-- [基于图的各种embedding](#%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%9A%84%E5%90%84%E7%A7%8Dembedding)
-    - [DeepWalk](#deepwalk)
-    - [LINE](#line)
-    - [node2vec](#node2vec)
-    - [SDNE](#sdne)
-- [其他embedding](#%E5%85%B6%E4%BB%96embedding)
-    - [tweet2vec](#tweet2vec)
-    - [talk to book](#talk-to-book)
+- [talk to book](#talk-to-book)
 - [应用](#%E5%BA%94%E7%94%A8)
-    - [xx率预估](#xx%E7%8E%87%E9%A2%84%E4%BC%B0)
-        - [模型结构](#%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84)
-        - [编码方式（embedding）](#%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8Fembedding)
-            - [随机编码](#%E9%9A%8F%E6%9C%BA%E7%BC%96%E7%A0%81)
-            - [挂靠编码](#%E6%8C%82%E9%9D%A0%E7%BC%96%E7%A0%81)
-            - [分词编码](#%E5%88%86%E8%AF%8D%E7%BC%96%E7%A0%81)
-        - [Online Update](#online-update)
+  - [xx率预估](#xx%E7%8E%87%E9%A2%84%E4%BC%B0)
+    - [模型结构](#%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84)
+    - [编码方式（embedding）](#%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8Fembedding)
+      - [随机编码](#%E9%9A%8F%E6%9C%BA%E7%BC%96%E7%A0%81)
+      - [挂靠编码](#%E6%8C%82%E9%9D%A0%E7%BC%96%E7%A0%81)
+      - [分词编码](#%E5%88%86%E8%AF%8D%E7%BC%96%E7%A0%81)
+    - [Online Update](#online-update)
 
 <!-- /TOC -->
 
@@ -118,41 +111,9 @@ tensorflow的embedding操作：
 [https://stackoverflow.com/questions/35687678/using-a-pre-trained-word-embedding-word2vec-or-glove-in-tensorflow](https://stackoverflow.com/questions/35687678/using-a-pre-trained-word-embedding-word2vec-or-glove-in-tensorflow)
 
 
-## 基于图的各种embedding
-
-参考[https://blog.csdn.net/u013527419/article/details/76017528/](https://blog.csdn.net/u013527419/article/details/76017528/)
-
-### DeepWalk
 
 
-
-### LINE
-
-
-### node2vec
-
-开源代码实现：
-
-[http://snap.stanford.edu/node2vec/](http://snap.stanford.edu/node2vec/)
-
-[node2vec: Scalable Feature Learning for Networks](http://arxiv.org/abs/1607.00653)
-
-[Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781)
-
-在计算广告、推荐领域中，围绕着node2vec有俩很有意思的应用：
-
-+ Facebook：[http://geek.csdn.net/news/detail/200138](http://geek.csdn.net/news/detail/200138)
-+ Tencent：[http://www.sohu.com/a/124091440_355140](http://www.sohu.com/a/124091440_355140)
-
-### SDNE
-
-## 其他embedding
-
-### tweet2vec
-
-[Tweet2Vec: Learning Tweet Embeddings Using Character-level CNN-LSTM Encoder-Decoder](http://lsm.media.mit.edu/papers/tweet2vec_vvr.pdf)
-
-### talk to book
+## talk to book
 
 [https://daiwk.github.io/posts/dl-talk-to-book.html](https://daiwk.github.io/posts/dl-talk-to-book.html)
 
