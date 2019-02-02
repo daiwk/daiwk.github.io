@@ -10,13 +10,13 @@ tags: [graph embedding, ]
 
 <!-- TOC -->
 
-- [概述](#%E6%A6%82%E8%BF%B0)
-  - [DeepWalk](#deepwalk)
-  - [LINE](#line)
-  - [node2vec](#node2vec)
-  - [SDNE](#sdne)
-- [其他embedding](#%E5%85%B6%E4%BB%96embedding)
-  - [tweet2vec](#tweet2vec)
+- [概述](#概述)
+    - [DeepWalk](#deepwalk)
+    - [LINE](#line)
+    - [node2vec](#node2vec)
+    - [SDNE](#sdne)
+- [其他embedding](#其他embedding)
+    - [tweet2vec](#tweet2vec)
 
 <!-- /TOC -->
 
@@ -25,7 +25,6 @@ tags: [graph embedding, ]
 参考[https://blog.csdn.net/u013527419/article/details/76017528/](https://blog.csdn.net/u013527419/article/details/76017528/)
 
 ### DeepWalk
-
 
 
 ### LINE
@@ -53,3 +52,4 @@ tags: [graph embedding, ]
 ### tweet2vec
 
 [Tweet2Vec: Learning Tweet Embeddings Using Character-level CNN-LSTM Encoder-Decoder](http://lsm.media.mit.edu/papers/tweet2vec_vvr.pdf)
+
