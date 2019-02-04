@@ -17,6 +17,7 @@ tags: [graph representation, ]
             - [二阶相似度](#二阶相似度)
             - [优化trick](#优化trick)
             - [讨论](#讨论)
+            - [实验](#实验)
         - [DeepWalk](#deepwalk)
         - [Node2vec](#node2vec)
     - [Graph and High-dimensional Data Visualization](#graph-and-high-dimensional-data-visualization)
@@ -107,7 +108,11 @@ LINE代码（c++）：[https://github.com/tangjianpku/LINE](https://github.com/t
 p_1(v_i,v_j)=\frac{\exp(\vec{u_i}^T\vec{u_j})}{\sum_{(m,n)\in V\times V}\exp(\vec{u_m}^T\vec{u_n})}
 \]`
 
-其中，`\(\vec{u_i}\)`是节点`\(i\)`的embedding
+其中，`\(\vec{u_i}\)`是节点`\(i\)`的embedding，其实就是sigmoid：
+
+`\[
+p_1(v_i,v_j)=\frac{1}{1+\exp(-\vec{u_i}^T\vec{u_j})}
+\]`
 
 目标函数是**KL散度**：
 
@@ -150,27 +155,62 @@ O_2=\sum_i KL(\hat{p_2}(\cdot |v_i),p_2(\cdot|v_i))=-\sum _{(i,j)\in E}w_{ij}\lo
 ##### 优化trick
 
 + sgd+negative sampling：随机sample一条边，以及多个negative的边
+
+例如针对二阶的，对每条边`\((i,j)\)`来说，它的目标函数就是：
+
+`\[
+\log \sigma(\vec{u'_j}^T\vec{u'_i})+\sum ^K_{i=1}E_{v_n\sim P_n(v)}[\log \sigma (-\vec{u'_n}^T\vec{\u_i})]
+\]`
+
+其中`\(\sigma(x)=1/(1+\exp(-x))\)`，设置`\(P_n(v)\propto d_v^{3/4}\)`，其中`\(d_v\)`是节点的出度（即`\(d_i=\sum _{k\in N(i)}w_{ik}\)`，其中`\(N(i)\)`是`\(v_i\)`的为起点的邻居的集合）。
+
+针对一阶的，把上面式子里的第一项里的`\(\vec{u'_j}^T\)`换成`\(\vec{u_j}\)`就行啦~
+
 + 边`\((i,j)\)`的embedding的梯度：
 
 `\[
-\frac{\partial O_2}{\partial \vec{u_i}}=w_{ij}\frac{\partial \log \hat{p_2(v_j|v_i)}}{\partial \vec{u_i}}
+\frac{\partial O_2}{\partial \vec{u_i}}=w_{ij}\frac{\partial \log \hat{p_2}(v_j|v_i)}{\partial \vec{u_i}}
 \]`
 
-+ 当边的方差很大的时候，梯度的方差就会很大，这样会有问题。
-+ 解决方法：**edge sampling**：根据边的权重来采样边，同时把边当成binary的(例如一个边的权重是`\(w\)`，那么拆成`\(w\)`条binary的边)
++ 当边的权重方差很大的时候，从上式可知，目标函数的梯度是`\(p_2\)`的梯度再乘以边权重，所以目标函数的梯度的方差也会很大，这样会有问题。
++ 解决方法：**edge sampling**：根据边的权重来采样边，然后把采样到的边当成binary的，也就是把每条边的权重看成一样的！(例如一个边的权重是`\(w\)`，那么拆成`\(w\)`条binary的边)
 + 复杂度：`\(O(d\times K \times |E|)\)`：`\(d\)`是embedding的维数，`\(K\)`是负样本的个数，`\(|E|\)`是边的总数
 
 ##### 讨论
 
 + 对只有少量邻居的节点（low degree vertices）进行embed：
     + 通过增加高阶邻居来扩展邻居
-    + BFS(breadth-first search)
+    + BFS(breadth-first search)，使用广度优先搜索策略扩展每个顶点的邻域，即递归地添加邻居的邻居
     + 在大部分场景下，只增加二阶邻居就足够了
 + 对新节点进行emb（如果新节点和已有节点有边相连，可以如下方式来搞；否则，future work...）:
     + 保持现有节点的embedding不变
     + 根据新节点的embedding求经验分布和模型分布，从而优化目标函数 w.r.t. 新node的embedding
 
+所以，对于新节点`\(i\)`，直接最小化如下目标函数：
+
+`\[
+-\sum_{j\in N(i)}w_{ji}\log p_1(v_j,v_i)
+\]`
+
+或者
+
+`\[
+-\sum _{j\in N(i)}w_{ji}\log p_2(v_j|v_i)
+\]`
+
+##### 实验
+
+LINE(1st)只适用于无向图，LINE(2nd)适用于各种图。
+
+LINE (1st+2nd)：同时考虑一阶相似度和二阶相似度。将由LINE（1st）和LINE（2nd）学习得到的两个向量表示，**连接成一个更长的向量**。在连接之后，对维度**重新加权**以**平衡两个表示**。因为在无监督的任务中，设定权重很困难，所以**只应用于监督学习**的场景。
+
+更适合的方法是共同训练一阶相似度和二阶相似度的目标函数，比较复杂，文章中没有实现。
+
 #### DeepWalk
+
+KDD14上的[DeepWalk: Online Learning of Social Representations](http://www.perozzi.net/publications/14_kdd_deepwalk.pdf)
+
+
 
 #### Node2vec
 
