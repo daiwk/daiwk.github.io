@@ -210,9 +210,79 @@ LINE (1st+2nd)：同时考虑一阶相似度和二阶相似度。将由LINE（1s
 
 KDD14上的[DeepWalk: Online Learning of Social Representations](http://www.perozzi.net/publications/14_kdd_deepwalk.pdf)
 
+使用学习word representation的方法来学习node representation（例如skip gram）
 
+将网络上的随机游走视为句子。
+
+分成两步：
+
++ 通过随机游走生成结点的context
++ 预测周围的节点:
+
+`\[
+p(v_j|v_i)=\frac{\exp(\vec{u'_i}^T \vec{u_j})}{\sum _{k\in V}\exp(\vec{u'_k}^T\vec{u_i})}
+\]`
 
 #### Node2vec
+
+KDD16上的[node2vec: Scalable Feature Learning for Networks](https://cs.stanford.edu/people/jure/pubs/node2vec-kdd16.pdf)
+
+通过如下混合策略去寻找一个node的context：
+
++ Breadth-firstSampling(BFS): homophily（同质性）
++ Depth-firstSampling(DFS): structuralequivalence（结构等价）
+
+使用带有参数`\(p\)`和`\(q\)`的**Biased Random Walk**来进行context的扩展：
+
++ `\(p\)`：控制在walk的过程中，revisit一个节点的概率
++ `\(q\)`：控制探索"outward"节点的概率
++ 在有标签的数据上，用cross validation来寻找最优的`\(p\)`和`\(q\)`
+
+优化目标和LINE的**一阶相似度**类似
+
+LINE、DeepWalk、Node2vec的对比：
+
+html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">algorithm</th>
+<th scope="col" class="left">neighbor expansion</th>
+<th scope="col" class="left">proximity</th>
+<th scope="col" class="left">optimization</th>
+<th scope="col" class="left">validation data</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">LINE</td>
+<td class="left">BFS</td>
+<td class="left">1st or 2nd</td>
+<td class="left">negative sampling</td>
+<td class="left">No</td>
+</tr>
+<tr>
+<td class="left">DeepWalk</td>
+<td class="left">Random</td>
+<td class="left">2nd</td>
+<td class="left">hierarchical softmax</td>
+<td class="left">No</td>
+</tr>
+<tr>
+<td class="left">Node2vec</td>
+<td class="left">BFS+DFS</td>
+<td class="left">1st</td>
+<td class="left">negative sampling</td>
+<td class="left">Yes</td>
+</tr>
+
+</tbody>
+</table></center>
+</html>
+
 
 ### Graph and High-dimensional Data Visualization
 
