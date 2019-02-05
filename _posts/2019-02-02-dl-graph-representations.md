@@ -232,11 +232,33 @@ KDD16上的[node2vec: Scalable Feature Learning for Networks](https://cs.stanfor
 + Breadth-firstSampling(BFS): homophily（同质性）
 + Depth-firstSampling(DFS): structuralequivalence（结构等价）
 
-使用带有参数`\(p\)`和`\(q\)`的**Biased Random Walk**来进行context的扩展：
+使用带有参数`\(p\)`和`\(q\)`的**Biased Random Walk**来进行context的扩展，在BFS和DFS中达到一个平衡，同时考虑到微观局部(BFS)和宏观全局(DFS)的信息，并且具有很高的适应性：
 
-+ `\(p\)`：控制在walk的过程中，revisit一个节点的概率
-+ `\(q\)`：控制探索"outward"节点的概率
-+ 在有标签的数据上，用cross validation来寻找最优的`\(p\)`和`\(q\)`
++ `\(p\)`：控制在walk的过程中，**revisit**一个节点的概率，对应BFS
++ `\(q\)`：控制探索"**outward**"节点的概率，对应DFS
++ 在有标签的数据上，用**cross validation**来寻找最优的`\(p\)`和`\(q\)`
+
+<html>
+<br/>
+<img src='../assets/node2vec.png' style='max-height: 100px'/>
+<br/>
+</html>
+
+刚从edge`\(t,v)\)`过来，现在在节点`\(v\)`上，要决定下一步`\((v,x)\)`怎么走：
+
+`\[
+\alpha _{pq}(t,x)=\left\{\begin{matrix}
+\frac{1}{p}&if\ d_{tx}=0\\ 
+1 &if\ d_{tx}=1\\ 
+\frac{1}{q}&if\ d_{tx}=2
+\end{matrix}\right.
+\]`
+
+其中的`\(d_{tx}\)`表示节点`\(t\)`到节点`\(x\)`间的最短路径：
+
++ 为0表示回到节点`\(t\)`本身
++ 为1表示节点`\(t\)`和节点`\(x\)`直接相连，但上一步却选择了节点`\(v\)`
++ 为2表示节点`\(t\)`和`\(x\)`不直接相连，但节点`\(v\)`和节点`\(x\)`直接相连
 
 优化目标和LINE的**一阶相似度**类似
 
@@ -282,6 +304,7 @@ html>
 </tbody>
 </table></center>
 </html>
+
 
 
 ### Graph and High-dimensional Data Visualization
