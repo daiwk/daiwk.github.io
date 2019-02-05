@@ -1,6 +1,11 @@
 --- 
 layout: default 
 --- 
+
+<script>
+$('head').append("<script src='"+window.location.protocol+"//xstarcd.github.io/wiki/files/ztreetoc/ldztree.js'><script>");void(0);
+</script>
+
 <!-- Navi -->
 {% for cat in site.all_categories %}{% if page.category == cat[0] %}<a href="/">首页</a>&nbsp;>&nbsp;<a href="{{cat[2]}}">{{cat[1]}}</a>&nbsp;>&nbsp;正文{% endif %}{% endfor %}
 <!-- Title -->
@@ -23,46 +28,6 @@ layout: default
 <b>原创文章，转载请注明出处！</b>
 <br/>
 <b>本文链接：</b><a href="{{site.url}}{{page.url}}" title="{{page.name}}">{{site.url}}{{page.url}}</a>
-
-<script>
-
- $(document).ready(function(){
-    $('#markdown-toc').ztree_toc({
-        ztreeStyle: {
-            width:'260px',
-            overflow: 'auto',
-            position: 'fixed',
-            'z-index': 2147483647,
-            border: '0px none',
-            left: '0px',
-            top: '0px'
-        }
-    });
-});
-
-function locateCatelogList(){
- /*获取文章目录集合,可通过：header过滤器*/
- var alis = $('.article :header');
- /*获取侧边栏目录列表集合**/
- var sidebar_alis = $('.sidebar_catelog').find('a');
- /*获取滚动条到顶部的距离*/
- var scroll_height = $(window).scrollTop();
- for(var i =0;i<alis.length;i++){
-     /*获取锚点集合中的元素分别到顶点的距离*/
-     var a_height = $(alis[i]).offset().top;
-     if (a_height<scroll_height){
-         /*高亮显示*/
-         sidebar_alis.removeClass('list_click');
-         $(sidebar_alis[i]).addClass('list_click');
-     }
- }
-}
-$(function() {
- /*绑定滚动事件 */ 
- $(window).bind('scroll',locateCatelogList); 
-});
-
-</script>
 
 <!-- next and previous -->
 <div style="margin-top:15px; margin-bottom:10px">
