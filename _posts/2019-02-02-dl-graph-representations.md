@@ -7,7 +7,7 @@ tags: [graph representation, ]
 
 *目录
 
-目录
+* 目录
 {:toc #markdown-toc}
 
 ```shell
