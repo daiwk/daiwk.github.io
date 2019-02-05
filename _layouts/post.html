@@ -25,9 +25,7 @@ layout: default
 <b>本文链接：</b><a href="{{site.url}}{{page.url}}" title="{{page.name}}">{{site.url}}{{page.url}}</a>
 
 <script>
-if (typeof $('#markdown-toc').html() === 'undefined') {
- 	
-}else {
+
  $(document).ready(function(){
     $('#markdown-toc').ztree_toc({
         ztreeStyle: {
@@ -41,7 +39,6 @@ if (typeof $('#markdown-toc').html() === 'undefined') {
         }
     });
 });
-}
 
 function locateCatelogList(){
  /*获取文章目录集合,可通过：header过滤器*/
