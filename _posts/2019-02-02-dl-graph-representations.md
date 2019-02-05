@@ -22,6 +22,9 @@ tags: [graph representation, ]
         - [Node2vec](#node2vec)
     - [Graph and High-dimensional Data Visualization](#graph-and-high-dimensional-data-visualization)
         - [t-SNE](#t-sne)
+        - [Visualizing Large-scale and High-dimensional Data](#visualizing-large-scale-and-high-dimensional-data)
+            - [Learning the Layout of KNN Graph](#learning-the-layout-of-knn-graph)
+            - [A Probabilistic Model for Graph Layout](#a-probabilistic-model-for-graph-layout)
     - [Knowledge Graph Embedding](#knowledge-graph-embedding)
     - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
 - [Graph Neural Networks](#graph-neural-networks)
@@ -337,15 +340,113 @@ largevis代码（c++&python）：[https://github.com/lferry007/LargeVis](https:/
 
 缺点：
 
-+ K-NNG construction: 复杂度是`\(O(NlogN)\)`，假设图中有`\(N\)`个数据点
++ K-NNG(K-Nearest Neighbor Graph) construction: 复杂度是`\(O(NlogN)\)`，假设图中有`\(N\)`个数据点
 + Graph layout: 复杂度是`\(O(NlogN)\)`
 + 对参数非常敏感（Very sensitive parameters）
 
+#### Visualizing Large-scale and High-dimensional Data
+
+www16的best paper提名[Visualizing Large-scale and High-dimensional Data](https://arxiv.org/abs/1602.00370)
+
+特点：
+
++ K-NNG construction的高效近似：
+    + 比t-SNE的速度快30倍（300w的数据点）
+    + 更好的time-accuracy tradeoff
++ graph layout的高效的probabilistic model
+    + 从`\(O(NlogN)\)`到`\(O(N)\)`
+    + 比t-SNE快7倍（300w的数据点）
+    + 更好的visualization layouts
+    + 在不同数据集间有更stable的参数
+
+##### Learning the Layout of KNN Graph
+
++ 保持2D/3D空间的节点的相似度
+    + 对每个节点使用一个2D/3D的向量来表示
+    + 保持相似的数据距离近而不相似的距离远
++ 观测节点`\((i,j)\)`间的一条**binary**的边的概率：
+
+`\[
+p(e_{ij}=1)=\frac{1}{1+\begin{Vmatrix}
+\vec{y_i}-\vec{y_j}
+\end{Vmatrix}^2}
+\]`
+
++ 观测节点`\((i,j)\)`间的一条**有权重**的边的likelihood：
+
+`\[
+p(e_{ij}=w_{ij})=p(e_{ij}=1)^{w_{ij}}
+\]`
+
+##### A Probabilistic Model for Graph Layout
+
+目标函数：
+
+`\[
+O=\prod _{(i,j)\in E}p(e_{ij}=w_{ij})\prod _{(i,j)\in \bar{E}}(1-p(e_{ij)=w_{ij})^{\gamma }
+\]`
+
+其中`\(\gamma\)`是给**negative edge**赋值的**unified weight**
+
++ 随机sample一些negative edges
++ 使用异步sgd来优化
++ 时间复杂度：与数据点数是**线性**关系
+
 ### Knowledge Graph Embedding
+
+知识图谱是异构图，有多种类型的relations
+
+用(head entity, relation, tail entity)来表示facts的集合
+
+related works：
+
++ 将entities用embeddings来表示
++ 将relations用embeddings或者matrices来表示
+
+<html>
+<center>
+<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
+
+<thead>
+<tr>
+<th scope="col" class="left">Model</th>
+<th scope="col" class="left">Score Function</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="left">SE(Bordes et al., 2011)</td>
+<td class="left">`\(xxxxxx\)`</td>
+<td class="left">1st or 2nd</td>
+<td class="left">negative sampling</td>
+<td class="left">No</td>
+</tr>
+<tr>
+<td class="left">DeepWalk</td>
+<td class="left">Random</td>
+<td class="left">2nd</td>
+<td class="left">hierarchical softmax</td>
+<td class="left">No</td>
+</tr>
+<tr>
+<td class="left">Node2vec</td>
+<td class="left">BFS+DFS</td>
+<td class="left">1st</td>
+<td class="left">negative sampling</td>
+<td class="left">Yes</td>
+</tr>
+
+</tbody>
+</table></center>
+</html>
+
 
 ### A High-performance Node Representation System
 
 RotatE代码（pytorch）:[https://github.com/DeepGraphLearning/KnowledgeGraphEmbedding]
+
+
 
 ## Graph Neural Networks
 
