@@ -28,7 +28,19 @@ layout: default
 if (typeof $('#markdown-toc').html() === 'undefined') {
  	
 }else {
- $('.sidebar_catelog').html('<ul class="list_catelog">' + $('#markdown-toc').html() + '</ul>');
+ $(document).ready(function(){
+    $('#markdown-toc').ztree_toc({
+        ztreeStyle: {
+            width:'260px',
+            overflow: 'auto',
+            position: 'fixed',
+            'z-index': 2147483647,
+            border: '0px none',
+            left: '0px',
+            top: '0px'
+        }
+    });
+});
 }
 
 function locateCatelogList(){
