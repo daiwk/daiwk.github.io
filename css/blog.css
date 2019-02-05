@@ -25,3 +25,23 @@ code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inher
 "HTML-CSS": { linebreaks: { automatic: true, width: "450px" } }
 
 p code.has-jax { margin:0; padding:0; }
+
+
+/*文章目录*/
+.sidebar_catelog ul{
+	margin:0;
+	list-style:none;
+  }
+  .sidebar_catelog li a{
+	color:#666;
+	font-size:16px;
+	font-weight:100;
+	letter-spacing:1px;
+	font-family:'Microsoft JhengHei';
+	text-decoration:none;
+  }
+  .sidebar_catelog li .list_click{
+	color:#1874CD;
+	text-shadow: 0 0 1px #8EE5EE;
+	border-bottom:1px dashed #1874CD;
+  }
