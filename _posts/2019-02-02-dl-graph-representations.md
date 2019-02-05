@@ -264,7 +264,7 @@ KDD16上的[node2vec: Scalable Feature Learning for Networks](https://cs.stanfor
 
 LINE、DeepWalk、Node2vec的对比：
 
-html>
+<html>
 <center>
 <table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
 
