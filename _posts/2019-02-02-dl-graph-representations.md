@@ -21,6 +21,7 @@ tags: [graph representation, ]
         - [DeepWalk](#deepwalk)
         - [Node2vec](#node2vec)
     - [Graph and High-dimensional Data Visualization](#graph-and-high-dimensional-data-visualization)
+        - [t-SNE](#t-sne)
     - [Knowledge Graph Embedding](#knowledge-graph-embedding)
     - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
 - [Graph Neural Networks](#graph-neural-networks)
@@ -234,8 +235,8 @@ KDD16上的[node2vec: Scalable Feature Learning for Networks](https://cs.stanfor
 
 使用带有参数`\(p\)`和`\(q\)`的**Biased Random Walk**来进行context的扩展，在BFS和DFS中达到一个平衡，同时考虑到微观局部(BFS)和宏观全局(DFS)的信息，并且具有很高的适应性：
 
-+ `\(p\)`：控制在walk的过程中，**revisit**一个节点的概率，对应BFS
-+ `\(q\)`：控制探索"**outward**"节点的概率，对应DFS
++ `\(p\)`：Return parameter，控制在walk的过程中，**revisit**一个节点的概率，对应BFS
++ `\(q\)`：In-out parameter，控制探索"**outward**"节点的概率，对应DFS
 + 在有标签的数据上，用**cross validation**来寻找最优的`\(p\)`和`\(q\)`
 
 <html>
@@ -259,6 +260,8 @@ KDD16上的[node2vec: Scalable Feature Learning for Networks](https://cs.stanfor
 + 为0表示回到节点`\(t\)`本身
 + 为1表示节点`\(t\)`和节点`\(x\)`直接相连，但上一步却选择了节点`\(v\)`
 + 为2表示节点`\(t\)`和`\(x\)`不直接相连，但节点`\(v\)`和节点`\(x\)`直接相连
+
+最简单的给random walk加上bias的方法就是转移概率`\(\pi _{vx}=w_{vx}\)`，而我们的方法就是`\(\pi _{vx}=\alpha _{pq}(t,x)w_{vx}\)`，相当于还考虑了跳到`\(v\)`之前的节点`\(t\)`。
 
 优化目标和LINE的**一阶相似度**类似
 
@@ -305,11 +308,38 @@ LINE、DeepWalk、Node2vec的对比：
 </table></center>
 </html>
 
+node representation的应用：
 
++ Node **classification** (Perozzi et al. 2014, Tang et al. 2015a, Grover et al. 2015 )
++ Node **visualization** (Tang et al. 2015a)
++ **Link** prediction (Grover et al. 2015)
++ **Recommendation** (Zhao et al. 2016)
++ **Text** representation (Tang et al. 2015a, Tang et al. 2015b)
+
+node representation的扩展：
+
++ Leverage **global structural information** (Cao et al. 2015)
++ Non-linear methods based on **autoencoders** (Wang et al. 2016) • Matrix-factorization based approaches (Qiu et al. 2018)
++ **Directed** network embedding (Ou et al. 2016)
++ **Signed** network embedding (Wang et al. 2017)
++ **Multi-view** networks ( Qu and Tang et al. 2017)
++ Networks with **node attributes** (Yang et al. 2015)
++ **Heterogeneous(异构)** networks (Chang et al. 2015)
++ **Task-specific** network embedding (Chen et al. 2017)
 
 ### Graph and High-dimensional Data Visualization
 
 largevis代码（c++&python）：[https://github.com/lferry007/LargeVis](https://github.com/lferry007/LargeVis)
+
+#### t-SNE
+
+高维数据可视化的一个state-of-the-art的方法，tensorboard就用的这个。
+
+缺点：
+
++ K-NNG construction: 复杂度是`\(O(NlogN)\)`，假设图中有`\(N\)`个数据点
++ Graph layout: 复杂度是`\(O(NlogN)\)`
++ 对参数非常敏感（Very sensitive parameters）
 
 ### Knowledge Graph Embedding
 
