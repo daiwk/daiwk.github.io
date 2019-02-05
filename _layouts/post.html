@@ -24,6 +24,14 @@ layout: default
 <br/>
 <b>本文链接：</b><a href="{{site.url}}{{page.url}}" title="{{page.name}}">{{site.url}}{{page.url}}</a>
 
+<script>
+if (typeof $('#markdown-toc').html() === 'undefined') {
+ 	
+}else {
+ $('.sidebar_catelog').html('<ul class="list_catelog">' + $('#markdown-toc').html() + '</ul>');
+}
+</script>
+
 <!-- next and previous -->
 <div style="margin-top:15px; margin-bottom:10px">
   {%if page.previous%}

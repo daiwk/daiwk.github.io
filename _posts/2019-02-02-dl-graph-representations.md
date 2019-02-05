@@ -41,6 +41,7 @@ tags: [graph representation, ]
 
 <!-- /TOC -->
 
+{:toc #markdown-toc}
 
 参考AAAI2019的tutorial：[AAAI2019《图表示学习》Tutorial, 180 页 PPT 带你从入门到精通（下载）](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652037887&idx=4&sn=730e6bd0cce6c3e40f4aec2de190f99d&chksm=f121960ec6561f1842640aff963fbe609e52fdd695386a442a9726016551c0a3697a196fd5a1&mpshare=1&scene=1&srcid=0202IYksgop7SmowGXrFkpMV&pass_ticket=IHFhi51iDztgrpluZGaofR7zoGSfaB%2F4Y6iACEc6lvxZ3KgGvbkA%2Fhp2MAVH09RS#rd)
 
@@ -383,7 +384,7 @@ p(e_{ij}=w_{ij})=p(e_{ij}=1)^{w_{ij}}
 目标函数：
 
 `\[
-O=\prod _{(i,j)\in E}p(e_{ij}=w_{ij})\prod _{(i,j)\in \bar{E}}(1-p(e_{ij)=w_{ij})^{\gamma }
+O=\prod _{(i,j)\in E}p(e_{ij}=w_{ij})\prod _{(i,j)\in \bar{E}}(1-p(e_{ij}=w_{ij})^{\gamma }
 \]`
 
 其中`\(\gamma\)`是给**negative edge**赋值的**unified weight**
@@ -404,42 +405,11 @@ related works：
 + 将relations用embeddings或者matrices来表示
 
 <html>
-<center>
-<table border="2" cellspacing="0" cellpadding="6" rules="all" frame="border">
-
-<thead>
-<tr>
-<th scope="col" class="left">Model</th>
-<th scope="col" class="left">Score Function</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td class="left">SE(Bordes et al., 2011)</td>
-<td class="left">`\(xxxxxx\)`</td>
-<td class="left">1st or 2nd</td>
-<td class="left">negative sampling</td>
-<td class="left">No</td>
-</tr>
-<tr>
-<td class="left">DeepWalk</td>
-<td class="left">Random</td>
-<td class="left">2nd</td>
-<td class="left">hierarchical softmax</td>
-<td class="left">No</td>
-</tr>
-<tr>
-<td class="left">Node2vec</td>
-<td class="left">BFS+DFS</td>
-<td class="left">1st</td>
-<td class="left">negative sampling</td>
-<td class="left">Yes</td>
-</tr>
-
-</tbody>
-</table></center>
+<br/>
+<img src='../assets/knowledge-graph-embedding.png' style='max-height: 300px'/>
+<br/>
 </html>
+
 
 
 ### A High-performance Node Representation System
