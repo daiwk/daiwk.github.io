@@ -2,10 +2,6 @@
 layout: default 
 --- 
 
-<script>
-$('head').append("<script src='"+window.location.protocol+"//xstarcd.github.io/wiki/files/ztreetoc/ldztree.js'><script>");void(0);
-</script>
-
 <!-- Navi -->
 {% for cat in site.all_categories %}{% if page.category == cat[0] %}<a href="/">首页</a>&nbsp;>&nbsp;<a href="{{cat[2]}}">{{cat[1]}}</a>&nbsp;>&nbsp;正文{% endif %}{% endfor %}
 <!-- Title -->
