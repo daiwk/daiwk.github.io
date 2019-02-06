@@ -26,6 +26,7 @@ tags: [graph representation, ]
             - [Learning the Layout of KNN Graph](#learning-the-layout-of-knn-graph)
             - [A Probabilistic Model for Graph Layout](#a-probabilistic-model-for-graph-layout)
     - [Knowledge Graph Embedding](#knowledge-graph-embedding)
+        - [relation patterns](#relation-patterns)
     - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
 - [Graph Neural Networks](#graph-neural-networks)
     - [Graph Convolutional Networks](#graph-convolutional-networks)
@@ -396,7 +397,7 @@ O=\prod _{(i,j)\in E}p(e_{ij}=w_{ij})\prod _{(i,j)\in \bar{E}}(1-p(e_{ij}=w_{ij}
 
 知识图谱是异构图，有多种类型的relations
 
-用(head entity, relation, tail entity)来表示facts的集合
+用(head entity, relation, tail entity)的三元组来表示facts的集合。
 
 related works：
 
@@ -409,12 +410,68 @@ related works：
 <br/>
 </html>
 
+kg的核心任务：预测missing links
+
+kg的核心idea：根据观测到的knowledge facts，对kg中的relation patterns进行建模和infer。也就是学习**relations的relations**。
+
+#### relation patterns
+
++ 对称和非对称：
+    + 对称(Symmetric)：例如，marriage
+    + 非对称(Antisymmetric)：例如，Filiation(父子关系)
+
+形式化定义：
+
+`\[
+\begin{matrix}
+r\ is\ Symmetric & r(x,y)\Rightarrow r(y,x)\ if\ \forall x,y\\ 
+r\ is\ Antisymmetric & r(x,y)\Rightarrow \neg r(y,x)\ if\ \forall x,y\\ 
+\end{matrix}
+\]`   
+
++ Inverse relations:
+    + Hypernym(上位词) and hyponym(下位词)：花是鲜花的上位词，鲜花是花的下位词
+    + 丈夫和妻子
+
+形式化定义：
+
+`\[
+r_1\ is\ inverse\ to\ relation\ r_2:\ r_2(x,y)\Rightarrow r_1(y,x)\ if\ \forall x,y
+\]`
+
++ Composition Relations
+    + My mother’s husband is my father
+
+形式化定义：
+
+`\[
+\begin{matrix}
+r_1\ is\ a\ composition\ of\ relation\ r_2\ and\ relation\ r_3: & \ r_2(x,y)\wedge r_3(y,z) \Rightarrow r_1(x,z)\ if\ \forall x,y,z
+\end{matrix}
+\]`
+
+目前的方法没有一种能同时infer上面这所有3种relation patterns，只有RotatE可以！！
+
+<html>
+<br/>
+<img src='../assets/infer-relation-patterns.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+RotatE代码（pytorch）:[https://github.com/DeepGraphLearning/KnowledgeGraphEmbedding](https://github.com/DeepGraphLearning/KnowledgeGraphEmbedding)
 
 
 ### A High-performance Node Representation System
 
-RotatE代码（pytorch）:[https://github.com/DeepGraphLearning/KnowledgeGraphEmbedding]
+A High-Performance CPU-GPU Hybrid System for Node Embedding，投稿www19
 
+algorithm and system co-design的一个node embeddings的系统
+
++ CPUs: online random walk generation
++ GPUs: training node embeddings
++ Efficient and effective collaboration strategies between CPUs and GPUs
+
+比现有的系统快50倍，一个有100w节点的网络只要1min
 
 
 ## Graph Neural Networks
