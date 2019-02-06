@@ -486,10 +486,10 @@ t=h\circ r,\ where\ |r_i|=1
 其中，`\(\circ\)`是element-wise product，所以`\(t_i=h_ir_i\)`，其中
 
 `\[
-r_i=e^{i\theta _{r,i}}
+r_i=e^{\mathbf{i}\theta _{r,i}}
 \]`
 
-里面的`\(\theta _{r,i}\)`是`\(r\)`的第`\(i\)`维的phase angle
+里面的`\(\theta _{r,i}\)`是`\(r\)`的第`\(i\)`维的phase angle，e的`\(\mathbf{i}\theta_{r,i}\)`的第一个`\(\mathbf{i}\)`是虚数单位，第二个`\(i\)`是第i维。
 
 定义distance function：
 
@@ -497,8 +497,8 @@ r_i=e^{i\theta _{r,i}}
 d_r(h,t)=\left \| h\circ r-t \right \|
 \]`
 
-+ 如左图，transE建模的是`\(h+r\)`和`\(t\)`的距离，也就是在实数直线上以translation的方式建模`\(r\)`；
-+ 如右图，RotatE建模的是`\(h\circ r\)`和`\(t\)`的距离，也就是在复平面上以rotation的方式建模`\(r\)`。
++ 如左图，transE建模的是`\(h+r\)`和`\(t\)`的距离，也就是在**实数直线**上以**translation**的方式建模`\(r\)`；
++ 如右图，RotatE建模的是`\(h\circ r\)`和`\(t\)`的距离，也就是在**复平面**上以**rotation**的方式建模`\(r\)`。
 
 <html>
 <br/>
@@ -506,13 +506,17 @@ d_r(h,t)=\left \| h\circ r-t \right \|
 <br/>
 </html>
 
-xxx
+
+先科普一下，在复变函数中，自变量`\(z\)`可以写成`\(z=r\times (\cos \theta + \mathbf{i}\sin \theta)\)`，`\(r\)`是`\(z\)`的模，即`\(r=|z|\)`；`\(\theta\)`是`\(z\)`的辐角，记作`\(Arg(z)\)`。在`\(-\pi\)`到`\(\pi\)`间的辐角称为辐角主值，记作`\(arg(z)\)`。指数形式`\(z=r(\cos \theta + i\sin \theta)=re^{\mathbf{i}\theta}\)`。
+
+relation `\(r\)`是对称的，当且仅当，`\(r_i=\pm 1\)`，也就是`\(\theta_{r,i}=0\ or\ \pi\)`，例如下图，`\(r_i=-1\)`也就是`\(\theta _{r,i}=\pi\)`
 
 <html>
 <br/>
 <img src='../assets/illustration-rotate-2.png' style='max-height: 150px'/>
 <br/>
 </html>
+
 
 
 ### A High-performance Node Representation System
