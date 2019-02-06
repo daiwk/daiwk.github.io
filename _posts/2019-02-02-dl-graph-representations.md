@@ -27,6 +27,8 @@ tags: [graph representation, ]
             - [A Probabilistic Model for Graph Layout](#a-probabilistic-model-for-graph-layout)
     - [Knowledge Graph Embedding](#knowledge-graph-embedding)
         - [relation patterns](#relation-patterns)
+        - [RotatE](#rotate)
+            - [Relation as Elementwise Rotation in Complex Space](#relation-as-elementwise-rotation-in-complex-space)
     - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
 - [Graph Neural Networks](#graph-neural-networks)
     - [Graph Convolutional Networks](#graph-convolutional-networks)
@@ -368,9 +370,7 @@ www16的best paper提名[Visualizing Large-scale and High-dimensional Data](http
 + 观测节点`\((i,j)\)`间的一条**binary**的边的概率：
 
 `\[
-p(e_{ij}=1)=\frac{1}{1+\begin{Vmatrix}
-\vec{y_i}-\vec{y_j}
-\end{Vmatrix}^2}
+p(e_{ij}=1)=\frac{1}{1+\left \|\vec{y_i}-\vec{y_j}\right \|^2}
 \]`
 
 + 观测节点`\((i,j)\)`间的一条**有权重**的边的likelihood：
@@ -458,7 +458,58 @@ r_1\ is\ a\ composition\ of\ relation\ r_2\ and\ relation\ r_3: & \ r_2(x,y)\wed
 <br/>
 </html>
 
+#### RotatE
+
+ICLR19 [RotatE: Knowledge Graph Embedding by Relational Rotation in Complex Space.](https://openreview.net/pdf?id=HkgEQnRqYQ)
+
 RotatE代码（pytorch）:[https://github.com/DeepGraphLearning/KnowledgeGraphEmbedding](https://github.com/DeepGraphLearning/KnowledgeGraphEmbedding)
+
+每一个relation可以看成是从source entity到target entity在complex(复数？？)向量空间上的elementwise rotation
+
+RotatE可以同时建模和infer上面这所有3种relation patterns
+
+优化RotatE可以用高效的negative sampling
+
+在kg的link prediction的benchmarks中能达到state-of-the-art的效果
+
+
+##### Relation as Elementwise Rotation in Complex Space
+
+head entity：`\(h\in C^k\)`；tail entity：`\(t\in \mathbb{C}^k\)`
+
+relation `\(r\)`：是一个从`\(h\)`到`\(t\)`的elementwise rotation：
+
+`\[
+t=h\circ r,\ where\ |r_i|=1
+\]`
+
+其中，`\(\circ\)`是element-wise product，所以`\(t_i=h_ir_i\)`，其中
+
+`\[
+r_i=e^{i\theta _{r,i}}
+\]`
+
+里面的`\(\theta _{r,i}\)`是`\(r\)`的第`\(i\)`维的phase angle
+
+定义distance function：
+
+`\[
+d_r(h,t)=\left \| h\circ r-t \right \|
+\]`
+
+<html>
+<br/>
+<img src='../assets/illustration-rotate-1.png' style='max-height: 100px'/>
+<br/>
+</html>
+
+xxx
+
+<html>
+<br/>
+<img src='../assets/illustration-rotate-2.png' style='max-height: 100px'/>
+<br/>
+</html>
 
 
 ### A High-performance Node Representation System
