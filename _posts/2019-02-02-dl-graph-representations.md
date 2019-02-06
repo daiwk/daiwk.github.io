@@ -509,7 +509,7 @@ d_r(h,t)=\left \| h\circ r-t \right \|
 
 先科普一下，在复变函数中，自变量`\(z\)`可以写成`\(z=r\times (\cos \theta + \mathbf{i}\sin \theta)\)`，`\(r\)`是`\(z\)`的模，即`\(r=|z|\)`；`\(\theta\)`是`\(z\)`的辐角，记作`\(Arg(z)\)`。在`\(-\pi\)`到`\(\pi\)`间的辐角称为辐角主值，记作`\(arg(z)\)`。指数形式`\(z=r(\cos \theta + i\sin \theta)=re^{\mathbf{i}\theta}\)`。
 
-relation `\(r\)`是对称的，当且仅当，`\(r_i=\pm 1\)`，也就是`\(\theta_{r,i}=0\ or\ \pi\)`，例如下图，`\(r_i=-1\)`也就是`\(\theta _{r,i}=\pi\)`
++ relation `\(r\)`是对称的，当且仅当，`\(r_i=\pm 1\)`，也就是`\(\theta_{r,i}=0\ or\ \pi\)`，例如下图，`\(r_i=-1\)`也就是`\(\theta _{r,i}=\pi\)`
 
 <html>
 <br/>
@@ -517,6 +517,9 @@ relation `\(r\)`是对称的，当且仅当，`\(r_i=\pm 1\)`，也就是`\(\the
 <br/>
 </html>
 
++ relation `\(r\)`是非对称的，当且仅当，`\(r\circ r\neq 1\)`
++ relation `\(r_1\)`和`\(r_2\)`是inverse，当且仅当，`\(r_2=\bar{r_1}\)`，也就是`\(\theta _{2,i}=-\theta _{1,i}\)`
++ relation `\(r_3=e^{\mathbf{i}\theta_3}\)`是两个relation `\(r_1=e^{\mathbf{i}\theta_1}\)`和`\(r_2=e^{\mathbf{i}\theta_2}\)`的composition，当且仅当，`\(r_3=r_1\circ r_2\)`，也就是`\(\theta _3=\theta _1 + \theta _2\)`
 
 
 ### A High-performance Node Representation System
