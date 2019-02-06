@@ -464,7 +464,7 @@ ICLR19 [RotatE: Knowledge Graph Embedding by Relational Rotation in Complex Spac
 
 RotatE代码（pytorch）:[https://github.com/DeepGraphLearning/KnowledgeGraphEmbedding](https://github.com/DeepGraphLearning/KnowledgeGraphEmbedding)
 
-每一个relation可以看成是从source entity到target entity在complex(复数？？)向量空间上的elementwise rotation
+每一个relation可以看成是从source entity到target entity在complex(复数)向量空间上的elementwise rotation
 
 RotatE可以同时建模和infer上面这所有3种relation patterns
 
@@ -475,7 +475,7 @@ RotatE可以同时建模和infer上面这所有3种relation patterns
 
 ##### Relation as Elementwise Rotation in Complex Space
 
-head entity：`\(h\in C^k\)`；tail entity：`\(t\in \mathbb{C}^k\)`
+head entity：`\(h\in \mathbb{C}^k\)`；tail entity：`\(t\in \mathbb{C}^k\)`
 
 relation `\(r\)`：是一个从`\(h\)`到`\(t\)`的elementwise rotation：
 
@@ -496,6 +496,9 @@ r_i=e^{i\theta _{r,i}}
 `\[
 d_r(h,t)=\left \| h\circ r-t \right \|
 \]`
+
++ 如左图，transE建模的是`\(h+r\)`和`\(t\)`的距离，也就是在实数直线上以translation的方式建模`\(r\)`；
++ 如右图，RotatE建模的是`\(h\circ r\)`和`\(t\)`的距离，也就是在复平面上以rotation的方式建模`\(r\)`。
 
 <html>
 <br/>
