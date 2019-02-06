@@ -406,7 +406,7 @@ related works：
 
 <html>
 <br/>
-<img src='../assets/knowledge-graph-embedding.png' style='max-height: 300px'/>
+<img src='../assets/knowledge-graph-embedding.png' style='max-height: 200px'/>
 <br/>
 </html>
 
@@ -454,7 +454,7 @@ r_1\ is\ a\ composition\ of\ relation\ r_2\ and\ relation\ r_3: & \ r_2(x,y)\wed
 
 <html>
 <br/>
-<img src='../assets/infer-relation-patterns.png' style='max-height: 300px'/>
+<img src='../assets/infer-relation-patterns.png' style='max-height: 200px'/>
 <br/>
 </html>
 
@@ -499,7 +499,7 @@ d_r(h,t)=\left \| h\circ r-t \right \|
 
 <html>
 <br/>
-<img src='../assets/illustration-rotate-1.png' style='max-height: 100px'/>
+<img src='../assets/illustration-rotate-1.png' style='max-height: 150px'/>
 <br/>
 </html>
 
@@ -507,7 +507,7 @@ xxx
 
 <html>
 <br/>
-<img src='../assets/illustration-rotate-2.png' style='max-height: 100px'/>
+<img src='../assets/illustration-rotate-2.png' style='max-height: 150px'/>
 <br/>
 </html>
 
