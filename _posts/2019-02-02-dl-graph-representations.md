@@ -35,7 +35,6 @@ tags: [graph representation, ]
         - [基础知识](#基础知识)
             - [Neighborhood Aggregation](#neighborhood-aggregation)
     - [Graph Convolutional Networks](#graph-convolutional-networks)
-    - [Graph Convolutional Networks](#graph-convolutional-networks-1)
     - [GraphSAGE](#graphsage)
     - [Gated Graph Neural Networks](#gated-graph-neural-networks)
     - [Graph Attention Networks](#graph-attention-networks)
@@ -604,8 +603,49 @@ similarity(u,v)\approx z_v^Tz_u
 
 核心思想：使用nn对节点的邻居的信息进行汇聚，生成这个节点的embedding
 
+如下图：
 
-### Graph Convolutional Networks
++ node在每一层都有embedding
++ 模型的depth可以任意
++ 节点`\(u\)`在第0层的embedding是它的input-feature `\(x_u\)`
+
+<html>
+<br/>
+<img src='../assets/neighborhood-aggregation.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+neighborhood aggregateion其实数学上和spectral graph convolutions(参考[Geometric deep learning: going beyond Euclidean data](https://arxiv.org/abs/1611.08097))很像，可以看成是一种center-surround filter。
+
+关键在于上图的layer1和layer2用什么样的网络结构，一种basic的方法就是，layer2先average，然后再接一个神经网络：
+
+`\[
+\begin{align*}
+h^0_v &=x_v \\ 
+h^k_v &=\sigma (W_k\sum _{u\in N(v)}\frac{h^{k-1}_u}{|N(v)|}+B_kh^{k-1}_v) ,\forall k>0\\ 
+z_v&=h^K_v\\
+\end{align*}
+\]`
+
++ `\(h^0_v\)`：第0层的embedding就是node的特征
++ `\(h^k_v\)`：第`\(k\)`层的embedding，包括的两项分别是邻居节点的前一层的emb的平均，还有当前节点的前一层的emb
++ `\(\sigma\)`：非线性，可以是relu/tanh等
++ `\(W_k\)`和`\(B_k\)`是两个待训练的矩阵
++ `\(z_v\)`：最终的输出结果，也就是第`\(K\)`层的输出
+
+训练可以使用无监督的方法，loss可以是前面讲到的任意的node embedding的方法：
+
++ Random walks (node2vec, DeepWalk)
++ Graph factorization
++ 或者直接训练保证相似的node有相似的embedding
+
+也可以直接用监督学习的方法来训（例如是一个node的分类问题），其中的`\(\theta\)`是classification weights：
+
+`\[
+L=\sum _{v\in V}y_v\log (\sigma (z^T_v\theta )+(1-y_v)\log(1-\sigma (z^T_v\theta)))
+\]`
+
+
 
 ### Graph Convolutional Networks
 
