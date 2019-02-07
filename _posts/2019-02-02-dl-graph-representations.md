@@ -29,8 +29,11 @@ tags: [graph representation, ]
         - [relation patterns](#relation-patterns)
         - [RotatE](#rotate)
             - [Relation as Elementwise Rotation in Complex Space](#relation-as-elementwise-rotation-in-complex-space)
+            - [RoteE的优化](#rotee的优化)
     - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
 - [Graph Neural Networks](#graph-neural-networks)
+        - [基础知识](#基础知识)
+            - [Neighborhood Aggregation](#neighborhood-aggregation)
     - [Graph Convolutional Networks](#graph-convolutional-networks)
     - [Graph Convolutional Networks](#graph-convolutional-networks-1)
     - [GraphSAGE](#graphsage)
@@ -416,9 +419,9 @@ kg的核心idea：根据观测到的knowledge facts，对kg中的relation patter
 
 #### relation patterns
 
-+ 对称和非对称：
++ 对称和反对称：
     + 对称(Symmetric)：例如，marriage
-    + 非对称(Antisymmetric)：例如，Filiation(父子关系)
+    + 反对称(Antisymmetric)：例如，Filiation(父子关系)
 
 形式化定义：
 
@@ -517,10 +520,41 @@ d_r(h,t)=\left \| h\circ r-t \right \|
 <br/>
 </html>
 
-+ relation `\(r\)`是非对称的，当且仅当，`\(r\circ r\neq 1\)`
-+ relation `\(r_1\)`和`\(r_2\)`是inverse，当且仅当，`\(r_2=\bar{r_1}\)`，也就是`\(\theta _{2,i}=-\theta _{1,i}\)`
++ relation `\(r\)`是反对称的，当且仅当，`\(r\circ r\neq 1\)`
++ relation `\(r_1\)`和`\(r_2\)`是inverse，当且仅当，`\(r_2=r^{-1}_1\)`，也就是`\(\theta _{2,i}=-\theta _{1,i}\)`
 + relation `\(r_3=e^{\mathbf{i}\theta_3}\)`是两个relation `\(r_1=e^{\mathbf{i}\theta_1}\)`和`\(r_2=e^{\mathbf{i}\theta_2}\)`的composition，当且仅当，`\(r_3=r_1\circ r_2\)`，也就是`\(\theta _3=\theta _1 + \theta _2\)`
 
+##### RoteE的优化
+
+Negative sampling loss如下：
+
+`\[
+L=-\log\sigma (\gamma -d_r(h,t))-\sum ^k_{i=1}\frac{1}{k}\log \sigma (d_r(h'_i,t'_i)-\gamma)
+\]`
+
+其中的`\(\gamma\)`是一个fixed margin，`\(\sigma\)`是sigmoid，`\((h'_i,r,t'_i)\)`是第`\(i\)`个negative三元组。
+
+然后我们要变成self-adversarial negative sampling：
+
++ 传统地，负样本通过uniform的方式（均匀分布，即等概率）来采样
+    + 随着训练的继续，因为很多样本是obviously false了，所以这种采样是inefficient的
+    + 没有提供有用的信息
++ self-adversarial negative sampling：
+    + 根据当前的embedding model来进行negative三元组的采样
+    + 从更简单的samples开始，逐步变难
+    + Curriculum Learning（递进学习，课程学习，可以参考[https://blog.csdn.net/qq_25011449/article/details/82914803](https://blog.csdn.net/qq_25011449/article/details/82914803)），从如下分布中进行采样：
+
+`\[
+p(h'_j,r,t'_j|\{(h_i,r_i,t_i)\})=\frac{\exp \alpha f_r(h'_j,t'_j)}{\sum _i \exp \alpha f_r(h'_i,t'_i)}
+\]`
+
+其中，`\(\alpha\)`是sampling的temperature，`\(f_r(h'_j,t'_j)\)`衡量三元组的salience(突出程度)
+
+但在实际应用中，从上面这个分布去sample的代价是很大的，所以我们把这个概率直接作为负样本的权重，所以最终的loss如下：
+
+`\[
+L=-\log\sigma (\gamma -d_r(h,t))-\sum ^k_{i=1}p(h'_i,r,t'_i)\log \sigma (d_r(h'_i,t'_i)-\gamma)
+\]`
 
 ### A High-performance Node Representation System
 
@@ -534,8 +568,42 @@ algorithm and system co-design的一个node embeddings的系统
 
 比现有的系统快50倍，一个有100w节点的网络只要1min
 
-
 ## Graph Neural Networks
+
+#### 基础知识
+
+通过一个encoder函数`\(ENC\)`，把原始网络的结点`\(u\)`和结点`\(v\)`映射到embedding space的`\(d\)`维向量`\(z_u\)`和`\(z_v\)`，然后希望原空间的相似度和embedding space的相似度（例如内积）接近：
+
+`\[
+similarity(u,v)\approx z_v^Tz_u
+\]`
+
+之前的encoder是shallow的，也就是一个`\(Z\)`矩阵，使用embedding lookup，矩阵大小是node_num \* emb_dim。缺点如下：
+
++ **需要`\(O(|V|)\)`的参数**：每个node有自己的unique的embedding vector，**没有参数共享**！！
++ **Inherently "transductive"**：固有的『直推式』。也就是说，对于**训练中没有见过的结点**，不可能生成一个embedding
++ **没有包含节点feature**：很多图有一些我们必须要考虑和利用好的feature。
+
+因此需要使用deeper的encoder，而这些更复杂的encoder也自带了similarity函数。
+
+参考2017年的综述[Representation Learning on Graphs: Methods and Applications](https://arxiv.org/abs/1709.05584)
+
+还有2005年的[The Graph Neural Network Model](https://ieeexplore.ieee.org/document/4700287/)
+
+定义：
+
++ `\(G\)`：图
++ `\(V\)`：节点集合
++ `\(A\)`：邻接矩阵(假设是binary的)
++ `\(X\in R ^{m\times |V|}\)`：**节点features**的矩阵
+    + 类别型的特征、文本、图像数据等
+    + 节点度数、clustering coefficients(聚集系数，参考[https://blog.csdn.net/pennyliang/article/details/6838956](https://blog.csdn.net/pennyliang/article/details/6838956))等
+    + Indicator vectors(例如，每个节点的one-hot vector)
+
+##### Neighborhood Aggregation
+
+核心思想：使用nn对节点的邻居的信息进行汇聚，生成这个节点的embedding
+
 
 ### Graph Convolutional Networks
 
