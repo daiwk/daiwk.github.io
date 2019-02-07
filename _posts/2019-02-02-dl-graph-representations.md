@@ -645,9 +645,20 @@ z_v&=h^K_v\\
 L=\sum _{v\in V}y_v\log (\sigma (z^T_v\theta )+(1-y_v)\log(1-\sigma (z^T_v\theta)))
 \]`
 
+归纳能力（inductive capability）：
 
++ 所有节点共享相同的aggretation parameters
++ 模型参数是`\(|V|\)`的sublinear，而且可以对没见过的node生成embed
 
 ### Graph Convolutional Networks
+
+[Semi-Supervised Classification with Graph Convolutional Networks](https://arxiv.org/abs/1609.02907)
+
+在neighborhood aggretagtion上有一些小改动：
+
+`\[
+h^k_v=\sigma(W_k\sum_{u\in N(v)\cup v}\frac{h^{k-1}_u}{\sqrt{|N(u)||N(v)|}})
+\]`
 
 ### GraphSAGE
 
