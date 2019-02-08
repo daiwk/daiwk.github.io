@@ -37,6 +37,8 @@ tags: [graph representation, ]
     - [Graph Convolutional Networks](#graph-convolutional-networks)
     - [GraphSAGE](#graphsage)
     - [Gated Graph Neural Networks](#gated-graph-neural-networks)
+        - [Gated Graph Neural Networks介绍](#gated-graph-neural-networks介绍)
+        - [Message-Passing Neural Networks介绍](#message-passing-neural-networks介绍)
     - [Graph Attention Networks](#graph-attention-networks)
     - [Subgraph Embeddings](#subgraph-embeddings)
 - [Deep Generative Models for Graph Generation](#deep-generative-models-for-graph-generation)
@@ -713,9 +715,12 @@ GCNs和GraphSAGE大部分情况下只有**2-3层**深，层数加深有如下挑
 + 层间参数共享
 + Recurrent state update：各层的神经网络使用RNN。
 
+
+#### Gated Graph Neural Networks介绍
+
 Recurrent state update这种方法分成两步：
 
-+ step `\(k\)`从neighbors获取"message"，**这个聚合函数与`\(k\)`无关**：
++ 在step `\(k\)`从neighbors获取"message"，**这个聚合函数与`\(k\)`无关**：
 
 `\[
 m^k_v=W\sum _{u\in N(v)}h^{k-1}_u
@@ -727,7 +732,52 @@ m^k_v=W\sum _{u\in N(v)}h^{k-1}_u
 h^k_v=GRU(h^{k-1}_v,m^k_v)
 \]`
 
+优点：
+
++ 可以处理**20+的层数**
++ 绝大部分真实世界的网络有比较小的diameters（直径，放大倍率），**大部分小于等于7**
++ 能够将**global的图结构**的复杂信息传播给所有结点
++ 对复杂网络的表示很有用（例如Logical formulas，或者程序）
+
+#### Message-Passing Neural Networks介绍
+
+从以下两个方面来对gated graph neural networks进行泛化：
+
++ 在step `\(k\)`从neighbors获取"message"：
+
+其中的`\(M\)`可以是一个一般(generic)的"message"函数，例如sum或者MLP。`\(e_{u,v}\)`把**边的信息**考虑进来了！
+
+`\[
+m^k_v=\sum _{u\in N(v)}M(h^{k-1}_u,h^{k-1}_v,e_{u,v})
+\]`
+
++ 更新node的"state"：
+
+其中的`\(U\)`可以是一个一般(generic)的"update"函数，例如LSTM或者GRU
+
+`\[
+h^k_v=U(h^{k-1}_v,m^k_v)
+\]`
+
+所以，其实这是一个通用的conceptual（概念性的） framework，可以归纳大部分GNNs。
+
 ### Graph Attention Networks
+
+参考ICLR18的[Graph Attention Networks](https://arxiv.org/pdf/1710.10903.pdf)
+
+key idea：某些neighbor更重要，所以可以使用attention机制来搞
+
+`\[
+h^k_v=\sigma (\sum _{u\in N(v)\cup \{v\}}\alpha _{v,u}W^kh^{k-1}_u)
+\]`
+
+其中：
+
++ `\(sigma\)`是非线性；
++ `\(\sum _{u\in N(v)\cup \{v\}}\)`意味着把所有neighbor(包括节点自己！！)都加起来
++ `\(\alpha _{v,u}\)`是学习到的attention权重
+
+
 
 ### Subgraph Embeddings
 
