@@ -652,7 +652,7 @@ L=\sum _{v\in V}y_v\log (\sigma (z^T_v\theta )+(1-y_v)\log(1-\sigma (z^T_v\theta
 
 ### Graph Convolutional Networks
 
-[Semi-Supervised Classification with Graph Convolutional Networks](https://arxiv.org/abs/1609.02907)
+参考ICLR17的[Semi-Supervised Classification with Graph Convolutional Networks](https://arxiv.org/abs/1609.02907)
 
 在neighborhood aggretagtion上有一些小改动：
 
@@ -660,9 +660,72 @@ L=\sum _{v\in V}y_v\log (\sigma (z^T_v\theta )+(1-y_v)\log(1-\sigma (z^T_v\theta
 h^k_v=\sigma(W_k\sum_{u\in N(v)\cup v}\frac{h^{k-1}_u}{\sqrt{|N(u)||N(v)|}})
 \]`
 
+和普通gnn的区别：
+
++ self和neighbor的embedding共用同一个权重`\(W_k\)`，而普通的gnn是两个权重`\(B_k\)`和`\(W_k\)`，好处就是有**更多的参数共享**
++ 每一个neighbor都有normalization(即`\(\sqrt{|N(u)||N(v)|}\)`)，好处就是可以**减小度数多的邻居的权重**
+
 ### GraphSAGE
 
+参考NIPS17的[Inductive Representation Learning on Large Graphs](https://arxiv.org/abs/1706.02216)
+
+出发点：把上面在aggretate之后使用的神经网络换成任意一个可以把一堆vectors映射成一个单独的vector的可微函数（也就是下面的`\(AGG(\{h^{k-1}_u,\forall u\in N(v)\})\)`）：
+
+`\[
+h^k_v=\sigma ([A_k\cdot AGG(\{h^{k-1}_u,\forall u\in N(v)\}),B_kh^{k-1}_v])
+\]`
+
+上面的`\([A_k\cdot AGG(\{h^{k-1}_u,\forall u\in N(v)\}),B_kh^{k-1}_v]\)`是把这self embedding和neighbor embedding这两个向量**concate**到一起。
+
+AGG的变种：
+
++ mean：
+
+`\[
+AGG=\sum _{u\in N(v)}\frac{h^{k-1}_u}{|N(v)|}
+\]`
+
++ pool：对neighbor vectors进行转换（例如下面的`\(Q\)`），并进行symmetric vector函数变换（例如下面的`\(\gamma\)`就是element-wise mean/max）
+
+`\[
+AGG=\gamma (\{Qh^{k-1}_u,\forall u \in N(v)\})
+\]`
+
++ lstm：对neighbor的一个**随机排列**（random permutation）使用lstm
+
+`\[
+AGG=LSTM([h^{k-1}_u, \forall u\in \pi(N(v))])
+\]`
+
 ### Gated Graph Neural Networks
+
+参考ICLR16的[Gated Graph Sequence Neural Networks](https://arxiv.org/abs/1511.05493)
+
+参考ICML17的[Neural Message Passing for Quantum Chemistry](https://arxiv.org/pdf/1704.01212.pdf)
+
+GCNs和GraphSAGE大部分情况下只有**2-3层**深，层数加深有如下挑战：
+
++ 参数太多导致过拟合
++ bp的过程中出现梯度消失/爆炸
+
+思路：
+
++ 层间参数共享
++ Recurrent state update：各层的神经网络使用RNN。
+
+Recurrent state update这种方法分成两步：
+
++ step `\(k\)`从neighbors获取"message"，**这个聚合函数与`\(k\)`无关**：
+
+`\[
+m^k_v=W\sum _{u\in N(v)}h^{k-1}_u
+\]`
+
++ 通过gru来更新节点的"state"。新节点的state依赖old state以及neighbors的"message"：
+
+`\[
+h^k_v=GRU(h^{k-1}_v,m^k_v)
+\]`
 
 ### Graph Attention Networks
 
