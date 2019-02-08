@@ -34,12 +34,12 @@ tags: [graph representation, ]
 - [Graph Neural Networks](#graph-neural-networks)
         - [基础知识](#基础知识)
             - [Neighborhood Aggregation](#neighborhood-aggregation)
-    - [Graph Convolutional Networks](#graph-convolutional-networks)
+    - [Graph Convolutional Networks(GCN)](#graph-convolutional-networksgcn)
     - [GraphSAGE](#graphsage)
     - [Gated Graph Neural Networks](#gated-graph-neural-networks)
         - [Gated Graph Neural Networks介绍](#gated-graph-neural-networks介绍)
         - [Message-Passing Neural Networks介绍](#message-passing-neural-networks介绍)
-    - [Graph Attention Networks](#graph-attention-networks)
+    - [Graph Attention Networks(GAT)](#graph-attention-networksgat)
     - [Subgraph Embeddings](#subgraph-embeddings)
 - [Deep Generative Models for Graph Generation](#deep-generative-models-for-graph-generation)
     - [Variational Autoencoders (VAEs)](#variational-autoencoders-vaes)
@@ -652,7 +652,7 @@ L=\sum _{v\in V}y_v\log (\sigma (z^T_v\theta )+(1-y_v)\log(1-\sigma (z^T_v\theta
 + 所有节点共享相同的aggretation parameters
 + 模型参数是`\(|V|\)`的sublinear，而且可以对没见过的node生成embed
 
-### Graph Convolutional Networks
+### Graph Convolutional Networks(GCN)
 
 参考ICLR17的[Semi-Supervised Classification with Graph Convolutional Networks](https://arxiv.org/abs/1609.02907)
 
@@ -761,7 +761,7 @@ h^k_v=U(h^{k-1}_v,m^k_v)
 
 所以，其实这是一个通用的conceptual（概念性的） framework，可以归纳大部分GNNs。
 
-### Graph Attention Networks
+### Graph Attention Networks(GAT)
 
 参考ICLR18的[Graph Attention Networks](https://arxiv.org/pdf/1710.10903.pdf)
 
@@ -777,6 +777,24 @@ h^k_v=\sigma (\sum _{u\in N(v)\cup \{v\}}\alpha _{v,u}W^kh^{k-1}_u)
 + `\(\sum _{u\in N(v)\cup \{v\}}\)`意味着把所有neighbor(包括节点自己！！)都加起来
 + `\(\alpha _{v,u}\)`是学习到的attention权重
 
+各种attention都是可以的，原始GAT用的是如下attention权重：
+
+`\[
+\alpha _{v,u}=\frac{\exp(LeakyReLU(a^T[Qh_v,Qh_u]))}{\sum _{u'\in N(v)\cup \{v\}}\exp(LeakyReLU(a^T[Qh_v,Qh_{u'}]))}
+\]`
+
+对照上面讲到的通用的conceptual（概念性的） framework，其实就是**把attention加到获取"message"那步里去**。
+
+其他新的东西：
+
++ Generalizations based on spectral convolutions: 
+    + Geometric Deep Learning (Bronstein et al., 2017, [Geometric deep learning: going beyond Euclidean data](https://arxiv.org/abs/1611.08097)) 
+    + Mixture Model CNNs (Monti et al., 2017, [Geometric deep learning on graphs and manifolds using mixture model CNNs](https://arxiv.org/pdf/1611.08402.pdf))
++ Speed improvements via subsampling: 
+    + FastGCNs (Chen et al., 2018, [FastGCN: Fast Learning with Graph Convolutional Networks via Importance Sampling](https://arxiv.org/abs/1801.10247))
+    + Stochastic GCNs (Chen et al., 2017, [Stochastic Training of Graph Convolutional Networks with Variance Reduction](https://arxiv.org/abs/1710.10568))
+
+SOTA：
 
 
 ### Subgraph Embeddings
