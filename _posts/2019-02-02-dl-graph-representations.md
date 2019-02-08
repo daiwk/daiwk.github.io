@@ -10,7 +10,7 @@ tags: [graph representation, ]
 <!-- TOC -->
 
 - [Introduction](#introduction)
-- [Node Representation Learning](#node-representation-learning)
+- [part1-Node Representation Learning](#part1-node-representation-learning)
     - [Node Representation Methods](#node-representation-methods)
         - [LINE](#line)
             - [一阶相似度](#一阶相似度)
@@ -31,7 +31,7 @@ tags: [graph representation, ]
             - [Relation as Elementwise Rotation in Complex Space](#relation-as-elementwise-rotation-in-complex-space)
             - [RoteE的优化](#rotee的优化)
     - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
-- [Graph Neural Networks](#graph-neural-networks)
+- [part2-Graph Neural Networks](#part2-graph-neural-networks)
         - [基础知识](#基础知识)
             - [Neighborhood Aggregation](#neighborhood-aggregation)
     - [Graph Convolutional Networks(GCN)](#graph-convolutional-networksgcn)
@@ -41,10 +41,12 @@ tags: [graph representation, ]
         - [Message-Passing Neural Networks介绍](#message-passing-neural-networks介绍)
     - [Graph Attention Networks(GAT)](#graph-attention-networksgat)
     - [Subgraph Embeddings](#subgraph-embeddings)
-- [Deep Generative Models for Graph Generation](#deep-generative-models-for-graph-generation)
-    - [Variational Autoencoders (VAEs)](#variational-autoencoders-vaes)
-    - [Generative Adversarial Networks (GANs)](#generative-adversarial-networks-gans)
-    - [Deep Auto-regressive Models](#deep-auto-regressive-models)
+- [part3-Deep Generative Models for Graph Generation](#part3-deep-generative-models-for-graph-generation)
+    - [深度生成模型](#深度生成模型)
+        - [Variational Autoencoders (VAEs)](#variational-autoencoders-vaes)
+        - [Generative Adversarial Networks (GANs)](#generative-adversarial-networks-gans)
+        - [Deep Auto-regressive Models](#deep-auto-regressive-models)
+    - [GraphVAE](#graphvae)
 
 <!-- /TOC -->
 
@@ -75,7 +77,7 @@ graph的几大传统ml任务：
 + 没有固定的结点顺序或者参考点（reference point）(例如，isomorphism（同构）问题)
 + 经常是动态的并且有multimodal（多模态）的features
 
-## Node Representation Learning
+## part1-Node Representation Learning
 
 ### Node Representation Methods
 
@@ -569,7 +571,7 @@ algorithm and system co-design的一个node embeddings的系统
 
 比现有的系统快50倍，一个有100w节点的网络只要1min
 
-## Graph Neural Networks
+## part2-Graph Neural Networks
 
 #### 基础知识
 
@@ -773,7 +775,7 @@ h^k_v=\sigma (\sum _{u\in N(v)\cup \{v\}}\alpha _{v,u}W^kh^{k-1}_u)
 
 其中：
 
-+ `\(sigma\)`是非线性；
++ `\(\sigma\)`是非线性；
 + `\(\sum _{u\in N(v)\cup \{v\}}\)`意味着把所有neighbor(包括节点自己！！)都加起来
 + `\(\alpha _{v,u}\)`是学习到的attention权重
 
@@ -794,19 +796,144 @@ h^k_v=\sigma (\sum _{u\in N(v)\cup \{v\}}\alpha _{v,u}W^kh^{k-1}_u)
     + FastGCNs (Chen et al., 2018, [FastGCN: Fast Learning with Graph Convolutional Networks via Importance Sampling](https://arxiv.org/abs/1801.10247))
     + Stochastic GCNs (Chen et al., 2017, [Stochastic Training of Graph Convolutional Networks with Variance Reduction](https://arxiv.org/abs/1710.10568))
 
-SOTA：
-
-
 ### Subgraph Embeddings
 
-## Deep Generative Models for Graph Generation
++ 方法一：直接把子图中的node的emb进行sum或者avg
 
-### Variational Autoencoders (VAEs)
+`\[
+z_S=\sum _{v\in S}z_v
+\]`
 
-### Generative Adversarial Networks (GANs)
+见2016年的[Convolutional Networks on Graphs for Learning Molecular Fingerprints](https://arxiv.org/abs/1509.09292)
 
-### Deep Auto-regressive Models
++ 方法二：引入"virtual node"来表示子图，并走一个完整的gnn
+
+如下图
+
+<html>
+<br/>
+<img src='../assets/subgraph-embedding-approach2.png' style='max-height: 100px'/>
+<br/>
+</html>
+
+见2016年的[Gated Graph Sequence Neural Networks](https://arxiv.org/abs/1511.05493)
+
++ 方法三：对节点进行层次聚类
+
+见2018年的[Hierarchical Graph Representation Learning with Differentiable Pooling](https://arxiv.org/pdf/1806.08804.pdf)
+
+<html>
+<br/>
+<img src='../assets/subgraph-embedding-approach3.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+大致流程如下：
+
+1. 在图上跑GNN，得到node的embeddings
+1. 对node embeddings进行聚类，得到一个“coarsened” graph（粗糙的）
+1. 在“coarsened” graph上跑GNN
+1. 重复
+
+学习clustering的不同方式：
+
++ 使用softmax weight的soft clustering（2018年的[Hierarchical Graph Representation Learning with Differentiable Pooling](https://arxiv.org/pdf/1806.08804.pdf)）
++ 使用hard clustering（2018年的[Towards Sparse Hierarchical Graph Classifiers](https://arxiv.org/pdf/1811.01287.pdf)和2018年的[GRAPH U-NET](https://openreview.net/pdf?id=HJePRoAct7)）
+
+## part3-Deep Generative Models for Graph Generation
+
+### 深度生成模型
+
+深度生成模型的目标：为数据分布`\(p(x)\)`隐式或者显式地建模，`\(x\)`是一个高维随机变量
+
+#### Variational Autoencoders (VAEs)
+
+原始论文：2014年Kingma et al.的[Auto-Encoding Variational Bayes](https://arxiv.org/pdf/1312.6114.pdf)
+
+Latent variable model: 
+
++ 一个encoder `\(q_{\phi}(z|x)\)`
++ 一个decoder `\(q_{\theta}(x|z)\)`
+
+最大化log likelihood `\(\log p(x)\)`：inference是intractable（棘手）的，因为`\(z\)`是连续的
+
+最大化variational的下界`\(L(\phi, \theta;x)\)`
+
+通过reparametrization trick来jointly优化encoder和decoder：
+
+`\[
+L(\phi, \theta;x)=E_{q_{\phi}(z|x)}\log p_{\theta }(x|z)-KL[q_{\phi}(z|x)||p(z)]
+\]`
+
+其中的`\(E_{q_{\phi}(z|x)}\log p_{\theta }(x|z)\)`是reconstruction，`\(KL[q_{\phi}(z|x)||p(z)]\)`是regularization
+
+<html>
+<br/>
+<img src='../assets/vaes.png' style='max-height: 150px'/>
+<br/>
+</html>
+
+#### Generative Adversarial Networks (GANs)
+
+原始论文：2014年Goodfellow et al.的[Generative Adversarial Networks](https://arxiv.org/abs/1406.2661)
+
+一个两个玩家的Minimax游戏：
+
++ Generator `\(G: z\rightarrow x\)`。目标是迷惑discriminator
++ Discriminator `\(D: x\rightarrow \{0,1\}\)`。目标是区分真实数据和生成的数据
+
+`\[
+\underset{G}{\min}\underset{D}{\max}V(D,G)=E_{x\sim p_{data}(x)}[\log D(x)]+E_{z\sim p_z(z)}[\log (1-D(G(z)))]
+\]`
+
+直观地理解，这个式子包括两部分，一部分是判别真实数据是正例的概率，另一部分是判别生成的数据是负例的的概率，对于`\(G\)`来讲，期望这个式子min，而对于`\(D\)`来讲，期望这个式子max
+
+#### Deep Auto-regressive Models
+
+深度自回归模型：例如RNN
+
+例如，PixelRNN（2016年Oort et al.的[Pixel Recurrent Neural Networks](https://arxiv.org/abs/1601.06759)）和PixelCNN（2016年也是Oort et al.的[Conditional Image Generation with PixelCNN Decoders](https://arxiv.org/pdf/1606.05328v2.pdf)）：
+
++ 一个pixel一个pixel地生成图像
++ 通过一个神经网络来对条件概率分布建模
+
+WaveNet（2017年Oort et al.的[WaveNet: A Generative Model for Raw Audio](https://arxiv.org/abs/1609.03499)）
+
+`\[
+p(x)=\prod ^{n^2}_{i=1}p(x_i|x_1,...,x_{i-1})
+ \]`
+
+<html>
+<br/>
+<img src='../assets/wavenet.png' style='max-height: 200px'/>
+<br/>
+</html> 
+
+但如果要用在图上，有以下几个挑战：
+
++ 图的structures和size是不一样的
++ node之间并没有顺序
++ 离散
+
+### GraphVAE
 
 
+2018年Simonovsky和Komodakis的[GraphVAE: Towards Generation of Small Graphs Using Variational Autoencoders](https://arxiv.org/abs/1802.03480)
+
+提出了生成图的VAE的框架：
+
++ 输入graph
++ encoder：gnn+gated pooling=>graph representation，参考Li et al.在2015的
++ decoder：输出一个预先定义好max size的probalistic fully-connected graph
+    + 对节点、边、节点和边的属性的存在性单独建模
+    + graph matching是必须的
+
+<html>
+<br/>
+<img src='../assets/graphvae.png' style='max-height: 300px'/>
+<br/>
+</html> 
+
+输入的graph是`\(G=(A,E,F)\)`：`\(A\)`是邻接矩阵；`\(E\)`是边的属性的tensor；`\(F\)`是节点的属性的矩阵
 
 
