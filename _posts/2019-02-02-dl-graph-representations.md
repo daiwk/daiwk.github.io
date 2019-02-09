@@ -47,6 +47,10 @@ tags: [graph representation, ]
         - [Generative Adversarial Networks (GANs)](#generative-adversarial-networks-gans)
         - [Deep Auto-regressive Models](#deep-auto-regressive-models)
     - [GraphVAE](#graphvae)
+    - [JTVAE](#jtvae)
+    - [MolGAN](#molgan)
+    - [GCPN](#gcpn)
+- [未来方向](#未来方向)
 
 <!-- /TOC -->
 
@@ -873,6 +877,14 @@ L(\phi, \theta;x)=E_{q_{\phi}(z|x)}\log p_{\theta }(x|z)-KL[q_{\phi}(z|x)||p(z)]
 <br/>
 </html>
 
+小结一下，encoder是`\(q_{\phi}\)`，decoder是`\(p_{\theta}\)`，encoder根据`\(x\)`生成`\(z\)`，decoder根据`\(z\)`生成`\(\x\)`。
+
+可以参考[https://blog.csdn.net/antkillerfarm/article/details/80648805](https://blog.csdn.net/antkillerfarm/article/details/80648805)
+
+重构的过程是希望没噪声的，而KL loss则希望有高斯噪声的，两者是对立的。所以，VAE跟GAN一样，内部其实是包含了一个对抗的过程，只不过它们两者是混合起来，共同进化的。
+
+公式推导可以看[https://blog.csdn.net/weixin_40955254/article/details/82315909](https://blog.csdn.net/weixin_40955254/article/details/82315909)
+
 #### Generative Adversarial Networks (GANs)
 
 原始论文：2014年Goodfellow et al.的[Generative Adversarial Networks](https://arxiv.org/abs/1406.2661)
@@ -917,7 +929,6 @@ p(x)=\prod ^{n^2}_{i=1}p(x_i|x_1,...,x_{i-1})
 
 ### GraphVAE
 
-
 2018年Simonovsky和Komodakis的[GraphVAE: Towards Generation of Small Graphs Using Variational Autoencoders](https://arxiv.org/abs/1802.03480)
 
 提出了生成图的VAE的框架：
@@ -936,4 +947,143 @@ p(x)=\prod ^{n^2}_{i=1}p(x_i|x_1,...,x_{i-1})
 
 输入的graph是`\(G=(A,E,F)\)`：`\(A\)`是邻接矩阵；`\(E\)`是边的属性的tensor；`\(F\)`是节点的属性的矩阵
 
+decoder的输出：
 
++ 限制domain在最多max k个节点的所有graphs的集合中（k一般是10左右）
++ 一次输出一个k个节点的probalistic fully-connected graph `\(\tilde{G}=(\tilde{A},\tilde{E},\tilde{F})\)`
+    + 以**bernoulli variables**建模nodes和edges的**existence**
+    + 以**multinomial variables**建模nodes和edges的**attributes**
+    + `\(\tilde{A}\in [0,1]^{k\times k}\)`：同时包括node probabilities `\(\tilde{A}_{aa}\)`和edge probabilities `\(\tilde{A}_{ab}\)`，其中`\(a\neq b\)`
+    + `\(\tilde{E}\in [0,1]^{k\times k\times d_e}\)`：表示edge attributes的probabilities
+    + `\(\tilde{F}\in [0,1]^{k\times d_e}\)`：表示node attributes的probabilities
++ inference：在`\(\tilde{A}\)`，`\(\tilde{E}\)`，`\(\tilde{F}\)`中使用edge-wise和node-wise的argmax
++ 计算reconstruction loss的时候，需要使用graph matching
+
+缺点：
+
++ graph的max size必须是预先定义好的
++ graph matching是必须的
+
+### JTVAE
+
+[Junction Tree Variational Autoencoder for Molecular Graph Generation](https://arxiv.org/pdf/1802.04364.pdf)
+
++ 利用了化学领域的知识
+    + 每个molecule(分子)可以表示为化学substructures(如环、键(bond))的树状的scaffold(骨架、支架)
++ 生成一个树状结构的object
+    + 用来表示subgraph components的scaffold
++ 将substructure组装成一个coherent(连贯的) molecular graph
+
+### MolGAN
+
+[MolGAN: An implicit generative model for small molecular graphs](https://arxiv.org/pdf/1805.11973.pdf)
+
++ 一个implicit, likelihood-free的生成模型：用于分子生成
++ 结合了强化学习来encourage生成的带有化学属性的分子
++ Generator：从先验分布中生成分子
++ Discriminator：区分生成的sample和真实的sample
++ Reward network：
+    + 学习给每个分子赋值一个reward，这个reward要和external software提供的score进行match
+    + invalid的分子通常得到的reward是0
+
+整体架构图如下：
+
+<html>
+<br/>
+<img src='../assets/molgan.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+Generator：
+
++ 生成一个probabilistic fully-connected graph：
+    + `\(X\in R^{N\times T}\)`：atom types
+    + `\(A\in R^{N\times N\times Y\)`：bond types
++ 目标函数：
+
+`\[
+L(\theta)=\lambda L_{WGAN}+(1-\lambda)L_RL
+\]`
+
+Discriminator & Reward network：
+
++ 通过neural message passing algorithm的一个变种-Relational-GCN，Schlichtkrull et al. 2017的[Modeling relational data with graph convolutional networks](https://arxiv.org/abs/1703.06103)来学习分子/graph的表示
++ discriminator和reward network用相同的网络结构（但参数不共享）
++ reward network用来近似external software的打分(使用真实的samples和生成的samples进行训练)
+
+优缺点：
+
++ 不需要graph matching
++ graphs/分子的max size仍然需要预先定义
+
+### GCPN
+
+You et al.在2018的[Graph Convolutional Policy Network for Goal-Directed Molecular Graph Generation](https://arxiv.org/pdf/1806.02473.pdf)
+
++ 将分子的生成看成序列决策问题
+    + 增加节点和边
+    + 一个马尔可夫决策过程
++ 目标：发现分子式，能优化融入了chemical rules的特定的properties
++ GCPN：一个结合了RL的面向目标（goal-directed）的通用的model
+    + 使用policy gradients来优化adversarial loss和domain-specific rewards
+    + 能够在一个融入了domain-specific rules的environment中生效
+
+整体架构图如下：
+
+<html>
+<br/>
+<img src='../assets/gcpn.png' style='max-height: 300px'/>
+<br/>
+</html>
+
++ `\(M=(S,A,P,R,\gamma\)`：
+    + states `\(S=\{s_i\}\)`：包括所有intermediat和final graphs
+    + actions `\(A=\{a_i\}\)`：每一个step对当前graph进行的修改
+    + 状态转移概率`\(P\)`
+    + reward函数`\(R\)`
+    + discount factor `\(\gamma\)`
++ 状态空间：
+    + `\(s_t\)`是中间生成的图`\(G_t\)`
+    + `\(G_0\)`包括一个single node，表示一个carbon atom(碳原子)
++ 动作空间：
+    + 每个step将要添加的一个atoms的集合：`\(C=\cup ^S_{i=1}C_i\)`
+    + 具体的actions:
+        + 把一个新的atom `\(C_i\)`连接到现有的`\(G_t\)`中的一个节点上去
+        + 连接`\(G_t\)`内退出(exiting)的节点
++ state transition dynamics:
+    + 在state transition dynamics中融入了domain-specific rules，只执行遵守规则的actions
+    + policy network产生的infeasible(不可实行的)动作会被rejected，而state保持不变
++ Reward设计
+    + final rewards：domain-specific rewards之和（例如，最终的property scores，对不真实的分子的惩罚，adversirial rewards）
+    + intermediate rewards：step-wise validity(有效性) rewards和adversirial rewards
++ GCPN
+    + 使用neural message passing算法计算节点的embeddings
+    + 预测action：
+        + 挑选两个节点
+        + 预测边的类型
+        + 预测是否结束（termination）
+
+整体公式如下：
+
+`\[
+a_t=CONCAT(a_{first},a_{second},a_{edge},a_{stop})
+\]`
+
+其中
+
+`\[
+\begin{matrix}
+f_{first}(s_t)=SOFTMAX(m_f(X)), & a_{first}\sim f_{first}(s_t)\in \{0,1\}^n \\ 
+f_{second}(s_t)=SOFTMAX(m_s(X_{a_{first}},X)), & a_{second}\sim f_{second}(s_t)\in \{0,1\}^{n+c} \\ 
+f_{edge}(s_t)=SOFTMAX(m_e(X_{a_{first}},X_{a_{second}})), & a_{edge}\sim f_{edge}(s_t)\in \{0,1\}^b \\ 
+f_{stop}(s_t)=SOFTMAX(m_t(AGG(X))), & a_{stop}\sim f_{stop}(s_t)\in \{0,1\} \\ 
+\end{matrix}
+\]`
+
+## 未来方向
+
+参考[https://zhuanlan.zhihu.com/p/38142339](https://zhuanlan.zhihu.com/p/38142339)
+
+主要想法：将relational的关系转化成attention，利用attention来代表两个entity的关系。隐式地将relational引入NN结构中
+
+Zambaldi et al.在2018的[Relational deep reinforcement learning](https://arxiv.org/abs/1806.01830
