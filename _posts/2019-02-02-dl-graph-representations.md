@@ -877,7 +877,7 @@ L(\phi, \theta;x)=E_{q_{\phi}(z|x)}\log p_{\theta }(x|z)-KL[q_{\phi}(z|x)||p(z)]
 <br/>
 </html>
 
-小结一下，encoder是`\(q_{\phi}\)`，decoder是`\(p_{\theta}\)`，encoder根据`\(x\)`生成`\(z\)`，decoder根据`\(z\)`生成`\(\x\)`。
+小结一下，encoder是`\(q_{\phi}\)`，decoder是`\(p_{\theta}\)`，encoder根据`\(x\)`生成`\(z\)`，decoder根据`\(z\)`生成`\(x\)`。
 
 可以参考[https://blog.csdn.net/antkillerfarm/article/details/80648805](https://blog.csdn.net/antkillerfarm/article/details/80648805)
 
@@ -998,7 +998,7 @@ Generator：
 
 + 生成一个probabilistic fully-connected graph：
     + `\(X\in R^{N\times T}\)`：atom types
-    + `\(A\in R^{N\times N\times Y\)`：bond types
+    + `\(A\in R^{N\times N\times Y}\)`：bond types
 + 目标函数：
 
 `\[
@@ -1036,7 +1036,7 @@ You et al.在2018的[Graph Convolutional Policy Network for Goal-Directed Molecu
 <br/>
 </html>
 
-+ `\(M=(S,A,P,R,\gamma\)`：
++ `\(M=(S,A,P,R,\gamma)\)`：
     + states `\(S=\{s_i\}\)`：包括所有intermediat和final graphs
     + actions `\(A=\{a_i\}\)`：每一个step对当前graph进行的修改
     + 状态转移概率`\(P\)`
@@ -1086,4 +1086,4 @@ f_{stop}(s_t)=SOFTMAX(m_t(AGG(X))), & a_{stop}\sim f_{stop}(s_t)\in \{0,1\} \\
 
 主要想法：将relational的关系转化成attention，利用attention来代表两个entity的关系。隐式地将relational引入NN结构中
 
-Zambaldi et al.在2018的[Relational deep reinforcement learning](https://arxiv.org/abs/1806.01830
+Zambaldi et al.在2018的[Relational deep reinforcement learning](https://arxiv.org/abs/1806.01830)
