@@ -40,8 +40,9 @@ tags: [tagspace, ]
       doc_embed = tflearn.embedding(doc, input_dim=N, output_dim=d)
       self.lt_embed = lt_embed = tf.Variable(tf.random_normal([tN, d], stddev=0.1)) # 在卷积这步这个变量没啥用
 
-      net = tflearn.conv_1d(doc_embed, H, K, activation='tanh')# conv_1d默认是same padding，卷积核是Kxd，有H个卷积核
-      net = tflearn.max_pool_1d(net, K) # max_pool_1d默认也是same pooling
+      net = tflearn.conv_1d(doc_embed, H, K, activation='tanh')# conv_1d默认是same padding，卷积核是Kxd，有H个卷积核，输出是(None,l,d)
+      net = tflearn.max_pool_1d(net, K) # max_pool_1d默认也是same pooling，输出是(None,xxx,H)
+      ## maybe上面那行应该改成tensorflow.keras.layers.GlobalMaxPooling1D(net)# 输出就是(None,H)啦?
       net = tflearn.tanh(net)
       self.logit = logit = tflearn.fully_connected(net, d, activation=None)
 ```
