@@ -500,7 +500,7 @@ algorithm and system co-design的一个node embeddings的系统
 
 # part2-Graph Neural Networks
 
-### 基础知识
+## 基础知识
 
 通过一个encoder函数$ENC$，把原始网络的结点$u$和结点$v$映射到embedding space的$d$维向量$z_u$和$z_v$，然后希望原空间的相似度和embedding space的相似度（例如内积）接近：
 
