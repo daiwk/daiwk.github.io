@@ -6,7 +6,6 @@ tags: [graph representation, ]
 urlcolor: blue
 ---
 
-目录
 
 <!-- TOC -->
 
