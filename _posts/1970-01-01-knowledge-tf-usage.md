@@ -28,6 +28,7 @@ tags: [tf, ]
   - [tf.contrib.layers.flatten](#tfcontriblayersflatten)
   - [tf.contrib.layers.fully-connected](#tfcontriblayersfully-connected)
 - [常见问题](#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+  - [steps v.s. epoch](#steps-vs-epoch)
   - [nan](#nan)
     - [情况1：loss出现nan](#%E6%83%85%E5%86%B51loss%E5%87%BA%E7%8E%B0nan)
     - [情况2：更新网络时出现Nan值](#%E6%83%85%E5%86%B52%E6%9B%B4%E6%96%B0%E7%BD%91%E7%BB%9C%E6%97%B6%E5%87%BA%E7%8E%B0nan%E5%80%BC)
@@ -286,6 +287,23 @@ output[b, i, j, k] =
 
 
 ## 常见问题
+
+### steps v.s. epoch
+
+参考[https://stackoverflow.com/questions/42816124/steps-vs-num-epochs-in-tensorflow-getting-started-tutorial](https://stackoverflow.com/questions/42816124/steps-vs-num-epochs-in-tensorflow-getting-started-tutorial)
+
+整理了一下，大概是这样吧：
+
+epoch：1个epoch等于使用一次训练集中的全部样本训练；也就是训练整个数据集的重复数。
+step: number of times the training loop in your learning algorithm will run to update the parameters in the model. 相当于如果每batchsize个样本update一次模型，那么应该就是
+
+`\[
+num_examples \times epochs / batchsize = steps
+\]`
+
+如果设置的steps比上面的大，可能会继续训？相当于加多了epoch？如果比上面的数小的话，相当于early stopping吧？
+
+Why do we need this? There are many variations on gradient descent (batch, stochastic, mini-batch) as well as other algorithms for optimizing the learning parameters (e.g., L-BFGS). Some of them need to see the data in batches, while others see one datum at a time. Also, some of them include random factors/steps, hence you might need multiple passes on the data to get good convergence.
 
 ### nan
 
