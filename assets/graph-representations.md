@@ -3,6 +3,7 @@ layout: post
 category: "dl"
 title: "graph represention"
 tags: [graph representation, ]
+urlcolor: blue
 ---
 
 目录
