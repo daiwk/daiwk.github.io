@@ -15,10 +15,10 @@ tags: [kubernetes, k8s, container ]
 
 <!-- /TOC -->
 
-容器技术的核心功能，就是通过**约束和修改进程**的动态表现，从而为其创造一个『边界』。
+容器技术的核心功能，就是通过**约束和修改进程**的动态表现，从而为其创造一个**『边界』**。
 
-+ Namespace技术用来修改进程视图
-+ Cgroups技术用来制造约束
++ **Namespace**：**修改进程视图**
++ **Cgroups**：**制造约束**
 
 ## Namespace
 
@@ -32,7 +32,7 @@ docker run -it busybox /bin/sh
 
 -it参数指的是，在启动容器后，**分配一个文本输入/输出环境，即tty**，与容器的标准输入相关联。
 
-linux的Namespace机制，其实就是Linux新建进行的一个可选参数，在Linux系统中创建线程的系统调用是clone()，如：
+linux的Namespace机制，其实就是Linux新建进程的一个可选参数，在Linux系统中创建线程的系统调用是clone()，如：
 
 ```c++
 int pid = clone(main_function, stack_size, SIGCHLD, NULL); 
