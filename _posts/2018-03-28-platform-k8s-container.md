@@ -218,4 +218,6 @@ throttled_time 27232386
 
 ## rootfs文件系统
 
+参考[07 \| 白话容器基础（三）：深入理解容器镜像](https://time.geekbang.org/column/article/17921)
+
 Mount Namespace和其他Namespace的不同之处在于：它对容器进程视图的改变，一定要伴随着挂载操作(mount)才能生效。
