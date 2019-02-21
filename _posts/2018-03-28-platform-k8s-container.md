@@ -44,7 +44,7 @@ int pid = clone(main_function, stack_size, SIGCHLD, NULL);
 int pid = clone(main_function, stack_size, CLONE_NEWPID | SIGCHLD, NULL); 
 ```
 
-如果多次执行如上的clone()调用，就会创建多个PID Namespace，每个Namespace里的应用进程，都会认为自己是当前容器里的第1号进行，看不到宿主机里真正的进程空间，也看不到其他PID Namespace里的具体情况。
+如果多次执行如上的clone()调用，就会创建多个PID Namespace，**每个Namespace里的应用进程，都会认为自己是当前容器里的第1号进程**，看不到宿主机里真正的进程空间，也看不到其他PID Namespace里的具体情况。
 
 除了PID Namespace，Linux中还有Mount、UTS、IPC、Network和User这些Namespace。
 
@@ -52,7 +52,7 @@ int pid = clone(main_function, stack_size, CLONE_NEWPID | SIGCHLD, NULL);
 
 右边的Docker在运行时，并没有一个真正的『docker容器』运行在宿主机中，只是一个正常的应用进程，只是在创建时，加上了各种Namespace参数。
 
-『敏捷』和『高性能』是容口相对于虚拟机的最大优势，也是它能够在PaaS这种更细粒度的资源管理平台上大行其道的重要原因。
+『敏捷』和『高性能』是容器相对于虚拟机的最大优势，也是它能够在PaaS这种更细粒度的资源管理平台上大行其道的重要原因。
 
 <html>
 <br/>
