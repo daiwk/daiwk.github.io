@@ -22,6 +22,7 @@ https://daiwk.github.io/posts/nlp-ltr.html
 https://daiwk.github.io/posts/nlp-ndcg.html
 https://daiwk.github.io/posts/other-community-discovery.html
 https://daiwk.github.io/posts/other-docker-cmds.html
+https://daiwk.github.io/posts/other-k8s-cmds.html
 https://daiwk.github.io/posts/other-others.html
 https://daiwk.github.io/posts/other-scrapy.html
 https://daiwk.github.io/posts/platform-cache.html

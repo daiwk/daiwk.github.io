@@ -27,6 +27,8 @@ tags: [kubernetes, k8s, container ]
 
 ## Namespace
 
+可以参考[https://coolshell.cn/articles/17010.html](https://coolshell.cn/articles/17010.html)
+
 参考[05 \| 白话容器基础（一）：从进程说开去](https://time.geekbang.org/column/article/14642)
 
 ### PID Namespace
@@ -92,6 +94,8 @@ int pid = clone(main_function, stack_size, CLONE_NEWPID | SIGCHLD, NULL);
 当然，后续讲的**基于虚拟化或者独立内核技术的容器实现**，可以较好地在隔离和性能间做平衡。
 
 ### cgroups简介
+
+可以参考[https://coolshell.cn/articles/17049.html](https://coolshell.cn/articles/17049.html)
 
 Linux Cgroups是Linux内核中用来**为进程设置资源限制**的一个重要功能，可以限制一个进程能够使用的资源上限，包括CPU、内存、磁盘、网络带宽等。
 
@@ -260,3 +264,18 @@ docker run -it -m 300m  \
 参考[07 \| 白话容器基础（三）：深入理解容器镜像](https://time.geekbang.org/column/article/17921)
 
 Mount Namespace和其他Namespace的不同之处在于：它对容器进程视图的改变，一定要伴随着挂载操作(mount)才能生效。
+
+
+
+
+
+xxx
+
+Union Mount FS可以参考[https://en.wikipedia.org/wiki/Union_mount](https://en.wikipedia.org/wiki/Union_mount)
+
+实现：
+
++ AU FS
++ Overlay FS
++ Devicemapper
++ btrfs
