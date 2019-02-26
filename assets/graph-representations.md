@@ -723,6 +723,8 @@ $$
     + FastGCNs (Chen et al., 2018, [FastGCN: Fast Learning with Graph Convolutional Networks via Importance Sampling](https://arxiv.org/abs/1801.10247))
     + Stochastic GCNs (Chen et al., 2017, [Stochastic Training of Graph Convolutional Networks with Variance Reduction](https://arxiv.org/abs/1710.10568))
 
+还可以参考[专栏 \| 深入理解图注意力机制](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650757332&idx=3&sn=4a66ac808542af2617be5621a4a56e5d&chksm=871a9caab06d15bc29f72e3d2c78355cd226d65907486a4c4acbc3f6c60713192908b70eadb4&mpshare=1&scene=1&srcid=&pass_ticket=4hmIYvO6GJcf2XjDjrkA6v22Y3ZUCDsA30spOD3nAyih4OfDpXcZPiTcotPvF%2FnT#rd)
+
 ## Subgraph Embeddings
 
 + 方法一：直接把子图中的node的emb进行sum或者avg

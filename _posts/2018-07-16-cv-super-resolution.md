@@ -21,10 +21,11 @@ tags: [超分辨率, super resolution]
 - [SRGAN(SRResNet)](#srgansrresnet)
 - [EDSR](#edsr)
 - [deblurGAN](#deblurgan)
-- [讨论](#%E8%AE%A8%E8%AE%BA)
+- [讨论](#讨论)
 
 <!-- /TOC -->
 
+综述：[从网络设计到实际应用，深度学习图像超分辨率综述](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650757585&idx=3&sn=10b7f6aa96e5a7717eaa079f05696935&chksm=871a9dafb06d14b9a99edc0070caac73d22a5febed2045ac103419903909cff833a38089e577&mpshare=1&scene=1&srcid=&pass_ticket=4hmIYvO6GJcf2XjDjrkA6v22Y3ZUCDsA30spOD3nAyih4OfDpXcZPiTcotPvF%2FnT#rd)
 
 参考[https://blog.csdn.net/sinat_39372048/article/details/81628945](https://blog.csdn.net/sinat_39372048/article/details/81628945)
 
