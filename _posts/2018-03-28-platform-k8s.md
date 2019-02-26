@@ -244,3 +244,6 @@ dockerhub.baidubce.com
 使用minikube:
 
 [https://qii404.me/2018/01/06/minukube.html](https://qii404.me/2018/01/06/minukube.html)
+
+建一个k8s集群的时候，有n+3台机器做master，因为用的是etcd，选主至少要3台机器。
+

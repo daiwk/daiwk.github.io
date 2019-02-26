@@ -13,6 +13,7 @@ tags: [k8s常用命令, kubectl, ]
 - [get](#get)
   - [get deployments](#get-deployments)
   - [get nodes](#get-nodes)
+  - [get replicasets](#get-replicasets)
   - [get pods](#get-pods)
     - [get pod detail](#get-pod-detail)
   - [get rc](#get-rc)
@@ -64,7 +65,12 @@ kubectl get deployments
 
 显示
 
-？？？
+```shell
+kubectl get deployments
+NAME                  DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+kubernetes-bootcamp   1         1         1            1           2m
+```
+
 
 ### get nodes
 
@@ -79,6 +85,20 @@ NAME            STATUS    ROLES     AGE       VERSION   INTERNAL-IP     EXTERNAL
 192.168.0.142   Ready     <none>    15h       v1.11.5   192.168.0.142   <none>        CentOS Linux 7 (Core)   3.10.0-957.1.3.el7.x86_64   docker://18.9.2
 ```
 
+### get replicasets
+
+```shell
+kubectl get replicasets -o wide 
+```
+
+显示
+
+```shell
+kubectl get replicasets -o wide 
+NAME                             DESIRED   CURRENT   READY     AGE       CONTAINERS            IMAGES                                   SELECTOR
+kubernetes-bootcamp-8465764b6b   1         1         1         4m        kubernetes-bootcamp   hub.baidubce.com/bootcamp/mynode:1.0.0   pod-template-hash=4021320626,run=kubernetes-bootcamp
+```
+
 ### get pods
 
 ```shell
@@ -86,6 +106,14 @@ kubectl get pods -o wide
 ```
 
 显示
+
+```shell
+kubectl get pods -o wide
+NAME                                   READY     STATUS    RESTARTS   AGE       IP            NODE            NOMINATED NODE
+kubernetes-bootcamp-8465764b6b-8555s   1/1       Running   0          3m        172.19.0.29   192.168.0.142   <none>
+```
+
+命名：deployment名-replicaset名-pod名
 
 #### get pod detail
 
@@ -387,18 +415,11 @@ deployment.extensions/kubernetes-demo-daiwk scaled
 
 ### 暴露端口
 
-然后可以把端口通过NodePort暴露出来：
+然后可以把deploy通过端口再通过NodePort暴露出来，这样外网就可以访问了，否则只有登上k8s集群内部的机器才能访问：
 
 ```shell
 kubectl expose deployment/kubernetes-demo-daiwk --type="NodePort" --port 8080
 service/kubernetes-demo-daiwk exposed
-```
-
-类似地，我们还可以把clusterip，loadbalancer暴露出来：
-
-```shell
-kubectl expose deployment/kubernetes-demo-daiwk --type="LoadBalancer" --port 8080
-kubectl expose deployment/kubernetes-demo-daiwk --type="ClusterIP" --port 8080
 ```
 
 这个时候就可以发现：
@@ -408,6 +429,30 @@ kubectl get services
 NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
 kubernetes              ClusterIP   172.16.0.1      <none>        443/TCP          17h
 kubernetes-demo-daiwk   NodePort    172.16.182.56   <none>        8080:32561/TCP   15m
+```
+
+类似地，我们还可以把clusterip，loadbalancer暴露出来：
+
+```shell
+kubectl expose deployment/kubernetes-demo-daiwk --type="LoadBalancer" --port 8080
+kubectl expose deployment/kubernetes-demo-daiwk --type="ClusterIP" --port 8080
+```
+
+变成loadbalancer的时候，external-ip就会有一个值：
+
+```shell
+kubectl get service --namespace=daiwk
+NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)          AGE
+daiwk-1                 NodePort       172.16.177.108   <none>          8080:32689/TCP   34m
+daiwk-2                 LoadBalancer   172.16.32.199    106.12.43.102   8080:31405/TCP   13m
+kubernetes-demo-daiwk   NodePort       172.16.193.53    <none>          8080:31763/TCP   17h
+```
+
+这样就可以
+
+```shell
+ curl 106.12.43.102:8080
+Hello Kubernetes! | Running on: daiwk-2-56d68cc894-mbmhj | v=1
 ```
 
 然后describe一下这个service：
