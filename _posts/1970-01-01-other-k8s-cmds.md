@@ -35,6 +35,10 @@ tags: [k8s常用命令, kubectl, ]
   - [pod的自动分配](#pod%E7%9A%84%E8%87%AA%E5%8A%A8%E5%88%86%E9%85%8D)
   - [构建namespace](#%E6%9E%84%E5%BB%BAnamespace)
   - [从yaml文件出发](#%E4%BB%8Eyaml%E6%96%87%E4%BB%B6%E5%87%BA%E5%8F%91)
+- [自动扩容](#%E8%87%AA%E5%8A%A8%E6%89%A9%E5%AE%B9-1)
+- [版本更新](#%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0)
+- [小流量](#%E5%B0%8F%E6%B5%81%E9%87%8F)
+- [abtest](#abtest)
 
 <!-- /TOC -->
 
@@ -325,7 +329,7 @@ NAME                    DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 kubernetes-demo-daiwk   1         1         1            0           8s
 ```
 
-看下pod
+看下pod，可见这个deployment里有1个pod，如果我们设置replicas为3，那应该有3个pods
 
 ```shell
 kubectl get pods
@@ -681,4 +685,417 @@ mynode-svc              NodePort   172.16.122.209   <none>        8080:31671/TCP
 ```shell
 curl 106.12.xx.xx:31671
 Hello Kubernetes ! | Running on: kubernetes-demo-daiwk-78659d8587-bts5s | v=1
+```
+
+kubectl exec可以直接进到容器里，然后可以直接curl servicename:port
+
+```shell
+kubectl exec -it daiwk-1-748867bfb-h65tr /bin/bash --namespace=daiwk    
+root@daiwk-1-748867bfb-h65tr:/# curl daiwk-1:8080                
+Hello Kubernetes bootcamp! | Running on: daiwk-1-748867bfb-h65tr | v=1
+root@daiwk-1-748867bfb-h65tr:/# curl daiwk-1-748867bfb-h65tr:8080
+Hello Kubernetes bootcamp! | Running on: daiwk-1-748867bfb-h65tr | v=1
+```
+
+常见的配置文件处理方式有几种：
+
+1. 使用env的方式，将配置以环境变量方式注入到容器内
+2. 使用kubernetes的configmap，将配置文件挂载到容器内/注入到环境变量中
+3. 同代码一同build到容器内
+4. 将配置保存到宿主机，通过目录挂载到容器内
+
+对于1，需要update/create deployment
+对于2，在configmap更新后重启pod即可
+对于3的方式比较简单，重新上传容器，rolling update即可
+对于4的方式，如果程序支持热加载，不需要做任何操作，但是缺点是损失无状态，且配置修改需要登录到机器上操作
+
+这几种方式各有优劣，基本上要根据实际情况做分析和选型
+
+如果使用kubernetes的configmap或secret，kubernetes会自动实施更新，所以如果程序支持热加载配置，也同样可以不需要重启pod
+
+如果delete了一个deployment，但service还在，那么：
+
+```shell
+kubectl describe service mypython-svc --namespace=daiwenkai-2
+Name:                     mypython-svc
+Namespace:                daiwenkai-2
+Labels:                   app=mypython
+Annotations:              <none>
+Selector:                 app=mypython
+Type:                     NodePort
+IP:                       172.16.72.253
+Port:                     <unset>  8080/TCP
+TargetPort:               8080/TCP
+NodePort:                 <unset>  31753/TCP
+Endpoints:                <none>
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+```
+
+可以发现endpoints没东西了，说明这个service死掉了。。那么我们可以再搞个deployment，只要能select到，就又活了
+
+## 自动扩容
+
+通过如下Dockerfile进行build并Push一个镜像：
+
+```shell
+FROM node:slim
+EXPOSE 8080
+COPY server.js .
+CMD node server.js
+```
+
+其中的server.js如下：
+
+```js
+var http = require('http');
+var requests=0;
+var podname= process.env.HOSTNAME;
+var startTime;
+var host;
+var handleRequest = function(request, response) {
+  // run loop for increasing usage of cpu
+  for (var i=0; i< 1000000000; i++) {
+
+  }
+  response.setHeader('Content-Type', 'text/plain');
+  response.writeHead(200);
+  response.write("Hello Kubernetes bootcamp! | Running on: ");
+  response.write(host);
+  response.end(" | v=3\n");
+  console.log("Running On:" ,host, "| Total Requests:", ++requests,"| App Uptime:", (new Date() - startTime)/1000 , "seconds", "| Log Time:",new Date());
+}
+var www = http.createServer(handleRequest);
+www.listen(8080,function () {
+    startTime = new Date();
+    host = process.env.HOSTNAME;
+    console.log ("Kubernetes Bootcamp App Started At:",startTime, "| Running On: " ,host, "\n" );
+});
+```
+
+通过如下yaml建立一个deployment：
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mynode-deployment
+  namespace: daiwenkai-2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mynode
+        track: stable
+        version: 1.0.0
+    spec:
+      containers:
+        - name: mynode
+          resources:
+              requests:
+                  cpu: "300m"
+                  memory: 1Gi
+              limits:
+                  cpu: "500m"
+                  memory: 2Gi
+          imagePullPolicy: Always
+          image: "xxxx/mynode_node_daiwenkai:autoscale"
+          ports:
+            - name: http
+              containerPort: 8080
+```
+
+然后自动扩容
+
+```shell
+kubectl autoscale deployment mynode-deployment --min=1 --max=4 --cpu-percent=2 --namespace=daiwenkai-2
+```
+
+成功的话，会提示：```horizontalpodautoscaler.autoscaling/mynode-deployment autoscaled```
+
+然后通过以下yaml建立一个service：
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mynode-svc
+  namespace: daiwenkai-2
+  labels:
+    app: mynode
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: NodePort
+  selector:
+    app: mynode
+```
+
+然后获取端口：
+
+```shell
+export NODE_PORT=$(kubectl get services/mynode-svc -o go-template='{{(index .spec.ports 0).nodePort}}' --namespace=daiwenkai-2)
+```
+
+然后我们用ab来压测（如果是Centos，可以通过```yum -y install httpd-tools```来安装）：
+
+```shell
+```
+
+然后我们可以监控实例：
+
+```shell
+watch -n 1 'kubectl top pod --namespace=daiwenkai-2'
+```
+
+一开始可能是：
+
+```shell
+Every 1.0s: kubectl top pod --namespace=daiwenkai-2                                                                                      Wed Feb 27 20:12:34 2019
+
+NAME                                 CPU(cores)   MEMORY(bytes)
+mynode-deployment-64c64d98b9-6rx85   164m         8Mi
+```
+
+当压力大的时候(cpu超过200m的时候)，就会自动扩容：
+
+```shell
+Every 1.0s: kubectl top pod --namespace=daiwenkai-2                                                                                      Wed Feb 27 20:25:15 2019
+
+NAME                                 CPU(cores)   MEMORY(bytes)
+mynode-deployment-64c64d98b9-2gphw   0m           8Mi
+mynode-deployment-64c64d98b9-rc6ng   500m         13Mi
+mynode-deployment-64c64d98b9-rtnrq   0m           10Mi
+mynode-deployment-64c64d98b9-zmlgd   22m          8Mi
+```
+
+删除自动扩容策略：
+
+```shell
+kubectl delete horizontalpodautoscaler.autoscaling/mynode-deployment --namespace=daiwenkai-2
+```
+
+## 版本更新
+
+set image可以改image
+
+例如：
+
+```shell
+kubectl set image deployments/mypython-deployment mypython=xxxx/bootcamp_7/mynode_python_daiwenkai:2.0.0 --namespace=daiwenkai-2
+```
+
+然后就可以看到：
+
+```shell
+kubectl get pods --namespace=daiwenkai-2                                                                               NAME                                   READY     STATUS        RESTARTS   AGE
+mypython-deployment-5989ddfd4f-652kd   1/1       Running       0          8s
+mypython-deployment-5989ddfd4f-fx8cj   1/1       Running       0          9s
+mypython-deployment-5989ddfd4f-lfzwt   1/1       Running       0          11s
+mypython-deployment-5989ddfd4f-ngpm2   1/1       Running       0          11s
+mypython-deployment-66bc86658-qvmm5    1/1       Terminating   0          15m
+mypython-deployment-66bc86658-tcjdf    1/1       Terminating   0          11m
+mypython-deployment-66bc86658-z4t4m    1/1       Terminating   0          15m
+mypython-deployment-66bc86658-z9c25    1/1       Terminating   0          15m
+```
+
+再过一会儿，就是：
+
+```shell
+kubectl get pods --namespace=daiwenkai-2
+NAME                                   READY     STATUS    RESTARTS   AGE
+mypython-deployment-5989ddfd4f-652kd   1/1       Running   0          41s
+mypython-deployment-5989ddfd4f-fx8cj   1/1       Running   0          42s
+mypython-deployment-5989ddfd4f-lfzwt   1/1       Running   0          44s
+mypython-deployment-5989ddfd4f-ngpm2   1/1       Running   0          44s
+```
+
+可以查看进度(显示的是running的个数，如果还有在terminating的，只要都running了，就是succ)：
+
+```shell
+kubectl rollout status deployments/mypython-deployment --namespace=daiwenkai-2
+deployment "mypython-deployment" successfully rolled out
+```
+
+然后我们可以回滚：
+
+```shell
+kubectl rollout undo deployment/mypython-deployment --namespace=daiwenkai-2
+```
+
+## 小流量
+
+先创建一个deployment，里面有3个pod，version是1
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mypython-deployment
+  namespace: daiwenkai-2
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mypython
+        track: stable
+        version: 1.0.0
+    spec:
+      containers:
+        - name: mypython
+          image: "xxx/bootcamp_7/mynode_python_daiwenkai:1.0.0"
+          ports:
+            - name: http
+              containerPort: 8080
+```
+
+再创建一个deployment，里面有1个pod，version是2
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mypython-canary
+  namespace: daiwenkai-2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mypython
+        track: canary
+        version: 2.0.0
+    spec:
+      containers:
+        - name: hello
+          image: "xxx/bootcamp_7/mynode_python_daiwenkai:2.0.0"
+          ports:
+            - name: http
+              containerPort: 8080
+```
+
+然后创建一个service，把这四个pod连接起来（通过app=mypython连接到一起~）：
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mypython-svc
+  namespace: daiwenkai-2
+  labels:
+    app: mypython
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: NodePort
+  selector:
+    app: mypython
+```
+
+这样，我们往这个Service发请求，就会发现75%的流量在v1上，25%的流量在v2上
+
+## abtest
+
+先建一个deployment：
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mypython-deployment
+  namespace: daiwenkai-2
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mypython
+        track: stable
+        version: 1.0.0
+    spec:
+      containers:
+        - name: mypython
+          image: "xxx/bootcamp_7/mynode_python_daiwenkai:1.0.0"
+          ports:
+            - name: http
+              containerPort: 8080
+```
+
+再建一个deployment，唯一的区别就是version和name不一样，其他都一样，包括replicas：
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mypython-green
+  namespace: daiwenkai-2
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mypython
+        track: stable
+        version: 2.0.0
+    spec:
+      containers:
+        - name: mypython
+          image: "xxx/bootcamp_7/mynode_python_daiwenkai:2.0.0"
+          ports:
+            - name: http
+              containerPort: 8080
+```
+
+同样地，用一个service把这6个node都连起来(selector是app=mypython)：
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mypython-svc
+  namespace: daiwenkai-2
+  labels:
+    app: mypython
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: NodePort
+  selector:
+    app: mypython
+```
+
+然后我们可以通过```apply -f```命令来通过yaml文件来修改对象：
+
+比如我们用```mynode-1.0.0.yaml```这个文件来选定v1版本```kubectl apply -f mynode-1.0.0.yaml```，这样发请求，这6个节点就都是v1了：
+
+```yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: mypython-svc
+  namespace: daiwenkai-2
+spec:
+  selector:
+    app: mypython
+    version: 1.0.0
+```
+
+类似地，我们用```mynode-2.0.0.yaml```这个文件来选定v2版本```kubectl apply -f mynode-2.0.0.yaml```，这样发请求，这6个节点就都是v2了：
+
+```yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: "mypython-svc"
+  namespace: daiwenkai-2
+spec:
+  selector:
+    app: "mypython"
+    version: 2.0.0
 ```
