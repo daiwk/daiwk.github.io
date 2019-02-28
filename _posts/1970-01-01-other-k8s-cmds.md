@@ -39,6 +39,8 @@ tags: [k8s常用命令, kubectl, ]
 - [版本更新](#%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0)
 - [小流量](#%E5%B0%8F%E6%B5%81%E9%87%8F)
 - [abtest](#abtest)
+- [configmap](#configmap)
+- [secret](#secret)
 
 <!-- /TOC -->
 
@@ -1098,4 +1100,161 @@ spec:
   selector:
     app: "mypython"
     version: 2.0.0
+```
+
+## configmap
+
+```shell
+kubectl create configmap <map-name> <data-source>
+```
+
+data-source可以是目录：
+
+```shell
+mkdir conf
+echo -n "foo=bar" > conf/a.properties
+echo -n "foo=baz" > conf/b.properties
+
+kubectl create configmap dir-conf --from-file=conf
+```
+
+data-source也可以是文件：
+
+```shell
+echo -n "foo=bar" > a.properties
+
+kubectl create configmap file-conf --from-file=a.properties
+```
+
+data-source也可以直接在命令里指定
+
+```shell
+kubectl create configmap literial-conf --from-literial=foo_bar=baz
+```
+
+在pod内使用configmap可以按文件引用：
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: mysql
+spec: 
+  containers: 
+  - name: mysql 
+    image: mysql
+  volumeMounts: 
+  - name: config-volume 
+    mountPath: "/etc/foo”
+    readOnly: true 
+  volumes: 
+  - name: config-volume 
+    configMap: 
+      name: file-conf
+```
+
+也可以按环境变量引用：
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: mysql
+spec: 
+  containers: 
+  - name: mysql 
+    image: mysql
+    env: 
+    - name: FOO_BAR
+      valueFrom:
+        configMapKeyRef:
+          name: literial-conf
+          key: foo_bar
+```
+
+## secret
+
+可以直接通过文件来创建：
+
+```shell
+echo –n “root” > username
+echo –n ‘root123!’ > password
+kubectl create secret generic user-password --from-file=username --from-file=password
+```
+
+也可以通过yaml，首先：
+
+```shell
+echo -n "root" | base64
+cm9vdA==
+echo -n 'root123!' | base64
+cm9vdDEyMyE=
+```
+
+然后打开一个secrets.yaml：
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: user-password
+type: Opaque
+data:
+  username: cm9vdA== 
+  password: cm9vdDEyMyE=
+```
+
+然后
+
+```shell
+kubectl create -f secrets.yaml
+```
+
+创建完，我们就可以发现：
+
+```shell
+kubectl get secret --namespace daiwenkai
+NAME                  TYPE                                  DATA      AGE
+default-token-xbt78   kubernetes.io/service-account-token   3         31m
+user-password         Opaque                                2         13s
+```
+
+在pod内使用secret可以按文件引用：
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: mysql
+spec: 
+  containers: 
+  - name: mysql 
+    image: mysql
+  volumeMounts: 
+  - name: secret-volume 
+    mountPath: "/etc/foo”
+    readOnly: true 
+  volumes: 
+  - name: secret-volume 
+    secret: 
+      secretName: user-password
+```
+
+也可以按环境变量引用：
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: mysql
+spec: 
+  containers: 
+  - name: mysql 
+    image: mysql
+    env: 
+    - name: MYSQL_ROOT_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: user-password
+          key: password
 ```

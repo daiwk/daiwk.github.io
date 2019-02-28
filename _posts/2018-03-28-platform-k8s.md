@@ -43,6 +43,9 @@ tags: [kubernetes, k8s ]
   - [Volumes](#volumes)
 - [inf k8s](#inf-k8s)
 - [k8s示例](#k8s%E7%A4%BA%E4%BE%8B)
+  - [minikube](#minikube)
+  - [katacoda](#katacoda)
+  - [其他](#%E5%85%B6%E4%BB%96)
 
 <!-- /TOC -->
 
@@ -241,9 +244,28 @@ dockerhub.baidubce.com
 
 ## k8s示例
 
+
+### minikube
+
 使用minikube:
 
 [https://qii404.me/2018/01/06/minukube.html](https://qii404.me/2018/01/06/minukube.html)
 
+### katacoda
+
+[https://www.katacoda.com/](https://www.katacoda.com/)
+
+有状态的容器：例如
+
+监控：普罗米修斯
+
+### 其他
+
 建一个k8s集群的时候，有n+3台机器做master，因为用的是etcd，选主至少要3台机器。
 
+service如何访问到pods:
+
+可以参考[https://blog.csdn.net/yuanjunlai141/article/details/79487381](https://blog.csdn.net/yuanjunlai141/article/details/79487381)
+
++ 在宿主机创建iptables
++ xxx
