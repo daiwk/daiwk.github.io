@@ -34,3 +34,8 @@ adversarial_loss: wasserstein distance
 
 参考[Deconvolution and Checkerboard Artifacts](https://www.jianshu.com/p/36ff39344de5)
 
+pytorch的修改方式参考：
+
+[https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/pull/64/commits/3b6a5bb36b018ffc6dd43833c5d31af1e7a5b770](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/pull/64/commits/3b6a5bb36b018ffc6dd43833c5d31af1e7a5b770)
+
+用```nn.UpsamplingNearest2d(scale_factor=2)```替换```nn.ConvTranspose2d(ngf * mult, int(ngf * mult / 2)```
