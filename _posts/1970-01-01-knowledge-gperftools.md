@@ -88,6 +88,6 @@ perf script -i perf.data > out.perf
 
 <html>
 <br/>
-<img src='../assets/flame-perf.png' style='max-width: 250px'/>
+<img src='../assets/flame-perf.png' style='max-height: 250px'/>
 <br/>
 </html>
