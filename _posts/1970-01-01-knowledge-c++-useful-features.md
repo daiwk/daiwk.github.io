@@ -9,23 +9,24 @@ tags: [c++, ]
 
 <!-- TOC -->
 
-- [字符串相关](#字符串相关)
-    - [缓冲区溢出问题](#缓冲区溢出问题)
-        - [strncpy/strncat](#strncpystrncat)
-        - [snprintf](#snprintf)
-- [各种容器](#各种容器)
-    - [map与unordered map对比](#map与unordered-map对比)
-- [各种智能指针](#各种智能指针)
-    - [unique_ptr](#unique_ptr)
-    - [shared_ptr](#shared_ptr)
-    - [weak_ptr](#weak_ptr)
-- [各种多线程](#各种多线程)
-    - [thread基本用法](#thread基本用法)
-    - [thread_local](#thread_local)
-    - [atomic](#atomic)
-    - [unique_lock与lock_guard](#unique_lock与lock_guard)
-- [其他](#其他)
-    - [值/引用/指针](#值引用指针)
+- [字符串相关](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3)
+  - [缓冲区溢出问题](#%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA%E9%97%AE%E9%A2%98)
+    - [strncpy/strncat](#strncpystrncat)
+    - [snprintf](#snprintf)
+- [各种容器](#%E5%90%84%E7%A7%8D%E5%AE%B9%E5%99%A8)
+  - [map与unordered map对比](#map%E4%B8%8Eunordered-map%E5%AF%B9%E6%AF%94)
+- [各种智能指针](#%E5%90%84%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88)
+  - [unique_ptr](#uniqueptr)
+  - [shared_ptr](#sharedptr)
+  - [weak_ptr](#weakptr)
+- [各种多线程](#%E5%90%84%E7%A7%8D%E5%A4%9A%E7%BA%BF%E7%A8%8B)
+  - [thread基本用法](#thread%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
+  - [thread_local](#threadlocal)
+  - [atomic](#atomic)
+  - [unique_lock与lock_guard](#uniquelock%E4%B8%8Elockguard)
+- [其他tips](#%E5%85%B6%E4%BB%96tips)
+  - [值/引用/指针](#%E5%80%BC%E5%BC%95%E7%94%A8%E6%8C%87%E9%92%88)
+  - [避免大struct的拷贝](#%E9%81%BF%E5%85%8D%E5%A4%A7struct%E7%9A%84%E6%8B%B7%E8%B4%9D)
 
 <!-- /TOC -->
 
@@ -249,8 +250,67 @@ C++多线程编程中通常会对共享的数据进行写保护，以防止多�
 
 针对以上的问题，C++11中引入了std::unique_lock与std::lock_guard两种数据结构。通过对lock和unlock进行一次薄的封装，实现**自动unlock**的功能。
 
-## 其他
+## 其他tips
 
 ### 值/引用/指针
 
 [https://segmentfault.com/a/1190000006812825](https://segmentfault.com/a/1190000006812825)
+
+### 避免大struct的拷贝
+
+例如：
+
+```c++
+struct A {
+    std::vector<int> xx;
+    std::unordered_map<std::string, int> aa;
+
+};
+
+std::vector<A> m;
+A tmp;
+tmp.xx.emplace_back(2);
+tmp.xx.emplace_back(4);
+tmp.seconds_pass=3;
+tmp.aa.insert(std::make_pair("test1", 2));
+tmp.aa.insert(std::make_pair("test2", 288));
+m.emplace_back(tmp);
+
+// ...
+
+// sort的时候会涉及大量拷贝
+std::sort(m.begin(), m.end(),
+    [](A a, A b) {
+    return a.seconds_pass < b.seconds_pass;
+    });
+
+```
+
+可以改成
+
+```c++
+struct A {
+    std::vector<int> xx;
+    std::unordered_map<std::string, int> aa;
+    int seconds_pass;
+};
+
+typedef std::shared_ptr<A> APtr;
+
+std::vector<APtr> m;
+APtr tmp = std::make_shared<A>();
+tmp->xx.emplace_back(2);
+tmp->xx.emplace_back(4);
+tmp->seconds_pass=3;
+tmp->aa.insert(std::make_pair("test1", 2));
+tmp->aa.insert(std::make_pair("test2", 288));
+m.emplace_back(tmp);
+
+// ...
+
+std::sort(m.begin(), m.end(),
+    [](APtr a, APtr b) {
+    return a->seconds_pass < b->seconds_pass;
+    });
+
+```
