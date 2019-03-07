@@ -3,13 +3,13 @@ layout: post
 category: "knowledge"
 title: "python小技巧"
 tags: [python, ]
+
 ---
 
 目录
 
 <!-- TOC -->
 
-- [tags: [python, ]](#tags-python)
 - [1. 编译安装python](#1-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85python)
 - [2. jupyter](#2-jupyter)
 - [3. mkdocs](#3-mkdocs)
@@ -432,3 +432,4 @@ d2['a'] = 'A'
 
 print d2 == d1 ## False
 ```
+

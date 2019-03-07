@@ -28,6 +28,7 @@ tags: [tf, ]
   - [tf.contrib.layers.flatten](#tfcontriblayersflatten)
   - [tf.contrib.layers.fully-connected](#tfcontriblayersfully-connected)
 - [常见问题](#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+  - [tf下载数据集出现ssl问题时](#tf%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%BA%E7%8E%B0ssl%E9%97%AE%E9%A2%98%E6%97%B6)
   - [steps v.s. epoch](#steps-vs-epoch)
   - [nan](#nan)
     - [情况1：loss出现nan](#%E6%83%85%E5%86%B51loss%E5%87%BA%E7%8E%B0nan)
@@ -287,6 +288,17 @@ output[b, i, j, k] =
 
 
 ## 常见问题
+
+### tf下载数据集出现ssl问题时
+
+参考[https://blog.csdn.net/wangxiaotian2007/article/details/79284124](https://blog.csdn.net/wangxiaotian2007/article/details/79284124)
+
+例如，修改```python-2.7.14/lib/python2.7/site-packages/tensorflow/python/keras/utils/data_utils.py```，增加：
+
+```python
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+```
 
 ### steps v.s. epoch
 
