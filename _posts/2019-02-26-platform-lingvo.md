@@ -9,11 +9,13 @@ tags: [lingvo, ]
 
 <!-- TOC -->
 
-- [安装&使用](#%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8)
-- [现有模型](#%E7%8E%B0%E6%9C%89%E6%A8%A1%E5%9E%8B)
-  - [语音识别(asr, Automatic Speech Recogition)](#%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%ABasr-automatic-speech-recogition)
-  - [语言模型](#%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B)
-  - [机器翻译](#%E6%9C%BA%E5%99%A8%E7%BF%BB%E8%AF%91)
+- [安装及基本使用](#安装及基本使用)
+- [自定义参数和模型](#自定义参数和模型)
+    - [自定义参数](#自定义参数)
+- [现有模型](#现有模型)
+    - [语音识别(asr, Automatic Speech Recogition)](#语音识别asr-automatic-speech-recogition)
+    - [语言模型](#语言模型)
+    - [机器翻译](#机器翻译)
 
 <!-- /TOC -->
 
@@ -31,7 +33,7 @@ Lingvo 是一个能够为协作式深度学习研究提供完整解决方案的 
 + 性能应该可以**高效地扩展到生产规模的数据集**，或拥有**数百个加速器的分布式训练系统**；
 + 当模型从**研究转向产品**时应该尽可能共享代码。
 
-## 安装&使用
+## 安装及基本使用
 
 首先的首先，需要安装：
 
@@ -292,6 +294,36 @@ all_model_checkpoint_paths: "/tmp/mnist/log/train/ckpt-00391858"
 all_model_checkpoint_paths: "/tmp/mnist/log/train/ckpt-00391915"
 all_model_checkpoint_paths: "/tmp/mnist/log/train/ckpt-00391973"
 all_model_checkpoint_paths: "/tmp/mnist/log/train/ckpt-00392030"
+```
+
+## 自定义参数和模型
+
+### 自定义参数
+
+例如，我们想基于lenet5的模型，改一下训练时间，那么需要参考[https://github.com/tensorflow/lingvo/issues/40](https://github.com/tensorflow/lingvo/issues/40)
+
+自己写一个：
+
+```python
+@model_registry.RegisterSingleTaskModel
+class LeNet5Custom(LeNet5):
+  """LeNet params for MNIST classification custom."""
+
+  @classmethod
+  def Task(cls):
+    p = super(LeNet5Custom, cls).Task()
+    p.train.max_steps = 100
+    return p
+```
+
+然后跑一遍全流程：
+
+```shell
+ps aux| grep tensorboard| awk '{print $2}'| xargs kill -9
+nohup tensorboard --logdir=/tmp/mnist/log/ --port 8023 --host xxx-xx-xx &
+
+bazel build -c opt //lingvo:trainer --sandbox_debug --action_env=PATH
+bazel-bin/lingvo/trainer --run_locally=cpu --mode=sync --model=image.mnist.LeNet5Custom --logdir=/tmp/mnist/log --logtostderr
 ```
 
 ## 现有模型
