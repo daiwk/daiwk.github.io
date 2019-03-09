@@ -10,6 +10,9 @@ tags: [lingvo, ]
 <!-- TOC -->
 
 - [安装及基本使用](#安装及基本使用)
+    - [安装](#安装)
+    - [跑lenet5](#跑lenet5)
+    - [跑机器翻译](#跑机器翻译)
 - [自定义参数和模型](#自定义参数和模型)
     - [自定义参数](#自定义参数)
 - [现有模型](#现有模型)
@@ -33,13 +36,19 @@ Lingvo 是一个能够为协作式深度学习研究提供完整解决方案的 
 + 性能应该可以**高效地扩展到生产规模的数据集**，或拥有**数百个加速器的分布式训练系统**；
 + 当模型从**研究转向产品**时应该尽可能共享代码。
 
+我们可以发现好多paper都是基于lingvo跑的呢：[https://github.com/tensorflow/lingvo/blob/master/PUBLICATIONS.md](https://github.com/tensorflow/lingvo/blob/master/PUBLICATIONS.md)
+
+api文档：[https://tensorflow.github.io/lingvo/](https://tensorflow.github.io/lingvo/)
+
 ## 安装及基本使用
+
+### 安装
 
 首先的首先，需要安装：
 
 ```shell
 pip install tf-nightly
-pip install tensorflow -U
+pip install tensorflow -U # 至少要是2.0的哦，后面会讲原因，可以自己编个whl出来，再pip本地安装
 ```
 
 首先下载数据集(如果遇到下载的ssl问题，可以参考[https://daiwk.github.io/posts/knowledge-tf-usage.html#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98](https://daiwk.github.io/posts/knowledge-tf-usage.html#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98))
@@ -103,7 +112,7 @@ Use --verbose_failures to see the command lines of failed build steps.
 这个时候我们会发现，，因为依赖的是用gcc4.8编译好的protoc，而下下来本地跑bazel的时候，会用本地默认的lib64，所以不行，所以我们用trick来搞，对```lingvo/lingvo.bzl```进行如下修改，也就是
 
 + 一方面把```/opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib```加到protoc前面，
-+ 另一方面，手动把protc的zip下载下来，例如```lingvo/repos.bzl```里要求的是3.6.1版本，然后解压到tmp目录，所以咱们把里面的include目录(里面有一堆.proto文件)加进来『```-I/home/disk2/daiwenkai/workspaces/tf/lingvo/tmp/include```』
++ 另一方面，手动把protc的zip下载下来，例如```lingvo/repos.bzl```里要求的是3.6.1版本，然后解压到```./protobuf3.6.1_dir```目录，所以咱们把里面的include目录(里面有一堆.proto文件)加进来『```-I/home/disk2/daiwenkai/workspaces/tf/lingvo/protobuf3.6.1_dir/include```』
 
 ```python
 def _proto_gen_cc_src(name, basename):
@@ -119,8 +128,7 @@ def _proto_gen_cc_src(name, basename):
         cmd = """
           mkdir -p $(@D)/tf_proto.$$$$;
           tar -C $(@D)/tf_proto.$$$$ -xf $(location //lingvo:tf_dot_protos);
-          /opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib $(location @protobuf_protoc//:protoc_bin) --proto_path=$(@D)/tf_proto.$$$$ -I/home/disk2/daiwenkai/workspaces/tf/lingvo/tmp/include --proto
-_path=. --cpp_out=$(GENDIR) $(<);
+          /opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib $(location @protobuf_protoc//:protoc_bin) --proto_path=$(@D)/tf_proto.$$$$ -I/home/disk2/daiwenkai/workspaces/tf/lingvo/protobuf3.6.1_dir/include --proto_path=. --cpp_out=$(GENDIR) $(<);
           rm -rf $(@D)/tf_proto.$$$$
         """,
     )
@@ -138,16 +146,41 @@ def _proto_gen_py_src(name, basename):
         cmd = """
           mkdir -p $(@D)/tf_proto.$$$$;
           tar -C $(@D)/tf_proto.$$$$ -xf $(location //lingvo:tf_dot_protos);
-          /opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib $(location @protobuf_protoc//:protoc_bin) --proto_path=$(@D)/tf_proto.$$$$ -I/home/disk2/daiwenkai/workspaces/tf/lingvo/tmp/include --proto
-_path=. --python_out=$(GENDIR) $(<);
+          /opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib $(location @protobuf_protoc//:protoc_bin) --proto_path=$(@D)/tf_proto.$$$$ -I/home/disk2/daiwenkai/workspaces/tf/lingvo/protobuf3.6.1_dir/include --proto_path=. --python_out=$(GENDIR) $(<);
           rm -rf $(@D)/tf_proto.$$$$
         """,
     )
 ```
 
-注意！！！这里的protobuf版本要和你装的tf的protobuf版本一样。。。比如你的tf是3.6.0的，那就要把这里依赖的改成3.6.0的protoc~~3.6.1是不行的呢！！
+注意！！！这里的protobuf版本要求是3.6.1！！！
 
-然后呢。。。发现我们从tf源码build出来的include里会出现这种问题[https://github.com/tensorflow/lingvo/issues/39](https://github.com/tensorflow/lingvo/issues/39)，于是。。从源码编个tf2.0就行啦！！！！！
+为什么呢。。。发现我们从tf1.3源码build出来的include里会出现这种问题[https://github.com/tensorflow/lingvo/issues/39](https://github.com/tensorflow/lingvo/issues/39)，于是。。从源码编个tf2.0就行啦！！！！！
+
+因为你的tf1.3的，那么protobuf是3.6.0的，所以是不行的呢！！
+
+也就是说，把```lingvo/repo.bzl```必须是原来的3.6.1！！不要乱改成3.6.0。。。：
+
+```shell
+def lingvo_protoc_deps():
+    http_archive(
+        name = "protobuf_protoc",
+        build_file_content = """
+filegroup(
+    name = "protoc_bin",
+    srcs = ["bin/protoc"],
+    visibility = ["//visibility:public"],
+)
+""",
+        urls = [
+            #"https://github.com/google/protobuf/releases/download/v3.6.0/protoc-3.6.0-linux-x86_64.zip",
+            "https://github.com/google/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip",
+        ],      
+        sha256 = "6003de742ea3fcf703cfec1cd4a3380fd143081a2eb0e559065563496af27807",
+        #sha256 = "84e29b25de6896c6c4b22067fb79472dac13cf54240a7a210ef1cac623f5231d",
+    )
+```
+
+### 跑lenet5
 
 然后就可以跑啦
 
@@ -295,6 +328,12 @@ all_model_checkpoint_paths: "/tmp/mnist/log/train/ckpt-00391915"
 all_model_checkpoint_paths: "/tmp/mnist/log/train/ckpt-00391973"
 all_model_checkpoint_paths: "/tmp/mnist/log/train/ckpt-00392030"
 ```
+
+### 跑机器翻译
+
+参考[https://github.com/tensorflow/lingvo/tree/master/lingvo/tasks/mt](https://github.com/tensorflow/lingvo/tree/master/lingvo/tasks/mt)
+
+
 
 ## 自定义参数和模型
 
