@@ -160,7 +160,7 @@ def _proto_gen_py_src(name, basename):
 
 也就是说，把```lingvo/repo.bzl```必须是原来的3.6.1！！不要乱改成3.6.0。。。：
 
-```shell
+```python
 def lingvo_protoc_deps():
     http_archive(
         name = "protobuf_protoc",
