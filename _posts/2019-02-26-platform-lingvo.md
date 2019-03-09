@@ -10,6 +10,10 @@ tags: [lingvo, ]
 <!-- TOC -->
 
 - [安装&使用](#%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8)
+- [现有模型](#%E7%8E%B0%E6%9C%89%E6%A8%A1%E5%9E%8B)
+  - [语音识别(asr, Automatic Speech Recogition)](#%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%ABasr-automatic-speech-recogition)
+  - [语言模型](#%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B)
+  - [机器翻译](#%E6%9C%BA%E5%99%A8%E7%BF%BB%E8%AF%91)
 
 <!-- /TOC -->
 
@@ -141,4 +145,176 @@ _path=. --python_out=$(GENDIR) $(<);
 
 注意！！！这里的protobuf版本要和你装的tf的protobuf版本一样。。。比如你的tf是3.6.0的，那就要把这里依赖的改成3.6.0的protoc~~3.6.1是不行的呢！！
 
-然后呢。。。发现我们从tf源码build出来的include里会出现这种问题[https://github.com/tensorflow/lingvo/issues/39](https://github.com/tensorflow/lingvo/issues/39)，于是。。
+然后呢。。。发现我们从tf源码build出来的include里会出现这种问题[https://github.com/tensorflow/lingvo/issues/39](https://github.com/tensorflow/lingvo/issues/39)，于是。。从源码编个tf2.0就行啦！！！！！
+
+然后就可以跑啦
+
+```shell
+bazel-bin/lingvo/trainer --run_locally=cpu --mode=sync --model=image.mnist.LeNet5 --logdir=/tmp/mnist/log --logtostderr
+```
+
+注意，跑的时候要装matplotlib，而且要用tk的东西（记得把libtk\*，还有libtcl\*拷到python的lib-dynload目录下去）~
+
+当然，我们可以看tensorboard，使用
+
+```shell
+tensorboard --logdir=/tmp/mnist/log/ --port 8023
+```
+
+如果提示
+
+```shell
+E0309 04:14:00.829349 139808152127232 program.py:232] Tensorboard could not bind to unsupported address family ::
+ERROR: Tensorboard could not bind to unsupported address family ::
+```
+
+那么，我们可以加上host参数：
+
+```shell
+tensorboard --logdir=/tmp/mnist/log/ --port 8023 --host bj01-aaa.bbb.bj01
+```
+
+可以看到：
+
+<html>
+<br/>
+<img src='../assets/lingvo-lenet5.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+这样，在```/tmp/mnist/log/control```目录下，就有：
+
++ params.txt: hyper-parameters.
+
+例如：
+
+```shell
+add_summary : True
+allow_implicit_capture : NoneType
+cls : type/lingvo.core.base_model/SingleTaskModel
+cluster.add_summary : NoneType
+cluster.cls : type/lingvo.core.cluster/_Cluster
+cluster.controller.devices_per_split : 1
+cluster.controller.gpus_per_replica : 0
+cluster.controller.name : '/job:local'
+cluster.controller.num_tpu_hosts : 0
+cluster.controller.replicas : 1
+cluster.controller.tpus_per_replica : 0
+cluster.decoder.devices_per_split : 1
+cluster.decoder.gpus_per_replica : 0
+cluster.decoder.name : '/job:local'
+
+...
+
+task.train.max_steps : 4000000
+task.train.optimizer.add_summary : True
+task.train.optimizer.allow_implicit_capture : NoneType
+task.train.optimizer.beta1 : 0.9
+task.train.optimizer.beta2 : 0.999
+task.train.optimizer.cls : type/lingvo.core.optimizer/Adam
+task.train.optimizer.dtype : float32
+task.train.optimizer.epsilon : 1e-06
+task.train.optimizer.fprop_dtype : NoneType
+task.train.optimizer.inference_driver_name : NoneType
+task.train.optimizer.is_eval : NoneType
+task.train.optimizer.is_inference : NoneType
+task.train.optimizer.name : 'Adam'
+task.train.optimizer.params_init.method : 'xavier'
+```
+
++ model_analysis.txt: model sizes for each layer.
+
+例如：
+
+```shell
+_task.conv[0].w           (5, 5, 1, 20)               500 lenet5/conv0/w/var
+_task.conv[1].w           (5, 5, 20, 50)            25000 lenet5/conv1/w/var
+_task.fc.b                (300,)                      300 lenet5/fc/b/var
+_task.fc.w                (2450, 300)              735000 lenet5/fc/w/var
+_task.softmax.bias_0      (10,)                        10 lenet5/softmax/bias_0/var
+_task.softmax.weight_0    (300, 10)                  3000 lenet5/softmax/weight_0/var
+====================================================================================================
+total #params:     763810
+```
+
++ train.pbtxt: the training tf.GraphDef.
+
+例如：
+
+```shell
+node {
+  name: "global_step/Initializer/zeros"
+  op: "Const" 
+  attr {  
+    key: "_class"
+    value { 
+      list {  
+        s: "loc:@global_step"
+      }
+    }
+  }
+  attr {  
+    key: "dtype" 
+    value { 
+      type: DT_INT64
+    }
+  }
+  attr {  
+    key: "value" 
+    value { 
+      tensor {
+        dtype: DT_INT64
+        tensor_shape {
+        }       
+        int64_val: 0
+      }
+    }
+  }
+}
+node {
+  name: "global_step"
+...
+```
+
++ events.\*: a tensorboard events file.
+
+
+而在```/tmp/mnist/log/train```目录下，有
+
++ ckpt-\*: the checkpoint files.
++ checkpoint: a text file containing information about the checkpoint files.
+
+例如：
+
+```shell
+model_checkpoint_path: "/tmp/mnist/log/train/ckpt-00397115"
+all_model_checkpoint_paths: "/tmp/mnist/log/train/ckpt-00391858"
+all_model_checkpoint_paths: "/tmp/mnist/log/train/ckpt-00391915"
+all_model_checkpoint_paths: "/tmp/mnist/log/train/ckpt-00391973"
+all_model_checkpoint_paths: "/tmp/mnist/log/train/ckpt-00392030"
+```
+
+## 现有模型
+
+### 语音识别(asr, Automatic Speech Recogition)
+
++ [asr.librispeech.Librispeech960Grapheme](https://github.com/tensorflow/lingvo/blob/master/lingvo/tasks/asr/params/librispeech.py)
+
++ [asr.librispeech.Librispeech960Wpm](https://github.com/tensorflow/lingvo/blob/master/lingvo/tasks/asr/params/librispeech.py)
+
+参考[Listen, Attend and Spell](https://arxiv.org/pdf/1508.01211.pdf)以及[End-to-end Continuous Speech Recognition using Attention-based Recurrent NN: First Results](https://arxiv.org/pdf/1412.1602.pdf)
+
+### 语言模型
+
++ [lm.one_billion_wds.WordLevelOneBwdsSimpleSampledSoftmax](https://github.com/tensorflow/lingvo/blob/master/lingvo/tasks/lm/params/one_billion_wds.py)
+
+参考[Exploring the Limits of Language Modeling](https://arxiv.org/pdf/1602.02410.pdf)
+
+### 机器翻译
+
++ [mt.wmt14_en_de.WmtEnDeTransformerBase](https://github.com/tensorflow/lingvo/blob/master/lingvo/tasks/mt/params/wmt14_en_de.py)
++ [mt.wmt14_en_de.WmtEnDeRNMT](https://github.com/tensorflow/lingvo/blob/master/lingvo/tasks/mt/params/wmt14_en_de.py)
++ [mt.wmtm16_en_de.WmtCaptionEnDeTransformer](https://github.com/tensorflow/lingvo/blob/master/lingvo/tasks/mt/params/wmtm16_en_de.py)
+
+参考ACL2018的[The Best of Both Worlds: Combining Recent Advances in Neural Machine Translation](http://aclweb.org/anthology/P18-1008)
+

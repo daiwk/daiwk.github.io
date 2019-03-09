@@ -18,6 +18,8 @@ tags: [时间序列预测算法, ]
 
 参考[https://www.zhihu.com/question/21229371](https://www.zhihu.com/question/21229371)
 
+参考[https://www.analyticsvidhya.com/blog/2018/02/time-series-forecasting-methods/](https://www.analyticsvidhya.com/blog/2018/02/time-series-forecasting-methods/)
+
 比较流行的还有holt winters、arima等，在statsmodels这个lib里就有：
 
 参考[https://www.jianshu.com/p/2c607fe926f0](https://www.jianshu.com/p/2c607fe926f0)
