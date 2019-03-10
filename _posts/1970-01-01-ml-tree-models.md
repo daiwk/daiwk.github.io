@@ -113,3 +113,66 @@ xgboost调参：[https://segmentfault.com/a/1190000014040317](https://segmentfau
 
 注意，```grid_scores_```这个参数改名了，改成了````cv_results_```。
 
+xgboost的坑：
+
+[https://xgboost.readthedocs.io/en/latest/faq.html#why-do-i-see-different-results-with-sparse-and-dense-data](https://xgboost.readthedocs.io/en/latest/faq.html#why-do-i-see-different-results-with-sparse-and-dense-data)
+
+所以，如果我们用libsvm的格式来给python喂数据，如果用的是tree，那么需要加上missing参数：
+
+```python
+dtrain = xgb.DMatrix("./output/%sins.dat.train.cls" % (prefix) + "." + flag, missing=0.0)
+dtest = xgb.DMatrix("./output/%sins.dat.test.cls" % (prefix) + "." + flag, missing=0.0)
+
+params = {'booster': 'gbtree',
+        'objective': 'binary:logistic',
+        'eval_metric': 'auc',
+        'max_depth': 5,
+        'min_child_weight': 1,
+        'eta': 0.1,
+        'nthread': 8,
+        'silent': 1}
+```
+
+而在线预测的时候，默认值给0.0：
+
+```c++
+
+int sample_rows = 1;
+int cols = feature_count;
+float test[sample_rows][cols];
+for (int i = 0; i < sample_rows; i++) {
+    for (int j = 0; j < cols; j++) {
+        test[i][j] = 0;
+    }
+}
+
+DMatrixHandle h_test;
+
+// 这里的0.0就是Missing的默认值
+int ret_x = XGDMatrixCreateFromMat((float *) test, sample_rows, cols, 0.0, &h_test);
+if (ret_x < 0) {
+    XGDMatrixFree(h_test);
+    LOG(WARNING) << "fail in XGDMatrixCreateFromMat";
+    return ret;
+}
+bst_ulong out_len;
+const float * pred_result = nullptr;
+
+std::shared_ptr<BoosterHandlePool> handle_pool = xgb_dict->get_dict();
+if (handle_pool == nullptr) {
+    return ret;
+}
+auto obj = handle_pool->get();
+BoosterHandle *handle = obj.get();
+if (handle == nullptr) {
+    return ret;
+}
+int ret_p = XGBoosterPredict(*handle, h_test, 0, 0, &out_len, &pred_result);
+if (ret_p) {
+    pred_result = nullptr;
+    LOG(WARNING) << "fail in XGBoosterPredict";
+    return ret;
+}
+
+XGDMatrixFree(h_test);
+```
