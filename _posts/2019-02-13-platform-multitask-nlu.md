@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "platform"
-title: "multitask "
-tags: [bert as service, ]
+title: "multitask nlu"
+tags: [multitask nlu, mt-dnn, multitask, ]
 
 ---
 
