@@ -232,6 +232,7 @@ https://daiwk.github.io/posts/nlp-transformer-xl.html
 https://daiwk.github.io/posts/platform-erpo.html
 https://daiwk.github.io/posts/audio-smlta.html
 https://daiwk.github.io/posts/dl-graph-representations.html
+https://daiwk.github.io/posts/platform-multitask-nlu.html
 https://daiwk.github.io/posts/cv-deepgan.html
 https://daiwk.github.io/posts/platform-lingvo.html
 https://daiwk.github.io/posts/rl-simple.html
