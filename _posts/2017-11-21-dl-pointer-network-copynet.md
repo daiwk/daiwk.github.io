@@ -16,11 +16,11 @@ tags: [pointer network, copynet]
 
 参考[干货 \| Pointer Network 与 CopyNet 之上有哪些新颖任务](http://www.sohu.com/a/140364283_297288)
 
-+ [1] [Incorporating Copying Mechanism in Sequence-to-Sequence Learning](http://aclweb.org/anthology/P16-1154)
-+ [Pointing the Unknown Words](https://arxiv.org/abs/1603.08148)
-+ [2] [Joint Copying and Restricted Generation for Paraphrase](https://arxiv.org/abs/1611.09235)
-+ [Generating Natural Answer by Incorporating Copying and Retrieving Mechanisms in Sequence-to-Sequence Learning](http://www.nlpr.ia.ac.cn/cip/shizhuhe/articles/acl2017-coreqa.pdf)
-+ [Program Induction by Rationale Generation:Learning to Solve and Explain Algebraic Word Problems](https://arxiv.org/abs/1705.04146)
++ [1][Incorporating Copying Mechanism in Sequence-to-Sequence Learning](http://aclweb.org/anthology/P16-1154)
++ [2][Pointing the Unknown Words](https://arxiv.org/abs/1603.08148)
++ [3][Joint Copying and Restricted Generation for Paraphrase](https://arxiv.org/abs/1611.09235)
++ [4][Generating Natural Answer by Incorporating Copying and Retrieving Mechanisms in Sequence-to-Sequence Learning](http://www.nlpr.ia.ac.cn/cip/shizhuhe/articles/acl2017-coreqa.pdf)
++ [5][Program Induction by Rationale Generation:Learning to Solve and Explain Algebraic Word Problems](https://arxiv.org/abs/1705.04146)
 
 首先讲前两篇ACL2016的文章，为了解决如何把 sequence2sequence任务（不只是机器翻译 MT）中的某些信息“原封不动”地保留下来（而不是翻译）而提出的。
 
@@ -80,3 +80,4 @@ CopyNet 的框架如上图。主要结构还是基于 Bahdanau 2014 提出的**a
 也就是说，当 PS 决定走 shortlist softmax 时，就开启generate-mode，从shortlist中**生成**一个词给decoder；而如果是相反，则从location softmax获取**要『复制』的词在输入端的位置**。那么，帮PS决定是**走哪个softmax**的方式就是通过一个实际上是**MLP的switch network**。
 
 因为**不是直接『复制』输入端**的具体内容，而是**找到输入端的内容的位置**，所以 PS 可以完成机器翻译这种输入端和输出端不是同一种语言的任务。在实验中，这篇论文[2] 也分别在 detect rare words，机器翻译MT 和 summarization 上都进行了测试。
+

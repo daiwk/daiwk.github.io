@@ -224,6 +224,7 @@ https://daiwk.github.io/posts/platform-horizon.html
 https://daiwk.github.io/posts/platform-gnn-frameworks.html
 https://daiwk.github.io/posts/nlp-pytext.html
 https://daiwk.github.io/posts/platform-tf-ranking.html
+https://daiwk.github.io/posts/dl-pointer-networks-for-combinational-optimization.html
 https://daiwk.github.io/posts/platform-bert-as-service.html
 https://daiwk.github.io/posts/rl-drn.html
 https://daiwk.github.io/posts/dl-gnn.html
