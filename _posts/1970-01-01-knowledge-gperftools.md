@@ -12,6 +12,8 @@ tags: [gperftools, perf, 火焰图]
 - [内存泄漏](#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F)
 - [常用工具](#%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7)
   - [gperftools的功能支持](#gperftools%E7%9A%84%E5%8A%9F%E8%83%BD%E6%94%AF%E6%8C%81)
+  - [gperf示例](#gperf%E7%A4%BA%E4%BE%8B)
+  - [valgrind示例：](#valgrind%E7%A4%BA%E4%BE%8B)
   - [perf+火焰图](#perf%E7%81%AB%E7%84%B0%E5%9B%BE)
     - [火焰图工具](#%E7%81%AB%E7%84%B0%E5%9B%BE%E5%B7%A5%E5%85%B7)
     - [perf](#perf)
@@ -37,6 +39,178 @@ gperftool主要支持以下四个功能：
 + heap-checking using tcmalloc
 + heap-profiling using tcmalloc
 + CPU profiler
+
+### gperf示例
+
+```c++
+#include <stdlib.h>
+
+void* create(unsigned int size) {
+    return malloc(size);
+}
+
+void create_destory(unsigned int size) {
+    void *p = create(size);
+    free(p);
+}
+
+int main(void) {
+    const int loop = 4;
+    char* a[loop];
+    unsigned int mega = 1024 * 1024;
+
+    for (int i = 0; i < loop; i++) {
+        const unsigned int create_size = 1024 * mega;
+        create(create_size);
+
+        const unsigned int malloc_size = 1024 * mega;
+        a[i] = (char*)malloc(malloc_size);
+
+        const unsigned int create_destory_size = mega;
+        create_destory(create_destory_size);
+    }
+
+    for (int i = 0; i < loop; i++) {
+        free(a[i]);
+    }
+
+    return 0;
+}
+```
+
+然后：
+
+```shell
+g++ ./test_heap.cpp -ltcmalloc -g -lprofiler -o heap_profiler
+HEAPPROFILE=/tmp/profile ./heap_profiler
+pprof ./heap_profiler --pdf /tmp/profile.0009.heap  > x.pdf
+pprof ./heap_profiler --text /tmp/profile.0009.heap
+```
+
+当然，也可以通过text来看：
+
+```shell
+pprof ./heap_profiler --text /tmp/profile.0009.heap
+```
+
+显示
+
+```shell
+Using local file ./heap_profiler.
+Using local file /tmp/profile.0009.heap.
+Total: 4096.0 MB
+  4096.0 100.0% 100.0%   4096.0 100.0% create
+     0.0   0.0% 100.0%      0.0   0.0% std::basic_string::_Rep::_S_create
+     0.0   0.0% 100.0%      0.0   0.0% 00007fcca097dde1
+     0.0   0.0% 100.0%      0.0   0.0% 00007fcca097ddc0
+     0.0   0.0% 100.0%      0.0   0.0% 00007fcca098c405
+     0.0   0.0% 100.0%      0.0   0.0% 0x0072656c69666f71
+     0.0   0.0% 100.0%   4096.0 100.0% __libc_start_main
+     0.0   0.0% 100.0%      0.0   0.0% _init
+     0.0   0.0% 100.0%      0.0   0.0% _init (inline)
+     0.0   0.0% 100.0%   4096.0 100.0% _start
+     0.0   0.0% 100.0%   4096.0 100.0% main
+     0.0   0.0% 100.0%      0.0   0.0% std::basic_string::basic_string
+     0.0   0.0% 100.0%      0.0   0.0% std::basic_string::copy
+```
+
+### valgrind示例：
+
+不能开tcmalloc。。
+
+```c++
+#include <stdlib.h>
+
+int main() {
+    //const int array_count = 40000;
+    const int array_count = 1;
+    int* p1 = new int[array_count];
+    double* p2 = new double[array_count];
+    double p3[10][3000];
+    return 0;
+}
+```
+
+```shell
+g++ a.cpp
+valgrind --leak-check=full -v --tool=memcheck --show-reachable=yes --track-origins=yes --log-file=./x.log ./a.out
+```
+
+然后看看x.log文件，可见泄漏了两次，int那次4byte，double那次8byte：
+
+```shell
+==2220== Memcheck, a memory error detector
+==2220== Copyright (C) 2002-2010, and GNU GPL'd, by Julian Seward et al.
+==2220== Using Valgrind-3.6.0 and LibVEX; rerun with -h for copyright info
+==2220== Command: ./a.out
+==2220== Parent PID: 11791
+==2220== 
+--2220-- 
+--2220-- Valgrind options:
+--2220--    --leak-check=full
+--2220--    -v
+--2220--    --tool=memcheck
+--2220--    --show-reachable=yes
+--2220--    --track-origins=yes
+--2220--    --log-file=x.log
+--2220-- Contents of /proc/version:
+--2220--   Linux version 3.10.0_1-0-0-8 (whistler@www.local) (gcc version 4.9.2 20150212 (Red Hat 4.9.2-6) (GCC) ) #1 SMP Thu Mar 24 15:26:50 CST 2016
+--2220-- Arch and hwcaps: AMD64, amd64-sse3-cx16
+--2220-- Page sizes: currently 4096, max supported 4096
+--2220-- Valgrind library directory: /usr/lib64/valgrind
+--2220-- Reading syms from /home/learn_tools/a.out (0x400000)
+--2220-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux (0x38000000)
+--2220--    object doesn't have a dynamic symbol table
+--2220-- Reading syms from /lib64/ld-2.12.so (0x318a600000)
+--2220-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+--2220-- REDIR: 0x318a6174a0 (strlen) redirected to 0x38042ae7 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--2220-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so (0x4801000)
+--2220-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so (0x4a02000)
+==2220== WARNING: new redirection conflicts with existing -- ignoring it
+--2220--     new: 0x318a6174a0 (strlen              ) R-> 0x04a07830 strlen
+--2220-- REDIR: 0x318a617310 (index) redirected to 0x4a07470 (index)
+--2220-- REDIR: 0x318a617390 (strcmp) redirected to 0x4a07df0 (strcmp)
+--2220-- Reading syms from /usr/lib64/libstdc++.so.6.0.13 (0x318ea00000)
+--2220--    object doesn't have a symbol table
+--2220-- Reading syms from /lib64/libm-2.12.so (0x318b600000)
+--2220-- Reading syms from /lib64/libgcc_s-4.4.6-20120305.so.1 (0x318da00000)
+--2220--    object doesn't have a symbol table
+--2220-- Reading syms from /lib64/libc-2.12.so (0x318ae00000)
+--2220-- REDIR: 0x318ae84100 (strcasecmp) redirected to 0x4801560 (_vgnU_ifunc_wrapper)
+--2220-- REDIR: 0x318ae863c0 (strncasecmp) redirected to 0x4801560 (_vgnU_ifunc_wrapper)
+--2220-- REDIR: 0x318ae82070 (__GI_strrchr) redirected to 0x4a072f0 (__GI_strrchr)
+--2220-- REDIR: 0x318eabd1b0 (operator new[](unsigned long)) redirected to 0x4a06680 (operator new[](unsigned long))
+--2220-- REDIR: 0x318ae7a950 (free) redirected to 0x4a05890 (free)
+==2220== 
+==2220== HEAP SUMMARY:
+==2220==     in use at exit: 12 bytes in 2 blocks
+==2220==   total heap usage: 2 allocs, 0 frees, 12 bytes allocated
+==2220== 
+==2220== Searching for pointers to 2 not-freed blocks
+==2220== Checked 179,384 bytes
+==2220== 
+==2220== 4 bytes in 1 blocks are definitely lost in loss record 1 of 2
+==2220==    at 0x4A0674C: operator new[](unsigned long) (vg_replace_malloc.c:305)
+==2220==    by 0x4005DF: main (in /home/learn_tools/a.out)
+==2220== 
+==2220== 8 bytes in 1 blocks are definitely lost in loss record 2 of 2
+==2220==    at 0x4A0674C: operator new[](unsigned long) (vg_replace_malloc.c:305)
+==2220==    by 0x4005ED: main (in /home/learn_tools/a.out)
+==2220== 
+==2220== LEAK SUMMARY:
+==2220==    definitely lost: 12 bytes in 2 blocks
+==2220==    indirectly lost: 0 bytes in 0 blocks
+==2220==      possibly lost: 0 bytes in 0 blocks
+==2220==    still reachable: 0 bytes in 0 blocks
+==2220==         suppressed: 0 bytes in 0 blocks
+==2220== 
+==2220== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 6 from 6)
+--2220-- 
+--2220-- used_suppression:      6 dl-hack3-cond-1
+==2220== 
+==2220== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 6 from 6)
+```
+
 
 ### perf+火焰图
 
