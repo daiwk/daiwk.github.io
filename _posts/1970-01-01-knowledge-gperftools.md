@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "knowledge"
-title: "cpu、内存问题排查（gperftools、perf等）"
-tags: [gperftools, perf, 火焰图]
+title: "cpu、内存问题排查（gperftools、valgrind、perf等）"
+tags: [gperftools, perf, 火焰图, valgrind, ]
 ---
 
 目录
@@ -12,15 +12,16 @@ tags: [gperftools, perf, 火焰图]
 - [内存泄漏](#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F)
 - [常用工具](#%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7)
   - [gperftools的功能支持](#gperftools%E7%9A%84%E5%8A%9F%E8%83%BD%E6%94%AF%E6%8C%81)
-  - [gperf示例](#gperf%E7%A4%BA%E4%BE%8B)
-  - [valgrind示例：](#valgrind%E7%A4%BA%E4%BE%8B)
+  - [gperf示例（c++）](#gperf%E7%A4%BA%E4%BE%8Bc)
+  - [gperf示例（python）](#gperf%E7%A4%BA%E4%BE%8Bpython)
+  - [valgrind示例](#valgrind%E7%A4%BA%E4%BE%8B)
   - [perf+火焰图](#perf%E7%81%AB%E7%84%B0%E5%9B%BE)
     - [火焰图工具](#%E7%81%AB%E7%84%B0%E5%9B%BE%E5%B7%A5%E5%85%B7)
     - [perf](#perf)
 
 <!-- /TOC -->
 
-参考[高阶干货\｜如何用gperftools分析深度学习框架的内存泄漏问题](https://mp.weixin.qq.com/s?__biz=MzIxNTgyMDMwMw==&mid=2247484403&idx=1&sn=5b260e7d681a4550811ee5611a1dd4ce&chksm=97933293a0e4bb85104066213606f5c89002fe78fa0518d95c71918a5a6ae656c62beac0f1ae&mpshare=1&scene=1&srcid=0608zWg71wg9411XBaYQ7o1V&pass_ticket=xLsJxSJh9Kgj4HKrq0S6VH1cKTCnSBShWGuwGJy9Gfpbp1CgoA6crqJiPhq9JjnM#rd)
+参考[高阶干货\|如何用gperftools分析深度学习框架的内存泄漏问题](https://mp.weixin.qq.com/s?__biz=MzIxNTgyMDMwMw==&mid=2247484403&idx=1&sn=5b260e7d681a4550811ee5611a1dd4ce&chksm=97933293a0e4bb85104066213606f5c89002fe78fa0518d95c71918a5a6ae656c62beac0f1ae&mpshare=1&scene=1&srcid=0608zWg71wg9411XBaYQ7o1V&pass_ticket=xLsJxSJh9Kgj4HKrq0S6VH1cKTCnSBShWGuwGJy9Gfpbp1CgoA6crqJiPhq9JjnM#rd)
 
 ## 内存泄漏
 
@@ -40,7 +41,20 @@ gperftool主要支持以下四个功能：
 + heap-profiling using tcmalloc
 + CPU profiler
 
-### gperf示例
+首先的首先，需要定义如下环境变量：
+
+```shell
+export PPROF_PATH=/root/gopath/bin/pprof
+export PPROF_BINARY_PATH=/root/gopath/bin/pprof
+export LD_PRELOAD=/usr/lib/libtcmalloc.so.4
+```
+
+然后运行程序前还要加上如下参数：
+
++ HEAPPROFILE：设置生成的堆分析文件的目录和文件前缀
++ HEAP_PROFILE_ALLOCATION_INTERVAL：设置**每分配多少存储dump一次**，默认1GB
+
+### gperf示例（c++）
 
 ```c++
 #include <stdlib.h>
@@ -84,7 +98,6 @@ int main(void) {
 g++ ./test_heap.cpp -ltcmalloc -g -lprofiler -o heap_profiler
 HEAPPROFILE=/tmp/profile ./heap_profiler
 pprof ./heap_profiler --pdf /tmp/profile.0009.heap  > x.pdf
-pprof ./heap_profiler --text /tmp/profile.0009.heap
 ```
 
 当然，也可以通过text来看：
@@ -114,7 +127,25 @@ Total: 4096.0 MB
      0.0   0.0% 100.0%      0.0   0.0% std::basic_string::copy
 ```
 
-### valgrind示例：
+上面的方式是完整模式，我们还可以通过diff模式，对两个时刻的heap做diff，把一些内存分配没有发生变化的模块去掉，而把增量部分显示出来。
+
+例如：
+
+```shell
+pprof --pdf --base test.log.0010.heap ./heap_profiler test.log.1045.heap
+```
+
+### gperf示例（python）
+
+和c++几乎一样，区别如下(把可执行文件换成python)：
+
+```shel
+env HEAPPROFILE=/tmp/profile HEAP_PROFILE_ALLOCATION_INTERVAL=209715200 python train.py
+pprof --pdf python test.log.0012.heap
+pprof --pdf --base test.log.0010.heap python test.log.1045.heap
+```
+
+### valgrind示例
 
 不能开tcmalloc。。
 
@@ -130,6 +161,8 @@ int main() {
     return 0;
 }
 ```
+
+然后：
 
 ```shell
 g++ a.cpp
