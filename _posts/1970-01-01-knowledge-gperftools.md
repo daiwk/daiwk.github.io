@@ -12,6 +12,7 @@ tags: [gperftools, perf, 火焰图, valgrind, ]
 - [内存泄漏](#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F)
 - [常用工具](#%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7)
   - [gperftools的功能支持](#gperftools%E7%9A%84%E5%8A%9F%E8%83%BD%E6%94%AF%E6%8C%81)
+  - [gperf安装](#gperf%E5%AE%89%E8%A3%85)
   - [gperf示例（c++）](#gperf%E7%A4%BA%E4%BE%8Bc)
   - [gperf示例（python）](#gperf%E7%A4%BA%E4%BE%8Bpython)
   - [valgrind示例](#valgrind%E7%A4%BA%E4%BE%8B)
@@ -53,6 +54,23 @@ export LD_PRELOAD=/usr/lib/libtcmalloc.so.4
 
 + HEAPPROFILE：设置生成的堆分析文件的目录和文件前缀
 + HEAP_PROFILE_ALLOCATION_INTERVAL：设置**每分配多少存储dump一次**，默认1GB
+
+### gperf安装
+
+```shell
+mkdir /home/work/xxx
+git clone https://github.com/gperftools/gperftools.git
+./autogen.sh
+./configure --prefix=/home/work/xxx
+make
+make install
+```
+
+参考[https://blog.csdn.net/u011217649/article/details/77683126](https://blog.csdn.net/u011217649/article/details/77683126)
+
+安装tcmalloc相关的lib
+
+[http://download.savannah.gnu.org/releases/libunwind/libunwind-1.1.tar.gz](http://download.savannah.gnu.org/releases/libunwind/libunwind-1.1.tar.gz)
 
 ### gperf示例（c++）
 
