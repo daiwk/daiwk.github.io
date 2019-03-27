@@ -188,6 +188,14 @@ filegroup(
 bazel-bin/lingvo/trainer --run_locally=cpu --mode=sync --model=image.mnist.LeNet5 --logdir=/tmp/mnist/log --logtostderr
 ```
 
+如果出现：『locale.Error: unsupported locale setting』这种报错！！
+
+那么！！[https://stackoverflow.com/questions/14547631/python-locale-error-unsupported-locale-setting](https://stackoverflow.com/questions/14547631/python-locale-error-unsupported-locale-setting)这个解答是完美的！！
+
+```shell
+export LC_ALL=C
+```
+
 注意，跑的时候要装matplotlib，而且要用tk的东西（记得把libtk\*，还有libtcl\*拷到python的lib-dynload目录下去）~
 
 当然，我们可以看tensorboard，使用

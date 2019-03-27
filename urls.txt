@@ -11,6 +11,7 @@ https://daiwk.github.io/posts/knowledge-mmr.html
 https://daiwk.github.io/posts/knowledge-numpy-usage.html
 https://daiwk.github.io/posts/knowledge-python.html
 https://daiwk.github.io/posts/knowledge-pytorch-install.html
+https://daiwk.github.io/posts/knowledge-rnn-implementation.html
 https://daiwk.github.io/posts/knowledge-sphinx.html
 https://daiwk.github.io/posts/knowledge-stack-heap-core.html
 https://daiwk.github.io/posts/knowledge-testing-tools.html
