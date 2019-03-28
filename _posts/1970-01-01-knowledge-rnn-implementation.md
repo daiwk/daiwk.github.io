@@ -19,6 +19,8 @@ tags: [rnn, lstm, LSTMCell, Recurrent, AutogradRNN, StackedRNN, ]
 
 [https://blog.ddlee.cn/posts/7b4533bb/](https://blog.ddlee.cn/posts/7b4533bb/)
 
+在```python2.7/site-packages/torch/nn/_functions/rnn.py```中。
+
 ## tf的rnn
 
 ## paddle的rnn
