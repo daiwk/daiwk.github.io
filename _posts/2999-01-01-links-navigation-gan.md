@@ -24,6 +24,7 @@ tags: [gan论文集合, ]
 - [stackGAN](#stackgan)
 - [cycleGAN](#cyclegan)
 - [deblurGAN](#deblurgan)
+- [txt2img](#txt2img)
 
 <!-- /TOC -->
 
@@ -87,3 +88,6 @@ tags: [gan论文集合, ]
 
 [https://daiwk.github.io/posts/cv-deblurgan.html](https://daiwk.github.io/posts/cv-deblurgan.html)
 
+## txt2img
+
+[https://daiwk.github.io/posts/cv-gan-txt2img.html](https://daiwk.github.io/posts/cv-gan-txt2img.html)
