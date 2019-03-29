@@ -50,9 +50,9 @@ attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt {d_k}})V
 
 对比[https://daiwk.github.io/posts/nlp-nmt.html#4-%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6](https://daiwk.github.io/posts/nlp-nmt.html#4-%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6)以及[https://daiwk.github.io/posts/platform-tensor-to-tensor.html#422-attention](https://daiwk.github.io/posts/platform-tensor-to-tensor.html#422-attention)可以发现：
 
-+ 机器翻译里的源语言的编码器输出`\(h_j\)`就是`\(V\)`
-+ 机器翻译里的源语言的编码器输出`\(h_j\)`同样是`\(K\)`
-+ 机器翻译里的目标语言的隐层状态`\(z_i\)`就是`\(Q\)`
++ 机器翻译里的**源**语言的编码器输出`\(h_j\)`就是**`\(V\)`**
++ 机器翻译里的**源**语言的编码器输出`\(h_j\)`同样是**`\(K\)`**
++ 机器翻译里的**目标**语言的隐层状态`\(z_i\)`就是**`\(Q\)`**
 + 机器翻译里的目标语言和源语言的匹配程度`\(e_{ij}\)`就是`\(\frac{QK^T}{\sqrt {d_k}}\)`
 + 机器翻译里的归一化后的目标语言和源语言的匹配程度`\(a_{ij}\)`就是`\(softmax(\frac{QK^T}{\sqrt {d_k}})\)`
 + 机器翻译里的`\(c_i\)`就是最终的`\(attention(Q,K,V)\)`
