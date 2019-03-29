@@ -19,6 +19,13 @@ tags: [自注意力, self-attention,  ]
     - [SRNN](#srnn)
   - [cnn](#cnn)
   - [transformer](#transformer)
+- [机器翻译小综述](#%E6%9C%BA%E5%99%A8%E7%BF%BB%E8%AF%91%E5%B0%8F%E7%BB%BC%E8%BF%B0)
+  - [机器翻译的挑战](#%E6%9C%BA%E5%99%A8%E7%BF%BB%E8%AF%91%E7%9A%84%E6%8C%91%E6%88%98)
+    - [漏译](#%E6%BC%8F%E8%AF%91)
+    - [数据稀疏](#%E6%95%B0%E6%8D%AE%E7%A8%80%E7%96%8F)
+    - [引入知识](#%E5%BC%95%E5%85%A5%E7%9F%A5%E8%AF%86)
+    - [可解释性](#%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7)
+    - [语篇翻译](#%E8%AF%AD%E7%AF%87%E7%BF%BB%E8%AF%91)
 
 <!-- /TOC -->
 
@@ -46,7 +53,7 @@ Attention函数的本质可以被描述为**一个查询（query）与一系列�
 attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt {d_k}})V
 \]`
 
-目前在**NLP研究**中，key和value常常都是同一个，即 **key=value**(如下例中的源语言的编码器输出)。
+目前在**NLP研究**中，key和value常常都是同一个，即 **key=value**(如下例中的**源**语言的编码器输出)。
 
 对比[https://daiwk.github.io/posts/nlp-nmt.html#4-%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6](https://daiwk.github.io/posts/nlp-nmt.html#4-%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6)以及[https://daiwk.github.io/posts/platform-tensor-to-tensor.html#422-attention](https://daiwk.github.io/posts/platform-tensor-to-tensor.html#422-attention)可以发现：
 
@@ -164,6 +171,61 @@ connections（严格来说是highway connections）**
 
 ### cnn
 
-
 ### transformer
 
+
+## 机器翻译小综述
+
+参考[神经网络机器翻译技术及应用（上）](https://mp.weixin.qq.com/s?__biz=MzIxNTgyMDMwMw==&mid=2247486312&idx=1&sn=e3d9f43a101dd21ab92acf91e6f00ee3&chksm=97933a08a0e4b31eb1d903ffcfc0dedfc83f4839aae80c274f1a8b988be96794968bb4cb1810&mpshare=1&scene=1&srcid=&pass_ticket=KX13tEs%2BqQgwQ%2B1WWjoUQ1lrrkEScP2JOwqFfDxz8jLhwJXggm7HrOeHlTxg7Of1#rd)
+
+### 机器翻译的挑战
+
+#### 漏译
+
+翻译模型把原文句子整体读进去以后形成了**一个向量**，然后再对这个向量进行解码。翻译模型**认为有些词不应该产生**，从而漏掉了译文。
+
+[Addressing the Under-translation Problem from the Entropy Perspective](https://www.aaai.org/Papers/AAAI/2019/AAAI-ZhaoYang.2930.pdf)这篇就发现漏译与**词语的熵**成**正相关**关系，这个词的**熵越大**，**漏译的可能性越大**。它所对应的目标语言词越多，概率越分散（熵越大），越有可能被漏译。
+
+例如源语言的一个词```s1```对应3种不同的翻译，```(s1,t1),(s1,t2),(s1,t3 t4)```，它的熵就比较大。我们把所有对应的翻译统一替换为一个特殊词```stoken4s1```，以降低词语翻译的熵值。然后文章提出了pre-training, multitask learning, two-pass decoding三种方法，来改善翻译结果。
+
+#### 数据稀疏
+
+相比于统计机器翻译，这个问题对神经网络翻译而言更严重。实验表明，**神经网络对于数据量更敏感**。
+
+[Multi-Task Learning for Multiple Language Translation](https://aclweb.org/anthology/P15-1166)在进行多语言翻译的时候，源语言**共享编码器**，在解码端，**不同的语言，使用不同的解码器**。这样在源语言端就会共享编码器的信息，从而缓解数据稀疏问题。
+
+[Phrase-Based & Neural Unsupervised Machine Translation](https://aclweb.org/anthology/D18-1549)是EMNLP'18的best paper，提出了一个统一的框架，通过两种单语言，来构建翻译系统。
+
++ 首先构建一个词典，把这两种语言之间的词做一下对齐
++ 然后为两个单语言分别训练一个语言模型
++ 然后使用**back translation**，先基于词的翻译从语言a翻译成语言b，然后挑出得分高的译文，再翻译回去，再用源语言的语言模型来判别好不好。一轮轮地迭代，就可以得到比较好的翻译结果
+
+#### 引入知识
+
+我们引入了几种知识，
+
++ 短语表或者词表：如果发现『XXX』这个词没有被翻译出来，我们就去查这个词典，这个词典的内容是：『XXX: oo1 0.7 oo2:0.3』这样的，也就是XXX翻译成oo1和oo2的概率
++ 语言模型：衡量目标语言的这个句子是不是流畅
++ 长度奖励特征：奖励长句子，因为句子越长，可能漏掉的信息就越少。
+
+但这样还可能有歧义问题，因为比如中巴关系，可以是中国和巴基斯坦，中国和巴西，中国和巴勒斯坦等的缩写，如果限定了『金砖框架』下的，那就只能是巴西了，所以这还是有挑战的。
+
+#### 可解释性
+
+[Visualizing and Understanding Neural Machine Translation](http://nlp.csai.tsinghua.edu.cn/~ly/papers/acl2017_dyz.pdf)
+
+左边的例子，出现了一个UNK，它虽然没有被翻译出来，但是出现在正确的位置，占了一个位置。通过Attention对应关系，可以看到这个UNK对应到『债务国』。
+
+右边例子是一个重复翻译的现象。神经网络机器翻译除了经常漏翻译之外，还会经常重复翻译。比如说出现了两个“history”。那么通过这个对应关系我们就可以看到，第6个位置上的“history”是重复出现的，它的出现不仅跟第一个位置“美国人”和第二个位置“历史”相关，还跟第5个位置“the”相关。因为产生了一个定冠词“the”，模型认为这个地方应该出现一个“history”。
+
+<html>
+<br/>
+
+<img src='../assets/visualizing-and-understanding-of-mt.png' style='max-height: 300px;'/>
+<br/>
+
+</html>
+
+#### 语篇翻译
+
+[Modeling Coherence for Discourse Neural Machine Translation](https://arxiv.org/abs/1811.05683)提出了一个两步解码的方法。在第一轮解码中单独生成每个句子的初步翻译结果，在第二轮解码中利用第一轮翻译的结果进行翻译内容润色，并且提出使用**增强式学习**模型来奖励模型产生更流畅的译文。
