@@ -9,11 +9,12 @@ tags: [numpy, ]
 
 <!-- TOC -->
 
-- [常用函数](#常用函数)
-    - [np.shape](#npshape)
-    - [np.multiply](#npmultiply)
-    - [np.dot](#npdot)
-    - [np.matmul](#npmatmul)
+- [常用函数](#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0)
+  - [np.shape](#npshape)
+  - [np.multiply](#npmultiply)
+  - [np.dot](#npdot)
+  - [np.matmul](#npmatmul)
+  - [np.squeeze](#npsqueeze)
 
 <!-- /TOC -->
 
@@ -110,4 +111,36 @@ matmul和dot的区别：
 >>> np.matmul(a, b)
 array([[4, 1],
        [2, 2]])
+```
+
+### np.squeeze
+
+从数组的形状中**删除单维度条目**，即**把shape中为1的维度去掉**
+
+参考[https://blog.csdn.net/zenghaitao0128/article/details/78512715](https://blog.csdn.net/zenghaitao0128/article/details/78512715)
+
+```python
+numpy.squeeze(a,axis = None)
+```
+
+输入：
+
++ a表示输入的数组；
++ axis用于指定需要删除的维度，但是指定的维度必须为单维度，否则将会报错；
++ axis的取值可为None 或 int 或 tuple of ints, 可选。**若axis为空，则删除所有单维度的条目**；
+
+返回值：数组，不会修改原数组。
+
+场景：在机器学习和深度学习中，通常算法的结果是可以表示向量的数组（即包含两对或以上的方括号形式```[[]]```），如果直接利用这个数组进行画图可能显示界面为空（见后面的示例）。我们可以利用```squeeze```函数将表示向量的数组转换为秩为1的数组，这样利用matplotlib库函数画图时，就可以正常的显示结果了。
+
+例如：
+
+```python
+
+import numpy as np
+squares =np.array([[1,4,9,16,25]])
+squares.shape
+# (1, 5)
+np.squeeze(squares).shape
+# (5,)
 ```

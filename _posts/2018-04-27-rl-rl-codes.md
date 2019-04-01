@@ -12,6 +12,8 @@ tags: [rl, ]
 - [tensorflow](#tensorflow)
 - [keras](#keras)
 - [pytorch](#pytorch)
+- [mxnet](#mxnet)
+- [paddle](#paddle)
 
 <!-- /TOC -->
 
@@ -31,6 +33,10 @@ tags: [rl, ]
 
 [https://github.com/openai/baselines](https://github.com/openai/baselines)
 
+## mxnet
+
 [https://github.com/apache/incubator-mxnet/tree/master/example/reinforcement-learning](https://github.com/apache/incubator-mxnet/tree/master/example/reinforcement-learning)
 
-[https://github.com/PaddlePaddle/models/tree/develop/fluid/policy_gradient](https://github.com/PaddlePaddle/models/tree/develop/fluid/policy_gradient)
+## paddle
+
+[http://paddlepaddle.org/paddle/ModelPARL](http://paddlepaddle.org/paddle/ModelPARL)
