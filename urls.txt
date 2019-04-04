@@ -243,6 +243,7 @@ https://daiwk.github.io/posts/platform-lingvo.html
 https://daiwk.github.io/posts/rl-parl.html
 https://daiwk.github.io/posts/rl-simple.html
 https://daiwk.github.io/posts/nlp-bam.html
+https://daiwk.github.io/posts/platform-lamb.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-nlp.html
