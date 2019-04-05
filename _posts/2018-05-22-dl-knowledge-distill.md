@@ -12,6 +12,17 @@ tags: [knowledge distill, ]
 - [introduction](#introduction)
 - [distillation](#distillation)
     - [Matching logits是distillation的一个特例](#matching-logits是distillation的一个特例)
+- [在MNIST上的初步实验](#在mnist上的初步实验)
+- [在speech recognition上的实验](#在speech-recognition上的实验)
+- [training ensembles of specialists on very big datasets](#training-ensembles-of-specialists-on-very-big-datasets)
+    - [JFT dataset](#jft-dataset)
+    - [specialist models](#specialist-models)
+    - [assigning classes to specialists](#assigning-classes-to-specialists)
+    - [performing inference with ensumbles of specialists](#performing-inference-with-ensumbles-of-specialists)
+    - [结果](#结果)
+- [soft targets as regularizers](#soft-targets-as-regularizers)
+    - [使用soft targets以阻止specialists过拟合](#使用soft-targets以阻止specialists过拟合)
+- [与mixtures of experts的关系](#与mixtures-of-experts的关系)
 
 <!-- /TOC -->
 
@@ -76,9 +87,64 @@ distillation：
 
 发现当**第二个目标函数权重较低**时可以得到最好的结果。
 
-因为梯度的量级(magnitude)被『软目标』缩放了`\(1/T^2\)`(没懂。。。下面好像有讲)，所以同时使用hard和soft target的时候，需要乘以`\(T^2\)`，这样可以保证即使T在实验的过程中改了，hard和soft targets的贡献程度相对不变。
+因为梯度的量级(magnitude)被『软目标』缩放了`\(1/T^2\)`(下面有讲)，所以同时使用hard和soft target的时候，需要乘以`\(T^2\)`，这样可以保证即使T在实验的过程中改了，hard和soft targets的贡献程度相对不变。
 
 ### Matching logits是distillation的一个特例
 
-交叉熵损失函数对小模型的logit，也就是`\(z_i\)`进行求导，得到`\(dC/dz_i\)`。假设大模型的logit是`\(v_i\)`，算出来的soft target的probability是`\(p_i\)`，那么：
+
+那么，我们先看一下交叉熵的求导(参考[简单易懂的softmax交叉熵损失函数求导](https://blog.csdn.net/qian99/article/details/78046329))，假设`\(z_i\)`是logit，经过softmax后得到`\(a_i\)`，label是`\(y_i\)`，那么，由于n个类，只有一个类是1，其他都是0，所以`\(\sum_j y_j = 0\)`，所以：
+
+`\[
+\frac{\partial C}{\partial z_i}=\frac{\partial C}{\partial a_i}\frac{\partial a_i}{\partial z_i}=...=a_i\sum_j y_j-y_i=a_i-y_i
+\]`
+
+然后看回这个distill模型
+
++ 大模型的logit是`\(v_i\)`，算出来的soft target的probability是`\(p_i\)`，
++ 小模型的logit是`\(z_i\)`，算出来的soft target的probability是`\(q_i\)`
+
+交叉熵损失函数对小模型的logit，也就是`\(z_i\)`进行求导（把`\(p_i\)`看成一个常量），得到的梯度`\(dC/dz_i\)`如下：
+
+`\[
+\frac{\partial C}{\partial z_i}=\frac{1}{T}(q_i-p_i)=\frac{1}{T}(\frac{e^{z_i/T}}{\sum_je^{z_j/T}}-\frac{e^{v_i/T}}{\sum_je^{v_j/T}})
+\]`
+
+然后，如果temperature T比logits的量级（magnitude）要大得多，那么，`\(z_i/T\)`趋向于0（是一个很小的数），`\(z_i<0\)`的时候是从左边趋向于0，`\(z_i\>0)`的时候是从右边趋向于0，所以，`\(e^{z_i/T}\approx e^0+z_i/T\)`。因此，可以如下方式近似：
+
+`\[
+\frac{\partial C}{\partial z_i}\approx \frac{1}{T}(\frac{1+z_i/T}{N+\sum _jz_j/T}-\frac{1+v_i/T}{N+\sum_jv_j/T})
+\]`
+
+假设对于每一个transfer case，都有logits的均值为0，那么就有`\(\sum_jz_j=\sum_jv_j=0\)`，所以上式可以简化为：
+
+`\[
+\frac{\partial C}{\partial z_i}\approx \frac{1}{T}(\frac{1+z_i/T}{N}-\frac{1+v_i/T}{N})=\frac{1}{NT^2}(z_i-v_i)
+\]`
+
+所以，如果temperature T很高，如果对于每一个transfer case，都有logits的均值为0，那么distillation就等价于最小化`\(1/2(z_i-v_i)^2\)`，也就是Caruana提出的使得复杂模型的logits和小模型的logits的平方差最小。
+
+而对于比较低的temperature T来讲，distillation对那些比平均值negative很多的logits的matching，会给予更少的关注。因为这样的logits在大模型的损失函数中几乎是unconstrained，也就是noisy的，所以这是potentially advantageous的。另一方面，这些很negative的logits可能可以传递大模型学到的知识中的很有用的信息。上面的这些效果哪个起了决定性作用其实是一个empirical(经验主义) question。当distilled model比大模型小太多，以至于无法捕捉到大模型的所有知识时，intermediate（中间的）的temperature效果最好，强烈建议把large negative logits直接忽略掉是很有用的。
+
+## 在MNIST上的初步实验
+
+## 在speech recognition上的实验
+
+## training ensembles of specialists on very big datasets
+
+### JFT dataset
+
+### specialist models
+
+### assigning classes to specialists
+
+### performing inference with ensumbles of specialists
+
+### 结果
+
+## soft targets as regularizers
+
+### 使用soft targets以阻止specialists过拟合
+
+## 与mixtures of experts的关系
+
 
