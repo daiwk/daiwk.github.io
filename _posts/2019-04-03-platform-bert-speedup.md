@@ -30,7 +30,6 @@ tags: [lamb, bert, cubert, mklbert,  ]
 
 论文：[Reducing BERT Pre-Training Time from 3 Days to 76 Minutes](https://arxiv.org/abs/1904.00962)
 
-
 ## cuBERT
 
 [https://github.com/zhihu/cuBERT](https://github.com/zhihu/cuBERT)
