@@ -133,11 +133,11 @@ softmax的输入也就是logits是`\(z=w^Th\)`，输出是：
 
 #### POS-guided word replacement
 
-以`\(\(p_{\text { pos }}\)\)`的概率，随机地把一个词替换成相同POS(part-of-speech) tag的另一个词（如，把how替换成what）。为了保持原始的训练集的分布，新词从使用POS tag进行re-normalize的unigram的分布中采样出来。
+以`\(p_{\text { pos }}\)\)`的概率，随机地把一个词替换成相同POS(part-of-speech) tag的另一个词（如，把how替换成what）。为了保持原始的训练集的分布，新词从使用POS tag进行re-normalize的unigram的分布中采样出来。
 
 #### n-gram sampling
 
-以`\(\(p_{\text { ng }}\)\)`的概率，从`\(\{1,2, \dots, 5\}\)`中随机选一个`\(n\)`，然后随机采样出一个ngram。这种方法相当于随机扔掉句子的其他部分，是一种更aggressive的masking。
+以`\(p_{\text { ng }}\)\)`的概率，从`\(\{1,2, \dots, 5\}\)`中随机选一个`\(n\)`，然后随机采样出一个ngram。这种方法相当于随机扔掉句子的其他部分，是一种更aggressive的masking。
 
 #### 整个augmentation的流程
 
@@ -146,6 +146,6 @@ softmax的输入也就是logits是`\(z=w^Th\)`，输出是：
 + 对每个词`\(w_i\)`从uniform distribution `\(X_{i} \sim \mathrm{UNIFORM}[0,1]\)`中采样出一个`\(X_i\)`如下操作
     + 如果`\(X_{i}<p_{\mathrm{mask}}\)`，对`\(w_i\)`进行masking
     + 如果`\(p_{\text { mask }} \leq X_{i}<p_{\mathrm{mask}}+p_{\mathrm{pos}}\)`，那么对`\(w_i\)`使用POS-guided word replacement
-+ 对这个样本的每个词处理完之后，以`\(\(p_{\text { ng }}\)\)`的概率，使用n-gram sampling，然后把结果加到augmented数据集中（无标签）
++ 对这个样本的每个词处理完之后，以`\(p_{\text { ng }}\)\)`的概率，使用n-gram sampling，然后把结果加到augmented数据集中（无标签）
 
 然后使用`\(n_{\text { iter }}\)`次如上操作，得到`\(n_{\text { iter }}\)`个augmented的sample。
