@@ -109,7 +109,7 @@ distillation：
 \frac{\partial C}{\partial z_i}=\frac{1}{T}(q_i-p_i)=\frac{1}{T}(\frac{e^{z_i/T}}{\sum_je^{z_j/T}}-\frac{e^{v_i/T}}{\sum_je^{v_j/T}})
 \]`
 
-然后，如果temperature T比logits的量级（magnitude）要大得多，那么，`\(z_i/T\)`趋向于0（是一个很小的数），`\(z_i<0\)`的时候是从左边趋向于0，`\(z_i\>0)`的时候是从右边趋向于0，所以，`\(e^{z_i/T}\approx e^0+z_i/T\)`。因此，可以如下方式近似：
+然后，如果temperature T比logits的量级（magnitude）要大得多，那么，`\(z_i/T\)`趋向于0（是一个很小的数），`\(z_i<0\)`的时候是从左边趋向于0，`\(z_i\>0\)`的时候是从右边趋向于0，所以，`\(e^{z_i/T}\approx e^0+z_i/T\)`。因此，可以如下方式近似：
 
 `\[
 \frac{\partial C}{\partial z_i}\approx \frac{1}{T}(\frac{1+z_i/T}{N+\sum _jz_j/T}-\frac{1+v_i/T}{N+\sum_jv_j/T})

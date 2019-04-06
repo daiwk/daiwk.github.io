@@ -2,7 +2,7 @@
 layout: post
 category: "platform"
 title: "tensorflow优化"
-tags: [tensorflow, 优化, tensorflowRS]
+tags: [tensorflow, 优化, tensorflowRS, 阿里, psplus, 梯度补偿, ]
 ---
 
 目录
