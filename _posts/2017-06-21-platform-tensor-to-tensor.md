@@ -180,13 +180,11 @@ Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 + `\(W_i^V\in \mathbb{R}^{d_{model}\times d_v}\)`
 + `\(W^O\in \mathbb{R}^{hd_v\times d_{model}}\)`
 
-另外，
+另外，attention在本模型中的应用
 
-+ attention在本模型中的应用
-
-  + encoder-decoder结构中，对当前层的decoder而言，query来自前一层的decoder，key和value来自encoder的输出。
-  + encoder有self-attention层。在self-attention中，所有层的key，value和query都来自于前一层encoder的输出。因此，当前层的encoder的每个位置可以attend to前一层的所有位置。
-  + 类似的，当前层的encoder的每个位置（例如位置i）可以attend to前一层的所有位置（包括位置i）。但为了保持auto-regressive特性，需要阻止leftword infomation（左边，即encoder的输出） 流入decoder，所以在scaled dot-product attention里使用mask把所有输入给softmax的都mask掉（**图figure2中的mask(opt)**）。相当于不要Q(上一层decoder的输出)，也不要K，V（encoder的输出，所以图里，encoder的输出在mask这层被干掉了，所以没画这条线）
++ encoder-decoder结构中，对当前层的decoder而言，query来自前一层的decoder，key和value来自encoder的输出。
++ encoder有self-attention层。在self-attention中，所有层的key，value和query都来自于前一层encoder的输出。因此，当前层的encoder的每个位置可以attend to前一层的所有位置。
++ 类似的，当前层的encoder的每个位置（例如位置i）可以attend to前一层的所有位置（包括位置i）。但为了保持auto-regressive特性，需要阻止leftword infomation（左边，即encoder的输出） 流入decoder，所以在scaled dot-product attention里使用mask把所有输入给softmax的都mask掉（**图figure2中的mask(opt)**）。相当于不要Q(上一层decoder的输出)，也不要K，V（encoder的输出，所以图里，encoder的输出在mask这层被干掉了，所以没画这条线）
 
 #### 4.2.3 position-wise feed-forward networks
 
