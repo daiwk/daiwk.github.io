@@ -35,6 +35,7 @@ python=../../python-2.7.14-paddle-1.3.1/bin/python
 export FLAGS_enable_parallel_graph=1
 export FLAGS_sync_nccl_allreduce=1
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+export CPU_NUM=3 ## 设置跑的cpu核数
 
 TASK_NAME='XNLI'
 CKPT_PATH=./output/

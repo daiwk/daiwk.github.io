@@ -12,15 +12,15 @@ tags: [lamb, bert, cubert, mklbert,  ]
 - [LAMB](#lamb)
 - [cuBERT](#cubert)
 - [distill](#distill)
-    - [背景与相关工作](#背景与相关工作)
-        - [模型压缩](#模型压缩)
-    - [网络结构与方法](#网络结构与方法)
-    - [distill目标](#distill目标)
-    - [用于distill的augmentation](#用于distill的augmentation)
-        - [Masking](#masking)
-        - [POS-guided word replacement](#pos-guided-word-replacement)
-        - [n-gram sampling](#n-gram-sampling)
-        - [整个augmentation的流程](#整个augmentation的流程)
+  - [背景与相关工作](#%E8%83%8C%E6%99%AF%E4%B8%8E%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C)
+    - [模型压缩](#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9)
+  - [网络结构与方法](#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E4%B8%8E%E6%96%B9%E6%B3%95)
+  - [distill目标](#distill%E7%9B%AE%E6%A0%87)
+  - [用于distill的augmentation](#%E7%94%A8%E4%BA%8Edistill%E7%9A%84augmentation)
+    - [Masking](#masking)
+    - [POS-guided word replacement](#pos-guided-word-replacement)
+    - [n-gram sampling](#n-gram-sampling)
+    - [整个augmentation的流程](#%E6%95%B4%E4%B8%AAaugmentation%E7%9A%84%E6%B5%81%E7%A8%8B)
 
 <!-- /TOC -->
 
@@ -133,11 +133,11 @@ softmax的输入也就是logits是`\(z=w^Th\)`，输出是：
 
 #### POS-guided word replacement
 
-以`\(p_{\text { pos }}\)\)`的概率，随机地把一个词替换成相同POS(part-of-speech) tag的另一个词（如，把how替换成what）。为了保持原始的训练集的分布，新词从使用POS tag进行re-normalize的unigram的分布中采样出来。
+以`\(p_{\text { pos }}\)`的概率，随机地把一个词替换成相同POS(part-of-speech) tag的另一个词（如，把how替换成what）。为了保持原始的训练集的分布，新词从使用POS tag进行re-normalize的unigram的分布中采样出来。
 
 #### n-gram sampling
 
-以`\(p_{\text { ng }}\)\)`的概率，从`\(\{1,2, \dots, 5\}\)`中随机选一个`\(n\)`，然后随机采样出一个ngram。这种方法相当于随机扔掉句子的其他部分，是一种更aggressive的masking。
+以`\(p_{\text { ng }}\)`的概率，从`\(\{1,2, \dots, 5\}\)`中随机选一个`\(n\)`，然后随机采样出一个ngram。这种方法相当于随机扔掉句子的其他部分，是一种更aggressive的masking。
 
 #### 整个augmentation的流程
 
@@ -146,6 +146,6 @@ softmax的输入也就是logits是`\(z=w^Th\)`，输出是：
 + 对每个词`\(w_i\)`从uniform distribution `\(X_{i} \sim \mathrm{UNIFORM}[0,1]\)`中采样出一个`\(X_i\)`如下操作
     + 如果`\(X_{i}<p_{\mathrm{mask}}\)`，对`\(w_i\)`进行masking
     + 如果`\(p_{\text { mask }} \leq X_{i}<p_{\mathrm{mask}}+p_{\mathrm{pos}}\)`，那么对`\(w_i\)`使用POS-guided word replacement
-+ 对这个样本的每个词处理完之后，以`\(p_{\text { ng }}\)\)`的概率，使用n-gram sampling，然后把结果加到augmented数据集中（无标签）
++ 对这个样本的每个词处理完之后，以`\(p_{\text { ng }}\)`的概率，使用n-gram sampling，然后把结果加到augmented数据集中（无标签）
 
 然后使用`\(n_{\text { iter }}\)`次如上操作，得到`\(n_{\text { iter }}\)`个augmented的sample。
