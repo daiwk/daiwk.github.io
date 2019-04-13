@@ -8,6 +8,7 @@ https://daiwk.github.io/posts/knowledge-linux.html
 https://daiwk.github.io/posts/knowledge-matplotlib.html
 https://daiwk.github.io/posts/knowledge-matrix.html
 https://daiwk.github.io/posts/knowledge-mmr.html
+https://daiwk.github.io/posts/knowledge-mpi.html
 https://daiwk.github.io/posts/knowledge-numpy-usage.html
 https://daiwk.github.io/posts/knowledge-python.html
 https://daiwk.github.io/posts/knowledge-pytorch-install.html
