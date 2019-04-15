@@ -29,6 +29,7 @@ tags: [深入浅出强化学习, DQN]
             - [稀疏连接](#稀疏连接)
             - [权值共享](#权值共享)
         - [3.3.2 池化](#332-池化)
+- [4. 各种其他优化](#4-各种其他优化)
 
 <!-- /TOC -->
 
@@ -301,3 +302,32 @@ Q(s,a;\theta,\alpha,\beta) = V(s;\theta,\beta)+(A(s,a;\theta,\alpha)-\frac{1}{|A
 ##### 权值共享
 
 #### 3.3.2 池化
+
+## 4. 各种其他优化
+
+参考[https://zhuanlan.zhihu.com/p/21547911](https://zhuanlan.zhihu.com/p/21547911)
+
+几个问题：
+
++ 目标Q值的计算准确吗？全部通过max Q来计算有没有问题？
++ 随机采样的方法好吗？按道理不同样本的重要性是不一样的
++ Q值代表状态，动作的价值，那么单独动作价值的评估会不会更准确？
++ DQN中使用`\(\epsilon-greedy\)`的方法来探索状态空间，有没有更好的做法？
++ 使用卷积神经网络的结构是否有局限？加入RNN呢？
++ DQN无法解决一些高难度的Atari游戏比如Montezuma's Revenge，如何处理这些游戏？
++ DQN训练时间太慢了，跑一个游戏要好几天，有没有办法更快？
++ DQN训练是单独的，也就是一个游戏弄一个网络进行训练，有没有办法弄一个网络同时掌握多个游戏，或者训练某一个游戏后将知识迁移到新的游戏？
++ DQN能否用在连续动作输出问题？
+
+解法：
+
++ 改进目标Q值计算：[Deep Reinforcement Learning with Double Q-learning](https://arxiv.org/abs/1509.06461)
++ 改进随机采样：[Prioritized Experience Replay](https://arxiv.org/abs/1511.05952)
++ 改进网络结构，评估单独动作价值：[Dueling Network Architectures for Deep Reinforcement Learning](https://arxiv.org/abs/1511.06581) ( 本文为ICML最佳论文之一）
++ 改进探索状态空间方式：（1）[Deep Exploration via Bootstrapped DQN](https://arxiv.org/abs/1602.04621) （2）[Incentivizing Exploration In Reinforcement Learning With Deep Predictive Models](https://arxiv.org/abs/1507.00814)
++ 改变网络结构，增加RNN：[Deep Recurrent Q-Learning for Partially Observable MDPs](https://arxiv.org/abs/1507.06527)（非DeepMind出品，效果很一般，谈不上改进，不考虑讲解）
++ 实现DQN训练的迁移学习：（1）[Policy Distillation](https://arxiv.org/abs/1511.06295) （2） [Actor-Mimic: Deep Multitask and Transfer Reinforcement Learning](https://arxiv.org/abs/1511.06342)
++ 解决高难度游戏Montezuma‘s Revenge：[Unifying Count-Based Exploration and Intrinsic Motivation](https://arxiv.org/abs/1606.01868)
++ 加快DQN训练速度：[Asynchronous Methods for Deep Reinforcement Learning](https://arxiv.org/abs/1602.01783)（这篇文章还引出了可以替代DQN的A3C算法，效果4倍Nature DQN）
++ 改变DQN使之能够应用在连续控制上面：[Continuous Deep Q-Learning with Model-based Acceleration](https://arxiv.org/abs/1603.00748)
+
