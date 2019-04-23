@@ -22,6 +22,7 @@ tags: [特征工程, ]
     - [3.2 特征选择的形式](#32-特征选择的形式)
 - [4. 降维](#4-降维)
 - [5. sklearn小技巧](#5-sklearn小技巧)
+- [6. tf的特征工程](#6-tf的特征工程)
 
 <!-- /TOC -->
 
@@ -312,3 +313,8 @@ pca.explained_variaance_ratio_：percentage of variance explained by each of the
 </tbody>
 </table></center>
 </html>
+
+## 6. tf的特征工程
+
+参考[https://blog.csdn.net/cjopengler/article/details/78161748](https://blog.csdn.net/cjopengler/article/details/78161748)
+
