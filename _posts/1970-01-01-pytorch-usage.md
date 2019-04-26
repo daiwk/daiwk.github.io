@@ -9,21 +9,43 @@ tags: [pytorch, ]
 
 <!-- TOC -->
 
+- [自动求导](#%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC)
 - [torch.nn](#torchnn)
-    - [torch.nn.functional](#torchnnfunctional)
-    - [torch.nn.Conv2d](#torchnnconv2d)
-    - [torch.nn.MaxPool2d](#torchnnmaxpool2d)
-    - [torch.nn.Embedding](#torchnnembedding)
+  - [torch.nn.functional](#torchnnfunctional)
+  - [torch.nn.Conv2d](#torchnnconv2d)
+  - [torch.nn.MaxPool2d](#torchnnmaxpool2d)
+  - [torch.nn.Embedding](#torchnnembedding)
 - [torch](#torch)
-    - [torch.addmm](#torchaddmm)
-    - [torch.mm](#torchmm)
-    - [torch.bmm](#torchbmm)
-    - [torch.unsqueeze](#torchunsqueeze)
+  - [torch.addmm](#torchaddmm)
+  - [torch.mm](#torchmm)
+  - [torch.bmm](#torchbmm)
+  - [torch.unsqueeze](#torchunsqueeze)
 - [torch.Tensor](#torchtensor)
-    - [view](#view)
-    - [masked_fill_](#maskedfill)
+  - [view](#view)
+  - [masked_fill_](#maskedfill)
 
 <!-- /TOC -->
+
+## 自动求导
+
+[https://blog.csdn.net/qjk19940101/article/details/79557204](https://blog.csdn.net/qjk19940101/article/details/79557204)
+
+```python
+#encoding=utf8
+import torch
+from torch.autograd import Variable
+
+x = Variable(torch.Tensor([2]), requires_grad=True)
+y = x + 2 
+z = y ** 2 + 3
+print z
+## 输出tensor([19.], grad_fn=<AddBackward>)
+
+z.backward()
+## z=(x+2)^2+3==>dz/dx=2(x+2)
+print x.grad
+## 输出tensor([8.])
+```
 
 ## torch.nn
 
