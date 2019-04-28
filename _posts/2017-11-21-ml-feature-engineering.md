@@ -316,5 +316,91 @@ pca.explained_variaance_ratio_：percentage of variance explained by each of the
 
 ## 6. tf的特征工程
 
+官方文档：[https://www.tensorflow.org/guide/feature_columns?hl=zh-cn](https://www.tensorflow.org/guide/feature_columns?hl=zh-cn)
+
 参考[https://blog.csdn.net/cjopengler/article/details/78161748](https://blog.csdn.net/cjopengler/article/details/78161748)
 
+同样地，参考[https://zhuanlan.zhihu.com/p/41663141](https://zhuanlan.zhihu.com/p/41663141)
+
+
+通过调用tf.feature_column模块来创建feature columns。有两大类feature column
+
++ 一类是生成dense tensor的Dense Column。包括：
+  + numerical_column
+  + indicator_column：one-hot或者multi-hot的sparsetensor
+  + embedding_column：每个bucket对应一个emb向量，如果是multi-hot可以指定combine方式，如sum，avg等
+  + shared_embedding_columns：有多个特征可能需要共享相同的embeding映射空间，比如用户历史行为序列中的商品ID和候选商品ID
++ 另一类是生成sparse tensor的Categorical Column。包括：
+  + categorical_column_with_identity：和bucketize类似，也是用一个单个的唯一值表示bucket。
+  + categorical_column_with_vocabulary_file：通过一个文件的名字来one-hot
+  + categorical_column_with_vocabulary_list：通过一个list的名字来one-hot
+  + categorical_column_with_hash_bucket：通过hash的方式来得到最终的类别ID
+  + crossed_column：特征先进行笛卡尔积，再hash
+  + weighted_categorical_column：
++ 还有bucketized_column，可以生成Categorical Column也可以生成Dense Column：把numeric column的值按照提供的边界（boundaries)离散化为多个值
+
+使用indicator_column能把categorical column得到的稀疏tensor转换为one-hot或者multi-hot形式的稠密tensor
+
+
+demo：
+
+```python
+import tensorflow as tf
+from tensorflow import feature_column
+from tensorflow.python.feature_column.feature_column import _LazyBuilder
+def test_shared_embedding_column_with_hash_bucket():
+    color_data = {'color': [[2, 2], [5, 5], [0, -1], [0, 0]],
+                  'color2': [[2], [5], [-1], [0]]}  # 4行样本
+    builder = _LazyBuilder(color_data)
+    color_column = feature_column.categorical_column_with_hash_bucket('color', 7, dtype=tf.int32)
+    color_column_tensor = color_column._get_sparse_tensors(builder)
+    color_column2 = feature_column.categorical_column_with_hash_bucket('color2', 7, dtype=tf.int32)
+    color_column_tensor2 = color_column2._get_sparse_tensors(builder)
+    with tf.Session() as session:
+        session.run(tf.global_variables_initializer())
+        session.run(tf.tables_initializer())
+        print('not use input_layer' + '_' * 40)
+        print(session.run([color_column_tensor.id_tensor]))
+        print(session.run([color_column_tensor2.id_tensor]))
+
+    # 将稀疏的转换成dense，也就是one-hot形式，只是multi-hot
+    color_column_embed = feature_column.shared_embedding_columns([color_column2, color_column], 3, combiner='sum')
+    print(type(color_column_embed))
+    color_dense_tensor = feature_column.input_layer(color_data, color_column_embed)
+
+    with tf.Session() as session:
+        session.run(tf.global_variables_initializer())
+        session.run(tf.tables_initializer())
+        print('use input_layer' + '_' * 40)
+        print(session.run(color_dense_tensor))
+
+test_shared_embedding_column_with_hash_bucket()
+```
+
+还有：
+
+```python
+def test_categorical_column_with_vocabulary_list():
+    color_data = {'color': [['R', 'R'], ['G', 'R'], ['B', 'G'], ['A', 'A']]}  # 4行样本
+    builder = _LazyBuilder(color_data)
+    color_column = feature_column.categorical_column_with_vocabulary_list(
+        'color', ['R', 'G', 'B'], dtype=tf.string, default_value=-1
+    )
+
+    color_column_tensor = color_column._get_sparse_tensors(builder)
+    with tf.Session() as session:
+        session.run(tf.global_variables_initializer())
+        session.run(tf.tables_initializer())
+        print(session.run([color_column_tensor.id_tensor]))
+
+    # 将稀疏的转换成dense，也就是one-hot形式，只是multi-hot
+    color_column_identy = feature_column.indicator_column(color_column)
+    color_dense_tensor = feature_column.input_layer(color_data, [color_column_identy])
+    with tf.Session() as session:
+        session.run(tf.global_variables_initializer())
+        session.run(tf.tables_initializer())
+        print('use input_layer' + '_' * 40)
+        print(session.run([color_dense_tensor]))
+
+test_categorical_column_with_vocabulary_list()
+```
