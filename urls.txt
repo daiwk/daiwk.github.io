@@ -20,6 +20,7 @@ https://daiwk.github.io/posts/knowledge-testing-tools.html
 https://daiwk.github.io/posts/knowledge-tf-install.html
 https://daiwk.github.io/posts/knowledge-tf-usage.html
 https://daiwk.github.io/posts/knowledge-url.html
+https://daiwk.github.io/posts/ml-few-shot-learning.html
 https://daiwk.github.io/posts/ml-loss-functions.html
 https://daiwk.github.io/posts/ml-tree-models.html
 https://daiwk.github.io/posts/nlp-ltr.html
