@@ -10,6 +10,7 @@ tags: [pytorch, ]
 <!-- TOC -->
 
 - [自动求导](#%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC)
+- [torch常用操作](#torch%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C)
 - [torch.nn](#torchnn)
   - [torch.nn.functional](#torchnnfunctional)
   - [torch.nn.Conv2d](#torchnnconv2d)
@@ -46,6 +47,12 @@ z.backward()
 print x.grad
 ## 输出tensor([8.])
 ```
+
+参考[https://www.cnblogs.com/luckyscarlett/p/10552747.html](https://www.cnblogs.com/luckyscarlett/p/10552747.html)
+
+## torch常用操作
+
+[https://blog.csdn.net/xholes/article/details/81667211](https://blog.csdn.net/xholes/article/details/81667211)
 
 ## torch.nn
 
