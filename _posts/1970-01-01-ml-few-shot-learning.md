@@ -10,6 +10,11 @@ tags: [few-shot, fewshot, 小样本, ]
 
 <!-- TOC -->
 
+- [定义](#%E5%AE%9A%E4%B9%89)
+- [分类](#%E5%88%86%E7%B1%BB)
+  - [model based](#model-based)
+  - [metric based](#metric-based)
+  - [optimization based](#optimization-based)
 
 <!-- /TOC -->
 
@@ -18,6 +23,9 @@ tags: [few-shot, fewshot, 小样本, ]
 参考[Few-shot Learning: A Survey](https://arxiv.org/pdf/1904.05046.pdf)
 
 关于meta learning，可以参考[https://daiwk.github.io/posts/dl-meta-learning.html](https://daiwk.github.io/posts/dl-meta-learning.html)
+
+
+## 定义
 
 Few-shot Learning 是 Meta Learning 在**监督学习**领域的应用
 
@@ -32,3 +40,12 @@ few-shot的训练集中包含了很多的类别，每个类别中有多个样本
 
 训练过程中，每次训练 **(episode)**都会**采样**得到**不同meta-task**。这种机制使得模型学会**不同meta-task**中的**共性部分**，比如如何提取重要特征及比较样本相似等，**忘掉** meta-task中**task相关**部分，因此，在面对新的**未见过的 meta-task**时，也能较好地进行分类。
 
+## 分类
+
+主要分为Mode Based，Metric Based 和 Optimization Based三大类。
+
+### model based
+
+### metric based
+
+### optimization based
