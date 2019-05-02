@@ -404,3 +404,43 @@ def test_categorical_column_with_vocabulary_list():
 
 test_categorical_column_with_vocabulary_list()
 ```
+
+对于多个取值特征进行feature crossing。。。参考[https://github.com/Lapis-Hong/wide_deep/blob/master/python/lib/dataset.py#L152](https://github.com/Lapis-Hong/wide_deep/blob/master/python/lib/dataset.py#L152)的掉渣天的代码：
+
+```python
+
+_CSV_COLUMNS = [
+        "ad_account_id", "education", 
+        "show"]
+
+_CSV_COLUMN_DEFAULTS = [
+        ['-1'], ['-1'], 
+        [0.0]]
+
+ad_product_id = tf.feature_column.categorical_column_with_hash_bucket(
+      'ad_product_id', hash_bucket_size=12000)
+
+base_columns = [
+      ad_account_id, ]
+
+crossed_columns = [
+    tf.feature_column.crossed_column(
+          ['ad_product_id', 'education_cross2'],
+          hash_bucket_size=2000),
+]
+
+wide_columns = base_columns + crossed_columns
+
+deep_columns = [
+      bid,
+]
+def input_fn(data_file, num_epochs, shuffle, batch_size):
+  def parse_csv(value):
+    tf.logging.info('Parsing {}'.format(data_file))
+    columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
+    features = dict(zip(_CSV_COLUMNS, columns))
+    # features = {"bid": csv_decode_obj, "show": csv_decode_obj, ...}
+    features["education_cross2"] = tf.string_split(columns[5:6], delimiter=":").values
+    labels = features.pop('show')
+    return features, labels
+```
