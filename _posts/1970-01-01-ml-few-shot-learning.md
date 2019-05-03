@@ -13,8 +13,16 @@ tags: [few-shot, fewshot, 小样本, ]
 - [定义](#定义)
 - [分类](#分类)
     - [model based](#model-based)
+        - [One-shot learning with memory-augmented neural networks](#one-shot-learning-with-memory-augmented-neural-networks)
+        - [Meta networks](#meta-networks)
     - [metric based](#metric-based)
+        - [Siamese Network](#siamese-network)
+        - [Match Network](#match-network)
+        - [Prototype Network](#prototype-network)
+        - [Relation Network](#relation-network)
     - [optimization based](#optimization-based)
+        - [Optimization as a model for few-shot learning](#optimization-as-a-model-for-few-shot-learning)
+        - [Model-agnostic meta-learning for fast adaptation of deep networks](#model-agnostic-meta-learning-for-fast-adaptation-of-deep-networks)
 
 <!-- /TOC -->
 
@@ -54,13 +62,40 @@ few-shot的训练集中包含了很多的类别，每个类别中有多个样本
 P_{\theta}(y | x, S)=f_{\theta}(x, S)
 \]`
 
+#### One-shot learning with memory-augmented neural networks
+
 [One-shot learning with memory-augmented neural networks](https://arxiv.org/abs/1605.06065)使用**记忆增强**的方法。基于记忆的神经网络方法早在2001年被证明可以用于meta-learning。通过**权重更新**来**调节bias**，并且通过学习**将表达**快速**缓存**到**记忆**中来调节输出。
 
 利用循环神经网络的**内部记忆**单元**无法扩展**到需要对**大量新信息**进行编码的**新任务**上。因此，需要让存储在记忆中的表达既要**稳定**又要是**元素粒度访问**的，前者是说当**需要时就能**可靠地访问，后者是说可**选择性地**访问相关的信息；另外，参数数量**不能被内存的大小束缚**。**神经图灵机**（NTMs）和**记忆网络**就符合这种必要条件。
 
 参考[https://daiwk.github.io/posts/dl-ntm-memory-networks.html](https://daiwk.github.io/posts/dl-ntm-memory-networks.html)
 
+文章基于**神经网络图灵机（NTMs）**的思想，因为 NTMs 能通过外部存储（external memory）进行短时记忆，并能通过**缓慢权值更新**来进行**长时记忆**，NTMs可以学习将表达存入记忆的策略，并如何用这些表达来进行预测。由此，文章方法可以**快速准确**地**预测**那些**只出现过一次的数据**。
 
+基于LSTM等RNN的模型，将数据**看成序列**来训练，在测试时输入新的类的样本进行分类。
+
+如下图，在`\(t\)`时刻，模型输入`\(\left(\mathbf{x}_{t}, y_{t-1}\right)\)`，即**当前时刻**的**样本**`\(x_t\)`，**上一时刻**的**真实label** `\(y_{t-1}\)`，然后基于这两个来**预测当前时刻的类别**。在新episode开始时，要对样本和label进行shuffle。
+
+<html>
+<br/>
+<img src='../assets/one-shot-memory-augment-a.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+如下图，在external memory里面里存储绑定好（bind & encode，得到bound information）的上一次的输入的表示和对应的label（representation-class label）。具体地，当前时间步的输入`\(x_t\)`的label`\(y_t\)`是在下一时间步给出的（上面那段话说的）。如果后面的时间步(图中的`\(t+n\)`）中的样本`\(x_{t+n}\)`，有这个class的样本出现的时候，应该能够直接从external memory中retrieve到bound information，并直接进行预测。从这个prediction step进行反向传播时对**之前时间步的权重更新**进行shape，从而提升这种bind strategy。
+
+<html>
+<br/>
+<img src='../assets/one-shot-memory-augment-b.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+#### Meta networks
+
+[Meta Networks](https://arxiv.org/abs/1703.00837)的快速泛化能力源自其**"快速权重"**的机制，在**训练**过程中**产生的梯度**被用来作为**快速权重的生成**。模型包含一个**meta learner**和一个**base learner**：
+
++ meta learner：用于**学习meta task之间的泛化信息**，并使用**memory机制**保存这种信息
++ base learner：用于**快速适应新的task**，并**和meta learner交互**产生预测输出
 
 ### metric based
 
@@ -70,6 +105,52 @@ P_{\theta}(y | x, S)=f_{\theta}(x, S)
 P_{\theta}(y | x, S)=\sum_{\left(x_{i}, y_{i}\right) \in S} k_{\theta}\left(x, x_{i}, S\right) y_{i}
 \]`
 
+如果在 Few-shot Learning 的任务中去训练普通的基于cross-entropy的**神经网络分类器**，那么几乎**肯定是会过拟合**，因为神经网络分类器中有数以万计的参数需要优化。
+
+所以，很多**非参数化的方法**（最近邻、K-近邻、Kmeans）是不需要优化参数的，因此可以在meta-learning的框架下构造一种可以端到端训练的 few-shot 分类器。该方法是**对样本间距离分布进行建模**，使得**同类样本靠近，异类样本远离**。
+
+#### Siamese Network
+
+[Siamese neural networks for one-shot image recognition](https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf)
+
+通过**有监督**的方式训练**孪生网络**来学习，然后重用网络所提取的特征进行one/few-shot学习。
+
+孪生网络是一个双路的神经网络，训练时，通过组合的方式构造不同的成对样本，输入网络进行训练，在最上层通过**样本对的距离**判断他们**是否属于同一个类**，并产生对应的概率分布。
+
+在**预测阶段**，孪生网络处理**测试**样本和**支撑**集之间**每一个样本对**，最终预测结果为**支撑集上概率最高的类别**。
+
+可以参考下[https://yq.aliyun.com/articles/209297](https://yq.aliyun.com/articles/209297)，翻译自[https://sorenbouma.github.io/blog/oneshot/](https://sorenbouma.github.io/blog/oneshot/)，代码：[https://github.com/sorenbouma/keras-oneshot](https://github.com/sorenbouma/keras-oneshot)
+
+#### Match Network
+
+[Matching networks for one shot learning](https://arxiv.org/abs/1606.04080)
+
+为**支撑**集和**Batch**集构建**不同的编码器**，最终分类器的输出是**支撑集**样本和**query**之间预测值的**加权求和**。
+
+<html>
+<br/>
+<img src='../assets/few-shot-match-network.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+建模过程的创新，文章提出了基于**memory**和**attention**的matching nets，使得可以快速学习。
+
+训练过程的创新，文章基于传统机器学习的一个原则，即训练和测试是要在同样条件下进行的，提出在**训练时**不断地**让网络只看每一类**的**少量样本**，这将**和测试的过程保持一致**。
+
+明天再看。。
+
+#### Prototype Network
+
+每个类别都存在一个原型表达，该类的原型是**support set**在**embedding空间中的均值**。然后，分类问题变成在**embedding空间中的最近邻**。
+
+文章采用在Bregman散度下的指数族分布的混合密度估计，文章在训练时采用**比测试**时**更多的类别数**，即**训练**时每个episodes采用20个类（**20 way**），而**测试**对在5个类（**5 way**）中进行，其效果相对训练时也采用5 way的提升了2.5个百分点。
+
+#### Relation Network
+
+前面介绍的几个网络结构在最终的**距离度量**上都使用了**固定的度量**方式，如**cosine，欧式距离等**，这种模型结构下所有的**学习过程**都发生在**样本的embedding**阶段。
+
+[Learning to compare: Relation network for few-shot learning](https://arxiv.org/abs/1711.06025)认为，度量方式也是网络中非常重要的一环，需要对其进行建模，所以该网络不满足单一且固定的距离度量方式，而是**训练一个网络来学习（例如 CNN）距离的度量方式**，在 loss 方面也有所改变，考虑到relation network**更多的关注relation score**，更像一种回归，而非 0/1 分类，所以使用了**MSE**取代了cross-entropy。
+
 ### optimization based
 
 认为**普通的梯度下降**方法**难以**在few-shot场景下**拟合**，因此通过调整优化方法来完成小样本分类的任务。
@@ -77,3 +158,31 @@ P_{\theta}(y | x, S)=\sum_{\left(x_{i}, y_{i}\right) \in S} k_{\theta}\left(x, x
 `\[
 P_{\theta}(y | x, S)=f_{\theta(S)}(x)
 \]`
+
+#### Optimization as a model for few-shot learning
+
+[Optimization as a model for few-shot learning](https://openreview.net/pdf?id=rJY0-Kcll)
+
+文章发现：
+
++ 首先，这些梯度优化算法包括momentum, adagrad, adadelta, ADAM等，**无法在几步内完成优化**，特别是在非凸的问题上，**多种超参的选取无法保证收敛的速度**。
++ 其次，**不同任务****分别随机初始化**会影响任务收敛到好的解上。虽然 finetune 这种迁移学习能缓解这个问题，但当新数据相对原始数据偏差比较大时，迁移学习的性能会大大下降。我们需要一个**系统的学习通用初始化**，使得训练从一个好的点开始，它和迁移学习不同的是，它能保证该初始化能**让finetune从一个好的点开始。**
+
+文章**学习**的是一个**模型参数的更新函数**，即更新规则。它不是在多轮的episodes学习一个单模型，而是在**每个episode学习特定的模型**。
+
+...明天再看
+
+学习基于梯度下降的参数更新算法，采用 LSTM 表达 meta learner，用其状态表达目标分类器的参数的更新，最终学会如何在新的分类任务上，对分类器网络（learner）进行初始化和参数更新。这个优化算法同时考虑一个任务的短时知识和跨多个任务的长时知识。
+
+<html>
+<br/>
+<img src='../assets/fewshot-optimization-as-a-model.png' style='max-height: 400px'/>
+<br/>
+</html>
+
+#### Model-agnostic meta-learning for fast adaptation of deep networks
+
+[Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks](https://arxiv.org/abs/1703.03400)
+
+使得可以在小量样本上，用少量的迭代步骤就可以获得较好的泛化性能，而且模型是容易 fine-tine 的。而且这个方法无需关心模型的形式，也不需要为 meta learning 增加新的参数，直接用梯度下降来训练 learner。
+
