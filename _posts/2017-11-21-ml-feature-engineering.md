@@ -410,11 +410,11 @@ test_categorical_column_with_vocabulary_list()
 ```python
 
 _CSV_COLUMNS = [
-        "ad_account_id", "education", 
+        "ad_account_id", "education", "bid"
         "show"]
 
 _CSV_COLUMN_DEFAULTS = [
-        ['-1'], ['-1'], 
+        ['-1'], ['-1'], [0.0], 
         [0.0]]
 
 ad_product_id = tf.feature_column.categorical_column_with_hash_bucket(
@@ -443,4 +443,66 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
     features["education_cross2"] = tf.string_split(columns[5:6], delimiter=":").values
     labels = features.pop('show')
     return features, labels
+```
+
+然而要batch的时候，还是会有点问题的，所以需要改成(注意！！padded_shape如果传入第一个元素的是个字典，会按key排序的，也就是"bid"会排在"age"的后面！！)：
+
+```python
+_CSV_COLUMNS = [
+        "ad_account_id", "education", "age","bid",
+        "show"]
+
+_CSV_COLUMN_DEFAULTS = [
+        ['-1'], ['-1'], ['-1'], [0.0], 
+        [0.0]]
+
+ad_product_id = tf.feature_column.categorical_column_with_hash_bucket(
+      'ad_product_id', hash_bucket_size=12000)
+
+base_columns = [
+      ad_account_id, ]
+
+crossed_columns = [
+    tf.feature_column.crossed_column(
+          ['ad_product_id', 'education'],
+          hash_bucket_size=2000),
+]
+
+wide_columns = base_columns + crossed_columns
+
+deep_columns = [
+      bid,
+]
+def input_fn(data_file, num_epochs, shuffle, batch_size):
+  def parse_csv(value):
+    tf.logging.info('Parsing {}'.format(data_file))
+    columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
+    features = dict(zip(_CSV_COLUMNS, columns))
+    # features = {"bid": csv_decode_obj, "show": csv_decode_obj, ...}
+    features["education"] = tf.string_split(columns[5:6], delimiter=":").values
+    features["age"] = tf.string_split(columns[6:7], delimiter=":").values
+    labels = features.pop('show')
+    return features, labels
+
+  # Extract lines from input files using the Dataset API.
+  dataset = tf.data.TextLineDataset(data_file)
+
+  if shuffle:
+    dataset = dataset.shuffle(buffer_size=_NUM_EXAMPLES['train'])
+
+  dataset = dataset.map(parse_csv, num_parallel_calls=5)
+
+  g_features = _CSV_COLUMNS[:-1]
+  padded_dict = {k: [] for k in g_features}
+  padded_dict["age"] = [-1] # 如果设成某个数，比如我想pad成长度5的之类的。。会出现『Attempted to pad to a smaller size than the input element.』的错。。比较蛋疼
+  padded_dict["education"] = [-1]
+  if mode == "pred": 
+      padded_dict = (padded_dict, [])
+  else:
+      padded_dict = (padded_dict, [])
+  dataset = dataset.padded_batch(batch_size, padded_shapes=padded_dict)#, drop_remainder=True)#.filter(lambda fea,lab: tf.equal(tf.shape(lab)[0], batch_size))
+  # We call repeat after shuffling, rather than before, to prevent separate
+  # epochs from blending together.
+  dataset = dataset.repeat(num_epochs)
+##  dataset = dataset.batch(batch_size) ## 如果有变长的，就不能用这个啦，要用上面的padded_batch
 ```
