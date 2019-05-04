@@ -163,7 +163,7 @@ a\left(\hat{x}, x_{i}\right)=e^{c\left(f(\hat{x}), g\left(x_{i}\right)\right)} /
 + Fully Conditional Embeddings (FCE)：使用一个对整个set `\(S\)`有read-attention的LSTM。
 
 `\[
-\(f(\hat{x}, S)=\operatorname{attLSTM}\left(f^{\prime}(\hat{x}), g(S), K\right)\)
+f(\hat{x}, S)=\operatorname{attLSTM}\left(f^{\prime}(\hat{x}), g(S), K\right)
 \]`
 
 其中，`\(f^{\prime}(\hat{x})\)`是LSTM的输入features(在每个时间步都是**常量**)；`\(K\)`是LSTM的unrolling steps的一个固定数目；`\(g(S)\)`是对集合`\(S\)`中每个元素`\(x_i\)`的emb函数。
