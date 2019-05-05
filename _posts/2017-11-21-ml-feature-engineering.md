@@ -341,7 +341,6 @@ pca.explained_variaance_ratio_：percentage of variance explained by each of the
 
 使用indicator_column能把categorical column得到的稀疏tensor转换为one-hot或者multi-hot形式的稠密tensor
 
-
 demo：
 
 ```python
@@ -506,3 +505,5 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
   dataset = dataset.repeat(num_epochs)
 ##  dataset = dataset.batch(batch_size) ## 如果有变长的，就不能用这个啦，要用上面的padded_batch
 ```
+
+另外，在[https://github.com/daiwk/grace_t/tree/master/python/grace_t/basic_demos](https://github.com/daiwk/grace_t/tree/master/python/grace_t/basic_demos)这里有些实践和尝试。。

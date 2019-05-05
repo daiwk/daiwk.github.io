@@ -10,6 +10,8 @@ tags: [tf, ]
 
 <!-- TOC -->
 
+- [特征相关](#%E7%89%B9%E5%BE%81%E7%9B%B8%E5%85%B3)
+- [estimator相关](#estimator%E7%9B%B8%E5%85%B3)
 - [基本函数](#%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0)
   - [tf.truncated-normal](#tftruncated-normal)
   - [tf.reduce-*](#tfreduce)
@@ -35,6 +37,20 @@ tags: [tf, ]
     - [情况2：更新网络时出现Nan值](#%E6%83%85%E5%86%B52%E6%9B%B4%E6%96%B0%E7%BD%91%E7%BB%9C%E6%97%B6%E5%87%BA%E7%8E%B0nan%E5%80%BC)
 
 <!-- /TOC -->
+
+## 特征相关
+
+官方文档参考[https://www.tensorflow.org/guide/feature_columns?hl=zh_cn](https://www.tensorflow.org/guide/feature_columns?hl=zh_cn)
+
+实践参考[https://daiwk.github.io/posts/ml-feature-engineering.html#6-tf%E7%9A%84%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B](https://daiwk.github.io/posts/ml-feature-engineering.html#6-tf%E7%9A%84%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B)
+
+## estimator相关
+
+[https://www.tensorflow.org/guide/custom_estimators?hl=zh_cn](https://www.tensorflow.org/guide/custom_estimators?hl=zh_cn)
+
+分类的demo：[https://github.com/daiwk/grace_t/blob/master/python/grace_t/basic_demos/custom_estimator_classifier.py](https://github.com/daiwk/grace_t/blob/master/python/grace_t/basic_demos/custom_estimator_classifier.py)
+
+回归的demo：[https://github.com/daiwk/grace_t/blob/master/python/grace_t/basic_demos/custom_estimator_regressor.py](https://github.com/daiwk/grace_t/blob/master/python/grace_t/basic_demos/custom_estimator_regressor.py)
 
 ## 基本函数
 
