@@ -137,7 +137,55 @@ P_{\theta}(y | x, S)=\sum_{\left(x_{i}, y_{i}\right) \in S} k_{\theta}\left(x, x
 
 训练过程的创新，文章基于传统机器学习的一个原则，即训练和测试是要在同样条件下进行的，提出在**训练时**不断地**让网络只看每一类**的**少量样本**，这将**和测试的过程保持一致**。
 
-明天再看。。
+构建一个从有`\(k\)`个image-label的pair对的样本的支撑集`\(S=\left\{\left(x_{i}, y_{i}\right)\right\}_{i=1}^{k}\)`到分类器`\(c_{S}(\hat{x})\)`的一个map，使得given一个测试样本`\(\hat{x}\)`能得到他的输出`\(\hat{y}\)`的概率分布。
+
+定义`\(P(\hat{y} | \hat{x}, S):S \rightarrow c_{S}(\hat{x})\)`，其中`\(P\)`是通过nn的参数构建的。所以，给定一个没见过的样本`\(\hat{x}\)`和支撑集`\(S\)`，最终的预测结果就是`\(\arg \max _{y} P(y | \hat{x}, S)\)`
+
+模型的最终输出形式就是：
+
+`\[
+\hat{y}=\sum_{i=1}^{k} a\left(\hat{x}, x_{i}\right) y_{i}
+\]`
+
+其中，`\(x_{i}, y_{i}\)`来自于支撑集`\(S=\left\{\left(x_{i}, y_{i}\right)\right\}_{i=1}^{k}\)`。而`\(a\)`是attention机制，是`\(X \times X\)`上的一种kernel，所以类似于一个kernel density estimator。
+
+attention kernel一个常见的形式如下，对cos距离`\(c\)`求softmax：
+
+`\[
+a\left(\hat{x}, x_{i}\right)=e^{c\left(f(\hat{x}), g\left(x_{i}\right)\right)} / \sum_{j=1}^{k} e^{c\left(f(\hat{x}), g\left(x_{j}\right)\right)}
+\]`
+
+其中的`\(f\)`是对测试集样本`\(\hat{x}\)`的emb，`\(g\)`是对支撑集样本`\(x\)`的emb。
+
+进一步地，期望支撑集学到的`\(g\)`可以modify测试集的emb函数`\(f\)`。可以通过如下两种方式来：
+
++ 把整个支撑集的数据都告诉`\(g\)`，也就是`\(g\)`不只是`\(g(x_i)\)`，应该是`\(g(x_i,S)\)`。可以把整个支撑集看成一个sequence，然后用一个双向lstm来根据整个支撑集这个context来进行emb。
++ Fully Conditional Embeddings (FCE)：使用一个对整个set `\(S\)`有read-attention的LSTM。
+
+`\[
+f(\hat{x}, S)=\operatorname{attLSTM}\left(f^{\prime}(\hat{x}), g(S), K\right)
+\]`
+
+其中，`\(f^{\prime}(\hat{x})\)`是LSTM的输入features(在每个时间步都是**常量**)；`\(K\)`是LSTM的unrolling steps的一个固定数目；`\(g(S)\)`是对集合`\(S\)`中每个元素`\(x_i\)`的emb函数。
+
+参考附录，attLSTM的一个时间步的运算如下：
+
+`\[
+\begin{aligned} 
+\hat{h}_{k}, c_{k} &=\operatorname{LSTM}\left(f^{\prime}(\hat{x}),\left[h_{k-1}, r_{k-1}\right], c_{k-1}\right) \\ 
+h_{k} &=\hat{h}_{k}+f^{\prime}(\hat{x}) \\ 
+r_{k-1} &=\sum_{i=1}^{|S|} a\left(h_{k-1}, g\left(x_{i}\right)\right) g\left(x_{i}\right) \\ 
+a\left(h_{k-1}, g\left(x_{i}\right)\right) &=\operatorname{softmax}\left(h_{k-1}^{T} g\left(x_{i}\right)\right) 
+\end{aligned}
+\]`
+
+假设`\(g^{\prime}\left(x_{i}\right)\)`是一个神经网络（类似上面提到的`\(f^{\prime}\)`），定义`\(g\left(x_{i}, S\right)=\vec{h}_{i}+\overleftarrow{h}_{i}+g^{\prime}\left(x_{i}\right)\)`，从而`\(g(S)\)`如下：
+
+`\[
+\begin{aligned} \vec{h}_{i}, \vec{c}_{i} &=\operatorname{LSTM}\left(g^{\prime}\left(x_{i}\right), \vec{h}_{i-1}, \vec{c}_{i-1}\right) \\ 
+\overleftarrow{h}_{i}, \overleftarrow{c}_{i} &=\operatorname{LSTM}\left(g^{\prime}\left(x_{i}\right), \overleftarrow{h}_{i+1}, \overleftarrow{c}_{i+1}\right) 
+\end{aligned}
+\]`
 
 #### Prototype Network
 
@@ -170,15 +218,25 @@ P_{\theta}(y | x, S)=f_{\theta(S)}(x)
 
 文章**学习**的是一个**模型参数的更新函数**，即更新规则。它不是在多轮的episodes学习一个单模型，而是在**每个episode学习特定的模型**。
 
-...明天再看
+学习基于梯度下降的参数更新算法，采用LSTM表达meta learner，用其**状态**表达**目标分类器的参数的更新**，最终学会如何在新的分类任务上，对分类器网络（learner）进行**初始化**和**参数更新**。这个优化算法同时考虑**一个任务**的**短时知识**和跨**多个任务**的**长时知识**。
 
-学习基于梯度下降的参数更新算法，采用 LSTM 表达 meta learner，用其状态表达目标分类器的参数的更新，最终学会如何在新的分类任务上，对分类器网络（learner）进行初始化和参数更新。这个优化算法同时考虑一个任务的短时知识和跨多个任务的长时知识。
+设定目标为通过少量的迭代步骤捕获优化算法的泛化能力，由此meta learner可以训练让learner在每个任务上收敛到一个好的解。另外，通过捕获所有任务之前**共享的基础知识**，进而更好地**初始化**learner。
+
+以训练 miniImage 数据集为例，
+
+**训练**过程中，从训练集（64 个类，每类 600 个样本）中随机采样 5 个类，每个类 5 个样本，构成**支撑集**，去**学习learner**；然后从训练集的样本（采出的 5 个类，每类剩下的样本）中采样构成**Batch集**，集合中每类有 15 个样本，用来**获得learner的loss**，去**学习meta leaner**。
+
+**测试**的流程一样，从测试集（16 个类，每类 600 个样本）中随机采样 5 个类，每个类 5 个样本，构成**支撑集**Support Set，去**学习learner**；然后从测试集剩余的样本（采出的 5 个类，每类剩下的样本）中采样构成**Batch集**，集合中每类有 15 个样本，用来**获得learner的参数**，进而**得到预测的类别概率**。
+
+这两个过程分别如下图中虚线左侧和右侧。
 
 <html>
 <br/>
 <img src='../assets/fewshot-optimization-as-a-model.png' style='max-height: 400px'/>
 <br/>
 </html>
+
+meta learner的目标是在各种**不同的学习任务**上**学出一个模型**，使得可以仅用少量的样本就能解决一些新的学习任务。这种任务的挑战是模型需要结合之前的经验和当前新任务的少量样本信息，并避免在新数据上过拟合。 
 
 #### Model-agnostic meta-learning for fast adaptation of deep networks
 
