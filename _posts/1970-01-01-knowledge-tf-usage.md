@@ -52,6 +52,14 @@ tags: [tf, ]
 
 回归的demo：[https://github.com/daiwk/grace_t/blob/master/python/grace_t/basic_demos/custom_estimator_regressor.py](https://github.com/daiwk/grace_t/blob/master/python/grace_t/basic_demos/custom_estimator_regressor.py)
 
+如果想要estimator把一个东西输出到tensorboard中，只要自己定义一个scalar就行了(参考[https://stackoverflow.com/questions/50264302/trying-to-log-accuracy-of-cnn-tensorflow-on-tensorboard](https://stackoverflow.com/questions/50264302/trying-to-log-accuracy-of-cnn-tensorflow-on-tensorboard))：
+
+```python
+loss = tf.losses.mean_squared_error(labels=tf.expand_dims(labels, 0), predictions=logits)
+tf.summary.scalar('total-loss', loss)
+tf.summary.scalar('avg-loss', loss / flags_obj.batch_size)
+```
+
 ## 基本函数
 
 ### tf.truncated-normal
