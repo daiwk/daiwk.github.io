@@ -64,8 +64,6 @@ WWW'19 Oral
 
 [Dual Graph Attention Networks for Deep Latent Representation of Multifaceted Social Effects in Recommender Systems](https://arxiv.org/abs/1903.10433)
 
-代码：[https://github.com/arnab39/FewShot_GAN-Unet3D](https://github.com/arnab39/FewShot_GAN-Unet3D)
-
 ## NGCF
 
 SIGIR'19
