@@ -164,7 +164,7 @@ class FM(Model):
 FFM把**相同性质的特征**归于**同一个field**。每一维特征`\(x_i\)`，针对**其他特征**的每一种field `\(f_j\)`，都会学习一个隐向量`\(V_{i,f_j}\)`。所以隐向量不仅与特征有关，也与field相关。假设有`\(n\)`个特征，`\(f\)`个field，那么FFM的二次项总共有`\(nf\)`个隐向量，而FM中，每一维特征的隐向量只有一个。公式如下：
 
 `\[
-y=w_0+\sum^n_{i=1}w_ix_i+\sum^n_{i=1}\sum ^n_{j=i+1}\rangle + \left \langle V_{i,f_j}, V_{j,f_i} \right  \rangle x_i x_j
+y=w_0+\sum^n_{i=1}w_ix_i+\sum^n_{i=1}\sum ^n_{j=i+1} \left \langle V_{i,f_j}, V_{j,f_i} \right  \rangle x_i x_j
 \]`
 
 如果隐向量的长度是`\(k\)`，那么FFM的二次参数有`\(nfk\)`个，远多于FM的`\(nk\)`个，二次项并不能化简，所以时间复杂度是`\(O(kn^2)\)`。由于FFM中的latent vector只需要学习特定的field，所以通常要求`\(k_{FFM}<< k_{FM}\)`
