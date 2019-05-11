@@ -9,6 +9,7 @@ tags: [强化学习, 进展, ]
 
 <!-- TOC -->
 
+- [Review: DQN and A3C/A2C](#review-dqn-and-a3ca2c)
 
 <!-- /TOC -->
 
@@ -16,8 +17,17 @@ tags: [强化学习, 进展, ]
 
 原blog：[https://towardsdatascience.com/advanced-reinforcement-learning-6d769f529eb3](https://towardsdatascience.com/advanced-reinforcement-learning-6d769f529eb3)
 
-xxx
+## Review: DQN and A3C/A2C
+
+DQN
 
 `\[
 Q\left(s_{t}, a_{t} ; \theta\right) \leftarrow Q\left(s_{t}, a_{t} ; \theta\right)+\alpha[\underbrace{\underbrace{(r_{t}+\max _{a} \hat{Q}\left(s_{t+1}, a ; \theta^{\prime}\right))}_{\text { target }}-Q\left(s_{t}, a_{t} ; \theta\right) )}_{\text {TD-error}}]
 \]`
+
+ac
+
+`\[
+d \theta_{v} \leftarrow d \theta_{v}+\partial{\underbrace{{\left(R-V\left(s_{i} ; \theta_{v}\right)\right)}}_{\text{advantage}}}^{2} / \partial \theta_{v}
+\]`
+
