@@ -14,11 +14,12 @@ tags: [分布式强化学习, A3C, ape-x, rudder]
 - [3. PPO](#3-ppo)
 - [4. rainbow](#4-rainbow)
 - [5. APE-X](#5-ape-x)
-    - [5.1 简介](#51-%E7%AE%80%E4%BB%8B)
-    - [5.2 Actor的算法](#52-actor%E7%9A%84%E7%AE%97%E6%B3%95)
-    - [5.3 Learner的算法](#53-learner%E7%9A%84%E7%AE%97%E6%B3%95)
-    - [代码](#%E4%BB%A3%E7%A0%81)
+  - [5.1 简介](#51-%E7%AE%80%E4%BB%8B)
+  - [5.2 Actor的算法](#52-actor%E7%9A%84%E7%AE%97%E6%B3%95)
+  - [5.3 Learner的算法](#53-learner%E7%9A%84%E7%AE%97%E6%B3%95)
+  - [代码](#%E4%BB%A3%E7%A0%81)
 - [6. rudder](#6-rudder)
+- [7. IMPALA](#7-impala)
 
 <!-- /TOC -->
 
@@ -187,3 +188,14 @@ ray的ape-x代码：[https://github.com/ray-project/ray/blob/master/python/ray/r
 [RUDDER: Return Decomposition for Delayed Rewards](https://arxiv.org/abs/1806.07857)
 
 源码：[https://github.com/ml-jku/baselines-rudder](https://github.com/ml-jku/baselines-rudder)
+
+
+## 7. IMPALA
+
+参考[前沿 \| DeepMind提出新型架构IMPALA：帮助实现单智能体的多任务强化学习](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650737603&idx=4&sn=216d3980555ab9e6e8365b6e2f83cad4&chksm=871acfbdb06d46abe8c47f0cb2b7190e765d66fb0104e0beeafd1db156b2a36ac3698409b46d&mpshare=1&scene=1&srcid=0502Z61wBOXN5SEc1P4P7f2w&pass_ticket=csFmp%2BqPqpbOEtBCr9byDm0vHyp83ccxf21EyZaHyV%2BoFQOLINXIlgzuTkVvCg24#rd)
+
+IMPALA 受流行的 A3C 架构的启发，**A3C**架构使用**多个分布式actor**来学习智能体的参数。在此类模型中，每个actor使用策略参数在环境中动作。**actor周期性地暂停探索**，和**中央参数服务器共享它们计算出的梯度**，用于**梯度更新**
+
+IMPALA的**actor不用于计算梯度，而是用于收集经验**，然后传输至可**计算梯度的中央学习器**，生成一个具备完全独立的actor和learner的模型。为了利用现代计算系统，IMPALA可使用**单个学习器**或执行**同步更新的多个学习器**来实现。用这种方式分离学习和动作可以有效地**提高整个系统的吞吐量**，因为 actor不再需要等待学习步（像 batched A2C 架构中那样）。这使得我们可以在多个有趣的环境中训练IMPALA，无需经历帧渲染时间的变动或耗时的任务重启。
+
+[IMPALA: Scalable Distributed Deep-RL with Importance Weighted Actor-Learner Architectures](https://arxiv.org/abs/1802.01561)

@@ -1,6 +1,6 @@
 ---
 layout: post
-category: "platform"
+category: "dl"
 title: "图神经网络+推荐"
 tags: [gnn, gcn, 推荐, graph, 图神经网络, 图网络, DiffNet, DGRec, IGPL, GraphRec, DANSER, NGCF]
 ---

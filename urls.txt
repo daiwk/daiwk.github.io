@@ -251,6 +251,8 @@ https://daiwk.github.io/posts/nlp-bam.html
 https://daiwk.github.io/posts/nlp-paddle-lark.html
 https://daiwk.github.io/posts/platform-bert-speedup.html
 https://daiwk.github.io/posts/dl-graph-recommendations.html
+https://daiwk.github.io/posts/platform-tensorlayer.html
+https://daiwk.github.io/posts/rl-rl-progresses.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-nlp.html
