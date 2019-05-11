@@ -28,5 +28,5 @@ Q\left(s_{t}, a_{t} ; \theta\right) \leftarrow Q\left(s_{t}, a_{t} ; \theta\righ
 ac
 
 `\[
-d \theta_{v} \leftarrow d \theta_{v}+\partial{\underbrace{{\left(R-V\left(s_{i} ; \theta_{v}\right)\right)}}_{\text{advantage}}}^{2} / \partial \theta_{v}
+d \theta_{v} \leftarrow d \theta_{v}+\partial{\underbrace{\left(R-V\left(s_{i} ; \theta_{v}\right)\right)}_{\text{advantage}}}^{2} / \partial \theta_{v}
 \]`
