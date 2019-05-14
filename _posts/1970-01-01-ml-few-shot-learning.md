@@ -10,19 +10,19 @@ tags: [few-shot, fewshot, 小样本, ]
 
 <!-- TOC -->
 
-- [定义](#定义)
-- [分类](#分类)
-    - [model based](#model-based)
-        - [One-shot learning with memory-augmented neural networks](#one-shot-learning-with-memory-augmented-neural-networks)
-        - [Meta networks](#meta-networks)
-    - [metric based](#metric-based)
-        - [Siamese Network](#siamese-network)
-        - [Match Network](#match-network)
-        - [Prototype Network](#prototype-network)
-        - [Relation Network](#relation-network)
-    - [optimization based](#optimization-based)
-        - [Optimization as a model for few-shot learning](#optimization-as-a-model-for-few-shot-learning)
-        - [Model-agnostic meta-learning for fast adaptation of deep networks](#model-agnostic-meta-learning-for-fast-adaptation-of-deep-networks)
+- [定义](#%E5%AE%9A%E4%B9%89)
+- [分类](#%E5%88%86%E7%B1%BB)
+  - [model based](#model-based)
+    - [One-shot learning with memory-augmented neural networks](#one-shot-learning-with-memory-augmented-neural-networks)
+    - [Meta networks](#meta-networks)
+  - [metric based](#metric-based)
+    - [Siamese Network](#siamese-network)
+    - [Match Network](#match-network)
+    - [Prototype Network](#prototype-network)
+    - [Relation Network](#relation-network)
+  - [optimization based](#optimization-based)
+    - [Optimization as a model for few-shot learning](#optimization-as-a-model-for-few-shot-learning)
+    - [Model-agnostic meta-learning for fast adaptation of deep networks](#model-agnostic-meta-learning-for-fast-adaptation-of-deep-networks)
 
 <!-- /TOC -->
 
@@ -34,6 +34,7 @@ tags: [few-shot, fewshot, 小样本, ]
 
 关于meta learning，可以参考[https://daiwk.github.io/posts/dl-meta-learning.html](https://daiwk.github.io/posts/dl-meta-learning.html)
 
+参考[基于小样本学习的意图识别冷启动](https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247496949&idx=1&sn=f0c2ec025be78ebc9f87fe30b78967c3&chksm=96ea2b75a19da26365cae1a30f7e8d7363fae366ced91277ee0380758b98096a7d839e80df7e&mpshare=1&scene=1&srcid=&pass_ticket=OEoJxI2kFvfmi6pDQlY3W%2FGC2MeNgyiIRuMCWgKgSHf5DYmZLcpg4jkhV1VOz5EE#rd)
 
 ## 定义
 
