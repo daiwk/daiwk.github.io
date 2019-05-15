@@ -16,7 +16,7 @@ tags: [推荐系统, ]
   - [youtube](#youtube)
   - [序列建模](#%E5%BA%8F%E5%88%97%E5%BB%BA%E6%A8%A1)
   - [标签体系](#%E6%A0%87%E7%AD%BE%E4%BD%93%E7%B3%BB)
-- [最新paper](#%E6%9C%80%E6%96%B0paper)
+- [最新paper1](#%E6%9C%80%E6%96%B0paper1)
   - [A review on deep learning for recommender systems: challenges and remedies](#a-review-on-deep-learning-for-recommender-systems-challenges-and-remedies)
   - [Next Item Recommendation with Self-Attention](#next-item-recommendation-with-self-attention)
   - [Metric Factorization: Recommendation beyond Matrix Factorization](#metric-factorization-recommendation-beyond-matrix-factorization)
@@ -33,6 +33,17 @@ tags: [推荐系统, ]
   - [Multi-Pointer Co-Attention Networks for Recommendation](#multi-pointer-co-attention-networks-for-recommendation)
   - [ATRank: An Attention-Based User Behavior Modeling Framework for Recommendation](#atrank-an-attention-based-user-behavior-modeling-framework-for-recommendation)
   - [Deep Matrix Factorization Models for Recommender Systems](#deep-matrix-factorization-models-for-recommender-systems)
+- [最新paper2](#%E6%9C%80%E6%96%B0paper2)
+  - [DeepRec: An Open-source Toolkit for Deep Learning based Recommendation](#deeprec-an-open-source-toolkit-for-deep-learning-based-recommendation)
+  - [A Survey on Session-based Recommender Systems](#a-survey-on-session-based-recommender-systems)
+  - [Reinforcement Learning to Optimize Long-term User Engagement in Recommender Systems](#reinforcement-learning-to-optimize-long-term-user-engagement-in-recommender-systems)
+  - [Representing and Recommending Shopping Baskets with Complementarity, Compatibility, and Loyalty](#representing-and-recommending-shopping-baskets-with-complementarity-compatibility-and-loyalty)
+  - [Attentive Group Recommendation](#a%C2%82ttentive-group-recommendation)
+  - [Variational Autoencoders for Collaborative Filtering](#variational-autoencoders-for-collaborative-filtering)
+  - [Exploiting Emotion on Reviews for Recommender Systems](#exploiting-emotion-on-reviews-for-recommender-systems)
+  - [An Attentive Interaction Network for Context-aware Recommendations](#an-attentive-interaction-network-for-context-aware-recommendations)
+  - [Regularizing Matrix Factorization with User and Item Embeddings for Recommendation](#regularizing-matrix-factorization-with-user-and-item-embeddings-for-recommendation)
+  - [Explainable Recommendation via Multi-Task Learning in Opinionated Text Data](#explainable-recommendation-via-multi-task-learning-in-opinionated-text-data)
 
 <!-- /TOC -->
 
@@ -68,7 +79,7 @@ paddle实现：[https://github.com/PaddlePaddle/models/tree/develop/fluid/Paddle
 
 [https://daiwk.github.io/posts/nlp-tagspaces.html](https://daiwk.github.io/posts/nlp-tagspaces.html)
 
-## 最新paper
+## 最新paper1
 
 参考[想了解推荐系统最新研究进展？请收好这16篇论文](https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247491818&idx=1&sn=311962e2e41119a565c252a19037dd76&chksm=96ea3f6aa19db67c3fbfa77fbec65797d0ccc8f2930290d57c2016a3e55a8bb18b77fd10180b&mpshare=1&scene=1&srcid=0928qyE33GaHUFg2ddzaDfmw&pass_ticket=QWrkCW0n7ulxJGBU0GG41I42RJFST5los9jWx8%2B%2BvEjJLwDxvQFM9Vs9mfvzCdFq#rd)
 
@@ -162,3 +173,80 @@ Metric Factorization 可以用在评分预测和排序两个经典的推荐场�
 
 本文在利用深度学习做推荐时，考虑了推荐的显式反馈和隐式反馈，将其融合构建成一个矩阵，从而将用户和产品的不同向量输入到两个并行的深层网络中去。最后，设计了一种新型的损失函数以同时考虑评分和交互两种不同类型的反馈数据。
 
+## 最新paper2
+
+参考[推荐系统阅读清单：最近我们在读哪些论文？](https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247497070&idx=1&sn=f5d8489a9ae0edaf64281bb4e9e0f911&chksm=96ea2aeea19da3f81b5be9933497bdd921abd4dec0457fc49d0055a66d6d8f21c4e16ec1db0b&mpshare=1&scene=1&srcid=&pass_ticket=gsCKgAT5ncC4Oyqcqu32vlRROsqT7GGmlwcs6Mru0krjDac9tUZg2yxUB7dE5%2BpP#rd)
+
+### DeepRec: An Open-source Toolkit for Deep Learning based Recommendation
+
+[DeepRec: An Open-source Toolkit for Deep Learning based Recommendation](https://www.researchgate.net/publication/332555888_DeepRec_An_Open-source_Toolkit_for_Deep_Learning_based_Recommendation)
+
+本文提出了一个全新开源工具库，包含诸多基于深度学习的推荐算法，代码可以直接运行，可以用来做为 baselines 和开发自己的算法，是一个非常不错的工具。
+
+[https://github.com/cheungdaven/DeepRec](https://github.com/cheungdaven/DeepRec)
+
+### A Survey on Session-based Recommender Systems
+
+[A Survey on Session-based Recommender Systems](https://arxiv.org/abs/1902.04864)
+
+本文是第一篇全面深入总结 session-based recommendations 的综述文章，值得推荐。文章系统总结了目前一种新型推荐范式：session-based recommendations 的特点、挑战和目前取得的进展，对整个推荐系统研究领域和相关的工业界人员提供了一个全面了解推荐系统领域最新研究进展的机会。
+
+该文从问题本质和相关的数据特征入手，为 session-based recommendations 建立了一个层次化模型来深入理解里面存在的各种数据复杂性和潜在挑战，然后采用了两个不同维度对现有研究成果进行了系统分类和总结，最后提出了展望。
+
+### Reinforcement Learning to Optimize Long-term User Engagement in Recommender Systems
+
+[Reinforcement Learning to Optimize Long-term User Engagement in Recommender Systems](https://arxiv.org/abs/1902.05570)
+
+论文针对利用强化学习解决推荐系统时存在用户行为难以建模的问题，提出了一种新的强化学习框架 FeedRec，包括两个网络：Q 网络利用层次化 LSTM 对复杂用户行为建模，S 网络用来模拟环境，辅助和稳定 Q 网络的训练。方法在合成数据和真实数据上进行了验证，取得了 SOTA 的结果。
+
+### Representing and Recommending Shopping Baskets with Complementarity, Compatibility, and Loyalty
+
+[Representing and Recommending Shopping Baskets with Complementarity, Compatibility, and Loyalty](https://www.microsoft.com/en-us/research/uploads/prod/2019/01/cikm18_mwan.pdf)
+
+与在线购物不同的是，在超市购物场景下，商品间的互补性和用户对商品的忠诚度起着决定性作用。本文基于这两个维度提出了一种新的表示学习方法——triple2vec。此外，作者在上述方法得到的表示基础上，提出了一种考虑忠诚度的推荐算法，用忠诚系数来权衡表示模型和统计模型计算出的购买偏好。
+
+源码：[https://github.com/MengtingWan/grocery](https://github.com/MengtingWan/grocery)
+
+### Attentive Group Recommendation
+
+[Attentive Group Recommendation](https://www.comp.nus.edu.sg/~xiangnan/papers/sigir18-groupRS.pdf)
+
+论文应用神经协同网络和注意力机制为群组用户进行 Top-N 商品推荐，主要解决了群组用户兴趣的动态组合、群组与个人用户的协同商品推荐，以及新用户的冷启动问题。
+
+源码：[https://github.com/LianHaiMiao/Attentive-Group-Recommendation](https://github.com/LianHaiMiao/Attentive-Group-Recommendation)
+
+### Variational Autoencoders for Collaborative Filtering
+
+[Variational Autoencoders for Collaborative Filtering](https://arxiv.org/abs/1802.05814)
+
+论文将变分自编码器（VAE）扩展到协同过滤以进行隐式反馈，通过非线性概率模型克服线性因子模型的局限。其次，作者引入了具有多项式似然（multinomial likelihood）的生成模型，并使用贝叶斯推断进行参数估计。作者基于 VAE 提出了一个生成模型 VAE_CF，并针对 VAE 的正则参数和概率模型选取做了适当调整，使其在当前推荐任务中取得最佳结果。
+
+源码：[https://github.com/dawenl/vae_cf](https://github.com/dawenl/vae_cf)
+
+### Exploiting Emotion on Reviews for Recommender Systems
+
+[Exploiting Emotion on Reviews for Recommender Systems](https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/viewFile/16608/16603)
+
+现有的推荐系统大多依靠用户的历史评分或者评论文本进行推荐，往往由于数据资源不足而面临数据稀疏和难以进行冷启动的问题。本文基于原则性和数学的方式，对用户评论中的积极/消极情感加以充分利用，提出了一个全新推荐框架 MIRROR，并且在 Ciao 和 Epinions 这两个真实数据集上证明了该框架的有效性。
+
+### An Attentive Interaction Network for Context-aware Recommendations
+
+[An Attentive Interaction Network for Context-aware Recommendations](https://dl.acm.org/citation.cfm?id=3271813)
+
+论文关注的问题是基于上下文感知的推荐系统。作者提出了一种新型注意力交互网络，用来捕捉内容、user和item之间的交互影响。此外，作者还提出了一种效应级注意力机制来聚合多种交互影响。通过在三个公开数据集 Food、Yelp 和 Frappe 上的大量实验表明，本文模型效果优于当前最先进的上下文感知推荐算法。
+
+### Regularizing Matrix Factorization with User and Item Embeddings for Recommendation
+
+[Regularizing Matrix Factorization with User and Item Embeddings for Recommendation](https://arxiv.org/pdf/1809.00979)
+
+论文提出了一个基于 RME（Regularized Multi-Embedding）的推荐模型，不再基于用户的共同喜好进行物品推荐，而是创新地提出刻画物品对共同被讨厌的特征，进而避免向用户推荐其讨厌的物品。
+
+源码：[https://github.com/thanhdtran/RME](https://github.com/thanhdtran/RME)
+
+### Explainable Recommendation via Multi-Task Learning in Opinionated Text Data
+
+[Explainable Recommendation via Multi-Task Learning in Opinionated Text Data](https://arxiv.org/abs/1806.03568)
+
+论文提出了一个用于可解释推荐任务的多任务学习方法，通过联合张量分解将用户、产品、特征和观点短语映射到同一表示空间。
+
+源码：[https://github.com/MyTHWN/MTER](https://github.com/MyTHWN/MTER)
