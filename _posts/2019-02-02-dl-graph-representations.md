@@ -11,46 +11,46 @@ urlcolor: blue
 
 - [Introduction](#introduction)
 - [part1-Node Representation Learning](#part1-node-representation-learning)
-    - [Node Representation Methods](#node-representation-methods)
-        - [LINE](#line)
-            - [一阶相似度](#一阶相似度)
-            - [二阶相似度](#二阶相似度)
-            - [优化trick](#优化trick)
-            - [讨论](#讨论)
-            - [实验](#实验)
-        - [DeepWalk](#deepwalk)
-        - [Node2vec](#node2vec)
-    - [Graph and High-dimensional Data Visualization](#graph-and-high-dimensional-data-visualization)
-        - [t-SNE](#t-sne)
-        - [Visualizing Large-scale and High-dimensional Data](#visualizing-large-scale-and-high-dimensional-data)
-            - [Learning the Layout of KNN Graph](#learning-the-layout-of-knn-graph)
-            - [A Probabilistic Model for Graph Layout](#a-probabilistic-model-for-graph-layout)
-    - [Knowledge Graph Embedding](#knowledge-graph-embedding)
-        - [relation patterns](#relation-patterns)
-        - [RotatE](#rotate)
-            - [Relation as Elementwise Rotation in Complex Space](#relation-as-elementwise-rotation-in-complex-space)
-            - [RoteE的优化](#rotee的优化)
-    - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
+  - [Node Representation Methods](#node-representation-methods)
+    - [LINE](#line)
+      - [一阶相似度](#%E4%B8%80%E9%98%B6%E7%9B%B8%E4%BC%BC%E5%BA%A6)
+      - [二阶相似度](#%E4%BA%8C%E9%98%B6%E7%9B%B8%E4%BC%BC%E5%BA%A6)
+      - [优化trick](#%E4%BC%98%E5%8C%96trick)
+      - [讨论](#%E8%AE%A8%E8%AE%BA)
+      - [实验](#%E5%AE%9E%E9%AA%8C)
+    - [DeepWalk](#deepwalk)
+    - [Node2vec](#node2vec)
+  - [Graph and High-dimensional Data Visualization](#graph-and-high-dimensional-data-visualization)
+    - [t-SNE](#t-sne)
+    - [Visualizing Large-scale and High-dimensional Data](#visualizing-large-scale-and-high-dimensional-data)
+      - [Learning the Layout of KNN Graph](#learning-the-layout-of-knn-graph)
+      - [A Probabilistic Model for Graph Layout](#a-probabilistic-model-for-graph-layout)
+  - [Knowledge Graph Embedding](#knowledge-graph-embedding)
+    - [relation patterns](#relation-patterns)
+    - [RotatE](#rotate)
+      - [Relation as Elementwise Rotation in Complex Space](#relation-as-elementwise-rotation-in-complex-space)
+      - [RoteE的优化](#rotee%E7%9A%84%E4%BC%98%E5%8C%96)
+  - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
 - [part2-Graph Neural Networks](#part2-graph-neural-networks)
-    - [基础知识](#基础知识)
-            - [Neighborhood Aggregation](#neighborhood-aggregation)
-    - [Graph Convolutional Networks(GCN)](#graph-convolutional-networksgcn)
-    - [GraphSAGE](#graphsage)
-    - [Gated Graph Neural Networks](#gated-graph-neural-networks)
-        - [Gated Graph Neural Networks介绍](#gated-graph-neural-networks介绍)
-        - [Message-Passing Neural Networks介绍](#message-passing-neural-networks介绍)
-    - [Graph Attention Networks(GAT)](#graph-attention-networksgat)
-    - [Subgraph Embeddings](#subgraph-embeddings)
+  - [基础知识](#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86)
+      - [Neighborhood Aggregation](#neighborhood-aggregation)
+  - [Graph Convolutional Networks(GCN)](#graph-convolutional-networksgcn)
+  - [GraphSAGE](#graphsage)
+  - [Gated Graph Neural Networks](#gated-graph-neural-networks)
+    - [Gated Graph Neural Networks介绍](#gated-graph-neural-networks%E4%BB%8B%E7%BB%8D)
+    - [Message-Passing Neural Networks介绍](#message-passing-neural-networks%E4%BB%8B%E7%BB%8D)
+  - [Graph Attention Networks(GAT)](#graph-attention-networksgat)
+  - [Subgraph Embeddings](#subgraph-embeddings)
 - [part3-Deep Generative Models for Graph Generation](#part3-deep-generative-models-for-graph-generation)
-    - [深度生成模型](#深度生成模型)
-        - [Variational Autoencoders (VAEs)](#variational-autoencoders-vaes)
-        - [Generative Adversarial Networks (GANs)](#generative-adversarial-networks-gans)
-        - [Deep Auto-regressive Models](#deep-auto-regressive-models)
-    - [GraphVAE](#graphvae)
-    - [JTVAE](#jtvae)
-    - [MolGAN](#molgan)
-    - [GCPN](#gcpn)
-- [未来方向](#未来方向)
+  - [深度生成模型](#%E6%B7%B1%E5%BA%A6%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B)
+    - [Variational Autoencoders (VAEs)](#variational-autoencoders-vaes)
+    - [Generative Adversarial Networks (GANs)](#generative-adversarial-networks-gans)
+    - [Deep Auto-regressive Models](#deep-auto-regressive-models)
+  - [GraphVAE](#graphvae)
+  - [JTVAE](#jtvae)
+  - [MolGAN](#molgan)
+  - [GCPN](#gcpn)
+- [未来方向](#%E6%9C%AA%E6%9D%A5%E6%96%B9%E5%90%91)
 
 <!-- /TOC -->
 
@@ -620,14 +620,14 @@ L=\sum _{v\in V}y_v\log (\sigma (z^T_v\theta )+(1-y_v)\log(1-\sigma (z^T_v\theta
 
 归纳能力（inductive capability）：
 
-+ 所有节点共享相同的aggretation parameters
++ 所有节点共享相同的aggregation parameters
 + 模型参数是`\(|V|\)`的sublinear，而且可以对没见过的node生成embed
 
 ### Graph Convolutional Networks(GCN)
 
 参考ICLR17的[Semi-Supervised Classification with Graph Convolutional Networks](https://arxiv.org/abs/1609.02907)
 
-在neighborhood aggretagtion上有一些小改动：
+在neighborhood aggregation上有一些小改动：
 
 `\[
 h^k_v=\sigma(W_k\sum_{u\in N(v)\cup v}\frac{h^{k-1}_u}{\sqrt{|N(u)||N(v)|}})
@@ -642,7 +642,7 @@ h^k_v=\sigma(W_k\sum_{u\in N(v)\cup v}\frac{h^{k-1}_u}{\sqrt{|N(u)||N(v)|}})
 
 参考NIPS17的[Inductive Representation Learning on Large Graphs](https://arxiv.org/abs/1706.02216)
 
-出发点：把上面在aggretate之后使用的神经网络换成任意一个可以把一堆vectors映射成一个单独的vector的可微函数（也就是下面的`\(AGG(\{h^{k-1}_u,\forall u\in N(v)\})\)`）：
+出发点：把上面在aggregate之后使用的神经网络换成任意一个可以把一堆vectors映射成一个单独的vector的可微函数（也就是下面的`\(AGG(\{h^{k-1}_u,\forall u\in N(v)\})\)`）：
 
 `\[
 h^k_v=\sigma ([A_k\cdot AGG(\{h^{k-1}_u,\forall u\in N(v)\}),B_kh^{k-1}_v])

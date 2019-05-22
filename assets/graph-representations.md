@@ -578,14 +578,14 @@ $$
 
 归纳能力（inductive capability）：
 
-+ 所有节点共享相同的aggretation parameters
++ 所有节点共享相同的aggregation parameters
 + 模型参数是$|V|$的sublinear，而且可以对没见过的node生成embed
 
 ## Graph Convolutional Networks(GCN)
 
 参考ICLR17的[Semi-Supervised Classification with Graph Convolutional Networks](https://arxiv.org/abs/1609.02907)
 
-在neighborhood aggretagtion上有一些小改动：
+在neighborhood aggregation上有一些小改动：
 
 $$
 h^k_v=\sigma(W_k\sum_{u\in N(v)\cup v}\frac{h^{k-1}_u}{\sqrt{|N(u)||N(v)|}})
@@ -600,7 +600,7 @@ $$
 
 参考NIPS17的[Inductive Representation Learning on Large Graphs](https://arxiv.org/abs/1706.02216)
 
-出发点：把上面在aggretate之后使用的神经网络换成任意一个可以把一堆vectors映射成一个单独的vector的可微函数（也就是下面的$AGG(\{h^{k-1}_u,\forall u\in N(v)\})$）：
+出发点：把上面在aggregate之后使用的神经网络换成任意一个可以把一堆vectors映射成一个单独的vector的可微函数（也就是下面的$AGG(\{h^{k-1}_u,\forall u\in N(v)\})$）：
 
 $$
 h^k_v=\sigma ([A_k\cdot AGG(\{h^{k-1}_u,\forall u\in N(v)\}),B_kh^{k-1}_v])
