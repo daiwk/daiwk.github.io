@@ -112,6 +112,11 @@ P_{\theta}(y | x, S)=\sum_{\left(x_{i}, y_{i}\right) \in S} k_{\theta}\left(x, x
 
 #### Siamese Network
 
+siamese的经典论文：
+
++ [Learning a similarity metric discriminatively, with application to face verification](https://www.researchgate.net/publication/4156225_Learning_a_similarity_metric_discriminatively_with_application_to_face_verification?enrichId=rgreq-69df456718ba3ae3e30d3cdc40686c21-XXX&enrichSource=Y292ZXJQYWdlOzQxNTYyMjU7QVM6MTAxMzE1NTUyMjE5MTQyQDE0MDExNjY5MTg0MTE%3D&el=1_x_3&_esc=publicationCoverPdf)
++ [Signature Verification Using a Siamese Time Delay Neural Network](https://www.researchgate.net/publication/221620245_Signature_Verification_Using_a_Siamese_Time_Delay_Neural_Network?enrichId=rgreq-4152865765293445c4c6b41da78b8790-XXX&enrichSource=Y292ZXJQYWdlOzIyMTYyMDI0NTtBUzoxODEyMDE3ODAzNTUwNzJAMTQyMDIxMzI3OTMxNA%3D%3D&el=1_x_3&_esc=publicationCoverPdf)
+
 [Siamese neural networks for one-shot image recognition](https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf)
 
 通过**有监督**的方式训练**孪生网络**来学习，然后重用网络所提取的特征进行one/few-shot学习。

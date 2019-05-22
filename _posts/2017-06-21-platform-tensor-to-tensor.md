@@ -108,7 +108,7 @@ encoder堆叠了N=6层，每层有两个子层：
 
 + decoder:
 
-decoder同样堆叠了N=6层。**在encoder的两个子层的基础上，decoder加了一个子层，即，对encoder的输出增加了一个masked multi-head attention层【通过添加mask，这个子层不要encoder的输出作为输入，只要output的embedding作为输入】。**连接一样是Add & Norm。另外，**还对self-attention子层进行了修改，prevent positions from attending to subsequent positions.** **由于输入的output embedding有一个position的offset，所以结合masking，可以保证对位置i的预测，只依赖于位置小于i的位置的输出。**
+decoder同样堆叠了N=6层。**在encoder的两个子层的基础上，decoder加了一个子层，即，对encoder的输出增加了一个masked multi-head attention层【通过添加mask，这个子层不要encoder的输出作为输入，只要output的embedding作为输入】。**连接一样是Add & Norm。另外，**还对self-attention子层进行了修改，prevent positions from attending to subsequent positions.** **由于输入的output embedding有一个position的offset，所以结合masking，可以保证对位置i的预测，只依赖于位置小于i的位置的输出。**====>让decoder只看到左边的词，不作弊！
 
 #### 4.2.2 attention
 
