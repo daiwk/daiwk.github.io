@@ -33,7 +33,7 @@ urlcolor: blue
   - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
 - [part2-Graph Neural Networks](#part2-graph-neural-networks)
   - [基础知识](#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86)
-      - [Neighborhood Aggregation](#neighborhood-aggregation)
+  - [Neighborhood Aggregation](#neighborhood-aggregation)
   - [Graph Convolutional Networks(GCN)](#graph-convolutional-networksgcn)
   - [GraphSAGE](#graphsage)
   - [Gated Graph Neural Networks](#gated-graph-neural-networks)
@@ -572,7 +572,7 @@ similarity(u,v)\approx z_v^Tz_u
     + 节点度数、clustering coefficients(聚集系数，参考[https://blog.csdn.net/pennyliang/article/details/6838956](https://blog.csdn.net/pennyliang/article/details/6838956))等
     + Indicator vectors(例如，每个节点的one-hot vector)
 
-##### Neighborhood Aggregation
+### Neighborhood Aggregation
 
 核心思想：使用nn对节点的邻居的信息进行汇聚，生成这个节点的embedding
 

@@ -530,7 +530,7 @@ $$
     + 节点度数、clustering coefficients(聚集系数，参考[https://blog.csdn.net/pennyliang/article/details/6838956](https://blog.csdn.net/pennyliang/article/details/6838956))等
     + Indicator vectors(例如，每个节点的one-hot vector)
 
-#### Neighborhood Aggregation
+## Neighborhood Aggregation
 
 核心思想：使用nn对节点的邻居的信息进行汇聚，生成这个节点的embedding
 
