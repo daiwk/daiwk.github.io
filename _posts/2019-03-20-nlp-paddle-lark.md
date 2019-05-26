@@ -170,7 +170,7 @@ REPEAT_TIMES=1
 
 <html>
 <br/>
-<img src='../assets/ernie-different-mask-level.png' style='max-height: 200px'/>
+<img src='../assets/ernie-different-mask-level.png' style='max-width: 500px'/>
 <br/>
 </html>
 
