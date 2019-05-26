@@ -12,7 +12,10 @@ tags: [paddle, bert, lark, ernie ]
 - [bert](#bert)
   - [finetune和跑预测并save模型](#finetune%E5%92%8C%E8%B7%91%E9%A2%84%E6%B5%8B%E5%B9%B6save%E6%A8%A1%E5%9E%8B)
   - [线上infer部分](#%E7%BA%BF%E4%B8%8Ainfer%E9%83%A8%E5%88%86)
-- [ernie](#ernie)
+- [ernie(baiduNLP)](#erniebaidunlp)
+- [ernie(清华ACL2019版)](#ernie%E6%B8%85%E5%8D%8Eacl2019%E7%89%88)
+  - [模型结构](#%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84)
+  - [finetune方法](#finetune%E6%96%B9%E6%B3%95)
 
 <!-- /TOC -->
 
@@ -133,6 +136,85 @@ REPEAT_TIMES=1
         --output_prediction
 ```
 
-## ernie
+## ernie(baiduNLP)
 
-xx
+参考[中文任务全面超越BERT：百度正式发布NLP预训练模型ERNIE](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650758722&idx=1&sn=6742b0f86982890d78cb3ec3be9865b3&scene=0#wechat_redirect)
+
+[ERNIE: Enhanced Representation through Knowledge Integration](https://arxiv.org/pdf/1904.09223.pdf)
+
+使用entity-level masking和phrase-level masking两种mask方法
+
+输入的每个样本由5个 ';' 分隔的字段组成，数据格式：
+
++ token_ids
++ sentence_type_ids：两句话，第一句都是0，第二句都是1
++ position_ids
++ seg_labels：分词边界信息: 0表示词首、1表示非词首、-1为占位符, 其对应的词为 CLS 或者 SEP；
++ next_sentence_label
+
+例如：
+
+```shell
+1 1048 492 1333 1361 1051 326 2508 5 1803 1827 98 164 133 2777 2696 983 121 4 19 9 634 551 844 85 14 2476 1895 33 13 983 121 23 7 1093 24 46 660 12043 2 1263 6 328 33 121 126 398 276 315 5 63 44 35 25 12043 2;0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1;0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55;-1 0 0 0 0 1 0 1 0 0 1 0 0 1 0 1 0 0 0 0 0 0 1 0 1 0 0 1 0 1 0 0 0 0 1 0 0 0 0 -1 0 0 0 1 0 0 1 0 1 0 0 1 0 1 0 -1;0
+```
+
+和bert在mask上的区别：
+
+<html>
+<br/>
+<img src='../assets/ernie-bert-masking-diff.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+一个句子的不同level的mask方式：
+
+<html>
+<br/>
+<img src='../assets/ernie-different-mask-level.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+## ernie(清华ACL2019版)
+
+参考[ACL 2019 \| 清华等提出ERNIE：知识图谱结合BERT才是「有文化」的语言模型](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650762696&idx=4&sn=70c25ea24d15ed53880f45c511938813&chksm=871aa9b6b06d20a0536c7602a5757e28f995600bdffdd52ccb791927ba17aaaa10bfc15a209d&scene=0&xtrack=1&pass_ticket=10gfACXwvjCg3%2FChSZlp60K3dPTbQYhHe4njUqeSGdqo1x0Esjyqks8weqv1u2O0#rd)
+
+[ERNIE: Enhanced Language Representation with Informative Entities](https://arxiv.org/pdf/1905.07129.pdf)
+
+代码：[https://github.com/thunlp/ERNIE](https://github.com/thunlp/ERNIE)
+
++ 对于抽取并编码的知识信息，研究者首先**识别**文本中的**命名实体**，然后将这些提到的实体**与知识图谱中的实体进行匹配**。
+
+研究者并不直接使用 KG 中基于图的事实，相反他们通过**知识嵌入**算法（例如，TransE，参考[Translating Embeddings for Modeling Multi-relational Data](https://www.utc.fr/~bordesan/dokuwiki/_media/en/transe_nips13.pdf)，简单说就是(head,relation,tail)这个三元组，每个元素都是一个向量，期望head+relation尽可能=tail）**编码KG的图结构**，并将多信息实体嵌入作为ERNIE的输入。基于**文本和知识图谱的对齐**，ERNIE 将知识模块的实体表征整合到语义模块的隐藏层中。
+
++ 与 BERT 类似，研究者采用了带 Mask 的语言模型，以及预测下一句文本作为预训练目标。除此之外，为了更好地融合文本和知识特征，研究者设计了一种新型预训练目标，即随机**Mask掉**一些**对齐了输入文本的命名实体**，并要求模型从知识图谱中选择合适的实体以完成对齐。
+
+现存的预训练语言表征模型只利用局部上下文预测 Token，但 ERNIE 的新目标要求模型**同时聚合上下文**和**知识事实**的信息，并**同时**预测**Token和实体**，从而构建一种知识化的语言表征模型。
+
+研究者针对两种知识驱动型 NLP 任务进行了实验，即实体分型（entity typing）和关系分类。实验结果表明，ERNIE在知识驱动型任务中效果显著超过当前最佳的 BERT，因此 ERNIE 能完整利用词汇、句法和知识信息的优势。研究者同时在其它一般 NLP 任务中测试 ERNIE，并发现它能获得与 BERT 相媲美的性能。
+
+### 模型结构
+
+<html>
+<br/>
+<img src='../assets/thu-ernie-arch.png' style='max-height: 400px'/>
+<br/>
+</html>
+
+由两个堆叠的模块构成：
+
++ 底层的文本编码器（T-Encoder），负责获取输入 token 的词法和句法信息；
++ 上层的知识型编码器（K-Encoder），负责将额外的面向token的实体知识信息整合进来自底层的文本信息。这样我们就可以在一个统一的特征空间中表征token和实体的异构信息了。注意，**输出也是两部分**，token output和entity output，然后这两部分**各自过self-attention**，再进行information fusion。
+
+N表示T-Encoder的层数，M表示K-Encoder的层数。
+
+### finetune方法
+
++ 针对relation classification问题，```[HD]```表示head entity，```[TL]```表示tail entity，然后```[CLS]```表示这个pair对的关系分类的label
++ 针对entity typing问题，其实是个简化版的relation classification问题，只要```[ENT]```这个就行了，然后这个实体是哪一类的，用```[CLS]```来表示，每条样本只预测一个```[ENT]```的分类。另一个实体用占位符替代。
++ 对于普通任务，把上述的```[TL]```、```[HD]```和```[ENT]```用占位符来替代就行。
+
+<html>
+<br/>
+<img src='../assets/thu-ernie-finetune.png' style='max-height: 200px'/>
+<br/>
+</html>

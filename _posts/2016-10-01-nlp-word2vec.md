@@ -43,6 +43,7 @@ tags: [word2vec, ngram, nnlm, cbow, c-skip-gram, 统计语言模型]
     - [可视化](#%E5%8F%AF%E8%A7%86%E5%8C%96)
 - [y1. tensorflow的高级实现1](#y1-tensorflow%E7%9A%84%E9%AB%98%E7%BA%A7%E5%AE%9E%E7%8E%B01)
 - [y2. tensorflow的高级实现2](#y2-tensorflow%E7%9A%84%E9%AB%98%E7%BA%A7%E5%AE%9E%E7%8E%B02)
+- [自己的总结](#%E8%87%AA%E5%B7%B1%E7%9A%84%E6%80%BB%E7%BB%93)
 
 <!-- /TOC -->
 
@@ -998,3 +999,14 @@ except ImportError as ex:
 
 [https://github.com/tensorflow/models/blob/master/tutorials/embedding/word2vec_optimized.py](https://github.com/tensorflow/models/blob/master/tutorials/embedding/word2vec_optimized.py)
 
+# 自己的总结
+
+某个时候整理了个ppt：
+
+<html>
+<br/>
+
+<img src='../assets/w2v-fasttext.png' style='max-height: 300px'/>
+<br/>
+
+</html>

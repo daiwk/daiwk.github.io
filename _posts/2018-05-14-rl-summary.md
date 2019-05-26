@@ -12,6 +12,7 @@ tags: [rl summary, ]
 - [概览](#概览)
 - [基于值函数的强化学习方法](#基于值函数的强化学习方法)
 - [策略搜索方法](#策略搜索方法)
+- [自己的小结](#自己的小结)
 
 <!-- /TOC -->
 
@@ -41,6 +42,29 @@ tags: [rl summary, ]
 <html>
 <br/>
 <img src='../assets/rl-overview-policy-search.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+
+## 自己的小结
+
+某个时候整理了个ppt：
+
+<html>
+<br/>
+<img src='../assets/rl-my-understanding1.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+<html>
+<br/>
+<img src='../assets/rl-my-understanding2.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+<html>
+<br/>
+<img src='../assets/rl-my-understanding3.png' style='max-height: 300px'/>
 <br/>
 </html>
 

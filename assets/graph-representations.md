@@ -1012,3 +1012,20 @@ $$
 主要想法：将relational的关系转化成attention，利用attention来代表两个entity的关系。隐式地将relational引入NN结构中
 
 Zambaldi et al.在2018的[Relational deep reinforcement learning](https://arxiv.org/abs/1806.01830)
+
+# 自己的小结
+
+某个时候整理了个ppt：
+
+<div>
+
+![](./assets/gnn-my-understanding1.png){ max-height=300px }
+
+</div>
+
+<div>
+
+![](./assets/gnn-my-understanding2.png){ max-height=300px }
+
+</div>
+

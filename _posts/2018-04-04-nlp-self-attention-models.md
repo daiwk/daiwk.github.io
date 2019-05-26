@@ -11,6 +11,7 @@ tags: [自注意力, self-attention,  ]
 <!-- TOC -->
 
 - [attention的本质](#attention%E7%9A%84%E6%9C%AC%E8%B4%A8)
+- [自己的小结](#%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B0%8F%E7%BB%93)
 - [multi-head attention](#multi-head-attention)
 - [self-attention](#self-attention)
 - [对比rnn/cnn/transformer](#%E5%AF%B9%E6%AF%94rnncnntransformer)
@@ -84,6 +85,16 @@ attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt {d_k}})V
 <html>
 <br/>
 <img src='../assets/attention-explanation.jpg' style='max-height: 300px'/>
+<br/>
+</html>
+
+## 自己的小结
+
+某个时候整理了个ppt：
+
+<html>
+<br/>
+<img src='../assets/attention-my-understanding.png' style='max-height: 300px'/>
 <br/>
 </html>
 

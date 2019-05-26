@@ -51,6 +51,7 @@ urlcolor: blue
   - [MolGAN](#molgan)
   - [GCPN](#gcpn)
 - [未来方向](#%E6%9C%AA%E6%9D%A5%E6%96%B9%E5%90%91)
+- [自己的小结](#%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B0%8F%E7%BB%93)
 
 <!-- /TOC -->
 
@@ -1054,3 +1055,20 @@ f_{stop}(s_t)=SOFTMAX(m_t(AGG(X))), & a_{stop}\sim f_{stop}(s_t)\in \{0,1\} \\
 主要想法：将relational的关系转化成attention，利用attention来代表两个entity的关系。隐式地将relational引入NN结构中
 
 Zambaldi et al.在2018的[Relational deep reinforcement learning](https://arxiv.org/abs/1806.01830)
+
+## 自己的小结
+
+某个时候整理了个ppt：
+
+<html>
+<br/>
+<img src='../assets/gnn-my-understanding1.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+<html>
+<br/>
+<img src='../assets/gnn-my-understanding2.png' style='max-height: 300px'/>
+<br/>
+</html>
+

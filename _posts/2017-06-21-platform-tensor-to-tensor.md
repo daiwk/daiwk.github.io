@@ -37,6 +37,7 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
   - [7.1 原版（tensor2tensor）](#71-%E5%8E%9F%E7%89%88tensor2tensor)
   - [7.2 单纯transformer](#72-%E5%8D%95%E7%BA%AFtransformer)
 - [8. 改进](#8-%E6%94%B9%E8%BF%9B)
+- [9. 自己的小结](#9-%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B0%8F%E7%BB%93)
 
 <!-- /TOC -->
 
@@ -446,3 +447,12 @@ t2t-trainer \
 + 将 Transformer 中的 Multi-Head Attention 替换为**多个自注意力分支**，而模型会在训练阶段中将学习结合这些分支注意力模块。
 + 采用了一种**编码相对位置的表征**以扩展自注意力机制，并令模型能更好地理解**序列元素间的相对距离**。
 
+## 9. 自己的小结
+
+<html>
+<br/>
+
+<img src="../assets/transformer-my-understanding.png" style='max-height: 300px'/>
+<br/>
+
+</html>
