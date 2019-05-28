@@ -44,6 +44,7 @@ tags: [推荐系统, ]
   - [An Attentive Interaction Network for Context-aware Recommendations](#an-attentive-interaction-network-for-context-aware-recommendations)
   - [Regularizing Matrix Factorization with User and Item Embeddings for Recommendation](#regularizing-matrix-factorization-with-user-and-item-embeddings-for-recommendation)
   - [Explainable Recommendation via Multi-Task Learning in Opinionated Text Data](#explainable-recommendation-via-multi-task-learning-in-opinionated-text-data)
+  - [Top-K Off-Policy Correction for a REINFORCE Recommender System](#top-k-off-policy-correction-for-a-reinforce-recommender-system)
 
 <!-- /TOC -->
 
@@ -250,3 +251,10 @@ Metric Factorization 可以用在评分预测和排序两个经典的推荐场�
 论文提出了一个用于可解释推荐任务的多任务学习方法，通过联合张量分解将用户、产品、特征和观点短语映射到同一表示空间。
 
 源码：[https://github.com/MyTHWN/MTER](https://github.com/MyTHWN/MTER)
+
+
+### Top-K Off-Policy Correction for a REINFORCE Recommender System
+
+[Top-K Off-Policy Correction for a REINFORCE Recommender System](https://arxiv.org/pdf/1812.02353.pdf)
+
+参考[https://daiwk.github.io/posts/dl-topk-off-policy-correction.html](https://daiwk.github.io/posts/dl-topk-off-policy-correction.html)
