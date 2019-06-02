@@ -52,13 +52,30 @@ tags: [federated learning, 联邦学习, ]
 
 [Communication-Efficient Learning of Deep Networks from Decentralized Data](https://arxiv.org/abs/1602.05629)
 
+[http://column.hongliangjie.com/%E8%AF%BB%E8%AE%BA%E6%96%87/2017/06/18/aistats2017-dist-sgd/](http://column.hongliangjie.com/%E8%AF%BB%E8%AE%BA%E6%96%87/2017/06/18/aistats2017-dist-sgd/)
+
+FederatedAveraging算法总共有三个基本的参数，`\(C\)`（0到1）控制有多少比例的的客户端参与优化，`\(E\)`控制每一轮多少轮SGD需要在客户端运行，`\(B\)`是每一轮的Mini-Batch的数目大小。另外，假设总共有`\(K\)`个客户端。
+
++ 每一轮都**随机选择**出`\(\max (CK,1)\)`个的客户端
++ 对于**每个客户端**进行**Mini-Batch**的大小为`\(B\)`，**轮数**为`\(E\)`的SGD更新
++ 对于参数直接进行**加权平均**（这里的**权重**是每个**客户端的数据相对大小**）
+
+文章对这里的最后一步进行了说明。之前有其他研究表明，如何直接对参数空间进行加权平均，特别是Non-Convex的问题，会得到任意坏的结果。这篇文章里，作者们对于这样的问题的处理是，让**每一轮**的**各个客户端**的**起始参数值相同**（也就是**前一轮的全局参数值**）。这一步使得算法效果大幅度提高。
+
 ### paper2: Federated Learning: Strategies for Improving Communication Efficiency
 
 [Federated Learning: Strategies for Improving Communication Efficiency](https://arxiv.org/abs/1610.05492)
 
+使用两种update来减少通信的耗时：
+
++ structured updates: 在一个使用**更少的变量**（例如low-rank或者随机mask）来参数化表示的**受限空间内**，**直接学习**一个**update**。
++ sketched updates: 学习**整个模型的update**，并在发送给server之前，使用**quantization, random rotations, and subsampling**来进行**压缩**。
+
 ### paper3: Federated Optimization: Distributed Machine Learning for On-Device Intelligence
 
 [Federated Optimization: Distributed Machine Learning for On-Device Intelligence](https://arxiv.org/abs/1610.02527)
+
+提到了SVRG(Stochastic Variance Reduced Gradient)、 DANE(Distributed Approximate Newton algorithm)，然后提出了Federated SVRG(FSVRG)。
 
 ### paper4: Practical Secure Aggregation for Privacy Preserving Machine Learning
 
