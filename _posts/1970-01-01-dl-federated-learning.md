@@ -71,6 +71,7 @@ FederatedAveraging算法总共有三个基本的参数，`\(C\)`（0到1）控�
 + structured updates: 在一个使用**更少的变量**（例如low-rank或者随机mask）来参数化表示的**受限空间内**，**直接学习**一个**update**。
 + sketched updates: 学习**整个模型的update**，并在发送给server之前，使用**quantization, random rotations, and subsampling**来进行**压缩**。
 
+
 ### paper3: Federated Optimization: Distributed Machine Learning for On-Device Intelligence
 
 [Federated Optimization: Distributed Machine Learning for On-Device Intelligence](https://arxiv.org/abs/1610.02527)
