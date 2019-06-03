@@ -10,8 +10,8 @@ tags: [docker常用命令,]
 <!-- TOC -->
 
 - [docker进入容器方法汇总](#docker%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB)
-    - [docker exec](#docker-exec)
-    - [install docker-enter](#install-docker-enter)
+  - [docker exec](#docker-exec)
+  - [install docker-enter](#install-docker-enter)
 - [docker run](#docker-run)
 - [docker images](#docker-images)
 - [docker ps](#docker-ps)
@@ -124,9 +124,9 @@ docker run -idt -v /home/work/daiwenkai:/home/data 390b21e493af /bin/bash
 docker images
 REPOSITORY                                           TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
 ubuntu                            ru                   latest              f5bb94a8fac4        11 days ago         117.3 MB
-registry.baidu.com/daiwenkai/deep-learning-factory   1.0.2               390b21e493af        7 weeks ago         2.174 GB
+xxx.baidu.com/daiwenkai/deep-learning-factory   1.0.2               390b21e493af        7 weeks ago         2.174 GB
 tensorflow/tensorflow                                latest              05a46e5af4d3        8 weeks ago         1.028 GB
-registry.baidu.com/public/centos6u3                  1.0.1               9a6d077da3a3        23 months ago       1.363 GB
+xxx.baidu.com/public/centos6u3                  1.0.1               9a6d077da3a3        23 months ago       1.363 GB
 ```
 
 ## docker ps
@@ -153,13 +153,13 @@ docker pull ubuntu
 ## docker commit
 
 ```
-docker commit -m "1.0.1 version" ffd32a5b82f7 registry.baidu.com/daiwenkai/scrapy-framework:1.0.1
+docker commit -m "1.0.1 version" ffd32a5b82f7 xxx.baidu.com/daiwenkai/scrapy-framework:1.0.1
 ```
 
 ## docker push
 
 ```
-docker push registry.baidu.com/daiwenkai/scrapy-framework:1.0.1
+docker push xxx.baidu.com/daiwenkai/scrapy-framework:1.0.1
 ```
 
 ## docker save

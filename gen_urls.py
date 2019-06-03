@@ -2,13 +2,11 @@
 # -*- coding: gbk -*-
 ########################################################################
 # 
-# Copyright (c) 2018 Baidu.com, Inc. All Rights Reserved
 # 
 ########################################################################
  
 """
 File: gen_urls.py
-Author: daiwenkai(daiwenkai@baidu.com)
 Date: 2018/01/28 00:10:09
 """
 

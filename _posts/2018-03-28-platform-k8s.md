@@ -233,10 +233,6 @@ skyDNS->KubeDNS。可以对特定的domain自定义上游nameserver。
 
 ## inf k8s
 
-docker .baidu.com
-registry.baidu.com
-dockerhub.baidubce.com
-
 微服务
 自动伸缩
 使用supervisor,如果主进程被Kill了，会把这个信号量传给每个子进程，避免孤儿进程

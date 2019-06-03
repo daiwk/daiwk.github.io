@@ -2,13 +2,11 @@
 # -*- coding: utf8 -*-
 ########################################################################
 # 
-# Copyright (c) 2018 Baidu.com, Inc. All Rights Reserved
 # 
 ########################################################################
  
 """
 File: gen_dot.py
-Author: daiwenkai(daiwenkai@baidu.com)
 Date: 2018/05/14 00:22:39
 """
 

@@ -9,9 +9,9 @@ tags: [bigflow,]
 
 <!-- TOC -->
 
-- [自动缩减](#自动缩减)
-- [一些reduce的task非常慢](#一些reduce的task非常慢)
-- [数据太长](#数据太长)
+- [自动缩减](#%E8%87%AA%E5%8A%A8%E7%BC%A9%E5%87%8F)
+- [一些reduce的task非常慢](#%E4%B8%80%E4%BA%9Breduce%E7%9A%84task%E9%9D%9E%E5%B8%B8%E6%85%A2)
+- [数据太长](#%E6%95%B0%E6%8D%AE%E5%A4%AA%E9%95%BF)
 - [lazyvar](#lazyvar)
 
 <!-- /TOC -->
@@ -45,7 +45,6 @@ else:
 pipeline = base.Pipeline.create(*****, cpu_profile=True)
 ```
 
-
 ### 数据太长
 
 看dce-writer-xxxxxxxxxxxxxxx文件，出现这句就挂了。。。
@@ -57,15 +56,11 @@ FATAL [writer.cc:188] 0113 17:27:47.340183 1342 | CHECK failed: key.length() + v
 
 ### lazyvar
 
-[http://bigflow.baidu.com/doc/faq.html#bigflow](http://bigflow.baidu.com/doc/faq.html#bigflow)
-
 目前外部词典的加载方式主要有3种：
 
 + 方法1. 如果词典文件极小（不超过10M）直接使用Python的闭包功能
 
 + 方法2. 如果词典文件较大（10M < 词典大小 < 1G），可以使用bigflow提供的lazy_var模块在远端加载词典。
-
-lazy_var从1.0.4版本开始提供，目前只提供 一个临时下载地址：wget http://bigflow.baidu.com/download/module/lazy_var.py:
 
 ```python
 # coding: utf-8
@@ -128,7 +123,7 @@ if __name__ == "__main__":
 
 另外，如果自定义的类型(python的class)会出现bad marshal等错误时，可以用lazyvar来搞
 
-```
+```python
 import my_lazy_var
 from brand_tagger import BrandTagger
 
