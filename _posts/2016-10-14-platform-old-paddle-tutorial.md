@@ -9,16 +9,16 @@ tags: [老paddle,]
 
 <!-- TOC -->
 
-- [老Paddle使用整理](#老paddle使用整理)
-    - [1. 预处理](#1-预处理)
-        - [1.1 预处理基本知识](#11-预处理基本知识)
-        - [1.1.1 预处理的文本结构：](#111-预处理的文本结构)
-            - [1.1.2 预处理的7个param](#112-预处理的7个param)
-            - [1.1.3 proto格式](#113-proto格式)
-                - [1.1.3.1 local预处理](#1131-local预处理)
-                - [1.1.3.2 cluster预处理](#1132-cluster预处理)
-            - [1.1.4 使用pyDataProvider格式](#114-使用pydataprovider格式)
-    - [2. 训练](#2-训练)
+- [老Paddle使用整理](#%E8%80%81paddle%E4%BD%BF%E7%94%A8%E6%95%B4%E7%90%86)
+  - [1. 预处理](#1-%E9%A2%84%E5%A4%84%E7%90%86)
+    - [1.1 预处理基本知识](#11-%E9%A2%84%E5%A4%84%E7%90%86%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86)
+    - [1.1.1 预处理的文本结构：](#111-%E9%A2%84%E5%A4%84%E7%90%86%E7%9A%84%E6%96%87%E6%9C%AC%E7%BB%93%E6%9E%84)
+      - [1.1.2 预处理的7个param](#112-%E9%A2%84%E5%A4%84%E7%90%86%E7%9A%847%E4%B8%AAparam)
+      - [1.1.3 proto格式](#113-proto%E6%A0%BC%E5%BC%8F)
+        - [1.1.3.1 local预处理](#1131-local%E9%A2%84%E5%A4%84%E7%90%86)
+        - [1.1.3.2 cluster预处理](#1132-cluster%E9%A2%84%E5%A4%84%E7%90%86)
+      - [1.1.4 使用pyDataProvider格式](#114-%E4%BD%BF%E7%94%A8pydataprovider%E6%A0%BC%E5%BC%8F)
+  - [2. 训练](#2-%E8%AE%AD%E7%BB%83)
 
 <!-- /TOC -->
 
@@ -482,9 +482,6 @@ Evaluator(
 
 Outputs("crf_cost")
 ```
-
-老paddle支持的所有layer：
-[http://wiki.baidu.com/pages/viewpage.action?pageId=42366874](http://wiki.baidu.com/pages/viewpage.action?pageId=42366874)
 
 ***注意：**运行submit的时候，会自己产出train.list和test.list，并且会生成tester_config.conf*
 
