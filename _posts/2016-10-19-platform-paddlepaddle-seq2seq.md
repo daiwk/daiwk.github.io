@@ -9,11 +9,11 @@ tags: [nlp, natural language processing, seq2seq, seqToseq, paddlepaddle]
 
 <!-- TOC -->
 
-- [**1. seq2seq简介**](#1-seq2seq简介)
-- [**2. seq2seq数据集简介**](#2-seq2seq数据集简介)
-- [**2. seq2seq数据预处理**](#2-seq2seq数据预处理)
-- [**3. seq2seq训练**](#3-seq2seq训练)
-- [**3. seq2seq生成文本**](#3-seq2seq生成文本)
+- [**1. seq2seq简介**](#1-seq2seq%E7%AE%80%E4%BB%8B)
+- [**2. seq2seq数据集简介**](#2-seq2seq%E6%95%B0%E6%8D%AE%E9%9B%86%E7%AE%80%E4%BB%8B)
+- [**2. seq2seq数据预处理**](#2-seq2seq%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86)
+- [**3. seq2seq训练**](#3-seq2seq%E8%AE%AD%E7%BB%83)
+- [**3. seq2seq生成文本**](#3-seq2seq%E7%94%9F%E6%88%90%E6%96%87%E6%9C%AC)
 
 <!-- /TOC -->
 
@@ -237,11 +237,6 @@ paddle train \
 #num_passes and test_pass: loading model parameters from test_pass to (num_passes - 1), here only loads data/wmt14_model/pass-00012
 
 ```
-
-【然而。。用jumbo装的paddle有问题。。版本太老。。我们从源码再来装一个好了。。：
-
-[http://deeplearning.baidu.com/doc_cn/build/internal/build_from_source_zh_cn.html#jumbo](http://deeplearning.baidu.com/doc_cn/build/internal/build_from_source_zh_cn.html#jumbo)
-
 
 gen的结果是这个文件translation/gen_result，内容如下：
 
