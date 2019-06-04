@@ -7,6 +7,7 @@ https://daiwk.github.io/posts/knowledge-ctags.html
 https://daiwk.github.io/posts/knowledge-eigen.html
 https://daiwk.github.io/posts/knowledge-git.html
 https://daiwk.github.io/posts/knowledge-gperftools.html
+https://daiwk.github.io/posts/knowledge-hadoop-streaming.html
 https://daiwk.github.io/posts/knowledge-linux.html
 https://daiwk.github.io/posts/knowledge-matplotlib.html
 https://daiwk.github.io/posts/knowledge-matrix.html

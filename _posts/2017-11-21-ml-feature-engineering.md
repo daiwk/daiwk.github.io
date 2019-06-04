@@ -23,6 +23,7 @@ tags: [特征工程, ]
 - [4. 降维](#4-降维)
 - [5. sklearn小技巧](#5-sklearn小技巧)
 - [6. tf的特征工程](#6-tf的特征工程)
+- [7. paddle的ctr特征demo](#7-paddle的ctr特征demo)
 
 <!-- /TOC -->
 
@@ -507,3 +508,78 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
 ```
 
 另外，在[https://github.com/daiwk/grace_t/tree/master/python/grace_t/basic_demos](https://github.com/daiwk/grace_t/tree/master/python/grace_t/basic_demos)这里有些实践和尝试。。
+
+## 7. paddle的ctr特征demo
+
+参考[https://zhuanlan.zhihu.com/p/32699487](https://zhuanlan.zhihu.com/p/32699487)
+
+参考[https://github.com/PaddlePaddle/models/blob/develop/PaddleRec/ctr/preprocess.py](https://github.com/PaddlePaddle/models/blob/develop/PaddleRec/ctr/preprocess.py)
+
+```python
+class CategoryDictGenerator:
+    """
+    Generate dictionary for each of the categorical features
+    """
+
+    def __init__(self, num_feature):
+        self.dicts = []
+        self.num_feature = num_feature
+        for i in range(0, num_feature):
+            self.dicts.append(collections.defaultdict(int))
+
+    def build(self, datafile, categorial_features, cutoff=0):
+        with open(datafile, 'r') as f:
+            for line in f:
+                features = line.rstrip('\n').split('\t')
+                for i in range(0, self.num_feature):
+                    if features[categorial_features[i]] != '':
+                        self.dicts[i][features[categorial_features[i]]] += 1
+        for i in range(0, self.num_feature):
+            self.dicts[i] = filter(lambda x: x[1] >= cutoff,
+                                   self.dicts[i].items())
+            self.dicts[i] = sorted(self.dicts[i], key=lambda x: (-x[1], x[0]))
+            vocabs, _ = list(zip(*self.dicts[i]))
+            self.dicts[i] = dict(zip(vocabs, range(1, len(vocabs) + 1)))
+            self.dicts[i]['<unk>'] = 0
+
+    def gen(self, idx, key):
+        if key not in self.dicts[idx]:
+            res = self.dicts[idx]['<unk>']
+        else:
+            res = self.dicts[idx][key]
+        return res
+
+    def dicts_sizes(self):
+        return list(map(len, self.dicts))
+```
+
+```python
+class ContinuousFeatureGenerator:
+    """
+    Normalize the integer features to [0, 1] by min-max normalization
+    """
+
+    def __init__(self, num_feature):
+        self.num_feature = num_feature
+        self.min = [sys.maxsize] * num_feature
+        self.max = [-sys.maxsize] * num_feature
+
+    def build(self, datafile, continous_features):
+        with open(datafile, 'r') as f:
+            for line in f:
+                features = line.rstrip('\n').split('\t')
+                for i in range(0, self.num_feature):
+                    val = features[continous_features[i]]
+                    if val != '':
+                        val = int(val)
+                        if val > continous_clip[i]:
+                            val = continous_clip[i]
+                        self.min[i] = min(self.min[i], val)
+                        self.max[i] = max(self.max[i], val)
+
+    def gen(self, idx, val):
+        if val == '':
+            return 0.0
+        val = float(val)
+        return (val - self.min[idx]) / (self.max[idx] - self.min[idx])
+```
