@@ -12,19 +12,20 @@ tags: [gan论文集合, ]
 - [basic gan](#basic-gan)
 - [gan landscape](#gan-landscape)
 - [gan with the wind](#gan-with-the-wind)
-- [gan推导](#gan%E6%8E%A8%E5%AF%BC)
+- [gan推导](#gan推导)
 - [ls-gan](#ls-gan)
 - [wgan](#wgan)
 - [lapgan](#lapgan)
 - [infogan & improvedgan](#infogan--improvedgan)
 - [dcgan](#dcgan)
 - [irgan](#irgan)
-- [BigGAN](#biggan)
+- [BigGAN+BigGAN-deep](#bigganbiggan-deep)
 - [TreeGAN](#treegan)
 - [stackGAN](#stackgan)
 - [cycleGAN](#cyclegan)
 - [deblurGAN](#deblurgan)
 - [txt2img](#txt2img)
+- [VQ-VAE](#vq-vae)
 
 <!-- /TOC -->
 
@@ -68,7 +69,7 @@ tags: [gan论文集合, ]
 
 [https://daiwk.github.io/posts/rl-irgan.html](https://daiwk.github.io/posts/rl-irgan.html)
 
-## BigGAN
+## BigGAN+BigGAN-deep
 
 [https://daiwk.github.io/posts/cv-biggan.html](https://daiwk.github.io/posts/cv-biggan.html)
 
@@ -91,3 +92,7 @@ tags: [gan论文集合, ]
 ## txt2img
 
 [https://daiwk.github.io/posts/cv-gan-txt2img.html](https://daiwk.github.io/posts/cv-gan-txt2img.html)
+
+## VQ-VAE
+
+[https://daiwk.github.io/posts/cv-vq-vae.html](https://daiwk.github.io/posts/cv-vq-vae.html)

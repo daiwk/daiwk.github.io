@@ -2,7 +2,7 @@
 layout: post
 category: "nlp"
 title: "自然语言处理中的自注意力机制（Self-Attention Mechanism）"
-tags: [自注意力, self-attention,  ]
+tags: [自注意力, self-attention, 机器翻译, ]
 
 ---
 
@@ -10,23 +10,27 @@ tags: [自注意力, self-attention,  ]
 
 <!-- TOC -->
 
-- [attention的本质](#attention%E7%9A%84%E6%9C%AC%E8%B4%A8)
-- [自己的小结](#%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B0%8F%E7%BB%93)
+- [attention的本质](#attention的本质)
+- [自己的小结](#自己的小结)
 - [multi-head attention](#multi-head-attention)
 - [self-attention](#self-attention)
-- [对比rnn/cnn/transformer](#%E5%AF%B9%E6%AF%94rnncnntransformer)
-  - [rnn](#rnn)
-    - [SRU](#sru)
-    - [SRNN](#srnn)
-  - [cnn](#cnn)
-  - [transformer](#transformer)
-- [机器翻译小综述](#%E6%9C%BA%E5%99%A8%E7%BF%BB%E8%AF%91%E5%B0%8F%E7%BB%BC%E8%BF%B0)
-  - [机器翻译的挑战](#%E6%9C%BA%E5%99%A8%E7%BF%BB%E8%AF%91%E7%9A%84%E6%8C%91%E6%88%98)
-    - [漏译](#%E6%BC%8F%E8%AF%91)
-    - [数据稀疏](#%E6%95%B0%E6%8D%AE%E7%A8%80%E7%96%8F)
-    - [引入知识](#%E5%BC%95%E5%85%A5%E7%9F%A5%E8%AF%86)
-    - [可解释性](#%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7)
-    - [语篇翻译](#%E8%AF%AD%E7%AF%87%E7%BF%BB%E8%AF%91)
+- [对比rnn/cnn/transformer](#对比rnncnntransformer)
+    - [rnn](#rnn)
+        - [SRU](#sru)
+        - [SRNN](#srnn)
+    - [cnn](#cnn)
+    - [transformer](#transformer)
+- [机器翻译小综述](#机器翻译小综述)
+    - [机器翻译的挑战](#机器翻译的挑战)
+        - [漏译](#漏译)
+        - [数据稀疏](#数据稀疏)
+        - [引入知识](#引入知识)
+        - [可解释性](#可解释性)
+        - [语篇翻译](#语篇翻译)
+- [清华刘洋的talk——机器翻译的三大挑战](#清华刘洋的talk机器翻译的三大挑战)
+    - [知识整合](#知识整合)
+    - [可解释/可视化](#可解释可视化)
+    - [鲁棒性](#鲁棒性)
 
 <!-- /TOC -->
 
@@ -240,3 +244,27 @@ connections（严格来说是highway connections）**
 #### 语篇翻译
 
 [Modeling Coherence for Discourse Neural Machine Translation](https://arxiv.org/abs/1811.05683)提出了一个两步解码的方法。在第一轮解码中单独生成每个句子的初步翻译结果，在第二轮解码中利用第一轮翻译的结果进行翻译内容润色，并且提出使用**增强式学习**模型来奖励模型产生更流畅的译文。
+
+## 清华刘洋的talk——机器翻译的三大挑战
+
+参考[清华刘洋《基于深度学习的机器翻译》，突破知识整合、可解释和鲁棒性三大难关](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652046349&idx=2&sn=3bdb889aa84b90f0c687fb2eb52bd8b1&chksm=f12070fcc657f9ea22310cd663feb21e2fa0e2c2b92b52bfd2b949eb0d9e677d52947beaecd7&mpshare=1&scene=1&srcid=&pass_ticket=TloMdmvUbLd5jnKvVTzrccQhGuskwL6KQ0HhJLF56Nwtcb16%2BVvMA09bw32tFrjs#rd)
+
+### 知识整合
+
+[Prior Knowledge Integration for Neural Machine Translation using Posterior Regularization](https://arxiv.org/pdf/1811.01100.pdf)
+
+在这项工作中，建议使用后验正则化来提供一个将先验知识整合到神经机器翻译中的通用框架。将先验知识来源表示为一个对数线性模型的特征，该模型指导神经翻译模型的学习过程。汉英翻译实验表明，该方法取得了显著的改进。
+
+### 可解释/可视化
+
+[Visualizing and Understanding Neural Machine Translation](https://aclweb.org/anthology/P17-1106)
+
+这项工作主要的贡献包括：
+
++ 利用层级相关性传播算法可视化分析神经机器翻译；
++ 能够计算任意隐状态和任意contextual words的相关性，同时不要求神经网络中的函数必须可求偏导，不同于之前只有encoder和decoder隐层之间的对应信息；
++ 能够针对机器翻译中出错的例子，进行分析。
+
+### 鲁棒性
+
+输入中的小扰动会严重扭曲中间表示，从而影响神经机器翻译（NMT）模型的翻译质量。
