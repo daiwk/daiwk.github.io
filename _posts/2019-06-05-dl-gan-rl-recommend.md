@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "dl"
-title: ""
-tags: [Top-K Off-Policy Correction for a REINFORCE Recommender System, ]
+title: "GAN-CDQN"
+tags: [GAN-CDQN, 强化学习, 推荐, gan, ]
 ---
 
 目录
