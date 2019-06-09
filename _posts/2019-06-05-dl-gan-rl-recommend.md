@@ -154,7 +154,7 @@ a^{t}=\arg \max _{a \in \mathcal{A}^{t}} \eta r\left(\boldsymbol{s}^{t}, a\right
 
 <html>
 <br/>
-<img src='../assets/gan-cdqn.png' style='max-height: 400px'/>
+<img src='../assets/gan-cdqn.png' style='max-height: 200px'/>
 <br/>
 </html>
 
