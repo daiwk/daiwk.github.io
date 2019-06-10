@@ -172,7 +172,7 @@ r\left(\boldsymbol{s}^{t}, a^{t}\right) :=\boldsymbol{v}^{\top} \sigma\left(\bol
 \phi\left(s, \mathcal{A}^{t}\right) \propto \exp \left(\boldsymbol{v}^{\prime \top} \sigma\left(\boldsymbol{V}^{\prime}\left[\begin{array}{c}{\boldsymbol{s}^{t}} \\ {\boldsymbol{f}_{a^{t}}^{t}}\end{array}\right]+\boldsymbol{b}^{\prime}\right)\right)
 \]`
 
-其中，`\(\boldsymbol{V}, \boldsymbol{V}^{\prime} \in \mathbb{R}^{\ell \times(d n+d)}\)`是权重矩阵，而`\(\boldsymbol{b}, \boldsymbol{b}^{\prime} \in \mathbb{R}^{1 \times(d n+d)}\)`是bias**向量**，`\(\boldsymbol{v}, \boldsymbol{v}^{\prime} \in \mathbb{R}^{\ell}\)`是最终的regression参数。
+其中，`\(\boldsymbol{V}, \boldsymbol{V}^{\prime} \in \mathbb{R}^{\ell \times(d n+d)}\)`是权重矩阵，而`\(\boldsymbol{b}, \boldsymbol{b}^{\prime} \in \mathbb{R}^{\ell \times 1}\)`是bias**向量**(原文写错了，和作者邮件确认了应该是这个维数)，`\(\boldsymbol{v}, \boldsymbol{v}^{\prime} \in \mathbb{R}^{\ell}\)`是最终的regression参数。
 
 为了简化一点，把reward的所有参数定义为`\(\theta\)`，而用户模型的所有参数定义为`\(\alpha\)`，因此，reward就是`\(r_{\theta}\)`，而用户模型就是`\(\phi_{\alpha}\)`。
 
