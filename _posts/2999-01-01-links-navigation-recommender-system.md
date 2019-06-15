@@ -45,6 +45,8 @@ tags: [推荐系统, ]
   - [Regularizing Matrix Factorization with User and Item Embeddings for Recommendation](#regularizing-matrix-factorization-with-user-and-item-embeddings-for-recommendation)
   - [Explainable Recommendation via Multi-Task Learning in Opinionated Text Data](#explainable-recommendation-via-multi-task-learning-in-opinionated-text-data)
   - [Top-K Off-Policy Correction for a REINFORCE Recommender System](#top-k-off-policy-correction-for-a-reinforce-recommender-system)
+- [其他](#%E5%85%B6%E4%BB%96)
+  - [Fast Matrix Factorization for Online Recommendation with Implicit Feedback](#fast-matrix-factorization-for-online-recommendation-with-implicit-feedback)
 
 <!-- /TOC -->
 
@@ -258,3 +260,18 @@ Metric Factorization 可以用在评分预测和排序两个经典的推荐场�
 [Top-K Off-Policy Correction for a REINFORCE Recommender System](https://arxiv.org/pdf/1812.02353.pdf)
 
 参考[https://daiwk.github.io/posts/dl-topk-off-policy-correction.html](https://daiwk.github.io/posts/dl-topk-off-policy-correction.html)
+
+## 其他
+
+### Fast Matrix Factorization for Online Recommendation with Implicit Feedback
+
+[Fast Matrix Factorization for Online Recommendation with Implicit Feedback](https://arxiv.org/pdf/1708.05024.pdf)
+
+以往的MF模型对于missing data，都是直接使用uniform weight。然而在真实场景下，
+
+简单说一下svd++，就是加上一个user bias，再加一个item bias，而user向量再加上这个用户的邻域信息(图中的y是用户的N(u)个历史item的隐式反馈)：
+
+`\[
+\hat{r_{u i}}=\mu+b_{i}+b_{u}+\left(p_{u}+\frac{1}{\sqrt{|N(u)|}} \sum_{i \in N(u)} y_{i}\right) q_{i}^{T}
+\]`
+
