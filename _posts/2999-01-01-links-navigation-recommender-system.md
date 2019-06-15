@@ -52,7 +52,11 @@ tags: [推荐系统, ]
 
 ## 各种综述
 
+传统mf算法：
+
 [https://daiwk.github.io/posts/ml-recommender-systems.html](https://daiwk.github.io/posts/ml-recommender-systems.html)
+
+其他几个综述：
 
 [Batmaz2018\_Article\_AReviewOnDeepLearningForRecomm](https://daiwk.github.io/assets/Batmaz2018_Article_AReviewOnDeepLearningForRecomm.pdf)
 
@@ -265,10 +269,11 @@ Metric Factorization 可以用在评分预测和排序两个经典的推荐场�
 
 ### Fast Matrix Factorization for Online Recommendation with Implicit Feedback
 
+注：传统的mf相关算法可以参考[https://daiwk.github.io/posts/ml-recommender-systems.html](https://daiwk.github.io/posts/ml-recommender-systems.html)
+
 [Fast Matrix Factorization for Online Recommendation with Implicit Feedback](https://arxiv.org/pdf/1708.05024.pdf)
 
 以往的MF模型对于missing data，都是直接使用uniform weight(均匀分布)。然而在真实场景下，这个均匀分布的假设往往是不成立的。而且很多offline表现好的，到了动态变化的online场景上，往往表现不好。
 
-传统的mf相关算法可以参考[https://daiwk.github.io/posts/ml-recommender-systems.html](https://daiwk.github.io/posts/ml-recommender-systems.html)
-
+文章使用**item的popularity**来给missing data权重，并提出了element-wise Alternating Least Squares(**eALS**)，来对missing data的权重是变量的问题进行学习。对于新的feedback，设计了增量更新的策略。对于两个offline和online的公开数据集，eALS都能取得比sota的隐式MF方法更好的效果。
 
