@@ -19,6 +19,8 @@ tags: [match, search, recommend, lihang, sigir18, www18 ]
 
 一个是sigir18的：[https://www.comp.nus.edu.sg/~xiangnan/sigir18-deep.pdf](https://www.comp.nus.edu.sg/~xiangnan/sigir18-deep.pdf)
 
+好像都403了。。可以看这个[http://www.hangli-hl.com/uploads/3/4/4/6/34465961/wsdm_2019_tutorial.pdf](http://www.hangli-hl.com/uploads/3/4/4/6/34465961/wsdm_2019_tutorial.pdf)
+
 sigir的这个比较新。。看之
 
 ## aaa
