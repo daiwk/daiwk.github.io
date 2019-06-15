@@ -143,4 +143,4 @@ hinton 07年提出的[Restricted boltzmann machines for collaborative filtering]
 针对负反馈缺失的问题，有以下两种策略：
 
 + sample based learning：从missing data中采样出一部分，当成负反馈。
-+ whole-data based learning：
++ whole-data based learning：所有missing data都当做是负反馈。
