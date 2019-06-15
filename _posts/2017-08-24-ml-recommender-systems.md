@@ -9,18 +9,116 @@ tags: [svd, svd++, als, rbm-cf, fm, eALS, ]
 
 <!-- TOC -->
 
+- [ALS-WR](#als-wr)
+- [SVD](#svd)
+- [SVD++](#svd)
+- [RBM-CF](#rbm-cf)
+- [OCCF](#occf)
 - [eALS](#eals)
-  - [简介](#%E7%AE%80%E4%BB%8B)
+    - [简介](#简介)
+    - [related work](#related-work)
 
 <!-- /TOC -->
 
 [从item-base到svd再到rbm，多种Collaborative Filtering(协同过滤算法)从原理到实现](http://blog.csdn.net/dark_scope/article/details/17228643)
 
-附：简单说一下svd++，就是加上一个user bias，再加一个item bias，而user向量再加上这个用户的邻域信息(图中的y是用户的N(u)个历史item的隐式反馈)：
+
+## ALS-WR
+
+[Large-scale Parallel Collaborative Filtering for the Netflix Prize](https://endymecy.gitbooks.io/spark-ml-source-analysis/content/%E6%8E%A8%E8%8D%90/papers/Large-scale%20Parallel%20Collaborative%20Filtering%20the%20Netflix%20Prize.pdf)
+
+目标是最小化：
 
 `\[
-\hat{r_{u i}}=\mu+b_{i}+b_{u}+\left(p_{u}+\frac{1}{\sqrt{|N(u)|}} \sum_{i \in N(u)} y_{i}\right) q_{i}^{T}
+f(U, M)=\sum_{(i, j) \in I}\left(r_{i j}-\mathbf{u}_{i}^{T} \mathbf{m}_{j}\right)^{2}+\lambda\left(\sum_{i} n_{u_{i}}\left\|\mathbf{u}_{i}\right\|^{2}+\sum_{j} n_{m_{j}}\left\|\mathbf{m}_{j}\right\|^{2}\right)
 \]`
+
+U矩阵的shape是`\(n_f\times n_u\)`，M矩阵的shape是`\(n_f\times n_m\)`
+
+核心解法是：
+
++ M矩阵的第一行（也就是所有item的`\(n_f\)`个特征的第1个特征）初始化为该Item的平均分，其他位置设为一个比较小的随机值
++ 固定M，通过最小化目标函数求解U
++ 固定U，通过最小化目标函数求解M
++ 重复以上两步，直到满足终止条件
+
+首先，当M固定时，来更新U。令u的导数为0，经过如下推导，可以得到
+
+`\[\begin{aligned} & \frac{1}{2} \frac{\partial f}{\partial u_{k i}}=0, \quad \forall i, k \\ \Rightarrow & \sum_{j \in I_{i}}\left(\mathbf{u}_{i}^{T} \mathbf{m}_{j}-r_{i j}\right) m_{k j}+\lambda n_{u_{i}} u_{k i}=0, \quad \forall i, k \\ \Rightarrow & \sum_{j \in I_{i}} m_{k j} \mathbf{m}_{j}^{T} \mathbf{u}_{i}+\lambda n_{u_{i}} u_{k i}=\sum_{j \in I_{i}} m_{k j} r_{i j}, \quad \forall i, k \\ \Rightarrow &\left(M_{I_{i}} M_{I_{i}}^{T}+\lambda n_{u_{i}} E\right) \mathbf{u}_{i}=M_{I_{i}} R^{T}\left(i, I_{i}\right), \quad \forall i \\ \Rightarrow & \mathbf{u}_{i}=A_{i}^{-1} V_{i}, & \forall i \end{aligned}\]`
+
+其中，
+
++ `\(A_{i}=M_{I_{i}} M_{I_{i}}^{T}+\lambda n_{u_{i}} E\)`
++ `\(V_{i}=M_{I_{i}} R^{T}\left(i, I_{i}\right)\)`
++ `\(E\)`是一个`\(n_{f} \times n_{f}\)`的identity矩阵(单位矩阵，对角线为1，其他位置是0)。
++ `\(M_{I_{i}}\)`是从`\(M\)`中把`\(j \in I_{i}\)`这些列选出来组成的矩阵
++ `\(R\left(i, I_{i}\right)\)`是取出`\(R\)`矩阵的第i行，然后再取出`\(j \in I_{i}\)`这些列得到的行向量
+
+类似地，固定U来更新M：
+
+`\[
+\mathbf{m}_{j}=A_{j}^{-1} V_{j}, \quad \forall j
+\]`
+
+同理，
+
++ `\(A_{j}=U_{I_{j}} U_{I_{j}}^{T}+\lambda n_{m_{j}} E\)`
++ `\(V_{j}=U_{I_{j}} R\left(I_{j}, j\right)\)`
++ `\(U_{I_{j}}\)`是从`\(U\)`中把`\(i \in I_{j}\)`这些列取出来组成的矩阵
++ `\(R\left(I_{j}, j\right)\)`是取出`\(R\)`的第j列，然后再取出`\(i \in I_{j}\)`这些行组成的列向量
+
+## SVD
+
+hinton 07年提出的[Restricted boltzmann machines for collaborative filtering](https://www.cs.toronto.edu/~rsalakhu/papers/rbmcf.pdf)里面提到了用sgd来训练svd：
+
+`\[
+\begin{aligned} f &=\sum_{i=1}^{N} \sum_{j=1}^{M} I_{i j}\left(\mathbf{u}_{\mathbf{i}} \mathbf{v}_{\mathbf{j}}^{\prime}-Y_{i j}\right)^{2} \\ &+\lambda \sum_{i j} I_{i j}\left(\left\|\mathbf{u}_{\mathbf{i}}\right\|_{F r o}^{2}+\left\|\mathbf{v}_{\mathbf{j}}\right\|_{F r o}^{2}\right) \end{aligned}
+\]`
+
+而在Koren的[Advances in collaborative filtering](https://datajobs.com/data-science-repo/Collaborative-Filtering-[Koren-and-Bell].pdf)有详细的介绍，其实就是加上一个user bias，再加一个item bias：
+
+`\[
+\hat{r}_{u i}=\mu+b_{i}+b_{u}+q_{i}^{T} p_{u}
+\]`
+
+优化目标就是：
+
+`\[
+\min _{b_{*}, q_{*}, p_{*}} \sum_{(u, i) \in \mathscr{K}}\left(r_{u i}-\mu-b_{i}-b_{u}-q_{i}^{T} p_{u}\right)^{2}+\lambda_{4}\left(b_{i}^{2}+b_{u}^{2}+\left\|q_{i}\right\|^{2}+\left\|p_{u}\right\|^{2}\right)
+\]`
+
+定义残差`\(e_{u i} \stackrel{\mathrm{def}}{=} r_{u i}-\hat{r}_{u i}\)`，使用梯度下降更新：
+
+`\[
+\begin{array}{l}{b_{u} \leftarrow b_{u}+\gamma \cdot\left(e_{u i}-\lambda_{4} \cdot b_{u}\right)} \\ {b_{i} \leftarrow b_{i}+\gamma \cdot\left(e_{u i}-\lambda_{4} \cdot b_{i}\right)} \\ {q_{i} \leftarrow q_{i}+\gamma \cdot\left(e_{u i} \cdot p_{u}-\lambda_{4} \cdot q_{i}\right)} \\ {p_{u} \leftarrow p_{u}+\gamma \cdot\left(e_{u i} \cdot q_{i}-\lambda_{4} \cdot p_{u}\right)}\end{array}
+\]`
+
+
+## SVD++
+
+[Advances in collaborative filtering](https://datajobs.com/data-science-repo/Collaborative-Filtering-[Koren-and-Bell].pdf)
+
+附：简单说一下svd++，就是user向量再加上这个用户的邻域信息(图中的y是用户的N(u)个历史item的隐式反馈)：
+
+`\[
+\hat{r}_{u i}=\mu+b_{i}+b_{u}+q_{i}^{T}\left(p_{u}+|\mathrm{R}(u)|^{-\frac{1}{2}} \sum_{j \in \mathrm{R}(u)} y_{j}\right)
+\]`
+
+梯度下降：
+
+`\[
+\begin{array}{l}{b_{u} \leftarrow b_{u}+\gamma \cdot\left(e_{u i}-\lambda_{5} \cdot b_{u}\right)} \\ {b_{i} \leftarrow b_{i}+\gamma \cdot\left(e_{u i}-\lambda_{5} \cdot b_{i}\right)} \\ {q_{i} \leftarrow q_{i}+\gamma \cdot\left(e_{u i} \cdot\left(p_{u}+|\mathrm{R}(u)|^{-\frac{1}{2}} \sum_{j \in \mathrm{R}(u)} y_{j}\right)-\lambda_{6} \cdot q_{i}\right)} \\ {p_{u} \leftarrow p_{u}+\gamma \cdot\left(e_{u i} \cdot q_{i}-\lambda_{6} \cdot p_{u}\right)} \\ {\forall j \in \mathrm{R}(u) :} \\ {y_{j} \leftarrow y_{j}+\gamma \cdot\left(e_{u i} \cdot|\mathrm{R}(u)|^{-\frac{1}{2}} \cdot q_{i}-\lambda_{6} \cdot y_{j}\right)}\end{array}
+\]`
+
+## RBM-CF
+
+hinton 07年提出的[Restricted boltzmann machines for collaborative filtering](https://www.cs.toronto.edu/~rsalakhu/papers/rbmcf.pdf)
+
+## OCCF
+
+[One-Class Collaborative Filtering](http://www.rongpan.net/publications/pan-oneclasscf.pdf)
+
+
 
 ## eALS
 
@@ -34,5 +132,15 @@ tags: [svd, svd++, als, rbm-cf, fm, eALS, ]
 
 之前的MF大多关注显式反馈，也就是用户的打分行为直接表达了用户对item的喜好程度。这种建模方式是基于这样一种假设：**大量的无标注的ratings(例如，missing data)与用户的preference无关**。这就大大减轻了建模的工作量，大量类似的复杂模型被提出了，例如SVD++、time-SVD等。
 
-但在实际应用中，用户往往有大量的隐式反馈，例如浏览历史、购买历史等，而负反馈却是稀缺的。如果只对正反馈建模，那得到的是用户profile的一种biased的表示。针对这种负反馈缺失的场景（也叫one-class problem，参考[One-class collaborative filtering](xx)），比较流行的解法是把missing data当做负反馈。但如果观测数据和missing data都要考虑的话，算法的学习效率就会大大降低。
+但在实际应用中，用户往往有大量的隐式反馈，例如浏览历史、购买历史等，而负反馈却是稀缺的。如果只对正反馈建模，那得到的是用户profile的一种biased的表示。针对这种负反馈缺失的场景（也叫one-class problem，参考[One-class collaborative filtering](http://www.rongpan.net/publications/pan-oneclasscf.pdf)），比较流行的解法是把missing data当做负反馈。但如果观测数据和missing data都要考虑的话，算法的学习效率就会大大降低。而且现实场景中，新的user/item/interaction都是流式地不停地进来的，所以模型的快速更新就更重要了。
 
+针对隐式反馈和online learning这两大问题，KDD2015的[Dynamic matrix factorization with priors on unknown values](https://arxiv.org/abs/1507.06452)已经提出了一种方法**Dynamic MF**，但本文作者认为，这种方法对missing data的建模是『unrealistic』且『suboptimal』 的。也就是这种方法对missing data给予了uniform的权重，认为所有的missing data有同等概率被视为负反馈。另外这篇文章使用的是梯度下降，需要expensive line search来找到每一步的最优学习率。
+
+本文的方法比Huyifan和Koren在[Collaborative filtering for implicit feedback datasets](http://yifanhu.net/PUB/cf.pdf)中用的ALS要快K倍，K是latent factor的num，这个速度和上面提到的**Dynamic MF**一样快。本文还提出了针对新数据的增量更新策略，能够快速更新模型参数。另外本文提出的方法不需要学习率，所以不需要像sgd那样去调学习率。
+
+### related work
+
+针对负反馈缺失的问题，有以下两种策略：
+
++ sample based learning：从missing data中采样出一部分，当成负反馈。
++ whole-data based learning：
