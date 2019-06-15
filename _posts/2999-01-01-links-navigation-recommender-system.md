@@ -267,11 +267,8 @@ Metric Factorization 可以用在评分预测和排序两个经典的推荐场�
 
 [Fast Matrix Factorization for Online Recommendation with Implicit Feedback](https://arxiv.org/pdf/1708.05024.pdf)
 
-以往的MF模型对于missing data，都是直接使用uniform weight。然而在真实场景下，
+以往的MF模型对于missing data，都是直接使用uniform weight(均匀分布)。然而在真实场景下，这个均匀分布的假设往往是不成立的。而且很多offline表现好的，到了动态变化的online场景上，往往表现不好。
 
-简单说一下svd++，就是加上一个user bias，再加一个item bias，而user向量再加上这个用户的邻域信息(图中的y是用户的N(u)个历史item的隐式反馈)：
+传统的mf相关算法可以参考[https://daiwk.github.io/posts/ml-recommender-systems.html](https://daiwk.github.io/posts/ml-recommender-systems.html)
 
-`\[
-\hat{r_{u i}}=\mu+b_{i}+b_{u}+\left(p_{u}+\frac{1}{\sqrt{|N(u)|}} \sum_{i \in N(u)} y_{i}\right) q_{i}^{T}
-\]`
 
