@@ -144,3 +144,7 @@ hinton 07年提出的[Restricted boltzmann machines for collaborative filtering]
 
 + sample based learning：从missing data中采样出一部分，当成负反馈。
 + whole-data based learning：所有missing data都当做是负反馈。
+
+
+只有[Mind the gaps: Weighting the unknown in large-scale one-class collaborative filtering](http://agents.sci.brooklyn.cuny.edu/internal/proceedings/kdd/kdd2009/docs/p667.pdf)和[One-class collaborative filtering](http://www.rongpan.net/publications/pan-oneclasscf.pdf)考虑了非uniform的weight方法。
+
