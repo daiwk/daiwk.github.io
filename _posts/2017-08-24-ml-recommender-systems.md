@@ -15,12 +15,12 @@ tags: [svd, svd++, als, rbm-cf, fm, eALS, ]
 - [RBM-CF](#rbm-cf)
 - [OCCF](#occf)
 - [eALS](#eals)
-  - [简介](#%E7%AE%80%E4%BB%8B)
-  - [related work](#related-work)
-  - [预备知识](#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86)
-    - [ALS](#als)
-    - [使用Uniform Weighting来加速](#%E4%BD%BF%E7%94%A8uniform-weighting%E6%9D%A5%E5%8A%A0%E9%80%9F)
-    - [generic element-wise ALS learner](#generic-element-wise-als-learner)
+    - [简介](#简介)
+    - [related work](#related-work)
+    - [预备知识](#预备知识)
+        - [ALS](#als)
+        - [使用Uniform Weighting来加速](#使用uniform-weighting来加速)
+        - [generic element-wise ALS learner](#generic-element-wise-als-learner)
 
 <!-- /TOC -->
 
@@ -200,30 +200,30 @@ wALS的损失函数就是要最小化：
 
 只有[Mind the gaps: Weighting the unknown in large-scale one-class collaborative filtering](http://agents.sci.brooklyn.cuny.edu/internal/proceedings/kdd/kdd2009/docs/p667.pdf)和[One-class collaborative filtering](http://www.rongpan.net/publications/pan-oneclasscf.pdf)考虑了非uniform的weight方法。但时间复杂度较高，没法在大规模的数据集上使用。
 
-而优化方法方面，Koren的[Collaborative filtering with temporal dynamics](xxx)和[Bpr: Bayesian personalized ranking from implicit feedback](xxx)使用的是SGD，而[Dynamic matrix factorization with priors on unknown values](https://arxiv.org/abs/1507.06452)和[Discrete collaborative filtering](xxx)使用的是Coordinate Descent (CD)，而[Fast context-aware recommendations with factorization machines](https://dl.acm.org/citation.cfm?id=2010002&dl=ACM&coll=DL)使用的是Markov Chain Monto Carlo(MCMC)。
+而优化方法方面，Koren的[Collaborative filtering with temporal dynamics](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.379.1951&rep=rep1&type=pdf)和[Bpr: Bayesian personalized ranking from implicit feedback](https://arxiv.org/pdf/1205.2618.pdf)使用的是SGD，而[Dynamic matrix factorization with priors on unknown values](https://arxiv.org/abs/1507.06452)和[Discrete collaborative filtering](https://dl.acm.org/citation.cfm?id=2911502)使用的是Coordinate Descent (CD)，而[Fast context-aware recommendations with factorization machines](https://dl.acm.org/citation.cfm?id=2010002&dl=ACM&coll=DL)使用的是Markov Chain Monto Carlo(MCMC)。
 
-SGD是最流行的，但对于[Collaborative filtering for implicit feedback datasets](xxx)提到的whole-data based MF来说，是不适合的，因为需要考虑整个user-item的交互矩阵，训练样本特别多。所以对于这种问题，ALS是CD的一个instantiation(实例化)，在[Collaborative filtering for implicit feedback datasets](xxx)、[Mind the gaps: Weighting the unknown in large-scale one-class collaborative filtering](http://agents.sci.brooklyn.cuny.edu/internal/proceedings/kdd/kdd2009/docs/p667.pdf)、[One-class collaborative filtering](http://www.rongpan.net/publications/pan-oneclasscf.pdf)、[Training and testing of recommender systems on data missing not at random](xxx)中都提到了。而这种方法时间复杂度较高，在[Fast als-based matrix factorization for explicit and implicit feedback datasets](xxx)和[Effective latent models for binary feedback in recommender systems](xxx)中都提到了。而[Fast als-based matrix factorization for explicit and implicit feedback datasets](xxx)提到了als的一种近似解法；而[Dynamic matrix factorization with priors on unknown values](https://arxiv.org/abs/1507.06452)使用的是Randomized block Coordinate Descent (RCD)；而[Effective latent models for binary feedback in recommender systems](xxx)则通过neighbor-based similarly来丰富隐式反馈矩阵，然后使用unweighted SVD。
+SGD是最流行的，但对于[Collaborative filtering for implicit feedback datasets](http://yifanhu.net/PUB/cf.pdf)提到的whole-data based MF来说，是不适合的，因为需要考虑整个user-item的交互矩阵，训练样本特别多。所以对于这种问题，ALS是CD的一个instantiation(实例化)，在[Collaborative filtering for implicit feedback datasets](http://yifanhu.net/PUB/cf.pdf)、[Mind the gaps: Weighting the unknown in large-scale one-class collaborative filtering](http://agents.sci.brooklyn.cuny.edu/internal/proceedings/kdd/kdd2009/docs/p667.pdf)、[One-class collaborative filtering](http://www.rongpan.net/publications/pan-oneclasscf.pdf)、[Training and testing of recommender systems on data missing not at random](https://dl.acm.org/citation.cfm?id=1835895)中都提到了。而这种方法时间复杂度较高，在[Fast als-based matrix factorization for explicit and implicit feedback datasets](https://dl.acm.org/citation.cfm?id=1864726)和[Effective latent models for binary feedback in recommender systems](http://www.cs.toronto.edu/~mvolkovs/sigir2015_svd.pdf)中都提到了。而[Fast als-based matrix factorization for explicit and implicit feedback datasets](https://dl.acm.org/citation.cfm?id=1864726)提到了als的一种近似解法；而[Dynamic matrix factorization with priors on unknown values](https://arxiv.org/abs/1507.06452)使用的是Randomized block Coordinate Descent (RCD)；而[Effective latent models for binary feedback in recommender systems](http://www.cs.toronto.edu/~mvolkovs/sigir2015_svd.pdf)则通过neighbor-based similarly来丰富隐式反馈矩阵，然后使用unweighted SVD。
 
 而推荐系统的增量更新这块，有这么些研究：
 
-+ neighbor-based：[Real-time stream recommendation in practice](xxx)
-+ graph-based：[Trirank: Review-aware explainable recommendation by modeling aspects](xxx)
-+ probabilistic：[Scalable online collaborative filtering](xxx)
++ neighbor-based：[TencentRec: Real-time stream recommendation in practice](http://net.pku.edu.cn/~cuibin/Papers/2015SIGMOD-tencentRec.pdf)
++ graph-based：[Trirank: Review-aware explainable recommendation by modeling aspects](https://www.comp.nus.edu.sg/~kanmy/papers/cikm15-trirank-cr.pdf)
++ probabilistic：[Google News Personalization: Scalable online collaborative filtering](https://www2007.org/papers/paper570.pdf)。用的plsi
 + MF：
   + [Dynamic matrix factorization with priors on unknown values](https://arxiv.org/abs/1507.06452)
-  + [Real-time top-n recommendation in social streams](xxx)
-  + [Online learning for collaborative filtering](xxx)
-  + [Online-updating regularized kernel matrix factorization models for large scale recommender systems](xxx)
+  + [Real-time top-n recommendation in social streams](https://dl.acm.org/citation.cfm?id=2365968)
+  + [Online learning for collaborative filtering](https://ieeexplore.ieee.org/document/6252670)
+  + [Online-updating regularized kernel matrix factorization models for large scale recommender systems](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.165.8010&rep=rep1&type=pdf)
 
 对MF来讲，在线更新有如下研究：
 
 + SGD：
-  + [Real-time top-n recommendation in social streams](xxx)
-  + [Online-updating regularized kernel matrix factorization models for large scale recommender systems](xxx)
+  + [Real-time top-n recommendation in social streams](https://dl.acm.org/citation.cfm?id=2365968)
+  + [Online-updating regularized kernel matrix factorization models for large scale recommender systems](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.165.8010&rep=rep1&type=pdf)
 + RCD：
   + [Dynamic matrix factorization with priors on unknown values](https://arxiv.org/abs/1507.06452)
 + dual-averaging：
-  + [Online learning for collaborative filtering](xxx)
+  + [Online learning for collaborative filtering](https://ieeexplore.ieee.org/document/6252670)
 
 本文是第一个用ALS的。
 
