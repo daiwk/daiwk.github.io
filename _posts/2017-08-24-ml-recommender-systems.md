@@ -71,6 +71,18 @@ U矩阵的shape是`\(n_f\times n_u\)`，M矩阵的shape是`\(n_f\times n_m\)`
 + `\(U_{I_{j}}\)`是从`\(U\)`中把`\(i \in I_{j}\)`这些列取出来组成的矩阵
 + `\(R\left(I_{j}, j\right)\)`是取出`\(R\)`的第j列，然后再取出`\(i \in I_{j}\)`这些行组成的列向量
 
+本文是用matlab来解的，了解一下求逆的时候用到的左除和右除。。参考[https://blog.csdn.net/qq_40655270/article/details/78250699](https://blog.csdn.net/qq_40655270/article/details/78250699)
+
+左除：
+
+`\(Ax=b\)`得到`\(x=A^{-1}b\)`。`\(A^{-1}\)`可以看成`\(1/A\)`，也就是说A在左边，而A是分母，所以，在matlab中写成```A\b```。
+
+右除：
+
+`\(xA=b\)`得到`\(x=bA^{-1}\)`。`\(A^{-1}\)`可以看成`\(1/A\)`，所以在matlab中写成```b/A```。
+
+所以论文里的```X = matrix \ vector```就是matrix的逆乘以vector
+
 ## SVD
 
 hinton 07年提出的[Restricted boltzmann machines for collaborative filtering](https://www.cs.toronto.edu/~rsalakhu/papers/rbmcf.pdf)里面提到了用sgd来训练svd：
@@ -183,15 +195,55 @@ wALS的损失函数就是要最小化：
 
 针对负反馈缺失的问题，有以下两种策略：
 
-+ sample based learning：从missing data中采样出一部分，当成负反馈。
-+ whole-data based learning：所有missing data都当做是负反馈。
++ sample based learning：从missing data中采样出一部分，当成负反馈。性能好，但风险是效果不一定好。
++ whole-data based learning：所有missing data都当做是负反馈。覆盖会更多，但性能是瓶颈。
 
+只有[Mind the gaps: Weighting the unknown in large-scale one-class collaborative filtering](http://agents.sci.brooklyn.cuny.edu/internal/proceedings/kdd/kdd2009/docs/p667.pdf)和[One-class collaborative filtering](http://www.rongpan.net/publications/pan-oneclasscf.pdf)考虑了非uniform的weight方法。但时间复杂度较高，没法在大规模的数据集上使用。
 
-只有[Mind the gaps: Weighting the unknown in large-scale one-class collaborative filtering](http://agents.sci.brooklyn.cuny.edu/internal/proceedings/kdd/kdd2009/docs/p667.pdf)和[One-class collaborative filtering](http://www.rongpan.net/publications/pan-oneclasscf.pdf)考虑了非uniform的weight方法。
+而优化方法方面，Koren的[Collaborative filtering with temporal dynamics](xxx)和[Bpr: Bayesian personalized ranking from implicit feedback](xxx)使用的是SGD，而[Dynamic matrix factorization with priors on unknown values](https://arxiv.org/abs/1507.06452)和[Discrete collaborative filtering](xxx)使用的是Coordinate Descent (CD)，而[Fast context-aware recommendations with factorization machines](https://dl.acm.org/citation.cfm?id=2010002&dl=ACM&coll=DL)使用的是Markov Chain Monto Carlo(MCMC)。
+
+SGD是最流行的，但对于[Collaborative filtering for implicit feedback datasets](xxx)提到的whole-data based MF来说，是不适合的，因为需要考虑整个user-item的交互矩阵，训练样本特别多。所以对于这种问题，ALS是CD的一个instantiation(实例化)，在[Collaborative filtering for implicit feedback datasets](xxx)、[Mind the gaps: Weighting the unknown in large-scale one-class collaborative filtering](http://agents.sci.brooklyn.cuny.edu/internal/proceedings/kdd/kdd2009/docs/p667.pdf)、[One-class collaborative filtering](http://www.rongpan.net/publications/pan-oneclasscf.pdf)、[Training and testing of recommender systems on data missing not at random](xxx)中都提到了。而这种方法时间复杂度较高，在[Fast als-based matrix factorization for explicit and implicit feedback datasets](xxx)和[Effective latent models for binary feedback in recommender systems](xxx)中都提到了。而[Fast als-based matrix factorization for explicit and implicit feedback datasets](xxx)提到了als的一种近似解法；而[Dynamic matrix factorization with priors on unknown values](https://arxiv.org/abs/1507.06452)使用的是Randomized block Coordinate Descent (RCD)；而[Effective latent models for binary feedback in recommender systems](xxx)则通过neighbor-based similarly来丰富隐式反馈矩阵，然后使用unweighted SVD。
+
+而推荐系统的增量更新这块，有这么些研究：
+
++ neighbor-based：[Real-time stream recommendation in practice](xxx)
++ graph-based：[Trirank: Review-aware explainable recommendation by modeling aspects](xxx)
++ probabilistic：[Scalable online collaborative filtering](xxx)
++ MF：
+  + [Dynamic matrix factorization with priors on unknown values](https://arxiv.org/abs/1507.06452)
+  + [Real-time top-n recommendation in social streams](xxx)
+  + [Online learning for collaborative filtering](xxx)
+  + [Online-updating regularized kernel matrix factorization models for large scale recommender systems](xxx)
+
+对MF来讲，在线更新有如下研究：
+
++ SGD：
+  + [Real-time top-n recommendation in social streams](xxx)
+  + [Online-updating regularized kernel matrix factorization models for large scale recommender systems](xxx)
++ RCD：
+  + [Dynamic matrix factorization with priors on unknown values](https://arxiv.org/abs/1507.06452)
++ dual-averaging：
+  + [Online learning for collaborative filtering](xxx)
+
+本文是第一个用ALS的。
 
 ### 预备知识
 
 #### ALS
+
+假设
+
+`\[
+\hat{r}_{u i}=<\mathbf{p}_{u}, \mathbf{q}_{i}>=\mathbf{p}_{u}^{T} \mathbf{q}_{i}
+\]`
+
+考虑bias的话，就是
+
+`\[
+\hat{r}_{u i}=b_{u}+b_{i}+<\mathbf{p}_{u}^{B}, \mathbf{q}_{i}^{B}>
+\]`
+
+可以转化为`\(\mathbf{p}_{u} \leftarrow\left[\mathbf{p}_{u}^{B}, b_{u}, 1\right]\)`和`\(\mathbf{q}_{i} \leftarrow\left[\mathbf{q}_{i}^{B}, 1, b_{i}\right]\)`，这样就又是`\(\hat{r}_{u i}=<\mathbf{p}_{u}, \mathbf{q}_{i}>=\mathbf{p}_{u}^{T} \mathbf{q}_{i}\)`啦~~
 
 目标函数是
 
@@ -236,3 +288,9 @@ J_{u}=\left\|\mathbf{W}^{u}\left(\mathbf{r}_{u}-\mathbf{Q} \mathbf{p}_{u}\right)
 #### generic element-wise ALS learner
 
 在[Fast context-aware recommendations with factorization machines](https://dl.acm.org/citation.cfm?id=2010002&dl=ACM&coll=DL)里提到了
+
+对`\(p_{u f}\)`求导
+
+`\[
+\frac{\partial J}{\partial p_{u f}}=-2 \sum_{i=1}^{N}\left(r_{u i}-\hat{r}_{u i}^{f}\right) w_{u i} q_{i f}+2 p_{u f} \sum_{i=1}^{N} w_{u i} q_{i f}^{2}+2 \lambda p_{u f}
+\]`
