@@ -12,9 +12,9 @@ tags: [pytorch, ]
 - [自动求导](#%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC)
 - [torch常用操作](#torch%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C)
 - [torch.nn](#torchnn)
+  - [torch.nn.AdaptiveLogSoftmaxWithLoss](#torchnnadaptivelogsoftmaxwithloss)
   - [torch.nn.functional](#torchnnfunctional)
   - [torch.nn.Conv2d](#torchnnconv2d)
-  - [torch.nn.MaxPool2d](#torchnnmaxpool2d)
   - [torch.nn.Embedding](#torchnnembedding)
 - [torch](#torch)
   - [torch.addmm](#torchaddmm)
@@ -23,7 +23,6 @@ tags: [pytorch, ]
   - [torch.unsqueeze](#torchunsqueeze)
 - [torch.Tensor](#torchtensor)
   - [view](#view)
-  - [masked_fill_](#maskedfill)
 
 <!-- /TOC -->
 
@@ -57,6 +56,12 @@ print x.grad
 ## torch.nn
 
 [https://pytorch-cn.readthedocs.io/zh/latest/package_references/torch-nn/](https://pytorch-cn.readthedocs.io/zh/latest/package_references/torch-nn/)
+
+### torch.nn.AdaptiveLogSoftmaxWithLoss
+
+[Efficient softmax approximation for GPUs](https://arxiv.org/pdf/1609.04309.pdf)
+
+参考[https://pytorch.org/docs/stable/nn.html?highlight=adaptivelogsoftmaxwithloss#torch.nn.AdaptiveLogSoftmaxWithLoss](https://pytorch.org/docs/stable/nn.html?highlight=adaptivelogsoftmaxwithloss#torch.nn.AdaptiveLogSoftmaxWithLoss)
 
 ### torch.nn.functional
 

@@ -15,8 +15,12 @@ tags: [svd, svd++, als, rbm-cf, fm, eALS, ]
 - [RBM-CF](#rbm-cf)
 - [OCCF](#occf)
 - [eALS](#eals)
-    - [简介](#简介)
-    - [related work](#related-work)
+  - [简介](#%E7%AE%80%E4%BB%8B)
+  - [related work](#related-work)
+  - [预备知识](#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86)
+    - [ALS](#als)
+    - [使用Uniform Weighting来加速](#%E4%BD%BF%E7%94%A8uniform-weighting%E6%9D%A5%E5%8A%A0%E9%80%9F)
+    - [generic element-wise ALS learner](#generic-element-wise-als-learner)
 
 <!-- /TOC -->
 
@@ -118,7 +122,44 @@ hinton 07年提出的[Restricted boltzmann machines for collaborative filtering]
 
 [One-Class Collaborative Filtering](http://www.rongpan.net/publications/pan-oneclasscf.pdf)
 
+对missing data有两种权重策略：
 
++ AMAU：All missing as unknown，观测到的数据的权重置成1，missing data的权重全部设成0。
++ AMAN：All missing as negative。观测到的数据的权重置成1，missing data的权重全部设成1。（论文里没直接提到，不过好像是这么个意思。。）
+
+wALS的损失函数就是要最小化：
+
+`\[
+\begin{aligned} \mathcal{L}(\boldsymbol{U}, \boldsymbol{V})=& \sum_{i j} W_{i j}\left(R_{i j}-\boldsymbol{U}_{i .} \boldsymbol{V}_{j .}^{T}\right)^{2} \\ &+\lambda\left(\|\boldsymbol{U}\|_{F}^{2}+\|\boldsymbol{V}\|_{F}^{2}\right) \end{aligned}
+\]`
+
+固定V，对U求导，令导数为0，去更新U的时候，推了半天，得到公式(6)
+
+`\[
+\begin{array}{r}{\boldsymbol{U}_{i .}=\boldsymbol{R}_{i .} \widetilde{\boldsymbol{W}_{i .}} \boldsymbol{V}\left(\boldsymbol{V}^{T} \widetilde{\boldsymbol{W}_{i .}} \boldsymbol{V}+\lambda\left(\sum_{j} W_{i j}\right) \boldsymbol{I}\right)^{-1}} \\ {\forall 1 \leq i \leq m}\end{array}
+\]`
+
+其中，`\(\widetilde{\boldsymbol{W}_{i .}} \in \mathfrak{R}^{n \times n}\)`是一个对角矩阵，对角线元素为`\(\boldsymbol{W}_{i .}\)`，而`\(I\)`是一个`\(d\times d\)`的单位矩阵（主对角线全1，其他全0）
+
+而固定U，对V求导，令导数为0，更新V，得到公式(7)：
+
+`\[
+\begin{array}{r}{\boldsymbol{V}_{j .}=\boldsymbol{R}_{. j}^T \widetilde{\boldsymbol{W}_{. j}} \boldsymbol{U}\left(\boldsymbol{U}^{T} \widetilde{\boldsymbol{W}_{. j}} \boldsymbol{U}+\lambda\left(\sum_{j} W_{i j}\right) \boldsymbol{I}\right)^{-1}} \\ {\forall 1 \leq j \leq n}\end{array}
+\]`
+
+类似地，`\(\widetilde{\boldsymbol{W}_{. j}} \in \mathfrak{R}^{m \times m}\)`是一个对角矩阵，对角线元素为`\(\boldsymbol{W}_{. j}\)`。
+
+然后整个wALS的过程就是不断地交替更新U和V直到满足收敛条件。
+
+注意，这里的权重不是可训练的参数，是一开始以某种方式进行分配的，论文给出如下三种权重分配方式：
+
+正样本，全部都是`\(W_{i j}=1\)`
+
+对于missing data：
+
++ Uniform方式：`\(W_{i j}=\delta\)`，其中`\(\delta \in[0,1]\)`，每个missing data采用同一个权重
++ User-Oriented方式：`\(W_{i j} \propto \sum_{j} R_{i j}\)`。相当于对于一个用户来讲，如果他的正例比较多，说明他已经表达了很充分『什么样的东西他喜欢』了，那么他的missing item是负样本的概率更大
++ Item-Oriented方式：`\(W_{i j} \propto m-\sum_{i} R_{i j}\)`，如果一个item已经被很多用户喜欢了，那么它成为负样本的概率就更小了
 
 ## eALS
 
@@ -148,3 +189,50 @@ hinton 07年提出的[Restricted boltzmann machines for collaborative filtering]
 
 只有[Mind the gaps: Weighting the unknown in large-scale one-class collaborative filtering](http://agents.sci.brooklyn.cuny.edu/internal/proceedings/kdd/kdd2009/docs/p667.pdf)和[One-class collaborative filtering](http://www.rongpan.net/publications/pan-oneclasscf.pdf)考虑了非uniform的weight方法。
 
+### 预备知识
+
+#### ALS
+
+目标函数是
+
+`\[
+J=\sum_{u=1}^{M} \sum_{i=1}^{N} w_{u i}\left(r_{u i}-\hat{r}_{u i}\right)^{2}+\lambda\left(\sum_{u=1}^{M}\left\|\mathbf{p}_{u}\right\|^{2}+\sum_{i=1}^{N}\left\|\mathbf{q}_{i}\right\|^{2}\right)
+\]`
+
+也就是要最小化
+
+`\[
+J_{u}=\left\|\mathbf{W}^{u}\left(\mathbf{r}_{u}-\mathbf{Q} \mathbf{p}_{u}\right)\right\|^{2}+\lambda\left\|\mathbf{p}_{u}\right\|^{2}
+\]`
+
+用ALS的话，得到的就是
+
+`\[
+\begin{aligned} \frac{\partial J_{u}}{\partial \mathbf{p}_{u}} &=2 \mathbf{Q}^{T} \mathbf{W}^{u} \mathbf{Q} \mathbf{p}_{u}-2 \mathbf{Q}^{T} \mathbf{W}^{u} \mathbf{r}_{u}+2 \lambda \mathbf{p}_{u}=0 \\ \Rightarrow \mathbf{p}_{u} &=\left(\mathbf{Q}^{T} \mathbf{W}^{u} \mathbf{Q}+\lambda \mathbf{I}\right)^{-1} \mathbf{Q}^{T} \mathbf{W}^{u} \mathbf{r}_{u} \end{aligned}
+\]`
+
+同样地，可以求出`\(\mathbf{q}_{i}\)`的解
+
+复杂度的话，对一个`\(K \times K\)`的矩阵求逆是一个比较耗时的操作，复杂度是`\(O\left(K^{3}\right)\)`。所以更新一次user向量的复杂度是`\(O\left(K^{3}+N K^{2}\right)\)`。然后整个ALS的过程的复杂度就是`\(O\left((M+N) K^{3}+M N K^{2}\right)\)`。
+
+#### 使用Uniform Weighting来加速
+
+对`\(\mathbf{R}\)`中的所有0元素，给同样的权重`\(w_{0}\)`。就有：
+
+`\[
+\mathbf{Q}^{T} \mathbf{W}^{u} \mathbf{Q}=w_{0} \mathbf{Q}^{T} \mathbf{Q}+\mathbf{Q}^{T}\left(\mathbf{W}^{u}-\mathbf{W}^{0}\right) \mathbf{Q}
+\]`
+
+其中，`\(\mathbf{W}^{0}\)`是一个对角矩阵，对角线元素都是`\(w_{0}\)`。
+
+因为`\(\mathbf{Q}^{T} \mathbf{Q}\)`和`\(u\)`无关，所以可以预先算好。
+
+而`\(\mathbf{W}^{u}-\mathbf{W}^{0}\)`只有`\(\left|\mathcal{R}_{u}\right|\)`个非0值，所以上面这个式子的计算复杂度是`\(O\left(\left|\mathcal{R}_{u}\right| K^{2}\right)\)`
+
+所以总的时间复杂度是`\(O\left((M+N) K^{3}+|\mathcal{R}| K^{2}\right)\)`
+
+而SGD的时间复杂度是`\(O(|\mathcal{R}| K)\)`，远比ALS要小！！
+
+#### generic element-wise ALS learner
+
+在[Fast context-aware recommendations with factorization machines](https://dl.acm.org/citation.cfm?id=2010002&dl=ACM&coll=DL)里提到了
