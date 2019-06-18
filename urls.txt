@@ -173,6 +173,7 @@ https://daiwk.github.io/posts/platform-linux-memory.html
 https://daiwk.github.io/posts/platform-memcached.html
 https://daiwk.github.io/posts/platform-microservices.html
 https://daiwk.github.io/posts/platform-nginx.html
+https://daiwk.github.io/posts/platform-paddle-fluid-code-distributed-cpu.html
 https://daiwk.github.io/posts/platform-paddle-fluid.html
 https://daiwk.github.io/posts/platform-protobufrpc.html
 https://daiwk.github.io/posts/platform-seastar.html
