@@ -14,7 +14,6 @@ tags: [paddle, fluid, 分布式, cpu]
 
 <!-- /TOC -->
 
-
 ## 简介
 
 + ```./paddle/fluid/framework/dist_multi_trainer.cc```：入口
