@@ -11,6 +11,7 @@ tags: [online learning, ftrl, ]
 <!-- TOC -->
 
 - [xxx](#xxx)
+- [adaptive regularization](#adaptive-regularization)
 
 <!-- /TOC -->
 
@@ -27,3 +28,12 @@ FTRL可以参考[https://daiwk.github.io/posts/ml-ftrl.html](https://daiwk.githu
 ## xxx
 
 aaa
+
+## adaptive regularization
+
+[Learning recommender systems with adaptive regularization](https://dl.acm.org/citation.cfm?id=2124313)
+
+参考[https://blog.csdn.net/google19890102/article/details/73301949](https://blog.csdn.net/google19890102/article/details/73301949)
+
+这几篇paper的pdf可以从这里下载：[https://github.com/buptjz/Factorization-Machine](https://github.com/buptjz/Factorization-Machine)
+
