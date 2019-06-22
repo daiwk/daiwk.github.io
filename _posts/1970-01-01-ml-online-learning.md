@@ -37,3 +37,9 @@ aaa
 
 这几篇paper的pdf可以从这里下载：[https://github.com/buptjz/Factorization-Machine](https://github.com/buptjz/Factorization-Machine)
 
+可以发现，FM里的正则有一坨`\(\lambda\)`，
+
+然后有一篇Incremental Factorization Machines for Persistently Cold-starting Online Item Recommendation
+
+简单地理解，就是adaptive regularization是先更新参数，然后更新lambda；而这篇是借鉴了另一篇的，先看在测试集的效果，再更新参数的思想，所以一次处理一条，这条先拿来更新lambda，然后用更新完的lambda来更新参数。。
+
