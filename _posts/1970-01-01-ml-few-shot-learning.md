@@ -13,18 +13,20 @@ tags: [few-shot, fewshot, 小样本, ]
 - [定义](#%E5%AE%9A%E4%B9%89)
 - [分类](#%E5%88%86%E7%B1%BB)
   - [model based](#model-based)
-    - [One-shot learning with memory-augmented neural networks](#one-shot-learning-with-memory-augmented-neural-networks)
-    - [Meta networks](#meta-networks)
+    - [One-shot learning with memory-augmented neural networks](#One-shot-learning-with-memory-augmented-neural-networks)
+    - [Meta networks](#Meta-networks)
   - [metric based](#metric-based)
-    - [Siamese Network](#siamese-network)
-    - [Match Network](#match-network)
-    - [Prototype Network](#prototype-network)
-    - [Relation Network](#relation-network)
+    - [Siamese Network](#Siamese-Network)
+    - [Match Network](#Match-Network)
+    - [Prototype Network](#Prototype-Network)
+    - [Relation Network](#Relation-Network)
   - [optimization based](#optimization-based)
-    - [Optimization as a model for few-shot learning](#optimization-as-a-model-for-few-shot-learning)
-    - [Model-agnostic meta-learning for fast adaptation of deep networks](#model-agnostic-meta-learning-for-fast-adaptation-of-deep-networks)
+    - [Optimization as a model for few-shot learning](#Optimization-as-a-model-for-few-shot-learning)
+    - [Model-agnostic meta-learning for fast adaptation of deep networks](#Model-agnostic-meta-learning-for-fast-adaptation-of-deep-networks)
 
 <!-- /TOC -->
+
+cvpr2019相关的参考[CVPR 2019提前看：少样本学习专题](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650763945&idx=3&sn=bac11c77b276c472b78d02d42f749e95&chksm=871ab6d7b06d3fc117cc068d20de12fbc7abfaa9e07c70f3a81205bc514999941d9c6f967ab6&mpshare=1&scene=1&srcid=&pass_ticket=%2BD9Ask8qPVeDCkEHTF8NEBVBQX9YmDDkPy9VdMIfOYJ2VtpyHOOhIYdS3wUnvPjn#rd)
 
 参考[小样本学习（Few-shot Learning）综述](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650759590&idx=3&sn=d7573d59fdffae5fc7bb83ea77a26fa6&chksm=871aa5d8b06d2cce197f93547df18d412c173dcb2149f31797c1c9fbea2ec7948f6b1100ab3e&mpshare=1&scene=1&srcid=0429y1qxBdLrdZ8C5KgRqP0e&pass_ticket=ZltpB2rBQ1hXYEBIClPX5yEh187BJtWG0mhs8mqho%2F%2FHR%2BUZZqkJ8efTvcnsT5KF#rd)
 
