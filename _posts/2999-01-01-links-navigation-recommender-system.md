@@ -17,36 +17,37 @@ tags: [推荐系统, ]
   - [序列建模](#%E5%BA%8F%E5%88%97%E5%BB%BA%E6%A8%A1)
   - [标签体系](#%E6%A0%87%E7%AD%BE%E4%BD%93%E7%B3%BB)
 - [最新paper1](#%E6%9C%80%E6%96%B0paper1)
-  - [A review on deep learning for recommender systems: challenges and remedies](#a-review-on-deep-learning-for-recommender-systems-challenges-and-remedies)
-  - [Next Item Recommendation with Self-Attention](#next-item-recommendation-with-self-attention)
-  - [Metric Factorization: Recommendation beyond Matrix Factorization](#metric-factorization-recommendation-beyond-matrix-factorization)
-  - [Collaborative Memory Network for Recommendation Systems](#collaborative-memory-network-for-recommendation-systems)
-  - [Evaluation of Session-based Recommendation Algorithms](#evaluation-of-session-based-recommendation-algorithms)
-  - [RippleNet: Propagating User Preferences on the Knowledge Graph for Recommender Systems](#ripplenet-propagating-user-preferences-on-the-knowledge-graph-for-recommender-systems)
-  - [Content-Based Citation Recommendation](#content-based-citation-recommendation)
-  - [Explainable Recommendation: A Survey and New Perspectives](#explainable-recommendation-a-survey-and-new-perspectives)
-  - [STAMP: Short-Term Attention/Memory Priority Model for Session-based Recommendation](#stamp-short-term-attentionmemory-priority-model-for-session-based-recommendation)
-  - [Real-time Personalization using Embeddings for Search Ranking at Airbnb](#real-time-personalization-using-embeddings-for-search-ranking-at-airbnb)
-  - [Billion-scale Commodity Embedding for E-commerce Recommendation in Alibaba](#billion-scale-commodity-embedding-for-e-commerce-recommendation-in-alibaba)
-  - [Sequential Recommendation with User Memory Networks](#sequential-recommendation-with-user-memory-networks)
-  - [Aesthetic-based Clothing Recommendation](#aesthetic-based-clothing-recommendation)
-  - [Multi-Pointer Co-Attention Networks for Recommendation](#multi-pointer-co-attention-networks-for-recommendation)
-  - [ATRank: An Attention-Based User Behavior Modeling Framework for Recommendation](#atrank-an-attention-based-user-behavior-modeling-framework-for-recommendation)
-  - [Deep Matrix Factorization Models for Recommender Systems](#deep-matrix-factorization-models-for-recommender-systems)
+  - [A review on deep learning for recommender systems: challenges and remedies](#A-review-on-deep-learning-for-recommender-systems-challenges-and-remedies)
+  - [Next Item Recommendation with Self-Attention](#Next-Item-Recommendation-with-Self-Attention)
+  - [Metric Factorization: Recommendation beyond Matrix Factorization](#Metric-Factorization-Recommendation-beyond-Matrix-Factorization)
+  - [Collaborative Memory Network for Recommendation Systems](#Collaborative-Memory-Network-for-Recommendation-Systems)
+  - [Evaluation of Session-based Recommendation Algorithms](#Evaluation-of-Session-based-Recommendation-Algorithms)
+  - [RippleNet: Propagating User Preferences on the Knowledge Graph for Recommender Systems](#RippleNet-Propagating-User-Preferences-on-the-Knowledge-Graph-for-Recommender-Systems)
+  - [Content-Based Citation Recommendation](#Content-Based-Citation-Recommendation)
+  - [Explainable Recommendation: A Survey and New Perspectives](#Explainable-Recommendation-A-Survey-and-New-Perspectives)
+  - [STAMP: Short-Term Attention/Memory Priority Model for Session-based Recommendation](#STAMP-Short-Term-AttentionMemory-Priority-Model-for-Session-based-Recommendation)
+  - [Real-time Personalization using Embeddings for Search Ranking at Airbnb](#Real-time-Personalization-using-Embeddings-for-Search-Ranking-at-Airbnb)
+  - [Billion-scale Commodity Embedding for E-commerce Recommendation in Alibaba](#Billion-scale-Commodity-Embedding-for-E-commerce-Recommendation-in-Alibaba)
+  - [Sequential Recommendation with User Memory Networks](#Sequential-Recommendation-with-User-Memory-Networks)
+  - [Aesthetic-based Clothing Recommendation](#Aesthetic-based-Clothing-Recommendation)
+  - [Multi-Pointer Co-Attention Networks for Recommendation](#Multi-Pointer-Co-Attention-Networks-for-Recommendation)
+  - [ATRank: An Attention-Based User Behavior Modeling Framework for Recommendation](#ATRank-An-Attention-Based-User-Behavior-Modeling-Framework-for-Recommendation)
+  - [Deep Matrix Factorization Models for Recommender Systems](#Deep-Matrix-Factorization-Models-for-Recommender-Systems)
 - [最新paper2](#%E6%9C%80%E6%96%B0paper2)
-  - [DeepRec: An Open-source Toolkit for Deep Learning based Recommendation](#deeprec-an-open-source-toolkit-for-deep-learning-based-recommendation)
-  - [A Survey on Session-based Recommender Systems](#a-survey-on-session-based-recommender-systems)
-  - [Reinforcement Learning to Optimize Long-term User Engagement in Recommender Systems](#reinforcement-learning-to-optimize-long-term-user-engagement-in-recommender-systems)
-  - [Representing and Recommending Shopping Baskets with Complementarity, Compatibility, and Loyalty](#representing-and-recommending-shopping-baskets-with-complementarity-compatibility-and-loyalty)
-  - [Attentive Group Recommendation](#a%C2%82ttentive-group-recommendation)
-  - [Variational Autoencoders for Collaborative Filtering](#variational-autoencoders-for-collaborative-filtering)
-  - [Exploiting Emotion on Reviews for Recommender Systems](#exploiting-emotion-on-reviews-for-recommender-systems)
-  - [An Attentive Interaction Network for Context-aware Recommendations](#an-attentive-interaction-network-for-context-aware-recommendations)
-  - [Regularizing Matrix Factorization with User and Item Embeddings for Recommendation](#regularizing-matrix-factorization-with-user-and-item-embeddings-for-recommendation)
-  - [Explainable Recommendation via Multi-Task Learning in Opinionated Text Data](#explainable-recommendation-via-multi-task-learning-in-opinionated-text-data)
-  - [Top-K Off-Policy Correction for a REINFORCE Recommender System](#top-k-off-policy-correction-for-a-reinforce-recommender-system)
+  - [DeepRec: An Open-source Toolkit for Deep Learning based Recommendation](#DeepRec-An-Open-source-Toolkit-for-Deep-Learning-based-Recommendation)
+  - [A Survey on Session-based Recommender Systems](#A-Survey-on-Session-based-Recommender-Systems)
+  - [Reinforcement Learning to Optimize Long-term User Engagement in Recommender Systems](#Reinforcement-Learning-to-Optimize-Long-term-User-Engagement-in-Recommender-Systems)
+  - [Representing and Recommending Shopping Baskets with Complementarity, Compatibility, and Loyalty](#Representing-and-Recommending-Shopping-Baskets-with-Complementarity-Compatibility-and-Loyalty)
+  - [Attentive Group Recommendation](#A%C2%82ttentive-Group-Recommendation)
+  - [Variational Autoencoders for Collaborative Filtering](#Variational-Autoencoders-for-Collaborative-Filtering)
+  - [Exploiting Emotion on Reviews for Recommender Systems](#Exploiting-Emotion-on-Reviews-for-Recommender-Systems)
+  - [An Attentive Interaction Network for Context-aware Recommendations](#An-Attentive-Interaction-Network-for-Context-aware-Recommendations)
+  - [Regularizing Matrix Factorization with User and Item Embeddings for Recommendation](#Regularizing-Matrix-Factorization-with-User-and-Item-Embeddings-for-Recommendation)
+  - [Explainable Recommendation via Multi-Task Learning in Opinionated Text Data](#Explainable-Recommendation-via-Multi-Task-Learning-in-Opinionated-Text-Data)
+  - [Top-K Off-Policy Correction for a REINFORCE Recommender System](#Top-K-Off-Policy-Correction-for-a-REINFORCE-Recommender-System)
 - [其他](#%E5%85%B6%E4%BB%96)
-  - [Fast Matrix Factorization for Online Recommendation with Implicit Feedback](#fast-matrix-factorization-for-online-recommendation-with-implicit-feedback)
+  - [Fast Matrix Factorization for Online Recommendation with Implicit Feedback](#Fast-Matrix-Factorization-for-Online-Recommendation-with-Implicit-Feedback)
+- [2019顶会相关文章](#2019%E9%A1%B6%E4%BC%9A%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0)
 
 <!-- /TOC -->
 
@@ -272,3 +273,15 @@ Metric Factorization 可以用在评分预测和排序两个经典的推荐场�
 ### Fast Matrix Factorization for Online Recommendation with Implicit Feedback
 
 参考[https://daiwk.github.io/posts/ml-recommender-systems.html#eals](https://daiwk.github.io/posts/ml-recommender-systems.html#eals)
+
+## 2019顶会相关文章
+
+[最新！五大顶会2019必读的深度推荐系统与CTR预估相关的论文](https://zhuanlan.zhihu.com/p/69559974)
+
+偷个图：
+
+<html>
+<br/>
+<img src='../assets/recommender_system_dl.jpg' style='max-width: 300px'/>
+<br/>
+</html>

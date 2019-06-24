@@ -16,3 +16,4 @@ tags: [Top-K Off-Policy Correction for a REINFORCE Recommender System, ]
 
 视频链接：[Reinforcement Learning for Recommender Systems: A Case Study on Youtube](https://www.youtube.com/watch?v=HEqQ2_1XRTs)
 
+参考[Youtube推荐已经上线RL了，强化学习在推荐广告工业界大规模应用还远吗？](https://zhuanlan.zhihu.com/p/69559974)
