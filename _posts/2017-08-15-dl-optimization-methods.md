@@ -2,7 +2,7 @@
 layout: post
 category: "ml"
 title: "梯度下降优化算法"
-tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam]
+tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam, Aadams, AMSGrad, ]
 ---
 
 目录
@@ -11,11 +11,13 @@ tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam
 
 - [梯度下降](#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D)
 - [momentum](#momentum)
-- [NAG](#nag)
-- [Adagrad](#adagrad)
-- [Adadelta](#adadelta)
-- [RMSprop](#rmsprop)
-- [Adam](#adam)
+- [NAG](#NAG)
+- [Adagrad](#Adagrad)
+- [Adadelta](#Adadelta)
+- [RMSprop](#RMSprop)
+- [Adam](#Adam)
+- [Adam类方法小结](#Adam%E7%B1%BB%E6%96%B9%E6%B3%95%E5%B0%8F%E7%BB%93)
+- [AMSGrad](#AMSGrad)
 
 <!-- /TOC -->
 
@@ -215,3 +217,32 @@ rmsprop可以看成是对二阶矩做了指数平滑，adam就是对一阶矩也
 + 为不同的参数计算不同的自适应学习率
 + 也适用于大多**非凸优化**
 + 适用于**大数据集**和**高维空间**
+
+## Adam类方法小结
+
+参考[https://blog.csdn.net/wishchin/article/details/80567558](https://blog.csdn.net/wishchin/article/details/80567558)
+
+结论：
+
++ Adam算法可以看做是修正后的Momentum+RMSProp算法
++ 动量直接并入梯度一阶矩估计中（指数加权）
++ Adam通常被认为对超参数的选择相当鲁棒
++ 学习率建议为0.001
+
+其实就是Momentum+RMSProp的结合，然后再修正其偏差。
+
+
+## AMSGrad
+
+Adams其实有不少问题，参考[https://zhuanlan.zhihu.com/p/32262540](https://zhuanlan.zhihu.com/p/32262540)
+
+论文：[On the Convergence of Adam and Beyond](https://arxiv.org/abs/1904.09237)
+
+参考[https://blog.csdn.net/wishchin/article/details/80567558](https://blog.csdn.net/wishchin/article/details/80567558)
+
+`\[
+\Gamma_{t+1}=\left(\frac{\sqrt{V_{t+1}}}{\alpha_{t+1}}-\frac{\sqrt{V_{t}}}{\alpha_{t}}\right)
+\]`
+
+RMSProp和Adam算法下的`\(\Gamma_{t}\)`可能是负的，所以文章探讨了一种替代方法，通过把超参数`\(\beta_1\)`、`\(\beta_2\)`设置为随着`\(t\)`变化而变化，从而保证`\(\Gamma_{t}\)`始终是个非负数。
+
