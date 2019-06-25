@@ -10,18 +10,19 @@ tags: [paddle, bert, lark, ernie, ]
 <!-- TOC -->
 
 - [bert](#bert)
-    - [finetune和跑预测并save模型](#finetune和跑预测并save模型)
-    - [线上infer部分](#线上infer部分)
+  - [finetune和跑预测并save模型](#finetune%E5%92%8C%E8%B7%91%E9%A2%84%E6%B5%8B%E5%B9%B6save%E6%A8%A1%E5%9E%8B)
+  - [线上infer部分](#%E7%BA%BF%E4%B8%8Ainfer%E9%83%A8%E5%88%86)
 - [ernie](#ernie)
-    - [ernie(baiduNLP)](#erniebaidunlp)
-    - [ernie(清华ACL2019版)](#ernie清华acl2019版)
-        - [模型结构](#模型结构)
-        - [finetune方法](#finetune方法)
-- [XLMs/MASS/UNILM](#xlmsmassunilm)
-    - [XLM(facebook2019)](#xlmfacebook2019)
-    - [LASER(facebook2018)](#laserfacebook2018)
-    - [MASS(microsoft)](#massmicrosoft)
-    - [UNILM(microsoft)](#unilmmicrosoft)
+  - [ernie(baiduNLP)](#erniebaiduNLP)
+  - [ernie(清华ACL2019版)](#ernie%E6%B8%85%E5%8D%8EACL2019%E7%89%88)
+    - [模型结构](#%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84)
+    - [finetune方法](#finetune%E6%96%B9%E6%B3%95)
+- [XLMs/MASS/UNILM](#XLMsMASSUNILM)
+  - [XLM(facebook2019)](#XLMfacebook2019)
+  - [LASER(facebook2018)](#LASERfacebook2018)
+  - [MASS(microsoft)](#MASSmicrosoft)
+  - [UNILM(microsoft)](#UNILMmicrosoft)
+- [UER框架](#UER%E6%A1%86%E6%9E%B6)
 
 <!-- /TOC -->
 
@@ -279,3 +280,13 @@ bert只使用了Transformer的encoder部分，其下游任务也主要是适用�
 + BERT仅关注encoder，LASER考虑了encoder-decoder的联合训练。但从LASER模型框架上也可以看出，其**无法提取word级别的特征**，擅长于跨语言任务；
 + XLM和MASS都是跨语言模型，补充了BERT在NLG任务上的不足。模型层面而言XLM没有使用传统的encoder-decoder框架；
 + UNILM可以同时处理NLU和NLG任务。后续的改进可以考虑加入跨语言任务的预训练，比如XLM和MASS做的工作。
+
+## UER框架
+
+Universal Encoder Representations
+
+参考[一大批中文（BERT等）预训练模型等你认领！](https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247497927&idx=1&sn=feb841473f5503fe549f87304865e901&chksm=96ea2747a19dae51f41c17870ab37172382b24ae53b451f566d6afee1fce7d34388a0aef92aa&mpshare=1&scene=1&srcid=&pass_ticket=b29oFqpJS3l2z9rkgAH2HsO1MhYXnw6w%2FmAI30o3T46KiQgaX30qaNd4uUXfW4zq#rd)
+
+代码：[https://github.com/dbiir/UER-py](https://github.com/dbiir/UER-py)
+
+知乎中记录问题：[https://zhuanlan.zhihu.com/p/70389596](https://zhuanlan.zhihu.com/p/70389596)
