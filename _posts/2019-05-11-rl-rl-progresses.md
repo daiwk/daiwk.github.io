@@ -9,7 +9,9 @@ tags: [强化学习, 进展, ]
 
 <!-- TOC -->
 
-- [Review: DQN and A3C/A2C](#review-dqn-and-a3ca2c)
+- [xxx(2018)](#xxx2018)
+    - [Review: DQN and A3C/A2C](#review-dqn-and-a3ca2c)
+- [Modern Deep Reinforcement Learning Algorithms(2019)](#modern-deep-reinforcement-learning-algorithms2019)
 
 <!-- /TOC -->
 
@@ -17,7 +19,9 @@ tags: [强化学习, 进展, ]
 
 原blog：[https://towardsdatascience.com/advanced-reinforcement-learning-6d769f529eb3](https://towardsdatascience.com/advanced-reinforcement-learning-6d769f529eb3)
 
-## Review: DQN and A3C/A2C
+## xxx(2018)
+
+### Review: DQN and A3C/A2C
 
 DQN
 
@@ -30,3 +34,10 @@ ac
 `\[
 d \theta_{v} \leftarrow d \theta_{v}+\partial{\underbrace{\left(R-V\left(s_{i} ; \theta_{v}\right)\right)}_{\text{advantage}}}^{2} / \partial \theta_{v}
 \]`
+
+## Modern Deep Reinforcement Learning Algorithms(2019)
+
+[Modern Deep Reinforcement Learning Algorithms](https://arxiv.org/pdf/1906.10025v1.pdf)
+
+原论文有点大。。打开太慢。。转存一份：[https://daiwk.github.io/assets/Modern%20Deep%20Reinforcement%20Learning%20Algorithms.pdf](https://daiwk.github.io/assets/Modern%20Deep%20Reinforcement%20Learning%20Algorithms.pdf)
+
