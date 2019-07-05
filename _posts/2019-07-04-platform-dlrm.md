@@ -20,6 +20,8 @@ tags: [dlrm, facebook,  ]
 
 原始博客：[https://ai.facebook.com/blog/dlrm-an-advanced-open-source-deep-learning-recommendation-model/](https://ai.facebook.com/blog/dlrm-an-advanced-open-source-deep-learning-recommendation-model/)
 
+DLRM模型有两大类特征：连续（dense）特征和类别（sparse）特征。使用emb处理类别特征，使用下方的多层感知机（MLP）处理连续特征。然后显式地计算不同特征的二阶交互（second-order interaction）。最后，使用顶部的多层感知机处理结果，并输入sigmoid函数中，得出点击的概率。
+
 <html>
 <br/>
 <img src='../assets/dlrm.gif' style='max-height: 200px'/>
