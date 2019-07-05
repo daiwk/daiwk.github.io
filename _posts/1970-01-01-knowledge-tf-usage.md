@@ -30,11 +30,12 @@ tags: [tf, ]
   - [tf.contrib.layers.flatten](#tfcontriblayersflatten)
   - [tf.contrib.layers.fully-connected](#tfcontriblayersfully-connected)
 - [常见问题](#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+  - [如何统计参数量](#%E5%A6%82%E4%BD%95%E7%BB%9F%E8%AE%A1%E5%8F%82%E6%95%B0%E9%87%8F)
   - [tf下载数据集出现ssl问题时](#tf%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%BA%E7%8E%B0ssl%E9%97%AE%E9%A2%98%E6%97%B6)
   - [steps v.s. epoch](#steps-vs-epoch)
   - [nan](#nan)
     - [情况1：loss出现nan](#%E6%83%85%E5%86%B51loss%E5%87%BA%E7%8E%B0nan)
-    - [情况2：更新网络时出现Nan值](#%E6%83%85%E5%86%B52%E6%9B%B4%E6%96%B0%E7%BD%91%E7%BB%9C%E6%97%B6%E5%87%BA%E7%8E%B0nan%E5%80%BC)
+    - [情况2：更新网络时出现Nan值](#%E6%83%85%E5%86%B52%E6%9B%B4%E6%96%B0%E7%BD%91%E7%BB%9C%E6%97%B6%E5%87%BA%E7%8E%B0Nan%E5%80%BC)
 
 <!-- /TOC -->
 
@@ -312,6 +313,10 @@ output[b, i, j, k] =
 
 
 ## 常见问题
+
+### 如何统计参数量
+
+参考[https://blog.csdn.net/feynman233/article/details/79187304](https://blog.csdn.net/feynman233/article/details/79187304)
 
 ### tf下载数据集出现ssl问题时
 
