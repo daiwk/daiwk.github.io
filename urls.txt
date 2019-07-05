@@ -266,6 +266,7 @@ https://daiwk.github.io/posts/cv-vq-vae.html
 https://daiwk.github.io/posts/dl-gan-rl-recommend.html
 https://daiwk.github.io/posts/dl-multi-sample-dropout.html
 https://daiwk.github.io/posts/nlp-xlnet.html
+https://daiwk.github.io/posts/platform-dlrm.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-nlp.html

@@ -23,6 +23,7 @@ tags: [paddle, bert, lark, ernie, ]
   - [MASS(microsoft)](#MASSmicrosoft)
   - [UNILM(microsoft)](#UNILMmicrosoft)
 - [UER框架](#UER%E6%A1%86%E6%9E%B6)
+- [Whole Word Masking BERT](#Whole-Word-Masking-BERT)
 
 <!-- /TOC -->
 
@@ -290,3 +291,12 @@ Universal Encoder Representations
 代码：[https://github.com/dbiir/UER-py](https://github.com/dbiir/UER-py)
 
 知乎中记录问题：[https://zhuanlan.zhihu.com/p/70389596](https://zhuanlan.zhihu.com/p/70389596)
+
+## Whole Word Masking BERT
+
+[哈工大讯飞联合实验室发布基于全词覆盖的中文BERT预训练模型](https://mp.weixin.qq.com/s?__biz=MzIxMjAzNDY5Mg==&mid=2650794872&idx=1&sn=dccd856283bdd4edcdad08cf75506697&chksm=8f477e93b830f7850e6c0ffe684264f704c6fcc4e126a6300b5ae33916aa676a279206e1e4ce&mpshare=1&scene=1&srcid=0701DAFsQt28gF1hGzH4llaM&pass_ticket=8wChBZeeRNV5mWLFKMXfVyWjwTb94XookbbSJiYpmEClqUrpybiGPpfilXkL5UQN#rd)
+
+[https://github.com/ymcui/Chinese-BERT-wwm](https://github.com/ymcui/Chinese-BERT-wwm)
+
+论文：[Pre-Training with Whole Word Masking for Chinese BERT](https://arxiv.org/abs/1906.08101)
+

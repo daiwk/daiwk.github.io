@@ -10,40 +10,40 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
 
 <!-- TOC -->
 
-- [FM](#fm)
-- [FFM](#ffm)
+- [FM](#FM)
+- [FFM](#FFM)
 - [embedding + mlp](#embedding--mlp)
-- [FNN, SNN](#fnn-snn)
-  - [FNN](#fnn)
-  - [SNN](#snn)
-- [NFM](#nfm)
-- [AFM](#afm)
-- [PNN](#pnn)
-  - [IPNN](#ipnn)
-  - [OPNN](#opnn)
-  - [PNN小结](#pnn%E5%B0%8F%E7%BB%93)
-- [CCPM](#ccpm)
-  - [Convolution Layer](#convolution-layer)
-  - [Flexible p-Max Pooling](#flexible-p-max-pooling)
+- [FNN, SNN](#FNN-SNN)
+  - [FNN](#FNN)
+  - [SNN](#SNN)
+- [NFM](#NFM)
+- [AFM](#AFM)
+- [PNN](#PNN)
+  - [IPNN](#IPNN)
+  - [OPNN](#OPNN)
+  - [PNN小结](#PNN%E5%B0%8F%E7%BB%93)
+- [CCPM](#CCPM)
+  - [Convolution Layer](#Convolution-Layer)
+  - [Flexible p-Max Pooling](#Flexible-p-Max-Pooling)
   - [feature maps](#feature-maps)
   - [ccpm小结](#ccpm%E5%B0%8F%E7%BB%93)
-- [Wide & Deep](#wide--deep)
-- [DeepFM](#deepfm)
-- [Deep & Cross](#deep--cross)
-- [xDeepFM](#xdeepfm)
+- [Wide & Deep](#Wide--Deep)
+- [DeepFM](#DeepFM)
+- [Deep & Cross](#Deep--Cross)
+- [xDeepFM](#xDeepFM)
   - [背景](#%E8%83%8C%E6%99%AF)
   - [预备知识](#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86)
     - [embedding](#embedding)
     - [隐式的高阶特征交互](#%E9%9A%90%E5%BC%8F%E7%9A%84%E9%AB%98%E9%98%B6%E7%89%B9%E5%BE%81%E4%BA%A4%E4%BA%92)
     - [显式的高阶特征交互](#%E6%98%BE%E5%BC%8F%E7%9A%84%E9%AB%98%E9%98%B6%E7%89%B9%E5%BE%81%E4%BA%A4%E4%BA%92)
-  - [CIN](#cin)
-  - [xDeepFM](#xdeepfm-1)
-- [DIN](#din)
-- [DIEN](#dien)
+  - [CIN](#CIN)
+  - [xDeepFM](#xDeepFM-1)
+- [DIN](#DIN)
+- [DIEN](#DIEN)
   - [兴趣提取](#%E5%85%B4%E8%B6%A3%E6%8F%90%E5%8F%96)
   - [兴趣演化](#%E5%85%B4%E8%B6%A3%E6%BC%94%E5%8C%96)
-- [ESMM](#esmm)
-- [TDM](#tdm)
+- [ESMM](#ESMM)
+- [TDM](#TDM)
 
 <!-- /TOC -->
 
@@ -906,6 +906,8 @@ CIN+DNN+linear
 </html>
 
 集成的CIN和DNN两个模块能够帮助模型同时以显式和隐式的方式学习高阶的特征交互，而集成的线性模块和深度神经模块也让模型兼具记忆与泛化的学习能力。值得一提的是，为了提高模型的通用性，**xDeepFM中不同的模块共享相同的输入数据**。而在具体的应用场景下，不同的模块**也可以接入各自不同的输入数据**，例如，线性模块中依旧可以接入很多根据先验知识提取的交叉特征来提高记忆能力，而在CIN或者DNN中，为了减少模型的计算复杂度，可以只导入一部分稀疏的特征子集。
+
+一些基本知识可以参考：[一镜到底：FM们的原理及在贝壳搜索的实践](https://mp.weixin.qq.com/s?__biz=MzU3OTY2MjQ2NQ==&mid=2247484047&idx=1&sn=93027663ed80d795d705ec06e196e5d5&chksm=fd63e561ca146c7798edbefa7f6b3ed8cc47083e7ed66db9b519cf11e5a11a3ecb2e822fba90&mpshare=1&scene=1&srcid=&pass_ticket=8wChBZeeRNV5mWLFKMXfVyWjwTb94XookbbSJiYpmEClqUrpybiGPpfilXkL5UQN#rd)
 
 ## DIN
 
