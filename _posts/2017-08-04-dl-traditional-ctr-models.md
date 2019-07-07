@@ -384,7 +384,11 @@ Bagging算法是这样做的：每个分类器都随机从原样本中做有放�
   对于Bagging算法来说，由于我们会并行地训练很多不同的分类器的目的就是降低这个方差(variance) ,因为采用了相互独立的基分类器多了以后，h的值自然就会靠近.所以对于每个基分类器来说，目标就是如何降低这个偏差（bias),所以我们会采用深度很深甚至不剪枝的决策树。
   对于Boosting来说，每一步我们都会在上一轮的基础上更加拟合原数据，所以可以保证偏差（bias）,所以对于每个基分类器来说，问题就在于如何选择variance更小的分类器，即更简单的分类器，所以我们选择了深度很浅的决策树。
 
-#### LR+GBDT
+#### facebook LR+GBDT
+
+原始paper：[Practical Lessons from Predicting Clicks on Ads at Facebook](https://quinonero.net/Publications/predicting-clicks-facebook.pdf)
+
+[https://zhuanlan.zhihu.com/p/57987311](https://zhuanlan.zhihu.com/p/57987311)
 
 参考[https://blog.csdn.net/u010352603/article/details/80681100](https://blog.csdn.net/u010352603/article/details/80681100)
 

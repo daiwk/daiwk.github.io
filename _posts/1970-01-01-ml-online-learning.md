@@ -21,6 +21,8 @@ tags: [online learning, ftrl, ]
 
 [A Survey of Algorithms and Analysis for Adaptive Online Learning](http://www.jmlr.org/papers/volume18/14-428/14-428.pdf)
 
+参考[机器学习算法系列（31）：在线最优化求解（online Optimization）](https://plushunter.github.io/2017/07/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%EF%BC%8831%EF%BC%89%EF%BC%9A%E5%9C%A8%E7%BA%BF%E6%9C%80%E4%BC%98%E5%8C%96%E6%B1%82%E8%A7%A3%EF%BC%88online%20Optimization%EF%BC%89/)，这个真的写得非常好。。
+
 美团的[Online Learning算法理论与实践](https://tech.meituan.com/2016/04/21/online-learning.html)
 
 FTRL可以参考[https://daiwk.github.io/posts/ml-ftrl.html](https://daiwk.github.io/posts/ml-ftrl.html)
