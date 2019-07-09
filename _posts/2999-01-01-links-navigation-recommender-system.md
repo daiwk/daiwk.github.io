@@ -67,7 +67,11 @@ tags: [推荐系统, ]
 
 好像上面的链接403了，这个应该Ok：[http://www.hangli-hl.com/uploads/3/4/4/6/34465961/wsdm_2019_tutorial.pdf](http://www.hangli-hl.com/uploads/3/4/4/6/34465961/wsdm_2019_tutorial.pdf)
 
-个人小结(更新中)：[https://daiwk.github.io/posts/dl-match-for-search-recommendation.html](https://daiwk.github.io/posts/dl-match-for-search-recommendation.html)
+个人小结(更新中)：
+
+传统部分：[https://daiwk.github.io/posts/dl-match-for-search-recommendation-traditional.html](https://daiwk.github.io/posts/dl-match-for-search-recommendation-traditional.html)
+
+深度学习部分：[https://daiwk.github.io/posts/dl-match-for-search-recommendation.html](https://daiwk.github.io/posts/dl-match-for-search-recommendation.html)
 
 ## 一些经典论文
 
