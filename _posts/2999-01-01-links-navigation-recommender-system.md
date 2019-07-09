@@ -38,7 +38,7 @@ tags: [推荐系统, ]
   - [A Survey on Session-based Recommender Systems](#A-Survey-on-Session-based-Recommender-Systems)
   - [Reinforcement Learning to Optimize Long-term User Engagement in Recommender Systems](#Reinforcement-Learning-to-Optimize-Long-term-User-Engagement-in-Recommender-Systems)
   - [Representing and Recommending Shopping Baskets with Complementarity, Compatibility, and Loyalty](#Representing-and-Recommending-Shopping-Baskets-with-Complementarity-Compatibility-and-Loyalty)
-  - [Attentive Group Recommendation](#A%C2%82ttentive-Group-Recommendation)
+  - [Attentive Group Recommendation](#Attentive-Group-Recommendation)
   - [Variational Autoencoders for Collaborative Filtering](#Variational-Autoencoders-for-Collaborative-Filtering)
   - [Exploiting Emotion on Reviews for Recommender Systems](#Exploiting-Emotion-on-Reviews-for-Recommender-Systems)
   - [An Attentive Interaction Network for Context-aware Recommendations](#An-Attentive-Interaction-Network-for-Context-aware-Recommendations)
@@ -221,9 +221,9 @@ Metric Factorization 可以用在评分预测和排序两个经典的推荐场�
 
 源码：[https://github.com/MengtingWan/grocery](https://github.com/MengtingWan/grocery)
 
-### Attentive Group Recommendation
+### Attentive Group Recommendation
 
-[Attentive Group Recommendation](https://www.comp.nus.edu.sg/~xiangnan/papers/sigir18-groupRS.pdf)
+[Attentive Group Recommendation](https://www.comp.nus.edu.sg/~xiangnan/papers/sigir18-groupRS.pdf)
 
 论文应用神经协同网络和注意力机制为群组用户进行 Top-N 商品推荐，主要解决了群组用户兴趣的动态组合、群组与个人用户的协同商品推荐，以及新用户的冷启动问题。
 
