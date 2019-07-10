@@ -57,6 +57,8 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
 
 参考：[从FM推演各深度CTR预估模型(附代码)](https://www.jiqizhixin.com/articles/2018-07-16-17)
 
+发现一个不错的合集。。[https://www.jianshu.com/p/2b1246858e6f](https://www.jianshu.com/p/2b1246858e6f)
+
 ## FM
 
 二阶多项式模型：
