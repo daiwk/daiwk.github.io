@@ -7,12 +7,13 @@ tags: [federated learning, 联邦学习, ]
 
 <!-- TOC -->
 
-- [google2017年的blog](#google2017年的blog)
-    - [paper1: Communication-Efficient Learning of Deep Networks from Decentralized Data](#paper1-communication-efficient-learning-of-deep-networks-from-decentralized-data)
-    - [paper2: Federated Learning: Strategies for Improving Communication Efficiency](#paper2-federated-learning-strategies-for-improving-communication-efficiency)
-    - [paper3: Federated Optimization: Distributed Machine Learning for On-Device Intelligence](#paper3-federated-optimization-distributed-machine-learning-for-on-device-intelligence)
-    - [paper4: Practical Secure Aggregation for Privacy Preserving Machine Learning](#paper4-practical-secure-aggregation-for-privacy-preserving-machine-learning)
-- [yangqiang的paper](#yangqiang的paper)
+- [google2017年的blog](#google2017%E5%B9%B4%E7%9A%84blog)
+  - [paper1: Communication-Efficient Learning of Deep Networks from Decentralized Data](#paper1-Communication-Efficient-Learning-of-Deep-Networks-from-Decentralized-Data)
+  - [paper2: Federated Learning: Strategies for Improving Communication Efficiency](#paper2-Federated-Learning-Strategies-for-Improving-Communication-Efficiency)
+  - [paper3: Federated Optimization: Distributed Machine Learning for On-Device Intelligence](#paper3-Federated-Optimization-Distributed-Machine-Learning-for-On-Device-Intelligence)
+  - [paper4: Practical Secure Aggregation for Privacy Preserving Machine Learning](#paper4-Practical-Secure-Aggregation-for-Privacy-Preserving-Machine-Learning)
+- [yangqiang的paper](#yangqiang%E7%9A%84paper)
+- [FATE](#FATE)
 
 <!-- /TOC -->
 
@@ -86,3 +87,8 @@ FederatedAveraging算法总共有三个基本的参数，`\(C\)`（0到1）控�
 
 [Federated Machine Learning: Concept and Applications](https://arxiv.org/pdf/1902.04885.pdf)
 
+## FATE
+
+[怎样扩充大数据？你需要了解的第一个联邦学习开源框架FATE](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650765998&idx=4&sn=a6fdc4c39e29e0260dc06779bceed6ad&chksm=871abed0b06d37c617a063ba4c98867658f981b4fae6d34e0f2785edebeae8a09b6a2cef22e7&mpshare=1&scene=1&srcid=&pass_ticket=zzUnWIgdqTLvX39vSLCKaOJN8KVDYuvxPgj7h5mQNNMiTnEMdrWSwBJSd3ch3aLL#rd)
+
+github：[https://github.com/WeBankFinTech/FATE](https://github.com/WeBankFinTech/FATE)

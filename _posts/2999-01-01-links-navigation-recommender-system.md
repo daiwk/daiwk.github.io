@@ -48,6 +48,7 @@ tags: [推荐系统, ]
 - [其他](#%E5%85%B6%E4%BB%96)
   - [Fast Matrix Factorization for Online Recommendation with Implicit Feedback](#Fast-Matrix-Factorization-for-Online-Recommendation-with-Implicit-Feedback)
 - [2019顶会相关文章](#2019%E9%A1%B6%E4%BC%9A%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0)
+- [可解释推荐系统](#%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F)
 
 <!-- /TOC -->
 
@@ -289,3 +290,11 @@ Metric Factorization 可以用在评分预测和排序两个经典的推荐场�
 <img src='../assets/recommender_system_dl.jpg' style='max-width: 300px'/>
 <br/>
 </html>
+
+## 可解释推荐系统
+
+第四范式写的
+
+[可解释推荐系统：身怀绝技，一招击中用户心理](https://zhuanlan.zhihu.com/p/55349847)
+
+[可解释推荐系统：知其然，知其所以然](https://zhuanlan.zhihu.com/p/55433428)

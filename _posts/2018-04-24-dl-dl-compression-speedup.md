@@ -9,8 +9,9 @@ tags: [模型压缩, 加速]
 
 <!-- TOC -->
 
-- [背景](#背景)
-- [研究现状](#研究现状)
+- [背景](#%E8%83%8C%E6%99%AF)
+- [研究现状](#%E7%A0%94%E7%A9%B6%E7%8E%B0%E7%8A%B6)
+- [paddle的slim](#paddle%E7%9A%84slim)
 
 <!-- /TOC -->
 
@@ -59,3 +60,7 @@ Krizhevsky在2014年的文章中，提出的两点观察结论为后来的研究
 <br/>
 
 </html>
+
+## paddle的slim
+
+[自动模型压缩与架构搜索，这是飞桨PaddleSlim最全的解读](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650765628&idx=2&sn=62b7034b2a68422f0b434f423e157306&chksm=871abd42b06d3454a083d54b4c25d8bdf973dd1183e471b586e59a8c7cf016b95de53868e7d5&scene=0&xtrack=1&pass_ticket=zzUnWIgdqTLvX39vSLCKaOJN8KVDYuvxPgj7h5mQNNMiTnEMdrWSwBJSd3ch3aLL#rd)

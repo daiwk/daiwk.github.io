@@ -12,20 +12,20 @@ tags: [gan论文集合, ]
 - [basic gan](#basic-gan)
 - [gan landscape](#gan-landscape)
 - [gan with the wind](#gan-with-the-wind)
-- [gan推导](#gan推导)
+- [gan推导](#gan%E6%8E%A8%E5%AF%BC)
 - [ls-gan](#ls-gan)
 - [wgan](#wgan)
 - [lapgan](#lapgan)
 - [infogan & improvedgan](#infogan--improvedgan)
 - [dcgan](#dcgan)
 - [irgan](#irgan)
-- [BigGAN+BigGAN-deep](#bigganbiggan-deep)
-- [TreeGAN](#treegan)
-- [stackGAN](#stackgan)
-- [cycleGAN](#cyclegan)
-- [deblurGAN](#deblurgan)
+- [BigGAN+BigGAN-deep+BigBiGAN](#BigGANBigGAN-deepBigBiGAN)
+- [TreeGAN](#TreeGAN)
+- [stackGAN](#stackGAN)
+- [cycleGAN](#cycleGAN)
+- [deblurGAN](#deblurGAN)
 - [txt2img](#txt2img)
-- [VQ-VAE](#vq-vae)
+- [VQ-VAE](#VQ-VAE)
 
 <!-- /TOC -->
 
@@ -69,7 +69,7 @@ tags: [gan论文集合, ]
 
 [https://daiwk.github.io/posts/rl-irgan.html](https://daiwk.github.io/posts/rl-irgan.html)
 
-## BigGAN+BigGAN-deep
+## BigGAN+BigGAN-deep+BigBiGAN
 
 [https://daiwk.github.io/posts/cv-biggan.html](https://daiwk.github.io/posts/cv-biggan.html)
 
