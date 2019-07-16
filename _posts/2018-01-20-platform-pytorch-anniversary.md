@@ -9,37 +9,36 @@ tags: [pytorch, ]
 
 <!-- TOC -->
 
-- [Community](#community)
-    - [Research papers, packages and Github](#research-papers-packages-and-github)
-        - [cycle-GAN](#cycle-gan)
-        - [opennmt](#opennmt)
-        - [超分辨率](#超分辨率)
-        - [PyTorch-QRNN](#pytorch-qrnn)
-        - [Pyro & ProbTorch](#pyro--probtorch)
-        - [pix2pixHD, sentiment neuron & flownet2](#pix2pixhd-sentiment-neuron--flownet2)
-        - [allenNLP](#allennlp)
-        - [DSB2017冠军](#dsb2017冠军)
-        - [可视化](#可视化)
-        - [Facebook AI Research](#facebook-ai-research)
-    - [Metrics](#metrics)
-    - [Research Metrics](#research-metrics)
-    - [Courses, Tutorials and Books](#courses-tutorials-and-books)
-- [Engineering](#engineering)
-    - [Higher-order gradients](#higher-order-gradients)
-    - [Distributed PyTorch](#distributed-pytorch)
-    - [Closer to NumPy](#closer-to-numpy)
-    - [Sparse Tensors](#sparse-tensors)
-    - [Performance](#performance)
-        - [Reducing framework overhead by 10x across board](#reducing-framework-overhead-by-10x-across-board)
-        - [ATen](#aten)
-    - [Exporting models to production — ONNX Support and the JIT compiler](#exporting-models-to-production--onnx-support-and-the-jit-compiler)
+- [Community](#Community)
+  - [Research papers, packages and Github](#Research-papers-packages-and-Github)
+    - [cycle-GAN](#cycle-GAN)
+    - [opennmt](#opennmt)
+    - [超分辨率](#%E8%B6%85%E5%88%86%E8%BE%A8%E7%8E%87)
+    - [PyTorch-QRNN](#PyTorch-QRNN)
+    - [Pyro & ProbTorch](#Pyro--ProbTorch)
+    - [pix2pixHD, sentiment neuron & flownet2](#pix2pixHD-sentiment-neuron--flownet2)
+    - [allenNLP](#allenNLP)
+    - [DSB2017冠军](#DSB2017%E5%86%A0%E5%86%9B)
+    - [可视化](#%E5%8F%AF%E8%A7%86%E5%8C%96)
+    - [Facebook AI Research](#Facebook-AI-Research)
+  - [Metrics](#Metrics)
+  - [Research Metrics](#Research-Metrics)
+  - [Courses, Tutorials and Books](#Courses-Tutorials-and-Books)
+- [Engineering](#Engineering)
+  - [Higher-order gradients](#Higher-order-gradients)
+  - [Distributed PyTorch](#Distributed-PyTorch)
+  - [Closer to NumPy](#Closer-to-NumPy)
+  - [Sparse Tensors](#Sparse-Tensors)
+  - [Performance](#Performance)
+    - [Reducing framework overhead by 10x across board](#Reducing-framework-overhead-by-10x-across-board)
+    - [ATen](#ATen)
+  - [Exporting models to production — ONNX Support and the JIT compiler](#Exporting-models-to-production--ONNX-Support-and-the-JIT-compiler)
 
 <!-- /TOC -->
 
 参考 [PyTorch一周年战绩总结：是否比TensorFlow来势凶猛？](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650736406&idx=1&sn=db8da5ddc9a9cf86e804d29eb817f078&chksm=871ac368b06d4a7ec4854a44cc758a2d9610a350569be43209d4f99868e7341e7a551155079e&mpshare=1&scene=1&srcid=0120WbpeJXZUHZpvcIhqA8Xu&pass_ticket=xK%2FffWIobjEWlqRcODdvVXVcND5Es%2FtthdouMWebLV70o%2F654l0vh1big6xAGCGm#rd)
 
 原文：[http://pytorch.org/2018/01/19/a-year-in.html](http://pytorch.org/2018/01/19/a-year-in.html)
-
 
 # Community
 
