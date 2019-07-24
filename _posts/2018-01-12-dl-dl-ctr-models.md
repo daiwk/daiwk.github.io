@@ -10,40 +10,41 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
 
 <!-- TOC -->
 
-- [FM](#FM)
-- [FFM](#FFM)
+- [FM](#fm)
+- [FFM](#ffm)
 - [embedding + mlp](#embedding--mlp)
-- [FNN, SNN](#FNN-SNN)
-  - [FNN](#FNN)
-  - [SNN](#SNN)
-- [NFM](#NFM)
-- [AFM](#AFM)
-- [PNN](#PNN)
-  - [IPNN](#IPNN)
-  - [OPNN](#OPNN)
-  - [PNN小结](#PNN%E5%B0%8F%E7%BB%93)
-- [CCPM](#CCPM)
-  - [Convolution Layer](#Convolution-Layer)
-  - [Flexible p-Max Pooling](#Flexible-p-Max-Pooling)
+- [FNN, SNN](#fnn-snn)
+  - [FNN](#fnn)
+  - [SNN](#snn)
+- [NFM](#nfm)
+- [AFM](#afm)
+- [PNN](#pnn)
+  - [IPNN](#ipnn)
+  - [OPNN](#opnn)
+  - [PNN小结](#pnn%e5%b0%8f%e7%bb%93)
+- [CCPM](#ccpm)
+  - [Convolution Layer](#convolution-layer)
+  - [Flexible p-Max Pooling](#flexible-p-max-pooling)
   - [feature maps](#feature-maps)
-  - [ccpm小结](#ccpm%E5%B0%8F%E7%BB%93)
-- [Wide & Deep](#Wide--Deep)
-- [DeepFM](#DeepFM)
-- [Deep & Cross](#Deep--Cross)
-- [xDeepFM](#xDeepFM)
-  - [背景](#%E8%83%8C%E6%99%AF)
-  - [预备知识](#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86)
+  - [ccpm小结](#ccpm%e5%b0%8f%e7%bb%93)
+- [Wide & Deep](#wide--deep)
+- [DeepFM](#deepfm)
+- [Deep & Cross](#deep--cross)
+- [xDeepFM](#xdeepfm)
+  - [背景](#%e8%83%8c%e6%99%af)
+  - [预备知识](#%e9%a2%84%e5%a4%87%e7%9f%a5%e8%af%86)
     - [embedding](#embedding)
-    - [隐式的高阶特征交互](#%E9%9A%90%E5%BC%8F%E7%9A%84%E9%AB%98%E9%98%B6%E7%89%B9%E5%BE%81%E4%BA%A4%E4%BA%92)
-    - [显式的高阶特征交互](#%E6%98%BE%E5%BC%8F%E7%9A%84%E9%AB%98%E9%98%B6%E7%89%B9%E5%BE%81%E4%BA%A4%E4%BA%92)
-  - [CIN](#CIN)
-  - [xDeepFM](#xDeepFM-1)
-- [DIN](#DIN)
-- [DIEN](#DIEN)
-  - [兴趣提取](#%E5%85%B4%E8%B6%A3%E6%8F%90%E5%8F%96)
-  - [兴趣演化](#%E5%85%B4%E8%B6%A3%E6%BC%94%E5%8C%96)
-- [ESMM](#ESMM)
-- [TDM](#TDM)
+    - [隐式的高阶特征交互](#%e9%9a%90%e5%bc%8f%e7%9a%84%e9%ab%98%e9%98%b6%e7%89%b9%e5%be%81%e4%ba%a4%e4%ba%92)
+    - [显式的高阶特征交互](#%e6%98%be%e5%bc%8f%e7%9a%84%e9%ab%98%e9%98%b6%e7%89%b9%e5%be%81%e4%ba%a4%e4%ba%92)
+  - [CIN](#cin)
+  - [xDeepFM](#xdeepfm-1)
+- [DIN](#din)
+- [DIEN](#dien)
+  - [兴趣提取](#%e5%85%b4%e8%b6%a3%e6%8f%90%e5%8f%96)
+  - [兴趣演化](#%e5%85%b4%e8%b6%a3%e6%bc%94%e5%8c%96)
+- [ESMM](#esmm)
+- [TDM](#tdm)
+- [各种比赛](#%e5%90%84%e7%a7%8d%e6%af%94%e8%b5%9b)
 
 <!-- /TOC -->
 
@@ -1036,3 +1037,17 @@ ESMM模型是在整个样本空间建模，而不像传统CVR预估模型那样�
 
 严格来说，tdm是个召回模型，这里一起看一看
 
+
+## 各种比赛
+
+2019腾讯广告大赛：
+
+冠军方案：[https://zhuanlan.zhihu.com/p/72762888](https://zhuanlan.zhihu.com/p/72762888)
+
+[https://zhuanlan.zhihu.com/p/73062485](https://zhuanlan.zhihu.com/p/73062485)
+
+初赛代码：[https://github.com/guoday/Tencent2019_Preliminary_Rank1st](https://github.com/guoday/Tencent2019_Preliminary_Rank1st)
+
+包括deepwalk/CIN/key-value memory network等
+
+[Key-Value Memory Networks for Directly Reading Documents](https://arxiv.org/pdf/1606.03126.pdf)
