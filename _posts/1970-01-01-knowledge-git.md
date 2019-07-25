@@ -14,6 +14,7 @@ tags: [git, ]
     - [如何回滚到某一次commit](#如何回滚到某一次commit)
     - [如何把一个分支的代码合并到另一个分支](#如何把一个分支的代码合并到另一个分支)
 - [如何往github的某一个分支push代码](#如何往github的某一个分支push代码)
+- [submodule](#submodule)
 
 <!-- /TOC -->
 
@@ -104,3 +105,7 @@ git push --set-upstream origin test-dwk
 ```
 
 这样，远程也就多了origin/test-dwk这样一个分支
+
+## submodule
+
+[https://www.jianshu.com/p/9000cd49822c](https://www.jianshu.com/p/9000cd49822c)
