@@ -1882,8 +1882,24 @@ public:
 };
 ```
 
+## 二叉树的最近公共祖先
 
+参考[https://blog.csdn.net/wangls56/article/details/88783783](https://blog.csdn.net/wangls56/article/details/88783783)
 
+递归
+
+```c++
+TreeNode findAncestor(TreeNode root, TreeNode node1, TreeNode node2) {
+    if (root == null) return null;
+    if (root == node1 || root == node2) return root;
+    TreeNode left  = findAncestor(root.left,  node1, node2);
+    TreeNode right = findAncestor(root.right, node1, node2);
+    if (left != null && right != null) return root;
+    return right == null ? left : right;
+}
+```
+
+如果有指向父节点的指针，可以转化成两个链表求第一个交点的问题。
 
 
 # 图
