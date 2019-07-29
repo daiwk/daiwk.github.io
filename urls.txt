@@ -272,6 +272,7 @@ https://daiwk.github.io/posts/dl-layer-rotation.html
 https://daiwk.github.io/posts/dl-label-smoothing.html
 https://daiwk.github.io/posts/dl-product-key-memory-layer.html
 https://daiwk.github.io/posts/rl-slateq.html
+https://daiwk.github.io/posts/dl-generative-models.html
 https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-nlp.html

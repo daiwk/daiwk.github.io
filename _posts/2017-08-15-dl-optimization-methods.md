@@ -2,22 +2,23 @@
 layout: post
 category: "ml"
 title: "梯度下降优化算法"
-tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam, Aadams, AMSGrad, ]
+tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam, Aadams, AMSGrad, Lookahead, ]
 ---
 
 目录
 
 <!-- TOC -->
 
-- [梯度下降](#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D)
+- [梯度下降](#%e6%a2%af%e5%ba%a6%e4%b8%8b%e9%99%8d)
 - [momentum](#momentum)
-- [NAG](#NAG)
-- [Adagrad](#Adagrad)
-- [Adadelta](#Adadelta)
-- [RMSprop](#RMSprop)
-- [Adam](#Adam)
-- [Adam类方法小结](#Adam%E7%B1%BB%E6%96%B9%E6%B3%95%E5%B0%8F%E7%BB%93)
-- [AMSGrad](#AMSGrad)
+- [NAG](#nag)
+- [Adagrad](#adagrad)
+- [Adadelta](#adadelta)
+- [RMSprop](#rmsprop)
+- [Adam](#adam)
+- [Adam类方法小结](#adam%e7%b1%bb%e6%96%b9%e6%b3%95%e5%b0%8f%e7%bb%93)
+- [AMSGrad](#amsgrad)
+- [Lookahead](#lookahead)
 
 <!-- /TOC -->
 
@@ -245,4 +246,11 @@ Adams其实有不少问题，参考[https://zhuanlan.zhihu.com/p/32262540](https
 \]`
 
 RMSProp和Adam算法下的`\(\Gamma_{t}\)`可能是负的，所以文章探讨了一种替代方法，通过把超参数`\(\beta_1\)`、`\(\beta_2\)`设置为随着`\(t\)`变化而变化，从而保证`\(\Gamma_{t}\)`始终是个非负数。
+
+
+## Lookahead
+
+论文：[Lookahead Optimizer: k steps forward, 1 step back](https://arxiv.org/abs/1907.08610v1)
+
+参考[Adam作者大革新， 联合Hinton等人推出全新优化方法Lookahead](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650766617&idx=2&sn=bc57e82d6236a31b6da4863e9de3283f&chksm=871ab967b06d30719277f8fd675ae55a71064e61816a38ee469446153f133b9487bc3788e947&scene=0&xtrack=1&pass_ticket=I7vMVoY36Vu5%2FFz%2FMUDKXgy%2FHocjPiCFYYtVANqq1m0CCQBpIAQhSU5BGMcu7Il0#rd)
 

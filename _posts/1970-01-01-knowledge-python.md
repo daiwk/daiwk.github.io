@@ -10,17 +10,17 @@ tags: [python, ]
 
 <!-- TOC -->
 
-- [1. 编译安装python](#1-%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85python)
+- [1. 编译安装python](#1-%e7%bc%96%e8%af%91%e5%ae%89%e8%a3%85python)
 - [2. jupyter](#2-jupyter)
 - [3. mkdocs](#3-mkdocs)
-- [进程池multiprocessing.Pool](#%E8%BF%9B%E7%A8%8B%E6%B1%A0multiprocessingpool)
-- [线程池threadpool](#%E7%BA%BF%E7%A8%8B%E6%B1%A0threadpool)
-- [mac版python3的tf](#mac%E7%89%88python3%E7%9A%84tf)
+- [进程池multiprocessing.Pool](#%e8%bf%9b%e7%a8%8b%e6%b1%a0multiprocessingpool)
+- [线程池threadpool](#%e7%ba%bf%e7%a8%8b%e6%b1%a0threadpool)
+- [mac版python3的tf](#mac%e7%89%88python3%e7%9a%84tf)
 - [copy deepcopy](#copy-deepcopy)
 - [gc](#gc)
-  - [引用计数（主要）](#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E4%B8%BB%E8%A6%81)
-  - [标记清除](#%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4)
-  - [分代回收](#%E5%88%86%E4%BB%A3%E5%9B%9E%E6%94%B6)
+  - [引用计数（主要）](#%e5%bc%95%e7%94%a8%e8%ae%a1%e6%95%b0%e4%b8%bb%e8%a6%81)
+  - [标记清除](#%e6%a0%87%e8%ae%b0%e6%b8%85%e9%99%a4)
+  - [分代回收](#%e5%88%86%e4%bb%a3%e5%9b%9e%e6%94%b6)
 - [collections](#collections)
   - [OrderedDict](#ordereddict)
 
@@ -130,6 +130,7 @@ python get-pip.py
 
 其中的-h参数，是把软链对应的真实文件搞过来哈~。。
 
+10个小技巧：[十大至简规则，用Jupyter Notebook写代码应该这样来](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650766829&idx=1&sn=18d429c632972d9fa52a16516b2cc1df&chksm=871ab993b06d3085b8f49d214deb257fa629994c7cb139d266df3def31831a2c56d8c0103b6b&scene=0&xtrack=1&pass_ticket=I7vMVoY36Vu5%2FFz%2FMUDKXgy%2FHocjPiCFYYtVANqq1m0CCQBpIAQhSU5BGMcu7Il0#rd)
 
 ## 3. mkdocs
 
