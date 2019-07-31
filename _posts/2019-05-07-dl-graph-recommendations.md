@@ -68,4 +68,4 @@ WWW'19 Oral
 
 SIGIR'19
 
-[Neural Graph Collaborative Filtering](https://www.comp.nus.edu.sg/~xiangnan/papers/sigir19-NGCF.pdf)
+[Neural Graph Collaborative Filtering](https://arxiv.org/abs/1905.08108)
