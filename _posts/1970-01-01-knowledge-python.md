@@ -441,3 +441,5 @@ print d2 == d1 ## False
 ```$HOME```容易满。。可以用这个方法：
 
 [https://www.jianshu.com/p/deaaf3f2af91](https://www.jianshu.com/p/deaaf3f2af91)
+
+当然，可以在安装的时候指定```--prefix=/home/work/anaconda3```
