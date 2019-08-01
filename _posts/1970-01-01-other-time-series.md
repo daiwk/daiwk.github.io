@@ -10,9 +10,11 @@ tags: [时间序列预测算法, ]
 <!-- TOC -->
 
 - [holt winters](#holt-winters)
-  - [一次指数平滑](#%E4%B8%80%E6%AC%A1%E6%8C%87%E6%95%B0%E5%B9%B3%E6%BB%91)
-  - [二次指数平滑](#%E4%BA%8C%E6%AC%A1%E6%8C%87%E6%95%B0%E5%B9%B3%E6%BB%91)
-  - [三次指数平滑](#%E4%B8%89%E6%AC%A1%E6%8C%87%E6%95%B0%E5%B9%B3%E6%BB%91)
+    - [一次指数平滑](#一次指数平滑)
+    - [二次指数平滑](#二次指数平滑)
+    - [三次指数平滑](#三次指数平滑)
+- [tensorflow](#tensorflow)
+- [keras](#keras)
 
 <!-- /TOC -->
 
@@ -90,3 +92,11 @@ pd.DataFrame({
     'pred': pred3
 }).plot(legend=True)
 ```
+
+## tensorflow
+
+[https://www.tensorflow.org/api_docs/python/tf/contrib/timeseries](https://www.tensorflow.org/api_docs/python/tf/contrib/timeseries)
+
+## keras
+
+[https://machinelearningmastery.com/time-series-forecasting-long-short-term-memory-network-python/](https://machinelearningmastery.com/time-series-forecasting-long-short-term-memory-network-python/)
