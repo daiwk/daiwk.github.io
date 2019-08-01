@@ -11,14 +11,14 @@ tags: [bert代码, bert code]
 
 - [pretrained model](#pretrained-model)
 - [Sentence (and sentence-pair) classification tasks](#sentence-and-sentence-pair-classification-tasks)
-  - [glue data数据集](#glue-data%E6%95%B0%E6%8D%AE%E9%9B%86)
-  - [运行](#%E8%BF%90%E8%A1%8C)
+  - [glue data数据集](#glue-data%e6%95%b0%e6%8d%ae%e9%9b%86)
+  - [运行](#%e8%bf%90%e8%a1%8c)
 - [pretraining](#pretraining)
   - [step1. create-pretraining-data](#step1-create-pretraining-data)
   - [step2. run-pretraining](#step2-run-pretraining)
   - [pretrain tips and caveats](#pretrain-tips-and-caveats)
-- [抽取feature vector(类似ELMo)](#%E6%8A%BD%E5%8F%96feature-vector%E7%B1%BB%E4%BC%BCelmo)
-- [自己尝试](#%E8%87%AA%E5%B7%B1%E5%B0%9D%E8%AF%95)
+- [抽取feature vector(类似ELMo)](#%e6%8a%bd%e5%8f%96feature-vector%e7%b1%bb%e4%bc%bcelmo)
+- [自己尝试](#%e8%87%aa%e5%b7%b1%e5%b0%9d%e8%af%95)
 
 <!-- /TOC -->
 
@@ -95,6 +95,16 @@ uncased_L-12_H-768_A-12
 
 ```shell
 python download_glue_data.py --data_dir glue_data --tasks all
+```
+
+官方文档：[https://github.com/nyu-mll/GLUE-baselines](https://github.com/nyu-mll/GLUE-baselines)
+
+如果是国内，先把这个clone下来：[https://github.com/wasiahmad/paraphrase_identification](https://github.com/wasiahmad/paraphrase_identification)
+
+然后
+
+```shell
+python download_glue_data.py --data_dir glue_data --tasks all --path_to_mrpc=paraphrase_identification/dataset/msr-paraphrase-corpus
 ```
 
 ### 运行

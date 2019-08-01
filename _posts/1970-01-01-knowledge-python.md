@@ -23,6 +23,7 @@ tags: [python, ]
   - [分代回收](#%e5%88%86%e4%bb%a3%e5%9b%9e%e6%94%b6)
 - [collections](#collections)
   - [OrderedDict](#ordereddict)
+- [conda](#conda)
 
 <!-- /TOC -->
 
@@ -434,3 +435,9 @@ d2['a'] = 'A'
 print d2 == d1 ## False
 ```
 
+
+## conda
+
+```$HOME```容易满。。可以用这个方法：
+
+[https://www.jianshu.com/p/deaaf3f2af91](https://www.jianshu.com/p/deaaf3f2af91)
