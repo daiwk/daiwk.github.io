@@ -10,20 +10,23 @@ tags: [paddle, bert, lark, ernie, ]
 <!-- TOC -->
 
 - [bert](#bert)
-  - [finetune和跑预测并save模型](#finetune%E5%92%8C%E8%B7%91%E9%A2%84%E6%B5%8B%E5%B9%B6save%E6%A8%A1%E5%9E%8B)
-  - [线上infer部分](#%E7%BA%BF%E4%B8%8Ainfer%E9%83%A8%E5%88%86)
+  - [finetune和跑预测并save模型](#finetune%e5%92%8c%e8%b7%91%e9%a2%84%e6%b5%8b%e5%b9%b6save%e6%a8%a1%e5%9e%8b)
+  - [线上infer部分](#%e7%ba%bf%e4%b8%8ainfer%e9%83%a8%e5%88%86)
 - [ernie](#ernie)
-  - [ernie(baiduNLP)](#erniebaiduNLP)
-  - [ernie(清华ACL2019版)](#ernie%E6%B8%85%E5%8D%8EACL2019%E7%89%88)
-    - [模型结构](#%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84)
-    - [finetune方法](#finetune%E6%96%B9%E6%B3%95)
-- [XLMs/MASS/UNILM](#XLMsMASSUNILM)
-  - [XLM(facebook2019)](#XLMfacebook2019)
-  - [LASER(facebook2018)](#LASERfacebook2018)
-  - [MASS(microsoft)](#MASSmicrosoft)
-  - [UNILM(microsoft)](#UNILMmicrosoft)
-- [UER框架](#UER%E6%A1%86%E6%9E%B6)
-- [Whole Word Masking BERT](#Whole-Word-Masking-BERT)
+  - [ernie(baiduNLP)](#erniebaidunlp)
+  - [ernie2.0(baidunlp)](#ernie20baidunlp)
+  - [ernie(清华ACL2019版)](#ernie%e6%b8%85%e5%8d%8eacl2019%e7%89%88)
+    - [模型结构](#%e6%a8%a1%e5%9e%8b%e7%bb%93%e6%9e%84)
+    - [finetune方法](#finetune%e6%96%b9%e6%b3%95)
+- [XLMs/MASS/UNILM](#xlmsmassunilm)
+  - [XLM(facebook2019)](#xlmfacebook2019)
+  - [LASER(facebook2018)](#laserfacebook2018)
+  - [MASS(microsoft)](#massmicrosoft)
+  - [UNILM(microsoft)](#unilmmicrosoft)
+- [UER框架](#uer%e6%a1%86%e6%9e%b6)
+- [Whole Word Masking BERT](#whole-word-masking-bert)
+- [RoBERTa](#roberta)
+- [](#)
 
 <!-- /TOC -->
 
@@ -186,6 +189,24 @@ REPEAT_TIMES=1
 <br/>
 </html>
 
+### ernie2.0(baidunlp)
+
+[ERNIE 2.0: A CONTINUAL PRE-TRAINING FRAMEWORK FOR LANGUAGE UNDERSTANDING](https://arxiv.org/pdf/1907.12412v1.pdf)
+
+<html>
+<br/>
+<img src='../assets/ernie-2.0.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+另一张图：
+
+<html>
+<br/>
+<img src='../assets/ernie-2.0-loss.png' style='max-height: 200px'/>
+<br/>
+</html>
+
 ### ernie(清华ACL2019版)
 
 参考[ACL 2019 \| 清华等提出ERNIE：知识图谱结合BERT才是「有文化」的语言模型](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650762696&idx=4&sn=70c25ea24d15ed53880f45c511938813&chksm=871aa9b6b06d20a0536c7602a5757e28f995600bdffdd52ccb791927ba17aaaa10bfc15a209d&scene=0&xtrack=1&pass_ticket=10gfACXwvjCg3%2FChSZlp60K3dPTbQYhHe4njUqeSGdqo1x0Esjyqks8weqv1u2O0#rd)
@@ -300,3 +321,12 @@ Universal Encoder Representations
 
 论文：[Pre-Training with Whole Word Masking for Chinese BERT](https://arxiv.org/abs/1906.08101)
 
+## RoBERTa
+
+来自Facebook
+
+参考[重回榜首的BERT改进版开源了，千块V100、160GB纯文本的大模型](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650766934&idx=2&sn=54c479dd8e8e69cd9617b9a1962443e1&chksm=871aba28b06d333e0d5dc64754b7280776ba5c17577831077dc5cd2caa4c2335beec3afd8d34&scene=0&xtrack=1&pass_ticket=zAXdHORK5tTx549e9RwAgNcm7bjJrH4ENwbbTYVrAZDqpsE%2Fu1hY63b%2FoRfnZQdM#rd)
+
+[RoBERTa: A Robustly Optimized BERT Pretraining Approach](https://arxiv.org/pdf/1907.11692.pdf)
+
+## 

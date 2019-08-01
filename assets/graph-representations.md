@@ -769,6 +769,14 @@ $$
 + 使用softmax weight的soft clustering（2018年的[Hierarchical Graph Representation Learning with Differentiable Pooling](https://arxiv.org/pdf/1806.08804.pdf)）
 + 使用hard clustering（2018年的[Towards Sparse Hierarchical Graph Classifiers](https://arxiv.org/pdf/1811.01287.pdf)和2018年的[GRAPH U-NET](https://openreview.net/pdf?id=HJePRoAct7)）
 
+## 其他GNN
+
+### 更深的GCN
+
+参考[​ICCV 2019 Oral论文：KAUST提出大幅加深图卷积网络的新方法](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650767026&idx=3&sn=9bcb11b0355f366a5f8cbdf886061223&chksm=871abaccb06d33da62147dac4bf87fb68c9deadd7f46b8e91aa141b3b4b24b7a2899c9b92e63&scene=0&xtrack=1&pass_ticket=zAXdHORK5tTx549e9RwAgNcm7bjJrH4ENwbbTYVrAZDqpsE%2Fu1hY63b%2FoRfnZQdM#rd)
+
+[Can GCNs Go as Deep as CNNs?](https://arxiv.org/pdf/1904.03751.pdf)
+
 # part3-Deep Generative Models for Graph Generation
 
 ## 深度生成模型
@@ -1029,3 +1037,12 @@ Zambaldi et al.在2018的[Relational deep reinforcement learning](https://arxiv.
 
 </div>
 
+# 其他
+
+## Google的一些进展
+
+[https://ai.googleblog.com/2019/06/innovations-in-graph-representation.html](https://ai.googleblog.com/2019/06/innovations-in-graph-representation.html)
+
+[谷歌图表征学习创新：学习单个节点多个嵌入&自动学习最优超参数](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650767026&idx=4&sn=b1f5c9eb2e060c51b882584ee3a24de9&chksm=871abaccb06d33da8a05c7e6afa794763c9e85a75f783a26ef53d3ac8f2cc164cd18dc9926e9&scene=0&xtrack=1&pass_ticket=zAXdHORK5tTx549e9RwAgNcm7bjJrH4ENwbbTYVrAZDqpsE%2Fu1hY63b%2FoRfnZQdM#rd)
+
+代码地址：[https://github.com/google-research/google-research/tree/master/graph_embedding](https://github.com/google-research/google-research/tree/master/graph_embedding)

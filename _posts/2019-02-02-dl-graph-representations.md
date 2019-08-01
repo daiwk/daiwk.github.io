@@ -13,11 +13,11 @@ urlcolor: blue
 - [part1-Node Representation Learning](#part1-node-representation-learning)
   - [Node Representation Methods](#node-representation-methods)
     - [LINE](#line)
-      - [一阶相似度](#%E4%B8%80%E9%98%B6%E7%9B%B8%E4%BC%BC%E5%BA%A6)
-      - [二阶相似度](#%E4%BA%8C%E9%98%B6%E7%9B%B8%E4%BC%BC%E5%BA%A6)
-      - [优化trick](#%E4%BC%98%E5%8C%96trick)
-      - [讨论](#%E8%AE%A8%E8%AE%BA)
-      - [实验](#%E5%AE%9E%E9%AA%8C)
+      - [一阶相似度](#%e4%b8%80%e9%98%b6%e7%9b%b8%e4%bc%bc%e5%ba%a6)
+      - [二阶相似度](#%e4%ba%8c%e9%98%b6%e7%9b%b8%e4%bc%bc%e5%ba%a6)
+      - [优化trick](#%e4%bc%98%e5%8c%96trick)
+      - [讨论](#%e8%ae%a8%e8%ae%ba)
+      - [实验](#%e5%ae%9e%e9%aa%8c)
     - [DeepWalk](#deepwalk)
     - [Node2vec](#node2vec)
   - [Graph and High-dimensional Data Visualization](#graph-and-high-dimensional-data-visualization)
@@ -29,20 +29,22 @@ urlcolor: blue
     - [relation patterns](#relation-patterns)
     - [RotatE](#rotate)
       - [Relation as Elementwise Rotation in Complex Space](#relation-as-elementwise-rotation-in-complex-space)
-      - [RoteE的优化](#rotee%E7%9A%84%E4%BC%98%E5%8C%96)
+      - [RoteE的优化](#rotee%e7%9a%84%e4%bc%98%e5%8c%96)
   - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
 - [part2-Graph Neural Networks](#part2-graph-neural-networks)
-  - [基础知识](#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86)
+  - [基础知识](#%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86)
   - [Neighborhood Aggregation](#neighborhood-aggregation)
   - [Graph Convolutional Networks(GCN)](#graph-convolutional-networksgcn)
   - [GraphSAGE](#graphsage)
   - [Gated Graph Neural Networks](#gated-graph-neural-networks)
-    - [Gated Graph Neural Networks介绍](#gated-graph-neural-networks%E4%BB%8B%E7%BB%8D)
-    - [Message-Passing Neural Networks介绍](#message-passing-neural-networks%E4%BB%8B%E7%BB%8D)
+    - [Gated Graph Neural Networks介绍](#gated-graph-neural-networks%e4%bb%8b%e7%bb%8d)
+    - [Message-Passing Neural Networks介绍](#message-passing-neural-networks%e4%bb%8b%e7%bb%8d)
   - [Graph Attention Networks(GAT)](#graph-attention-networksgat)
   - [Subgraph Embeddings](#subgraph-embeddings)
+  - [其他GNN](#%e5%85%b6%e4%bb%96gnn)
+    - [更深的GCN](#%e6%9b%b4%e6%b7%b1%e7%9a%84gcn)
 - [part3-Deep Generative Models for Graph Generation](#part3-deep-generative-models-for-graph-generation)
-  - [深度生成模型](#%E6%B7%B1%E5%BA%A6%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B)
+  - [深度生成模型](#%e6%b7%b1%e5%ba%a6%e7%94%9f%e6%88%90%e6%a8%a1%e5%9e%8b)
     - [Variational Autoencoders (VAEs)](#variational-autoencoders-vaes)
     - [Generative Adversarial Networks (GANs)](#generative-adversarial-networks-gans)
     - [Deep Auto-regressive Models](#deep-auto-regressive-models)
@@ -50,8 +52,10 @@ urlcolor: blue
   - [JTVAE](#jtvae)
   - [MolGAN](#molgan)
   - [GCPN](#gcpn)
-- [未来方向](#%E6%9C%AA%E6%9D%A5%E6%96%B9%E5%90%91)
-- [自己的小结](#%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B0%8F%E7%BB%93)
+- [未来方向](#%e6%9c%aa%e6%9d%a5%e6%96%b9%e5%90%91)
+- [自己的小结](#%e8%87%aa%e5%b7%b1%e7%9a%84%e5%b0%8f%e7%bb%93)
+- [其他](#%e5%85%b6%e4%bb%96)
+  - [Google的一些进展](#google%e7%9a%84%e4%b8%80%e4%ba%9b%e8%bf%9b%e5%b1%95)
 
 <!-- /TOC -->
 
@@ -812,6 +816,14 @@ z_S=\sum _{v\in S}z_v
 + 使用softmax weight的soft clustering（2018年的[Hierarchical Graph Representation Learning with Differentiable Pooling](https://arxiv.org/pdf/1806.08804.pdf)）
 + 使用hard clustering（2018年的[Towards Sparse Hierarchical Graph Classifiers](https://arxiv.org/pdf/1811.01287.pdf)和2018年的[GRAPH U-NET](https://openreview.net/pdf?id=HJePRoAct7)）
 
+### 其他GNN
+
+#### 更深的GCN
+
+参考[​ICCV 2019 Oral论文：KAUST提出大幅加深图卷积网络的新方法](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650767026&idx=3&sn=9bcb11b0355f366a5f8cbdf886061223&chksm=871abaccb06d33da62147dac4bf87fb68c9deadd7f46b8e91aa141b3b4b24b7a2899c9b92e63&scene=0&xtrack=1&pass_ticket=zAXdHORK5tTx549e9RwAgNcm7bjJrH4ENwbbTYVrAZDqpsE%2Fu1hY63b%2FoRfnZQdM#rd)
+
+[Can GCNs Go as Deep as CNNs?](https://arxiv.org/pdf/1904.03751.pdf)
+
 ## part3-Deep Generative Models for Graph Generation
 
 ### 深度生成模型
@@ -1072,3 +1084,12 @@ Zambaldi et al.在2018的[Relational deep reinforcement learning](https://arxiv.
 <br/>
 </html>
 
+## 其他
+
+### Google的一些进展
+
+[https://ai.googleblog.com/2019/06/innovations-in-graph-representation.html](https://ai.googleblog.com/2019/06/innovations-in-graph-representation.html)
+
+[谷歌图表征学习创新：学习单个节点多个嵌入&自动学习最优超参数](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650767026&idx=4&sn=b1f5c9eb2e060c51b882584ee3a24de9&chksm=871abaccb06d33da8a05c7e6afa794763c9e85a75f783a26ef53d3ac8f2cc164cd18dc9926e9&scene=0&xtrack=1&pass_ticket=zAXdHORK5tTx549e9RwAgNcm7bjJrH4ENwbbTYVrAZDqpsE%2Fu1hY63b%2FoRfnZQdM#rd)
+
+代码地址：[https://github.com/google-research/google-research/tree/master/graph_embedding](https://github.com/google-research/google-research/tree/master/graph_embedding)
