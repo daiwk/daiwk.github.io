@@ -137,7 +137,7 @@ Size:       5646236541
 Compressed: 2176768927
 ```
 
-参考[https://github.com/nyu-mll/GLUE-baselines](https://github.com/nyu-mll/GLUE-baselines)，装allennlp>=0.8.4，torch>=0.4.1，可以跑glue数据集的baseline：
+参考[https://github.com/nyu-mll/GLUE-baselines](https://github.com/nyu-mll/GLUE-baselines)，装allennlp==0.7.0，torch>=0.4.1，可以跑glue数据集的baseline：
 
 ```shell
 py=/home/xxx/python-3-tf-cpu/bin/python3.6
