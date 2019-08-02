@@ -443,3 +443,34 @@ print d2 == d1 ## False
 [https://www.jianshu.com/p/deaaf3f2af91](https://www.jianshu.com/p/deaaf3f2af91)
 
 当然，可以在安装的时候指定```--prefix=/home/work/anaconda3```
+
+
+如果发现装东西的时候（例如：[https://github.com/nyu-mll/GLUE-baselines](https://github.com/nyu-mll/GLUE-baselines)）里的```conda env create -f environment.yml```，pip装psycopg2时gcc失败了，
+
+```
+    Running setup.py install for psycopg2: finished with status 'error'
+    ...
+
+  gcc -pthread -B /home/work/anaconda3/envs/glue/compiler_compat -Wl,--sysroot=/ -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -DPSYCOPG_VERSION=2.8.3 (dt dec pq3 ext) -DPG_VERSION_NUM=80411 -I/home/work/anaconda3/envs/glue/include/python3.6m -I. -I/usr/include -I/usr/include/pgsql/server -c psycopg/psycopgmodule.c -o build/temp.linux-x86_64-3.6/psycopg/psycopgmodule.o -Wdeclaration-after-statement
+  In file included from psycopg/psycopgmodule.c:27:
+  ./psycopg/psycopg.h:30:2: error: #error "Psycopg requires PostgreSQL client library (libpq) >= 9.1"
+  psycopg/psycopgmodule.c: In function ‘libpq_version’:
+  psycopg/psycopgmodule.c:414: warning: implicit declaration of function ‘PQlibVersion’
+  
+  It appears you are missing some prerequisite to build the package from source.
+  
+  You may install a binary package by installing 'psycopg2-binary' from PyPI.
+  If you want to install psycopg2 from source, please install the packages
+  required for the build and try again.
+  
+  For further information please check the 'doc/src/install.rst' file (also at
+  <http://initd.org/psycopg/docs/install.html>).
+  
+  error: command 'gcc' failed with exit status 1
+```
+
+可以在外面先：
+
+```shell
+conda install psycopg2 
+```
