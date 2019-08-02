@@ -115,7 +115,9 @@ main 2>&1
 
 ### 线上infer部分
 
-参考这个readme，[https://github.com/PaddlePaddle/LARK/tree/develop/BERT/inference](https://github.com/PaddlePaddle/LARK/tree/develop/BERT/inference)
+参考这个readme:
+
+[https://github.com/PaddlePaddle/models/tree/develop/PaddleNLP/language_representations_kit/BERT/inference](https://github.com/PaddlePaddle/models/tree/develop/PaddleNLP/language_representations_kit/BERT/inference)
 
 生成demo文件可以参考
 

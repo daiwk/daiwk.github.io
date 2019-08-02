@@ -107,6 +107,53 @@ python download_glue_data.py --data_dir glue_data --tasks all
 python download_glue_data.py --data_dir glue_data --tasks all --path_to_mrpc=paraphrase_identification/dataset/msr-paraphrase-corpus
 ```
 
+注意，如果要用glove，从[https://nlp.stanford.edu/projects/glove/](https://nlp.stanford.edu/projects/glove/)下载下来的840B版本的zip就有2G多，直接unzip解压不了。。可以
+
+```shell
+7z x glove.840B.300d.zip
+```
+
+然后就很风骚。。。
+
+```shell
+7z x glove.840B.300d.zip
+
+7-Zip [64] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
+p7zip Version 16.02 (locale=en_US,Utf16=on,HugeFiles=on,64 bits,56 CPUs x64)
+
+Scanning the drive for archives:
+1 file, 2176768927 bytes (2076 MiB)
+
+Extracting archive: glove.840B.300d.zip
+--
+Path = glove.840B.300d.zip
+Type = zip
+Physical Size = 2176768927
+64-bit = +
+
+Everything is Ok
+
+Size:       5646236541
+Compressed: 2176768927
+```
+
+参考[https://github.com/nyu-mll/GLUE-baselines](https://github.com/nyu-mll/GLUE-baselines)，装allennlp>=0.8.4，torch>=0.4.1，可以跑glue数据集的baseline：
+
+```shell
+py=/home/xxx/python-3-tf-cpu/bin/python3.6
+alias superhead='/opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib:$LD_LIBRARY_PATH '
+alias python='superhead $py'
+python main.py \
+    --exp_dir EXP_DIR \
+    --run_dir RUN_DIR \
+    --train_tasks all \
+    --cove 0 \
+    --cuda -1 \
+    --eval_tasks all \
+    --glove 1 \
+    --word_embs_file ./emb_dir/glove.840B.300d.txt
+```
+
 ### 运行
 
 ```shell
