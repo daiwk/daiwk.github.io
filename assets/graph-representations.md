@@ -1,7 +1,7 @@
 ---
 layout: post
 category: "dl"
-title: "graph represention"
+title: "graph representation"
 tags: [graph representation, ]
 urlcolor: blue
 ---
