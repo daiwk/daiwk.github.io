@@ -15,6 +15,7 @@ tags: [时间序列预测算法, ]
     - [三次指数平滑](#三次指数平滑)
 - [tensorflow](#tensorflow)
 - [keras](#keras)
+- [时间序列建模相关](#时间序列建模相关)
 
 <!-- /TOC -->
 
@@ -100,3 +101,7 @@ pd.DataFrame({
 ## keras
 
 [https://machinelearningmastery.com/time-series-forecasting-long-short-term-memory-network-python/](https://machinelearningmastery.com/time-series-forecasting-long-short-term-memory-network-python/)
+
+## 时间序列建模相关
+
+[【资源】时序行为检测相关资源列表](http://bbs.cvmart.net/articles/526/zi-yuan-shi-xu-xing-wei-jian-ce-xiang-guan-zi-yuan-lie-biao?from=timeline&isappinstalled=0)

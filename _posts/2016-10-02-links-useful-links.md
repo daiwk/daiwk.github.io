@@ -51,6 +51,20 @@ tags: [useful links,]
 
 <!-- /TOC -->
 
+[https://paperswithcode.com/sota](https://paperswithcode.com/sota)
+
+[https://www.jianshu.com/u/511ba5d71aef](https://www.jianshu.com/u/511ba5d71aef)
+
+[https://www.cnblogs.com/pinard/](https://www.cnblogs.com/pinard/)
+
+牛逼的网站：
+
+工业级ml应用的templates：[http://predictionio.apache.org/](http://predictionio.apache.org/)，对应的代码[https://github.com/apache/predictionio](https://github.com/apache/predictionio)，例如推荐系统示例：[http://predictionio.apache.org/templates/recommendation/quickstart/](http://predictionio.apache.org/templates/recommendation/quickstart/)
+
+自动上色，不过因为资金不足。。主网站关了。。[https://github.com/lllyasviel/style2paints](https://github.com/lllyasviel/style2paints)
+
+人脸识别最简洁的工具：[https://github.com/ageitgey/face_recognition](https://github.com/ageitgey/face_recognition)
+
 # **1. Basic Knowledges**
  
 ## 1.1 Machine Learning
@@ -80,6 +94,13 @@ tags: [useful links,]
 2. **LSTM及其11种变种**：[《图解LSTM神经网络架构及其11种变体（附论文）》](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650719562&idx=1&sn=ad6693cdeaa18034ed1c53271f642ef7&chksm=871b0134b06c8822bf89781a81081c161eb82b06d0c20b655bd7b991202d363b6c233ef137ff&scene=0&pass_ticket=lD2bnuoAxxbEWgy8KxGVnWVzLL%2FeiSX9MsE68ZdaZQzVoXKXHlCJQ3sVCfTnR7MQ#rd)
 2. **augmented-rnns**：google大脑的研究员在博客中讲述了Neural Turing Machine、Attentional Interfaces、Adaptive Computation Time和Neural Programmers四大部分。[英文原文](http://distill.pub/2016/augmented-rnns/)；[新智元翻译版](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2651986905&idx=4&sn=dcfdeb7c92826c0603569d5a86025536&chksm=f1216f28c656e63e309d7c92fd06a1c67ac96ebea2a8c6f90169cd944876fb367a8bf819b4f4&mpshare=1&scene=1&srcid=1002ho2GSC2PTnFhFUio3EYj&pass_ticket=DoiMlYDlmCK%2FTS99n6JzBzzsHdN7QoyC81j%2BvUNHFkqqmuADrJsZlH0yXSTgpVEB#rd)；gitbub博客代码：[https://github.com/distillpub/post--augmented-rnns](https://github.com/distillpub/post--augmented-rnns)
 3. **漫谈4种RNN-decoder**：[博客地址](http://jacoxu.com/?p=1852)；github地址：[https://github.com/jacoxu/encoder_decoder](https://github.com/jacoxu/encoder_decoder)
+4. 小合辑（从lstm到gru到双向多层到nmt到attention）:[https://daiwk.github.io/posts/nlp-nmt.html](https://daiwk.github.io/posts/nlp-nmt.html)
+5. attention model集合：[https://daiwk.github.io/posts/dl-attention-models.html](https://daiwk.github.io/posts/dl-attention-models.html)
+6. 只要attention的tensor2tensor：[https://daiwk.github.io/posts/platform-tensor-to-tensor.html](https://daiwk.github.io/posts/platform-tensor-to-tensor.html)
+7. nested lstm: [https://daiwk.github.io/posts/dl-nested-lstm.html](https://daiwk.github.io/posts/dl-nested-lstm.html)
+8. indRNN: [https://daiwk.github.io/posts/dl-indrnn.html](https://daiwk.github.io/posts/dl-indrnn.html)
+9. colah的博客：翻译版之一：[https://www.leiphone.com/news/201701/UIlrDBnwiqoQUbqB.html](https://www.leiphone.com/news/201701/UIlrDBnwiqoQUbqB.html)，原文：[http://colah.github.io/posts/2015-08-Understanding-LSTMs/](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+
  
 ### 1.2.3 GAN
  

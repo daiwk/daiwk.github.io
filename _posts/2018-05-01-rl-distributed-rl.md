@@ -9,17 +9,18 @@ tags: [分布式强化学习, A3C, ape-x, rudder]
 
 <!-- TOC -->
 
-- [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+- [1. 概述](#1-概述)
 - [2. A3C](#2-a3c)
 - [3. PPO](#3-ppo)
 - [4. rainbow](#4-rainbow)
 - [5. APE-X](#5-ape-x)
-  - [5.1 简介](#51-%E7%AE%80%E4%BB%8B)
-  - [5.2 Actor的算法](#52-actor%E7%9A%84%E7%AE%97%E6%B3%95)
-  - [5.3 Learner的算法](#53-learner%E7%9A%84%E7%AE%97%E6%B3%95)
-  - [代码](#%E4%BB%A3%E7%A0%81)
+    - [5.1 简介](#51-简介)
+    - [5.2 Actor的算法](#52-actor的算法)
+    - [5.3 Learner的算法](#53-learner的算法)
+    - [代码](#代码)
 - [6. rudder](#6-rudder)
 - [7. IMPALA](#7-impala)
+- [xx. 自己搞一下](#xx-自己搞一下)
 
 <!-- /TOC -->
 
@@ -199,3 +200,8 @@ IMPALA 受流行的 A3C 架构的启发，**A3C**架构使用**多个分布式ac
 IMPALA的**actor不用于计算梯度，而是用于收集经验**，然后传输至可**计算梯度的中央学习器**，生成一个具备完全独立的actor和learner的模型。为了利用现代计算系统，IMPALA可使用**单个学习器**或执行**同步更新的多个学习器**来实现。用这种方式分离学习和动作可以有效地**提高整个系统的吞吐量**，因为 actor不再需要等待学习步（像 batched A2C 架构中那样）。这使得我们可以在多个有趣的环境中训练IMPALA，无需经历帧渲染时间的变动或耗时的任务重启。
 
 [IMPALA: Scalable Distributed Deep-RL with Importance Weighted Actor-Learner Architectures](https://arxiv.org/abs/1802.01561)
+
+
+## xx. 自己搞一下
+
+参考一个简单的例子：[强化学习异步分布式训练实现](https://mp.weixin.qq.com/s?__biz=MzA5MDMwMTIyNQ==&mid=2649294666&idx=1&sn=ef88c31c17a1ed6f6511713664a0e60f&chksm=8810110cbf67981a7b8d2680f57240d561b3b52eb364d674766b4f91937d652e12e44ba7e457&mpshare=1&scene=1&srcid=&sharer_sharetime=1565122185223&sharer_shareid=8e95986c8c4779e3cdf4e60b3c7aa752&pass_ticket=Kz97uXi0CH4ceADUC3ocCNkjZjy%2B0DTtVYOM7n%2FmWttTt5YKTC2DQT9lqCel7dDR#rd)

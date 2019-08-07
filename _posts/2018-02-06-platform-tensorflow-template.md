@@ -9,9 +9,10 @@ tags: [tensorflow template,  ]
 
 <!-- TOC -->
 
-- [tensorflow项目架构模板](#tensorflow%e9%a1%b9%e7%9b%ae%e6%9e%b6%e6%9e%84%e6%a8%a1%e6%9d%bf)
-- [tensorflow常用代码集](#tensorflow%e5%b8%b8%e7%94%a8%e4%bb%a3%e7%a0%81%e9%9b%86)
-- [oo的dl代码](#oo%e7%9a%84dl%e4%bb%a3%e7%a0%81)
+- [tensorflow项目架构模板](#tensorflow项目架构模板)
+- [tensorflow常用代码集](#tensorflow常用代码集)
+- [oo的dl代码](#oo的dl代码)
+- [awesome tensorflow](#awesome-tensorflow)
 
 <!-- /TOC -->
 
@@ -30,3 +31,7 @@ tags: [tensorflow template,  ]
 ## oo的dl代码
 
 [编程进阶之路：用简单的面向对象编程提升深度学习原型](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650766829&idx=2&sn=bc751e25ac5bbcc0f40cf58f627d3190&chksm=871ab993b06d30851ea30e81e6001e46cee4ca8cc432e993679c3a70c3980e2a08e75967ccc3&scene=0&xtrack=1&pass_ticket=I7vMVoY36Vu5%2FFz%2FMUDKXgy%2FHocjPiCFYYtVANqq1m0CCQBpIAQhSU5BGMcu7Il0#rd)
+
+## awesome tensorflow 
+
+[https://github.com/jtoy/awesome-tensorflow](https://github.com/jtoy/awesome-tensorflow)

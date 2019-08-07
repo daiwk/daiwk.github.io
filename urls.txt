@@ -12,6 +12,7 @@ https://daiwk.github.io/posts/image-gan.html
 https://daiwk.github.io/posts/nlp-new-nmt.html
 https://daiwk.github.io/posts/rl-dual-learning-mt.html
 https://daiwk.github.io/posts/nlp-bert-code-annotated-application.html
+https://daiwk.github.io/posts/links-navigation-gnn.html
 https://daiwk.github.io/posts/audio-fastspeech.html
 https://daiwk.github.io/posts/dl-dl-ctr-models.html
 https://daiwk.github.io/posts/cv-glow.html
@@ -105,7 +106,6 @@ https://daiwk.github.io/posts/cv-efficientnet.html
 https://daiwk.github.io/posts/knowledge-stack-heap-core.html
 https://daiwk.github.io/posts/platform-tf-basics.html
 https://daiwk.github.io/posts/ml-ftrl.html
-https://daiwk.github.io/posts/links-blog-navigation.html
 https://daiwk.github.io/posts/image-mrnn.html
 https://daiwk.github.io/posts/other-scrapy.html
 https://daiwk.github.io/posts/platform-tensorflow-1.4-lattice.html
@@ -126,6 +126,7 @@ https://daiwk.github.io/posts/ml-svm-3-levels.html
 https://daiwk.github.io/posts/nlp-bam.html
 https://daiwk.github.io/posts/cv-img-txt-sim.html
 https://daiwk.github.io/posts/rl-defend-adversarial-samples.html
+https://daiwk.github.io/posts/nlp-chatbot.html
 https://daiwk.github.io/posts/cv-tips.html
 https://daiwk.github.io/posts/platform-paddlepaddle-layers.html
 https://daiwk.github.io/posts/cv-gan-overview.html
@@ -138,6 +139,7 @@ https://daiwk.github.io/posts/dl-product-key-memory-layer.html
 https://daiwk.github.io/posts/image-infogan-improvedgan.html
 https://daiwk.github.io/posts/knowledge-c++-useful-features.html
 https://daiwk.github.io/posts/nlp-bert.html
+https://daiwk.github.io/posts/other-thoughts.html
 https://daiwk.github.io/posts/cv-stackgan.html
 https://daiwk.github.io/posts/knowledge-rnn-implementation.html
 https://daiwk.github.io/posts/dl-graph-representations.html
