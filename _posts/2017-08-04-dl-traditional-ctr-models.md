@@ -386,13 +386,15 @@ Bagging算法是这样做的：每个分类器都随机从原样本中做有放�
 
 #### facebook LR+GBDT
 
-原始paper：[Practical Lessons from Predicting Clicks on Ads at Facebook](https://quinonero.net/Publications/predicting-clicks-facebook.pdf)
+参考[https://blog.csdn.net/u010352603/article/details/80681100](https://blog.csdn.net/u010352603/article/details/80681100)
 
 这个讲得很细，还有好多工业上的注意点。。[https://zhuanlan.zhihu.com/p/57987311](https://zhuanlan.zhihu.com/p/57987311)
 
-参考[https://blog.csdn.net/u010352603/article/details/80681100](https://blog.csdn.net/u010352603/article/details/80681100)
+需要强调是，因为我们需要利用CTR计算**精准**的出价、ROI等重要的后续预估值，因此CTR模型的预估值需要是一个**具有物理意义的精准的CTR**，而**不仅仅是输出广告排序的高低关系**。所以文中不仅把CTR calibration作为重要的评价指标，更是在最后介绍了**模型校正**的相关方法。
 
-GBDT与LR的融合方式，Facebook的paper有个例子如下图2所示，图中Tree1、Tree2为通过GBDT模型学出来的两颗树，x为一条输入样本，遍历两棵树后，x样本分别落到两颗树的叶子节点上，每个叶子节点对应LR一维特征，那么通过遍历树，就得到了该样本对应的所有LR特征。由于树的每条路径，是通过最小化均方差等方法最终分割出来的有区分性路径，根据该路径得到的特征、特征组合都相对有区分性，效果理论上不会亚于人工经验的处理方式。
+原始paper：[Practical Lessons from Predicting Clicks on Ads at Facebook](https://quinonero.net/Publications/predicting-clicks-facebook.pdf)
+
+GBDT与LR的融合方式，Facebook的paper有个例子如下图2所示，图中Tree1、Tree2为通过GBDT模型学出来的两颗树，x为一条输入样本，遍历两棵树后，x样本分别落到两颗树的叶子节点上，每个**叶子节点**对应LR一维特征，那么通过遍历树，就得到了该样本对应的所有LR特征。由于树的每条路径，是通过最小化均方差等方法最终分割出来的有区分性路径，根据该路径得到的特征、特征组合都相对有区分性，效果理论上不会亚于人工经验的处理方式。
 
 <html>
 <br/>
