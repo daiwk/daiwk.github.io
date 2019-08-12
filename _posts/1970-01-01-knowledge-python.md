@@ -55,6 +55,12 @@ X11_LIB_SWITCHES = $(XFT_LIBS) -L/usr/X11R6/lib64 -lX11
 ./configure --enable-unicode=ucs4
 ```
 
+如果要sqlite3，可能要加上
+
+```shell
+ -enable-loadable-sqlite-extensions 
+```
+
 打开Makefile，
 
 ```shell
@@ -111,6 +117,13 @@ cp ~/.jumbo/lib/libtk8.6.so /home/disk2/daiwenkai/tools/python-2.7.14-tk/lib/pyt
 ```shell
  cp /home/work/.jumbo/lib/python2.7/lib-dynload/_sqlite3.so ./python-2.7.14-latest/lib/python2.7/lib-dynload/_sqlite3.so
 ```
+
+如果是py3，就
+
+```shell
+cp ~/.jumbo/lib/libsqlite3.* ./python-3.6.9/lib/python3.6/lib-dynload/
+```
+
 
 4、安装pip
 
