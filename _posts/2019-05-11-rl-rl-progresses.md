@@ -9,8 +9,9 @@ tags: [强化学习, 进展, ]
 
 <!-- TOC -->
 
-- [Beyond DQN/A3C: A Survey in Advanced Reinforcement Learning(2018)](#Beyond-DQNA3C-A-Survey-in-Advanced-Reinforcement-Learning2018)
-- [Modern Deep Reinforcement Learning Algorithms(2019)](#Modern-Deep-Reinforcement-Learning-Algorithms2019)
+- [Beyond DQN/A3C: A Survey in Advanced Reinforcement Learning(2018)](#beyond-dqna3c-a-survey-in-advanced-reinforcement-learning2018)
+- [Modern Deep Reinforcement Learning Algorithms(2019)](#modern-deep-reinforcement-learning-algorithms2019)
+- [Evolution Strategies as a Scalable Alternative to Reinforcement Learning](#evolution-strategies-as-a-scalable-alternative-to-reinforcement-learning)
 
 <!-- /TOC -->
 
@@ -40,4 +41,12 @@ d \theta_{v} \leftarrow d \theta_{v}+\partial{\underbrace{\left(R-V\left(s_{i} ;
 
 原论文有点大。。打开太慢。。转存一份：[https://daiwk.github.io/assets/Modern%20Deep%20Reinforcement%20Learning%20Algorithms.pdf](https://daiwk.github.io/assets/Modern%20Deep%20Reinforcement%20Learning%20Algorithms.pdf)
 
+
+## Evolution Strategies as a Scalable Alternative to Reinforcement Learning
+
+[Evolution Strategies as a Scalable Alternative to Reinforcement Learning](https://arxiv.org/abs/1703.03864)
+
+blog：[https://openai.com/blog/evolution-strategies/](https://openai.com/blog/evolution-strategies/)
+
+代码：[https://github.com/openai/evolution-strategies-starter](https://github.com/openai/evolution-strategies-starter)
 
