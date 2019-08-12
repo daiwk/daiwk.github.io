@@ -55,6 +55,8 @@ X11_LIB_SWITCHES = $(XFT_LIBS) -L/usr/X11R6/lib64 -lX11
 ./configure --enable-unicode=ucs4
 ```
 
+如果你要自己装sqlite3而不是用jumbo的，那也可以参考[https://blog.csdn.net/sparkexpert/article/details/79118448](https://blog.csdn.net/sparkexpert/article/details/79118448)
+
 如果要sqlite3，可能要加上
 
 ```shell
