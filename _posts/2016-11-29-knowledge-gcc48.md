@@ -11,12 +11,12 @@ tags: [gcc48]
 
 - [1.神奇的gcc48](#1%e7%a5%9e%e5%a5%87%e7%9a%84gcc48)
 - [2.注意事项](#2%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9)
-  - [1）/opt/compiler/gcc-4.8.2/lib或者lib64添加到LD_LIBRARY_PATH中吗？](#1optcompilergcc-482lib%e6%88%96%e8%80%85lib64%e6%b7%bb%e5%8a%a0%e5%88%b0ldlibrarypath%e4%b8%ad%e5%90%97)
-  - [2）使用gcc4编译得到的so，可以被gcc3编译得到的binary加载吗？](#2%e4%bd%bf%e7%94%a8gcc4%e7%bc%96%e8%af%91%e5%be%97%e5%88%b0%e7%9a%84so%e5%8f%af%e4%bb%a5%e8%a2%abgcc3%e7%bc%96%e8%af%91%e5%be%97%e5%88%b0%e7%9a%84binary%e5%8a%a0%e8%bd%bd%e5%90%97)
+  - [1）/opt/compiler/gcc-4.8.2/lib或者lib64添加到LD_LIBRARY_PATH中吗](#1optcompilergcc-482lib%e6%88%96%e8%80%85lib64%e6%b7%bb%e5%8a%a0%e5%88%b0ldlibrarypath%e4%b8%ad%e5%90%97)
+  - [2）使用gcc4编译得到的so，可以被gcc3编译得到的binary加载吗](#2%e4%bd%bf%e7%94%a8gcc4%e7%bc%96%e8%af%91%e5%be%97%e5%88%b0%e7%9a%84so%e5%8f%af%e4%bb%a5%e8%a2%abgcc3%e7%bc%96%e8%af%91%e5%be%97%e5%88%b0%e7%9a%84binary%e5%8a%a0%e8%bd%bd%e5%90%97)
 
 <!-- /TOC -->
 
-# 1.神奇的gcc48
+## 1.神奇的gcc48
 
 使用gcc48的最直接方法：
 
@@ -24,9 +24,9 @@ tags: [gcc48]
 export PATH=/opt/compiler/gcc-4.8.2/bin:$PATH
 ```
 
-# 2.注意事项
+## 2.注意事项
 
-## 1）/opt/compiler/gcc-4.8.2/lib或者lib64添加到LD_LIBRARY_PATH中吗？
+### 1）/opt/compiler/gcc-4.8.2/lib或者lib64添加到LD_LIBRARY_PATH中吗
 
 不可以，因为/opt/compiler/gcc-4.8.2/下的库与系统自身的程序和库在OS ABI上不兼容，如果添加之后，系统自身的程序(不要说python了，ls都用不了。。。)将无法运行，会出现如下错误：
 
@@ -45,11 +45,10 @@ ls: error while loading shared libraries: /opt/compiler/gcc-4.8.2/lib64/librt.so
 当然，我们用pip装tf或者torch的时候，可能有些用的是编译好的so，里面一些符号找不到。。这个时候也可以用这种风骚的方法来使用python。。
 
 ```shell
-/opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib:$LD_LIBRARY_PATH
+/opt/compiler/gcc-4.8.2/lib/ld-linux-x86-64.so.2 --library-path /opt/compiler/gcc-4.8.2/lib:$LD_LIBRARY_PATH ./python-3.6.9/bin/python3
 ```
 
-
-## 2）使用gcc4编译得到的so，可以被gcc3编译得到的binary加载吗？ 
+### 2）使用gcc4编译得到的so，可以被gcc3编译得到的binary加载吗
 
 不可以，因为gcc3编译得到的binary（譬如系统自带的python）中，其运行时加载的是/lib64/tls/libc.so.6，而gcc4编译得到的so（譬如gcc4编译得到的python扩展sofa.so）可能依赖高版本libc.so的符号。
 系统自带的python运行时加载的是系统自身的/lib64/tls/libc.so.6，其libc版本为2.3.4(发现jumbo的python也是一个shi样子……)：
