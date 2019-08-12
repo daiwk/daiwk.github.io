@@ -450,15 +450,13 @@ d2['a'] = 'A'
 print d2 == d1 ## False
 ```
 
-
 ## conda
 
-```$HOME```容易满。。可以用这个方法：
+当```$HOME```容易满时。。可以用这个方法：
 
 [https://www.jianshu.com/p/deaaf3f2af91](https://www.jianshu.com/p/deaaf3f2af91)
 
 当然，可以在安装的时候指定```--prefix=/home/work/anaconda3```
-
 
 如果发现装东西的时候（例如：[https://github.com/nyu-mll/GLUE-baselines](https://github.com/nyu-mll/GLUE-baselines)）里的```conda env create -f environment.yml```，pip装psycopg2时gcc失败了，
 
