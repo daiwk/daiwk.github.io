@@ -9,9 +9,11 @@ tags: [eigen, ]
 
 <!-- TOC -->
 
-- [入门](#%E5%85%A5%E9%97%A8)
-- [基本操作](#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C)
-- [eigen+mkl加速](#eigenmkl%E5%8A%A0%E9%80%9F)
+- [入门](#%e5%85%a5%e9%97%a8)
+- [基本操作](#%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c)
+- [eigen+mkl加速](#eigenmkl%e5%8a%a0%e9%80%9f)
+- [常用函数](#%e5%b8%b8%e7%94%a8%e5%87%bd%e6%95%b0)
+  - [block](#block)
 
 <!-- /TOC -->
 
@@ -92,4 +94,22 @@ VectorXf和MatrixXf可以搞出指定size的向量和矩阵：
 
 ```c++
 #define EIGEN_USE_MKL_ALL
+```
+
+## 常用函数
+
+### block
+
+截取从startRow开始blockRows行，以及从startCol开始blockCols列的小矩阵出来。
+
+```c++
+inline Block<Derived> block(Index startRow, Index startCol, Index blockRows, Index blockCols)
+{
+  return Block<Derived>(derived(), startRow, startCol, blockRows, blockCols);
+}
+/** This is the const version of block(Index,Index,Index,Index). */
+inline const Block<const Derived> block(Index startRow, Index startCol, Index blockRows, Index blockCols) const
+{
+  return Block<const Derived>(derived(), startRow, startCol, blockRows, blockCols);
+}
 ```

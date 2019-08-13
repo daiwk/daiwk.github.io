@@ -13,6 +13,7 @@ tags: [gnn frameworks, dgl, pyg,]
 - [DGL(mxnet+pytorch)](#dglmxnetpytorch)
 - [PyG(pytorch)](#pygpytorch)
 - [GraphVite](#graphvite)
+- [pgl](#pgl)
 
 <!-- /TOC -->
 
@@ -56,3 +57,129 @@ GraphVite 框架由两个部分组成，核心库和 Python wrapper。Python wra
 [https://graphvite.io/](https://graphvite.io/)
 
 [https://github.com/DeepGraphLearning/graphvite](https://github.com/DeepGraphLearning/graphvite)
+
+
+## pgl
+
+paddle的graph learning
+
+可以从这里搞些examples来试试：
+
+[https://github.com/PaddlePaddle/PGL](https://github.com/PaddlePaddle/PGL)
+
+安装不赘述了，还有官方文档：[https://pgl.readthedocs.io/en/latest/instruction.html](https://pgl.readthedocs.io/en/latest/instruction.html)
+
+看看这个demo：
+
+```python
+import pgl
+from pgl import graph  # import pgl module
+import numpy as np
+
+def build_graph():
+    # define the number of nodes; we can use number to represent every node
+    num_node = 10
+    # add edges, we represent all edges as a list of tuple (src, dst)
+    edge_list = [(2, 0), (2, 1), (3, 1),(4, 0), (5, 0),
+             (6, 0), (6, 4), (6, 5), (7, 0), (7, 1),
+             (7, 2), (7, 3), (8, 0), (9, 7)]
+
+    # Each node can be represented by a d-dimensional feature vector, here for simple, the feature vectors are randomly generated.
+    d = 16
+    feature = np.random.randn(num_node, d).astype("float32")
+    # each edge also can be represented by a feature vector
+    edge_feature = np.random.randn(len(edge_list), d).astype("float32")
+
+    # create a graph
+    g = graph.Graph(num_nodes = num_node,
+                    edges = edge_list,
+                    node_feat = {'feature':feature},
+                    edge_feat ={'edge_feature': edge_feature})
+
+    return g
+
+# create a graph object for saving graph data
+g = build_graph()
+
+
+print('There are %d nodes in the graph.'%g.num_nodes)
+print('There are %d edges in the graph.'%g.num_edges)
+
+# Out:
+# There are 10 nodes in the graph.
+# There are 14 edges in the graph.
+
+import paddle.fluid as fluid
+
+use_cuda = False
+place = fluid.GPUPlace(0) if use_cuda else fluid.CPUPlace()
+
+# use GraphWrapper as a container for graph data to construct a graph neural network
+gw = pgl.graph_wrapper.GraphWrapper(name='graph',
+                        place = place,
+                        node_feat=g.node_feat_info())
+
+
+
+# define GCN layer function
+def gcn_layer(gw, feature, hidden_size, name, activation):
+    # gw is a GraphWrapper；feature is the feature vectors of nodes
+
+    # define message function
+    def send_func(src_feat, dst_feat, edge_feat):
+        # In this tutorial, we return the feature vector of the source node as message
+        return src_feat['h']
+
+    # define reduce function
+    def recv_func(feat):
+        # we sum the feature vector of the source node
+        return fluid.layers.sequence_pool(feat, pool_type='sum')
+
+    # trigger message to passing
+    msg = gw.send(send_func, nfeat_list=[('h', feature)])
+    # recv funciton receives message and trigger reduce funcition to handle message
+    output = gw.recv(msg, recv_func)
+    output = fluid.layers.fc(output,
+                    size=hidden_size,
+                    bias_attr=False,
+                    act=activation,
+                    name=name)
+    return output
+
+output = gcn_layer(gw, gw.node_feat['feature'],
+                hidden_size=8, name='gcn_layer_1', activation='relu')
+output = gcn_layer(gw, output, hidden_size=1,
+                name='gcn_layer_2', activation=None)
+
+y = [0,1,1,1,0,0,0,1,0,1]
+label = np.array(y, dtype="float32")
+label = np.expand_dims(label, -1)
+
+# create a label layer as a container
+node_label = fluid.layers.data("node_label", shape=[None, 1],
+            dtype="float32", append_batch_size=False)
+
+# using cross-entropy with sigmoid layer as the loss function
+loss = fluid.layers.sigmoid_cross_entropy_with_logits(x=output, label=node_label)
+
+# calculate the mean loss
+loss = fluid.layers.mean(loss)
+
+# choose the Adam optimizer and set the learning rate to be 0.01
+adam = fluid.optimizer.Adam(learning_rate=0.01)
+adam.minimize(loss)
+
+# create the executor
+exe = fluid.Executor(place)
+exe.run(fluid.default_startup_program())
+feed_dict = gw.to_feed(g) # gets graph data
+
+for epoch in range(30):
+    feed_dict['node_label'] = label
+
+    train_loss = exe.run(fluid.default_main_program(),
+        feed=feed_dict,
+        fetch_list=[loss],
+        return_numpy=True)
+    print('Epoch %d | Loss: %f'%(epoch, train_loss[0]))
+```

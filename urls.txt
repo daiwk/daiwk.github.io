@@ -26,6 +26,7 @@ https://daiwk.github.io/posts/knowledge-url.html
 https://daiwk.github.io/posts/ml-few-shot-learning.html
 https://daiwk.github.io/posts/ml-loss-functions.html
 https://daiwk.github.io/posts/ml-online-learning.html
+https://daiwk.github.io/posts/ml-traditional-ml.html
 https://daiwk.github.io/posts/ml-tree-models.html
 https://daiwk.github.io/posts/nlp-ltr.html
 https://daiwk.github.io/posts/nlp-ndcg.html
