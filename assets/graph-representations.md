@@ -74,7 +74,7 @@ LINE代码（c++）：[https://github.com/tangjianpku/LINE](https://github.com/t
 一阶相似度的经验分布：
 
 $$
-\hat{p_1}(v_i,v_j)=\frac{w_{ij}}{\sum_{(m,n)\in E}w_{mn}}
+\hat{p}_1(v_i,v_j)=\frac{w_{ij}}{\sum_{(m,n)\in E}w_{mn}}
 $$
 
 一阶相似度的模型分布：
@@ -92,7 +92,7 @@ $$
 目标函数是**KL散度**：
 
 $$
-O_1=KL(\hat{p_1},p_1)
+O_1=KL(\hat{p}_1,p_1)
 $$
 
 干掉常量$\sum_{(m,n)\in E}w_{mn}$，还有$\sum _{(i,j)\in E}w_{ij}\log w_{ij}$之后：
@@ -112,7 +112,7 @@ $$
 邻近网络的经验分布：
 
 $$
-\hat{p_2}(v_j|v_i)=\frac{w_{ij}}{\sum_{k\in V}w_{ik}}
+\hat{p}_2(v_j|v_i)=\frac{w_{ij}}{\sum_{k\in V}w_{ik}}
 $$
 
 邻近网络的模型分布，其中，$u_i$是$v_i$被视为顶点时的表示，$u'_i$是$v_i$被视为"context"时的表示：
@@ -124,7 +124,7 @@ $$
 目标函数是**KL散度**：
 
 $$
-O_2=\sum_i KL(\hat{p_2}(\cdot |v_i),p_2(\cdot|v_i))=-\sum _{(i,j)\in E}w_{ij}\log p_2(v_j|v_i)
+O_2=\sum_i KL(\hat{p}_2(\cdot |v_i),p_2(\cdot|v_i))=-\sum _{(i,j)\in E}w_{ij}\log p_2(v_j|v_i)
 $$
 
 #### 优化trick
@@ -144,7 +144,7 @@ $$
 + 边$(i,j)$的embedding的梯度：
 
 $$
-\frac{\partial O_2}{\partial \vec{u_i}}=w_{ij}\frac{\partial \log \hat{p_2}(v_j|v_i)}{\partial \vec{u_i}}
+\frac{\partial O_2}{\partial \vec{u_i}}=w_{ij}\frac{\partial \log \hat{p}_2(v_j|v_i)}{\partial \vec{u_i}}
 $$
 
 + 当边的权重方差很大的时候，从上式可知，目标函数的梯度是$p_2$的梯度再乘以边权重，所以目标函数的梯度的方差也会很大，这样会有问题。

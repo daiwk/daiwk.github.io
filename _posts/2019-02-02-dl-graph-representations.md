@@ -11,51 +11,51 @@ urlcolor: blue
 
 - [Introduction](#introduction)
 - [part1-Node Representation Learning](#part1-node-representation-learning)
-    - [Node Representation Methods](#node-representation-methods)
-        - [LINE](#line)
-            - [一阶相似度](#一阶相似度)
-            - [二阶相似度](#二阶相似度)
-            - [优化trick](#优化trick)
-            - [讨论](#讨论)
-            - [实验](#实验)
-        - [DeepWalk](#deepwalk)
-        - [Node2vec](#node2vec)
-    - [Graph and High-dimensional Data Visualization](#graph-and-high-dimensional-data-visualization)
-        - [t-SNE](#t-sne)
-        - [Visualizing Large-scale and High-dimensional Data](#visualizing-large-scale-and-high-dimensional-data)
-            - [Learning the Layout of KNN Graph](#learning-the-layout-of-knn-graph)
-            - [A Probabilistic Model for Graph Layout](#a-probabilistic-model-for-graph-layout)
-    - [Knowledge Graph Embedding](#knowledge-graph-embedding)
-        - [relation patterns](#relation-patterns)
-        - [RotatE](#rotate)
-            - [Relation as Elementwise Rotation in Complex Space](#relation-as-elementwise-rotation-in-complex-space)
-            - [RoteE的优化](#rotee的优化)
-    - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
+  - [Node Representation Methods](#node-representation-methods)
+    - [LINE](#line)
+      - [一阶相似度](#%e4%b8%80%e9%98%b6%e7%9b%b8%e4%bc%bc%e5%ba%a6)
+      - [二阶相似度](#%e4%ba%8c%e9%98%b6%e7%9b%b8%e4%bc%bc%e5%ba%a6)
+      - [优化trick](#%e4%bc%98%e5%8c%96trick)
+      - [讨论](#%e8%ae%a8%e8%ae%ba)
+      - [实验](#%e5%ae%9e%e9%aa%8c)
+    - [DeepWalk](#deepwalk)
+    - [Node2vec](#node2vec)
+  - [Graph and High-dimensional Data Visualization](#graph-and-high-dimensional-data-visualization)
+    - [t-SNE](#t-sne)
+    - [Visualizing Large-scale and High-dimensional Data](#visualizing-large-scale-and-high-dimensional-data)
+      - [Learning the Layout of KNN Graph](#learning-the-layout-of-knn-graph)
+      - [A Probabilistic Model for Graph Layout](#a-probabilistic-model-for-graph-layout)
+  - [Knowledge Graph Embedding](#knowledge-graph-embedding)
+    - [relation patterns](#relation-patterns)
+    - [RotatE](#rotate)
+      - [Relation as Elementwise Rotation in Complex Space](#relation-as-elementwise-rotation-in-complex-space)
+      - [RoteE的优化](#rotee%e7%9a%84%e4%bc%98%e5%8c%96)
+  - [A High-performance Node Representation System](#a-high-performance-node-representation-system)
 - [part2-Graph Neural Networks](#part2-graph-neural-networks)
-    - [基础知识](#基础知识)
-    - [Neighborhood Aggregation](#neighborhood-aggregation)
-    - [Graph Convolutional Networks(GCN)](#graph-convolutional-networksgcn)
-    - [GraphSAGE](#graphsage)
-    - [Gated Graph Neural Networks](#gated-graph-neural-networks)
-        - [Gated Graph Neural Networks介绍](#gated-graph-neural-networks介绍)
-        - [Message-Passing Neural Networks介绍](#message-passing-neural-networks介绍)
-    - [Graph Attention Networks(GAT)](#graph-attention-networksgat)
-    - [Subgraph Embeddings](#subgraph-embeddings)
-    - [其他GNN](#其他gnn)
-        - [更深的GCN](#更深的gcn)
+  - [基础知识](#%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86)
+  - [Neighborhood Aggregation](#neighborhood-aggregation)
+  - [Graph Convolutional Networks(GCN)](#graph-convolutional-networksgcn)
+  - [GraphSAGE](#graphsage)
+  - [Gated Graph Neural Networks](#gated-graph-neural-networks)
+    - [Gated Graph Neural Networks介绍](#gated-graph-neural-networks%e4%bb%8b%e7%bb%8d)
+    - [Message-Passing Neural Networks介绍](#message-passing-neural-networks%e4%bb%8b%e7%bb%8d)
+  - [Graph Attention Networks(GAT)](#graph-attention-networksgat)
+  - [Subgraph Embeddings](#subgraph-embeddings)
+  - [其他GNN](#%e5%85%b6%e4%bb%96gnn)
+    - [更深的GCN](#%e6%9b%b4%e6%b7%b1%e7%9a%84gcn)
 - [part3-Deep Generative Models for Graph Generation](#part3-deep-generative-models-for-graph-generation)
-    - [深度生成模型](#深度生成模型)
-        - [Variational Autoencoders (VAEs)](#variational-autoencoders-vaes)
-        - [Generative Adversarial Networks (GANs)](#generative-adversarial-networks-gans)
-        - [Deep Auto-regressive Models](#deep-auto-regressive-models)
-    - [GraphVAE](#graphvae)
-    - [JTVAE](#jtvae)
-    - [MolGAN](#molgan)
-    - [GCPN](#gcpn)
-- [未来方向](#未来方向)
-- [自己的小结](#自己的小结)
-- [其他](#其他)
-    - [Google的一些进展](#google的一些进展)
+  - [深度生成模型](#%e6%b7%b1%e5%ba%a6%e7%94%9f%e6%88%90%e6%a8%a1%e5%9e%8b)
+    - [Variational Autoencoders (VAEs)](#variational-autoencoders-vaes)
+    - [Generative Adversarial Networks (GANs)](#generative-adversarial-networks-gans)
+    - [Deep Auto-regressive Models](#deep-auto-regressive-models)
+  - [GraphVAE](#graphvae)
+  - [JTVAE](#jtvae)
+  - [MolGAN](#molgan)
+  - [GCPN](#gcpn)
+- [未来方向](#%e6%9c%aa%e6%9d%a5%e6%96%b9%e5%90%91)
+- [自己的小结](#%e8%87%aa%e5%b7%b1%e7%9a%84%e5%b0%8f%e7%bb%93)
+- [其他](#%e5%85%b6%e4%bb%96)
+  - [Google的一些进展](#google%e7%9a%84%e4%b8%80%e4%ba%9b%e8%bf%9b%e5%b1%95)
 
 <!-- /TOC -->
 
@@ -121,7 +121,7 @@ LINE代码（c++）：[https://github.com/tangjianpku/LINE](https://github.com/t
 一阶相似度的经验分布：
 
 `\[
-\hat{p_1}(v_i,v_j)=\frac{w_{ij}}{\sum_{(m,n)\in E}w_{mn}}
+\hat{p}_1(v_i,v_j)=\frac{w_{ij}}{\sum_{(m,n)\in E}w_{mn}}
 \]`
 
 一阶相似度的模型分布：
@@ -139,7 +139,7 @@ p_1(v_i,v_j)=\frac{1}{1+\exp(-\vec{u_i}^T\vec{u_j})}
 目标函数是**KL散度**：
 
 `\[
-O_1=KL(\hat{p_1},p_1)
+O_1=KL(\hat{p}_1,p_1)
 \]`
 
 干掉常量`\(\sum_{(m,n)\in E}w_{mn}\)`，还有`\(\sum _{(i,j)\in E}w_{ij}\log w_{ij}\)`之后：
@@ -159,7 +159,7 @@ O_1=\sum _{(i,j)\in E}w_{ij}\log w_{ij}-\sum _{(i,j)\in E}w_{ij}\log p_1(v_i,v_j
 邻近网络的经验分布：
 
 `\[
-\hat{p_2}(v_j|v_i)=\frac{w_{ij}}{\sum_{k\in V}w_{ik}}
+\hat{p}_2(v_j|v_i)=\frac{w_{ij}}{\sum_{k\in V}w_{ik}}
 \]`
 
 邻近网络的模型分布，其中，`\(u_i\)`是`\(v_i\)`被视为顶点时的表示，`\(u'_i\)`是`\(v_i\)`被视为"context"时的表示：
@@ -171,7 +171,7 @@ p_2(v_j|v_i)=\frac{\exp(\vec{u'_j}^T\vec{u_i})}{\sum_{k\in V}\exp(\vec{u'_k}^T\v
 目标函数是**KL散度**：
 
 `\[
-O_2=\sum_i KL(\hat{p_2}(\cdot |v_i),p_2(\cdot|v_i))=-\sum _{(i,j)\in E}w_{ij}\log p_2(v_j|v_i)
+O_2=\sum_i KL(\hat{p}_2(\cdot |v_i),p_2(\cdot|v_i))=-\sum _{(i,j)\in E}w_{ij}\log p_2(v_j|v_i)
 \]`
 
 ##### 优化trick
@@ -191,7 +191,7 @@ O_2=\sum_i KL(\hat{p_2}(\cdot |v_i),p_2(\cdot|v_i))=-\sum _{(i,j)\in E}w_{ij}\lo
 + 边`\((i,j)\)`的embedding的梯度：
 
 `\[
-\frac{\partial O_2}{\partial \vec{u_i}}=w_{ij}\frac{\partial \log \hat{p_2}(v_j|v_i)}{\partial \vec{u_i}}
+\frac{\partial O_2}{\partial \vec{u_i}}=w_{ij}\frac{\partial \log \hat{p}_2(v_j|v_i)}{\partial \vec{u_i}}
 \]`
 
 + 当边的权重方差很大的时候，从上式可知，目标函数的梯度是`\(p_2\)`的梯度再乘以边权重，所以目标函数的梯度的方差也会很大，这样会有问题。
