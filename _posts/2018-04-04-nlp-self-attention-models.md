@@ -314,7 +314,7 @@ softmax(QK^T)V：(mxd)xk维，
 
 <html>
 <br/>
-<img src='../assets/att-rank-yy1.png' style='max-height: 200px'/>
+<img src='../assets/att-rank-yy2.png' style='max-height: 200px'/>
 <br/>
 </html>
 
