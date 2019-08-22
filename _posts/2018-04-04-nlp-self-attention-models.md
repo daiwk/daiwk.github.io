@@ -10,27 +10,28 @@ tags: [自注意力, self-attention, 机器翻译, ]
 
 <!-- TOC -->
 
-- [attention的本质](#attention的本质)
-- [自己的小结](#自己的小结)
+- [attention的本质](#attention%e7%9a%84%e6%9c%ac%e8%b4%a8)
+- [自己的小结](#%e8%87%aa%e5%b7%b1%e7%9a%84%e5%b0%8f%e7%bb%93)
 - [multi-head attention](#multi-head-attention)
 - [self-attention](#self-attention)
-- [对比rnn/cnn/transformer](#对比rnncnntransformer)
-    - [rnn](#rnn)
-        - [SRU](#sru)
-        - [SRNN](#srnn)
-    - [cnn](#cnn)
-    - [transformer](#transformer)
-- [机器翻译小综述](#机器翻译小综述)
-    - [机器翻译的挑战](#机器翻译的挑战)
-        - [漏译](#漏译)
-        - [数据稀疏](#数据稀疏)
-        - [引入知识](#引入知识)
-        - [可解释性](#可解释性)
-        - [语篇翻译](#语篇翻译)
-- [清华刘洋的talk——机器翻译的三大挑战](#清华刘洋的talk机器翻译的三大挑战)
-    - [知识整合](#知识整合)
-    - [可解释/可视化](#可解释可视化)
-    - [鲁棒性](#鲁棒性)
+- [对比rnn/cnn/transformer](#%e5%af%b9%e6%af%94rnncnntransformer)
+  - [rnn](#rnn)
+    - [SRU](#sru)
+    - [SRNN](#srnn)
+  - [cnn](#cnn)
+  - [transformer](#transformer)
+- [机器翻译小综述](#%e6%9c%ba%e5%99%a8%e7%bf%bb%e8%af%91%e5%b0%8f%e7%bb%bc%e8%bf%b0)
+  - [机器翻译的挑战](#%e6%9c%ba%e5%99%a8%e7%bf%bb%e8%af%91%e7%9a%84%e6%8c%91%e6%88%98)
+    - [漏译](#%e6%bc%8f%e8%af%91)
+    - [数据稀疏](#%e6%95%b0%e6%8d%ae%e7%a8%80%e7%96%8f)
+    - [引入知识](#%e5%bc%95%e5%85%a5%e7%9f%a5%e8%af%86)
+    - [可解释性](#%e5%8f%af%e8%a7%a3%e9%87%8a%e6%80%a7)
+    - [语篇翻译](#%e8%af%ad%e7%af%87%e7%bf%bb%e8%af%91)
+- [清华刘洋的talk——机器翻译的三大挑战](#%e6%b8%85%e5%8d%8e%e5%88%98%e6%b4%8b%e7%9a%84talk%e6%9c%ba%e5%99%a8%e7%bf%bb%e8%af%91%e7%9a%84%e4%b8%89%e5%a4%a7%e6%8c%91%e6%88%98)
+  - [知识整合](#%e7%9f%a5%e8%af%86%e6%95%b4%e5%90%88)
+  - [可解释/可视化](#%e5%8f%af%e8%a7%a3%e9%87%8a%e5%8f%af%e8%a7%86%e5%8c%96)
+  - [鲁棒性](#%e9%b2%81%e6%a3%92%e6%80%a7)
+- [attention的其他奇怪应用](#attention%e7%9a%84%e5%85%b6%e4%bb%96%e5%a5%87%e6%80%aa%e5%ba%94%e7%94%a8)
 
 <!-- /TOC -->
 
@@ -268,3 +269,53 @@ connections（严格来说是highway connections）**
 ### 鲁棒性
 
 输入中的小扰动会严重扭曲中间表示，从而影响神经机器翻译（NMT）模型的翻译质量。
+
+
+## attention的其他奇怪应用
+
+机器翻译里，假设emb是d维，正常机器翻译里，源语言K=V是nxd，目标语言Q是mxd
+
+softmax(QK^T)是mxn，第i行第j列是源语言的第j个词在所有源语言的词里，对第i个目标语言词的重要程度
+
+
+假设有一个rank问题，m个队列，n个位置，每个队列有n条结果，每条结果是一个d维向量
+
+Q是(mxd)xn，姑且把mxd这个向量看成一维的，即d=1，
+
+K是nxn，表示每个位置间两两的关系
+
+QK^T是(mxd)xn，第i行第j列是第j个位置在所有位置里，对第i个队列的重要程度
+
+。。真绕
+
+从我自己的角度，yy了一下：
+
+m个队列，n个位置，每个队列有k条结果，每个结果是一个d维向量
+
+Q: (mxd)xk，m行表示m个队列，k列表示k条结果
+
+K: nxk，n行表示n个位置，k列表示k条结果，也就是每个位置与每一条结果间的权重
+
+V: nxk，同K
+
+softmax(QK^T)：(mxd)xn维，第i行第j列表示，第j个位置在所有位置里，对第i个队列的重要程度
+
+softmax(QK^T)V：(mxd)xk维，
+
+
+<html>
+<br/>
+<img src='../assets/att-rank-yy1.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+有点奇怪。。如果把k和n互换呢。。。
+
+
+<html>
+<br/>
+<img src='../assets/att-rank-yy1.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+再想想。。
