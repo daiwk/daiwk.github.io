@@ -10,15 +10,18 @@ tags: [stack, heap, core, 栈, 堆, gdb, ]
 <!-- TOC -->
 
 - [gdb](#gdb)
-- [打印内存](#打印内存)
-    - [pretty stl](#pretty-stl)
-    - [gogogo](#gogogo)
-- [基础命令](#基础命令)
-- [堆与栈](#堆与栈)
+- [打印内存](#%e6%89%93%e5%8d%b0%e5%86%85%e5%ad%98)
+  - [pretty stl](#pretty-stl)
+  - [gogogo](#gogogo)
+- [基础命令](#%e5%9f%ba%e7%a1%80%e5%91%bd%e4%bb%a4)
+- [堆与栈](#%e5%a0%86%e4%b8%8e%e6%a0%88)
 - [core](#core)
-- [堆、栈导致的core](#堆栈导致的core)
-    - [栈空间不足](#栈空间不足)
-- [其他容易core的点](#其他容易core的点)
+- [堆、栈导致的core](#%e5%a0%86%e6%a0%88%e5%af%bc%e8%87%b4%e7%9a%84core)
+  - [栈空间不足](#%e6%a0%88%e7%a9%ba%e9%97%b4%e4%b8%8d%e8%b6%b3)
+- [其他容易core的点](#%e5%85%b6%e4%bb%96%e5%ae%b9%e6%98%93core%e7%9a%84%e7%82%b9)
+- [其他的一些操作](#%e5%85%b6%e4%bb%96%e7%9a%84%e4%b8%80%e4%ba%9b%e6%93%8d%e4%bd%9c)
+  - [把so里的地址转换成行号](#%e6%8a%8aso%e9%87%8c%e7%9a%84%e5%9c%b0%e5%9d%80%e8%bd%ac%e6%8d%a2%e6%88%90%e8%a1%8c%e5%8f%b7)
+  - [用gdb查py的core](#%e7%94%a8gdb%e6%9f%a5py%e7%9a%84core)
 
 <!-- /TOC -->
 
@@ -615,3 +618,20 @@ int main()
     return 0;
 }
 ```
+
+## 其他的一些操作
+
+### 把so里的地址转换成行号
+
+参考[https://stackoverflow.com/questions/8545931/using-gdb-to-convert-addresses-to-lines](https://stackoverflow.com/questions/8545931/using-gdb-to-convert-addresses-to-lines)
+
+参考[https://stackoverflow.com/questions/7648642/how-to-use-the-addr2line-command-in-linux/7648883#7648883](https://stackoverflow.com/questions/7648642/how-to-use-the-addr2line-command-in-linux/7648883#7648883)
+
+参考[https://stackoverflow.com/questions/49150331/given-program-counter-find-the-source-line-in-a-shared-library](https://stackoverflow.com/questions/49150331/given-program-counter-find-the-source-line-in-a-shared-library)
+
+### 用gdb查py的core
+
+下载[https://svn.python.org/projects/python/trunk/Tools/gdb/libpython.py](https://svn.python.org/projects/python/trunk/Tools/gdb/libpython.py)
+
+参考[https://www.cnblogs.com/dkblog/p/3806277.html](https://www.cnblogs.com/dkblog/p/3806277.html)
+
