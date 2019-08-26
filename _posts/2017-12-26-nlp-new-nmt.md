@@ -9,12 +9,12 @@ tags: [MUSE, facebook, gan, 机器翻译, 无监督]
 
 <!-- TOC -->
 
-- [基于GAN的机器翻译](#基于gan的机器翻译)
-    - [seqgan](#seqgan)
-    - [Adversarial-NMT](#adversarial-nmt)
-- [无监督机器翻译](#无监督机器翻译)
-    - [MUSE](#muse)
-    - [基于短语和神经的无监督机器翻译](#基于短语和神经的无监督机器翻译)
+- [基于GAN的机器翻译](#%e5%9f%ba%e4%ba%8egan%e7%9a%84%e6%9c%ba%e5%99%a8%e7%bf%bb%e8%af%91)
+  - [seqgan](#seqgan)
+  - [Adversarial-NMT](#adversarial-nmt)
+- [无监督机器翻译](#%e6%97%a0%e7%9b%91%e7%9d%a3%e6%9c%ba%e5%99%a8%e7%bf%bb%e8%af%91)
+  - [MUSE](#muse)
+  - [基于短语和神经的无监督机器翻译](#%e5%9f%ba%e4%ba%8e%e7%9f%ad%e8%af%ad%e5%92%8c%e7%a5%9e%e7%bb%8f%e7%9a%84%e6%97%a0%e7%9b%91%e7%9d%a3%e6%9c%ba%e5%99%a8%e7%bf%bb%e8%af%91)
 
 <!-- /TOC -->
 
@@ -25,6 +25,8 @@ tags: [MUSE, facebook, gan, 机器翻译, 无监督]
 ### seqgan
 
 [SeqGAN: Sequence Generative Adversarial Nets with Policy Gradient](https://arxiv.org/abs/1609.05473)
+
+[https://daiwk.github.io/posts/rl-seqgan.html](https://daiwk.github.io/posts/rl-seqgan.html)
 
 ### Adversarial-NMT
 
