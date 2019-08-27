@@ -24,6 +24,7 @@ tags: [python, ]
 - [collections](#collections)
   - [OrderedDict](#ordereddict)
 - [conda](#conda)
+- [flush](#flush)
 
 <!-- /TOC -->
 
@@ -486,4 +487,13 @@ print d2 == d1 ## False
 
 ```shell
 conda install psycopg2 
+```
+
+## flush
+
+参考[https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file](https://stackoverflow.com/questions/3167494/how-often-does-python-flush-to-a-file)
+
+```python
+bufsize = 0
+f = open('file.txt', 'w', buffering=bufsize)
 ```
