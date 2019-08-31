@@ -2,7 +2,7 @@
 layout: post
 category: "dl"
 title: "meta learning& auto-ml"
-tags: [meta learning, learning to learn, automl, auto-ml, ]
+tags: [meta learning, learning to learn, automl, auto-ml, once for all, ]
 urlcolor: blue
 ---
 
@@ -11,9 +11,11 @@ urlcolor: blue
 
 - [meta-learning](#meta-learning)
 - [auto-ml](#auto-ml)
-    - [fairnas](#fairnas)
-    - [efficientnet](#efficientnet)
-    - [adanet](#adanet)
+  - [fairnas](#fairnas)
+  - [efficientnet](#efficientnet)
+  - [adanet](#adanet)
+  - [mdenas](#mdenas)
+- [once for all](#once-for-all)
 
 <!-- /TOC -->
 
@@ -46,4 +48,31 @@ urlcolor: blue
 ### adanet
 
 参考[https://daiwk.github.io/posts/platform-adanet.html](https://daiwk.github.io/posts/platform-adanet.html)
+
+### mdenas
+
+参考[ICCV 2019 \| 四小时搜索NN结构，厦大提出快速NAS检索方法](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650768900&idx=4&sn=d61886200c847f7beca7b68ad1416539&chksm=871a427ab06dcb6c91d4d579cd9e7a95fc3dd08d93110f7ab495fb31d02fc693421869888975&scene=0&xtrack=1&pass_ticket=mmBhl6hER5JU9q0KMKTTFnbwPDksdn18kk%2FlW9Ih3p2TCzi4%2BlfisKHhCysHq%2Bou#rd)
+
+[Multinomial Distribution Learning for Effective Neural Architecture Search](https://arxiv.org/abs/1905.07529)
+
+[https://github.com/tanglang96/MDENAS](https://github.com/tanglang96/MDENAS)
+
+近年来，通过神经架构搜索（NAS）算法生成的架构在各种计算机视觉任务中获得了极强的的性能。然而，现有的 NAS 算法需要再上百个 GPU 上运行 30 多天。在本文中，我们提出了一种基于多项式分布估计快速 NAS 算法，它将搜索空间视为一个多项式分布，我们可以通过采样-分布估计来优化该分布，从而将 NAS 可以转换为分布估计/学习。
+
+除此之外，本文还提出并证明了一种保序精度排序假设，进一步加速学习过程。在 CIFAR-10 上，通过我们的方法搜索的结构实现了 2.55％的测试误差，GTX1080Ti 上仅 4 个 GPU 小时。在 ImageNet 上，我们实现了 75.2％的 top1 准确度。
+
+## once for all
+
+参考[韩松等人提出NN设计新思路：训练一次，全平台应用](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650769015&idx=5&sn=8e490488bdb2cd6a0aa28fa89083d55f&chksm=871a4209b06dcb1f1ec06b3a74bffad1eade7f69e790516bfa9f7c332fe22bddb83df90d9e41&scene=0&xtrack=1&pass_ticket=mmBhl6hER5JU9q0KMKTTFnbwPDksdn18kk%2FlW9Ih3p2TCzi4%2BlfisKHhCysHq%2Bou#rd)
+
+[Once for All: Train One Network and Specialize it for Efficient Deployment](https://arxiv.org/pdf/1908.09791.pdf)
+
+如要有效地部署深度学习模型，需要专门的神经网络架构，以便最好地适应不同的硬件平台和效率限制条件（定义为部署场景（deployment scenario））。传统的方法要么是人工设计，要么就是使用 AutoML（自动机器学习）来搜索特定的神经网络，再针对每个案例从头开始训练。这些方法的成本高昂，而且难以扩展，因为它们的训练成本与部署场景的数量有关。
+
+本研究为高效神经网络设计引入了一种 Once for All（OFA/一劳永逸）方法，可处理很多部署场景。这种新方法的特点是分离了模型训练与架构搜索过程。这种方法不会针对每种案例都训练一个专用模型，而是训练一个支持多种不同架构设置（深度、宽度、核大小和分辨率）的 OFA 网络。
+
+
+然后给定一个部署场景，再通过选择 OFA 网络中特定的子网络来搜索合适的结果，这个过程无需训练。因此，专用模型的训练成本就从 O(N) 降到了 O(1)。但是，我们却难以防止许多不同子网络之间的干扰。针对这一问题，MIT 的这些研究者提出了渐进式收束算法（progressive shrinking algorithm）。该算法能够训练支持超过 10^19 个子网络的 OFA 网络，同时还能保持与独立训练的网络一样的准确度，从而节省非重复性工程开发（non-recurring engineering/NRE）成本。
+
+研究者在多种不同的硬件平台（移动平台/CPU/GPU）和效率限制条件上进行了广泛的实验，结果表明：相比于当前最佳（SOTA）的神经架构搜索（NAS）方法，OFA 能稳定地取得同等水平（或更好）的 ImageNet 准确度。值得注意的是，OFA 在处理多部署场景（N）时的速度比 NAS 快几个数量级。当 N=40 时，OFA 所需的 GPU 工作小时数比 ProxylessNAS 少 14 倍、比 FBNet 少 16 倍、比 MnasNet 少 1142 倍。部署场景越多，则相比于 NAS 就节省越多。
 

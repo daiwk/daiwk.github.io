@@ -9,15 +9,16 @@ tags: [异常检测, anormaly detection, iforest]
 
 <!-- TOC -->
 
-- [1. 概述](#1-概述)
-    - [1.1 异常的原因](#11-异常的原因)
-    - [1.2 方法](#12-方法)
-    - [1.3 方法](#13-方法)
-- [2. 无监督算法](#2-无监督算法)
-    - [2.1 作用于numeric data的方法](#21-作用于numeric-data的方法)
-    - [2.2 作用于categorical data的方法](#22-作用于categorical-data的方法)
-    - [2.3 Exact methods v.s. Probalistic methods](#23-exact-methods-vs-probalistic-methods)
+- [1. 概述](#1-%e6%a6%82%e8%bf%b0)
+  - [1.1 异常的原因](#11-%e5%bc%82%e5%b8%b8%e7%9a%84%e5%8e%9f%e5%9b%a0)
+  - [1.2 方法](#12-%e6%96%b9%e6%b3%95)
+  - [1.3 方法](#13-%e6%96%b9%e6%b3%95)
+- [2. 无监督算法](#2-%e6%97%a0%e7%9b%91%e7%9d%a3%e7%ae%97%e6%b3%95)
+  - [2.1 作用于numeric data的方法](#21-%e4%bd%9c%e7%94%a8%e4%ba%8enumeric-data%e7%9a%84%e6%96%b9%e6%b3%95)
+  - [2.2 作用于categorical data的方法](#22-%e4%bd%9c%e7%94%a8%e4%ba%8ecategorical-data%e7%9a%84%e6%96%b9%e6%b3%95)
+  - [2.3 Exact methods v.s. Probalistic methods](#23-exact-methods-vs-probalistic-methods)
 - [iForest](#iforest)
+- [微软的异常检测服务](#%e5%be%ae%e8%bd%af%e7%9a%84%e5%bc%82%e5%b8%b8%e6%a3%80%e6%b5%8b%e6%9c%8d%e5%8a%a1)
 
 <!-- /TOC -->
 
@@ -84,3 +85,11 @@ Exact methods对于相同的criteria，会给出相同的结果,概率方法则�
 参考[https://zhuanlan.zhihu.com/p/25040651](https://zhuanlan.zhihu.com/p/25040651)
 
 
+## 微软的异常检测服务
+
+[Time-Series Anomaly Detection Service at Microsoft](https://arxiv.org/abs/1906.03821)
+
+
+时序数据的异常检测在实际生产环境中有着重要且广泛的应用，包括业务指标、DevOps 数据以及 IOT Sensor 数据的监控等。及时地发现异常可以有效降低企业成本，增加服务的稳定性。构建一个准确并实用的异常检测算法主要有以下几点挑战：1）缺乏标注：在系统中有百万级别的时间序列，我们很难对每种类型的数据进行足够的标注；2）泛化：时间序列的模式多种多样，产品要求算法对各式各样的时间序列具备很好的泛化能力；3）效率：线上服务对算法的执行效率有较高要求，一些复杂的模型虽然精度不错，但效率达不到产品的要求。
+
+在微软内部，AI Platform of Cloud+AI 产品组构建了一个异常检测平台，应用于包括 Azure、Office 以及必应在内的多个产品组，同时在微软认知服务上提供 API 供外部客户使用。我们针对该产品面临的挑战，发明了一种准确、高效的异常检测算法，带来了显著的效果提升。

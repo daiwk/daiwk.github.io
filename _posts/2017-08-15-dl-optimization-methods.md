@@ -19,6 +19,7 @@ tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam
 - [Adam类方法小结](#adam%e7%b1%bb%e6%96%b9%e6%b3%95%e5%b0%8f%e7%bb%93)
 - [AMSGrad](#amsgrad)
 - [Lookahead](#lookahead)
+- [dlADMM](#dladmm)
 
 <!-- /TOC -->
 
@@ -253,4 +254,15 @@ RMSProp和Adam算法下的`\(\Gamma_{t}\)`可能是负的，所以文章探讨�
 论文：[Lookahead Optimizer: k steps forward, 1 step back](https://arxiv.org/abs/1907.08610v1)
 
 参考[Adam作者大革新， 联合Hinton等人推出全新优化方法Lookahead](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650766617&idx=2&sn=bc57e82d6236a31b6da4863e9de3283f&chksm=871ab967b06d30719277f8fd675ae55a71064e61816a38ee469446153f133b9487bc3788e947&scene=0&xtrack=1&pass_ticket=I7vMVoY36Vu5%2FFz%2FMUDKXgy%2FHocjPiCFYYtVANqq1m0CCQBpIAQhSU5BGMcu7Il0#rd)
+
+
+## dlADMM
+
+[KDD 2019 \| 不用反向传播就能训练DL模型，ADMM效果可超梯度下降](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650768966&idx=5&sn=1a9dc281cbb62d3121e8601bbf5ef350&chksm=871a4238b06dcb2e6ee78374dd1c4c1a50c7340d4c955d1a4b8ba9ba3d87055f81e9ef762db6&scene=0&xtrack=1&pass_ticket=mmBhl6hER5JU9q0KMKTTFnbwPDksdn18kk%2FlW9Ih3p2TCzi4%2BlfisKHhCysHq%2Bou#rd)
+
+[ADMM for Efficient Deep Learning with Global Convergence](https://arxiv.org/pdf/1905.13611.pdf)
+
+代码：[https://github.com/xianggebenben/dlADMM](https://github.com/xianggebenben/dlADMM)
+
+本文提出了一种基于交替方向乘子法的深度学习优化算法 dlADMM。该方法可以避免随机梯度下降算法的梯度消失和病态条件等问题，弥补了此前工作的不足。此外，该研究提出了先后向再前向的迭代次序加快了算法的收敛速度，并且对于大部分子问题采用二次近似的方式进行求解，避免了矩阵求逆的耗时操作。在基准数据集的实验结果表明，dlADMM 击败了大部分现有的优化算法，进一步证明了它的有效性和高效。
 

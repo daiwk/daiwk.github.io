@@ -44,6 +44,7 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
   - [兴趣演化](#%e5%85%b4%e8%b6%a3%e6%bc%94%e5%8c%96)
 - [ESMM](#esmm)
 - [TDM](#tdm)
+- [DeepGBM](#deepgbm)
 - [各种比赛](#%e5%90%84%e7%a7%8d%e6%af%94%e8%b5%9b)
 
 <!-- /TOC -->
@@ -1036,6 +1037,15 @@ ESMM模型是在整个样本空间建模，而不像传统CVR预估模型那样�
 ## TDM
 
 严格来说，tdm是个召回模型，这里一起看一看
+
+## DeepGBM
+
+KDD2019上，[DeepGBM: A Deep Learning Framework Distilled by GBDT for Online Prediction Tasks](http://delivery.acm.org/10.1145/3340000/3330858/p384-ke.pdf?ip=123.116.98.90&id=3330858&acc=OPENTOC&key=4D4702B0C3E38B35%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35%2E9F04A3A78F7D3B8D&__acm__=1567230572_d9273c6128be4b62d2932d75d61e6af9)
+
+
+而目前广泛用于这些任务的机器学习模型都没有完美适配这两个重要的特性。常用的机器学习模型大致可分为三类：梯度提升树（GBDT）、神经网络（NN）和二者（GBDT+NN）结合的模型。其中 GBDT 可以很好地处理连续的数值特征，但很难处理好稀疏的类别特征，并且 GBDT 是利用全量数据学习的，很难高效地进行在线更新；而 NN（如Wide&Deep、DeepFM等）虽然可以用 embedding 技术处理好稀疏类别特征，且可以高效地在线更新，但其难以很好地处理数值特征；常见的 GBDT+NN 方法会单独使用 GBDT 再使用 NN，但同样由于 GBDT 的缘故，难以在线更新。
+
+DeepGBM 主要包含两个子模块——面向类别特征的 CatNN 和面向数值特征的 GBDT2NN。CatNN 主要继承了 NN 中对类别特征友好的 Deep 模块和 FM 模块；GBDT2NN 是文章最主要的贡献之一，其基于 GBDT 进行知识蒸馏构造了一个 NN 模块，可以有效地处理类别特征并可以在线更新。综上，DeepGBM 既支持含有类别特征和数值特征的表格型数据输入，还能利用实时产生的数据进行学习和更新。
 
 
 ## 各种比赛

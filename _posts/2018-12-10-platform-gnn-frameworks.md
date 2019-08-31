@@ -40,6 +40,8 @@ tags: [gnn frameworks, dgl, pyg,]
 
 [已开源！GraphVite 超高速图表示学习系统，1 分钟可学百万节点](https://mp.weixin.qq.com/s?__biz=MzU1NTUxNTM0Mg==&mid=2247491610&idx=1&sn=1188f6e0707031ee0a58ed10b89cb9d8&chksm=fbd18cbbcca605addf50058077ad5689bf3182b92e7302dacb6c55b2761bd518e33435848827&mpshare=1&scene=1&srcid=&sharer_sharetime=1565179278897&sharer_shareid=8e95986c8c4779e3cdf4e60b3c7aa752&pass_ticket=Kz97uXi0CH4ceADUC3ocCNkjZjy%2B0DTtVYOM7n%2FmWttTt5YKTC2DQT9lqCel7dDR#rd)
 
+单机支持最大20亿边的图。
+
 GraphVite 框架由两个部分组成，核心库和 Python wrapper。Python wrapper 可以为核心库中的类提供自动打包功能，并为应用程序和数据集提供了实现。
 
 核心库用 C+11 和 CUDA 实现，并使用 pybind11 绑定到 python 中。它涵盖了 GraphVite 中所有与计算相关类的实现，例如图、求解器和优化器。所有这些成分都可以打包成类，这类似于 Python 接口。
@@ -57,7 +59,6 @@ GraphVite 框架由两个部分组成，核心库和 Python wrapper。Python wra
 [https://graphvite.io/](https://graphvite.io/)
 
 [https://github.com/DeepGraphLearning/graphvite](https://github.com/DeepGraphLearning/graphvite)
-
 
 ## pgl
 

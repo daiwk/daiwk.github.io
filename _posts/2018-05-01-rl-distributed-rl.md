@@ -9,18 +9,20 @@ tags: [分布式强化学习, A3C, ape-x, rudder]
 
 <!-- TOC -->
 
-- [1. 概述](#1-概述)
+- [1. 概述](#1-%e6%a6%82%e8%bf%b0)
 - [2. A3C](#2-a3c)
 - [3. PPO](#3-ppo)
 - [4. rainbow](#4-rainbow)
 - [5. APE-X](#5-ape-x)
-    - [5.1 简介](#51-简介)
-    - [5.2 Actor的算法](#52-actor的算法)
-    - [5.3 Learner的算法](#53-learner的算法)
-    - [代码](#代码)
+  - [5.1 简介](#51-%e7%ae%80%e4%bb%8b)
+  - [5.2 Actor的算法](#52-actor%e7%9a%84%e7%ae%97%e6%b3%95)
+  - [5.3 Learner的算法](#53-learner%e7%9a%84%e7%ae%97%e6%b3%95)
+  - [代码](#%e4%bb%a3%e7%a0%81)
 - [6. rudder](#6-rudder)
 - [7. IMPALA](#7-impala)
-- [xx. 自己搞一下](#xx-自己搞一下)
+- [xx. 自己搞一下](#xx-%e8%87%aa%e5%b7%b1%e6%90%9e%e4%b8%80%e4%b8%8b)
+- [其他RL平台](#%e5%85%b6%e4%bb%96rl%e5%b9%b3%e5%8f%b0)
+  - [open spiel](#open-spiel)
 
 <!-- /TOC -->
 
@@ -205,3 +207,14 @@ IMPALA的**actor不用于计算梯度，而是用于收集经验**，然后传�
 ## xx. 自己搞一下
 
 参考一个简单的例子：[强化学习异步分布式训练实现](https://mp.weixin.qq.com/s?__biz=MzA5MDMwMTIyNQ==&mid=2649294666&idx=1&sn=ef88c31c17a1ed6f6511713664a0e60f&chksm=8810110cbf67981a7b8d2680f57240d561b3b52eb364d674766b4f91937d652e12e44ba7e457&mpshare=1&scene=1&srcid=&sharer_sharetime=1565122185223&sharer_shareid=8e95986c8c4779e3cdf4e60b3c7aa752&pass_ticket=Kz97uXi0CH4ceADUC3ocCNkjZjy%2B0DTtVYOM7n%2FmWttTt5YKTC2DQT9lqCel7dDR#rd)
+
+
+## 其他RL平台
+
+### open spiel
+
+[DeepMind开源强化学习游戏框架，25款线上游戏等你来挑战](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650768900&idx=3&sn=e214fc23d26cdd4eb94f5e6ea5feb7a2&chksm=871a427ab06dcb6ccadc9ed0ec3f57127f27f91dda1ba3ff4700a380f3dc1cb215dfd36522e8&scene=0&xtrack=1&pass_ticket=mmBhl6hER5JU9q0KMKTTFnbwPDksdn18kk%2FlW9Ih3p2TCzi4%2BlfisKHhCysHq%2Bou#rd)
+
+[https://github.com/deepmind/open_spiel](https://github.com/deepmind/open_spiel)
+
+目前大多是棋牌、博弈相关游戏。
