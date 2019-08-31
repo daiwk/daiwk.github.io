@@ -9,22 +9,21 @@ tags: [deep & cross network, DCN]
 
 <!-- TOC -->
 
-- [tags: [deep & cross network, DCN]](#tags-deep--cross-network-dcn)
-- [概述](#%E6%A6%82%E8%BF%B0)
+- [概述](#%e6%a6%82%e8%bf%b0)
 - [related work](#related-work)
-  - [embedding方法](#embedding%E6%96%B9%E6%B3%95)
+  - [embedding方法](#embedding%e6%96%b9%e6%b3%95)
     - [Factorization machines(FMs)](#factorization-machinesfms)
     - [Field-aware Factorization Machines(FFMs)](#field-aware-factorization-machinesffms)
-  - [神经网络](#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)
-- [贡献](#%E8%B4%A1%E7%8C%AE)
-- [网络结构](#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84)
+  - [神经网络](#%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c)
+- [贡献](#%e8%b4%a1%e7%8c%ae)
+- [网络结构](#%e7%bd%91%e7%bb%9c%e7%bb%93%e6%9e%84)
   - [Embedding and Stacking Layer](#embedding-and-stacking-layer)
   - [Cross Network](#cross-network)
-    - [复杂度分析](#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90)
+    - [复杂度分析](#%e5%a4%8d%e6%9d%82%e5%ba%a6%e5%88%86%e6%9e%90)
   - [Deep Network](#deep-network)
-    - [复杂度分析](#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-1)
+    - [复杂度分析](#%e5%a4%8d%e6%9d%82%e5%ba%a6%e5%88%86%e6%9e%90-1)
   - [Combination Layer](#combination-layer)
-- [代码](#%E4%BB%A3%E7%A0%81)
+- [代码](#%e4%bb%a3%e7%a0%81)
 
 <!-- /TOC -->
 
@@ -35,7 +34,7 @@ tags: [deep & cross network, DCN]
 
 论文地址：[deep & cross network for ad click predictions](https://arxiv.org/abs/1708.05123)
 
-在ctr预估这种场景中，有大量的离散和类别特征，所以特征空间非常大且稀疏。线性模型，例如logistic regression，简单，有可解释性，易扩展性，而交叉特征可以显著增加模型的表示能力。但这些组合徨需要人工的特征工程，或者exhaustive searching，而且，产生unseen的特征interactions非常困难。
+在ctr预估这种场景中，有大量的离散和类别特征，所以特征空间非常大且稀疏。线性模型，例如logistic regression，简单，有可解释性，易扩展性，而交叉特征可以显著增加模型的表示能力。但这些组合往往需要人工的特征工程，或者exhaustive searching，而且，产生unseen的特征interactions非常困难。
 
 本文提出了cross network，可以使用自动的方式实现显式的特征交叉。cross network包括了多种层，其中最高度的interactions是由层的深度决定的。每一层会基于已有的部分产出高阶interactions，并保持前层的interactions。**本文实现了cross network和dnn的联合训练。dnn能捕捉特征间非常复杂的interactions，但相比cross network而言，需要更多参数（几乎差一个数量级？an order of），而且难以显式地产出交叉特征，并且可能难以高效地学习特征的interactions。**
 
