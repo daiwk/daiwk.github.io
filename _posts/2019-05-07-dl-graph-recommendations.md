@@ -69,3 +69,6 @@ WWW'19 Oral
 SIGIR'19
 
 [Neural Graph Collaborative Filtering](https://arxiv.org/abs/1905.08108)
+
+参考[https://www.jianshu.com/p/16c8973ef8ff](https://www.jianshu.com/p/16c8973ef8ff)
+
