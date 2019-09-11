@@ -12,6 +12,7 @@ tags: [强化学习, 进展, ]
 - [Beyond DQN/A3C: A Survey in Advanced Reinforcement Learning(2018)](#beyond-dqna3c-a-survey-in-advanced-reinforcement-learning2018)
 - [Modern Deep Reinforcement Learning Algorithms(2019)](#modern-deep-reinforcement-learning-algorithms2019)
 - [Evolution Strategies as a Scalable Alternative to Reinforcement Learning](#evolution-strategies-as-a-scalable-alternative-to-reinforcement-learning)
+- [模拟器相关](#%e6%a8%a1%e6%8b%9f%e5%99%a8%e7%9b%b8%e5%85%b3)
 
 <!-- /TOC -->
 
@@ -50,3 +51,9 @@ blog：[https://openai.com/blog/evolution-strategies/](https://openai.com/blog/e
 
 代码：[https://github.com/openai/evolution-strategies-starter](https://github.com/openai/evolution-strategies-starter)
 
+
+## 模拟器相关
+
+[Virtual-Taobao: Virtualizing Real-world Online Retail Environment for Reinforcement Learning](https://arxiv.org/pdf/1805.10000.pdf)
+
+[Simulating User Feedback for Reinforcement Learning Based Recommendations](https://arxiv.org/pdf/1906.11462.pdf)
