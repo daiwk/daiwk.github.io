@@ -10,6 +10,7 @@ tags: [自注意力, self-attention, 机器翻译, ]
 
 <!-- TOC -->
 
+- [注意](#%e6%b3%a8%e6%84%8f)
 - [attention的本质](#attention%e7%9a%84%e6%9c%ac%e8%b4%a8)
 - [自己的小结](#%e8%87%aa%e5%b7%b1%e7%9a%84%e5%b0%8f%e7%bb%93)
 - [multi-head attention](#multi-head-attention)
@@ -46,6 +47,21 @@ attention is all you need的解读可以参考
 本文参考[自然语言处理中的自注意力机制（Self-Attention Mechanism）](https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247488035&idx=1&sn=9d0568f58cd85d628fa60ddc33d266e9&chksm=96e9cda3a19e44b5e7ce784d08508ad6d03dcd93c96491dd660af4312b9c67b67457486475ea&mpshare=1&scene=1&srcid=0328RMAtTkf2hZSuXZD5vJBR&pass_ticket=tNNNXIGOajFyoVTQkCkEGcrVM4xaK5lnuItOaXnqkjfkBuTkVoKCva7UoF68PTww#rd)
 
 论文作者之一Lukasz Kaiser的ppt：[https://daiwk.github.io/assets/attention-is-all-you-need-lkaiser.pdf](https://daiwk.github.io/assets/attention-is-all-you-need-lkaiser.pdf)
+
+## 注意
+
+[https://www.jianshu.com/p/48e71b72ca67](https://www.jianshu.com/p/48e71b72ca67)
+
+Adam 优化器可以说是目前使用最广泛、收敛速度较快且收敛过程较稳定的优化器。Adam 的计算公式如图所示。可以看到公式中梯度的计算使用了动量原理，每一轮用于梯度下降的梯度是当前计算的真实梯度与上一轮用于梯度下降的梯度的加权和。这样动量的引入可以防止训练时产生震荡。Adam 优化器的学习率对于不同参数也是不同的，由该参数历史每一轮的真实梯度的大小决定。好处是对于 NLP 这种输入极度稀疏且输入特征极度不平衡（例如整个预料库中“我”这样的词经常出现，而“拉姆塞”这样的词只出现几次）的任务，学习率是自适应的，一些在一次训练 epoch 中只更新几次的 embedding，在训练后期还是会有较大的学习率。
+
+NLP 输入稀疏的特点与 Adam 使用动量计算梯度的特点相结合就引入了麻烦。每一轮更新参数时，只有极少数 embedding 的梯度是非 0 的，大部分 embedding 的梯度是 0 即上图公式中的 gt 是 0。但是，计算了动量之后，这些原本梯度都应该是 0 的 embedding 有了非零梯度 mt 用于梯度下降更新。想象一个极端的例子，“拉姆塞”这个词在一个 epoch 中只在第一个 batch 出现了，于是第一个 batch 计算了“拉姆塞”这个 embedding 的真实梯度 g0 用于更新参数，在以后的每个 batch 中虽然“拉姆塞”这个词没有出现过，Adam 都会计算它的动量梯度 mt，并用于更新“拉姆塞”这个 embedding，实际上方向与 g0 完全相同，只是每一轮做一次 β1 倍的衰减。这样的做法就相当于对这些出现次数较少的低频词的 embedding，每次梯度下降的等效学习率是非常大的，容易引起类似过拟合的问题。
+
+每轮迭代只更新这个 batch 中出现过的词的 embedding 即可。TensorFlow 中可以使用 ```tf.contrib.opt.LazyAdamOptimizer```。
+
+参考[https://www.zhihu.com/question/265357659/answer/580469438](https://www.zhihu.com/question/265357659/answer/580469438)
+
+和图像等领域不同，对 NLU 之类的任务，每个 batch 采样到的词有限，每次更新对 Embedding 的梯度估计都是稀疏的。非 momentum-based 的 Optimizer 每步只会更新采样到的词，而对于 momentum-based 的 Optimizer，现在所有框架的实现都会用当前的 momentum 去更新所有的词，即使这些词在连续的几十步更新里都没有被采样到。这可能会使 Embedding 过拟合。
+
 
 ## attention的本质
 
