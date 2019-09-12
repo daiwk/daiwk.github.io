@@ -647,6 +647,20 @@ def get_model(model_type, model_dir):
     return m
 ```
 
+
+注意：wide deep在wide侧和deep侧用的是两个优化方法：
+
+[https://www.tensorflow.org/api_docs/python/tf/estimator/DNNLinearCombinedClassifier](https://www.tensorflow.org/api_docs/python/tf/estimator/DNNLinearCombinedClassifier)
+
+```python
+linear_optimizer='Ftrl',
+dnn_optimizer='Adagrad',
+```
+
+可以通过如下方式对不同参数指定不同的优化方法~
+
+[https://stackoverflow.com/questions/34945554/how-to-set-layer-wise-learning-rate-in-tensorflow](https://stackoverflow.com/questions/34945554/how-to-set-layer-wise-learning-rate-in-tensorflow)
+
 ## DeepFM
 
 [DeepFM: A Factorization-Machine based Neural Network for CTR Prediction](https://www.ijcai.org/proceedings/2017/0239.pdf)
