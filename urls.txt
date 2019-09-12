@@ -278,6 +278,7 @@ https://daiwk.github.io/posts/dl-product-key-memory-layer.html
 https://daiwk.github.io/posts/rl-slateq.html
 https://daiwk.github.io/posts/dl-generative-models.html
 https://daiwk.github.io/posts/audio-pytorch-kaldi.html
+https://daiwk.github.io/posts/others-visual-tools.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-gnn.html
 https://daiwk.github.io/posts/links-navigation-nlp.html
