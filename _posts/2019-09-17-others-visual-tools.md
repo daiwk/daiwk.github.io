@@ -46,7 +46,7 @@ with tf.Session() as sess:
 
 <html>
 <br/>
-<img src='../assets/netron-demo.png' style='max-height: 200px'/>
+<img src='../assets/netron-demo.png' style='max-height: 300px'/>
 <br/>
 </html>
 
