@@ -19,6 +19,7 @@ tags: [bert代码, bert code]
   - [pretrain tips and caveats](#pretrain-tips-and-caveats)
 - [抽取feature vector(类似ELMo)](#%e6%8a%bd%e5%8f%96feature-vector%e7%b1%bb%e4%bc%bcelmo)
 - [自己尝试](#%e8%87%aa%e5%b7%b1%e5%b0%9d%e8%af%95)
+- [注意](#%e6%b3%a8%e6%84%8f)
 
 <!-- /TOC -->
 
@@ -597,3 +598,11 @@ wait
 <br/>
 
 </html>
+
+## 注意
+
+我们发现，代码里没看到tf.summary相关的代码，却可以看到tensorboard...
+
+是因为用了tpuestimator。。。"TPUEstimator API 不支持 tensorboard 的自定义摘要。但是，基本摘要会自动记录到模型目录中的事件文件中。"
+
+[https://cloud.google.com/tpu/docs/tutorials/migrating-to-tpuestimator-api](https://cloud.google.com/tpu/docs/tutorials/migrating-to-tpuestimator-api)
