@@ -49,6 +49,10 @@ git revert 和 git reset的区别：
 revert操作：
 [https://blog.csdn.net/secretx/article/details/51461972](https://blog.csdn.net/secretx/article/details/51461972)
 
+官方文档：
+
+[https://git-scm.com/docs/git-revert](https://git-scm.com/docs/git-revert)
+
 强行推送到远端
 
 ```
