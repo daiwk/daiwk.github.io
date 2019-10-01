@@ -12,17 +12,20 @@ tags: [lamb, bert, cubert, mklbert,  ]
 - [LAMB](#lamb)
 - [cuBERT](#cubert)
 - [distill](#distill)
-  - [背景与相关工作](#%E8%83%8C%E6%99%AF%E4%B8%8E%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C)
-    - [模型压缩](#%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9)
-  - [网络结构与方法](#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E4%B8%8E%E6%96%B9%E6%B3%95)
-  - [distill目标](#distill%E7%9B%AE%E6%A0%87)
-  - [用于distill的augmentation](#%E7%94%A8%E4%BA%8Edistill%E7%9A%84augmentation)
+  - [背景与相关工作](#%e8%83%8c%e6%99%af%e4%b8%8e%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c)
+    - [模型压缩](#%e6%a8%a1%e5%9e%8b%e5%8e%8b%e7%bc%a9)
+  - [网络结构与方法](#%e7%bd%91%e7%bb%9c%e7%bb%93%e6%9e%84%e4%b8%8e%e6%96%b9%e6%b3%95)
+  - [distill目标](#distill%e7%9b%ae%e6%a0%87)
+  - [用于distill的augmentation](#%e7%94%a8%e4%ba%8edistill%e7%9a%84augmentation)
     - [Masking](#masking)
     - [POS-guided word replacement](#pos-guided-word-replacement)
     - [n-gram sampling](#n-gram-sampling)
-    - [整个augmentation的流程](#%E6%95%B4%E4%B8%AAaugmentation%E7%9A%84%E6%B5%81%E7%A8%8B)
+    - [整个augmentation的流程](#%e6%95%b4%e4%b8%aaaugmentation%e7%9a%84%e6%b5%81%e7%a8%8b)
 
 <!-- /TOC -->
+
+
+更多参考：[https://daiwk.github.io/posts/nlp-paddle-lark.html](https://daiwk.github.io/posts/nlp-paddle-lark.html)
 
 ## LAMB
 

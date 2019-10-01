@@ -60,6 +60,10 @@ urlcolor: blue
 <!-- /TOC -->
 
 
+再来另一个KDD2019的图相关的turorial：“Learning From Networks——Algorithms, Theory, & Applications”：
+
+链接:[https://pan.baidu.com/s/1uLXThmqVgS3P18i2PPBI9g](https://pan.baidu.com/s/1uLXThmqVgS3P18i2PPBI9g)  密码:9ls2
+
 参考AAAI2019的tutorial：[AAAI2019《图表示学习》Tutorial, 180 页 PPT 带你从入门到精通（下载）](https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652037887&idx=4&sn=730e6bd0cce6c3e40f4aec2de190f99d&chksm=f121960ec6561f1842640aff963fbe609e52fdd695386a442a9726016551c0a3697a196fd5a1&mpshare=1&scene=1&srcid=0202IYksgop7SmowGXrFkpMV&pass_ticket=IHFhi51iDztgrpluZGaofR7zoGSfaB%2F4Y6iACEc6lvxZ3KgGvbkA%2Fhp2MAVH09RS#rd)
 
 ppt下载：[https://pan.baidu.com/s/1hRjm1nbMcj4_ynZ0niE2JA](https://pan.baidu.com/s/1hRjm1nbMcj4_ynZ0niE2JA)

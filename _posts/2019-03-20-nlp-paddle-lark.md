@@ -2,7 +2,7 @@
 layout: post
 category: "nlp"
 title: "paddle的LARK(ERNIE/BERT等)+bert的各种变种"
-tags: [paddle, bert, lark, ernie, ]
+tags: [paddle, bert, lark, ernie, tinybert, ]
 ---
 
 目录
@@ -26,7 +26,9 @@ tags: [paddle, bert, lark, ernie, ]
 - [UER框架](#uer%e6%a1%86%e6%9e%b6)
 - [Whole Word Masking BERT](#whole-word-masking-bert)
 - [RoBERTa](#roberta)
-- [](#)
+- [TinyBert](#tinybert)
+- [SenseBert：解决歧义](#sensebert%e8%a7%a3%e5%86%b3%e6%ad%a7%e4%b9%89)
+- [bert加速方法](#bert%e5%8a%a0%e9%80%9f%e6%96%b9%e6%b3%95)
 
 <!-- /TOC -->
 
@@ -331,4 +333,34 @@ Universal Encoder Representations
 
 [RoBERTa: A Robustly Optimized BERT Pretraining Approach](https://arxiv.org/pdf/1907.11692.pdf)
 
-## 
+## TinyBert
+
+[TinyBERT：模型小7倍，速度快8倍，华中科大、华为出品](https://mp.weixin.qq.com/s/VL7TSHmZPKD-xGdOxNmnHw)
+
+[TinyBERT: Distilling BERT for Natural Language Understanding](https://arxiv.org/abs/1909.10351)
+
+提出了一个two-stage learning framework，在pre-training阶段和task-specific阶段都进行distill。
+
+相比baseline，只有28% parameters和31%的inference时间
+
+在glue上，7.5x小，infer上有9.4x快。
+
+
+## SenseBert：解决歧义
+
+[解决自然语言歧义问题，斯坦福教授、IJCAI 卓越研究奖得主提出 SenseBERT 模型](https://mp.weixin.qq.com/s/844jUNpo17C447SKiPAHJw)
+
+[SenseBERT: Driving Some Sense into BERT](https://arxiv.org/abs/1908.05646)
+
+[解读《SenseBERT: Driving Some Sense into BERT》](https://blog.csdn.net/weixin_37947156/article/details/100042008)
+
+SenseBERT不仅能够预测遮蔽词汇（masked word），还能预测它们在给定语境下的实际含义。
+
+AI21 Labs的研究人员使用英语词汇数据库WordNet作为标注参照系统，设计了一个网络来预测单词在语境中的实际含义。然后将该预训练网络嵌入 BERT。
+
+
+## bert加速方法
+
+[https://daiwk.github.io/posts/platform-bert-speedup.html](https://daiwk.github.io/posts/platform-bert-speedup.html)
+
+

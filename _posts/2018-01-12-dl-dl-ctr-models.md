@@ -46,6 +46,7 @@ tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccp
 - [TDM](#tdm)
 - [DeepGBM](#deepgbm)
 - [各种比赛](#%e5%90%84%e7%a7%8d%e6%af%94%e8%b5%9b)
+- [应用示例](#%e5%ba%94%e7%94%a8%e7%a4%ba%e4%be%8b)
 
 <!-- /TOC -->
 
@@ -1075,3 +1076,7 @@ DeepGBM 主要包含两个子模块——面向类别特征的 CatNN 和面向�
 包括deepwalk/CIN/key-value memory network等
 
 [Key-Value Memory Networks for Directly Reading Documents](https://arxiv.org/pdf/1606.03126.pdf)
+
+## 应用示例
+
+[从模型到部署，FPGA该怎样加速广告推荐算法](https://mp.weixin.qq.com/s/w1Kk1hn9LZzy8dgAqGGUtw)

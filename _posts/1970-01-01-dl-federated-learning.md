@@ -7,13 +7,14 @@ tags: [federated learning, 联邦学习, ]
 
 <!-- TOC -->
 
-- [google2017年的blog](#google2017%E5%B9%B4%E7%9A%84blog)
-  - [paper1: Communication-Efficient Learning of Deep Networks from Decentralized Data](#paper1-Communication-Efficient-Learning-of-Deep-Networks-from-Decentralized-Data)
-  - [paper2: Federated Learning: Strategies for Improving Communication Efficiency](#paper2-Federated-Learning-Strategies-for-Improving-Communication-Efficiency)
-  - [paper3: Federated Optimization: Distributed Machine Learning for On-Device Intelligence](#paper3-Federated-Optimization-Distributed-Machine-Learning-for-On-Device-Intelligence)
-  - [paper4: Practical Secure Aggregation for Privacy Preserving Machine Learning](#paper4-Practical-Secure-Aggregation-for-Privacy-Preserving-Machine-Learning)
-- [yangqiang的paper](#yangqiang%E7%9A%84paper)
-- [FATE](#FATE)
+- [google2017年的blog](#google2017%e5%b9%b4%e7%9a%84blog)
+  - [paper1: Communication-Efficient Learning of Deep Networks from Decentralized Data](#paper1-communication-efficient-learning-of-deep-networks-from-decentralized-data)
+  - [paper2: Federated Learning: Strategies for Improving Communication Efficiency](#paper2-federated-learning-strategies-for-improving-communication-efficiency)
+  - [paper3: Federated Optimization: Distributed Machine Learning for On-Device Intelligence](#paper3-federated-optimization-distributed-machine-learning-for-on-device-intelligence)
+  - [paper4: Practical Secure Aggregation for Privacy Preserving Machine Learning](#paper4-practical-secure-aggregation-for-privacy-preserving-machine-learning)
+- [yangqiang的paper](#yangqiang%e7%9a%84paper)
+- [FATE](#fate)
+- [近期进展](#%e8%bf%91%e6%9c%9f%e8%bf%9b%e5%b1%95)
 
 <!-- /TOC -->
 
@@ -92,3 +93,22 @@ FederatedAveraging算法总共有三个基本的参数，`\(C\)`（0到1）控�
 [怎样扩充大数据？你需要了解的第一个联邦学习开源框架FATE](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650765998&idx=4&sn=a6fdc4c39e29e0260dc06779bceed6ad&chksm=871abed0b06d37c617a063ba4c98867658f981b4fae6d34e0f2785edebeae8a09b6a2cef22e7&mpshare=1&scene=1&srcid=&pass_ticket=zzUnWIgdqTLvX39vSLCKaOJN8KVDYuvxPgj7h5mQNNMiTnEMdrWSwBJSd3ch3aLL#rd)
 
 github：[https://github.com/WeBankFinTech/FATE](https://github.com/WeBankFinTech/FATE)
+
+## 近期进展
+
+[打破数据孤岛：联邦学习近期重要研究进展](https://mp.weixin.qq.com/s/s4E9jM_HmOf9G4m0TIy61Q)
+
+经典的联邦学习问题基于存储在数千万至数百万远程客户端设备上的数据学习全局模型。在训练过程中，客户端设备需要周期性地与中央服务器进行通信。目前，联邦学习面临的难点主要包括四个方面：
+
++ 高昂的通信代价。在联邦学习问题中，原始数据保存在远程客户端设备本地，必须与中央服务器不断交互才能完成全局模型的构建。通常整个联邦学习网络可能包含了大量的设备，网络通信速度可能比本地计算慢许多个数量级，这就造成高昂的通信代价成为了联邦学习的关键瓶颈。
++ 系统异质性。由于客户端设备硬件条件（CPU、内存）、网络连接（3G、4G、5G、WiFi）和电源（电池电量）的变化，联邦学习网络中每个设备的存储、计算和通信能力都有可能不同。网络和设备本身的限制可能导致某一时间仅有一部分设备处于活动状态。此外，设备还会出现没电、网络无法接入等突发状况，导致瞬时无法连通。这种异质性的系统架构影响了联邦学习整体策略的制定。
++ 统计异质性。设备通常以不同分布方式在网络上生成和收集数据，跨设备的数据数量、特征等可能有很大的变化，因此联邦学习网络中的数据为非独立同分布（Non-indepent and identically distributed, Non-IID）的。目前，主流机器学习算法主要是基于 IID 数据的假设前提推导建立的。因此，异质性的 Non-IID 数据特征给建模、分析和评估都带来了很大挑战。
++ 隐私问题。联邦学习共享客户端设备中的模型参数更新（例如梯度信息）而不是原始数据，因此在数据隐私保护方面优于其他的分布式学习方法。然而，在训练过程中传递模型的更新信息仍然存在向第三方或中央服务器暴露敏感信息的风险。隐私保护成为联邦学习需要重点考虑的问题。
+
+4篇paper：
+
++ [Client selection for federated learning with heterogeneous resources in mobile edge](https://arxiv.org/abs/1804.08333), 提出了一个用于机器学习的移动边缘计算框架，它利用分布式客户端数据和计算资源来训练高性能机器学习模型，同时保留客户端隐私；
++ [Agnostic Federated Learning](https://arxiv.org/abs/1902.00146v1)，解决之前联邦学习机制中会对某些客户端任务发生倾斜的问题；
++ [Bayesian Nonparametric Federated Learning of Neural Networks](https://arxiv.org/abs/1905.12022v1). ICML 2019. 提出单样本/少样本探索式的学习方法来解决通信问题；
++ [Protection Against Reconstruction and Its Applications in Private Federated Learning](https://arxiv.org/pdf/1812.00984.pdf)，提出了一种差异性隐私保护方法。
+
