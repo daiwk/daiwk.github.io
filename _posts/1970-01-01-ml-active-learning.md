@@ -17,3 +17,4 @@ tags: [主动学习, active learning, ]
 
 [Multi-View Active Learning for Video Recommendation](https://www.ijcai.org/proceedings/2019/0284.pdf)
 
+[2019年主动学习有哪些进展？答案在这三篇论文里](https://mp.weixin.qq.com/s/qTZzQZEqHIJt_LAhYMd5lw)

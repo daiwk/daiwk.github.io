@@ -87,6 +87,7 @@ https://daiwk.github.io/posts/dl-topk-off-policy-correction.html
 https://daiwk.github.io/posts/rl-seqgan.html
 https://daiwk.github.io/posts/dl-dl-ai-notes.html
 https://daiwk.github.io/posts/nlp-dssm.html
+https://daiwk.github.io/posts/nlp-glue-above.html
 https://daiwk.github.io/posts/ml-regularization.html
 https://daiwk.github.io/posts/platform-tensorflow-seq2seq.html
 https://daiwk.github.io/posts/platform-tf-step-by-step-1-basics.html
@@ -176,6 +177,7 @@ https://daiwk.github.io/posts/platform-paddlepaddle-on-kubernetes.html
 https://daiwk.github.io/posts/platform-gnn-frameworks.html
 https://daiwk.github.io/posts/platform-erpo.html
 https://daiwk.github.io/posts/other-close-fd.html
+https://daiwk.github.io/posts/dl-hsic-bottleneck.html
 https://daiwk.github.io/posts/dl-tf-serving-docker.html
 https://daiwk.github.io/posts/video-video-papers.html
 https://daiwk.github.io/posts/platform-pytorch-keras-gan.html
