@@ -21,6 +21,7 @@ tags: [lamb, bert, cubert, mklbert,  ]
     - [POS-guided word replacement](#pos-guided-word-replacement)
     - [n-gram sampling](#n-gram-sampling)
     - [整个augmentation的流程](#%e6%95%b4%e4%b8%aaaugmentation%e7%9a%84%e6%b5%81%e7%a8%8b)
+- [土豪版：Megatron](#%e5%9c%9f%e8%b1%aa%e7%89%88megatron)
 
 <!-- /TOC -->
 
@@ -152,3 +153,17 @@ softmax的输入也就是logits是`\(z=w^Th\)`，输出是：
 + 对这个样本的每个词处理完之后，以`\(p_{\text { ng }}\)`的概率，使用n-gram sampling，然后把结果加到augmented数据集中（无标签）
 
 然后使用`\(n_{\text { iter }}\)`次如上操作，得到`\(n_{\text { iter }}\)`个augmented的sample。
+
+
+## 土豪版：Megatron
+
+[https://github.com/NVIDIA/Megatron-LM](https://github.com/NVIDIA/Megatron-LM)
+
+[有钱任性：英伟达训练80亿参数量GPT-2，1475块V100 53分钟训练BERT]()
+
++ 将BERT的训练时间缩短到了53分钟；
++ 将BERT的推理时间缩短到了2.2毫秒（10 毫秒已经是业界公认的高水平）；
++ 将GPT-2的参数量推向80亿（以前OpenAI GPT-2最大为15亿参数量）。
+
+最大配置：72层、每层隐藏单元都是3072
+

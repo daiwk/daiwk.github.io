@@ -146,6 +146,7 @@ https://daiwk.github.io/posts/cv-stackgan.html
 https://daiwk.github.io/posts/knowledge-rnn-implementation.html
 https://daiwk.github.io/posts/dl-graph-representations.html
 https://daiwk.github.io/posts/rl-pytorch-rl-tutorial.html
+https://daiwk.github.io/posts/dl-speedup-tricks.html
 https://daiwk.github.io/posts/dl-youtube-video-recommendation.html
 https://daiwk.github.io/posts/knowledge-mpi.html
 https://daiwk.github.io/posts/platform-brpc-rdma.html
@@ -204,6 +205,7 @@ https://daiwk.github.io/posts/dl-dlbook-chap3.html
 https://daiwk.github.io/posts/nlp-dnn_ps_and_dueros.html
 https://daiwk.github.io/posts/dl-graphembedding.html
 https://daiwk.github.io/posts/platform-tf-frameworks.html
+https://daiwk.github.io/posts/platform-dl-architectures.html
 https://daiwk.github.io/posts/platform-mlperf.html
 https://daiwk.github.io/posts/nlp-bert-code.html
 https://daiwk.github.io/posts/dl-capsules.html

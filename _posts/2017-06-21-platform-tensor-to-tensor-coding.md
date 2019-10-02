@@ -9,8 +9,8 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
 
 <!-- TOC -->
 
-- [-2. paddle的实现](#2-paddle%E7%9A%84%E5%AE%9E%E7%8E%B0)
-- [-1. pytorch的实现](#1-pytorch%E7%9A%84%E5%AE%9E%E7%8E%B0)
+- [-2. paddle的实现](#2-paddle%e7%9a%84%e5%ae%9e%e7%8e%b0)
+- [-1. pytorch的实现](#1-pytorch%e7%9a%84%e5%ae%9e%e7%8e%b0)
 - [0. Suggested Datasets and Models](#0-suggested-datasets-and-models)
   - [Image Classification](#image-classification)
   - [Language Modeling](#language-modeling)
@@ -22,12 +22,6 @@ tags: [tensor-to-tensor, t2t, tensor2tensor]
   - [Datasets](#datasets)
   - [Problems and Modalities](#problems-and-modalities)
   - [Models](#models)
-  - [Hyperparameter Sets](#hyperparameter-sets)
-  - [Trainer](#trainer)
-- [2. 新增components](#2-%E6%96%B0%E5%A2%9Ecomponents)
-- [3. 新增数据集](#3-%E6%96%B0%E5%A2%9E%E6%95%B0%E6%8D%AE%E9%9B%86)
-- [4. 可视化](#4-%E5%8F%AF%E8%A7%86%E5%8C%96)
-- [x. 备注](#x-%E5%A4%87%E6%B3%A8)
 
 <!-- /TOC -->
 
@@ -306,3 +300,25 @@ gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=gpu_mem_fraction, al
 ```
 
 不过好像还是没啥用。。
+
+## x.2 其他开源库
+
+transformer-model
+
+```shell
+pip install transformer-model
+```
+
+github: [https://github.com/zbloss/TransformerModel](https://github.com/zbloss/TransformerModel)
+
+要点：
+
+编码器：由 6 个完全相同的层堆叠而成，每个层有 2 个子层。在每个子层后面会跟一个残差连接和层正则化（layer normalization）。第一部分由一个多头（multi-head）自注意力机制，第二部分则是一个位置敏感的全连接前馈网络。
+
+解码器：解码器也由 6 个完全相同的层堆叠而成，不同的是这里每层有 3 个子层，第 3 个子层负责处理编码器输出的多头注意力机制。解码器的子层后面也跟了残差连接和层正则化。解码器的自注意力子层也做了相应修改。
+
+在编码器-解码器层当中，query 来自上一个解码层，编码器输出值（value）及 memory key。这样，解码器中所有位置都能照顾到输入序列中的所有位置。
+
+编码器含有自注意力层。在自注意力层中，所有的 key、value 和 query 都来自同一个地方，那就是编码器的上一层输出。编码器中的每一个位置都能照顾到编码器上一层中所有的位置。
+
+同样，解码器中的自注意力层让解码器中所有位置都能被注意到，包括那个位置本身。
