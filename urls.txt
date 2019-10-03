@@ -77,6 +77,7 @@ https://daiwk.github.io/posts/cv-gan-txt2img.html
 https://daiwk.github.io/posts/dl-dlbook-chap5.html
 https://daiwk.github.io/posts/dl-seq2seq.html
 https://daiwk.github.io/posts/image-ppgn.html
+https://daiwk.github.io/posts/dl-concept-activation-vector.html
 https://daiwk.github.io/posts/knowledge-mr-shuffle.html
 https://daiwk.github.io/posts/platform-paddlepaddle-tips.html
 https://daiwk.github.io/posts/knowledge-gperftools.html
@@ -125,6 +126,7 @@ https://daiwk.github.io/posts/links-navigation-nlp.html
 https://daiwk.github.io/posts/audio-speech-recognition-and-speaker-diarization.html
 https://daiwk.github.io/posts/rl-rl-codes.html
 https://daiwk.github.io/posts/ml-traditional-ml.html
+https://daiwk.github.io/posts/platform-tf-gan.html
 https://daiwk.github.io/posts/platform-paddlepaddle-tutorial.html
 https://daiwk.github.io/posts/ml-svm-3-levels.html
 https://daiwk.github.io/posts/nlp-bam.html
@@ -283,6 +285,7 @@ https://daiwk.github.io/posts/rl-stepbystep-chap5.html
 https://daiwk.github.io/posts/platform-bert-speedup.html
 https://daiwk.github.io/posts/platform-distributed-dl.html
 https://daiwk.github.io/posts/cv-cvpr2017-hekaiming.html
+https://daiwk.github.io/posts/platform-multigpu-parallel.html
 https://daiwk.github.io/posts/knowledge-ctags.html
 https://daiwk.github.io/posts/dl-attention-models.html
 https://daiwk.github.io/posts/nlp-elmo.html

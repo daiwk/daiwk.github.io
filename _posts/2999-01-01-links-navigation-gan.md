@@ -27,6 +27,7 @@ tags: [gan论文集合, ]
 - [deblurGAN](#deblurgan)
 - [txt2img](#txt2img)
 - [VQ-VAE](#vq-vae)
+- [框架——tf-gan](#%e6%a1%86%e6%9e%b6tf-gan)
 
 <!-- /TOC -->
 
@@ -102,3 +103,7 @@ tags: [gan论文集合, ]
 
 [https://daiwk.github.io/posts/cv-vq-vae.html](https://daiwk.github.io/posts/cv-vq-vae.html)
 
+
+## 框架——tf-gan
+
+[https://daiwk.github.io/posts/platform-tf-gan.html](https://daiwk.github.io/posts/platform-tf-gan.html)
