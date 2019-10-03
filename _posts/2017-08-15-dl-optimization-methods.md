@@ -2,7 +2,7 @@
 layout: post
 category: "ml"
 title: "梯度下降优化算法"
-tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam, Aadams, AMSGrad, Lookahead, ]
+tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam, Aadams, AMSGrad, Lookahead, RAdam, ]
 ---
 
 目录
@@ -20,6 +20,7 @@ tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam
 - [AMSGrad](#amsgrad)
 - [Lookahead](#lookahead)
 - [dlADMM](#dladmm)
+- [RAdam](#radam)
 
 <!-- /TOC -->
 
@@ -265,4 +266,31 @@ RMSProp和Adam算法下的`\(\Gamma_{t}\)`可能是负的，所以文章探讨�
 代码：[https://github.com/xianggebenben/dlADMM](https://github.com/xianggebenben/dlADMM)
 
 本文提出了一种基于交替方向乘子法的深度学习优化算法 dlADMM。该方法可以避免随机梯度下降算法的梯度消失和病态条件等问题，弥补了此前工作的不足。此外，该研究提出了先后向再前向的迭代次序加快了算法的收敛速度，并且对于大部分子问题采用二次近似的方式进行求解，避免了矩阵求逆的耗时操作。在基准数据集的实验结果表明，dlADMM 击败了大部分现有的优化算法，进一步证明了它的有效性和高效。
+
+## RAdam
+
+[Adam可以换了？UIUC中国博士生提出RAdam，收敛快精度高，大小模型通吃](https://mp.weixin.qq.com/s/LgxIQb1RelqKHqMtmGu7-Q)
+
+
+github: [https://github.com/LiyuanLucasLiu/RAdam](https://github.com/LiyuanLucasLiu/RAdam)
+
+[On the variance of the adaptive learning rate and beyond](https://arxiv.org/pdf/1908.03265v1.pdf)
+
+它既能实现Adam快速收敛的优点，又具备SGD方法的优势，令模型收敛至质量更高的结果。
+
+包括Adam，RMSProp等在内的自适应学习率优化器都存在收敛到质量较差的局部最优解的可能。因此，几乎每个人都使用某种形式的“预热”方式来避免这种风险。
+
+根本问题是自适应学习率优化器具有太大的变化，特别是在训练的早期阶段，并且可能由于训练数据量有限出现过度跳跃，因此可能收敛至局部最优解。
+
+当优化器仅使用有限的训练数据时，采用“预热”（这一阶段的学习率要慢得多）是自适应优化器要求抵消过度方差的要求。
+
+vanilla Adam和其他自适应学习速率优化器可能会基于训练早期数据太少而做出错误决策。因此，如果没有某种形式的预热，很可能在训练一开始便会收敛局部最优解，这使得训练曲线由于糟糕的开局而变得更长、更难。
+
+作者在不用预热的情况下运行了Adam，但是在前2000次迭代（adam-2k）中避免使用动量，结果实现了与“Adam+预热”差不多的结果，从而验证了“预热”在训练的初始阶段中起到“降低方差”的作用，并可以避免Adam在没有足够数据的情况下在开始训练时即陷入局部最优解。
+
+可以将“预热”作为降低方差的方法，但所需的预热程度未知，而且具体情况会根据数据集不同而变化，本文确定了一个数学算法，作为“动态方差减少器”。作者建立了一个“整流项”，可以缓慢而稳定地允许将自适应动量作为基础方差的函数进行充分表达。
+
+作者指出，在某些情况下，由于衰减率和基本方差的存在，RAdam可以在动量等效的情况下退化为SGD。
+  
+实验表明，RAdam优于传统的手动预热调整，其中需要预热或猜测需要预热的步骤数。RAdam自动提供方差缩减，在各种预热长度和各种学习率下都优于手动预热。
 

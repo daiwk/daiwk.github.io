@@ -130,6 +130,7 @@ https://daiwk.github.io/posts/nlp-bam.html
 https://daiwk.github.io/posts/cv-img-txt-sim.html
 https://daiwk.github.io/posts/rl-defend-adversarial-samples.html
 https://daiwk.github.io/posts/nlp-chatbot.html
+https://daiwk.github.io/posts/nlp-mrqa.html
 https://daiwk.github.io/posts/cv-tips.html
 https://daiwk.github.io/posts/platform-paddlepaddle-layers.html
 https://daiwk.github.io/posts/cv-gan-overview.html
