@@ -25,6 +25,7 @@ tags: [parameter server, pserver ]
     - [默认的复制方式: **Chain replication (强一致性, 可靠)**：](#%e9%bb%98%e8%ae%a4%e7%9a%84%e5%a4%8d%e5%88%b6%e6%96%b9%e5%bc%8f-chain-replication-%e5%bc%ba%e4%b8%80%e8%87%b4%e6%80%a7-%e5%8f%af%e9%9d%a0)
     - [Replication after Aggregation](#replication-after-aggregation)
 - [Server Management](#server-management)
+- [其他资料](#%e5%85%b6%e4%bb%96%e8%b5%84%e6%96%99)
 
 <!-- /TOC -->
 
@@ -253,3 +254,11 @@ parameter server 在数据一致性上，使用的是传统的**一致性哈希*
 2. 这个 worker 节点通过网络或者文件系统得到分配到的训练数据。接着，W会从服务器pull参数； 
 3. task scheduler 会广播节点的变化情况，可能会使一些节点释放一部分训练数据
 
+
+## 其他资料
+
+[参数服务器——分布式机器学习的新杀器](https://mp.weixin.qq.com/s/hjApfI-5cfkMCUqcuESnXQ)
+
+[解决大规模机器学习的策略和原则](https://mp.weixin.qq.com/s/EZ0QmoOqSMJcJWmB7tuh-g)
+
+[一个利用参数服务器解决大规模在线学习的实例](https://mp.weixin.qq.com/s/wERMC2jcZS34qtyag5kRzQ)
