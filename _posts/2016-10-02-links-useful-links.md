@@ -51,6 +51,8 @@ tags: [useful links,]
 
 <!-- /TOC -->
 
+jaxnet：[JAXnet：一行代码定义计算图，兼容三大主流框架，可GPU加速](https://mp.weixin.qq.com/s/mS40TE7_KmO6iAiDkrrTFg)
+
 [https://paperswithcode.com/sota](https://paperswithcode.com/sota)
 
 [https://www.jianshu.com/u/511ba5d71aef](https://www.jianshu.com/u/511ba5d71aef)

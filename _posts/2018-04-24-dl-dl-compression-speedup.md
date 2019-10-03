@@ -2,16 +2,17 @@
 layout: post
 category: "dl"
 title: "深度神经网络的模型压缩和加速方法"
-tags: [模型压缩, 加速]
+tags: [模型压缩, 加速, slim, DAFL, ]
 ---
 
 目录
 
 <!-- TOC -->
 
-- [背景](#%E8%83%8C%E6%99%AF)
-- [研究现状](#%E7%A0%94%E7%A9%B6%E7%8E%B0%E7%8A%B6)
-- [paddle的slim](#paddle%E7%9A%84slim)
+- [背景](#%e8%83%8c%e6%99%af)
+- [研究现状](#%e7%a0%94%e7%a9%b6%e7%8e%b0%e7%8a%b6)
+- [paddle的slim](#paddle%e7%9a%84slim)
+- [DAFL](#dafl)
 
 <!-- /TOC -->
 
@@ -64,3 +65,17 @@ Krizhevsky在2014年的文章中，提出的两点观察结论为后来的研究
 ## paddle的slim
 
 [自动模型压缩与架构搜索，这是飞桨PaddleSlim最全的解读](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650765628&idx=2&sn=62b7034b2a68422f0b434f423e157306&chksm=871abd42b06d3454a083d54b4c25d8bdf973dd1183e471b586e59a8c7cf016b95de53868e7d5&scene=0&xtrack=1&pass_ticket=zzUnWIgdqTLvX39vSLCKaOJN8KVDYuvxPgj7h5mQNNMiTnEMdrWSwBJSd3ch3aLL#rd)
+
+## DAFL
+
+[重磅开源！ ICCV 2019，华为诺亚提出无需数据网络压缩技术](https://mp.weixin.qq.com/s/jMuIfkxvpYNGP9lqWUvIzg)
+
+[DAFL：Data-Free Learning of Student Networks](https://arxiv.org/pdf/1904.01186)
+
+github: [https://github.com/huawei-noah/DAFL](https://github.com/huawei-noah/DAFL)
+
+绝大多数的神经网络压缩算法都假设训练数据是可以获得的。然而，在现实生活应用中，数据集往往由于隐私、法律或传输限制等原因是不可获得的。
+
+有很少的工作关注在无数据情况下的网络压缩，然而，这些方法得到的压缩后的网络准确率下降很多，这是因为这些方法没有利用待压缩网络中的信息。
+
+提出了一个新的无需训练数据的网络压缩方法。具体的，我们把给定的待压缩网络看作一个固定的判别器，接着，我们设计了一系列的损失函数来训练生成网络，使得生成图片可以代替训练数据集进行训练，最后，我们使用生成数据结合蒸馏算法得到压缩后的网络。

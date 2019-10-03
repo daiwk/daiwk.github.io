@@ -9,8 +9,8 @@ tags: [pytorch, ]
 
 <!-- TOC -->
 
-- [自动求导](#%E8%87%AA%E5%8A%A8%E6%B1%82%E5%AF%BC)
-- [torch常用操作](#torch%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C)
+- [自动求导](#%e8%87%aa%e5%8a%a8%e6%b1%82%e5%af%bc)
+- [torch常用操作](#torch%e5%b8%b8%e7%94%a8%e6%93%8d%e4%bd%9c)
 - [torch.nn](#torchnn)
   - [torch.nn.AdaptiveLogSoftmaxWithLoss](#torchnnadaptivelogsoftmaxwithloss)
   - [torch.nn.functional](#torchnnfunctional)
@@ -25,6 +25,8 @@ tags: [pytorch, ]
   - [view](#view)
 
 <!-- /TOC -->
+
+中文教程：[http://pytorch123.com](http://pytorch123.com)
 
 ## 自动求导
 

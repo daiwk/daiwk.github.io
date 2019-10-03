@@ -2,7 +2,7 @@
 layout: post
 category: "nlp"
 title: "chatbot"
-tags: [chatbot, 对话, ]
+tags: [chatbot, 对话, CCPE, taskmaster-1, ]
 ---
 
 目录
@@ -17,3 +17,8 @@ tags: [chatbot, 对话, ]
 
 
 [最新综述：对话系统之用户模拟器](https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247498768&idx=1&sn=fcfe600c5424d0574bb2388bb84f6201&chksm=96ea2390a19daa86945c6770eae0d901461012a2d3f0db0e9d588b2890a4dc56cf0f44484065&mpshare=1&scene=1&srcid=&sharer_sharetime=1565003633118&sharer_shareid=8e95986c8c4779e3cdf4e60b3c7aa752&pass_ticket=Kz97uXi0CH4ceADUC3ocCNkjZjy%2B0DTtVYOM7n%2FmWttTt5YKTC2DQT9lqCel7dDR#rd)
+
+
+[AI更懂人话：谷歌发布全新对话数据集，模仿智能助理](https://mp.weixin.qq.com/s/uI1yCNPN5eb1_cdB2RvT6g)
+
+谷歌发布了Coached Conversational Preference Elicitation（CCPE）和Taskmaster-1 对话数据集，在设计中独特地模仿当今基于语音的数字助理，在自动化系统的环境中保留口语对话的特征。

@@ -77,6 +77,7 @@ https://daiwk.github.io/posts/cv-gan-txt2img.html
 https://daiwk.github.io/posts/dl-dlbook-chap5.html
 https://daiwk.github.io/posts/dl-seq2seq.html
 https://daiwk.github.io/posts/image-ppgn.html
+https://daiwk.github.io/posts/dl-non-iid.html
 https://daiwk.github.io/posts/dl-concept-activation-vector.html
 https://daiwk.github.io/posts/knowledge-mr-shuffle.html
 https://daiwk.github.io/posts/platform-paddlepaddle-tips.html
@@ -160,6 +161,7 @@ https://daiwk.github.io/posts/platform-pytorch-anniversary.html
 https://daiwk.github.io/posts/dl-mtl.html
 https://daiwk.github.io/posts/platform-storm.html
 https://daiwk.github.io/posts/dl-wasserstein-autoencoders.html
+https://daiwk.github.io/posts/platform-neural-structured-learning.html
 https://daiwk.github.io/posts/nlp-openai-gpt.html
 https://daiwk.github.io/posts/knowledge-url.html
 https://daiwk.github.io/posts/cv-deblurgan.html

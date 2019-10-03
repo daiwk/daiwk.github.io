@@ -2,7 +2,7 @@
 layout: post
 category: "nlp"
 title: "paddle的LARK(ERNIE/BERT等)+bert的各种变种"
-tags: [paddle, bert, lark, ernie, tinybert, ]
+tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, xlm, laser, mass, unilm, roberta, sensebert, ]
 ---
 
 目录
@@ -26,8 +26,16 @@ tags: [paddle, bert, lark, ernie, tinybert, ]
 - [UER框架](#uer%e6%a1%86%e6%9e%b6)
 - [Whole Word Masking BERT](#whole-word-masking-bert)
 - [RoBERTa](#roberta)
+- [DistilBERT](#distilbert)
+- [中文预训练模型汇总](#%e4%b8%ad%e6%96%87%e9%a2%84%e8%ae%ad%e7%bb%83%e6%a8%a1%e5%9e%8b%e6%b1%87%e6%80%bb)
+  - [roberta中文](#roberta%e4%b8%ad%e6%96%87)
+  - [albert中文](#albert%e4%b8%ad%e6%96%87)
+  - [xlnet中文](#xlnet%e4%b8%ad%e6%96%87)
 - [TinyBert](#tinybert)
 - [SenseBert：解决歧义](#sensebert%e8%a7%a3%e5%86%b3%e6%ad%a7%e4%b9%89)
+- [VL-Bert](#vl-bert)
+- [bert的可解释性](#bert%e7%9a%84%e5%8f%af%e8%a7%a3%e9%87%8a%e6%80%a7)
+- [bert相关模型的对比与分析](#bert%e7%9b%b8%e5%85%b3%e6%a8%a1%e5%9e%8b%e7%9a%84%e5%af%b9%e6%af%94%e4%b8%8e%e5%88%86%e6%9e%90)
 - [bert加速方法](#bert%e5%8a%a0%e9%80%9f%e6%96%b9%e6%b3%95)
 
 <!-- /TOC -->
@@ -333,6 +341,32 @@ Universal Encoder Representations
 
 [RoBERTa: A Robustly Optimized BERT Pretraining Approach](https://arxiv.org/pdf/1907.11692.pdf)
 
+## DistilBERT
+
+参考[小版BERT也能出奇迹：最火的预训练语言库探索小巧之路](https://mp.weixin.qq.com/s/a0d0b1jSm5HxHso9Lz8MSQ)
+
+1.4w个stars。。
+
+[https://huggingface.co/transformers](https://huggingface.co/transformers)
+
+[DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter](https://arxiv.org/abs/1910.01108)
+
+## 中文预训练模型汇总
+
+### roberta中文
+
+[RoBERTa中文预训练模型，你离中文任务的「SOTA」只差个它](https://mp.weixin.qq.com/s/EKFa40rLQlnEVuu9V7GDmg)
+
+[https://github.com/brightmart/roberta_zh](https://github.com/brightmart/roberta_zh)
+
+### albert中文
+
+[https://github.com/brightmart/albert_zh](https://github.com/brightmart/albert_zh)
+
+### xlnet中文
+
+[https://github.com/brightmart/xlnet_zh](https://github.com/brightmart/xlnet_zh)
+
 ## TinyBert
 
 [TinyBERT：模型小7倍，速度快8倍，华中科大、华为出品](https://mp.weixin.qq.com/s/VL7TSHmZPKD-xGdOxNmnHw)
@@ -344,7 +378,6 @@ Universal Encoder Representations
 相比baseline，只有28% parameters和31%的inference时间
 
 在glue上，7.5x小，infer上有9.4x快。
-
 
 ## SenseBert：解决歧义
 
@@ -358,6 +391,56 @@ SenseBERT不仅能够预测遮蔽词汇（masked word），还能预测它们在
 
 AI21 Labs的研究人员使用英语词汇数据库WordNet作为标注参照系统，设计了一个网络来预测单词在语境中的实际含义。然后将该预训练网络嵌入 BERT。
 
+## VL-Bert
+
+Visual-Linguistic BERT，简称 VL-BERT
+
+[微软亚研提出VL-BERT：通用的视觉-语言预训练模型](https://mp.weixin.qq.com/s/RaYwdMXT0UKN8_bni-DpWw)
+
+此预训练过程可以显著提高下游的视觉-语言任务的效果，包含视觉常识推理、视觉问答与引用表达式理解等。值得一提的是，在视觉常识推理排行榜中，VL-BERT 取得了当前单模型的最好效果。
+
+[VL-BERT: Pre-training of Generic Visual-Linguistic Representations](https://arxiv.org/abs/1908.08530)
+
+之前的视觉-语言模型分别使用计算机视觉或自然语言处理领域中的预训练模型进行初始化，但如果目标任务数据量不足，模型容易过拟合从而损失性能。并且对于不同的视觉-语言任务，其网络架构一般是经过特殊设计的，由此很难通过视觉-语言联合预训练的过程帮助下游任务。
+
+VL-BERT 的主干网络使用 TransformerAttention 模块，并将视觉与语言嵌入特征作为输入，其中输入的每个元素是来自句子中的单词、或图像中的感兴趣区域（Region of Interests，简称 RoIs）。在模型训练的过程中，每个元素均可以根据其内容、位置、类别等信息自适应地聚合来自所有其他元素的信息。在堆叠多层 TransformerAttention 模块后，其特征表示即具有更为丰富的聚合与对齐视觉和语言线索的能力。
+
+为了更好地建模通用的视觉-语言表示，作者在大规模视觉-语言语料库中对 VL-BERT 进行了预训练。采用的预训练数据集为图像标题生成数据集，Conceptual Captions，其中包含了大约 330 万个图像标题对。
+
+VL-BERT 的预训练主要采用三个任务：a) 屏蔽语言模型（Masked Language Modeling），即随机屏蔽掉语句中的一些词，并预测当前位置的词是什么；b) 屏蔽 RoI 分类（MaskedRoIClassification），即随机屏蔽掉视觉输入中的一些 RoIs，并预测此空间位置对应 RoI 的所属类别；c) 图像标题关联预测（Sentence-Image Relationship Prediction），即预测图像与标题是否属于同一对。
+
+在预训练结束后，使用微调来进行下游任务的训练。本文中主要在三个视觉-语言下游任务中进行微调，即视觉常识推理（VisualCommonsenseReasoning）、视觉问答（VisualQuestionAnswering）与引用表达式理解（ReferringExpressionComprehension），下面将分别介绍。
+
+视觉常识推理任务即给定图片与相关问题，机器不仅需要回答问题，还需要提供理由来证明答案的正确性。此任务（Q->AR）被分解为两个子任务，即视觉问答（Q->A，给定图片与问题，输出正确答案），以及视觉推理（QA->R，给定图片、问题与答案，输出正确的理由）。
+
+## bert的可解释性
+
+[ACL 2019 \| 理解 BERT 每一层都学到了什么](https://mp.weixin.qq.com/s/w2Cwo--GTKp5o8YKRtbl7g)
+
+[What does BERT learn about the structure of language?](https://hal.inria.fr/hal-02131630/document)
+
+探索BERT深层次的表征学习是一个非常有必要的事情，一是这可以帮助我们更加清晰地认识BERT的局限性，从而改进BERT或者搞清楚它的应用范围；二是这有助于探索BERT的可解释性
+
+## bert相关模型的对比与分析
+
+[带你读论文\|8篇论文梳理BERT相关模型进展与反思](https://mp.weixin.qq.com/s/kJhOrz0VaYc-k-6XJS02ag)
+
+近期 BERT 相关模型一览
+
++ XLNet 及其与 BERT 的对比
+
+[A Fair Comparison Study of XLNet and BERT](https://medium.com/@xlnet.team/a-fair-comparison-study-of-xlnet-and-bert-with-large-models-5a4257f59dc0)
+
++ RoBERTa
++ SpanBERT
++ MT-DNN 与知识蒸馏
+
+[Multi-Task Deep Neural Networks for Natural Language Understanding](https://arxiv.org/abs/1901.11504)
+
+对 BERT 在部分 NLP 任务中表现的深入分析
+
++ BERT 在 Argument Reasoning Comprehension 任务中的表现
++ BERT 在 Natural Language Inference 任务中的表现
 
 ## bert加速方法
 

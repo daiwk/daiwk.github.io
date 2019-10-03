@@ -15,6 +15,7 @@ urlcolor: blue
   - [efficientnet](#efficientnet)
   - [adanet](#adanet)
   - [mdenas](#mdenas)
+  - [ProxylessNAS & HAQ](#proxylessnas--haq)
 - [once for all](#once-for-all)
 
 <!-- /TOC -->
@@ -61,6 +62,16 @@ urlcolor: blue
 
 除此之外，本文还提出并证明了一种保序精度排序假设，进一步加速学习过程。在 CIFAR-10 上，通过我们的方法搜索的结构实现了 2.55％的测试误差，GTX1080Ti 上仅 4 个 GPU 小时。在 ImageNet 上，我们实现了 75.2％的 top1 准确度。
 
+### ProxylessNAS & HAQ
+
+[寻找最佳的神经网络架构，韩松组两篇论文解读](https://mp.weixin.qq.com/s/ulrPhfsPunKAWYohBhkh9w)
+
+[ProxylessNAS: Direct Neural Architecture Search on Target Task and Hardware](https://arxiv.org/pdf/1812.00332v2.pdf),  ICLR2019
+
+github: [https://github.com/MIT-HAN-LAB/ProxylessNAS](https://github.com/MIT-HAN-LAB/ProxylessNAS)
+
+[HAQ: Hardware-Aware Automated Quantization with Mixed Precision](https://arxiv.org/pdf/1811.08886.pdf), CVPR2019
+
 ## once for all
 
 参考[韩松等人提出NN设计新思路：训练一次，全平台应用](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650769015&idx=5&sn=8e490488bdb2cd6a0aa28fa89083d55f&chksm=871a4209b06dcb1f1ec06b3a74bffad1eade7f69e790516bfa9f7c332fe22bddb83df90d9e41&scene=0&xtrack=1&pass_ticket=mmBhl6hER5JU9q0KMKTTFnbwPDksdn18kk%2FlW9Ih3p2TCzi4%2BlfisKHhCysHq%2Bou#rd)
@@ -70,7 +81,6 @@ urlcolor: blue
 如要有效地部署深度学习模型，需要专门的神经网络架构，以便最好地适应不同的硬件平台和效率限制条件（定义为部署场景（deployment scenario））。传统的方法要么是人工设计，要么就是使用 AutoML（自动机器学习）来搜索特定的神经网络，再针对每个案例从头开始训练。这些方法的成本高昂，而且难以扩展，因为它们的训练成本与部署场景的数量有关。
 
 本研究为高效神经网络设计引入了一种 Once for All（OFA/一劳永逸）方法，可处理很多部署场景。这种新方法的特点是分离了模型训练与架构搜索过程。这种方法不会针对每种案例都训练一个专用模型，而是训练一个支持多种不同架构设置（深度、宽度、核大小和分辨率）的 OFA 网络。
-
 
 然后给定一个部署场景，再通过选择 OFA 网络中特定的子网络来搜索合适的结果，这个过程无需训练。因此，专用模型的训练成本就从 O(N) 降到了 O(1)。但是，我们却难以防止许多不同子网络之间的干扰。针对这一问题，MIT 的这些研究者提出了渐进式收束算法（progressive shrinking algorithm）。该算法能够训练支持超过 10^19 个子网络的 OFA 网络，同时还能保持与独立训练的网络一样的准确度，从而节省非重复性工程开发（non-recurring engineering/NRE）成本。
 
