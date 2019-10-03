@@ -122,6 +122,7 @@ https://daiwk.github.io/posts/rl-rl-progresses.html
 https://daiwk.github.io/posts/platform-paddlepaddle-seq2seq.html
 https://daiwk.github.io/posts/dl-traditional-ctr-models.html
 https://daiwk.github.io/posts/links-navigation-nlp.html
+https://daiwk.github.io/posts/audio-speech-recognition-and-speaker-diarization.html
 https://daiwk.github.io/posts/rl-rl-codes.html
 https://daiwk.github.io/posts/ml-traditional-ml.html
 https://daiwk.github.io/posts/platform-paddlepaddle-tutorial.html

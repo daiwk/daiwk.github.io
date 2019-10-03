@@ -15,6 +15,7 @@ tags: [federated learning, 联邦学习, ]
 - [yangqiang的paper](#yangqiang%e7%9a%84paper)
 - [FATE](#fate)
 - [近期进展](#%e8%bf%91%e6%9c%9f%e8%bf%9b%e5%b1%95)
+- [共享学习](#%e5%85%b1%e4%ba%ab%e5%ad%a6%e4%b9%a0)
 
 <!-- /TOC -->
 
@@ -112,3 +113,7 @@ github：[https://github.com/WeBankFinTech/FATE](https://github.com/WeBankFinTec
 + [Bayesian Nonparametric Federated Learning of Neural Networks](https://arxiv.org/abs/1905.12022v1). ICML 2019. 提出单样本/少样本探索式的学习方法来解决通信问题；
 + [Protection Against Reconstruction and Its Applications in Private Federated Learning](https://arxiv.org/pdf/1812.00984.pdf)，提出了一种差异性隐私保护方法。
 
+
+## 共享学习
+
+[共享学习：蚂蚁金服提出全新数据孤岛解决方案](https://mp.weixin.qq.com/s/VGK_V-ZW1IPmxWYu7RYYug)
