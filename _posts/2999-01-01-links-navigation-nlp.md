@@ -15,6 +15,7 @@ tags: [nlp, ]
     - [nnlm综述](#nnlm综述)
     - [阅读理解综述](#阅读理解综述)
     - [ACL2019预训练语言模型](#acl2019预训练语言模型)
+    - [nlp综述](#nlp综述)
 
 <!-- /TOC -->
 
@@ -55,3 +56,9 @@ tags: [nlp, ]
 ### ACL2019预训练语言模型
 
 [ACL 2019提前看：预训练语言模型的最新探索](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650766791&idx=4&sn=c2e2088877e0ec88fe67e68ed7db5f65&chksm=871ab9b9b06d30afaeb21aefff562d6d3eab86f82b0b0a86315e6c75f54171e2d6ddaf2d0199&scene=0&xtrack=1&pass_ticket=I7vMVoY36Vu5%2FFz%2FMUDKXgy%2FHocjPiCFYYtVANqq1m0CCQBpIAQhSU5BGMcu7Il0#rd)
+
+### nlp综述
+
+[A Survey of the Usages of Deep Learning in Natural Language Processing](https://arxiv.org/pdf/1807.10854v2)
+
+过去数年，深度学习模型的爆炸式使用推动了自然语言处理领域的发展。在本文中，研究者简要介绍了自然语言处理领域的基本情况，并概述了深度学习架构和方法。然后，他们对近来的研究进行了筛选，对大量相关的文献展开总结。除了诸多计算机语言学的应用之外，研究者还分析研究了语言处理方面的几个核心问题。最后他们讨论了当前 SOTA 技术和方法并对该领域未来的研究提出了建议。

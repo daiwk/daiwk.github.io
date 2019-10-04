@@ -30,6 +30,7 @@ https://daiwk.github.io/posts/nlp-self-attention-models.html
 https://daiwk.github.io/posts/ml-recommender-systems.html
 https://daiwk.github.io/posts/links-navigation-recommender-system.html
 https://daiwk.github.io/posts/nlp-convseq2seq.html
+https://daiwk.github.io/posts/dl-one-shot-imitation-learning.html
 https://daiwk.github.io/posts/knowledge-tf-install.html
 https://daiwk.github.io/posts/other-time-series.html
 https://daiwk.github.io/posts/nlp-treegan.html
