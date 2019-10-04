@@ -35,6 +35,7 @@ https://daiwk.github.io/posts/other-time-series.html
 https://daiwk.github.io/posts/nlp-treegan.html
 https://daiwk.github.io/posts/platform-TVM.html
 https://daiwk.github.io/posts/cv-resnet-etc.html
+https://daiwk.github.io/posts/platform-pytorch-cpu2gpu.html
 https://daiwk.github.io/posts/dl-lstm.html
 https://daiwk.github.io/posts/nlp-nmt.html
 https://daiwk.github.io/posts/cv-super-resolution.html
@@ -71,6 +72,7 @@ https://daiwk.github.io/posts/rl-simple.html
 https://daiwk.github.io/posts/dl-gan-rl-recommend.html
 https://daiwk.github.io/posts/other-others.html
 https://daiwk.github.io/posts/knowledge-h5py-installation.html
+https://daiwk.github.io/posts/dl-hypergraph.html
 https://daiwk.github.io/posts/ml-tree-models.html
 https://daiwk.github.io/posts/nlp-crfpp.html
 https://daiwk.github.io/posts/cv-gan-txt2img.html
@@ -156,6 +158,7 @@ https://daiwk.github.io/posts/rl-pytorch-rl-tutorial.html
 https://daiwk.github.io/posts/dl-speedup-tricks.html
 https://daiwk.github.io/posts/dl-youtube-video-recommendation.html
 https://daiwk.github.io/posts/knowledge-mpi.html
+https://daiwk.github.io/posts/platform-learn2learn.html
 https://daiwk.github.io/posts/platform-brpc-rdma.html
 https://daiwk.github.io/posts/platform-lightgbm.html
 https://daiwk.github.io/posts/platform-pytorch-anniversary.html
@@ -206,6 +209,7 @@ https://daiwk.github.io/posts/dl-gnn.html
 https://daiwk.github.io/posts/ml-active-learning.html
 https://daiwk.github.io/posts/knowledge-mmr.html
 https://daiwk.github.io/posts/cv-object-detection.html
+https://daiwk.github.io/posts/cv-style-transfer.html
 https://daiwk.github.io/posts/dl-dl-compression-speedup.html
 https://daiwk.github.io/posts/platform-leveldb-rocksdb.html
 https://daiwk.github.io/posts/cv-2017-cv-papers.html

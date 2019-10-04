@@ -51,6 +51,8 @@ tags: [useful links,]
 
 <!-- /TOC -->
 
+机器学习笔记：[https://createmomo.github.io/2018/01/23/Super-Machine-Learning-Revision-Notes/#tableofcontents](https://createmomo.github.io/2018/01/23/Super-Machine-Learning-Revision-Notes/#tableofcontents)
+
 jaxnet：[JAXnet：一行代码定义计算图，兼容三大主流框架，可GPU加速](https://mp.weixin.qq.com/s/mS40TE7_KmO6iAiDkrrTFg)
 
 [https://paperswithcode.com/sota](https://paperswithcode.com/sota)
