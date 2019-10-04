@@ -52,6 +52,7 @@ tags: [推荐系统, ]
 - [2019顶会相关文章](#2019%e9%a1%b6%e4%bc%9a%e7%9b%b8%e5%85%b3%e6%96%87%e7%ab%a0)
 - [kdd2019相关](#kdd2019%e7%9b%b8%e5%85%b3)
 - [recsys2019相关](#recsys2019%e7%9b%b8%e5%85%b3)
+  - [best paper](#best-paper)
 - [可解释推荐系统](#%e5%8f%af%e8%a7%a3%e9%87%8a%e6%8e%a8%e8%8d%90%e7%b3%bb%e7%bb%9f)
 - [一些思考](#%e4%b8%80%e4%ba%9b%e6%80%9d%e8%80%83)
 
@@ -342,6 +343,14 @@ KDD2019 微软的[Neural News Recommendation with Personalized Attention](https:
 + [Addressing Delayed Feedback for Continuous Training with Neural Networks in CTR prediction](https://arxiv.org/abs/1907.06558)，提出一种基于损失函数的神经网络模型，用于解决连续学习过程中的延迟反馈问题。
 + [Tripartite Heterogeneous Graph Propagation for Large-scale Social Recommendation](https://arxiv.org/abs/1908.02569)，提出一种应用于社会化推荐系统的异构图传播结构。
 + [On Gossip-based Information Dissemination in Pervasive Recommender Systems](https://arxiv.org/abs/1908.05544)，提出一种离线手机端与邻近区域内其他设备之间推荐评分数据交换问题的普适推荐系统策略。
+
+### best paper
+
+[推荐系统顶会 RecSys2019 最佳论文奖出炉！可复现性成为焦点—18篇顶级会议只有7篇可以合理复现](https://mp.weixin.qq.com/s/GNYDX0SfitFtiIU-jq51Pg)
+
+[Are We Really Making Much Progress? A Worrying Analysis of Recent Neural Recommendation Approaches](https://arxiv.org/abs/1907.06902)
+
+[https://github.com/MaurizioFD/RecSys2019_DeepLearning_Evaluation](https://github.com/MaurizioFD/RecSys2019_DeepLearning_Evaluation)
 
 ## 可解释推荐系统
 

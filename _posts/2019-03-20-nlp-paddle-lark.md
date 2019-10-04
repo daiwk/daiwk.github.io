@@ -2,7 +2,7 @@
 layout: post
 category: "nlp"
 title: "paddle的LARK(ERNIE/BERT等)+bert的各种变种"
-tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, xlm, laser, mass, unilm, roberta, sensebert, ]
+tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, xlm, laser, mass, unilm, roberta, sensebert, faster transformer, ]
 ---
 
 目录
@@ -36,6 +36,7 @@ tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, xlm, laser, mass, u
 - [VL-Bert](#vl-bert)
 - [bert的可解释性](#bert%e7%9a%84%e5%8f%af%e8%a7%a3%e9%87%8a%e6%80%a7)
 - [bert相关模型的对比与分析](#bert%e7%9b%b8%e5%85%b3%e6%a8%a1%e5%9e%8b%e7%9a%84%e5%af%b9%e6%af%94%e4%b8%8e%e5%88%86%e6%9e%90)
+- [faster transformer](#faster-transformer)
 - [bert加速方法](#bert%e5%8a%a0%e9%80%9f%e6%96%b9%e6%b3%95)
 
 <!-- /TOC -->
@@ -441,6 +442,10 @@ VL-BERT 的预训练主要采用三个任务：a) 屏蔽语言模型（Masked La
 
 + BERT 在 Argument Reasoning Comprehension 任务中的表现
 + BERT 在 Natural Language Inference 任务中的表现
+
+## faster transformer
+
+[英伟达Faster Transformer：作者带你揭秘BERT优化](https://mp.weixin.qq.com/s/_yA8ZkwOR8pfarLRCeh8UQ)
 
 ## bert加速方法
 

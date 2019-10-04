@@ -10,9 +10,10 @@ tags: [gnn, ]
 
 <!-- TOC -->
 
-- [框架](#框架)
+- [框架](#%e6%a1%86%e6%9e%b6)
 - [gnn](#gnn)
-- [gnn+推荐](#gnn推荐)
+- [gnn+推荐](#gnn%e6%8e%a8%e8%8d%90)
+- [nips2019](#nips2019)
 
 <!-- /TOC -->
 
@@ -32,3 +33,6 @@ tags: [gnn, ]
 
 [https://daiwk.github.io/posts/dl-graph-recommendations.html](https://daiwk.github.io/posts/dl-graph-recommendations.html)
 
+## nips2019
+
+[八篇 NeurIPS 2019 最新图神经网络（GNN）相关论文](https://mp.weixin.qq.com/s/IIr4zWqtL2_1hvaINXypDQ)

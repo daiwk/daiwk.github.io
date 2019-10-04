@@ -13,6 +13,7 @@ tags: [强化学习, 进展, ]
 - [Modern Deep Reinforcement Learning Algorithms(2019)](#modern-deep-reinforcement-learning-algorithms2019)
 - [Evolution Strategies as a Scalable Alternative to Reinforcement Learning](#evolution-strategies-as-a-scalable-alternative-to-reinforcement-learning)
 - [模拟器相关](#%e6%a8%a1%e6%8b%9f%e5%99%a8%e7%9b%b8%e5%85%b3)
+- [代码库](#%e4%bb%a3%e7%a0%81%e5%ba%93)
 
 <!-- /TOC -->
 
@@ -57,3 +58,9 @@ blog：[https://openai.com/blog/evolution-strategies/](https://openai.com/blog/e
 [Virtual-Taobao: Virtualizing Real-world Online Retail Environment for Reinforcement Learning](https://arxiv.org/pdf/1805.10000.pdf)
 
 [Simulating User Feedback for Reinforcement Learning Based Recommendations](https://arxiv.org/pdf/1906.11462.pdf)
+
+## 代码库
+
+[https://github.com/p-christ/Deep-Reinforcement-Learning-Algorithms-with-PyTorch](https://github.com/p-christ/Deep-Reinforcement-Learning-Algorithms-with-PyTorch)
+
+参考[17种深度强化学习算法用Pytorch实现](https://mp.weixin.qq.com/s/BtNH2_s4l1Kcwe82y-oEkA)

@@ -2,7 +2,7 @@
 layout: post
 category: "links"
 title: "【置顶】导引——gan论文集合"
-tags: [gan论文集合, ]
+tags: [gan论文集合, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan, irgan, biggan, treegan, stackgan, cyclegan, deblurgan, txt2img, vq-vae, tf-gan, ]
 ---
 
 目录
@@ -28,6 +28,7 @@ tags: [gan论文集合, ]
 - [txt2img](#txt2img)
 - [VQ-VAE](#vq-vae)
 - [框架——tf-gan](#%e6%a1%86%e6%9e%b6tf-gan)
+- [对抗样本含义](#%e5%af%b9%e6%8a%97%e6%a0%b7%e6%9c%ac%e5%90%ab%e4%b9%89)
 
 <!-- /TOC -->
 
@@ -107,3 +108,7 @@ tags: [gan论文集合, ]
 ## 框架——tf-gan
 
 [https://daiwk.github.io/posts/platform-tf-gan.html](https://daiwk.github.io/posts/platform-tf-gan.html)
+
+## 对抗样本含义
+
+[你真的懂对抗样本吗？一文重新思考对抗样本背后的含义](https://mp.weixin.qq.com/s/thEWzBBSb6q97xz1gFmb4A)
