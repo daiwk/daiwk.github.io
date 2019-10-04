@@ -119,6 +119,7 @@ https://daiwk.github.io/posts/knowledge-python.html
 https://daiwk.github.io/posts/platform-tensor-to-tensor.html
 https://daiwk.github.io/posts/ml-loss-functions.html
 https://daiwk.github.io/posts/rl-drn.html
+https://daiwk.github.io/posts/platform-meitu-mml.html
 https://daiwk.github.io/posts/dl-mixmatch.html
 https://daiwk.github.io/posts/rl-rl-progresses.html
 https://daiwk.github.io/posts/platform-paddlepaddle-seq2seq.html
@@ -247,6 +248,7 @@ https://daiwk.github.io/posts/dl-dl-tips.html
 https://daiwk.github.io/posts/dl-deep-cross-network.html
 https://daiwk.github.io/posts/platform-tensorflow-on-spark.html
 https://daiwk.github.io/posts/rl-distributed-rl.html
+https://daiwk.github.io/posts/platform-high-concurrency.html
 https://daiwk.github.io/posts/platform-pytorch.html
 https://daiwk.github.io/posts/rl-alphago-zero.html
 https://daiwk.github.io/posts/platform-tf-probability.html
