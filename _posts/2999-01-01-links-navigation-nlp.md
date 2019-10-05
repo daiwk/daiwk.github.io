@@ -9,13 +9,18 @@ tags: [nlp, ]
 
 <!-- TOC -->
 
-- [机器翻译](#机器翻译)
-    - [10篇必读](#10篇必读)
-- [其他](#其他)
-    - [nnlm综述](#nnlm综述)
-    - [阅读理解综述](#阅读理解综述)
-    - [ACL2019预训练语言模型](#acl2019预训练语言模型)
-    - [nlp综述](#nlp综述)
+- [机器翻译](#%e6%9c%ba%e5%99%a8%e7%bf%bb%e8%af%91)
+  - [10篇必读](#10%e7%af%87%e5%bf%85%e8%af%bb)
+- [其他](#%e5%85%b6%e4%bb%96)
+  - [nnlm综述](#nnlm%e7%bb%bc%e8%bf%b0)
+  - [阅读理解综述](#%e9%98%85%e8%af%bb%e7%90%86%e8%a7%a3%e7%bb%bc%e8%bf%b0)
+  - [ACL2019预训练语言模型](#acl2019%e9%a2%84%e8%ae%ad%e7%bb%83%e8%af%ad%e8%a8%80%e6%a8%a1%e5%9e%8b)
+  - [nlp综述](#nlp%e7%bb%bc%e8%bf%b0)
+  - [nlp路线图](#nlp%e8%b7%af%e7%ba%bf%e5%9b%be)
+    - [Probability & Statistics](#probability--statistics)
+    - [Machine Learning](#machine-learning)
+    - [Text Mining](#text-mining)
+    - [Natural Language Processing](#natural-language-processing)
 
 <!-- /TOC -->
 
@@ -62,3 +67,39 @@ tags: [nlp, ]
 [A Survey of the Usages of Deep Learning in Natural Language Processing](https://arxiv.org/pdf/1807.10854v2)
 
 过去数年，深度学习模型的爆炸式使用推动了自然语言处理领域的发展。在本文中，研究者简要介绍了自然语言处理领域的基本情况，并概述了深度学习架构和方法。然后，他们对近来的研究进行了筛选，对大量相关的文献展开总结。除了诸多计算机语言学的应用之外，研究者还分析研究了语言处理方面的几个核心问题。最后他们讨论了当前 SOTA 技术和方法并对该领域未来的研究提出了建议。
+
+### nlp路线图
+
+[https://github.com/graykode/nlp-roadmap](https://github.com/graykode/nlp-roadmap)
+
+#### Probability & Statistics
+
+<html>
+<br/>
+<img src='../assets/prob-stats.png' style='max-height: 400px'/>
+<br/>
+</html>
+
+#### Machine Learning
+
+<html>
+<br/>
+<img src='../assets/ml.png' style='max-height: 400px'/>
+<br/>
+</html
+
+#### Text Mining
+
+<html>
+<br/>
+<img src='../assets/textmining.png' style='max-height: 400px'/>
+<br/>
+</html
+
+#### Natural Language Processing
+
+<html>
+<br/>
+<img src='../assets/nlp.png' style='max-height: 400px'/>
+<br/>
+</html

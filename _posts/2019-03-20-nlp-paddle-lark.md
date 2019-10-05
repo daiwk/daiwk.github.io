@@ -25,6 +25,7 @@ tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, xlm, laser, mass, u
   - [UNILM(microsoft)](#unilmmicrosoft)
 - [UER框架](#uer%e6%a1%86%e6%9e%b6)
 - [Whole Word Masking BERT](#whole-word-masking-bert)
+- [xlnet](#xlnet)
 - [RoBERTa](#roberta)
 - [DistilBERT](#distilbert)
 - [中文预训练模型汇总](#%e4%b8%ad%e6%96%87%e9%a2%84%e8%ae%ad%e7%bb%83%e6%a8%a1%e5%9e%8b%e6%b1%87%e6%80%bb)
@@ -334,6 +335,10 @@ Universal Encoder Representations
 
 论文：[Pre-Training with Whole Word Masking for Chinese BERT](https://arxiv.org/abs/1906.08101)
 
+## xlnet
+
+[https://daiwk.github.io/posts/nlp-xlnet.html](https://daiwk.github.io/posts/nlp-xlnet.html)
+
 ## RoBERTa
 
 来自Facebook
@@ -442,6 +447,9 @@ VL-BERT 的预训练主要采用三个任务：a) 屏蔽语言模型（Masked La
 
 + BERT 在 Argument Reasoning Comprehension 任务中的表现
 + BERT 在 Natural Language Inference 任务中的表现
+
+[从语言模型到Seq2Seq：Transformer如戏，全靠Mask](https://mp.weixin.qq.com/s/jdQVz4SC8UGTynlTft2CIA)
+
 
 ## faster transformer
 

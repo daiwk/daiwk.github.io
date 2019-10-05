@@ -16,6 +16,7 @@ urlcolor: blue
   - [adanet](#adanet)
   - [mdenas](#mdenas)
   - [ProxylessNAS & HAQ](#proxylessnas--haq)
+  - [进化论方法](#%e8%bf%9b%e5%8c%96%e8%ae%ba%e6%96%b9%e6%b3%95)
 - [once for all](#once-for-all)
 
 <!-- /TOC -->
@@ -71,6 +72,24 @@ urlcolor: blue
 github: [https://github.com/MIT-HAN-LAB/ProxylessNAS](https://github.com/MIT-HAN-LAB/ProxylessNAS)
 
 [HAQ: Hardware-Aware Automated Quantization with Mixed Precision](https://arxiv.org/pdf/1811.08886.pdf), CVPR2019
+
+### 进化论方法
+
+[亚马逊：自动选择AI模型，进化论方法效率更高！](https://mp.weixin.qq.com/s/xVhaIEuWUgPP8Va-hkYjFg)
+
+来自亚马逊的研究人员探索出了一种可适用于任何计算模型的技术，条件是该模型可以计算出与图灵机相同的功能。（这里的“图灵机”是指定义抽象机的模型，可以根据规则来操纵符号。）
+
+“无论使用哪种学习算法，选择哪种体系结构或调整训练参数（例如批规模或学习率），选择神经体系结构都不可能为给定的机器学习问题提供最佳解决方案，”Alexa AI机器学习平台服务组织的研究工程师，论文的主要作者温特表示。“只有考虑到尽可能多的可能性，才能确定一种在理论上保证计算准确性的体系结构。”
+
+为此，研究团队评估了函数逼近问题的解决方案，这是AI算法搜索参数以逼近目标函数输出的方式的数学抽象方法。研究人员将其重新制定为发现一个估计目标函数输出的已知函数序列的问题，以获取更大的系统建模优势。
+
+研究人员的研究表明，应该选择AI模型的组成部分，以确保它们具有“图灵等效性”。研究人员认为，最好通过自动搜索来识别模型，使用程序来设计特定任务的AI模型架构。这种搜索中的算法会首先生成用于解决问题的其他候选算法，然后将性能最佳的候选者彼此组合并再次进行测试。
+ 
+“本文中……可立即应用的结果是鉴定遗传算法，更具体地说，是协同进化算法，其性能指标取决于彼此之间的相互作用，这是寻找最佳（或接近最佳）架构的最实用方法，”论文作者写道。“基于经验，许多研究人员得出的结论是，协同进化算法提供了构建机器学习系统的最佳方法。但是本文中的函数逼近框架有助于为他们的直觉提供更安全的理论基础。”
+ 
+亚马逊并不是唯一一个倡导采用进化方法进行AI架构搜索的机构。今年7月，Uber为名为EvoGrad的进化算法开源了开发资源库。去年10月，Google推出了AdaNet，这是一种用于组合机器学习算法以获得更好的预测观点的工具。
+
+[On the Bounds of Function Approximations](https://arxiv.org/abs/1908.09942)
 
 ## once for all
 
