@@ -2,7 +2,7 @@
 layout: post
 category: "knowledge"
 title: "python小技巧"
-tags: [python, ]
+tags: [python, kwargs, args, collections, gc, flush, conda, mkdocs, ]
 
 ---
 
@@ -25,6 +25,10 @@ tags: [python, ]
   - [OrderedDict](#ordereddict)
 - [conda](#conda)
 - [flush](#flush)
+- [技巧](#%e6%8a%80%e5%b7%a7)
+- [kwargs与args](#kwargs%e4%b8%8eargs)
+  - [定义时使用](#%e5%ae%9a%e4%b9%89%e6%97%b6%e4%bd%bf%e7%94%a8)
+  - [调用时使用](#%e8%b0%83%e7%94%a8%e6%97%b6%e4%bd%bf%e7%94%a8)
 
 <!-- /TOC -->
 
@@ -496,4 +500,84 @@ conda install psycopg2
 ```python
 bufsize = 0
 f = open('file.txt', 'w', buffering=bufsize)
+```
+
+## 技巧
+
+[30段极简Python代码：这些小技巧你都Get了么](https://mp.weixin.qq.com/s/Yeqd0q30-taiQcdSmrM-pg)
+
+## kwargs与args
+
+[理解 Python 中的 *args 和 **kwargs](http://kodango.com/variable-arguments-in-python)
+
+\*args是可变的positional arguments列表，\*\*kwargs是可变的keyword arguments列表。并且，\*args必须位于\*\*kwargs之前，因为positional arguments必须位于keyword arguments之前。
+
+### 定义时使用
+
+```python
+def test_args(first, *args):
+   print 'Required argument: ', first
+   for v in args:
+      print 'Optional argument: ', v
+
+test_args(1, 2, 3, 4)
+# result:
+# Required argument: 1
+# Optional argument:  2
+# Optional argument:  3
+# Optional argument:  4
+
+def test_kwargs(first, *args, **kwargs):
+   print 'Required argument: ', first
+   for v in args:
+      print 'Optional argument (*args): ', v
+   for k, v in kwargs.items():
+      print 'Optional argument %s (*kwargs): %s' % (k, v)
+
+test_kwargs(1, 2, 3, 4, k1=5, k2=6)
+# results:
+# Required argument:  1
+# Optional argument (*args):  2
+# Optional argument (*args):  3
+# Optional argument (*args):  4
+# Optional argument k2 (*kwargs): 6
+# Optional argument k1 (*kwargs): 5
+```
+
+### 调用时使用
+
+```python
+def test_args(first, second, third, fourth, fifth):
+    print 'First argument: ', first
+    print 'Second argument: ', second
+    print 'Third argument: ', third
+    print 'Fourth argument: ', fourth
+    print 'Fifth argument: ', fifth
+
+# Use *args
+args = [1, 2, 3, 4, 5]
+test_args(*args)
+# results:
+# First argument:  1
+# Second argument:  2
+# Third argument:  3
+# Fourth argument:  4
+# Fifth argument:  5
+
+# Use **kwargs
+kwargs = {
+    'first': 1,
+    'second': 2,
+    'third': 3,
+    'fourth': 4,
+    'fifth': 5
+}
+
+test_args(**kwargs)
+# results:
+# First argument:  1
+# Second argument:  2
+# Third argument:  3
+# Fourth argument:  4
+# Fifth argument:  5
 ```

@@ -2,7 +2,7 @@
 layout: post
 category: "ml"
 title: "梯度下降优化算法"
-tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam, Aadams, AMSGrad, Lookahead, RAdam, ]
+tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam, Aadams, AMSGrad, Lookahead, RAdam, warm up, ]
 ---
 
 目录
@@ -21,6 +21,7 @@ tags: [梯度下降优化算法, momentum, NAG, Adagrad, Adadelta, RMSprop, Adam
 - [Lookahead](#lookahead)
 - [dlADMM](#dladmm)
 - [RAdam](#radam)
+- [warm-up](#warm-up)
 
 <!-- /TOC -->
 
@@ -294,3 +295,19 @@ vanilla Adam和其他自适应学习速率优化器可能会基于训练早期�
   
 实验表明，RAdam优于传统的手动预热调整，其中需要预热或猜测需要预热的步骤数。RAdam自动提供方差缩减，在各种预热长度和各种学习率下都优于手动预热。
 
+## warm-up
+
+[Resnet-18-训练实验-warm up操作](https://blog.csdn.net/u011995719/article/details/77884728)
+
+[Deep Residual Learning for Image Recognition](https://arxiv.org/pdf/1512.03385.pdf)中对cifar10的实验用了一个trick是 warm up（热身），就是**先**采用**小的学习率**（0.01）进行训练，训练了**400iterations之后**将**学习率调整至0.1**开始正式训练。
+
+参考知乎的这个问题：[https://www.zhihu.com/question/338066667](https://www.zhihu.com/question/338066667)
+
++ 有助于减缓模型在初始阶段对mini-batch的提前过拟合现象，保持分布的平稳
++ 有助于保持模型深层的稳定性
+
+可以参考这几篇：
+
++ [Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour](https://arxiv.org/pdf/1706.02677.pdf)
++ [Large batch training of convolutional networks](https://arxiv.org/pdf/1708.03888.pdf)
++ [A closer look at deep learning heuristics: learning rate restarts, warmup and distillation](https://arxiv.org/pdf/1810.13243.pdf)

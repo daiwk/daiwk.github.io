@@ -18,6 +18,7 @@ https://daiwk.github.io/posts/dl-dl-ctr-models.html
 https://daiwk.github.io/posts/cv-glow.html
 https://daiwk.github.io/posts/image-install-pil.html
 https://daiwk.github.io/posts/platform-tensor-to-tensor-coding.html
+https://daiwk.github.io/posts/dl-gate-decorator.html
 https://daiwk.github.io/posts/rl-slateq.html
 https://daiwk.github.io/posts/nlp-dl-for-nlp-best-practices.html
 https://daiwk.github.io/posts/ml-feature-engineering.html
@@ -33,6 +34,7 @@ https://daiwk.github.io/posts/nlp-convseq2seq.html
 https://daiwk.github.io/posts/dl-one-shot-imitation-learning.html
 https://daiwk.github.io/posts/knowledge-tf-install.html
 https://daiwk.github.io/posts/other-time-series.html
+https://daiwk.github.io/posts/cv-gan-pruning.html
 https://daiwk.github.io/posts/nlp-treegan.html
 https://daiwk.github.io/posts/platform-TVM.html
 https://daiwk.github.io/posts/cv-resnet-etc.html
