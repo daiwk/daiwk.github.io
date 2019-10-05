@@ -21,7 +21,8 @@ tags: [超分辨率, super resolution]
 - [SRGAN(SRResNet)](#srgansrresnet)
 - [EDSR](#edsr)
 - [deblurGAN](#deblurgan)
-- [讨论](#讨论)
+- [讨论](#%e8%ae%a8%e8%ae%ba)
+- [优酷数据集](#%e4%bc%98%e9%85%b7%e6%95%b0%e6%8d%ae%e9%9b%86)
 
 <!-- /TOC -->
 
@@ -74,3 +75,9 @@ tags: [超分辨率, super resolution]
 还有另一个相似的课题：图像补全(image inpainting)
 
 [https://blog.csdn.net/gavinmiaoc/article/details/80802967](https://blog.csdn.net/gavinmiaoc/article/details/80802967)
+
+## 优酷数据集
+
+[优酷发布最大工业级超高清视频数据集，超分辨率算法大赛落幕](https://mp.weixin.qq.com/s/tsJOP1bHiFV1ZI_jYRE92g)
+
+[https://tianchi.aliyun.com/dataset/dataDetail?datald=39568](https://tianchi.aliyun.com/dataset/dataDetail?datald=39568)

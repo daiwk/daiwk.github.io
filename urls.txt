@@ -6,6 +6,7 @@ https://daiwk.github.io/posts/dl-pointer-networks-for-combinational-optimization
 https://daiwk.github.io/posts/platform-thrift.html
 https://daiwk.github.io/posts/platform-keras-multi-cpu.html
 https://daiwk.github.io/posts/knowledge-git.html
+https://daiwk.github.io/posts/platform-interpret-ml.html
 https://daiwk.github.io/posts/ml-few-shot-learning.html
 https://daiwk.github.io/posts/other-community-discovery.html
 https://daiwk.github.io/posts/image-gan.html
@@ -254,6 +255,7 @@ https://daiwk.github.io/posts/platform-paddle-code.html
 https://daiwk.github.io/posts/cv-semantic-segmentation.html
 https://daiwk.github.io/posts/audio-smlta.html
 https://daiwk.github.io/posts/platform-paddle-fluid-code-distributed-cpu.html
+https://daiwk.github.io/posts/dl-quantum-computing.html
 https://daiwk.github.io/posts/platform-horizon.html
 https://daiwk.github.io/posts/dl-dl-tips.html
 https://daiwk.github.io/posts/dl-deep-cross-network.html
@@ -298,6 +300,7 @@ https://daiwk.github.io/posts/nlp-fasttext.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/rl-stepbystep-chap5.html
 https://daiwk.github.io/posts/platform-bert-speedup.html
+https://daiwk.github.io/posts/cv-interpretable-cnn.html
 https://daiwk.github.io/posts/platform-distributed-dl.html
 https://daiwk.github.io/posts/cv-cvpr2017-hekaiming.html
 https://daiwk.github.io/posts/platform-multigpu-parallel.html

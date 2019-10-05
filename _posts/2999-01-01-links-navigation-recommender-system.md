@@ -348,6 +348,8 @@ KDD2019 微软的[Neural News Recommendation with Personalized Attention](https:
 
 [推荐系统顶会 RecSys2019 最佳论文奖出炉！可复现性成为焦点—18篇顶级会议只有7篇可以合理复现](https://mp.weixin.qq.com/s/GNYDX0SfitFtiIU-jq51Pg)
 
+paperweekly的[RecSys 2019最佳论文：基于深度学习的推荐系统是否真的优于传统经典方法？](https://mp.weixin.qq.com/s/EGByoYg9BPEHrVT7C1M77A)
+
 [Are We Really Making Much Progress? A Worrying Analysis of Recent Neural Recommendation Approaches](https://arxiv.org/abs/1907.06902)
 
 [https://github.com/MaurizioFD/RecSys2019_DeepLearning_Evaluation](https://github.com/MaurizioFD/RecSys2019_DeepLearning_Evaluation)

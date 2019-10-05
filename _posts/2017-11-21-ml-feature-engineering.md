@@ -2,7 +2,7 @@
 layout: post
 category: "ml"
 title: "特征工程"
-tags: [特征工程, ]
+tags: [特征工程, sk-dist, ]
 ---
 
 目录
@@ -24,6 +24,7 @@ tags: [特征工程, ]
 - [5. sklearn小技巧](#5-sklearn小技巧)
 - [6. tf的特征工程](#6-tf的特征工程)
 - [7. paddle的ctr特征demo](#7-paddle的ctr特征demo)
+- [sk-dist](#sk-dist)
 
 <!-- /TOC -->
 
@@ -583,3 +584,9 @@ class ContinuousFeatureGenerator:
         val = float(val)
         return (val - self.min[idx]) / (self.max[idx] - self.min[idx])
 ```
+
+## sk-dist
+
+[将sklearn训练速度提升100多倍，美国「返利网」开源sk-dist框架](https://mp.weixin.qq.com/s/mjQuJoP4VIZ2yHToX19aMA)
+
+[https://github.com/Ibotta/sk-dist](https://github.com/Ibotta/sk-dist)
