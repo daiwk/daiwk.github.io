@@ -2,7 +2,7 @@
 layout: post
 category: "nlp"
 title: "paddle的LARK(ERNIE/BERT等)+bert的各种变种"
-tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, vilbert, xlm, laser, mass, unilm, roberta, sensebert, faster transformer, ]
+tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, vilbert, xlm, laser, mass, unilm, roberta, sensebert, faster transformer, 数字, ]
 ---
 
 目录
@@ -44,6 +44,8 @@ tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, vilbert, xlm, laser
   - [vilbert](#vilbert)
   - [VLbert](#vlbert)
 - [bert的一些常见问题](#bert%e7%9a%84%e4%b8%80%e4%ba%9b%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98)
+  - [为什么不用hierarchical softmax](#%e4%b8%ba%e4%bb%80%e4%b9%88%e4%b8%8d%e7%94%a8hierarchical-softmax)
+- [对数字的认知](#%e5%af%b9%e6%95%b0%e5%ad%97%e7%9a%84%e8%ae%a4%e7%9f%a5)
 
 <!-- /TOC -->
 
@@ -517,6 +519,8 @@ VL-BERT 的预训练主要采用三个任务：a) 屏蔽语言模型（Masked La
 
 ## bert的一些常见问题
 
+### 为什么不用hierarchical softmax
+
 [Transformer 结构中最后一层 softmax 为什么不再使用 层次化softmax了呢？](https://www.zhihu.com/question/310845030/answer/595573391?hb_wx_block=0&utm_source=wechat_session&utm_medium=social&utm_oi=632586637935251456)
 
 主要还是计算资源的问题。
@@ -526,3 +530,9 @@ Mikolov发明word2vec的几个版本大概在13-14年前后。那个时候GPU非
 大规模直接算 softmax 是在google的14年那篇seq2seq做MT的文章。为了快，把一个softmax 并行在4️块GPU上，每个GPU负责四分之一。那个年代，大多数NLP组全组都不会有4块GPU。
 
 hierarchical softmax是softmax的近似，suboptimal的。当如今计算资源足够大的时候，当然包括时间和显存 (BERT 和 Elmo 都没有用hierarchical)，hierarchical softmax就逐渐退出了历史舞台。
+
+## 对数字的认知
+
+[嵌入向量能否理解数字？BERT竟不如ELMo？](https://mp.weixin.qq.com/s/yXssWoPY1glr8q5jWMCpvw)
+
+[Do NLP Models Know Numbers? Probing Numeracy in Embeddings](https://arxiv.org/pdf/1909.07940.pdf)

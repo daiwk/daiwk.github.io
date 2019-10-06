@@ -10,9 +10,9 @@ tags: [tf, ]
 
 <!-- TOC -->
 
-- [特征相关](#%E7%89%B9%E5%BE%81%E7%9B%B8%E5%85%B3)
-- [estimator相关](#estimator%E7%9B%B8%E5%85%B3)
-- [基本函数](#%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0)
+- [特征相关](#%e7%89%b9%e5%be%81%e7%9b%b8%e5%85%b3)
+- [estimator相关](#estimator%e7%9b%b8%e5%85%b3)
+- [基本函数](#%e5%9f%ba%e6%9c%ac%e5%87%bd%e6%95%b0)
   - [tf.truncated-normal](#tftruncated-normal)
   - [tf.reduce-*](#tfreduce)
 - [tf.nn](#tfnn)
@@ -29,13 +29,13 @@ tags: [tf, ]
 - [tf.contrib.layers](#tfcontriblayers)
   - [tf.contrib.layers.flatten](#tfcontriblayersflatten)
   - [tf.contrib.layers.fully-connected](#tfcontriblayersfully-connected)
-- [常见问题](#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
-  - [如何统计参数量](#%E5%A6%82%E4%BD%95%E7%BB%9F%E8%AE%A1%E5%8F%82%E6%95%B0%E9%87%8F)
-  - [tf下载数据集出现ssl问题时](#tf%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%BA%E7%8E%B0ssl%E9%97%AE%E9%A2%98%E6%97%B6)
+- [常见问题](#%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98)
+  - [如何统计参数量](#%e5%a6%82%e4%bd%95%e7%bb%9f%e8%ae%a1%e5%8f%82%e6%95%b0%e9%87%8f)
+  - [tf下载数据集出现ssl问题时](#tf%e4%b8%8b%e8%bd%bd%e6%95%b0%e6%8d%ae%e9%9b%86%e5%87%ba%e7%8e%b0ssl%e9%97%ae%e9%a2%98%e6%97%b6)
   - [steps v.s. epoch](#steps-vs-epoch)
   - [nan](#nan)
-    - [情况1：loss出现nan](#%E6%83%85%E5%86%B51loss%E5%87%BA%E7%8E%B0nan)
-    - [情况2：更新网络时出现Nan值](#%E6%83%85%E5%86%B52%E6%9B%B4%E6%96%B0%E7%BD%91%E7%BB%9C%E6%97%B6%E5%87%BA%E7%8E%B0Nan%E5%80%BC)
+    - [情况1：loss出现nan](#%e6%83%85%e5%86%b51loss%e5%87%ba%e7%8e%b0nan)
+    - [情况2：更新网络时出现Nan值](#%e6%83%85%e5%86%b52%e6%9b%b4%e6%96%b0%e7%bd%91%e7%bb%9c%e6%97%b6%e5%87%ba%e7%8e%b0nan%e5%80%bc)
 
 <!-- /TOC -->
 
@@ -126,6 +126,19 @@ print y.shape
 
 ```python
 x=tf.constant([[[1,2,3],[4,5,6]],[[22,33,44],[55,66,77]]],dtype=tf.float32) # x.shape=(2, 2, 3)
+
+# [
+# [
+# [
+# [1,2,3], [4,5,6]
+# ]
+# ], 
+# [
+# [
+# [22,33,44], [55,66,77]
+# ]
+# ]
+# ]
 y = tf.reduce_max(x,axis=0,keepdims=True)
 sess = tf.Session()
 print sess.run(y) 

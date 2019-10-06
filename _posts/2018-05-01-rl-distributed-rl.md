@@ -2,7 +2,7 @@
 layout: post
 category: "rl"
 title: "分布式强化学习框架"
-tags: [分布式强化学习, A3C, ape-x, rudder]
+tags: [分布式强化学习, A3C, ape-x, rudder, impala, rlpyt, open spiel, rainbow, ppo, ]
 ---
 
 目录
@@ -23,6 +23,7 @@ tags: [分布式强化学习, A3C, ape-x, rudder]
 - [xx. 自己搞一下](#xx-%e8%87%aa%e5%b7%b1%e6%90%9e%e4%b8%80%e4%b8%8b)
 - [其他RL平台](#%e5%85%b6%e4%bb%96rl%e5%b9%b3%e5%8f%b0)
   - [open spiel](#open-spiel)
+  - [rlpyt](#rlpyt)
 
 <!-- /TOC -->
 
@@ -218,3 +219,29 @@ IMPALA的**actor不用于计算梯度，而是用于收集经验**，然后传�
 [https://github.com/deepmind/open_spiel](https://github.com/deepmind/open_spiel)
 
 目前大多是棋牌、博弈相关游戏。
+
+### rlpyt
+
+[https://github.com/astooke/rlpyt](https://github.com/astooke/rlpyt)
+
+[集合三大类无模型强化学习算法，BAIR开源RL代码库rlpyt](https://mp.weixin.qq.com/s/zKVF0AmQgop4i9j04PPyqw)
+
+[rlpyt: A Research Code Base for Deep Reinforcement Learning in PyTorch](https://arxiv.org/abs/1909.01500)
+
+rlpyt 库的重要特征和能力包括：
+
++ 以串行模式运行实验（对 debug 有帮助）；
++ 以并行模式运行实验，具备并行采样和/或多 GPU 优化的选项；
++ 同步或异步采样-优化（异步模式通过 replay buffer 实现）；
++ 在环境采样中，使用 CPU 或 GPU 进行训练和/或分批动作选择；
++ 全面支持循环智能体；
++ 在训练过程中，执行在线或离线评估，以及智能体诊断日志记录；
++ 在本地计算机上，启动对实验进行栈/队列（stacking / queueing）设置的程序；
++ 模块化：易于修改和对已有组件的重用；
++ 兼容 OpenAI Gym 环境接口。
+
+rlpyt 库中的已实现算法包括：
+
++ 策略梯度：A2C、PPO
++ DQN及其变体：Double、Dueling、Categorical、Rainbow minus Noisy Nets、Recurrent (R2D2-style)
++ QPG：DDPG、TD3、SAC

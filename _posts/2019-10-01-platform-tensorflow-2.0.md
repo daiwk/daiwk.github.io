@@ -29,3 +29,7 @@ tf2.0的教程：
 [TensorFlow 2.0 基础：张量、自动求导与优化器](https://mp.weixin.qq.com/s/6DmpLZ3Nklo17WY84hJYGA)
 
 [​TensorFlow 2.0 模型：卷积神经网络](https://mp.weixin.qq.com/s/VZBAevM1y-FxTUrFCI6oEQ)
+
+推荐教程：[https://colab.research.google.com/drive/1UCJt8EYjlzCs1H1d1X0iDGYJsHKwu-NO#scrollTo=88ExjKfCo7aP](https://colab.research.google.com/drive/1UCJt8EYjlzCs1H1d1X0iDGYJsHKwu-NO#scrollTo=88ExjKfCo7aP)
+
+拷了一份过来：[https://colab.research.google.com/drive/1GCWbk5pInyXSrJitM5dZfGxVT9ZWQsnM](https://colab.research.google.com/drive/1GCWbk5pInyXSrJitM5dZfGxVT9ZWQsnM)

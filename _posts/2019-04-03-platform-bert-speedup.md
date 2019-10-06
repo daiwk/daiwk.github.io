@@ -2,7 +2,7 @@
 layout: post
 category: "platform"
 title: "bert加速"
-tags: [lamb, bert, cubert, mklbert,  ]
+tags: [lamb, bert, cubert, mklbert,  megatron, ]
 ---
 
 目录
@@ -159,11 +159,23 @@ softmax的输入也就是logits是`\(z=w^Th\)`，输出是：
 
 [https://github.com/NVIDIA/Megatron-LM](https://github.com/NVIDIA/Megatron-LM)
 
-[有钱任性：英伟达训练80亿参数量GPT-2，1475块V100 53分钟训练BERT]()
+[有钱任性：英伟达训练80亿参数量GPT-2，1475块V100 53分钟训练BERT](https://mp.weixin.qq.com/s/8qJqP9gWook8VhtQQnWDxw)
 
 + 将BERT的训练时间缩短到了53分钟；
 + 将BERT的推理时间缩短到了2.2毫秒（10 毫秒已经是业界公认的高水平）；
 + 将GPT-2的参数量推向80亿（以前OpenAI GPT-2最大为15亿参数量）。
 
 最大配置：72层、每层隐藏单元都是3072
+
+[想效仿英伟达50分钟训练 BERT？只有GPU还不够……](https://mp.weixin.qq.com/s/MWaJP283qQrhs1VvyF0SrQ)
+
+论文：[Megatron-LM: Training Multi-Billion Parameter Language Models Using GPU Model Parallelism](https://arxiv.org/abs/1909.08053v1)
+
+该方法无需新的编译器或库更改，它与 pipeline 模型并行正交且互补，只需在 PyTorch 中嵌入几个通信操作即可完整实现。利用该方法，研究者使用 512 个 GPU 收敛了一个具备 83 亿参数的 transformer 语言模型，该模型是目前最大的 transformer 模型，其规模是 BERT 的 24 倍，GPT-2 的 5.6 倍。
+
+为了展示该方法的可扩展性，研究者建立了一个基线：他们在单个 NVIDIA V100 32GB GPU 上训练了一个具备 12 亿参数的模型，整个训练应用维持 39 TeraFLOPs/秒的性能，是单个 GPU 在 DGX-2H 服务器上运行的理论峰值 FLOPS 的 30%，因此这是一个非常强大的基线模型。将该模型扩展至 83 亿参数，并使用 8-way 模型并行化在 512 个 GPU 上进行训练，达到了 15.1 PetaFLOPs/秒的性能。与单个 GPU 的情况相比，它实现了 76% 的扩展效率。在 174 GB 文本数据上收敛该模型需要以 12 ZettaFLOPs 训练 9.2 天。
+
+研究者利用 transformer 网络的结构，仅添加几个同步基元（synchronization primitives）即创建出一个简单的模型并行化实现。他们对 transformer 中的自注意力模块和多层感知机（MLP）模块均采用了模型并行化。
+
+模型并行与数据并行是正交的，因此我们可以同时使用二者在合理时间内训练大型模型。
 

@@ -82,6 +82,7 @@ https://daiwk.github.io/posts/dl-hypergraph.html
 https://daiwk.github.io/posts/ml-tree-models.html
 https://daiwk.github.io/posts/nlp-crfpp.html
 https://daiwk.github.io/posts/cv-gan-txt2img.html
+https://daiwk.github.io/posts/video-tsm.html
 https://daiwk.github.io/posts/dl-dlbook-chap5.html
 https://daiwk.github.io/posts/dl-seq2seq.html
 https://daiwk.github.io/posts/image-ppgn.html
@@ -166,6 +167,7 @@ https://daiwk.github.io/posts/dl-graph-representations.html
 https://daiwk.github.io/posts/rl-pytorch-rl-tutorial.html
 https://daiwk.github.io/posts/dl-speedup-tricks.html
 https://daiwk.github.io/posts/dl-youtube-video-recommendation.html
+https://daiwk.github.io/posts/audio-gan-tts.html
 https://daiwk.github.io/posts/knowledge-mpi.html
 https://daiwk.github.io/posts/platform-learn2learn.html
 https://daiwk.github.io/posts/platform-brpc-rdma.html

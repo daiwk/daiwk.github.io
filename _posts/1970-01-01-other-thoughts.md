@@ -19,3 +19,4 @@ tags: [thoughts,]
 
 [抖音总裁张楠：抖音的美好与价值](https://mp.weixin.qq.com/s/t0B08Fu2cGygEh9Hn8SwXg)
 
+[万万没想到，未得图灵奖的LSTM之父Jürgen，30年前做了这么多DL前沿研究](https://mp.weixin.qq.com/s/hDF-ObBFpR50KogIgPCtRg)

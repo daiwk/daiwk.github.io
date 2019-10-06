@@ -2,7 +2,7 @@
 layout: post
 category: "links"
 title: "【置顶】导引——gan论文集合"
-tags: [gan论文集合, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan, irgan, biggan, treegan, stackgan, cyclegan, deblurgan, txt2img, vq-vae, tf-gan, gan剪枝, gan pruning, autogan, ]
+tags: [gan论文集合, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan, irgan, biggan, treegan, stackgan, cyclegan, deblurgan, txt2img, vq-vae, tf-gan, gan剪枝, gan pruning, autogan, gan-tts, ]
 ---
 
 目录
@@ -31,6 +31,7 @@ tags: [gan论文集合, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan
 - [框架——tf-gan](#%e6%a1%86%e6%9e%b6tf-gan)
 - [对抗样本含义](#%e5%af%b9%e6%8a%97%e6%a0%b7%e6%9c%ac%e5%90%ab%e4%b9%89)
 - [gan剪枝](#gan%e5%89%aa%e6%9e%9d)
+- [gan-tts](#gan-tts)
 
 <!-- /TOC -->
 
@@ -121,3 +122,7 @@ tags: [gan论文集合, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan
 ## gan剪枝
 
 [https://daiwk.github.io/posts/cv-gan-pruning.html](https://daiwk.github.io/posts/cv-gan-pruning.html)
+
+## gan-tts
+
+[https://daiwk.github.io/posts/audio-gan-tts.html](https://daiwk.github.io/posts/audio-gan-tts.html)
