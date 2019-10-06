@@ -367,3 +367,11 @@ paperweekly的[RecSys 2019最佳论文：基于深度学习的推荐系统是否
 [基于深度学习的推荐系统效果遭质疑，它真的有带来实质性进展吗？](https://mp.weixin.qq.com/s?__biz=MzU1NDA4NjU2MA==&mid=2247497477&idx=2&sn=cf23fbba12dcacaf0f7cdcdc504bfe46&chksm=fbea4ecacc9dc7dcc77e122ef2bc89c72883c7cd83360003050f876d8d2cc4292767e637b391&mpshare=1&scene=1&srcid=&sharer_sharetime=1564505444451&sharer_shareid=8e95986c8c4779e3cdf4e60b3c7aa752&pass_ticket=zAXdHORK5tTx549e9RwAgNcm7bjJrH4ENwbbTYVrAZDqpsE%2Fu1hY63b%2FoRfnZQdM#rd)
 
 对应的论文是RecSys2019上的：[Are We Really Making Much Progress? A Worrying Analysis of Recent Neural Recommendation Approaches](https://arxiv.org/abs/1907.06902)
+
+[推荐系统走向下一阶段最重要的三个问题](https://mp.weixin.qq.com/s/7gDMUk2zFGuyAlfEMvwECQ)
+
+1. 和真实应用场景贴近的统一 benchmark。我们需要一个工业级、可以迭代真实应用场景技术的数据集。
+
+2. 推荐系统的可解释性。在我看来可解释性重要的不是指导研究人员之后怎么迭代方法，而是增加透明性，让使用推荐系统的用户和为推荐系统提供内容的生产者能看得懂推荐系统，能参与进来。
+
+3. 算法对系统数据的 Confounding 问题。可以简单理解为反馈循环（Feedback Loop）问题，简单来说就是算法会决定推荐系统展示给用户内容，从而间接的影响了用户的行为。而用户的行为反馈数据又会决定算法的学习。形成一个循环。

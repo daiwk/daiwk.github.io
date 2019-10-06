@@ -9,6 +9,7 @@ tags: [目标检测, rcnn, ssd, yolo, retainnet, fast rcnn, faster rcnn, fpn]
 
 <!-- TOC -->
 
+- [Detectron](#detectron)
 
 <!-- /TOC -->
 
@@ -31,3 +32,12 @@ R-FCN等系列方法；
 <img src='../assets/rcnns.webp' style='max-height: 350px'/>
 <br/>
 </html>
+
+## Detectron
+
+[https://github.com/facebookresearch/Detectron](https://github.com/facebookresearch/Detectron)
+
+如果你正在寻找最先进的物体检测算法，那么你可以使用Detectron。
+
+它由Facebook开发，是AI Research软件系统的一部分。它利用Caffe2深度学习框架和Python。
+

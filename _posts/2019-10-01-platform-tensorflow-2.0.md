@@ -24,4 +24,8 @@ autograph：[https://www.tensorflow.org/guide/function](https://www.tensorflow.o
 
 deeplearning.ai的教程：[https://www.coursera.org/learn/introduction-tensorflow](https://www.coursera.org/learn/introduction-tensorflow)
 
-tf2.0的CNN教程：[​TensorFlow 2.0 模型：卷积神经网络](https://mp.weixin.qq.com/s/VZBAevM1y-FxTUrFCI6oEQ)
+tf2.0的教程：
+
+[TensorFlow 2.0 基础：张量、自动求导与优化器](https://mp.weixin.qq.com/s/6DmpLZ3Nklo17WY84hJYGA)
+
+[​TensorFlow 2.0 模型：卷积神经网络](https://mp.weixin.qq.com/s/VZBAevM1y-FxTUrFCI6oEQ)

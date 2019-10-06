@@ -2,7 +2,7 @@
 layout: post
 category: "dl"
 title: "基于深度学习的ctr预估模型集合（持续更新）"
-tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccpm, opnn, nfm, afm ]
+tags: [ctr模型, deepFM, wide & deep, deep & cross, ffm, fm, fnn, pnn, snn, ccpm, opnn, nfm, afm, tdm, xdeepfm, deep fm, din, dien, esmm, deepgbm, ]
 
 ---
 
@@ -1053,6 +1053,13 @@ ESMM模型是在整个样本空间建模，而不像传统CVR预估模型那样�
 ## TDM
 
 严格来说，tdm是个召回模型，这里一起看一看
+
+[Learning Tree-based Deep Model for Recommender Systems](https://arxiv.org/abs/1801.02294)
+
+[https://github.com/alibaba/x-deeplearning/wiki/%E6%B7%B1%E5%BA%A6%E6%A0%91%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%9E%8B(TDM)](https://github.com/alibaba/x-deeplearning/wiki/%E6%B7%B1%E5%BA%A6%E6%A0%91%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%9E%8B(TDM))
+
+[CIKM 2019 EComm AI：超大规模推荐之用户兴趣高效检索 赛题解读及阿里深度树匹配技术实践](https://tianchi.aliyun.com/course/video?spm=5176.12586971.1001.57.55e2194dAHpQl4&liveId=41072)
+
 
 ## DeepGBM
 

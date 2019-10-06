@@ -20,6 +20,8 @@ tags: [gnn, gcn, 推荐, graph, 图神经网络, 图网络, DiffNet, DGRec, IGPL
 
 参考[近期必读的6篇【图神经网络的推荐（GNN+R）】相关论文和代码（WWW、SIGIR、WSDM）](https://mp.weixin.qq.com/s?__biz=MzU2OTA0NzE2NA==&mid=2247510850&idx=1&sn=222f99d740acd50bcbcf5a5745c5d938&chksm=fc864a51cbf1c34739a348177e109d4ff4323f313208c410a44ac6af4cc4e32ad66f6275b235&mpshare=1&scene=1&srcid=&pass_ticket=yi5ku1%2Fs0oomHKKecAzMcpWLxtfI6PDYKYJn%2BWzsyCs3SOPlL0ZxjXuFZUZ2FS5h#rd)
 
+参考[CIKM 2019 EComm AI：用户行为预测 赛题解读与阿里GNN推荐结合实践分享](https://tianchi.aliyun.com/course/video?spm=5176.12586971.1001.62.55e2194dAHpQl4&liveId=41071)
+
 
 ## DiffNet
 

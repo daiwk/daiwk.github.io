@@ -9,6 +9,7 @@ tags: [chatbot, 对话, CCPE, taskmaster-1, ]
 
 <!-- TOC -->
 
+- [小冰](#%e5%b0%8f%e5%86%b0)
 
 <!-- /TOC -->
 
@@ -22,3 +23,11 @@ tags: [chatbot, 对话, CCPE, taskmaster-1, ]
 [AI更懂人话：谷歌发布全新对话数据集，模仿智能助理](https://mp.weixin.qq.com/s/uI1yCNPN5eb1_cdB2RvT6g)
 
 谷歌发布了Coached Conversational Preference Elicitation（CCPE）和Taskmaster-1 对话数据集，在设计中独特地模仿当今基于语音的数字助理，在自动化系统的环境中保留口语对话的特征。
+
+## 小冰
+
+[第七代微软小冰现身：史上最大升级，订制私人AI不是梦](https://mp.weixin.qq.com/s/h8kHxiJVb9TdVirPUiJmvg)
+
+[DIY自己的AI助理，萝莉御姐暖男霸道总裁全凭你定义，微软小冰团队发布新框架](https://mp.weixin.qq.com/s/8l-MkmoeEqtK75P6CrpKBA)
+
+[开放框架，进驻OV手机，五岁的微软小冰已经学会了养活自己](https://mp.weixin.qq.com/s/L_8Uj-LeJdGjc7Qsi1_PUA)

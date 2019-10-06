@@ -2,7 +2,7 @@
 layout: post
 category: "ml"
 title: "特征工程"
-tags: [特征工程, sk-dist, ]
+tags: [特征工程, sk-dist, 自动化特征工程，自动 特征工程, ]
 ---
 
 目录
@@ -25,6 +25,7 @@ tags: [特征工程, sk-dist, ]
 - [6. tf的特征工程](#6-tf的特征工程)
 - [7. paddle的ctr特征demo](#7-paddle的ctr特征demo)
 - [sk-dist](#sk-dist)
+- [自动化特征工程](#自动化特征工程)
 
 <!-- /TOC -->
 
@@ -590,3 +591,9 @@ class ContinuousFeatureGenerator:
 [将sklearn训练速度提升100多倍，美国「返利网」开源sk-dist框架](https://mp.weixin.qq.com/s/mjQuJoP4VIZ2yHToX19aMA)
 
 [https://github.com/Ibotta/sk-dist](https://github.com/Ibotta/sk-dist)
+
+## 自动化特征工程
+
+[HyperparameterHunter 3.0：一文教你学会自动化特征工程](https://mp.weixin.qq.com/s/hNh1PXKZqeSZ9gDt1uZKwA)
+
+[https://github.com/HunterMcGushion/hyperparameter_hunter](https://github.com/HunterMcGushion/hyperparameter_hunter)

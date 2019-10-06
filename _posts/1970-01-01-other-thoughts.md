@@ -17,3 +17,5 @@ tags: [thoughts,]
 
 [中国搜索引擎往事](https://mp.weixin.qq.com/s/4wR-wWGIgaQTj4LCBg-EbA)
 
+[抖音总裁张楠：抖音的美好与价值](https://mp.weixin.qq.com/s/t0B08Fu2cGygEh9Hn8SwXg)
+

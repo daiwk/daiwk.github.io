@@ -8,21 +8,22 @@ tags: [fasttext, ]
 目录
 <!-- TOC -->
 
-- [0. 原理](#0-%E5%8E%9F%E7%90%86)
-    - [0.1 softmax回归](#01-softmax%E5%9B%9E%E5%BD%92)
-    - [0.2 分层softmax](#02-%E5%88%86%E5%B1%82softmax)
-    - [0.4 n-gram](#04-n-gram)
-    - [0.5 CBOW](#05-cbow)
-        - [0.5.1 前向传播](#051-%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD)
-        - [0.5.2 反向传播](#052-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD)
-    - [0.6 skip-gram](#06-skip-gram)
-    - [0.7 fasttext](#07-fasttext)
-- [1. bin使用方法](#1-bin%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
-    - [训练](#%E8%AE%AD%E7%BB%83)
-    - [预测](#%E9%A2%84%E6%B5%8B)
-    - [输出向量](#%E8%BE%93%E5%87%BA%E5%90%91%E9%87%8F)
-- [2. python使用方法](#2-python%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
-    - [安装](#%E5%AE%89%E8%A3%85)
+- [0. 原理](#0-%e5%8e%9f%e7%90%86)
+  - [0.1 softmax回归](#01-softmax%e5%9b%9e%e5%bd%92)
+  - [0.2 分层softmax](#02-%e5%88%86%e5%b1%82softmax)
+  - [0.4 n-gram](#04-n-gram)
+  - [0.5 CBOW](#05-cbow)
+    - [0.5.1 前向传播](#051-%e5%89%8d%e5%90%91%e4%bc%a0%e6%92%ad)
+    - [0.5.2 反向传播](#052-%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad)
+  - [0.6 skip-gram](#06-skip-gram)
+  - [0.7 fasttext](#07-fasttext)
+- [1. bin使用方法](#1-bin%e4%bd%bf%e7%94%a8%e6%96%b9%e6%b3%95)
+  - [训练](#%e8%ae%ad%e7%bb%83)
+  - [预测](#%e9%a2%84%e6%b5%8b)
+  - [输出向量](#%e8%be%93%e5%87%ba%e5%90%91%e9%87%8f)
+- [2. python使用方法](#2-python%e4%bd%bf%e7%94%a8%e6%96%b9%e6%b3%95)
+  - [安装](#%e5%ae%89%e8%a3%85)
+- [自动调参](#%e8%87%aa%e5%8a%a8%e8%b0%83%e5%8f%82)
 
 <!-- /TOC -->
 
@@ -283,3 +284,17 @@ xxxx/pip install cython
 xxxx/pip install fasttext
 ```
 
+
+## 自动调参
+
+[一行代码自动调参，支持模型压缩指定大小，Facebook升级FastText](https://mp.weixin.qq.com/s/LLrq1F2uEC2xEWZrd9uijA)
+
+主要有以下几个：
+
+```shell
+-autotune-validation validation file to be used for evaluation 
+-autotune-metric metric objective {f1, f1:labelname} [f1] 
+-autotune-predictions number of predictions used for evaluation [1] 
+-autotune-duration maximum duration in seconds [300] 
+-autotune-modelsize constraint model file size [] (empty = do not quantize)
+```

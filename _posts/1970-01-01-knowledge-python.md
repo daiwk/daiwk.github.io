@@ -2,7 +2,7 @@
 layout: post
 category: "knowledge"
 title: "python小技巧"
-tags: [python, kwargs, args, collections, gc, flush, conda, mkdocs, ]
+tags: [python, kwargs, args, collections, gc, flush, conda, mkdocs, Heartrate, ]
 
 ---
 
@@ -29,6 +29,7 @@ tags: [python, kwargs, args, collections, gc, flush, conda, mkdocs, ]
 - [kwargs与args](#kwargs%e4%b8%8eargs)
   - [定义时使用](#%e5%ae%9a%e4%b9%89%e6%97%b6%e4%bd%bf%e7%94%a8)
   - [调用时使用](#%e8%b0%83%e7%94%a8%e6%97%b6%e4%bd%bf%e7%94%a8)
+- [Heartrate](#heartrate)
 
 <!-- /TOC -->
 
@@ -581,3 +582,9 @@ test_args(**kwargs)
 # Fourth argument:  4
 # Fifth argument:  5
 ```
+
+## Heartrate
+
+[Heartrate：如追综心跳般实时动态可视化监测Python程序运行](https://mp.weixin.qq.com/s/GWvMURaNhRbS3jUI5uBjrA)
+
+[https://github.com/alexmojaki/heartrate](https://github.com/alexmojaki/heartrate)

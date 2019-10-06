@@ -119,11 +119,13 @@ https://daiwk.github.io/posts/knowledge-stack-heap-core.html
 https://daiwk.github.io/posts/platform-tf-basics.html
 https://daiwk.github.io/posts/ml-ftrl.html
 https://daiwk.github.io/posts/image-mrnn.html
+https://daiwk.github.io/posts/dl-corrnet.html
 https://daiwk.github.io/posts/other-scrapy.html
 https://daiwk.github.io/posts/platform-tensorflow-1.4-lattice.html
 https://daiwk.github.io/posts/knowledge-python-yield-generator.html
 https://daiwk.github.io/posts/platform-k8s.html
 https://daiwk.github.io/posts/knowledge-python.html
+https://daiwk.github.io/posts/cv-autogan.html
 https://daiwk.github.io/posts/platform-tensor-to-tensor.html
 https://daiwk.github.io/posts/ml-loss-functions.html
 https://daiwk.github.io/posts/rl-drn.html
@@ -306,6 +308,7 @@ https://daiwk.github.io/posts/cv-cvpr2017-hekaiming.html
 https://daiwk.github.io/posts/platform-multigpu-parallel.html
 https://daiwk.github.io/posts/knowledge-ctags.html
 https://daiwk.github.io/posts/dl-attention-models.html
+https://daiwk.github.io/posts/cv-ocr.html
 https://daiwk.github.io/posts/nlp-elmo.html
 https://daiwk.github.io/posts/dl-pserver.html
 https://daiwk.github.io/posts/ml-google-tutorial-tf-ml.html

@@ -1,8 +1,8 @@
 ---
 layout: post
 category: "cv"
-title: "经典cnn模型们"
-tags: [cnn]
+title: "cnn模型们"
+tags: [cnn, sota, imagenet, kornia, simplecv, ]
 ---
 
 目录
@@ -10,9 +10,12 @@ tags: [cnn]
 <!-- TOC -->
 
 - [cnn basic](#cnn-basic)
-    - [卷积](#卷积)
-    - [池化](#池化)
-- [发展历程](#发展历程)
+  - [卷积](#%e5%8d%b7%e7%a7%af)
+  - [池化](#%e6%b1%a0%e5%8c%96)
+- [发展历程](#%e5%8f%91%e5%b1%95%e5%8e%86%e7%a8%8b)
+- [SOTA](#sota)
+- [simplecv](#simplecv)
+- [kornia](#kornia)
 
 <!-- /TOC -->
 
@@ -69,3 +72,23 @@ inception发展过程：
 科普贴：
 
 [https://zhuanlan.zhihu.com/p/27642620?utm_source=itdadao&utm_medium=referral](https://zhuanlan.zhihu.com/p/27642620?utm_source=itdadao&utm_medium=referral)
+
+## SOTA
+
+[https://www.paperswithcode.com/sota/image-classification-on-imagenet](https://www.paperswithcode.com/sota/image-classification-on-imagenet)
+
+## simplecv
+
+[http://simplecv.org/](http://simplecv.org/)
+
+SimpleCV，一个开源框架，允许你构建计算机视觉应用程序。它类似于OpenCV，使你可以访问高级计算机视觉库。这意味着你不必担心错综复杂的概念。
+
+有了它，你可以制作计算机视觉项目，而无需在基础知识上投入太多时间。毕竟，出于某种原因，它被命名为SimpleCV。
+
+## kornia
+
+参考[可微分的「OpenCV」：这是基于PyTorch的可微计算机视觉库](https://mp.weixin.qq.com/s/SdNDlTOCIwakV6rHHpI_Eg)
+
+[https://github.com/arraiyopensource/kornia](https://github.com/arraiyopensource/kornia)
+
+文档：[https://kornia.readthedocs.io/en/latest/](https://kornia.readthedocs.io/en/latest/)

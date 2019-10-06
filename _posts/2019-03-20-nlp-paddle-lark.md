@@ -2,7 +2,7 @@
 layout: post
 category: "nlp"
 title: "paddle的LARK(ERNIE/BERT等)+bert的各种变种"
-tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, xlm, laser, mass, unilm, roberta, sensebert, faster transformer, ]
+tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, vilbert, xlm, laser, mass, unilm, roberta, sensebert, faster transformer, ]
 ---
 
 目录
@@ -36,11 +36,14 @@ tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, xlm, laser, mass, u
   - [xlnet中文](#xlnet%e4%b8%ad%e6%96%87)
 - [TinyBert](#tinybert)
 - [SenseBert：解决歧义](#sensebert%e8%a7%a3%e5%86%b3%e6%ad%a7%e4%b9%89)
-- [VL-Bert](#vl-bert)
 - [bert的可解释性](#bert%e7%9a%84%e5%8f%af%e8%a7%a3%e9%87%8a%e6%80%a7)
 - [bert相关模型的对比与分析](#bert%e7%9b%b8%e5%85%b3%e6%a8%a1%e5%9e%8b%e7%9a%84%e5%af%b9%e6%af%94%e4%b8%8e%e5%88%86%e6%9e%90)
 - [faster transformer](#faster-transformer)
 - [bert加速方法](#bert%e5%8a%a0%e9%80%9f%e6%96%b9%e6%b3%95)
+- [多模态bert](#%e5%a4%9a%e6%a8%a1%e6%80%81bert)
+  - [vilbert](#vilbert)
+  - [VLbert](#vlbert)
+- [bert的一些常见问题](#bert%e7%9a%84%e4%b8%80%e4%ba%9b%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98)
 
 <!-- /TOC -->
 
@@ -437,28 +440,6 @@ SenseBERT不仅能够预测遮蔽词汇（masked word），还能预测它们在
 
 AI21 Labs的研究人员使用英语词汇数据库WordNet作为标注参照系统，设计了一个网络来预测单词在语境中的实际含义。然后将该预训练网络嵌入 BERT。
 
-## VL-Bert
-
-Visual-Linguistic BERT，简称 VL-BERT
-
-[微软亚研提出VL-BERT：通用的视觉-语言预训练模型](https://mp.weixin.qq.com/s/RaYwdMXT0UKN8_bni-DpWw)
-
-此预训练过程可以显著提高下游的视觉-语言任务的效果，包含视觉常识推理、视觉问答与引用表达式理解等。值得一提的是，在视觉常识推理排行榜中，VL-BERT 取得了当前单模型的最好效果。
-
-[VL-BERT: Pre-training of Generic Visual-Linguistic Representations](https://arxiv.org/abs/1908.08530)
-
-之前的视觉-语言模型分别使用计算机视觉或自然语言处理领域中的预训练模型进行初始化，但如果目标任务数据量不足，模型容易过拟合从而损失性能。并且对于不同的视觉-语言任务，其网络架构一般是经过特殊设计的，由此很难通过视觉-语言联合预训练的过程帮助下游任务。
-
-VL-BERT 的主干网络使用 TransformerAttention 模块，并将视觉与语言嵌入特征作为输入，其中输入的每个元素是来自句子中的单词、或图像中的感兴趣区域（Region of Interests，简称 RoIs）。在模型训练的过程中，每个元素均可以根据其内容、位置、类别等信息自适应地聚合来自所有其他元素的信息。在堆叠多层 TransformerAttention 模块后，其特征表示即具有更为丰富的聚合与对齐视觉和语言线索的能力。
-
-为了更好地建模通用的视觉-语言表示，作者在大规模视觉-语言语料库中对 VL-BERT 进行了预训练。采用的预训练数据集为图像标题生成数据集，Conceptual Captions，其中包含了大约 330 万个图像标题对。
-
-VL-BERT 的预训练主要采用三个任务：a) 屏蔽语言模型（Masked Language Modeling），即随机屏蔽掉语句中的一些词，并预测当前位置的词是什么；b) 屏蔽 RoI 分类（MaskedRoIClassification），即随机屏蔽掉视觉输入中的一些 RoIs，并预测此空间位置对应 RoI 的所属类别；c) 图像标题关联预测（Sentence-Image Relationship Prediction），即预测图像与标题是否属于同一对。
-
-在预训练结束后，使用微调来进行下游任务的训练。本文中主要在三个视觉-语言下游任务中进行微调，即视觉常识推理（VisualCommonsenseReasoning）、视觉问答（VisualQuestionAnswering）与引用表达式理解（ReferringExpressionComprehension），下面将分别介绍。
-
-视觉常识推理任务即给定图片与相关问题，机器不仅需要回答问题，还需要提供理由来证明答案的正确性。此任务（Q->AR）被分解为两个子任务，即视觉问答（Q->A，给定图片与问题，输出正确答案），以及视觉推理（QA->R，给定图片、问题与答案，输出正确的理由）。
-
 ## bert的可解释性
 
 [ACL 2019 \| 理解 BERT 每一层都学到了什么](https://mp.weixin.qq.com/s/w2Cwo--GTKp5o8YKRtbl7g)
@@ -490,6 +471,10 @@ VL-BERT 的预训练主要采用三个任务：a) 屏蔽语言模型（Masked La
 
 [从语言模型到Seq2Seq：Transformer如戏，全靠Mask](https://mp.weixin.qq.com/s/jdQVz4SC8UGTynlTft2CIA)
 
+[BERT or XLNet，围观NLP巅峰烧钱大战。技术发展太快，如何才能跟得上节奏？](https://mp.weixin.qq.com/s/VCmUkcP97XV_HqG7cjhfyg)
+
+[后 BERT 时代的那些 NLP 预训练模型](https://mp.weixin.qq.com/s/zinf8c570v-PfNO-0lLl3w)
+
 
 ## faster transformer
 
@@ -500,4 +485,44 @@ VL-BERT 的预训练主要采用三个任务：a) 屏蔽语言模型（Masked La
 [https://daiwk.github.io/posts/platform-bert-speedup.html](https://daiwk.github.io/posts/platform-bert-speedup.html)
 
 
+## 多模态bert
 
+### vilbert
+
+[ViLBERT: Pretraining Task-Agnostic Visiolinguistic Representations for Vision-and-Language Tasks](https://arxiv.org/pdf/1908.02265.pdf)
+
+研究人员提出了一种名为 ViLBERT（图文 BERT）模型。这是一个可以学习任务未知的、图像内容和自然语言联合表征的模型。研究人员将流行的 BERT 架构扩展成一个 multi-modal two-stream 模型上。在这个模型上，模型用两个分开的流处理图像和文本输入，但他们彼此用联合注意力层交互。研究人员在两个代理任务上，使用 Conceptual Captions 数据集（数据集很大，而且是自动收集的数据）预训练这个模型，然后将模型秦阿姨到多个建立好的图像-文本任务上。这些任务包括图像问答、图像常识推理、引述表达、指称成分，以及基于捕捉的图像提取。这些只需要在基本架构上进行微小的补充。研究人员观察到，相比现有的针对任务的特定模型，新模型在这些任务上都有了相助的性能提升——在每个任务上都取得了 SOTA。
+
+### VLbert
+
+Visual-Linguistic BERT，简称 VL-BERT
+
+[微软亚研提出VL-BERT：通用的视觉-语言预训练模型](https://mp.weixin.qq.com/s/RaYwdMXT0UKN8_bni-DpWw)
+
+此预训练过程可以显著提高下游的视觉-语言任务的效果，包含视觉常识推理、视觉问答与引用表达式理解等。值得一提的是，在视觉常识推理排行榜中，VL-BERT 取得了当前单模型的最好效果。
+
+[VL-BERT: Pre-training of Generic Visual-Linguistic Representations](https://arxiv.org/abs/1908.08530)
+
+之前的视觉-语言模型分别使用计算机视觉或自然语言处理领域中的预训练模型进行初始化，但如果目标任务数据量不足，模型容易过拟合从而损失性能。并且对于不同的视觉-语言任务，其网络架构一般是经过特殊设计的，由此很难通过视觉-语言联合预训练的过程帮助下游任务。
+
+VL-BERT 的主干网络使用 TransformerAttention 模块，并将视觉与语言嵌入特征作为输入，其中输入的每个元素是来自句子中的单词、或图像中的感兴趣区域（Region of Interests，简称 RoIs）。在模型训练的过程中，每个元素均可以根据其内容、位置、类别等信息自适应地聚合来自所有其他元素的信息。在堆叠多层 TransformerAttention 模块后，其特征表示即具有更为丰富的聚合与对齐视觉和语言线索的能力。
+
+为了更好地建模通用的视觉-语言表示，作者在大规模视觉-语言语料库中对 VL-BERT 进行了预训练。采用的预训练数据集为图像标题生成数据集，Conceptual Captions，其中包含了大约 330 万个图像标题对。
+
+VL-BERT 的预训练主要采用三个任务：a) 屏蔽语言模型（Masked Language Modeling），即随机屏蔽掉语句中的一些词，并预测当前位置的词是什么；b) 屏蔽 RoI 分类（MaskedRoIClassification），即随机屏蔽掉视觉输入中的一些 RoIs，并预测此空间位置对应 RoI 的所属类别；c) 图像标题关联预测（Sentence-Image Relationship Prediction），即预测图像与标题是否属于同一对。
+
+在预训练结束后，使用微调来进行下游任务的训练。本文中主要在三个视觉-语言下游任务中进行微调，即视觉常识推理（VisualCommonsenseReasoning）、视觉问答（VisualQuestionAnswering）与引用表达式理解（ReferringExpressionComprehension），下面将分别介绍。
+
+视觉常识推理任务即给定图片与相关问题，机器不仅需要回答问题，还需要提供理由来证明答案的正确性。此任务（Q->AR）被分解为两个子任务，即视觉问答（Q->A，给定图片与问题，输出正确答案），以及视觉推理（QA->R，给定图片、问题与答案，输出正确的理由）。
+
+## bert的一些常见问题
+
+[Transformer 结构中最后一层 softmax 为什么不再使用 层次化softmax了呢？](https://www.zhihu.com/question/310845030/answer/595573391?hb_wx_block=0&utm_source=wechat_session&utm_medium=social&utm_oi=632586637935251456)
+
+主要还是计算资源的问题。
+
+Mikolov发明word2vec的几个版本大概在13-14年前后。那个时候GPU非常少见，印象里面CMU的NLP组没有GPU，Stanford NLP lab只有6块K40。
+
+大规模直接算 softmax 是在google的14年那篇seq2seq做MT的文章。为了快，把一个softmax 并行在4️块GPU上，每个GPU负责四分之一。那个年代，大多数NLP组全组都不会有4块GPU。
+
+hierarchical softmax是softmax的近似，suboptimal的。当如今计算资源足够大的时候，当然包括时间和显存 (BERT 和 Elmo 都没有用hierarchical)，hierarchical softmax就逐渐退出了历史舞台。

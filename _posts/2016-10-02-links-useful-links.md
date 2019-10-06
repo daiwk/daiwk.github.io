@@ -3,7 +3,7 @@ layout: post
 toc: true
 category: "links"
 title: "Useful Links"
-tags: [useful links,]
+tags: [useful links, mlflow, jaxnet, ludwig, knime, ]
 ---
 
 目录：
@@ -50,6 +50,35 @@ tags: [useful links,]
     - [4.3.4 梯度下降算法系列](#434-%e6%a2%af%e5%ba%a6%e4%b8%8b%e9%99%8d%e7%ae%97%e6%b3%95%e7%b3%bb%e5%88%97)
 
 <!-- /TOC -->
+
+
+[https://www.knime.com/](https://www.knime.com/)
+
+Knime是一款出色的工具，可让你无需编写任何代码即可完成端到端的数据科学工作流程。
+
+它甚至配备了一个拖放式界面，UI清晰，操作简单直观，可以说是懒人福音了。
+
+操作起来非常简单，首先使用该工具进行数据收集和转换；完成后，你可以创建一个模型并将其可视化。在生产方面，你可以部署和管理数据科学项目。
+
+最后，你可以通过使用Knime生成洞察来利用你的实现。
+
+[https://uber.github.io/ludwig/getting_started/](https://uber.github.io/ludwig/getting_started/)
+
+Uber Ludwig是另一款适合初学者的优秀工具。有了它，你可以快速测试和训练深度学习模型。用户可以选择启用懒人模式（拖拽界面），或者直接操作代码。
+
+使用起来比Knime稍微复杂一点点。需要先加载CSV文件来训练数据。通过使用预先训练的模型，你可以预测输出目标。最后，你可以使用可用的可视化选项可视化你的数据。
+
+如果你是编程的初学者，你还可以在Python中使用他们扩展的API和训练模型。
+
+[https://github.com/mlflow/mlflow](https://github.com/mlflow/mlflow)
+
+MLFlow让你可以解决端到端的机器学习生命周期问题。它有三个主要组件。
+
++ MLflow跟踪 - 通过记录和比较结果和参数来处理实验
++ MLflow项目 - 允许你将项目打包成其他成员的可重用表单
++ MLflow模型 - 帮助你在不同平台中部署和管理ML库
+
+MLFlow的另一个惊人功能是它与库无关。这意味着你可以将其与其他机器学习库一起使用而不会出现任何兼容性问题。为了实现library-agonistic行为，它使用REST API和CLI。
 
 动手学深度学习：[https://github.com/d2l-ai/d2l-zh](https://github.com/d2l-ai/d2l-zh)
 

@@ -2,15 +2,20 @@
 layout: post
 category: "nlp"
 title: "openai gpt"
-tags: [openai gpt, ]
+tags: [openai gpt, gpt2, gpt-2, ]
 ---
 
 目录
 
 <!-- TOC -->
 
+- [gpt](#gpt)
+- [gpt-2](#gpt-2)
 
 <!-- /TOC -->
+
+
+## gpt
 
 openai的gpt(generative pre-training)：[Improving language understanding with unsupervised learning](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf)。。改名字了『Improving Language Understanding by Generative Pre-Training』
 
@@ -61,3 +66,10 @@ OpenAI 只需要很少的调整就能实现最后的结果。所有数据集都�
 + 改善精调过程：研究者的方法目前还很简单。有可能使用更复杂的适应和迁移技术例如在ULMFiT中所探索的方法，可以让该模型获得显著的提升。
 + 更好地理解生成式预训练的有效性：虽然本文中片面地讨论了一些思想，更多的目标指向的实验和研究将帮助分辨不同的解释。例如，实验中观察到的性能增益有多少是由于处理更广泛上下文的能力的提高，有多少是由于世界知识的提高。
 
+## gpt-2
+
+
+[完全图解GPT-2：看完这篇就够了（一）](https://mp.weixin.qq.com/s/67Z_dslvwTyRl3OMrArhCg)
+[完全图解GPT-2：看完这篇就够了（二）](https://mp.weixin.qq.com/s/xk5fWrSBKErH8tvl-3pgtg)
+
+[https://jalammar.github.io/illustrated-gpt2/](https://jalammar.github.io/illustrated-gpt2/)
