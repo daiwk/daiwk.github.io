@@ -27,7 +27,7 @@ tags: [gan论文集合, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan
 - [deblurGAN](#deblurgan)
 - [txt2img](#txt2img)
 - [VQ-VAE](#vq-vae)
-- [deblurGAN](#deblurgan-1)
+- [autoGAN](#autogan)
 - [框架——tf-gan](#%e6%a1%86%e6%9e%b6tf-gan)
 - [对抗样本含义](#%e5%af%b9%e6%8a%97%e6%a0%b7%e6%9c%ac%e5%90%ab%e4%b9%89)
 - [gan剪枝](#gan%e5%89%aa%e6%9e%9d)
@@ -107,7 +107,7 @@ tags: [gan论文集合, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan
 
 [https://daiwk.github.io/posts/cv-vq-vae.html](https://daiwk.github.io/posts/cv-vq-vae.html)
 
-## deblurGAN
+## autoGAN
 
 [https://daiwk.github.io/posts/cv-autogan.html](https://daiwk.github.io/posts/cv-autogan.html)
 

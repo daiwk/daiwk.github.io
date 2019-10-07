@@ -2,7 +2,7 @@
 layout: post
 category: "dl"
 title: "meta learning& auto-ml"
-tags: [meta learning, learning to learn, automl, auto-ml, once for all, ]
+tags: [meta learning, learning to learn, automl, auto-ml, auto-gan, autogan, fairnas, efficientnet, adanet, mdenas, proxylessnas, haq, once for all, ]
 urlcolor: blue
 ---
 
@@ -17,6 +17,7 @@ urlcolor: blue
   - [mdenas](#mdenas)
   - [ProxylessNAS & HAQ](#proxylessnas--haq)
   - [进化论方法](#%e8%bf%9b%e5%8c%96%e8%ae%ba%e6%96%b9%e6%b3%95)
+  - [autogan](#autogan)
 - [once for all](#once-for-all)
 
 <!-- /TOC -->
@@ -94,6 +95,10 @@ github: [https://github.com/MIT-HAN-LAB/ProxylessNAS](https://github.com/MIT-HAN
 亚马逊并不是唯一一个倡导采用进化方法进行AI架构搜索的机构。今年7月，Uber为名为EvoGrad的进化算法开源了开发资源库。去年10月，Google推出了AdaNet，这是一种用于组合机器学习算法以获得更好的预测观点的工具。
 
 [On the Bounds of Function Approximations](https://arxiv.org/abs/1908.09942)
+
+### autogan
+
+[[https://daiwk.github.io/posts/cv-autogan.html](https://daiwk.github.io/posts/cv-autogan.html]([https://daiwk.github.io/posts/cv-autogan.html](https://daiwk.github.io/posts/cv-autogan.html)
 
 ## once for all
 

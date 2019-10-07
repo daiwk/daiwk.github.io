@@ -172,6 +172,7 @@ https://daiwk.github.io/posts/knowledge-mpi.html
 https://daiwk.github.io/posts/platform-learn2learn.html
 https://daiwk.github.io/posts/platform-brpc-rdma.html
 https://daiwk.github.io/posts/platform-lightgbm.html
+https://daiwk.github.io/posts/video-deep-image-prior.html
 https://daiwk.github.io/posts/platform-pytorch-anniversary.html
 https://daiwk.github.io/posts/dl-mtl.html
 https://daiwk.github.io/posts/platform-storm.html
