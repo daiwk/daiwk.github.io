@@ -220,6 +220,7 @@ https://daiwk.github.io/posts/ml-online-learning.html
 https://daiwk.github.io/posts/knowledge-hadoop-streaming.html
 https://daiwk.github.io/posts/dl-gnn.html
 https://daiwk.github.io/posts/ml-active-learning.html
+https://daiwk.github.io/posts/rl-rl-recommendation.html
 https://daiwk.github.io/posts/knowledge-mmr.html
 https://daiwk.github.io/posts/cv-object-detection.html
 https://daiwk.github.io/posts/cv-style-transfer.html
