@@ -319,6 +319,7 @@ https://daiwk.github.io/posts/rl-stepbystep-chap8.html
 https://daiwk.github.io/posts/platform-bazel.html
 https://daiwk.github.io/posts/ml-crf-softmax.html
 https://daiwk.github.io/posts/dl-lottery-ticket-hypothesis.html
+https://daiwk.github.io/posts/dl-recurrent-independent-mechanisms.html
 https://daiwk.github.io/posts/knowledge-numpy-usage.html
 https://daiwk.github.io/posts/nlp-sentiment-analysis.html
 https://daiwk.github.io/posts/cv-vq-vae.html

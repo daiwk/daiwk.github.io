@@ -17,3 +17,9 @@ tags: [tf-gan, ]
 
 [https://github.com/tensorflow/gan/tree/master/tensorflow_gan/examples/self_attention_estimator](https://github.com/tensorflow/gan/tree/master/tensorflow_gan/examples/self_attention_estimator)
 
+参考[TF - GAN入门：TensorFlow 2.0 的轻量级 GAN 库](https://mp.weixin.qq.com/s/57i5mxK9oKAb9k77iElFBA)【这个东西不少，可以去看看。。】
+
+使用tf-gan的论文：
+
+[https://github.com/tensorflow/gan#who-uses-tf-gan](https://github.com/tensorflow/gan#who-uses-tf-gan)
+
