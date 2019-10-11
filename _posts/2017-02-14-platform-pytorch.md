@@ -2,7 +2,7 @@
 layout: post
 category: "platform"
 title: "pytorch"
-tags: [pytorch, 源码, pytorch 1.2]
+tags: [pytorch, 源码, pytorch 1.2, pytorch 1.3, ]
 ---
 
 
@@ -13,6 +13,7 @@ tags: [pytorch, 源码, pytorch 1.2]
 - [pytorch源码解析](#pytorch%e6%ba%90%e7%a0%81%e8%a7%a3%e6%9e%90)
 - [pytorch-lightning](#pytorch-lightning)
 - [pytorch 1.2](#pytorch-12)
+- [pytorch 1.3](#pytorch-13)
 
 <!-- /TOC -->
 
@@ -42,3 +43,7 @@ pytorch的多gpu使用tips：[https://medium.com/huggingface/training-larger-bat
 PyTorch 1.2 版本加入了标准的 nn.Transformer 模块。nn.Transformer 模块完全依赖注意机制描述输入和输出之间的全局依赖关系。nn.Transformer 模块的组件是单独设计的，以便于被分开使用。例如，没有更大的 nn.Transformer 的情况下，nn.TransformerEncoder 可被自身使用。
 
 简单的输入```from torch.untils.tensorboard import SummaryWriter```就能启动 TensorBoard。一旦我们安装了 TensorBoard，PyTorch 的这项新 API 就会将模型和指标记录到 TensorBoard UI 的目录中，并进行可视化。它对所有基于 PyTorch、Caffe 2 的模型和张量都支持数量、图像、直方图、图和嵌入可视化。
+
+## pytorch 1.3
+
+[2019年度机器学习框架王者之战！PyTorch 1.3重磅发布，TensorFlow有未来吗？](https://mp.weixin.qq.com/s/n5iwQs_k8BLRnUrA8nlQhg)

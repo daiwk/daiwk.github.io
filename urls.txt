@@ -321,7 +321,9 @@ https://daiwk.github.io/posts/audio-gan-tts.html
 https://daiwk.github.io/posts/video-tsm.html
 https://daiwk.github.io/posts/video-deep-image-prior.html
 https://daiwk.github.io/posts/dl-recurrent-independent-mechanisms.html
+https://daiwk.github.io/posts/dl-affective-computing.html
 https://daiwk.github.io/posts/dl-arrow-tf.html
+https://daiwk.github.io/posts/video-animate-face.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-gnn.html
 https://daiwk.github.io/posts/links-navigation-nlp.html

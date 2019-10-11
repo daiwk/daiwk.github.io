@@ -2,13 +2,14 @@
 layout: post
 category: "other"
 title: "thoughts"
-tags: [thoughts,]
+tags: [thoughts, nature, ]
 ---
 
 目录
 
 <!-- TOC -->
 
+- [nature文章](#nature%e6%96%87%e7%ab%a0)
 
 <!-- /TOC -->
 
@@ -20,3 +21,15 @@ tags: [thoughts,]
 [抖音总裁张楠：抖音的美好与价值](https://mp.weixin.qq.com/s/t0B08Fu2cGygEh9Hn8SwXg)
 
 [万万没想到，未得图灵奖的LSTM之父Jürgen，30年前做了这么多DL前沿研究](https://mp.weixin.qq.com/s/hDF-ObBFpR50KogIgPCtRg)
+
+[2万字超长干货论文，MIT人工智能实验室：如何做研究？](https://mp.weixin.qq.com/s/4AL8v3shAjfwoLIGl33lVg)
+
+[Github中文项目排行榜，你永远想不到开发者都用它干了什么](https://mp.weixin.qq.com/s/ExIUslFyu9xDn1UH77sTrQ)
+
+[https://github.com/kon9chunkit/GitHub-Chinese-Top-Charts](https://github.com/kon9chunkit/GitHub-Chinese-Top-Charts)
+
+## nature文章
+
+[https://www.nature.com/articles/d41586-019-03013-5](https://www.nature.com/articles/d41586-019-03013-5)
+
+[Nature发文：深度学习系统为什么这么好骗？](https://mp.weixin.qq.com/s/7emoVh1yjiEqFtCezBgSmg)
