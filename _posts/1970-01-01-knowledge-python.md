@@ -30,6 +30,8 @@ tags: [python, kwargs, args, collections, gc, flush, conda, mkdocs, Heartrate, ]
   - [定义时使用](#%e5%ae%9a%e4%b9%89%e6%97%b6%e4%bd%bf%e7%94%a8)
   - [调用时使用](#%e8%b0%83%e7%94%a8%e6%97%b6%e4%bd%bf%e7%94%a8)
 - [Heartrate](#heartrate)
+- [其他有用的库](#%e5%85%b6%e4%bb%96%e6%9c%89%e7%94%a8%e7%9a%84%e5%ba%93)
+  - [Selenium](#selenium)
 
 <!-- /TOC -->
 
@@ -588,3 +590,11 @@ test_args(**kwargs)
 [Heartrate：如追综心跳般实时动态可视化监测Python程序运行](https://mp.weixin.qq.com/s/GWvMURaNhRbS3jUI5uBjrA)
 
 [https://github.com/alexmojaki/heartrate](https://github.com/alexmojaki/heartrate)
+
+## 其他有用的库
+
+[吐血整理！绝不能错过的24个顶级Python库](https://zhuanlan.zhihu.com/p/76112940)
+
+### Selenium
+
+[数据科学项目：使用Python和Selenium抓取YouTube数据对视频进行分类](https://www.analyticsvidhya.com/blog/2019/05/scraping-classifying-youtube-video-data-python-selenium/)
