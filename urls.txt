@@ -323,6 +323,8 @@ https://daiwk.github.io/posts/video-deep-image-prior.html
 https://daiwk.github.io/posts/dl-recurrent-independent-mechanisms.html
 https://daiwk.github.io/posts/dl-affective-computing.html
 https://daiwk.github.io/posts/dl-arrow-tf.html
+https://daiwk.github.io/posts/dl-mixhop.html
+https://daiwk.github.io/posts/nlp-flowseq.html
 https://daiwk.github.io/posts/video-animate-face.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-gnn.html

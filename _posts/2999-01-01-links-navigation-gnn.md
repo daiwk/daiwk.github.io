@@ -14,6 +14,7 @@ tags: [gnn, ]
 - [gnn](#gnn)
 - [gnn+推荐](#gnn%e6%8e%a8%e8%8d%90)
 - [nips2019](#nips2019)
+- [mixhop](#mixhop)
 
 <!-- /TOC -->
 
@@ -36,3 +37,7 @@ tags: [gnn, ]
 ## nips2019
 
 [八篇 NeurIPS 2019 最新图神经网络（GNN）相关论文](https://mp.weixin.qq.com/s/IIr4zWqtL2_1hvaINXypDQ)
+
+## mixhop
+
+[https://daiwk.github.io/posts/dl-mixhop.html](https://daiwk.github.io/posts/dl-mixhop.html)
