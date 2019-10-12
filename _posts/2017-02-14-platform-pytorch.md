@@ -14,6 +14,8 @@ tags: [pytorch, 源码, pytorch 1.2, pytorch 1.3, ]
 - [pytorch-lightning](#pytorch-lightning)
 - [pytorch 1.2](#pytorch-12)
 - [pytorch 1.3](#pytorch-13)
+  - [PyTorch TorchScript](#pytorch-torchscript)
+  - [TensorFlow Eager](#tensorflow-eager)
 
 <!-- /TOC -->
 
@@ -49,3 +51,26 @@ PyTorch 1.2 版本加入了标准的 nn.Transformer 模块。nn.Transformer 模�
 [2019年度机器学习框架王者之战！PyTorch 1.3重磅发布，TensorFlow有未来吗？](https://mp.weixin.qq.com/s/n5iwQs_k8BLRnUrA8nlQhg)
 
 [图灵奖得主力推：PyTorch 1.3 今天发布](https://mp.weixin.qq.com/s/LvPm4HuD5c09T4tQjumg_Q)
+
+[PyTorch称霸学界，TensorFlow固守业界，ML框架之争将走向何方？](https://mp.weixin.qq.com/s/VlghKVslhM8gOLogAy5Igw)
+
+### PyTorch TorchScript
+
+PyTorch JIT是PyTorch的一个中间表征（IR），被称为TorchScript。TorchScript是PyTorch的「图」表征。你可以使用tracing或script模式把一个常规的PyTorch模型转换为TorchScript。
+
++ tracing接受一个**函数**和一个**输入**，记录下用该输入**执行的操作**，然后构建IR。虽然简单，但tracing也有其缺点。例如，它无法捕获还未执行的控制流。例如，如果执行了条件语句的true block，它就无法捕获false block。
++ Script模式接收一个**函数/类**，**重新解释Python代码**，然后直接输出TorchScript IR。这使得它可以支持任意代码，但它需要**重新解释 Python**。
+
+一旦你的 PyTorch 模型在这个 IR 中，我们就得到了图模式的所有好处。我们可以在**没有Python依赖**的情况下**用C++部署PyTorch模型**，还可以优化该模型。
+
+### TensorFlow Eager
+
+在API层面上，TensorFlow的eager模式与PyTorch的eager模式基本相同，最初是由Chainer发明的。加入eager模式之后，TensorFlow就拥有了PyTorch eager模式的大部分优势（易用、可调试等）。
+
+但这也给TensorFlow带来了相同的劣势。TensorFlow的eager模型**不能导出到非Python环境中**，**无法优化**，也**无法在移动端运行**。
+
+这将TensorFlow置于与PyTorch相同的境地，它们的解决方式也基本相同——要么**trace**你的代码**（tf.function）**，要么**重新解释Python代码（Autograph）**。
+
+因此，TensorFlow的eager模式也不是万能的。尽管你可以**用tf.function注释**将eager代码**转换为静态图**，但这并不是一个无缝过程（PyTorch的TorchScript也有类似问题）。tracing在根本上被限制了，**重新解释Python代码**本质上需要很大程度上**重写Python编译器**。当然，通过限制深度学习中用到的Python子集可以极大地简化这一范围。
+
+在默认情况下启用eager模式时，TensorFlow强迫用户做出选择，要么为了易用性使用eager执行，这种做法**需要为了部署而重写**；**要么彻底不用eager执行**。PyTorch也面临相同的问题，但PyTorch可选择性加入的TorchScript似乎更加令人愉悦。

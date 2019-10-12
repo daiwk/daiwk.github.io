@@ -327,6 +327,7 @@ https://daiwk.github.io/posts/audio-avm.html
 https://daiwk.github.io/posts/dl-mixhop.html
 https://daiwk.github.io/posts/nlp-flowseq.html
 https://daiwk.github.io/posts/video-animate-face.html
+https://daiwk.github.io/posts/nlp-m4.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-gnn.html
 https://daiwk.github.io/posts/links-navigation-nlp.html
