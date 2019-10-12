@@ -9,6 +9,7 @@ tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, vilbert, xlm, laser
 
 <!-- TOC -->
 
+- [小结](#%e5%b0%8f%e7%bb%93)
 - [bert](#bert)
   - [finetune和跑预测并save模型](#finetune%e5%92%8c%e8%b7%91%e9%a2%84%e6%b5%8b%e5%b9%b6save%e6%a8%a1%e5%9e%8b)
   - [线上infer部分](#%e7%ba%bf%e4%b8%8ainfer%e9%83%a8%e5%88%86)
@@ -48,6 +49,19 @@ tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, vilbert, xlm, laser
 - [对数字的认知](#%e5%af%b9%e6%95%b0%e5%ad%97%e7%9a%84%e8%ae%a4%e7%9f%a5)
 
 <!-- /TOC -->
+
+
+## 小结
+
+[预训练语言模型关系图+必读论文列表，清华荣誉出品](https://mp.weixin.qq.com/s/-U_Lu2MMr5QRNe1xpv-_Xg)
+
+[https://github.com/thunlp/PLMpapers](https://github.com/thunlp/PLMpapers)
+
+<html>
+<br/>
+<img src='../assets/PLMfamily.jpg' style='max-height: 250px'/>
+<br/>
+</html>
 
 paddle的LARK里包含了一些nlp模型
 

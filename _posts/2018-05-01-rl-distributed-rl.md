@@ -24,6 +24,7 @@ tags: [分布式强化学习, A3C, ape-x, rudder, impala, rlpyt, open spiel, rai
 - [其他RL平台](#%e5%85%b6%e4%bb%96rl%e5%b9%b3%e5%8f%b0)
   - [open spiel](#open-spiel)
   - [rlpyt](#rlpyt)
+- [FEN](#fen)
 
 <!-- /TOC -->
 
@@ -245,3 +246,17 @@ rlpyt 库中的已实现算法包括：
 + 策略梯度：A2C、PPO
 + DQN及其变体：Double、Dueling、Categorical、Rainbow minus Noisy Nets、Recurrent (R2D2-style)
 + QPG：DDPG、TD3、SAC
+
+## FEN
+
+参考[兼顾公平与效率？北大NeurIPS 19论文提出多智能体强化学习方法FEN](https://mp.weixin.qq.com/s/Wy9xpN-EqKybtrbYe5xLVQ)
+
+公平有助于人类社会的稳定和生产力的提高，同样对于多智能体系统也十分重要。然而让一组智能体学习提升系统效率并同时保持公平是一个复杂的、多目标的、联合策略优化问题。目前主流的多智能体强化学习算法没有考虑公平性的问题，一些针对特定情景公平性的方法又依赖专家知识，这对于一般性情景并不适用。
+
+作者提出一种分层多智能体强化学习方法 Fair-Efficient Network（FEN，「分」），从三个方面解决这一问题：
+
++ 提出 fair-efficient reward，用于学习效率与公平。
++ 提出一种 hierarchy 架构，降低学习难度。
++ 提出 FEN 的分布式训练方法。
+
+[Learning Fairness in Multi-Agent Systems](https://z0ngqing.github.io/paper/nips-jiechuan19.pdf)

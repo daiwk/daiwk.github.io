@@ -47,3 +47,5 @@ PyTorch 1.2 版本加入了标准的 nn.Transformer 模块。nn.Transformer 模�
 ## pytorch 1.3
 
 [2019年度机器学习框架王者之战！PyTorch 1.3重磅发布，TensorFlow有未来吗？](https://mp.weixin.qq.com/s/n5iwQs_k8BLRnUrA8nlQhg)
+
+[图灵奖得主力推：PyTorch 1.3 今天发布](https://mp.weixin.qq.com/s/LvPm4HuD5c09T4tQjumg_Q)

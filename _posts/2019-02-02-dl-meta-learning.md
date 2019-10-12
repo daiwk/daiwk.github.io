@@ -19,6 +19,7 @@ urlcolor: blue
   - [进化论方法](#%e8%bf%9b%e5%8c%96%e8%ae%ba%e6%96%b9%e6%b3%95)
   - [autogan](#autogan)
 - [once for all](#once-for-all)
+- [应用](#%e5%ba%94%e7%94%a8)
 
 <!-- /TOC -->
 
@@ -113,4 +114,8 @@ github: [https://github.com/MIT-HAN-LAB/ProxylessNAS](https://github.com/MIT-HAN
 然后给定一个部署场景，再通过选择 OFA 网络中特定的子网络来搜索合适的结果，这个过程无需训练。因此，专用模型的训练成本就从 O(N) 降到了 O(1)。但是，我们却难以防止许多不同子网络之间的干扰。针对这一问题，MIT 的这些研究者提出了渐进式收束算法（progressive shrinking algorithm）。该算法能够训练支持超过 10^19 个子网络的 OFA 网络，同时还能保持与独立训练的网络一样的准确度，从而节省非重复性工程开发（non-recurring engineering/NRE）成本。
 
 研究者在多种不同的硬件平台（移动平台/CPU/GPU）和效率限制条件上进行了广泛的实验，结果表明：相比于当前最佳（SOTA）的神经架构搜索（NAS）方法，OFA 能稳定地取得同等水平（或更好）的 ImageNet 准确度。值得注意的是，OFA 在处理多部署场景（N）时的速度比 NAS 快几个数量级。当 N=40 时，OFA 所需的 GPU 工作小时数比 ProxylessNAS 少 14 倍、比 FBNet 少 16 倍、比 MnasNet 少 1142 倍。部署场景越多，则相比于 NAS 就节省越多。
+
+## 应用
+
+[AutoTiKV：基于机器学习的数据库调优](https://zhuanlan.zhihu.com/p/85810706?utm_source=wechat_session&utm_medium=social&s_r=0&from=timeline&isappinstalled=0#showWechatShareTip)
 
