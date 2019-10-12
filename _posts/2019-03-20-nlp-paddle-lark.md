@@ -59,7 +59,7 @@ tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, vilbert, xlm, laser
 
 <html>
 <br/>
-<img src='../assets/PLMfamily.jpg' style='max-height: 250px'/>
+<img src='../assets/PLMfamily.jpg' style='max-height: 400px'/>
 <br/>
 </html>
 
