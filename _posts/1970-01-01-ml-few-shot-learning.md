@@ -2,7 +2,7 @@
 layout: post
 category: "ml"
 title: "few-shot learning"
-tags: [few-shot, fewshot, 小样本, ]
+tags: [few-shot, fewshot, 小样本, zero-shot, 零样本, 特征混淆, feature confusion, afc-gan, ]
 
 ---
 
@@ -10,19 +10,21 @@ tags: [few-shot, fewshot, 小样本, ]
 
 <!-- TOC -->
 
-- [定义](#%E5%AE%9A%E4%B9%89)
-- [分类](#%E5%88%86%E7%B1%BB)
+- [定义](#%e5%ae%9a%e4%b9%89)
+- [分类](#%e5%88%86%e7%b1%bb)
   - [model based](#model-based)
-    - [One-shot learning with memory-augmented neural networks](#One-shot-learning-with-memory-augmented-neural-networks)
-    - [Meta networks](#Meta-networks)
+    - [One-shot learning with memory-augmented neural networks](#one-shot-learning-with-memory-augmented-neural-networks)
+    - [Meta networks](#meta-networks)
   - [metric based](#metric-based)
-    - [Siamese Network](#Siamese-Network)
-    - [Match Network](#Match-Network)
-    - [Prototype Network](#Prototype-Network)
-    - [Relation Network](#Relation-Network)
+    - [Siamese Network](#siamese-network)
+    - [Match Network](#match-network)
+    - [Prototype Network](#prototype-network)
+    - [Relation Network](#relation-network)
   - [optimization based](#optimization-based)
-    - [Optimization as a model for few-shot learning](#Optimization-as-a-model-for-few-shot-learning)
-    - [Model-agnostic meta-learning for fast adaptation of deep networks](#Model-agnostic-meta-learning-for-fast-adaptation-of-deep-networks)
+    - [Optimization as a model for few-shot learning](#optimization-as-a-model-for-few-shot-learning)
+    - [Model-agnostic meta-learning for fast adaptation of deep networks](#model-agnostic-meta-learning-for-fast-adaptation-of-deep-networks)
+- [zero-shot相关](#zero-shot%e7%9b%b8%e5%85%b3)
+  - [解决特征混淆:AFC-GAN](#%e8%a7%a3%e5%86%b3%e7%89%b9%e5%be%81%e6%b7%b7%e6%b7%86afc-gan)
 
 <!-- /TOC -->
 
@@ -252,3 +254,14 @@ meta learner的目标是在各种**不同的学习任务**上**学出一个模�
 
 使得可以在小量样本上，用少量的迭代步骤就可以获得较好的泛化性能，而且模型是容易 fine-tine 的。而且这个方法无需关心模型的形式，也不需要为 meta learning 增加新的参数，直接用梯度下降来训练 learner。
 
+## zero-shot相关
+
+### 解决特征混淆:AFC-GAN
+
+[节后收心困难？这15篇论文，让你迅速找回学习状态](https://mp.weixin.qq.com/s/aaz-s87vorroyepNCd9-AA)
+
+[Alleviating Feature Confusion for Generative Zero-shot Learning](https://arxiv.org/abs/1909.07615)
+
+本文是电子科技大学和昆士兰大学发表于 ACM MM 2019 的工作。论文首次提出了生成式零样本学习中的特征混淆（feature confusion）问题，并提出了一种简单可行的解决特征混淆的方法。此外，作者还首次提出了一个特征混淆的度量指标。零样本学习结果在公开数据集上达到目前 SOTA 水平。
+
+[https://github.com/lijin118/AFC-GAN](https://github.com/lijin118/AFC-GAN)

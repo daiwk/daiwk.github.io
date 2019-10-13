@@ -2,7 +2,7 @@
 layout: post
 category: "nlp"
 title: "chatbot"
-tags: [chatbot, 对话, CCPE, taskmaster-1, ]
+tags: [chatbot, 对话, CCPE, taskmaster-1, space fusion, style fusion, ]
 ---
 
 目录
@@ -10,6 +10,8 @@ tags: [chatbot, 对话, CCPE, taskmaster-1, ]
 <!-- TOC -->
 
 - [小冰](#%e5%b0%8f%e5%86%b0)
+- [space fusion](#space-fusion)
+- [style fusion](#style-fusion)
 
 <!-- /TOC -->
 
@@ -31,3 +33,21 @@ tags: [chatbot, 对话, CCPE, taskmaster-1, ]
 [DIY自己的AI助理，萝莉御姐暖男霸道总裁全凭你定义，微软小冰团队发布新框架](https://mp.weixin.qq.com/s/8l-MkmoeEqtK75P6CrpKBA)
 
 [开放框架，进驻OV手机，五岁的微软小冰已经学会了养活自己](https://mp.weixin.qq.com/s/L_8Uj-LeJdGjc7Qsi1_PUA)
+
+
+## space fusion
+
+[Jointly optimizing diversity and relevance in neural response generation](https://arxiv.org/abs/1902.11205)
+
+NACCL 2019
+
+## style fusion
+
+[节后收心困难？这15篇论文，让你迅速找回学习状态](https://mp.weixin.qq.com/s/aaz-s87vorroyepNCd9-AA)
+
+[Structuring Latent Spaces for Stylized Response Generation](https://arxiv.org/abs/1909.05361)
+
+[https://github.com/golsun/StyleFusion](https://github.com/golsun/StyleFusion)
+
+本文是微软发表于 EMNLP 2019 的工作，这是 SpaceFusion  的后续之作。SpaceFusion 尝试将对话系统中的 source 和 target 映射到同一隐空间上，从而转换生成对话的问题成为生成隐空间向量的问题。本文（StyleFusion）进一步将额外的风格化文本的特征迁移到生成回复中，从而达到对话个性化和风格化的效果。在若干标准数据集上取得了很好的效果。
+

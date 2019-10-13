@@ -55,6 +55,8 @@ tags: [推荐系统, ]
   - [best paper](#best-paper)
 - [可解释推荐系统](#%e5%8f%af%e8%a7%a3%e9%87%8a%e6%8e%a8%e8%8d%90%e7%b3%bb%e7%bb%9f)
 - [一些思考](#%e4%b8%80%e4%ba%9b%e6%80%9d%e8%80%83)
+- [social recomendation](#social-recomendation)
+- [RSGAN](#rsgan)
 
 <!-- /TOC -->
 
@@ -375,3 +377,9 @@ paperweekly的[RecSys 2019最佳论文：基于深度学习的推荐系统是否
 2. 推荐系统的可解释性。在我看来可解释性重要的不是指导研究人员之后怎么迭代方法，而是增加透明性，让使用推荐系统的用户和为推荐系统提供内容的生产者能看得懂推荐系统，能参与进来。
 
 3. 算法对系统数据的 Confounding 问题。可以简单理解为反馈循环（Feedback Loop）问题，简单来说就是算法会决定推荐系统展示给用户内容，从而间接的影响了用户的行为。而用户的行为反馈数据又会决定算法的学习。形成一个循环。
+
+## social recomendation
+
+## RSGAN
+
+参考[https://daiwk.github.io/posts/dl-rsgan.html](https://daiwk.github.io/posts/dl-rsgan.html)

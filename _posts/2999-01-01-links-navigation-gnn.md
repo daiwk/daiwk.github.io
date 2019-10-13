@@ -13,6 +13,7 @@ tags: [gnn, ]
 - [框架](#%e6%a1%86%e6%9e%b6)
 - [gnn](#gnn)
 - [gnn+推荐](#gnn%e6%8e%a8%e8%8d%90)
+- [gnn+nlp](#gnnnlp)
 - [nips2019](#nips2019)
 - [mixhop](#mixhop)
 
@@ -33,6 +34,10 @@ tags: [gnn, ]
 ## gnn+推荐
 
 [https://daiwk.github.io/posts/dl-graph-recommendations.html](https://daiwk.github.io/posts/dl-graph-recommendations.html)
+
+## gnn+nlp
+
+[https://daiwk.github.io/posts/nlp-nlp-gnn.html](https://daiwk.github.io/posts/nlp-nlp-gnn.html)
 
 ## nips2019
 

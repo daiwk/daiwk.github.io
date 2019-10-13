@@ -2,7 +2,7 @@
 layout: post
 category: "cv"
 title: "目标检测汇总"
-tags: [目标检测, rcnn, ssd, yolo, retainnet, fast rcnn, faster rcnn, fpn, yolo nano, ]
+tags: [目标检测, rcnn, ssd, yolo, retainnet, fast rcnn, faster rcnn, fpn, yolo nano, gaussian yolov3, ]
 ---
 
 目录
@@ -12,6 +12,7 @@ tags: [目标检测, rcnn, ssd, yolo, retainnet, fast rcnn, faster rcnn, fpn, yo
 - [历史回顾](#%e5%8e%86%e5%8f%b2%e5%9b%9e%e9%a1%be)
 - [开源库：Detectron](#%e5%bc%80%e6%ba%90%e5%ba%93detectron)
 - [YOLO nano](#yolo-nano)
+- [gaussian yolov3](#gaussian-yolov3)
 
 <!-- /TOC -->
 
@@ -54,3 +55,7 @@ tags: [目标检测, rcnn, ssd, yolo, retainnet, fast rcnn, faster rcnn, fpn, yo
 研究者提出了名为 YOLO Nano 的网络。这一模型的大小在 4.0MB 左右，比 Tiny YOLOv2 和 Tiny YOLOv3 分别小了 15.1 倍和 8.3 倍。在计算上需要 4.57B 次推断运算，比后两个网络分别少了 34% 和 17%。
 
 在性能表现上，在 VOC2007 数据集取得了 69.1% 的 mAP，准确率比后两者分别提升了 12 个点和 10.7 个点。研究者还在 Jetson AGX Xavier 嵌入式模块上，用不同的能源预算进行了测试，进一步说明 YOLO Nano 非常适合边缘设备与移动端。
+
+## gaussian yolov3
+
+[Gaussian YOLOv3: An Accurate and Fast Object Detector Using Localization Uncertainty for Autonomous Driving](https://arxiv.org/abs/1904.04620)

@@ -1051,3 +1051,14 @@ Zambaldi et al.在2018的[Relational deep reinforcement learning](https://arxiv.
 [谷歌图表征学习创新：学习单个节点多个嵌入&自动学习最优超参数](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650767026&idx=4&sn=b1f5c9eb2e060c51b882584ee3a24de9&chksm=871abaccb06d33da8a05c7e6afa794763c9e85a75f783a26ef53d3ac8f2cc164cd18dc9926e9&scene=0&xtrack=1&pass_ticket=zAXdHORK5tTx549e9RwAgNcm7bjJrH4ENwbbTYVrAZDqpsE%2Fu1hY63b%2FoRfnZQdM#rd)
 
 代码地址：[https://github.com/google-research/google-research/tree/master/graph_embedding](https://github.com/google-research/google-research/tree/master/graph_embedding)
+
+## 理解gat
+
+[节后收心困难？这15篇论文，让你迅速找回学习状态](https://mp.weixin.qq.com/s/aaz-s87vorroyepNCd9-AA)
+
+[Understanding Attention and Generalization in Graph Neural Networks](https://arxiv.org/abs/1905.02850)
+
+[https://github.com/bknyaz/graph_attention_pool](https://github.com/bknyaz/graph_attention_pool)
+
+本文是圭尔夫大学发表于 NeurIPS 2019 的工作。本文的目标是更好地理解图神经网络（GNN）中节点的注意力，并确定影响其有效性的因素。本文特别关注将注意力 GNN 泛化到更大，更复杂或更嘈杂的图的能力。受图同构网络工作的启发，本文设计了简单的图推理任务，使本文能够在受控环境中研究注意力机制。本文发现在典型条件下，注意力的影响可以忽略甚至是有害的，但在某些条件下，它在一些分类任务中提供超过 60％ 的特殊性能提升。在实践中满足这些条件是具有挑战性的，并且通常需要对注意力机制进行监督训练。本文提出了一种替代方法，并以弱监督的方式训练注意力，以接近监督模型的性能，并且与无监督模型相比，改进了几个合成数据集和真实数据集的结果。
+

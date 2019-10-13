@@ -85,3 +85,4 @@ SIGIR'19
 
 传统商品推荐为用户推荐商品，而意图推荐则关注于预测用户的意图。本文将意图推荐的业务场景建模为异质图（包含多种类型节点和关系的图），然后设计了 metapath-guided heterogeneous Graph Neural Network 来学习该业务场景下多种不同目标的表示。同时，本文也提出一种 term embedding mechanism 来降低大规模异质图场景下的参数量。最后，在淘宝真实场景下的 AB test 证明了 MEIRec 算法的优越性。
 
+[https://github.com/googlebaba/KDD2019-MEIRec](https://github.com/googlebaba/KDD2019-MEIRec)
