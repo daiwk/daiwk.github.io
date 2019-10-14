@@ -330,6 +330,9 @@ https://daiwk.github.io/posts/video-animate-face.html
 https://daiwk.github.io/posts/dl-rsgan.html
 https://daiwk.github.io/posts/nlp-m4.html
 https://daiwk.github.io/posts/nlp-nlp-gnn.html
+https://daiwk.github.io/posts/platform-mlir.html
+https://daiwk.github.io/posts/dl-ngboost.html
+https://daiwk.github.io/posts/dl-youtube-multitask.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-gnn.html
 https://daiwk.github.io/posts/links-navigation-nlp.html

@@ -28,6 +28,8 @@ tags: [thoughts, nature, ]
 
 [https://github.com/kon9chunkit/GitHub-Chinese-Top-Charts](https://github.com/kon9chunkit/GitHub-Chinese-Top-Charts)
 
+[面对谷歌，Facebook 是如何赢得「社交保卫战」的？ \| 36氪领读](https://mp.weixin.qq.com/s/3ioUTLGpyylDny2u_o6g3w)
+
 ## nature文章
 
 [https://www.nature.com/articles/d41586-019-03013-5](https://www.nature.com/articles/d41586-019-03013-5)

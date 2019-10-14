@@ -2,7 +2,7 @@
 layout: post
 category: "links"
 title: "【置顶】导引——gan论文集合"
-tags: [gan论文集合, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan, irgan, biggan, treegan, stackgan, cyclegan, deblurgan, txt2img, vq-vae, tf-gan, gan剪枝, gan pruning, autogan, gan-tts, ]
+tags: [gan论文集合, fid, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan, irgan, biggan, treegan, stackgan, cyclegan, deblurgan, txt2img, vq-vae, tf-gan, gan剪枝, gan pruning, autogan, gan-tts, ]
 ---
 
 目录
@@ -12,6 +12,7 @@ tags: [gan论文集合, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan
 - [框架](#%e6%a1%86%e6%9e%b6)
   - [tf-gan](#tf-gan)
 - [基本原理](#%e5%9f%ba%e6%9c%ac%e5%8e%9f%e7%90%86)
+  - [度量方法](#%e5%ba%a6%e9%87%8f%e6%96%b9%e6%b3%95)
   - [basic gan](#basic-gan)
   - [gan landscape](#gan-landscape)
   - [gan with the wind](#gan-with-the-wind)
@@ -52,6 +53,10 @@ tags: [gan论文集合, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan
 [https://daiwk.github.io/posts/platform-tf-gan.html](https://daiwk.github.io/posts/platform-tf-gan.html)
 
 ## 基本原理
+
+### 度量方法
+
+[学习GAN模型量化评价，先从掌握FID开始吧](https://mp.weixin.qq.com/s/jGSqB6UpCeQo8FC219TWbQ)
 
 ### basic gan
 
@@ -154,7 +159,6 @@ tags: [gan论文集合, ls-gan, wgan, lpgan, infogan, improvedgan, dcgan, seqgan
 ### autoGAN
 
 [https://daiwk.github.io/posts/cv-autogan.html](https://daiwk.github.io/posts/cv-autogan.html)
-
 
 ## audio
 

@@ -24,3 +24,6 @@ Apache Arrow 本质上是一种基于内存的列式数据的标准格式，旨�
 
 Arrow 数据集是 tf.data.Dataset 的扩展，因此两者可利用相同的 API 与 tf.data 流水线集成，并可作为 tf.keras 的输入。TensorFlow I/O 目前提供 3 种 Arrow 数据集，按名称排序如下：ArrowDataset、ArrowFeatherDataset 和 ArrowStreamDataset。这三种数据集均由相同的底层 Arrow 数据馈送，且此类底层数据具有两个重要特征：结构化 和 批量化。
 
+
+[TensorFlow 与 Apache Arrow 数据集搭配最佳实践](https://mp.weixin.qq.com/s/5UtpFg7Zmm6WY0OOxzeueQ)
+
