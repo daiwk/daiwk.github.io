@@ -2,7 +2,7 @@
 layout: post
 category: "cv"
 title: "cnn模型们"
-tags: [cnn, sota, imagenet, kornia, simplecv, ]
+tags: [cnn, sota, imagenet, kornia, simplecv, Adaptively Connected Neural Networks, acnet, ]
 ---
 
 目录
@@ -14,8 +14,10 @@ tags: [cnn, sota, imagenet, kornia, simplecv, ]
   - [池化](#%e6%b1%a0%e5%8c%96)
 - [发展历程](#%e5%8f%91%e5%b1%95%e5%8e%86%e7%a8%8b)
 - [SOTA](#sota)
-- [simplecv](#simplecv)
-- [kornia](#kornia)
+- [工具库](#%e5%b7%a5%e5%85%b7%e5%ba%93)
+  - [simplecv](#simplecv)
+  - [kornia](#kornia)
+- [ACNet](#acnet)
 
 <!-- /TOC -->
 
@@ -77,7 +79,9 @@ inception发展过程：
 
 [https://www.paperswithcode.com/sota/image-classification-on-imagenet](https://www.paperswithcode.com/sota/image-classification-on-imagenet)
 
-## simplecv
+## 工具库
+
+### simplecv
 
 [http://simplecv.org/](http://simplecv.org/)
 
@@ -85,10 +89,18 @@ SimpleCV，一个开源框架，允许你构建计算机视觉应用程序。它
 
 有了它，你可以制作计算机视觉项目，而无需在基础知识上投入太多时间。毕竟，出于某种原因，它被命名为SimpleCV。
 
-## kornia
+### kornia
 
 参考[可微分的「OpenCV」：这是基于PyTorch的可微计算机视觉库](https://mp.weixin.qq.com/s/SdNDlTOCIwakV6rHHpI_Eg)
 
 [https://github.com/arraiyopensource/kornia](https://github.com/arraiyopensource/kornia)
 
 文档：[https://kornia.readthedocs.io/en/latest/](https://kornia.readthedocs.io/en/latest/)
+
+## ACNet
+
+[Adaptively Connected Neural Networks](https://arxiv.org/abs/1904.03579)
+
+[https://github.com/wanggrun/Adaptively-Connected-Neural-Networks](https://github.com/wanggrun/Adaptively-Connected-Neural-Networks)
+
+[https://zhuanlan.zhihu.com/p/84205427](https://zhuanlan.zhihu.com/p/84205427)

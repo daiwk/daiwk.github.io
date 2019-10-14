@@ -27,6 +27,8 @@ tags: [GAN-CDQN, 强化学习, 推荐, gan, cascade dqn, 级联dqn, ]
 
 代码：[https://github.com/xinshi-chen/GenerativeAdversarialUserModel](https://github.com/xinshi-chen/GenerativeAdversarialUserModel)
 
+ppt：[https://icml.cc/media/Slides/icml/2019/201(11-14-00)-11-14-25-4831-generative_adve.pdf](https://icml.cc/media/Slides/icml/2019/201(11-14-00)-11-14-25-4831-generative_adve.pdf)
+
 ## 简介
 
 本文提出利用**生成对抗网络**同时学习**用户行为模型transition**以及**奖励函数reward**。将该**用户模型**作为强化学习的**模拟环境**，研究者开发了全新的**Cascading-DQN**算法，从而得到了可以**高效处理大量候选**物品的**组合推荐**策略。
