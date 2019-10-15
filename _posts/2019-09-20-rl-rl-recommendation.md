@@ -75,7 +75,7 @@ DQN的两种经典结构：
 最优的Q函数策略便可以通过Bellman等式求得：
 
 `\[
-xxx
+Q^{*}\left(s_{t}, a_{t}\right)=\mathbb{E}_{s_{t+1}}\left[r_{t}+\gamma \max _{a_{t+1}} Q^{*}\left(s_{t+1}, a_{t+1}\right) | s_{t}, a_{t}\right]
 \]`
 
 基于用户交互历史的离线日志，采用 Off-policy的方式进行训练得到最优的投放策略。
@@ -87,11 +87,11 @@ xxx
 + 更新状态为`\(s_{t+1}\)`
 + 计算reward `\(r_t=r_t^{ad}+\alpha r_t^{ex}\)`；
 + 将状态转移信息`\((s_{t}，a_{t}，r_{t}，s_{t+1})\)`存储到replay buffer；
-+ 从replay buffer中取出mini-batch的状态转移信息`\(s,a,r,s'\)`，来训练得到最优的Q函数参数。
++ 从replay buffer中取出mini-batch的状态转移信息`\(s,a,r,s'\)`，来最小化`\((y-Q(s, a ; \theta))^{2}\)`训练得到最优的Q函数参数。
 + 其中，
 
 `\[
-y=xxx
+y=\left\{\begin{array}{ll}{r} & {\text { terminal } s^{\prime}} \\ {r+\gamma \max _{a^{\prime}} Q\left(s^{\prime}, a^{\prime} ; \theta\right)} & {\text { non - terminal } s^{\prime}}\end{array}\right.
 \]`
 
 <html>
