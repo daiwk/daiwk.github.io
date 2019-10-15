@@ -179,7 +179,7 @@ r\left(\boldsymbol{s}^{t}, a^{t}\right) :=\boldsymbol{v}^{\top} \sigma\left(\bol
 
 为了简化一点，把reward的所有参数定义为`\(\theta\)`，而用户模型的所有参数定义为`\(\alpha\)`，因此，reward就是`\(r_{\theta}\)`，而用户模型就是`\(\phi_{\alpha}\)`。
 
-自己来梳理一下。。有m个时间步，每个时间步的f是d维的，所以F是mxd，而w是mxn，所以乘完后是个dxn，然后这个vec的操作就是把n列竖着叠到一起，变成一个dnx1的向量。这就是s。然后那个s,f呢，f只是一个item，所以是d维，而s是dnx1，把这两个竖着叠在一起就是(dn+1)xd=dn+d这么多行，所以V就是lx(dn+d)。V乘以s和f的那个，出来就是一个lx1的。最后的r是一个标量吧。
+自己来梳理一下。。有m个时间步，每个时间步的f是dx1维的，所以F是dxm，而w是mxn，所以乘完后是个dxn，然后这个vec的操作就是把n列竖着叠到一起，变成一个dnx1的向量。这就是s。然后那个s,f呢，f只是一个item，所以是dx1维，而s是dnx1，把这两个竖着叠在一起就是(n+1)xd=dn+d这么多行，所以V就是lx(dn+d)。V乘以s和f的那个，出来就是一个lx1的。最后的r是一个标量吧。
 
 ### Generative Adversarial Training
 
