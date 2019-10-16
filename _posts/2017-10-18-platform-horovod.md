@@ -9,12 +9,14 @@ tags: [horovod, ]
 
 <!-- TOC -->
 
-- [安装](#安装)
-    - [有一个装了tf的py](#有一个装了tf的py)
-    - [安装openmpi](#安装openmpi)
-    - [pip安装](#pip安装)
+- [安装](#%e5%ae%89%e8%a3%85)
+  - [有一个装了tf的py](#%e6%9c%89%e4%b8%80%e4%b8%aa%e8%a3%85%e4%ba%86tf%e7%9a%84py)
+  - [安装openmpi](#%e5%ae%89%e8%a3%85openmpi)
+  - [pip安装](#pip%e5%ae%89%e8%a3%85)
 
 <!-- /TOC -->
+
+[https://juejin.im/post/5cbc6dbd5188253236619ccb#heading-9](https://juejin.im/post/5cbc6dbd5188253236619ccb#heading-9)
 
 主页：
 

@@ -13,6 +13,8 @@ tags: [rl recommendation, 强化学习 推荐, drn, slateq, topk off policy, dea
 - [top-k off-policy](#top-k-off-policy)
 - [slateq](#slateq)
 - [DEAR](#dear)
+  - [dear模型结构](#dear%e6%a8%a1%e5%9e%8b%e7%bb%93%e6%9e%84)
+  - [dear实验](#dear%e5%ae%9e%e9%aa%8c)
 
 <!-- /TOC -->
 
@@ -33,6 +35,8 @@ tags: [rl recommendation, 强化学习 推荐, drn, slateq, topk off policy, dea
 [今日头条最新论文，首次改进DQN网络解决推荐中的在线广告投放问题](https://zhuanlan.zhihu.com/p/85417314)
 
 [Deep Reinforcement Learning for Online Advertising in Recommender Systems](https://arxiv.org/abs/1909.03602)
+
+### dear模型结构
 
 在给定推荐列表前提下，本文提出了一种基于DQN的创新架构来同时解决三个任务：
 
@@ -83,7 +87,7 @@ Q^{*}\left(s_{t}, a_{t}\right)=\mathbb{E}_{s_{t+1}}\left[r_{t}+\gamma \max _{a_{
 针对每一次迭代训练：
 
 + 针对用户请求构建状态`\(s_t=concat(p^{rec}_t,p^{ad}_t,c_t,rec_t)\)`；
-+ 根据off-policy `\(b(s_t)\)`执行action `\(a_t\)`，也就是选取特定ad；
++ 根据off-policy `\(b(s_t)\)`(即离线日志里的当前广告策略)执行action `\(a_t\)`，也就是选取特定ad；
 + 更新状态为`\(s_{t+1}\)`
 + 计算reward `\(r_t=r_t^{ad}+\alpha r_t^{ex}\)`；
 + 将状态转移信息`\((s_{t}，a_{t}，r_{t}，s_{t+1})\)`存储到replay buffer；
@@ -99,3 +103,14 @@ y=\left\{\begin{array}{ll}{r} & {\text { terminal } s^{\prime}} \\ {r+\gamma \ma
 <img src='../assets/off-policy-dear.png' style='max-height: 250px'/>
 <br/>
 </html>
+
+在线test：
+
+
+
+### dear实验
+
+100w的session，涉及到18w的user，1700w的自然结果视频，1000w的广告。
+
+平均每个session里有55个自然结果视频,55%的推荐列表里有广告，平均每个session的时长是17min。
+
