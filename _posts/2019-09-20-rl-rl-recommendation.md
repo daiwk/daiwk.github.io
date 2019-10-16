@@ -106,7 +106,16 @@ y=\left\{\begin{array}{ll}{r} & {\text { terminal } s^{\prime}} \\ {r+\gamma \ma
 
 在线test：
 
++ 得到状态`\(s_t=concat(p^{rec}_t,p^{ad}_t,c_t,rec_t)\)`；
++ 通过最优策略`\(Q^*(s_t,a_t)\)`执行动作`\(a_t\)`
++ 得到用户反馈的reward `\(r_t(s_t,a_t)\)`
++ 将状态从`\(s_t\)`更新到`\(s_{t+1}\)`
 
+<html>
+<br/>
+<img src='../assets/test-dear.png' style='max-height: 250px'/>
+<br/>
+</html>
 
 ### dear实验
 
