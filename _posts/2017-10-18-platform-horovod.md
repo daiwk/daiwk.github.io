@@ -18,6 +18,8 @@ tags: [horovod, ]
 
 [https://juejin.im/post/5cbc6dbd5188253236619ccb#heading-9](https://juejin.im/post/5cbc6dbd5188253236619ccb#heading-9)
 
+参考[[深度学习] 分布式Horovod介绍（四）](https://blog.csdn.net/zwqjoy/article/details/89552432)
+
 主页：
 
 [https://github.com/uber/horovod](https://github.com/uber/horovod)

@@ -9,24 +9,32 @@ tags: [tensorflow, 分布式, 部署]
 
 <!-- TOC -->
 
-- [单机多gpu](#单机多gpu)
-- [分布式多机多GPU训练](#分布式多机多gpu训练)
-    - [参数服务器](#参数服务器)
-    - [tensorflow的分布式](#tensorflow的分布式)
-        - [in-graph 模式](#in-graph-模式)
-        - [between-graph模式](#between-graph模式)
-    - [同步更新和异步更新](#同步更新和异步更新)
-- [replica_device_setter](#replica_device_setter)
-    - [round-robin模式：](#round-robin模式)
-    - [greedystrategy](#greedystrategy)
-    - [partition](#partition)
+- [单机多gpu](#%e5%8d%95%e6%9c%ba%e5%a4%9agpu)
+- [分布式多机多GPU训练](#%e5%88%86%e5%b8%83%e5%bc%8f%e5%a4%9a%e6%9c%ba%e5%a4%9agpu%e8%ae%ad%e7%bb%83)
+  - [参数服务器](#%e5%8f%82%e6%95%b0%e6%9c%8d%e5%8a%a1%e5%99%a8)
+  - [tensorflow的分布式](#tensorflow%e7%9a%84%e5%88%86%e5%b8%83%e5%bc%8f)
+    - [in-graph 模式](#in-graph-%e6%a8%a1%e5%bc%8f)
+    - [between-graph模式](#between-graph%e6%a8%a1%e5%bc%8f)
+  - [同步更新和异步更新](#%e5%90%8c%e6%ad%a5%e6%9b%b4%e6%96%b0%e5%92%8c%e5%bc%82%e6%ad%a5%e6%9b%b4%e6%96%b0)
+- [replica_device_setter](#replicadevicesetter)
+  - [round-robin模式：](#round-robin%e6%a8%a1%e5%bc%8f)
+  - [greedystrategy](#greedystrategy)
+  - [partition](#partition)
 - [Sessionis and servers](#sessionis-and-servers)
 - [fault tolerance](#fault-tolerance)
-    - [故障恢复](#故障恢复)
+  - [故障恢复](#%e6%95%85%e9%9a%9c%e6%81%a2%e5%a4%8d)
 
 <!-- /TOC -->
 
 参考[白话tensorflow分布式部署和开发](http://blog.csdn.net/luodongri/article/details/52596780)
+
+参考[[深度学习] 分布式模式介绍（一）](https://blog.csdn.net/zwqjoy/article/details/81013527)
+
+参考[[深度学习] 分布式Tensorflow 2.0 介绍（二）](https://blog.csdn.net/zwqjoy/article/details/89552866)
+
+参考[[深度学习] 分布式Pytorch 1.0介绍（三）](https://blog.csdn.net/zwqjoy/article/details/89415933)
+
+参考[[深度学习] 分布式Horovod介绍（四）](https://blog.csdn.net/zwqjoy/article/details/89552432)
 
 ## 单机多gpu
 
