@@ -114,15 +114,33 @@ tf为cpu和gpu提供了管理设备的对象接口，每一个对象负责**分�
 
 当节点分配设备的方案确定了，整个计算图就会被划分为多个子图，使用同一设备并相邻的节点会被划分到同一子图。然后图中的边，会被替换成一个发送节点（send node）和一个接收节点（receive node），以及一条从发送节点到接收节点的边。两个子图间可能有多个接收节点，如果这些接收节点接收的是同一个tensor，那么所有这些接收节点会被合成同一个节点。
 
-![](../assets/tf step by step/chap1/tf communication mechanism.png)
+<html>
+<br/>
+
+<img src='../assets/tf step by step/chap1/tf communication mechanism.png' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
 
 这样的通讯机制可以转化为发送节点和接收节点的实现问题，用户无须设计节点间的通信流程，可以用同一套代码自动扩展到不同硬件环境并处理复杂的通信流程。下图就是cpu和gpu间的通讯。
 
-![](../assets/tf step by step/chap1/cpu gpu communication.png)
+<html>
+<br/>
+
+<img src='../assets/tf step by step/chap1/cpu gpu communication.png' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
 
 代码层面，从单机单设备到单机多设备的修改，只要一行，就可以实现单gpu到多gpu的修改。
 
-![](../assets/tf step by step/chap1/code 1 gpu to multi gpu.png)
+<html>
+<br/>
+
+<img src='../assets/tf step by step/chap1/code 1 gpu to multi gpu.png' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
 
 #### 2.2.3 分布式通讯机制
 
@@ -134,7 +152,13 @@ tf为cpu和gpu提供了管理设备的对象接口，每一个对象负责**分�
 
 另，GPU集群和单GPU的加速比变化如图。少于16卡时，基本没性能损耗。50卡时，加速比40。100卡时，加速比达到56。
 
-![](../assets/tf step by step/chap1/gpu cluster accelerate.png)
+<html>
+<br/>
+
+<img src='../assets/tf step by step/chap1/gpu cluster accelerate.png' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
 
 ### 2.3 拓展功能
 
@@ -220,7 +244,13 @@ tf为cpu和gpu提供了管理设备的对象接口，每一个对象负责**分�
 
 **将一个mini-batch的数据放在不同设备上计算**，实现梯度计算的并行化。例如，将**1000条样本的mini-batch再拆成10个100样本的数据**并行计算，完成后将10份梯度数据合并得到最终梯度并更新到参数服务器（parameter server）。
 
-![](../assets/tf step by step/chap1/data parallel.png)
+<html>
+<br/>
+
+<img src='../assets/tf step by step/chap1/data parallel.png' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
 
 这样的操作**会产生许多完全一样的子图的副本**，在client上可以用一个线程同步控制这些副本的循环。当然，这个操作也可以改成异步的，多个线程控制梯度计算，每个线程计算完成后异步地更新模型参数。
 
@@ -230,11 +260,23 @@ tf为cpu和gpu提供了管理设备的对象接口，每一个对象负责**分�
 
 一般而言，同步训练的模型精度(纵轴)较好：
 
-![](../assets/tf step by step/chap1/data parallel performance.png)
+<html>
+<br/>
+
+<img src='../assets/tf step by step/chap1/data parallel performance.png' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
 
 10块gpu和50块gpu训练Inception的对比，可以发现，达到相同精度时，50块gpu需要的时间是10块的1/4左右。
 
-![](../assets/tf step by step/chap1/data parallel performance for Inception.png)
+<html>
+<br/>
+
+<img src='../assets/tf step by step/chap1/data parallel performance for Inception.png' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
 
 相比模型并行，数据并行的计算性能损耗非常小，尤其对于sparse的model。因为不同mini-batch间干扰的概率非常小，所以经常可以同时进行很多份（replicas）数据并行，甚至高达上千份。
 
@@ -246,13 +288,25 @@ tf为cpu和gpu提供了管理设备的对象接口，每一个对象负责**分�
 + 多GPU上限制主要在PCIe的带宽。
 + 多机间的限制主要在网络开销。
 
-![](../assets/tf step by step/chap1/model parallel.png)
+<html>
+<br/>
+
+<img src='../assets/tf step by step/chap1/model parallel.png' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
 
 #### 2.4.3 流水线并行
 
 和异步的数据并行很像，只不过是**在同一个硬件设备上实现并行**，大致思路是将计算做成流水线，在一个设备上连续并行，提高设备利用率。
 
-![](../assets/tf step by step/chap1/pipeline parallel.png)
+<html>
+<br/>
+
+<img src='../assets/tf step by step/chap1/pipeline parallel.png' style='max-height: 350px;max-width:500px'/>
+<br/>
+
+</html>
 
 未来，有如下规划：
 + 把任意子图独立出来，封装成一个函数，让不同的前端语言（python/c++）调用。从而可以将设计好的子图发布在社区中，便于分享。
