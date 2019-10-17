@@ -214,7 +214,7 @@ r\left(\boldsymbol{s}^{t}, a^{t}\right) :=\boldsymbol{v}^{\top} \sigma\left(\bol
 
 ## Cascading RL Policy for Recommendation
 
-推荐策略需要处理`\(\left(\begin{array}{l}{\mathcal{I}} \\ {k}\end{array}\right)\)`这么一个combinatorial action space，其中每个action是从有`\(K\)`个候选的大集合`\(\mathcal{I}\)`中挑选出`\(k\)`个item的子集。有两个挑战：
+推荐策略需要处理`\(\left(\begin{array}{l}{\mathcal{I}} \\ {k}\end{array}\right)\)`（组合数）这么一个combinatorial action space，其中每个action是从有`\(K\)`个候选的大集合`\(\mathcal{I}\)`中挑选出`\(k\)`个item的子集。有两个挑战：
 
 + 在combinatorial action space这个空间上的可能的很高的计算复杂度
 + 对某种item组合的长期reward(Q)的预估也需要一个复杂度较高的框架
@@ -223,6 +223,103 @@ r\left(\boldsymbol{s}^{t}, a^{t}\right) :=\boldsymbol{v}^{\top} \sigma\left(\bol
 
 用户的一次请求，系统需要从有`\(K\)`个候选的大集合`\(\mathcal{I}\)`中挑选出`\(k\)`个item的子集`\(\mathcal{A}\)`。
 
+最优的Q如下：
+
+`\[
+Q^{*}\left(s^{t}, \mathcal{A}^{t}\right)=\mathbb{E}\left[r\left(s^{t}, \mathcal{A}^{t}, a^{t}\right)+\gamma \max _{\mathcal{A}^{\prime} \subset \mathcal{I}} Q^{*}\left(s^{t+1}, \mathcal{A}^{\prime}\right)\right], a^{t} \in \mathcal{A}^{t}
+\]`
+
+而学到了这个最优的Q之后，最优的推荐策略就是：
+
+`\[
+\pi^{*}\left(\boldsymbol{s}^{t}, \mathcal{I}^{t}\right)=\arg \max _{\mathcal{A}^{t} \subset \mathcal{I}^{t}} Q^{*}\left(\boldsymbol{s}^{t}, \mathcal{A}^{t}\right)
+\]`
+
+其中，`\(\mathcal{I}^{t} \subset \mathcal{I}\)`是在`\(t\)`时候的item候选集合。挑战就是，组合数`\(\left(\begin{array}{l}{K} \\ {k}\end{array}\right)\)`是非常巨大的，即使是不大的K=1000, k=5，组合数也有1.6亿！。。而且，同一个item，在不同的组合里，被点击的概率也会因不同用户在不同时刻而不同。
+
+因此，本文用**不止一个Q函数**，而是使用**k个**相关的**Q函数**来进行建模。
+
+定义推荐的action为`\(\mathcal{A}=\left\{a_{1: k}\right\} \subset \mathcal{I}\)`，最优的action为`\(\mathcal{A}^{*}=\left\{a_{1: k}^{*}\right\}=\arg \max _{\mathcal{A}} Q^{*}(s, \mathcal{A})\)`。
+
+也就是说，给定一组当前推荐系统推荐的`\(a_1,...,a_k\)`，需要得到一组使得`\(Q^*(s,a_{1:k})\)`最大的最优的`\(a^*_1,...,a^*_k\)`。
+
+可以这么拆解，
+
++ 输入`\(s\)`和`\(a_1\)`，找到使得`\(Q^{1*}(s,a_1)\)`最大的动作`\(a_1^*\)`
++ 输入`\(s\)`和`\(a_1^*\)`还有`\(a_2\)`，找到使得`\(Q^{2*}(s,a_1^*,a_2)\)`最大的动作`\(a_2^*\)`
++ ...
++ 输入`\(s\)`和`\(a_{1:k-1}^*\)`还有`\(a_k\)`，找到使得`\(Q^{k*}(s,a_{1:k-1}^*,a_k)\)`最大的动作`\(a_k^*\)`
+
+其中，
+
++ 第一步的`\(Q^{1*}(s,a_1)\)`可以看成是`\(Q^*(s,a_{1:k})\)`当动作取`\(a_{2:k}\)`的时候取得最大值
++ 第二步的`\(Q^{2*}(s,a_1^*,a_2)\)`可以看成是`\(Q^*(s,a_{1:k})\)`当动作取`\(a_{3:k}\)`的时候取得最大值
++ ...
++ 第k步的`\(Q^{k*}(s,a_{1:k-1}^*,a_1)\)`可以看成是`\(Q^*(s,a_{1:k})\)`
+
+于是：
+
+`\[
+\begin{array}{l}{\text { Cascading Q-Networks: }} \\ {\qquad \begin{aligned} a_{1}^{*} &=\arg \max _{a_{1}}\left\{Q^{1 *}\left(s, a_{1}\right):=\max _{a_{2: k}} Q^{*}\left(s, a_{1: k}\right)\right\} \\ a_{2}^{*} &=\arg \max _{a_{2}}\left\{Q^{2 *}\left(s, a_{1}^{*}, a_{2}\right):=\max _{a_{3: k}} Q^{*}\left(s, a_{1: k}\right)\right\} \\ \cdots & \\ a_{k}^{*} &=\arg \max _{a_{k}}\left\{Q^{k *}\left(s, a_{1: k-1}^{*}, a_{k}\right):=Q^{*}\left(s, a_{1: k}\right)\right\} \end{aligned}}\end{array}
+\]`
+
+看ppt。。。
+
+<html>
+<br/>
+<img src='../assets/cdqn-decompose.png' style='max-height: 300px'/>
+<br/>
+</html>
+
+画成网络图就是：
+
+<html>
+<br/>
+<img src='../assets/cdqn-arch.png' style='max-height: 200px'/>
+<br/>
+</html>
+
 
 ### Parameterization and Estimation
 
+每一个`\(Q^{j*}\)`通过神经网络来定义：
+
+`\[
+\boldsymbol{q}_{j}^{\top} \sigma\left(\boldsymbol{L}_{j}\left[\boldsymbol{s}^{\top}, \boldsymbol{f}_{a_{i}}^{\top}, \ldots, \boldsymbol{f}_{a_{j-1}^{\prime}}^{\top}, \boldsymbol{f}_{a_{j}}^{\top}\right]^{\top}+\boldsymbol{c}_{j}\right), \forall j
+\]`
+
+其中，参数`\(\Theta_{j}\)`包括了`\(\boldsymbol{L}_{j} \in \mathbb{R}^{\ell \times(d n+d j)}\)`，`\(\boldsymbol{c}_{j} \in \mathbb{R}^{\ell}\)`，`\(\boldsymbol{q}_{j} \in \mathbb{R}^{\ell}\)`。
+
+这里的state和前面用户模型的是共享的，即
+
+`\[\boldsymbol{s}^{t}:=h\left(\boldsymbol{F}_{*}^{1: t-1}:=\left[\boldsymbol{f}_{*}^{1}, \cdots, \boldsymbol{f}_{*}^{t-1}\right]\right)\]`
+
+还有
+
+`\[
+\boldsymbol{s}^{t}=h\left(\boldsymbol{F}_{*}^{t-m: t-1}\right):=\operatorname{vec}\left[\sigma\left(\boldsymbol{F}_{*}^{t-m: t-1} \boldsymbol{W}+\boldsymbol{B}\right)\right]
+\]`
+
+理论上，结果要是最优的话，那么要求`\(Q^{j*}\)`恰好就是`\(Q^*\)`
+
+`\[
+Q^{j *}\left(s, a_{1}^{*}, \cdots, a_{j}^{*}\right)=Q^{*}\left(s, a_{1}^{*}, \cdots, a_{k}^{*}\right), \quad \forall j
+\]`
+
+但严格要求相等是很难的，作者做了如下近似。
+
+定义loss为：
+
+`\[
+\begin{array}{l}{\left(y-Q^{j}\right)^{2}, \text { where }} \\ {y=r\left(s^{t}, \mathcal{A}^{t}, a^{t}\right)+\gamma Q^{k}\left(s^{t+1}, a_{1: k}^{*} ; \Theta_{k}\right), \forall j}\end{array}
+\]`
+
+也就是说，所有的`\(Q^j\)`个网络都拟合**同一个目标y**。这样，参数`\(\Theta_{k}\)`就可以通过对上述loss进行梯度下降来更新了。
+
+整体的训练方法：
+
+<html>
+<br/>
+<img src='../assets/cdqn-train.png' style='max-height: 300px'/>
+<br/>
+</html>
