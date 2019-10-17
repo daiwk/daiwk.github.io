@@ -323,3 +323,71 @@ perf script -i perf.data > out.perf
 [https://github.com/google/sanitizers/wiki](https://github.com/google/sanitizers/wiki)
 
 [使用AddressSanitizer进行内存访问越界检查](https://blog.csdn.net/C_lazy/article/details/80009627)
+
+看看test_asan.cpp：
+
+```c++
+#include <stdlib.h>
+int main() {
+    char *x = (char*)malloc(10 * sizeof(char*));
+    free(x);
+    return x[5];
+}
+```
+
+然后，参考[https://tsdgeos.blogspot.com/2014/03/asan-and-gcc-how-to-get-line-numbers-in.html](https://tsdgeos.blogspot.com/2014/03/asan-and-gcc-how-to-get-line-numbers-in.html)，gcc要下面这样才能看到行号。。而clang可以直接看到行号。。
+
+```shell
+export ASAN_OPTIONS=symbolize=1
+/opt/compiler/gcc-4.8.2/bin/g++ -fsanitize=address -O1  -fno-omit-frame-pointer -g  ./test_asan.cpp 
+```
+
+然后运行：
+
+```
+=================================================================
+==202427== ERROR: AddressSanitizer: heap-use-after-free on address 0x600e0000dfb5 at pc 0x4008a3 bp 0x7fffb353a230 sp 0x7fffb353a228
+READ of size 1 at 0x600e0000dfb5 thread T0
+    #0 0x4008a2 in main /home/work/daiwenkai/workspaces/Useful_tools/./test_asan.cpp:5
+    #1 0x7efc7d1b6bd4 in __libc_start_main (/opt/compiler/gcc-4.8.2/lib/libc.so.6+0x21bd4)
+    #2 0x400748 in _start (/home/disk2/daiwenkai/workspaces/Useful_tools/a.out+0x400748)
+0x600e0000dfb5 is located 5 bytes inside of 80-byte region [0x600e0000dfb0,0x600e0000e000)
+freed by thread T0 here:
+    #0 0x7efc7dd734ba in __interceptor_free /opt/compiler/gcc-4.8.3-build-tmp/gcc-4.8.3/build_gcc/x86_64-baidu-linux-gnu/libsanitizer/asan/../../../../libsanitizer/asan/asan_malloc_linux.cc:61
+    #1 0x40087d in main /home/work/daiwenkai/workspaces/Useful_tools/./test_asan.cpp:4
+    #2 0x7efc7d1b6bd4 in __libc_start_main (/opt/compiler/gcc-4.8.2/lib/libc.so.6+0x21bd4)
+previously allocated by thread T0 here:
+    #0 0x7efc7dd7359a in malloc /opt/compiler/gcc-4.8.3-build-tmp/gcc-4.8.3/build_gcc/x86_64-baidu-linux-gnu/libsanitizer/asan/../../../../libsanitizer/asan/asan_malloc_linux.cc:71
+    #1 0x400872 in main /home/work/daiwenkai/workspaces/Useful_tools/./test_asan.cpp:3
+    #2 0x7efc7d1b6bd4 in __libc_start_main (/opt/compiler/gcc-4.8.2/lib/libc.so.6+0x21bd4)
+SUMMARY: AddressSanitizer: heap-use-after-free /home/work/daiwenkai/workspaces/Useful_tools/./test_asan.cpp:5 main
+Shadow bytes around the buggy address:
+  0x0c023fff9ba0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c023fff9bb0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c023fff9bc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c023fff9bd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c023fff9be0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c023fff9bf0: fa fa fa fa fa fa[fd]fd fd fd fd fd fd fd fd fd
+  0x0c023fff9c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c023fff9c10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c023fff9c20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c023fff9c30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c023fff9c40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:     fa
+  Heap righ redzone:     fb
+  Freed Heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+==202427== ABORTING
+```
