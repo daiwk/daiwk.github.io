@@ -391,3 +391,5 @@ Shadow byte legend (one shadow byte represents 8 application bytes):
   ASan internal:         fe
 ==202427== ABORTING
 ```
+
+可见，```test_asan.cpp:5```使用了```test_asan.cpp:4```就free掉的指针，而这个指针是在```test_asan.cpp:3```进行的内存分配。
