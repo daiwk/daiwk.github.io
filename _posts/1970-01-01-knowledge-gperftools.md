@@ -321,3 +321,5 @@ perf script -i perf.data > out.perf
 ## sanitizers
 
 [https://github.com/google/sanitizers/wiki](https://github.com/google/sanitizers/wiki)
+
+[使用AddressSanitizer进行内存访问越界检查](https://blog.csdn.net/C_lazy/article/details/80009627)
