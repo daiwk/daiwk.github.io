@@ -214,14 +214,15 @@ r\left(\boldsymbol{s}^{t}, a^{t}\right) :=\boldsymbol{v}^{\top} \sigma\left(\bol
 
 ## Cascading RL Policy for Recommendation
 
-推荐策略需要处理`\(\left(\begin{array}{l}{\mathcal{I}} \\ {k}\end{array}\right)\)`这么一个combinatorial action space，其中每个action是从有`\(k\)`个候选的大集合`\(\mathcal{I}\)`中。有两个挑战：
+推荐策略需要处理`\(\left(\begin{array}{l}{\mathcal{I}} \\ {k}\end{array}\right)\)`这么一个combinatorial action space，其中每个action是从有`\(K\)`个候选的大集合`\(\mathcal{I}\)`中挑选出`\(k\)`个item的子集。有两个挑战：
 
 + 在combinatorial action space这个空间上的可能的很高的计算复杂度
-+ 对某种item组合的长期reward的预估也需要一个复杂度较高的框架
-
-xxx
++ 对某种item组合的长期reward(Q)的预估也需要一个复杂度较高的框架
 
 ### Cascading Q-Networks
+
+用户的一次请求，系统需要从有`\(K\)`个候选的大集合`\(\mathcal{I}\)`中挑选出`\(k\)`个item的子集`\(\mathcal{A}\)`。
+
 
 ### Parameterization and Estimation
 
