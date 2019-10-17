@@ -324,6 +324,8 @@ perf script -i perf.data > out.perf
 
 [使用AddressSanitizer进行内存访问越界检查](https://blog.csdn.net/C_lazy/article/details/80009627)
 
+[https://github.com/google/sanitizers/wiki/AddressSanitizer](https://github.com/google/sanitizers/wiki/AddressSanitizer)
+
 看看test_asan.cpp：
 
 ```c++
@@ -340,6 +342,7 @@ int main() {
 ```shell
 export ASAN_OPTIONS=symbolize=1
 /opt/compiler/gcc-4.8.2/bin/g++ -fsanitize=address -O1  -fno-omit-frame-pointer -g  ./test_asan.cpp 
+./a.out
 ```
 
 然后运行：
