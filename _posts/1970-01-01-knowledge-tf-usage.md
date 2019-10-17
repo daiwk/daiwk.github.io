@@ -13,6 +13,7 @@ tags: [tf, ]
 - [特征相关](#%e7%89%b9%e5%be%81%e7%9b%b8%e5%85%b3)
 - [estimator相关](#estimator%e7%9b%b8%e5%85%b3)
 - [基本函数](#%e5%9f%ba%e6%9c%ac%e5%87%bd%e6%95%b0)
+  - [tf.segment_sum](#tfsegmentsum)
   - [tf.truncated-normal](#tftruncated-normal)
   - [tf.reduce-*](#tfreduce)
 - [tf.nn](#tfnn)
@@ -62,6 +63,28 @@ tf.summary.scalar('avg-loss', loss / flags_obj.batch_size)
 ```
 
 ## 基本函数
+
+### tf.segment_sum
+
+[https://www.w3cschool.cn/tensorflow_python/tensorflow_python-ua7w2jip.html](https://www.w3cschool.cn/tensorflow_python/tensorflow_python-ua7w2jip.html)
+
+<html>
+<br/>
+<img src='../assets/tf_segment_add.png' style='max-height: 100px'/>
+<br/>
+</html>
+
+```python
+import tensorflow as tf
+
+with tf.Session() as ss: 
+    c = tf.constant([[9,29, 30,4], [4, 3, 2, 1], [5,6,7,8]])
+    y = tf.segment_sum(c, tf.constant([0, 0, 1]))
+    print ss.run(y)
+    # [[13 32 32  5]
+    # [ 5  6  7  8]]
+```
+
 
 ### tf.truncated-normal
 
