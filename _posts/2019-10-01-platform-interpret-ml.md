@@ -2,7 +2,7 @@
 layout: post
 category: "platform"
 title: "InterpretML"
-tags: [InterpretML, LIME, H2O, ]
+tags: [InterpretML, LIME, H2O, 可解释性, ]
 ---
 
 目录
@@ -30,6 +30,8 @@ InterpretML 是一个为实践者和研究者提供机器学习可解释性算�
 参考[吐血整理！绝不能错过的24个顶级Python库](https://zhuanlan.zhihu.com/p/76112940)
 
 ### LIME
+
+[“Why Should I Trust You?” Explaining the Predictions of Any Classifier](https://arxiv.org/pdf/1602.04938.pdf)
 
 [https://github.com/marcotcr/lime](https://github.com/marcotcr/lime)
 

@@ -336,6 +336,7 @@ https://daiwk.github.io/posts/dl-youtube-multitask.html
 https://daiwk.github.io/posts/dl-hichnet.html
 https://daiwk.github.io/posts/nlp-numnet-plus.html
 https://daiwk.github.io/posts/platform-cortex.html
+https://daiwk.github.io/posts/video-video-caption.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-gnn.html
 https://daiwk.github.io/posts/links-navigation-nlp.html
