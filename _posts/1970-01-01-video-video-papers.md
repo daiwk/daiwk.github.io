@@ -2,7 +2,7 @@
 layout: post
 category: "video"
 title: "视频相关paper"
-tags: [video, 视频]
+tags: [video, 视频, tcc, ]
 ---
 
 目录
@@ -12,6 +12,7 @@ tags: [video, 视频]
 - [视频分类](#%e8%a7%86%e9%a2%91%e5%88%86%e7%b1%bb)
 - [视频表示学习](#%e8%a7%86%e9%a2%91%e8%a1%a8%e7%a4%ba%e5%ad%a6%e4%b9%a0)
   - [Dense Predictive Coding](#dense-predictive-coding)
+  - [TCC](#tcc)
 - [应用](#%e5%ba%94%e7%94%a8)
 
 <!-- /TOC -->
@@ -60,6 +61,17 @@ style transfer: AdaIN(自适应示例正则化)，两个目标：纹理一致性
 文中的设计促使网络学习高层语义特征，避免了网络拘泥于学习低层特征。作者在不带标注的 Kinetics400 上训练了自监督任务（Dense Predictive Coding），然后在 UCF101 和 HMDB51 上测试了网络所学权重在动作识别上的正确率。
 
 Dense Predictive Coding 在 UCF101 数据集上获得了 75.7% 的 top1 正确率，超过了使用带标注的 ImageNet 预训练权重所获得的 73.0% 正确率。该研究结果证明了大规模自监督学习在视频分类上的有效性。
+
+### TCC
+
+[使用时间循环一致性学习 (TCC) 理解视频内容](https://mp.weixin.qq.com/s/xocs_UI5HzgFZtTPWABRKw)
+
+[Temporal Segment Networks: Towards Good Practices for Deep Action Recognition](https://arxiv.org/abs/1608.00859)
+
+[https://sites.google.com/view/temporal-cycle-consistency/home](https://sites.google.com/view/temporal-cycle-consistency/home)
+
+[https://github.com/google-research/google-research/tree/master/tcc](https://github.com/google-research/google-research/tree/master/tcc)
+
 
 ## 应用
 

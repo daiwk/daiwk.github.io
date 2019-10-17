@@ -2,7 +2,7 @@
 layout: post
 category: "cv"
 title: "cnn模型们"
-tags: [cnn, sota, imagenet, kornia, simplecv, Adaptively Connected Neural Networks, acnet, ]
+tags: [cnn, sota, imagenet, kornia, simplecv, Adaptively Connected Neural Networks, acnet, torchcv, ]
 ---
 
 目录
@@ -18,6 +18,7 @@ tags: [cnn, sota, imagenet, kornia, simplecv, Adaptively Connected Neural Networ
   - [simplecv](#simplecv)
   - [kornia](#kornia)
 - [ACNet](#acnet)
+- [torchcv](#torchcv)
 
 <!-- /TOC -->
 
@@ -104,3 +105,9 @@ SimpleCV，一个开源框架，允许你构建计算机视觉应用程序。它
 [https://github.com/wanggrun/Adaptively-Connected-Neural-Networks](https://github.com/wanggrun/Adaptively-Connected-Neural-Networks)
 
 [https://zhuanlan.zhihu.com/p/84205427](https://zhuanlan.zhihu.com/p/84205427)
+
+## torchcv
+
+[基于PyTorch的CV模型框架，北大学生出品TorchCV](https://mp.weixin.qq.com/s/nzbo52Gi43MmO92_rBerng)
+
+[https://github.com/donnyyou/torchcv](https://github.com/donnyyou/torchcv)

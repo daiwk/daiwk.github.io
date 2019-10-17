@@ -2,23 +2,24 @@
 layout: post
 category: "knowledge"
 title: "cpu、内存问题排查（gperftools、valgrind、perf等）"
-tags: [gperftools, perf, 火焰图, valgrind, ]
+tags: [gperftools, perf, 火焰图, valgrind, sanitizers, ]
 ---
 
 目录
 
 <!-- TOC -->
 
-- [内存泄漏](#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F)
-- [常用工具](#%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7)
-  - [gperftools的功能支持](#gperftools%E7%9A%84%E5%8A%9F%E8%83%BD%E6%94%AF%E6%8C%81)
-  - [gperf安装](#gperf%E5%AE%89%E8%A3%85)
-  - [gperf示例（c++）](#gperf%E7%A4%BA%E4%BE%8Bc)
-  - [gperf示例（python）](#gperf%E7%A4%BA%E4%BE%8Bpython)
-  - [valgrind示例](#valgrind%E7%A4%BA%E4%BE%8B)
-  - [perf+火焰图](#perf%E7%81%AB%E7%84%B0%E5%9B%BE)
-    - [火焰图工具](#%E7%81%AB%E7%84%B0%E5%9B%BE%E5%B7%A5%E5%85%B7)
+- [内存泄漏](#%e5%86%85%e5%ad%98%e6%b3%84%e6%bc%8f)
+- [常用工具](#%e5%b8%b8%e7%94%a8%e5%b7%a5%e5%85%b7)
+  - [gperftools的功能支持](#gperftools%e7%9a%84%e5%8a%9f%e8%83%bd%e6%94%af%e6%8c%81)
+  - [gperf安装](#gperf%e5%ae%89%e8%a3%85)
+  - [gperf示例（c++）](#gperf%e7%a4%ba%e4%be%8bc)
+  - [gperf示例（python）](#gperf%e7%a4%ba%e4%be%8bpython)
+  - [valgrind示例](#valgrind%e7%a4%ba%e4%be%8b)
+  - [perf+火焰图](#perf%e7%81%ab%e7%84%b0%e5%9b%be)
+    - [火焰图工具](#%e7%81%ab%e7%84%b0%e5%9b%be%e5%b7%a5%e5%85%b7)
     - [perf](#perf)
+- [sanitizers](#sanitizers)
 
 <!-- /TOC -->
 
@@ -316,3 +317,7 @@ perf script -i perf.data > out.perf
 <img src='../assets/flame-perf.png' style='max-height: 250px'/>
 <br/>
 </html>
+
+## sanitizers
+
+[https://github.com/google/sanitizers/wiki](https://github.com/google/sanitizers/wiki)

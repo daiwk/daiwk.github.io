@@ -14,6 +14,8 @@ tags: [dlrm, facebook,  ]
 
 参考[想知道Facebook怎样做推荐？FB开源深度学习推荐模型](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650765233&idx=4&sn=3542b0b86ec78a81fef75feb39f2dfac&chksm=871ab3cfb06d3ad9999ed019ae623fff59db8ea77881bfc908f3d41432e8d7c9f0d56b7b58c6&scene=0&xtrack=1&pass_ticket=g0RhlU91yTm4YwdL6HxxS6fDU%2FNvWsf8uqd5BGk9%2Fewn4u2UU5gMclDp6uVTk%2Bm3#rd)
 
+参考[Facebook 面向个性化推荐系统的深度学习推荐模型](https://mp.weixin.qq.com/s/7YuLBli0_pz7eE4I6PpbyQ)
+
 [https://github.com/facebookresearch/dlrm](https://github.com/facebookresearch/dlrm)
 
 [Deep Learning Recommendation Model for Personalization and Recommendation Systems](https://arxiv.org/abs/1906.00091)

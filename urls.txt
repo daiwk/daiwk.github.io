@@ -157,7 +157,6 @@ https://daiwk.github.io/posts/dl-normalization.html
 https://daiwk.github.io/posts/nlp-squad.html
 https://daiwk.github.io/posts/platform-pytorch-anniversary.html
 https://daiwk.github.io/posts/nlp-2017-nlp-papers.html
-https://daiwk.github.io/posts/cv-2017-cv-papers.html
 https://daiwk.github.io/posts/cv-cv-papers.html
 https://daiwk.github.io/posts/dl-capsules.html
 https://daiwk.github.io/posts/rl-defend-adversarial-samples.html
@@ -334,6 +333,9 @@ https://daiwk.github.io/posts/nlp-nlp-gnn.html
 https://daiwk.github.io/posts/platform-mlir.html
 https://daiwk.github.io/posts/dl-ngboost.html
 https://daiwk.github.io/posts/dl-youtube-multitask.html
+https://daiwk.github.io/posts/dl-hichnet.html
+https://daiwk.github.io/posts/nlp-numnet-plus.html
+https://daiwk.github.io/posts/platform-cortex.html
 https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/links-navigation-gnn.html
 https://daiwk.github.io/posts/links-navigation-nlp.html

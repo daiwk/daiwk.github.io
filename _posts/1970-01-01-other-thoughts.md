@@ -30,6 +30,10 @@ tags: [thoughts, nature, ]
 
 [面对谷歌，Facebook 是如何赢得「社交保卫战」的？ \| 36氪领读](https://mp.weixin.qq.com/s/3ioUTLGpyylDny2u_o6g3w)
 
+[汤晓鸥纵论商汤AR：AI驱动发力已超3年，落地多个场景](https://mp.weixin.qq.com/s/cE1P2tWXAtoZ_6zKsBE0BQ)
+
+[字节跳动的敌人只有时间](https://36kr.com/p/5237300)
+
 ## nature文章
 
 [https://www.nature.com/articles/d41586-019-03013-5](https://www.nature.com/articles/d41586-019-03013-5)

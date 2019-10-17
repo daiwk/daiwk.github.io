@@ -2,7 +2,7 @@
 layout: post
 category: "rl"
 title: "强化学习进展（持续更新）"
-tags: [强化学习, 进展, ]
+tags: [强化学习, 进展, 迁移学习,]
 ---
 
 目录
@@ -14,6 +14,7 @@ tags: [强化学习, 进展, ]
 - [Evolution Strategies as a Scalable Alternative to Reinforcement Learning](#evolution-strategies-as-a-scalable-alternative-to-reinforcement-learning)
 - [模拟器相关](#%e6%a8%a1%e6%8b%9f%e5%99%a8%e7%9b%b8%e5%85%b3)
 - [代码库](#%e4%bb%a3%e7%a0%81%e5%ba%93)
+- [迁移学习+强化学习](#%e8%bf%81%e7%a7%bb%e5%ad%a6%e4%b9%a0%e5%bc%ba%e5%8c%96%e5%ad%a6%e4%b9%a0)
 
 <!-- /TOC -->
 
@@ -64,3 +65,7 @@ blog：[https://openai.com/blog/evolution-strategies/](https://openai.com/blog/e
 [https://github.com/p-christ/Deep-Reinforcement-Learning-Algorithms-with-PyTorch](https://github.com/p-christ/Deep-Reinforcement-Learning-Algorithms-with-PyTorch)
 
 参考[17种深度强化学习算法用Pytorch实现](https://mp.weixin.qq.com/s/BtNH2_s4l1Kcwe82y-oEkA)
+
+## 迁移学习+强化学习
+
+[八千字长文深度解读，迁移学习在强化学习中的应用及最新进展](https://mp.weixin.qq.com/s/Rj55EoopzlR71DZ5XrvH_w)

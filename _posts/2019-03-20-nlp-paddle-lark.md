@@ -426,6 +426,8 @@ HuggingFace 在 GitHub 上表示，他们有意将这些模型放到移动设备
 
 ### albert中文
 
+[超小型BERT中文版横空出世！模型只有16M，训练速度提升10倍](https://mp.weixin.qq.com/s/eVlNpejrxdE4ctDTBM-fiA)
+
 [https://github.com/brightmart/albert_zh](https://github.com/brightmart/albert_zh)
 
 ### xlnet中文

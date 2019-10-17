@@ -9,10 +9,20 @@ tags: [机器学习中的矩阵、向量求导, ]
 
 <!-- TOC -->
 
-- [常用梯度](#%E5%B8%B8%E7%94%A8%E6%A2%AF%E5%BA%A6)
-  - [交叉熵](#%E4%BA%A4%E5%8F%89%E7%86%B5)
+- [数学基础](#数学基础)
+- [矩阵、向量求导](#矩阵向量求导)
+- [常用梯度](#常用梯度)
+    - [交叉熵](#交叉熵)
 
 <!-- /TOC -->
+
+## 数学基础
+
+[【资源】机器学习数学全书，1900页PDF下载](https://mp.weixin.qq.com/s/v1OMpDUaGqVA5gyoculeuQ)
+
+[https://www.cis.upenn.edu/~jean/math-deep.pdf](https://www.cis.upenn.edu/~jean/math-deep.pdf)
+
+## 矩阵、向量求导
 
 参考[机器之心最干的文章：机器学习中的矩阵、向量求导](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650737481&idx=1&sn=10e82e52991eb87170e22109857c3dec&chksm=871acf37b06d4621aabc409f95c72f935670c8595f274d62bf5283fdf275f052f29b73c27ab0&mpshare=1&scene=1&srcid=0207pDzvA7Kk5C3JAPj19P1a&pass_ticket=SeHiwrhprfhEeBDsE1XoKKgiqXKD0hs5Oyunmf09XE%2BrWYKA98pvhGxAVGX75FF1#rd)
 
