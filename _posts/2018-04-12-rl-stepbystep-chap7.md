@@ -38,7 +38,7 @@ U(\theta) = E(\sum^{H}_{t=0}R(s_t,u_t);\pi_{\theta})=\sum_{\tau}P(\tau;\theta)R(
 
 `\[
 \begin{split}
-\\\\triangledown _{\theta}(U_{\theta})&=1
+\\\triangledown _{\theta}(U_{\theta})&=1
 \\&=2
 \\&=3
 \\&=4
