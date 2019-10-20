@@ -54,6 +54,28 @@ U(\theta) = E(\sum^{H}_{t=0}R(s_t,u_t);\pi_{\theta})=\sum_{\tau}P(\tau;\theta)R(
 \triangledown _{\theta}(U_{\theta})\approx \frac{1}{m}\sum_{i=1}^{m}\triangledown_{\theta}\log P(\tau_i;\theta)R(\tau_i)
 \]`
 
+也从另一个角度来证明，因为`\(R(\tau)\)`和`\(\theta\)`无关，所以其实也可以这么看：
+
+`\[
+\triangledown_{\theta}\log P(\tau;\theta)=\frac{1}{P(\tau;\theta)}\triangledown_{\theta}P(\tau;\theta)
+\]`
+
+所以，
+
+`\[
+\triangledown_{\theta}P(\tau;\theta)=P(\tau;\theta)\triangledown_{\theta}\log P(\tau;\theta)
+\]`
+
+所以
+
+`\[
+\begin{split}
+\\ \triangledown _{\theta}(U_{\theta})&=\triangledown_{\theta}\sum_{\tau}P(\tau;\theta)R(\tau)
+\\&=\sum_{\tau}[\triangledown_{\theta}P(\tau;\theta)]R(\tau)
+\\&=\sum_{\tau} [P(\tau;\theta)\triangledown_{\theta}\log P(\tau;\theta)]R(\tau)
+\end{split}
+\]`  
+
 ### 重要性采样的角度
 
 暂时略
