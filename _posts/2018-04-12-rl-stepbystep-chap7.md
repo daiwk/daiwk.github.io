@@ -38,10 +38,11 @@ U(\theta) = E(\sum^{H}_{t=0}R(s_t,u_t);\pi_{\theta})=\sum_{\tau}P(\tau;\theta)R(
 
 `\[
 \begin{split}
-\\\triangledown _{\theta}(U_{\theta})&=1
-\\&=2
-\\&=3
-\\&=4
+\\ \triangledown _{\theta}(U_{\theta})&=\triangledown_{\theta}\sum_{\tau}P(\tau;\theta)R(\tau)
+\\&=\sum_{\tau}\triangledown_{\theta}P(\tau;\theta)R(\tau)
+\\&=\sum_{\tau} \frac{P(\tau;\theta)R(\tau)}{P(\tau;\theta)R(\tau)} \triangledown_{\theta}P(\tau;\theta)R(\tau)
+\\&=\sum_{\tau} P(\tau;\theta)\frac{\triangledown_{\theta}P(\tau;\theta)R(\tau)}{P(\tau;\theta)R(\tau)}
+\\&=\sum_{\tau} P(\tau;\theta)\triangledown_{\theta}\log P(\tau;\theta)R(\tau)
 \end{split}
 \]`
 
