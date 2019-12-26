@@ -47,6 +47,7 @@ tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, vilbert, xlm, laser
 - [bert的一些常见问题](#bert%e7%9a%84%e4%b8%80%e4%ba%9b%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98)
   - [为什么不用hierarchical softmax](#%e4%b8%ba%e4%bb%80%e4%b9%88%e4%b8%8d%e7%94%a8hierarchical-softmax)
 - [对数字的认知](#%e5%af%b9%e6%95%b0%e5%ad%97%e7%9a%84%e8%ae%a4%e7%9f%a5)
+- [与rl的结合](#%e4%b8%8erl%e7%9a%84%e7%bb%93%e5%90%88)
 
 <!-- /TOC -->
 
@@ -528,3 +529,11 @@ hierarchical softmax是softmax的近似，suboptimal的。当如今计算资源�
 [嵌入向量能否理解数字？BERT竟不如ELMo？](https://mp.weixin.qq.com/s/yXssWoPY1glr8q5jWMCpvw)
 
 [Do NLP Models Know Numbers? Probing Numeracy in Embeddings](https://arxiv.org/pdf/1909.07940.pdf)
+
+## 与rl的结合
+
+[7 Papers \| 微信团队等NumNet论文；神经算术逻辑单元评价方法；将量子电路转为机器学习模型](https://mp.weixin.qq.com/s/C06ccuhS00L9BvAgsbyEMw)
+
+[Stabilizing Transformers for Reinforcement Learning](https://arxiv.org/abs/1910.06764)
+
+得益于预训练语言模型强大的能力，这些模型近来在 NLP 任务上取得了一系列的成功。这需要归功于使用了 transformer 架构。但是在强化学习领域，transformer 并没有表现出同样的能力。本文说明了为什么标准的 transformer 架构很难在强化学习中优化。研究者同时提出了一种架构，可以很好地提升 transformer 架构和变体的稳定性，并加速学习。研究者将提出的架构命名为 Gated Transformer-XL (GTrXL)，该架构可以超过 LSTM，在多任务学习 DMLab-30 基准上达到 SOTA 的水平。

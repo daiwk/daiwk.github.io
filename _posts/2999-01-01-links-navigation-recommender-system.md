@@ -57,6 +57,7 @@ tags: [推荐系统, ]
 - [一些思考](#%e4%b8%80%e4%ba%9b%e6%80%9d%e8%80%83)
 - [social recomendation](#social-recomendation)
 - [RSGAN](#rsgan)
+- [pe-ltr](#pe-ltr)
 
 <!-- /TOC -->
 
@@ -383,3 +384,9 @@ paperweekly的[RecSys 2019最佳论文：基于深度学习的推荐系统是否
 ## RSGAN
 
 参考[https://daiwk.github.io/posts/dl-rsgan.html](https://daiwk.github.io/posts/dl-rsgan.html)
+
+## pe-ltr
+
+[阿里提出多目标优化全新算法框架，同时提升电商GMV和CTR](https://mp.weixin.qq.com/s/JXW--wzpaFwRHSSvZEA0mg)
+
+[A pareto-efficient algorithm for multiple objective optimization in e-commerce recommendation](https://dl.acm.org/citation.cfm?id=3346998)
