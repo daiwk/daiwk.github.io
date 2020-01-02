@@ -27,6 +27,7 @@ https://daiwk.github.io/posts/knowledge-stack-heap-core.html
 https://daiwk.github.io/posts/knowledge-testing-tools.html
 https://daiwk.github.io/posts/knowledge-tf-install.html
 https://daiwk.github.io/posts/knowledge-tf-usage.html
+https://daiwk.github.io/posts/knowledge-tmp-mark.html
 https://daiwk.github.io/posts/knowledge-url.html
 https://daiwk.github.io/posts/ml-active-learning.html
 https://daiwk.github.io/posts/ml-few-shot-learning.html
