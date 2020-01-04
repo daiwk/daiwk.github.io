@@ -9,28 +9,45 @@ tags: [合辑, ]
 
 <!-- TOC -->
 
-- [基础研究](#%e5%9f%ba%e7%a1%80%e7%a0%94%e7%a9%b6)
-  - [优化方法](#%e4%bc%98%e5%8c%96%e6%96%b9%e6%b3%95)
-  - [调参](#%e8%b0%83%e5%8f%82)
-  - [新的结构](#%e6%96%b0%e7%9a%84%e7%bb%93%e6%9e%84)
-    - [NALU](#nalu)
+- [基础研究](#基础研究)
+    - [优化方法](#优化方法)
+    - [调参](#调参)
+    - [新的结构](#新的结构)
+        - [NALU](#nalu)
 - [CV](#cv)
-  - [cnn优化](#cnn%e4%bc%98%e5%8c%96)
-  - [sota-cv](#sota-cv)
-    - [半弱监督](#%e5%8d%8a%e5%bc%b1%e7%9b%91%e7%9d%a3)
+    - [cnn优化](#cnn优化)
+    - [sota-cv](#sota-cv)
+        - [半弱监督](#半弱监督)
 - [NLP](#nlp)
-  - [sota-nlp](#sota-nlp)
-  - [对话](#%e5%af%b9%e8%af%9d)
-    - [convai](#convai)
-- [多目标](#%e5%a4%9a%e7%9b%ae%e6%a0%87)
-- [推荐](#%e6%8e%a8%e8%8d%90)
+    - [标准](#标准)
+    - [bert变种](#bert变种)
+        - [gated transformer-xl](#gated-transformer-xl)
+        - [bert蒸馏、量化、剪枝](#bert蒸馏量化剪枝)
+    - [对话](#对话)
+        - [convai](#convai)
+- [语音](#语音)
+    - [中文语音识别](#中文语音识别)
+- [视频](#视频)
+    - [快手相关工作](#快手相关工作)
+        - [EIUM：讲究根源的快手短视频推荐](#eium讲究根源的快手短视频推荐)
+        - [Comyco：基于质量感知的码率自适应策略](#comyco基于质量感知的码率自适应策略)
+        - [Livesmart：智能CDN调度](#livesmart智能cdn调度)
+    - [google](#google)
+- [多目标](#多目标)
+- [推荐](#推荐)
 - [ctr](#ctr)
-  - [传统ctr](#%e4%bc%a0%e7%bb%9fctr)
-  - [深度学习ctr](#%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0ctr)
+    - [传统ctr](#传统ctr)
+    - [深度学习ctr](#深度学习ctr)
 - [GNN](#gnn)
-  - [开源图计算平台](#%e5%bc%80%e6%ba%90%e5%9b%be%e8%ae%a1%e7%ae%97%e5%b9%b3%e5%8f%b0)
 - [RL](#rl)
-- [压缩与部署](#%e5%8e%8b%e7%bc%a9%e4%b8%8e%e9%83%a8%e7%bd%b2)
+- [压缩与部署](#压缩与部署)
+- [架构](#架构)
+    - [TensorRT](#tensorrt)
+    - [开源gnn平台](#开源gnn平台)
+- [课程资源](#课程资源)
+    - [无监督](#无监督)
+    - [tf2.0](#tf20)
+- [其他](#其他)
 
 <!-- /TOC -->
 
@@ -78,13 +95,25 @@ Facebook将该方法称为“半弱监督”(semi-weak supervision)，是结合�
 
 ## NLP
 
+### 标准
+
+[ChineseGLUE：为中文NLP模型定制的自然语言理解基准](https://mp.weixin.qq.com/s/14XQqFcLG1wMyB2tMABsCA)
+
+===here
+
+### bert变种
+
+#### gated transformer-xl
+
 [Stabilizing Transformers for Reinforcement Learning](https://arxiv.org/abs/1910.06764)
 
 摘要：得益于预训练语言模型强大的能力，这些模型近来在 NLP 任务上取得了一系列的成功。这需要归功于使用了 transformer 架构。但是在强化学习领域，transformer 并没有表现出同样的能力。本文说明了为什么标准的 transformer 架构很难在强化学习中优化。研究者同时提出了一种架构，可以很好地提升 transformer 架构和变体的稳定性，并加速学习。研究者将提出的架构命名为 Gated Transformer-XL (GTrXL)，该架构可以超过 LSTM，在多任务学习 DMLab-30 基准上达到 SOTA 的水平。
 
 推荐：本文是 DeepMind 的一篇论文，将强化学习和 Transformer 结合是一种新颖的方法，也许可以催生很多相关的交叉研究。
 
-### sota-nlp
+#### bert蒸馏、量化、剪枝
+
+[BERT 瘦身之路：Distillation，Quantization，Pruning](https://mp.weixin.qq.com/s/ir3pLRtIaywsD94wf9npcA)
 
 ### 对话
 
@@ -96,7 +125,41 @@ Facebook将该方法称为“半弱监督”(semi-weak supervision)，是结合�
 
 [https://github.com/huggingface/transfer-learning-conv-ai](https://github.com/huggingface/transfer-learning-conv-ai)
 
-====here
+## 语音
+
+### 中文语音识别
+
+[实战：基于tensorflow 的中文语音识别模型 | CSDN博文精选](https://mp.weixin.qq.com/s/rf6X5Iz4IOVtTdT8qVSi4Q)
+
+## 视频
+
+### 快手相关工作
+
+[AI碰撞短视频，从推荐到直播，快手探索了这些ML新思路](https://mp.weixin.qq.com/s/Wn-5VD2-YWwVUWCMEy-lvw)
+
+视频推荐、内容分发优化、视频码率优化这三方面探索提升快手视频体验的新方案。
+
+#### EIUM：讲究根源的快手短视频推荐
+
+[Explainable Interaction-driven User Modeling over Knowledge Graph for Sequential Recommendation](https://dl.acm.org/citation.cfm?id=3350893)
+
+#### Comyco：基于质量感知的码率自适应策略
+
+[Comyco: Quality-aware Adaptive Video Streaming via Imitation Learning](https://dl.acm.org/citation.cfm?id=3351014)
+
+#### Livesmart：智能CDN调度
+
+[Livesmart: a QoS-Guaranteed Cost-Minimum Framework of Viewer Scheduling for Crowdsourced Live Streaming](https://dl.acm.org/citation.cfm?id=3351013)
+
+### google
+
+[通过未标记视频进行跨模态时间表征学习](https://mp.weixin.qq.com/s/5qC70NoTBQ95vjI4cGl66g)
+
+两篇：
+
+[VideoBERT: A Joint Model for Video and Language Representation Learning](https://arxiv.org/abs/1904.01766)，VideoBert模型。
+
+[Contrastive Bidirectional Transformer for Temporal Representation Learning](https://arxiv.org/abs/1906.05743)，CBT模型。
 
 ## 多目标
 
@@ -118,9 +181,7 @@ Facebook将该方法称为“半弱监督”(semi-weak supervision)，是结合�
 
 ## GNN
 
-### 开源图计算平台
 
-[https://daiwk.github.io/posts/platform-gnn-frameworks.html](https://daiwk.github.io/posts/platform-gnn-frameworks.html)
 
 
 ## RL
@@ -133,3 +194,50 @@ Facebook将该方法称为“半弱监督”(semi-weak supervision)，是结合�
 
 推荐：本文是谷歌大脑的一篇论文，通过图网络的方法帮助将模型部署在合适的设备上。推荐收到硬件设备限制，需要找到合适部署图的方法的读者参考。
 
+[ICCV 2019 提前看 | 三篇论文，解读神经网络压缩](https://mp.weixin.qq.com/s/86A9kZkl_sQ1GrHMJ6NWpA)
+
++ [MetaPruning: Meta Learning for Automatic Neural Network Channel Pruning](https://arxiv.org/abs/1903.10258)
+
+旷视。近年来，有研究表明无论是否保存了原始网络的权值，剪枝网络都可以达到一个和原始网络相同的准确率。因此，通道剪枝的本质是逐层的通道数量，也就是网络结构。鉴于此项研究，Metapruning 决定直接保留裁剪好的通道结构，区别于剪枝的裁剪哪些通道。
+
+本文提出来一个 Meta network，名为 PruningNet，可以生成所有候选的剪枝网络的权重，并直接在验证集上评估，有效的搜索最佳结构。
+
++ [Data-Free Learning of Student Networks](https://arxiv.org/abs/1904.01186v1)
+
+该篇论文是华为提出的一篇蒸馏方向的论文，其主要的创新点是提出的蒸馏过程不需要原始训练数据的参与。
+
++ [Correlation Congruence for Knowledge Distillation](https://arxiv.org/abs/1904.01802)
+
+这篇论文是由商汤提出的一篇蒸馏方向论文，其主要的亮点在于研究样本之间的相关性，利用这种相关性作为蒸馏的知识输出。
+
+
+## 架构
+
+### TensorRT
+
+[手把手教你采用基于TensorRT的BERT模型实现实时自然语言理解](https://mp.weixin.qq.com/s/rvoelBO-XjbswxQigH-6TQ)
+
+### 开源gnn平台
+
+[https://daiwk.github.io/posts/platform-gnn-frameworks.html](https://daiwk.github.io/posts/platform-gnn-frameworks.html)
+
+
+
+## 课程资源
+
+### 无监督
+
+[14周无监督学习课程，UC伯克利出品，含课件、视频](https://mp.weixin.qq.com/s/leQEWqfBfLfAnyD0LU0uqA)
+
+### tf2.0
+
+[https://daiwk.github.io/posts/platform-tensorflow-2.0.html](https://daiwk.github.io/posts/platform-tensorflow-2.0.html)
+
+[TensorFlow 2.0 常用模块1：Checkpoint](https://mp.weixin.qq.com/s/KTj3wJSA4_95pJvN-pkoZw)
+
+
+## 其他
+
+不知道是啥。。
+
+nips18的tadam还有META-LEARNING WITH LATENT EMBEDDING OPTIMIZATION这篇 基本思路都是把问题先转化成做样本matching的deep metric learning任务 并对类目信息做task condition
