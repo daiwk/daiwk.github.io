@@ -10,9 +10,10 @@ tags: [python, kwargs, args, collections, gc, flush, conda, mkdocs, Heartrate, ]
 
 <!-- TOC -->
 
-- [1. 编译安装python](#1-%e7%bc%96%e8%af%91%e5%ae%89%e8%a3%85python)
-- [2. jupyter](#2-jupyter)
-- [3. mkdocs](#3-mkdocs)
+- [编译安装python](#%e7%bc%96%e8%af%91%e5%ae%89%e8%a3%85python)
+- [jupyter](#jupyter)
+- [mkdocs](#mkdocs)
+- [collections](#collections)
 - [进程池multiprocessing.Pool](#%e8%bf%9b%e7%a8%8b%e6%b1%a0multiprocessingpool)
 - [线程池threadpool](#%e7%ba%bf%e7%a8%8b%e6%b1%a0threadpool)
 - [mac版python3的tf](#mac%e7%89%88python3%e7%9a%84tf)
@@ -21,7 +22,7 @@ tags: [python, kwargs, args, collections, gc, flush, conda, mkdocs, Heartrate, ]
   - [引用计数（主要）](#%e5%bc%95%e7%94%a8%e8%ae%a1%e6%95%b0%e4%b8%bb%e8%a6%81)
   - [标记清除](#%e6%a0%87%e8%ae%b0%e6%b8%85%e9%99%a4)
   - [分代回收](#%e5%88%86%e4%bb%a3%e5%9b%9e%e6%94%b6)
-- [collections](#collections)
+- [collections](#collections-1)
   - [OrderedDict](#ordereddict)
 - [conda](#conda)
 - [flush](#flush)
@@ -35,7 +36,7 @@ tags: [python, kwargs, args, collections, gc, flush, conda, mkdocs, Heartrate, ]
 
 <!-- /TOC -->
 
-## 1. 编译安装python
+## 编译安装python
 
 python总体上有两个版本，cp27m是ucs2，cp27**mu**是**ucs4**，UCS2认为每个字符占用2个字节，UCS4认为每个字节占用4个字符，都是UNICODE的编码形式。
 
@@ -142,7 +143,7 @@ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python get-pip.py
 ```
 
-## 2. jupyter
+## jupyter
 
 小技巧：如何把整个notebook里的各级目录的东西一起下载？(我们发现在界面里一次只能下载一个文件。。。)
 
@@ -156,13 +157,17 @@ python get-pip.py
 
 10个小技巧：[十大至简规则，用Jupyter Notebook写代码应该这样来](https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650766829&idx=1&sn=18d429c632972d9fa52a16516b2cc1df&chksm=871ab993b06d3085b8f49d214deb257fa629994c7cb139d266df3def31831a2c56d8c0103b6b&scene=0&xtrack=1&pass_ticket=I7vMVoY36Vu5%2FFz%2FMUDKXgy%2FHocjPiCFYYtVANqq1m0CCQBpIAQhSU5BGMcu7Il0#rd)
 
-## 3. mkdocs
+## mkdocs
 
 ```shell
 pip install mkdocs
 ```
 
 参考：[https://www.mkdocs.org/](https://www.mkdocs.org/)
+
+## collections
+
+[四种高性能数据类型，Python collections助你优化代码、简洁任务](https://mp.weixin.qq.com/s/17xwTlwJi1ckht3wGk5ttA)
 
 ## 进程池multiprocessing.Pool
 

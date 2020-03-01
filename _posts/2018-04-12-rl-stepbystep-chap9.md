@@ -9,16 +9,16 @@ tags: [深入浅出强化学习, DPG, DDPG, AC, A3C]
 
 <!-- TOC -->
 
-- [1. 概述](#1-概述)
-- [2. 随机策略与确定性策略](#2-随机策略与确定性策略)
-    - [2.1 随机策略](#21-随机策略)
-    - [2.2 确定性策略](#22-确定性策略)
-    - [2.3 对比](#23-对比)
-- [3. AC框架](#3-ac框架)
-    - [3.1 随机策略AC方法](#31-随机策略ac方法)
-    - [3.2 确定性策略AC方法（DPG）](#32-确定性策略ac方法dpg)
-    - [3.3 深度确定性策略梯度方法（DDPG）](#33-深度确定性策略梯度方法ddpg)
-    - [3.3 A3C(asynchronous advantage actor-critic)](#33-a3casynchronous-advantage-actor-critic)
+- [1. 概述](#1-%e6%a6%82%e8%bf%b0)
+- [2. 随机策略与确定性策略](#2-%e9%9a%8f%e6%9c%ba%e7%ad%96%e7%95%a5%e4%b8%8e%e7%a1%ae%e5%ae%9a%e6%80%a7%e7%ad%96%e7%95%a5)
+  - [2.1 随机策略](#21-%e9%9a%8f%e6%9c%ba%e7%ad%96%e7%95%a5)
+  - [2.2 确定性策略](#22-%e7%a1%ae%e5%ae%9a%e6%80%a7%e7%ad%96%e7%95%a5)
+  - [2.3 对比](#23-%e5%af%b9%e6%af%94)
+- [3. AC框架](#3-ac%e6%a1%86%e6%9e%b6)
+  - [3.1 随机策略AC方法](#31-%e9%9a%8f%e6%9c%ba%e7%ad%96%e7%95%a5ac%e6%96%b9%e6%b3%95)
+  - [3.2 确定性策略AC方法（DPG）](#32-%e7%a1%ae%e5%ae%9a%e6%80%a7%e7%ad%96%e7%95%a5ac%e6%96%b9%e6%b3%95dpg)
+  - [3.3 深度确定性策略梯度方法（DDPG）](#33-%e6%b7%b1%e5%ba%a6%e7%a1%ae%e5%ae%9a%e6%80%a7%e7%ad%96%e7%95%a5%e6%a2%af%e5%ba%a6%e6%96%b9%e6%b3%95ddpg)
+  - [3.3 A3C(asynchronous advantage actor-critic)](#33-a3casynchronous-advantage-actor-critic)
 
 <!-- /TOC -->
 
@@ -205,7 +205,7 @@ DDPG的整体流程如下：
 >        1. 将transition `\((s_t,a_t,r_t,s_{t+1})\)`存入`\(R\)`。
 >        1. 从`\(R\)`中随机sample出一个minibatch(`\(N\)`个)的transitions，`\((s _i,a_i,r_i,s_{i+1})\)`
 >        1. 令`\(y_i=r_i+\gamma {Q'}{(s_{i+1},{\mu'}(s_{i+1}|\theta ^{\mu'})|\theta ^{Q'}})\)`【即使用两个目标网络得predict的值`\(y_i\)`】
->        1. 通过最小化loss`\(L=\frac{1}{N}\sum_i(y_i-Q(s_i,a_i|\theta ^Q)^2)\)`对critic `\(Q\)`进行更新
+>        1. 通过最小化loss`\(L=\frac{1}{N}\sum_i(y_i-Q(s_i,a_i|\theta ^Q))^2\)`对critic `\(Q\)`进行更新
 >        1. 通过采样的梯度，对actor policy`\(\mu\)`进行更新：
 >        `\[\triangledown _{\theta ^\mu} {J}\approx \frac{1}{N}\sum_i\triangledown_aQ(s,a|\theta ^Q)|_{s=s_i,a=\mu(s_i)}\triangledown _{\theta ^\mu} {\mu(s|\theta ^\mu)|_{s_i}}\]`
 >        1. 更新critic的目标网络`\(Q'\)`和actor的目标网络`\(\mu'\)`： 
