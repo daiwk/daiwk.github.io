@@ -32,6 +32,21 @@ tags: [hadoop streaming, ]
 
 而```KeyFieldBasedComparator```可以指定key的排序方式
 
+例如：
+
+```shell
+hadoop streaming \
+-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner \
+-jobconf stream.num.map.output.key.fields=3 \
+-jobconf stream.map.output.field.separator=. \
+-jobconf map.output.key.field.separator=. \
+-jobconf mapred.text.key.partitioner.options=-k1,1 \
+-jobconf mapred.text.key.comparator.options=-k3,3n \
+-jobconf mapred.output.key.comparator.class=org.apache.hadoop.mapred.lib.KeyFieldBasedComparator
+
+## 前3列是key，key里第一列拿来做分桶，然后只拿第三列来排序
+```
+
 ## 如何确定map任务数
 
 确定map任务数时依次优先参考如下几个原则：
