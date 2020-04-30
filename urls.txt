@@ -7,6 +7,7 @@ https://daiwk.github.io/posts/dl-federated-learning.html
 https://daiwk.github.io/posts/dl-ntm-memory-networks.html
 https://daiwk.github.io/posts/dl-speedup-tricks.html
 https://daiwk.github.io/posts/knowledge-algorithms.html
+https://daiwk.github.io/posts/knowledge-basic-knowledges.html
 https://daiwk.github.io/posts/knowledge-c++-useful-features.html
 https://daiwk.github.io/posts/knowledge-collections.html
 https://daiwk.github.io/posts/knowledge-ctags.html
