@@ -1399,7 +1399,7 @@ ICLR2020 cmu+google：
 + 原domain $S$：有大量用户交互行为的图文或视频推荐
 + 目标domain $T$：可以是用户label很少的一些预测任务。例如用户可能喜欢的item、用户性别、用户年龄分桶等
 
-
+$\mathbf{x}^{u}=\left\{x_{1}^{u}, \ldots, x_{n}^{u}\right\}\left(x_{i}^{u} \in X\right)$表示用户的点击历史
 
 
 
