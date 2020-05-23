@@ -16,11 +16,31 @@ tags: [合辑, ]
 
 # 一些回顾性的经典总结
 
+## 2019年盘点
+
 [告别2019：属于深度学习的十年，那些我们必须知道的经典](https://mp.weixin.qq.com/s/GT-o7nA9Fc_-4xhtUoFgvQ)
 
 [“深度学习”这十年：52篇大神级论文再现AI荣与光](https://mp.weixin.qq.com/s/RYU6SBlD6FFkCVJk0VvGuA)
 
+[Jeff Dean谈2020ML：专用芯片、多模态多任务学习，社区不用痴迷SOTA](https://mp.weixin.qq.com/s/w8zGd9x7li-1UA0PNvM9_g)
+
+[NLPer复工了！先看看这份2019机器学习与NLP年度盘点吧](https://mp.weixin.qq.com/s/-Uk74MjhZtVroasFUFdmvA)
+
+[三巨头共聚AAAI：Capsule没有错，LeCun看好自监督，Bengio谈注意力](https://mp.weixin.qq.com/s/nDDAx6AB9SYgQ9cVevjZvA)
+
+Geoffrey Hinton 介绍了[Stacked Capsule Autoencoders](https://arxiv.org/abs/1906.06818)，即一种无监督版本的 Capsule 网络，这种神经编码器能查看所有的组成部分，并用于推断跟细节的特征；
+Yann LeCun 在《Self-Supervised Learning》中再次强调了自监督学习的重要性；(nlp那章里讲到了)
+Yoshua Bengio 在[Deep Learning for System 2 Processing](http://www.iro.umontreal.ca/~bengioy/AAAI-9feb2020.pdf)中回顾了深度学习，并讨论了当前的局限性以及前瞻性研究方向。
+
+## 2019nlp
+
+[2019 NLP大全：论文、博客、教程、工程进展全梳理（长文预警）](https://mp.weixin.qq.com/s/5T3-SxBTVzndULwKiFp4Hw)
+
 # 传统ML
+
+## PRML
+
+[GitHub标星6000+！Python带你实践机器学习圣经PRML](https://mp.weixin.qq.com/s/xbsS7OOJTt8RQqhDPaTKqA)
 
 ## 传统ML库
 
@@ -74,9 +94,34 @@ XGBoost 是一项基于梯度提升可扩展集合技术，在解决机器学习
 
 [周志华团队：深度森林挑战多标签学习，9大数据集超越传统方法](https://mp.weixin.qq.com/s/AwvSTF8j0AinS-EgmPFJTA)
 
+## 主题模型
+
+[如何找到好的主题模型量化评价指标？这是一份热门方法总结](https://mp.weixin.qq.com/s/Ax0PzXjpPZ8TOU8pJPvpDw)
+
+## CRF
+
+[【机器学习】条件随机场](https://mp.weixin.qq.com/s/8QPA0lobUmdPirZI7WbWPA)
+
 # DL基础研究
 
 ## DL背后的原理
+
+[从2019 AI顶会最佳论文，看深度学习的理论基础](https://mp.weixin.qq.com/s/34k4UK0xZ9TUZIsq1-eHcg)
+
+MIT 教授 Tomaso Poggio 曾在他的系列研究中 [1] 表示深度学习理论研究可以分为三大类：
+
++ 表征问题（Representation）：为什么深层网络比浅层网络的表达能力更好？
++ 最优化问题（Optimization）：为什么梯度下降能找到很好的极小值解，好的极小值有什么特点？
++ 泛化问题（Generalization）：为什么过参数化仍然能拥有比较好的泛化性，不过拟合？
+
+对于表征问题，我们想要知道深度神经网络这种「复合函数」，它的表达能力到底怎么确定，它的复合机制又是什么样的。我们不再满足于「能拟合任意函数」这样的定性描述，我们希望知道是不是有一种方法能描述 50 层 ResNet、12 层 Transformer 的拟合能力，能不能清楚地了解它们的理论性质与过程。
+
+有了表征能力，那也只是具备了拟合潜力，深度学习还需要找到一组足够好的极值点，这就是模型的最优解。不同神经网络的「最优化 Landscape」是什么样的、怎样才能找到这种高维复杂函数的优秀极值点、极值点的各种属性都需要完善的理论支持。
+
+最后就是泛化了，深度模型泛化到未知样本的能力直接决定了它的价值。那么深度模型的泛化边界该怎样确定、什么样的极值点又有更好的泛化性能，很多重要的特性都等我们确定一套理论基准。
+
+
+[英伟达工程师解读NeurIPS 2019最热趋势：贝叶斯深度学习、图神经网络、凸优化](https://mp.weixin.qq.com/s/lj5B81hQumfJGYkgSfNVTg)
 
 neurips2019 杰出新方向论文奖颁给了Vaishnavh Nagarajan和J. Zico Kolter的《一致收敛理论可能无法解释深度学习中的泛化现象》(Uniform convergence may be unable to explain generalization in deep learning)，其论点是一致收敛理论本身并不能解释深度学习泛化的能力。随着数据集大小的增加，泛化差距(模型对可见和不可见数据的性能差距)的理论界限也会增加，而经验泛化差距则会减小。
 
@@ -138,6 +183,10 @@ AdaBound：一种基于PyTorch实现的优化器，训练速度堪比Adam，质�
 
 [可以丢掉SGD和Adam了，新的深度学习优化器Ranger：RAdam + LookAhead强强结合](https://mp.weixin.qq.com/s/htneyNQ779P1qzOafOY-Rw)
 
+### Shampoo
+
+[二阶梯度优化新崛起，超越 Adam，Transformer 只需一半迭代量](https://mp.weixin.qq.com/s/uHrRBS3Ju9MAWbaukiGnOA)
+
 ## 激活函数
 
 ### 激活函数汇总
@@ -176,9 +225,25 @@ NLP中彩票假设的应用：
 
 [Playing the lottery with rewards and multiple languages: lottery tickets in RL and NLP](https://arxiv.org/pdf/1906.02768.pdf)
 
+[Proving the Lottery Ticket Hypothesis: Pruning is All You Need](https://arxiv.org/pdf/2002.00585.pdf)
+
+Frankle 和 Carbin 在 2018 年提出的彩票假说表明，一个随机初始化的网络包含一个小的子网络，这个子网络在进行单独地训练时，其性能能够与原始网络匹敌。在本文中，研究者证明了一个更有力的假说（正如 Ramanujan 等人在 2019 年所猜想的那样），即对于每个有界分布和每个带有有界权重的目标网络来说，一个具有随机权重的充分过参数化神经网络包含一个具有与目标网络几乎相同准确率的子网络，并且无需任何进一步的训练。
+
+===>从根本上来说，剪枝随机初始化的神经网络与优化权重值一样重要。
+
 ## 知识蒸馏
 
 [一文总览知识蒸馏概述](https://mp.weixin.qq.com/s/-krzT5svcRsGILCDms7-VQ)
+
+## 生成模型
+
+[AAAI 2020 论文解读：关于生成模型的那些事](https://mp.weixin.qq.com/s/b3vSKfHY12XtlIeps7gaNg)
+
+[Probabilistic Graph Neural Network（PGNN）：Deep Generative Probabilistic Graph Neural Networks for Scene Graph Generation](https://grlearning.github.io/papers/135.pdf)
+
+[Reinforcement Learning（RL）: Sequence Generation with Optimal-Transport-Enhanced Reinforcement Learning](https://pdfs.semanticscholar.org/826d/b2e5f340a90fc9672279f9e921b596aba4b7.pdf)
+
+[Action Learning: MALA: Cross-Domain Dialogue Generation with Action Learning](https://arxiv.org/pdf/1912.08442.pdf)
 
 ## 双下降问题
 
@@ -294,7 +359,7 @@ NLP中彩票假设的应用：
 
 [Your Classifier is Secretly an Energy Based Model and You Should Treat it Like One](https://arxiv.org/abs/1912.03263)
 
-# 贝叶斯深度学习
+## 贝叶斯深度学习
 
 正如Emtiyaz Khan在他的受邀演讲《基于贝叶斯原理的深度学习》中所强调的那样，贝叶斯学习和深度学习是非常不同的。根据Khan的说法，深度学习使用“试错”(trial and error)的方法——看实验会把我们带向何方——而贝叶斯原理迫使你事先思考假设(先验)。
 
@@ -310,11 +375,40 @@ NLP中彩票假设的应用：
 
 [Practical Deep Learning with Bayesian Principles](https://arxiv.org/abs/1906.02506)
 
+## 可解释性
+
+[相信你的模型：初探机器学习可解释性研究进展](https://mp.weixin.qq.com/s/7ngrHNd4__MN3Wb5RMv6qQ)
+
+[NeurIPS 2019：两种视角带你了解网络可解释性的研究和进展](https://mp.weixin.qq.com/s/oud7w6MNWPO8svEHZxD4ZA)
+
+[Intrinsic dimension of data representations in deep neural networks](https://arxiv.org/pdf/1905.12784v1.pdf)
+
+对于一个深度网络，网络通过多层神经层渐进的转换输入，这其中的几何解释应该是什么样的呢？本文的作者通过实验发现，以固有维度（ID：intrinsic dimensionality）为切入点，可以发现训练好的网络相比较未训练网络而言，其每层的固有维度数量级均小于每层单元数，而且 ID 的存在可以来衡量网络的泛化性能。
+
+[This Looks Like That: Deep Learning for Interpretable Image Recognition](https://arxiv.org/pdf/1806.10574.pdf)
+
+当人遇到图像判断的时候，总是会分解图片并解释分类的理由，而机器在判断的时候总是跟人的判断会有些差距。本文旨在缩小机器分类和人分类之间的差距，提出了一个 ProtoPNet，根据人判断的机理来分类图像。本文网络通过分解图像，得到不同的原型部分，通过组成这些信息最终得到正确的分类。
+
+## 子集选择
+
+[AAAI 2020线上分享 \| 南京大学：一般约束下子集选择问题的高效演化算法](https://mp.weixin.qq.com/s/gl6HNZZoQcsHdhF2v_uriQ)
+
+[An Efficient Evolutionary Algorithm for Subset Selection with General Cost Constraints](http://www.lamda.nju.edu.cn/qianc/aaai20-eamc-final.pdf)
+
+子集选择问题旨在从 n 个元素中，选择满足约束 c 的一个子集，以最大化目标函数 f。它有很多应用，包括影响力最大化，传感器放置等等。针对这类问题，现有的代表性算法有广义贪心算法和 POMC。广义贪心算法耗时较短，但是受限于它的贪心行为，其找到的解质量往往一般；POMC 作为随机优化算法，可以使用更多的时间来找到质量更好的解，但是其缺乏多项式的运行时间保证。因此，我们提出一个高效的演化算法 EAMC。通过优化一个整合了 f 和 c 的代理函数，它可以在多项式时间内找到目前已知最好的近似解，并且其在多类问题上的试验也显示出比广义贪心算法更好的性能。
+
+[AAAI 2020 \| 南京大学提出高效演化算法 EAMC：可更好解决子集选择问题](https://mp.weixin.qq.com/s/QDbWwT5ZP2MNF3NVHX_SzQ)
+
+
 # 计算机视觉
 
 ## cv数据集
 
 [ResNet图像识别准确率暴降40个点！这个ObjectNet让世界最强视觉模型秒变水货](https://mp.weixin.qq.com/s/4kqswia0QKaj5J1505lLOg)
+
+[实测超轻量中文OCR开源项目，总模型仅17M](https://mp.weixin.qq.com/s/enVx8sLoxmaSM8NlUL5IMQ)
+
+[https://github.com/ouyanghuiyu/chineseocr_lite](https://github.com/ouyanghuiyu/chineseocr_lite)
 
 ## cv基础
 
@@ -329,6 +423,8 @@ NLP中彩票假设的应用：
 ## cv历史
 
 [历史需要重写？AlexNet之前，早有算法完成计算机视觉四大挑战](https://mp.weixin.qq.com/s/xo7bRNKEeT0QHcND6DxThg)
+
+[图像分类最新技术综述论文: 21种半监督、自监督和无监督学习方法一较高低](https://mp.weixin.qq.com/s/tJaNpW7TyUowdn9JRBVnJQ)
 
 ## cnn相关
 
@@ -363,6 +459,16 @@ NLP中彩票假设的应用：
 [PointRend: Image Segmentation as Rendering](https://arxiv.org/abs/1912.08193)
 
 
+### Graph-FCN
+
+[另辟蹊径，中科院自动化所等首次用图卷积网络解决语义分割难题](https://mp.weixin.qq.com/s/i_v1GoR-VzVxmy2Wm97t4w)
+
+[Graph-FCN for image semantic segmentation](https://arxiv.org/pdf/2001.00335.pdf)
+
+使用深度学习执行语义分割在图像像素分类方面取得了巨大进步。但是，深度学习提取高级特征时往往忽略了局部位置信息（local location information），而这对于图像语义分割而言非常重要。
+
+为了避免上述问题，来自中科院自动化所、北京中医药大学的研究者们提出一个执行图像语义分割任务的图模型 Graph-FCN，该模型由全卷积网络（FCN）进行初始化。首先，通过卷积网络将图像网格数据扩展至图结构数据，这样就把语义分割问题转换成了图节点分类问题；然后，使用图卷积网络解决图节点分类问题。研究者称，这是首次将图卷积网络用于图像语义分割的尝试。该方法在 VOC 数据集上获得了有竞争力的 mIOU 性能，相比原始 FCN 模型有 1.34% 的性能提升。
+
 ## 目标检测
 
 ### 自然场景文字定位
@@ -392,6 +498,10 @@ NLP中彩票假设的应用：
 
 近年来，卷积神经网络（CNN）已经主宰了计算机视觉领域。自 AlexNet 诞生以来，计算机视觉社区已经找到了一些能够改进 CNN 的设计，让这种骨干网络变得更加强大和高效，其中比较出色的单个分支网络包括 Network in Network、VGGNet、ResNet、DenseNet、ResNext、MobileNet v1/v2/v3 和 ShuffleNet v1/v2。近年来同样吸引了研究社区关注的还有多分辨率骨干网络。作者认为目前实现高效卷积网络的工作流程可以分成两步：1）设计一种网络架构；2）对该网络中的连接进行剪枝。在第一步，作者研究了人类专家设计的架构与搜索得到的架构之间的共同模式：对于每种骨干网络，其架构都是由其普通模块和归约模块（reduction block）的设计所确定的。第二步会将某些连接剪枝去掉，这样就不能保证每个模块都有完整的信息交换了。Facebook AI 的研究者在这篇论文中通过在网络设计步骤中考虑剪枝，为图像识别任务设计了一种更高效的网络。他们创造了一种新的模块设计方法：Idle。
 
+## 图像补全
+
+[拍照总被路人甲抢镜？那就用这个项目消Ta](https://mp.weixin.qq.com/s/kgQBQz2u8aMzZaHFhWF_VQ)
+
 ## 文字检测与识别
 
 [AAAI 2020 \| 旷视研究院：深度解读文字检测与识别新突破](https://mp.weixin.qq.com/s/1EewWtY70UgdMXm9mEifsQ)
@@ -403,6 +513,8 @@ NLP中彩票假设的应用：
 本论文要解决的问题是使用条件生成对抗网络（cGAN）生成合成图像。具体来说，本文要完成的具体任务是使用一个分割掩码控制所生成的图像的布局，该分割掩码的每个语义区域都具有标签，而网络可以根据这些标签为每个区域「添加」具有真实感的风格。尽管之前已经有一些针对该任务的框架了，但当前最佳的架构是 SPADE（也称为 GauGAN）。因此，本论文的研究也是以 SPADE 为起点的。具体来说，本文针对原始 SPADE 的两个缺陷提出了新的改进方案。本文在几个高难度的数据集（CelebAMaskHQ、CityScapes、ADE20K 和作者新建的 Facades 数据集）上对新提出的方法进行了广泛的实验评估。定量实验方面，作者基于 FID、PSNR、RMSE 和分割性能等多种指标对新方法进行了评估；定性实验方面，作者展示了可通过视觉观察进行评估的样本。
 
 推荐：图像合成是近来非常热门的研究领域，世界各地的研究者为这一任务提出了许多不同的框架和算法，只为能合成出更具真实感的图像。阿卜杜拉国王科技大学和卡迪夫大学近日提出了一种新改进方案 SEAN，能够分区域对合成图像的内容进行控制和编辑（比如只更换眼睛或嘴），同时还能得到更灵活更具真实感的合成结果。有了这个技术，修图换眼睛时不用再担心风格不搭了。
+
+[CVPR 2020 \| 让合成图像更真实，上交大提出基于域验证的图像和谐化](https://mp.weixin.qq.com/s/oV9vYbUmXOsdJsMuSGTjXg)
 
 ## 人脸识别
 
@@ -419,6 +531,10 @@ NLP中彩票假设的应用：
 [内存计算显著降低，平均7倍实测加速，MIT提出高效、硬件友好的三维深度学习方法](https://mp.weixin.qq.com/s/kz5ja8K4rPD_m1GvUznByg)
 
 [Point-Voxel CNN for Efficient 3D Deep Learning](https://arxiv.org/pdf/1907.03739.pdf)
+
+[FaceBook开源PyTorch3D：基于PyTorch的新3D计算机视觉库](https://mp.weixin.qq.com/s/2EHv669PUqqgvAGz3XoZ6Q)
+
+[https://github.com/facebookresearch/pytorch3d](https://github.com/facebookresearch/pytorch3d)
 
 ## GNN+CV
 
@@ -466,8 +582,25 @@ Facebook将该方法称为“半弱监督”(semi-weak supervision)，是结合�
 
 [https://github.com/wang3702/EnAET](https://github.com/wang3702/EnAET)
 
+### 无监督SimCLR
 
-# NLP
+[Hinton组力作：ImageNet无监督学习最佳性能一次提升7%，媲美监督学习](https://mp.weixin.qq.com/s/8RU3qLWkbP86-6dU2w023A)
+
+[A Simple Framework for Contrastive Learning of Visual Representations](https://arxiv.org/pdf/2002.05709.pdf)
+
+在这篇论文中，研究者发现：
+
++ 多个数据增强方法组合对于对比预测任务产生有效表示非常重要。此外，与有监督学习相比，数据增强对于无监督学习更加有用；
++ 在表示和对比损失之间引入一个可学习的非线性变换可以大幅提高模型学到的表示的质量；
++ 与监督学习相比，对比学习得益于更大的批量和更多的训练步骤。
+
+基于这些发现，他们在 ImageNet ILSVRC-2012 数据集上实现了一种新的半监督、自监督学习 SOTA 方法——SimCLR。在线性评估方面，SimCLR 实现了 76.5% 的 top-1 准确率，比之前的 SOTA 提升了 7%。在仅使用 1% 的 ImageNet 标签进行微调时，SimCLR 实现了 85.8% 的 top-5 准确率，比之前的 SOTA 方法提升了 10%。在 12 个其他自然图像分类数据集上进行微调时，SimCLR 在 10 个数据集上表现出了与强监督学习基线相当或更好的性能。
+
+### 图像对抗攻击
+
+[胶囊网络显神威：Google AI和Hinton团队检测到针对图像分类器的对抗攻击](https://mp.weixin.qq.com/s/ux81Z5H2ZcC0Rq8Hi6c27w)
+
+# 自然语言处理
 
 ## nlp综述
 
@@ -490,6 +623,8 @@ EMNLP 2019最佳论文
 [从三大顶会论文看百变Self-Attention](https://mp.weixin.qq.com/s/R9FoceRsPB3ceqKpnYPvbQ)
 
 [包学包会，这些动图和代码让你一次读懂「自注意力」](https://mp.weixin.qq.com/s/Z0--eLLiFwfSuMvnddKGPQ)
+
+[http://jalammar.github.io/illustrated-transformer/](http://jalammar.github.io/illustrated-transformer/)
 
 ## 机器翻译
 
@@ -533,6 +668,22 @@ MASS 采用了编码器-解码器框架，并尝试在给定部分句子的情�
 
 [https://github.com/nlpdata/c3](https://github.com/nlpdata/c3)
 
+### 物理常识推理任务数据集
+
+[PIQA: Reasoning about Physical Commonsense in Natural Language](https://arxiv.org/pdf/1911.11641.pdf)
+
+「在不使用刷子涂眼影的情况下，我应该用棉签还是牙签？」类似这种需要物理世界常识的问题对现今的自然语言理解系统提出了挑战。虽然最近的预训练模型 (如 BERT) 在更抽象的如新闻文章和百科词条这种具有丰富文本信息的领域问答方面取得了进展，但在更现实的领域，由于报导的偏差，文本本质上是有限的，类似于「用牙签涂眼影是一个坏主意」这样的事实很少得到直接报道。人工智能系统能够在不经历物理世界的情况下可靠地回答物理常识问题吗？是否能够捕获有关日常物品的常识知识，包括它们的物理特性、承受能力以及如何操纵它们。
+
+在本文中，研究者介绍了一个关于物理常识推理任务和相应的基准数据集 PIQA（Physical Interaction：Question Answering）进行评估。虽然人类应对这一数据集很容易 (95% 的准确率)，但是大型的预训模型很难 (77%)。作者分析了现有模型所缺乏的知识为未来的研究提供了重要的机遇。
+
+### 常识推理数据集WinoGrande
+
+[WinoGrande: An Adversarial Winograd Schema Challenge at Scale](https://arxiv.org/abs/1907.10641)
+
+研究者提出了 WINOGRANDE，一个有着 44k 个问题的大规模数据集。该数据集在规模和难度上较之前的数据集更大。该数据集的构建包括两个步骤：首先使用众包的方式设计问题，然后使用一个新的 AFLITE 算法缩减系统偏见（systematic bias），使得人类可以察觉到的词汇联想转换成机器可以检测到的嵌入联想（embedding association）。现在最好的 SOTA 模型可以达到的性能是 59.4 – 79.1%，比人脸性能水平（94%）低 15-35%（绝对值）。这种性能波动取决于训练数据量（2% 到 100%）。
+
+本论文荣获了 AAAI 2020 最佳论文奖，文中提出的 WINOGRANDE 是一个很好的迁移学习资源；但同时也说明我们现在高估了模型的常识推理的能力。研究者希望通过这项研究能够让学界重视减少算法的偏见。
+
 ## 阅读理解
 
 ### DCMN+
@@ -572,6 +723,23 @@ MASS 采用了编码器-解码器框架，并尝试在给定部分句子的情�
 
 [BERT小学生级上手教程，从原理到上手全有图示，还能直接在线运行](https://mp.weixin.qq.com/s/ltVuXZ4nJh8Cb5X2UhB6tQ)
 
+[BERT源码分析（PART I）](https://mp.weixin.qq.com/s/sSmTQ_cOLyAUV0aV0FkDvw)
+
+[BERT源码分析（PART II）](https://mp.weixin.qq.com/s/1NDxWfBu_csu8qHV2tmmVQ)
+
+[Dive into BERT：语言模型与知识](https://mp.weixin.qq.com/s/NjQtSKY85Np5IodRiKsrvg)
+
+[关于BERT，面试官们都怎么问](https://mp.weixin.qq.com/s/c2PktKruzq_teXm3GAwe1Q)
+
+主要讲了下面3篇：
+
+[Language Models as Knowledge Bases?](https://arxiv.org/abs/1909.01066)
+
+[Linguistic Knowledge and Transferability of Contextual Representations](https://arxiv.org/abs/1903.08855)
+
+[What does BERT learn about the structure of language?](https://hal.inria.fr/hal-02131630/document)
+
+
 ### gpt-2
 
 [15亿参数最强通用NLP模型面世！Open AI GPT-2可信度高于所有小模型](https://mp.weixin.qq.com/s/nu2egJuG_yxIVfW9GfdlCw)
@@ -583,6 +751,10 @@ MASS 采用了编码器-解码器框架，并尝试在给定部分句子的情�
 [https://github.com/imcaspar/gpt2-ml](https://github.com/imcaspar/gpt2-ml)
 
 [https://colab.research.google.com/github/imcaspar/gpt2-ml/blob/master/pretrained_model_demo.ipynb](https://colab.research.google.com/github/imcaspar/gpt2-ml/blob/master/pretrained_model_demo.ipynb)
+
+### gpt-2 8b
+
+[47分钟，BERT训练又破全新纪录！英伟达512个GPU训练83亿参数GPT-2 8B](https://mp.weixin.qq.com/s/ysQM7D761rtW4-423AUI5w)
 
 ### distill gpt-2
 
@@ -601,6 +773,8 @@ huggingface的distill gpt-2：[https://github.com/huggingface/transformers](http
 [XLNet : 运行机制及和 Bert 的异同比较](https://mp.weixin.qq.com/s/VCCZOKJOhCEjxfnoLSuRKA)
 
 [Transformer-XL与XLNet笔记](https://mp.weixin.qq.com/s/g7I_V5a3Puy9uK11A--Xqw)
+
+[什么是XLNet中的双流自注意力](https://mp.weixin.qq.com/s/9QmhN4KfukCtAxzprKDbAQ)
 
 ### ELECTRA
 
@@ -687,13 +861,41 @@ Facebook的这项研究提出了新架构BART，它结合双向和自回归Trans
 
 来自facebook。针对多种跨语言的传输任务，大规模地对多语言语言模型进行预训练可以显著提高性能。在使用超过 2TB 的已过滤 CommonCrawl 数据的基础上，研究者在 100 种语言上训练了基于 Transformer 的掩模语言模型。该模型被称为 XLM-R，在各种跨语言基准测试中，其性能显著优于多语言 BERT（mBERT），其中 XNLI 的平均准确度为+ 13.8％，MLQA 的平均 F1 得分为+ 12.3％，而 FQ 的平均 F1 得分为+ 2.1％ NER。XLM-R 在低资源语言上表现特别出色，与以前的 XLM 模型相比，斯瓦希里语（Swahili）的 XNLI 准确性提升了 11.8％，乌尔都语（Urdu）的准确性提升了 9.2％。研究者还对获得这些提升所需的关键因素进行了详细的实证评估，包括（1）积极转移和能力稀释；（2）大规模资源资源的高低性能之间的权衡。最后，他们首次展示了在不牺牲每种语言性能的情况下进行多语言建模的可能性。XLM-Ris 在 GLUE 和 XNLI 基准测试中具有强大的单语言模型，因此非常具有竞争力。
 
-### bert+生成模型：UniLM
+### bert+多模态
+
+[BERT在多模态领域中的应用](https://mp.weixin.qq.com/s/THxlQX2MPXua0_N0Ug0EWA)
+
+CV领域：VisualBert, Unicoder-VL, VL-Bert, ViLBERT, LXMERT。
+
+## transformer+生成模型
+
+### 经典文本生成模型
+
+[AI也能精彩表达：几种经典文本生成模型一览](https://mp.weixin.qq.com/s/GfP76I-BzzQcyLqQJoeXxw)
+
+### UniLM
 
 [NeurIPS 2019 \| 既能理解又能生成自然语言，微软提出统一预训练新模型UniLM](https://mp.weixin.qq.com/s/J96WjZhnf_1vBRHbbGwtyg)
 
 [Unified Language Model Pre-training for Natural Language Understanding and Generation](https://arxiv.org/abs/1905.03197)
 
 [https://github.com/microsoft/unilm](https://github.com/microsoft/unilm)
+
+### LaserTagger
+
+[谷歌开源文本生成新方法 LaserTagger，直击 seq2seq 效率低、推理慢、控制差三大缺陷！](https://mp.weixin.qq.com/s/xO9eBkFOxfzcmbMhqVcmGA)
+
+[推断速度达seq2seq模型的100倍，谷歌开源文本生成新方法LaserTagger](https://mp.weixin.qq.com/s/_1lr612F3x8ld9gvXj9L2A)
+
+序列到序列（seq2seq）模型给机器翻译领域带来了巨大变革，并成为多种文本生成任务的首选工具，如文本摘要、句子融合和语法纠错。模型架构改进（如 Transformer）以及通过无监督训练方法利用大型无标注文本数据库的能力，使得近年来神经网络方法获得了质量上的提升。
+
+但是，使用 seq2seq 模型解决文本生成任务伴随着一些重大缺陷，如生成的输出不受输入文本支持（即「幻觉」，hallucination）、需要大量训练数据才能实现优秀性能。此外，由于 seq2seq 模型通常逐词生成输出，因此其推断速度较慢。
+
+谷歌研究人员在近期论文《Encode, Tag, Realize: High-Precision Text Editing》中提出一种新型文本生成方法，旨在解决上述三种缺陷。该方法速度快、精确度高，因而得名 LaserTagger。
+
+[Encode, Tag, Realize: High-Precision Text Editing](https://research.google/pubs/pub48542/)
+
+[http://lasertagger.page.link/code](http://lasertagger.page.link/code)
 
 ### pegasus
 
@@ -702,6 +904,15 @@ Facebook的这项研究提出了新架构BART，它结合双向和自回归Trans
 [PEGASUS: Pre-training with Extracted Gap-sentences for Abstractive Summarization](https://arxiv.org/abs/1912.08777)
 
 来自帝国理工学院和谷歌大脑团队的研究者提出了大规模文本语料库上具有新的自监督目的的大型 Transformer 预训练编码器-解码器模型 PEGASUS（Pre-training with Extracted Gap-sentences for Abstractive Summarization）。与抽取式文本摘要（extractive summary）相似，在 PEGASUS 模型中，输入文档中删除或 mask 重要句子，并与剩余句子一起作为输出序列来生成。研究者在新闻、科学、故事、说明书、邮件、专利以及立法议案等 12 项文本摘要下游任务上测试了 PEGASUS 模型，结果表明该模型在全部 12 项下游任务数据集上取得了 SOTA 结果（以 ROUGE score 衡量）。此外，该模型在低资源（low-resource）文本摘要中也有非常良好的表现，在仅包含 1000 个示例的 6 个数据集上超越了以往的 SOTA 结果。
+
+### T-NLG/DeepSpeed
+
+[搞定千亿参数，训练时间只用1/3，微软全新工具催生超级NLP模型](https://mp.weixin.qq.com/s/4KIQQe_AfpLBOC9jL8puvQ)
+
+[https://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/](https://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/)
+
+[https://github.com/microsoft/DeepSpeed](https://github.com/microsoft/DeepSpeed)
+
 
 ### transformer应用于检索召回
 
@@ -715,7 +926,7 @@ ICLR2020 cmu+google：
 
 [Bert时代的创新（应用篇）：Bert在NLP各领域的应用进展](https://mp.weixin.qq.com/s/dF3PtiISVXadbgaG1rCjnA)
 
-### bert/transformer其他
+## bert/transformer其他
 
 [BERT系列文章汇总导读](https://mp.weixin.qq.com/s/oT2dtmfEQKyrpDTOrpzhWw)
 
@@ -731,6 +942,18 @@ ICLR2020 cmu+google：
 
 [https://github.com/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb](https://github.com/jalammar/jalammar.github.io/blob/master/notebooks/bert/A_Visual_Notebook_to_Using_BERT_for_the_First_Time.ipynb)
 
+[Transformers Assemble（PART I）](https://mp.weixin.qq.com/s/NZM05zyUkldOwpNIbsOtDQ) 讲了3篇
+
+[Transformers Assemble（PART II）](https://mp.weixin.qq.com/s/JdUVaQ3IyrflHvxIk5jYbQ) 又讲了三篇
+
+[站在BERT肩膀上的NLP新秀们（PART III）](https://mp.weixin.qq.com/s/CxcyX5V9kBQDW8A4g0uGNA)
+
+[BERT时代与后时代的NLP](https://mp.weixin.qq.com/s/U_pYc5roODcs_VENDoTbiQ)
+
+[新预训练模型CodeBERT出世，编程语言和自然语言都不在话下，哈工大、中山大学、MSRA出品](https://mp.weixin.qq.com/s/wmAu4810wrK2n-pDezAo0w)
+
+[AAAI 2020 \| BERT稳吗？亚马逊、MIT等提出针对NLP模型的对抗攻击框架TextFooler](https://mp.weixin.qq.com/s/3wPda43A-Jm6gl9ysxciEA)
+
 ## 对话
 
 ### 对话数据集
@@ -738,6 +961,10 @@ ICLR2020 cmu+google：
 [谷歌发布世界最大任务型对话数据集SGD，让虚拟助手更智能](https://mp.weixin.qq.com/s/hNghBThK4FX0ON4Ypp2HzQ)
 
 [Towards Scalable Multi-domain Conversational Agents: The Schema-Guided Dialogue Dataset](https://arxiv.org/abs/1909.05855)
+
+### 对话领域的传统模型
+
+[HMM模型在贝壳对话系统中的应用](https://mp.weixin.qq.com/s/AG_Khfb0D7Uo40puIVcx-Q)
 
 ### convai
 
@@ -759,6 +986,22 @@ ICLR2020 cmu+google：
 
 [生成式对话seq2seq：从rnn到transformer](https://mp.weixin.qq.com/s/qUxPgsgP-4XFmVMMzLH5Ow)
 
+### 开放领域聊天机器人
+
+[Towards a Human-like Open-Domain Chatbot](https://arxiv.org/abs/2001.09977)
+
+[不再鹦鹉学舌：26亿参数量，谷歌开放领域聊天机器人近似人类水平](https://mp.weixin.qq.com/s/TZJBSrp85p4gUY_aZY7gqw)
+
+### 问答系统
+
+[AAAI 2020 提前看 \| 三篇论文解读问答系统最新研究进展](https://mp.weixin.qq.com/s/ose5Yak8hsqEg2TGO2Mj9w)
+
+[Improving Question Generation with Sentence-level Semantic Matching and Answer Position Inferring](https://arxiv.org/pdf/1912.00879.pdf)
+
+[TANDA: Transfer and Adapt Pre-Trained Transformer Models for Answer Sentence Selection](https://arxiv.org/pdf/1911.04118.pdf)
+
+[On the Generation of Medical Question-Answer Pairs](https://arxiv.org/pdf/1811.00681.pdf)
+
 ## NER
 
 [OpenNRE 2.0：可一键运行的开源关系抽取工具包](https://mp.weixin.qq.com/s/vYJk6tm2EeY9znYWlXYbaA)
@@ -774,6 +1017,10 @@ ICLR2020 cmu+google：
 ## 关系提取
 
 [关系提取简述](https://mp.weixin.qq.com/s/4lcnqp60045CIHa_mMXgVw)
+
+## 常识知识与常识推理
+
+[AAAI 2020学术会议提前看：常识知识与常识推理](https://mp.weixin.qq.com/s/0CWrelur99lwyuIxSyJyxA)
 
 # 语音算法
 
@@ -918,6 +1165,12 @@ ICLR2020 cmu+google：
 
 [Joint Commonsense and Relation Reasoning for Image and Video Captioning](https://wuxinxiao.github.io/assets/papers/2020/C-R_reasoning.pdf)
 
+北京理工大学和阿里合作的一篇关于利用对象之间的关系进行图像和视频描述 (image caption/video caption) 的论文。大多数现有方法严重依赖于预训练的对象及其关系的检测器，因此在面临诸如遮挡，微小物体和长尾类别等检测挑战时可能效果不佳。
+
+在本文中，研究者提出了一种联合常识和关系推理的方法 (C-R Reasoning)，该方法利用先验知识进行图像和视频描述，而无需依赖任何目标检测器。先验知识提供对象之间的语义关系和约束，作为指导以建立概括对象关系的语义图，其中一些对象之间的关系是不能直接从图像或视频中获得。特别是，本文的方法是通过常识推理和关系推理的迭代学习算法交替实现的，常识推理将视觉区域嵌入语义空间以构建语义图，关系推理用于编码语义图以生成句子。作者在几个基准数据集上的实验验证了该方法的有效性。
+
+这篇论文并不是聚焦于常识知识和常识推理本身，而是联合常识和关系推理使得图像和视频描述中那些「难以捉摸」，「并非直接可见」的物体或关系现形，使得描述更加精准。
+
 ## 小视频推荐
 
 ### MMGCN
@@ -937,6 +1190,16 @@ ICLR2020 cmu+google：
 [让UP主不再为剪视频发愁，百度等提出用AI自动截取故事片段](https://mp.weixin.qq.com/s/yZ1lTEPVK1KaLr9__NC51Q)
 
 [TruNet: Short Videos Generation from Long Videos via Story-Preserving Truncation](https://arxiv.org/pdf/1910.05899v1.pdf)
+
+## AutoFlip
+
+[不想横屏看视频？谷歌开源框架AutoFlip一键截出最精彩竖版视频](https://mp.weixin.qq.com/s/Jtf7ZsploJ40-WninCPuVg)
+
+在使用过程中，只需要将一段视频和目标维度（如截取的长宽比类型）作为输入，AutoFlip 会分析视频内容并提出一个优化路径和裁剪策略，最后输出一段视频。
+
+[https://github.com/google/mediapipe](https://github.com/google/mediapipe)
+
+[https://github.com/google/mediapipe/blob/master/mediapipe/docs/autoflip.md](https://github.com/google/mediapipe/blob/master/mediapipe/docs/autoflip.md)
 
 ## 快手视频相关工作
 
@@ -977,6 +1240,10 @@ ICLR2020 cmu+google：
 [淘宝如何拥抱短视频时代？视频推荐算法实战](https://mp.weixin.qq.com/s/8N09Argm9sNJRYipq3Mipw)
 
 # GAN
+
+## GAN综述
+
+[密歇根大学最新28页综述论文《GANs生成式对抗网络综述：算法、理论与应用》，带你全面了解GAN技术趋势](https://mp.weixin.qq.com/s/31fvudco4KCRq-ngpS4dYQ)
 
 ## LOGAN
 
@@ -1022,6 +1289,14 @@ ICLR2020 cmu+google：
 
 本文还讨论了另一个问题——域的可伸缩性。这意味着它可以同时解决多个图像域的问题。本质上，这个架构依赖于StarGAN早期版本的成功，并为其添加了样式层。它由四个模块组成：第一个模块是生成器，它负责将输入图像转换为反映域特定样式的输出图像；接下来是映射网络转换器（Mapping Network Transformer），它将潜在代码转换为多个域的样式代码；第三个是样式编码器，它提取图像的样式并将其提供给生成器；最后，判别器可以从多个域中区分真实图像和伪图像。
 
+## nlp+gan
+
+[AAAI 2020 线上分享 \| Bert稳吗？解读NLP对抗模型新进展](https://mp.weixin.qq.com/s/Uh2b7XDR8ndAGYrk4oIwug)
+
+[Is BERT Really Robust? A Strong Baseline for Natural Language Attack on Text Classification and Entailment](https://arxiv.org/abs/1907.11932?context=cs)
+
+众所周知，CV 领域的 adversarial attack 被非常广泛的研究，但是在 NLP 领域的对抗攻击却因为文本的离散的特性而难以推进。对于 NLP 的模型来说，那些在人们眼里几乎没变的文本却会被模型非常不同地对待，甚至错判。这些是特别致命的、且急需研究的方向。这是一篇与 MIT 合作的 AAAI 2020 Oral 文章，自然语言对抗样本生成，我们将详细解读如何简单高效地生成自然语言对抗样本，并且高度 attack 文本分类和文本推测的 7 个数据集。
+
 # 多目标
 
 ## 多目标+推荐综述
@@ -1042,7 +1317,7 @@ ICLR2020 cmu+google：
 
 [https://daiwk.github.io/posts/dl-youtube-multitask.html](https://daiwk.github.io/posts/dl-youtube-multitask.html)
 
-# 推荐
+# 推荐系统
 
 [https://daiwk.github.io/posts/links-navigation-recommender-system.html](https://daiwk.github.io/posts/links-navigation-recommender-system.html)
 
@@ -1068,11 +1343,65 @@ ICLR2020 cmu+google：
 
 [深度推荐系统2019年度阅读收藏清单](https://mp.weixin.qq.com/s/u6r5FiPbfVF31Q38OIn6xA)
 
+## 推荐中的采样
+
+[浅谈个性化推荐系统中的非采样学习](https://mp.weixin.qq.com/s/OGLJx-1tGYYuLWFricfRKg)
+
+[Sampling-Bias-Corrected Neural Modeling for Large Corpus Item Recommendations](https://dl.acm.org/doi/10.1145/3298689.3346996)
+
+[推荐系统遇上深度学习(七十二)-[谷歌]采样修正的双塔模型](https://www.lizenghai.com/archives/38343.html)
+
 ## 序列建模
 
 [一文看懂序列推荐建模的最新进展与挑战](https://mp.weixin.qq.com/s/RQ1iBs8ftvNR0_xB7X8Erg)
 
 [从MLP到Self-Attention，一文总览用户行为序列推荐模型](https://mp.weixin.qq.com/s/aMqh79_jjgSCn1StuCvyRw)
+
+## 用户模型
+
+### PeterRec
+
+[仅需少量视频观看数据，即可精准推断用户习惯：腾讯、谷歌、中科大团队提出迁移学习架构PeterRec](https://mp.weixin.qq.com/s/PmVhAthYxiUspWic5Klpog)
+
+[Parameter-Efficient Transfer from Sequential Behaviors for User Modeling and Recommendation](https://arxiv.org/pdf/2001.04253.pdf)
+
+[https://github.com/fajieyuan/sigir2020_peterrec](https://github.com/fajieyuan/sigir2020_peterrec)
+
+搞一个pretrain-finetune的架构，学好一套用户的表示，可以给各种下游任务用。
+
+采用如下方式：
+
++ **无监督**地学习用户表示：使用**序列模型**，**预测**用户的**下一次点击**。为了能建模**超长**的u-i交互序列，使用类似NextItNet（[A Simple Convolutional Generative Network for Next Item Recommendation](https://arxiv.org/pdf/1808.05163.pdf)）的模型
++ 使用预训练好的模型去**有监督**地finetune下游任务
++ 在各个下游任务间，想要尽可能共享更多的网络参数：参考learning to learn，即一个网络的大部分参数可以其他参数来预测（一层里95%的参数可以通过剩下的5%的参数来预测）。文章提出了model patch(模型补丁)，每个模型补丁的参数量不到原始预训练模型里的卷积层参数的10%。通过加入模型补丁，不仅可以保留原来的预训练参数，还可以更好地适应下游任务。模型补丁有串行和并行两种加入方式。
+
+序列推荐模型:
+
++ RNN：强序列依赖
++ CNN：可并行，能比RNN叠更多层，所以准确率更高。难以建模长序列是因为卷积核一般都比较小（如3x3），但可以通过空洞(dilated)卷积来解决，可以使用不变的卷积核，指数级地扩充表示域。
++ 纯attention：可并行，例如SASRec（[Self-attentive sequential recommendation](https://arxiv.org/abs/1808.09781)）。但因为时间和存储消耗是序列长度的平方的复杂度。
+
+考虑到用户的点击序列往往成百上千，所以使用类似NextItNet的casual卷积，以及类似GRec（[Future Data Helps Training: Modeling Future Contexts for Session-based Recommendation](https://arxiv.org/abs/1906.04473)）的双向encoder的这种non-casual卷积。
+
+与推荐系统现有的transfer learning对比：
+
++ DUPN：
+  + 训练的时候就有多个loss。如果没有相应的loss和data，学好的用户表示效果就会很差。而本文只有一个loss，却能用在多个task上，所以算是一种multi-domain learning([Efficient parametrization of multi-domain deep neural networks](https://arxiv.org/abs/1803.10082))
+  + DUPN在用户和item特征上需要很多特征工程，并没有显式地对用户的行为序列建模
+  + DUPN要么finetune所有参数，要么只finetune最后一个分类层。PeterRec则是对网络的一小部分进行finetune，效果并不比全finetune差，比只finetune最后一个分类层要好很多
+
++ CoNet：杨强提出的[Conet: Collaborative cross networks for cross-domain recommendation](https://arxiv.org/abs/1804.06769)
+  + cross-domain用于推荐的一个网络。同时训练2个目标函数，一个表示source网络，一个表示target网络。
+  + pretrain+finetune效果不一定好，取决于预训练的方式、用户表示的表达能力、预训练的数据质量等
+
+预训练时没有\[TCL\]，fintune时加上。
+
++ 原domain $S$：有大量用户交互行为的图文或视频推荐
++ 目标domain $T$：可以是用户label很少的一些预测任务。例如用户可能喜欢的item、用户性别、用户年龄分桶等
+
+
+
+
 
 ## 召回
 
@@ -1092,11 +1421,15 @@ ICLR2020 cmu+google：
 
 ## 工业界的一些推荐应用
 
+### dlrm
+
+[Facebook深度个性化推荐系统经验总结(阿里内部分享PPT))](https://mp.weixin.qq.com/s/_LBSM_E0tNqVgLhLtULmUQ)
+
 ### 混合推荐架构
 
 [混合推荐系统就是多个推荐系统“大杂烩”吗?](https://mp.weixin.qq.com/s/-OwxXZmbjrcpDtH-hWN-oQ)
 
-### instagram
+### instagram推荐系统
 
 [Facebook首次揭秘：超过10亿用户使用的Instagram推荐算法是怎样炼成的？](https://mp.weixin.qq.com/s/LTFOw1jSgMogANT8gmCTpw)
 
@@ -1124,7 +1457,14 @@ ICLR2020 cmu+google：
 
 [推荐系统之数据与特征工程](https://mp.weixin.qq.com/s/FbIO1C4Xt2WIdIln9SY8Ug)
 
+
 # CTR预估
+
+## position bias
+
+[搜索、推荐业务中 - position bias的工业界、学术界 发展历程 - 系列1(共计2)](https://zhuanlan.zhihu.com/p/79904391)
+
+[推荐系统遇上深度学习(七十一)-\[华为\]一种消除CTR预估中位置偏置的框架](https://www.jianshu.com/p/37768b399cd8)
 
 ## 传统ctr
 
@@ -1137,6 +1477,8 @@ ICLR2020 cmu+google：
 ## ctr特征
 
 [稠密特征加入CTR预估模型的方法汇总](https://mp.weixin.qq.com/s/xhxBbSYva4g9wUvQ5RIdVA)
+
+[PAL: A Position-bias Aware Learning Framework for CTR Prediction in Live Recommender Systems](https://dl.acm.org/citation.cfm?id=3347033)
 
 ## HugeCTR
 
@@ -1154,6 +1496,12 @@ HugeCTR 是首个全部解决以上问题的开源 GPU 训练框架，与现有 
 
 [https://daiwk.github.io/posts/links-navigation-gnn.html](https://daiwk.github.io/posts/links-navigation-gnn.html)
 
+## GNN数据集
+
+[Bengio参与、LeCun点赞：图神经网络权威基准现已开源](https://mp.weixin.qq.com/s/ldkYTvess0Wte5HzKbMBfQ)
+
+[https://github.com/graphdeeplearning/benchmarking-gnns](https://github.com/graphdeeplearning/benchmarking-gnns)
+
 ## GNN综述
 
 [图神经网络（Graph Neural Networks，GNN）综述](https://mp.weixin.qq.com/s/wgR-NURxXpZdngFicgj7Sg)
@@ -1161,6 +1509,12 @@ HugeCTR 是首个全部解决以上问题的开源 GPU 训练框架，与现有 
 [A Comprehensive Survey on Graph Neural Networks](https://arxiv.org/abs/1901.00596)
 
 [网络图模型知识点综述](https://mp.weixin.qq.com/s/b_QqUxFbQ70xmsxGMtoaDQ)
+
+[想入门图深度学习？这篇55页的教程帮你理清楚了脉络](https://mp.weixin.qq.com/s/hyHUkiEyXGn3v-M0d0igVg)
+
+[A Gentle Introduction to Deep Learning for Graphs](https://arxiv.org/pdf/1912.12693.pdf)
+
+[2020年，图机器学习将走向何方？](https://mp.weixin.qq.com/s/YC2gvjbSBs2qOgix6wVhuQ)
 
 ### GNN理论研究
 
@@ -1245,6 +1599,8 @@ HugeCTR 是首个全部解决以上问题的开源 GPU 训练框架，与现有 
 
 ## RL历史
 
+[漫画带你图解强化学习](https://mp.weixin.qq.com/s/MdtjTRGV813t6Mn3JES-pw)
+
 [强化学习70年演进：从精确动态规划到基于模型](https://mp.weixin.qq.com/s/sIS9VvZ3yTtn6puJScuHig)
 
 ## MAB相关
@@ -1322,6 +1678,10 @@ UDRL学会将这些输入观察结果解释为命令，并根据过去(可能是
 
 ## 游戏+RL
 
+### 游戏AI历史
+
+[从α到μ：DeepMind棋盘游戏AI进化史](https://mp.weixin.qq.com/s/IcaxjdDLjihCK-nKBlJVWg)
+
 ### 绝悟
 
 [不服SOLO：腾讯绝悟AI击败王者荣耀顶尖职业玩家，论文入选AAAI，未来将开源](https://mp.weixin.qq.com/s/_qbzHG1IEOvcCpvlAKP0Dw)
@@ -1341,6 +1701,14 @@ UDRL学会将这些输入观察结果解释为命令，并根据过去(可能是
 ## RL+因果
 
 [华为诺亚ICLR 2020满分论文：基于强化学习的因果发现算法](https://mp.weixin.qq.com/s/mCOSvEwTNoX-x3PphLUjhw)
+
+## RL+Active learning
+
+[Ready Policy One: World Building Through Active Learning](https://arxiv.org/pdf/2002.02693.pdf)
+
+基于模型的强化学习（Model-Based Reinforcement Learning，MBRL）为样本高效学习提供了一个有前途的方向，通常可以实现连续控制任务（continuous control task）的 SOTA 结果。然而，许多现有的 MBRL 方法依赖于贪婪策略（greedy policy）与探索启发法的结合，甚至那些利用原则试探索奖金（exploration bonus）的方法也能够以特定方式构建双重目标。
+
+在本文中，研究者介绍了 Ready Policy One（RP1），这是一种将 MBRL 视为主动学习问题的框架。研究者的目标是在尽可能少样本中改进世界模型（world model）。RP1 通过利用混合目标函数来实现这一目标，该函数在优化过程中的适应性调整至关重要，从而使算法可以权衡不同学习阶段的奖励与探索。此外，一旦拥有足够丰富的轨迹批（trajectory batch）来改进模型，研究者会引入一种原则式机制（principled mechanism）来终止样本收集。
 
 # Auto-ML
 
@@ -1366,6 +1734,30 @@ UDRL学会将这些输入观察结果解释为命令，并根据过去(可能是
 
 [NAT: Neural Architecture Transformer for Accurate and Compact Architectures](https://papers.nips.cc/paper/8362-nat-neural-architecture-transformer-for-accurate-and-compact-architectures.pdf)
 
+## NASP
+
+[比可微架构搜索DARTS快10倍，第四范式提出优化NAS算法](https://mp.weixin.qq.com/s/w9CjMXRmU_XgwDKmvsKNbg)
+
+神经架构搜索（NAS）因其比手工构建的架构更能识别出更好的架构而备受关注。近年来，可微分的搜索方法因可以在数天内获得高性能的 NAS 而成为研究热点。然而，由于超级网的建设，其仍然面临着巨大的计算成本和性能低下的问题。
+
+在本文中，我们提出了一种基于近端迭代（NASP）的高效 NAS 方法。与以往的工作不同，NASP 将搜索过程重新定义为具有离散约束的优化问题和模型复杂度的正则化器。由于新的目标是难以解决的，我们进一步提出了一种高效的算法，由近端启发法进行优化。
+
+通过这种方式，NASP 不仅比现有的可微分的搜索方法速度快，而且还可以找到更好的体系结构并平衡模型复杂度。最终，通过不同任务的大量实验表明，NASP 在测试精度和计算效率上均能获得更好的性能，在发现更好的模型结构的同时，速度比 DARTS 等现有技术快 10 倍以上。此外，NASP 消除了操作之间的关联性。
+
+[Efficient Neural Architecture Search via Proximal Iterations](https://arxiv.org/abs/1905.13577)
+
+[https://github.com/xujinfan/NASP-codes](https://github.com/xujinfan/NASP-codes)
+
+### NASP+推荐系统
+
+[Efficient Neural Interaction Functions Search for Collaborative Filtering](https://arxiv.org/pdf/1906.12091)
+
+[https://github.com/quanmingyao/SIF](https://github.com/quanmingyao/SIF)
+
+[https://www.tuijianxitong.cn/cn/school/openclass/27](https://www.tuijianxitong.cn/cn/school/openclass/27)
+
+[https://www.tuijianxitong.cn/cn/school/video/26](https://www.tuijianxitong.cn/cn/school/video/26)
+
 ## automl+nlp
 
 [超强大自动NLP工具！谷歌推出AutoML自然语言预训练模型](https://mp.weixin.qq.com/s/sh5akbFh_fTTp0ku0LRnvw)
@@ -1386,9 +1778,18 @@ UDRL学会将这些输入观察结果解释为命令，并根据过去(可能是
 
 [深度学习助力数据压缩，一文读懂相关理论](https://mp.weixin.qq.com/s/YBJwLqqL7aVUTG0LaUbwxw)
 
+### layer dropout
+
+[模型压缩实践系列之——layer dropout](https://mp.weixin.qq.com/s/K1R_thLJqegm6QDj2GA5ww)
+
 ## 剪枝相关
 
 [2019年的最后一个月，这里有6种你必须要知道的最新剪枝技术](https://mp.weixin.qq.com/s/dABJbmPyEyKugdntHJqwsw)
+
+
+### slimmable networks
+
+[深度学习模型剪枝：Slimmable Networks三部曲](https://mp.weixin.qq.com/s/Yiu3GNzzWtuX7aszyKKt5A)
 
 ### TAS(NAS+剪枝)
 
@@ -1557,7 +1958,41 @@ MobileNetV3 语义分割的 TensorFlow 版开源实现可以在 DeepLab 中找�
 
 [阿里开源MNNKit：基于MNN的移动端深度学习SDK，支持安卓和iOS](https://mp.weixin.qq.com/s/r3GxEfcrmlps03Yxw7kdaw)
 
+## deepshift
+
+[把CNN里的乘法全部去掉会怎样？华为提出移动端部署神经网络新方法](https://mp.weixin.qq.com/s/ufn04nrOrD6XuziH9H3Ehw)
+
+[DeepShift: Towards Multiplication-Less Neural Networks](https://arxiv.org/pdf/1905.13298.pdf)
+
+[https://github.com/mostafaelhoushi/DeepShift](https://github.com/mostafaelhoushi/DeepShift)
+
+## 传感器相关
+
+[基于传感器的人类行为识别DL方法难在哪？这篇综述列了11项挑战](https://mp.weixin.qq.com/s/OnUaZyO9ZMmQlpacKbU7ug)
+
 # 架构
+
+## 分布式机器学习
+
+[MLSys提前看 \| 机器学习的分布式优化方法](https://mp.weixin.qq.com/s/dc2KJENJuwOJE6Mg8sfvTA)
+
+[机器学习系统(MLsys)综述：分布式、模型压缩与框架设计](https://mp.weixin.qq.com/s/lG74FQr-TIff-yaWfWFx1A)
+
+## JAX
+
+[DeepMind发布神经网络、强化学习库，网友：推动JAX发展](https://mp.weixin.qq.com/s/6p-dYObU0p8iayS3Ba4YtA)
+
+[​Jax 生态再添新库：DeepMind 开源 Haiku、RLax](https://mp.weixin.qq.com/s/XMgskf2b7U6N8OZOPZ4fSw)
+
+Haiku：[https://github.com/deepmind/haiku](https://github.com/deepmind/haiku)
+
+RLax：[https://github.com/deepmind/rlax](https://github.com/deepmind/rlax)
+
+# trax
+
+[谷歌大脑开源Trax代码库，你的深度学习进阶路径](https://mp.weixin.qq.com/s/tLAzDnAr5a2TwafE4Jg91g)
+
+[https://github.com/google/trax](https://github.com/google/trax)
 
 ## spark
 
@@ -1588,6 +2023,13 @@ MobileNetV3 语义分割的 TensorFlow 版开源实现可以在 DeepLab 中找�
 [召唤超参调优开源新神器：集XGBoost、TensorFlow、PyTorch、MXNet等十大模块于一身](https://mp.weixin.qq.com/s/UYhK1guQMnrjQ5KoZ4TRIg)
 
 [https://github.com/optuna/optuna](https://github.com/optuna/optuna)
+
+## DALI
+
+[英伟达DALI加速技巧：让数据预处理速度比原生PyTorch快4倍](https://mp.weixin.qq.com/s/BUHEkeN8nOyf5y9pf901gA)
+
+DALI 和 TensorFlow 自带的 DataLoader 类似，是一个专门用于加速数据预处理过程的库。英伟达数据加载库 DALI 是一个便捷式开源库，用于图像或视频的解码及增强，从而加速深度学习应用。通过并行训练和预处理过程，减少了延迟及训练时间，并为当下流行的深度学习框架中的内置数据加载器及数据迭代器提供了一个嵌入式替代器，便于集成或重定向至不同框架。
+
 
 ## tf
 
@@ -1659,6 +2101,10 @@ MobileNetV3 语义分割的 TensorFlow 版开源实现可以在 DeepLab 中找�
 
 [跻身世界顶级AI项目：腾讯机器学习平台Angel从LF AI基金会毕业](https://mp.weixin.qq.com/s/Tyv3BsPsh6HSNomZd10i2Q)
 
+### bytegraph
+
+[字节跳动自研万亿级图数据库 & 图计算实践](https://mp.weixin.qq.com/s/uYP8Eyz36JyTWska0hvtuA)
+
 ## tensorlayer
 
 [几行代码轻松实现，Tensorlayer 2.0推出深度强化学习基准库](https://mp.weixin.qq.com/s/4nbqS7YCUAsOVPOQtg5jDQ)
@@ -1702,17 +2148,21 @@ tf版本：
 
 # 课程资源
 
+## 分布式系统课程
+
+[MIT经典课程“分布式系统”视频版上线！网友：终于来了非偷拍清晰版本](https://mp.weixin.qq.com/s/xzVedmaoNMtDxIELr2sNqQ)
+
 ## 微软ml基础课程(win10版)
 
 [GitHub 6600星，面向中国人：微软AI教育与学习共建社区2.0登场！](https://mp.weixin.qq.com/s/45Wow1_kO_X6S0bm8j5bMg)
 
 [https://github.com/microsoft/ai-edu](https://github.com/microsoft/ai-edu)
 
-## 无监督
+## 无监督课程
 
 [14周无监督学习课程，UC伯克利出品，含课件、视频](https://mp.weixin.qq.com/s/leQEWqfBfLfAnyD0LU0uqA)
 
-## tf2.0
+## tf2.0课程
 
 [全新版本，李沐《动手学深度学习》TF2.0版本来了](https://mp.weixin.qq.com/s/XNPWUui4Z9tQ1iKOEV43ZQ)
 
@@ -1742,7 +2192,7 @@ TensorFlow 2.0 深度学习开源书：
 
 [快速掌握TensorFlow中张量运算的广播机制](https://mp.weixin.qq.com/s/PXORGN7O2uuKPzIK2w1nDg)
 
-### tf 2.0分布式
+### tf 2.0分布式课程
 
 [TensorFlow 2.0 分布式训练](https://mp.weixin.qq.com/s/QINaa9iBu0Y3NXRMPAViow)
 
@@ -1754,7 +2204,7 @@ TensorFlow 2.0 深度学习开源书：
 
 [https://www.youtube.com/playlist?list=PLKlhhkvvU8-aXmPQZNYG_e-2nTd0tJE8v](https://www.youtube.com/playlist?list=PLKlhhkvvU8-aXmPQZNYG_e-2nTd0tJE8v)
 
-## 统计学习方法
+## 统计学习方法课程
 
 [学它！李航《统计学习方法》课件，清华大学深圳研究院教授制作](https://mp.weixin.qq.com/s/KJSh0NxoPml7Ss4w8sSbbA)
 
@@ -1762,7 +2212,7 @@ TensorFlow 2.0 深度学习开源书：
 
 [GitHub趋势榜首：李航《统计学习方法》Python代码实现](https://mp.weixin.qq.com/s/sGXNxICjXWswMY15aVoNhg)
 
-## Colab相关
+## Colab相关课程
 
 [帮初学者快速上手机器学习，这有一份Colab资源大全](https://mp.weixin.qq.com/s/YlypXT8sQV9_89rpUWp71w)
 
@@ -1772,7 +2222,11 @@ TensorFlow 2.0 深度学习开源书：
 
 [https://github.com/toxtli/awesome-machine-learning-jupyter-notebooks-for-colab](https://github.com/toxtli/awesome-machine-learning-jupyter-notebooks-for-colab)
 
-## nlp+社交
+## 李宏毅机器学习课程
+
+[你离开学只差这个视频：李宏毅机器学习2020版正式开放上线](https://mp.weixin.qq.com/s/33pIcWxm3tPay-e2riQ5Sw)
+
+## nlp+社交课程
 
 [社科NLP课程来了：斯坦福开年公开课主讲NLP和社交网络应用](https://mp.weixin.qq.com/s/lQolkb1yzfi2zVlqVHPPGQ)
 
@@ -1784,9 +2238,13 @@ TensorFlow 2.0 深度学习开源书：
 
 ppt也在这个网页上
 
-## deeplearning.ai
+## deeplearning.ai课程
 
 [吴恩达deeplearning.ai新课上线：TensorFlow移动和web端机器学习](https://mp.weixin.qq.com/s/OutkkfCpJND9RBqqmUB9dg)
+
+## 多任务与元学习课程
+
+[斯坦福CS330 2019秋季课程视频全新上线，专注多任务与元学习](https://mp.weixin.qq.com/s/cekZ78Grw4Bu_umWaQDUdw)
 
 # 量子计算
 
@@ -1824,6 +2282,10 @@ ppt：[https://pan.baidu.com/s/1Zj59PAe4hYhDDh5zd4gWZg](https://pan.baidu.com/s/
 
 [阿里的AI安全武功秘籍：迁移+元学习开路，小样本数据能用跨模态](https://mp.weixin.qq.com/s/8X1REQzCVwxqxzutwMh28g)
 
+# 运筹物流相关
+
+[疫情期间如何让快递送得更快？菜鸟网络AAAI论文用深度学习驱动MIP求解](https://mp.weixin.qq.com/s/9WgKLVKlZQ1KIp48nOKCtg)
+
 # 多模态
 
 ## 多模态综述
@@ -1831,6 +2293,7 @@ ppt：[https://pan.baidu.com/s/1Zj59PAe4hYhDDh5zd4gWZg](https://pan.baidu.com/s/
 [【IEEE Fellow何晓东&邓力】多模态智能论文综述：表示学习，信息融合与应用，259篇文献带你了解AI热点技](https://mp.weixin.qq.com/s/EMWpBP5iB1Qrleo3XNjbuQ)
 
 [Multimodal Intelligence: Representation  Learning, Information Fusion, and Applications](https://arxiv.org/abs/1911.03977)
+
 
 # 机器人
 
@@ -1858,13 +2321,27 @@ ppt：[https://pan.baidu.com/s/1Zj59PAe4hYhDDh5zd4gWZg](https://pan.baidu.com/s/
 
 [用户增长怎么做？UG涉及哪些技术领域](https://mp.weixin.qq.com/s/bYD45hsmvXPMPio48Mu9Xw)
 
+[「拥抱产业互联网」一年后，腾讯首次完整披露20年技术演进之路](https://mp.weixin.qq.com/s/AP6vaTtC4PBAhA92M6ssvQ)
+
+[阿里达摩院发布2020十大科技趋势！量子计算、类脑计算系统崛起](https://mp.weixin.qq.com/s/E0-I066FTT5miFH4zGZWIg)
+
+[从工具选择到团队沟通，看ML工程师一步步打造生产级机器学习](https://mp.weixin.qq.com/s/fjnXy6u4Z2XINvNJYXTzPA)
+
 # 一些综合性的网址
 
 ## 一些笔记
 
 [超干货！一位博士生80篇机器学习相关论文及笔记下载](https://mp.weixin.qq.com/s/LIJU1WTL7ugwDziQDyNyBA)
 
+[机器学习研究者的养成指南，吴恩达建议这么读论文](https://mp.weixin.qq.com/s/QMDNKC0-sZu5p8LdMIULfg)
+
 ## 各类数据集
+
+[https://datasetsearch.research.google.com/](https://datasetsearch.research.google.com/)
+
+### 数据集搜索
+
+[谷歌数据集搜索正式版出炉：全面升级，覆盖2500万数据集](https://mp.weixin.qq.com/s/cx06tZBSsEAlxaT5S8n0gA)
 
 [https://www.datasetlist.com/](https://www.datasetlist.com/)
 
@@ -1885,12 +2362,12 @@ ppt：[https://pan.baidu.com/s/1Zj59PAe4hYhDDh5zd4gWZg](https://pan.baidu.com/s/
 [https://github.com/p-christ/Deep-Reinforcement-Learning-Algorithms-with-PyTorch](https://github.com/p-christ/Deep-Reinforcement-Learning-Algorithms-with-PyTorch)
 
 
-# 其他
+# 一些有趣应用
+
+[一键抠图，毛发毕现：这个GitHub项目助你快速PS](https://mp.weixin.qq.com/s/mRYp8bvkSjBTP3xdr4p5dQ)
+
+[https://github.com/pymatting/pymatting](https://github.com/pymatting/pymatting)
 
 [“狗屁不通文章生成器”登顶GitHub热榜，分分钟写出万字形式主义大作](https://mp.weixin.qq.com/s/gp9eFeM5Q85pAazWDuG9_g)
 
-[「拥抱产业互联网」一年后，腾讯首次完整披露20年技术演进之路](https://mp.weixin.qq.com/s/AP6vaTtC4PBAhA92M6ssvQ)
-
-[Jeff Dean谈2020ML：专用芯片、多模态多任务学习，社区不用痴迷SOTA](https://mp.weixin.qq.com/s/w8zGd9x7li-1UA0PNvM9_g)
-
-[阿里达摩院发布2020十大科技趋势！量子计算、类脑计算系统崛起](https://mp.weixin.qq.com/s/E0-I066FTT5miFH4zGZWIg)
+[实时可视化Debug：VS Code 开源新工具，一键解析代码结构](https://mp.weixin.qq.com/s/943dZHSZyQbjlxTpv54w7Q)

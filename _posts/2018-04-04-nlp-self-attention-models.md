@@ -121,7 +121,7 @@ attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt {d_k}})V
 
 ## multi-head attention
 
-+ Query，Key，Value最开始都是`\(d_{model}\)`维，各自通过h个线性变换拆成h部分，每一部分的大小是`\(d_k\)`，`\(d_k\)`和`\(d_v\)`（`\(d_k=d_v=d_{model}/h\)`）。
++ Query，Key，Value最开始都是`\(d_{model}\)`维，各自通过h个线性变换(即每个`\(W^Q,W^K,W^V\)`)拆成h部分，每一部分的大小是`\(d_k\)`，`\(d_k\)`和`\(d_v\)`（`\(d_k=d_v=d_{model}/h\)`）。
 + 然后这h部分，每部分各自的q/k/v做一个attention的操作得到对应的attention
 + 最后把这h个attention给concat到一起
 
