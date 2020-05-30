@@ -37,3 +37,49 @@ ALBERT 通过两个参数削减技术克服了扩展预训练模型面临的主�
 为了进一步提升 ALBERT 的性能，研究者还引入了一个自监督损失函数，用于句子级别的预测（SOP）。SOP 主要聚焦于句间连贯，用于解决原版 BERT 中下一句预测（NSP）损失低效的问题。
 
 参考[谷歌全新轻量级新模型ALBERT刷新三大NLP基准！](https://mp.weixin.qq.com/s/-Kzr4w7pv2DCOUlilg2Wfg)
+
+
+
+
+
+例子，albert_tiny：
+
+input_ids先查word_embeddings(`\(V\times E=21118*128)`)，得到dim=128的表示，再查word_embeddings_2(`\(E\times M =128*312\)`)，得到dim=312的表示。
+
+搞positionembedding时，并不用输入0 1 2...，只需要做一些slice的变换就行了
+
+```python
+    with tf.control_dependencies([assert_op]):
+      full_position_embeddings = tf.get_variable(
+          name=position_embedding_name,
+          shape=[max_position_embeddings, width],
+          initializer=create_initializer(initializer_range))
+      # Since the position embedding table is a learned variable, we create it
+      # using a (long) sequence length `max_position_embeddings`. The actual
+      # sequence length might be shorter than this, for faster training of
+      # tasks that do not have long sequences.
+      #    
+      # So `full_position_embeddings` is effectively an embedding table
+      # for position [0, 1, 2, ..., max_position_embeddings-1], and the current
+      # sequence has positions [0, 1, 2, ... seq_length-1], so we can just
+      # perform a slice.
+      position_embeddings = tf.slice(full_position_embeddings, [0, 0],
+                                     [seq_length, -1]) 
+      num_dims = len(output.shape.as_list())
+
+      # Only the last two dimensions are relevant (`seq_length` and `width`), so
+      # we broadcast among the first dimensions, which is typically just
+      # the batch size.
+      position_broadcast_shape = [] 
+      for _ in range(num_dims - 2):
+        position_broadcast_shape.append(1)
+      position_broadcast_shape.extend([seq_length, width])
+      position_embeddings = tf.reshape(position_embeddings,
+                                       position_broadcast_shape)
+      output += position_embeddings
+```
+
+然后会通过create_attention_mask_from_input_mask把input_ids和input_mask搞一下，得到attention_mask去和attention做mask，主要是算loss啥的，把后面的mask掉不算
+
+
+
