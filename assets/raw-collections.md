@@ -143,6 +143,7 @@ tags: [合辑, ]
     - [T-NLG/DeepSpeed](#t-nlgdeepspeed)
     - [transformer应用于检索召回](#transformer%e5%ba%94%e7%94%a8%e4%ba%8e%e6%a3%80%e7%b4%a2%e5%8f%ac%e5%9b%9e)
     - [一些bert/transformer的应用](#%e4%b8%80%e4%ba%9bberttransformer%e7%9a%84%e5%ba%94%e7%94%a8)
+    - [poly-encoder](#poly-encoder)
   - [bert/transformer其他](#berttransformer%e5%85%b6%e4%bb%96)
   - [对话](#%e5%af%b9%e8%af%9d)
     - [对话数据集](#%e5%af%b9%e8%af%9d%e6%95%b0%e6%8d%ae%e9%9b%86)
@@ -1286,6 +1287,11 @@ ICLR2020 cmu+google：
 [美团BERT的探索和实践](https://mp.weixin.qq.com/s/qfluRDWfL40E5Lrp5BdhFw)
 
 [Bert时代的创新（应用篇）：Bert在NLP各领域的应用进展](https://mp.weixin.qq.com/s/dF3PtiISVXadbgaG1rCjnA)
+
+
+#### poly-encoder
+
+[https://zhuanlan.zhihu.com/p/119444637](https://zhuanlan.zhihu.com/p/119444637)
 
 ### bert/transformer其他
 

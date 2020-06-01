@@ -926,6 +926,11 @@ ICLR2020 cmu+google：
 
 [Bert时代的创新（应用篇）：Bert在NLP各领域的应用进展](https://mp.weixin.qq.com/s/dF3PtiISVXadbgaG1rCjnA)
 
+
+### poly-encoder
+
+[https://zhuanlan.zhihu.com/p/119444637](https://zhuanlan.zhihu.com/p/119444637)
+
 ## bert/transformer其他
 
 [BERT系列文章汇总导读](https://mp.weixin.qq.com/s/oT2dtmfEQKyrpDTOrpzhWw)
