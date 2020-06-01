@@ -143,6 +143,43 @@ Self-Attention即**K=V=Q**，例如输入一个句子，那么里面的**每个�
 + 是否可以并行: multi-head Attention和CNN一样不依赖于前一时刻的计算，可以很好的并行，优于 RNN。
 + 长距离依赖: 由于Self-Attention是每个词和所有词都要计算Attention，所以不管他们中间有多长距离，最大的路径长度也都只是 1。可以捕获长距离依赖关系。
 
+decoder中的masked att：
+
+参考[https://zhuanlan.zhihu.com/p/79872507](https://zhuanlan.zhihu.com/p/79872507)
+
+每个词只能看到他前面的词，后面的要mask掉
+
+<html>
+<br/>
+<img src='../assets/mask-att-1.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+在gpt-2中，就是把要mask的乘以负无穷。qk如下：
+
+<html>
+<br/>
+<img src='../assets/mask-att-2.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+乘以mask矩阵后如下：
+
+<html>
+<br/>
+<img src='../assets/mask-att-3.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+计算softmax后如下：
+
+<html>
+<br/>
+<img src='../assets/mask-att-4.png' style='max-height: 200px'/>
+<br/>
+</html>
+
+
 ## 对比rnn/cnn/transformer
 
 当然，在讲t2t的时候，就讲到了[https://daiwk.github.io/posts/platform-tensor-to-tensor.html#426-why-self-attention](https://daiwk.github.io/posts/platform-tensor-to-tensor.html#426-why-self-attention)

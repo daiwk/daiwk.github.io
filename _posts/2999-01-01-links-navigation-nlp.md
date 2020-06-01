@@ -107,6 +107,25 @@ tags: [nlp, ]
 
 ### teacher forcing
 
+参考[https://zhuanlan.zhihu.com/p/93030328](https://zhuanlan.zhihu.com/p/93030328)
+
+Teacher Forcing 是一种用于序列生成任务的训练技巧，与Autoregressive模式相对应，这里阐述下两者的区别：
+
+Autoregressive 模式下，在`\(t\)`时刻decoder模块的输入是`\(t-1\)`时刻的**输出`\(y_{t-1}\)`**。这时候我们称 `\(y_{t-1}\)` 为当前预测步的context;
+Teacher-Forcing 模式下，在`\(t\)`时刻decoder模块的输入是Ground-truth语句中位置的`\(y^{*}_{t-1}\)`单词。这时候我们称 `\(y^{*}_{t-1}\)`为当前预测步的context；
+
+Teacher-Forcing 技术之所以作为一种有用的训练技巧，主要是因为：
+
++ Teacher-Forcing能够在**训练**的时候**矫正模型的预测**，避免在序列生成的过程中误差进一步放大。
++ Teacher-Forcing能够极大的**加快模型的收敛速度**，令模型训练过程更加快&平稳。
++ Teacher-Forcing技术是保证Transformer模型能够在训练过程中**完全并行计算所有token**的关键技术。
+
+Teacher Forcing的问题(后面两个是acl2019最佳论文提出的)：
+
++ 最常见的问题就是Exposure Bias了。由于训练和预测的时候decode行为的不一致， 导致预测单词（predict words）在训练和预测的时候是从不同的分布中推断出来的。而这种不一致导致训练模型和预测模型直接的Gap，就叫做Exposure Bias。
++ Teacher-Forcing技术在解码的时候生成的字符都受到了 Ground-Truth 的约束，希望模型生成的结果都必须和参考句一一对应。这种约束在训练过程中**减少模型发散**，加快收敛速度。但是一方面也**扼杀了翻译多样性**的可能。
++ Teacher-Forcing技术在这种约束下，还会导致一种叫做Overcorrect(矫枉过正)的问题，导致生成的语句不通顺。
+
 参考[ACL2019最佳论文冯洋：Teacher Forcing亟待解决 ，通用预训练模型并非万能](https://mp.weixin.qq.com/s/RNaFuacpbQ32OtIUthcPRQ)
 
 [Bridging the Gap between Training and Inference for Neural Machine Translation](https://arxiv.org/abs/1906.02448)
