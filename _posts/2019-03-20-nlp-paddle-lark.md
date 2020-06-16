@@ -9,45 +9,45 @@ tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, vilbert, xlm, laser
 
 <!-- TOC -->
 
-- [小结](#%e5%b0%8f%e7%bb%93)
+- [小结](#小结)
 - [bert](#bert)
-  - [finetune和跑预测并save模型](#finetune%e5%92%8c%e8%b7%91%e9%a2%84%e6%b5%8b%e5%b9%b6save%e6%a8%a1%e5%9e%8b)
-  - [线上infer部分](#%e7%ba%bf%e4%b8%8ainfer%e9%83%a8%e5%88%86)
+  - [finetune和跑预测并save模型](#finetune和跑预测并save模型)
+  - [线上infer部分](#线上infer部分)
 - [ernie](#ernie)
   - [ernie(baiduNLP)](#erniebaidunlp)
   - [ernie2.0(baidunlp)](#ernie20baidunlp)
-  - [ernie(清华ACL2019版)](#ernie%e6%b8%85%e5%8d%8eacl2019%e7%89%88)
-    - [模型结构](#%e6%a8%a1%e5%9e%8b%e7%bb%93%e6%9e%84)
-    - [finetune方法](#finetune%e6%96%b9%e6%b3%95)
+  - [ernie(清华ACL2019版)](#ernie清华acl2019版)
+    - [模型结构](#模型结构)
+    - [finetune方法](#finetune方法)
 - [XLMs/MASS/UNILM](#xlmsmassunilm)
   - [XLM(facebook2019)](#xlmfacebook2019)
   - [LASER(facebook2018)](#laserfacebook2018)
   - [MASS(microsoft)](#massmicrosoft)
   - [UNILM(microsoft)](#unilmmicrosoft)
-- [UER框架](#uer%e6%a1%86%e6%9e%b6)
+- [UER框架](#uer框架)
 - [Whole Word Masking BERT](#whole-word-masking-bert)
 - [xlnet](#xlnet)
 - [RoBERTa](#roberta)
 - [ALBERT](#albert)
 - [DistilBERT](#distilbert)
-- [移动端部署](#%e7%a7%bb%e5%8a%a8%e7%ab%af%e9%83%a8%e7%bd%b2)
-- [中文预训练模型汇总](#%e4%b8%ad%e6%96%87%e9%a2%84%e8%ae%ad%e7%bb%83%e6%a8%a1%e5%9e%8b%e6%b1%87%e6%80%bb)
-  - [roberta中文](#roberta%e4%b8%ad%e6%96%87)
-  - [albert中文](#albert%e4%b8%ad%e6%96%87)
-  - [xlnet中文](#xlnet%e4%b8%ad%e6%96%87)
+- [移动端部署](#移动端部署)
+- [中文预训练模型汇总](#中文预训练模型汇总)
+  - [roberta中文](#roberta中文)
+  - [albert中文](#albert中文)
+  - [xlnet中文](#xlnet中文)
 - [TinyBert](#tinybert)
-- [SenseBert：解决歧义](#sensebert%e8%a7%a3%e5%86%b3%e6%ad%a7%e4%b9%89)
-- [bert的可解释性](#bert%e7%9a%84%e5%8f%af%e8%a7%a3%e9%87%8a%e6%80%a7)
-- [bert相关模型的对比与分析](#bert%e7%9b%b8%e5%85%b3%e6%a8%a1%e5%9e%8b%e7%9a%84%e5%af%b9%e6%af%94%e4%b8%8e%e5%88%86%e6%9e%90)
+- [SenseBert：解决歧义](#sensebert解决歧义)
+- [bert的可解释性](#bert的可解释性)
+- [bert相关模型的对比与分析](#bert相关模型的对比与分析)
 - [faster transformer](#faster-transformer)
-- [bert加速方法](#bert%e5%8a%a0%e9%80%9f%e6%96%b9%e6%b3%95)
-- [多模态bert](#%e5%a4%9a%e6%a8%a1%e6%80%81bert)
+- [bert加速方法](#bert加速方法)
+- [多模态bert](#多模态bert)
   - [vilbert](#vilbert)
   - [VLbert](#vlbert)
-- [bert的一些常见问题](#bert%e7%9a%84%e4%b8%80%e4%ba%9b%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98)
-  - [为什么不用hierarchical softmax](#%e4%b8%ba%e4%bb%80%e4%b9%88%e4%b8%8d%e7%94%a8hierarchical-softmax)
-- [对数字的认知](#%e5%af%b9%e6%95%b0%e5%ad%97%e7%9a%84%e8%ae%a4%e7%9f%a5)
-- [与rl的结合](#%e4%b8%8erl%e7%9a%84%e7%bb%93%e5%90%88)
+- [bert的一些常见问题](#bert的一些常见问题)
+  - [为什么不用hierarchical softmax](#为什么不用hierarchical-softmax)
+- [对数字的认知](#对数字的认知)
+- [与rl的结合](#与rl的结合)
 
 <!-- /TOC -->
 
@@ -188,6 +188,16 @@ REPEAT_TIMES=1
 ## ernie
 
 也可以参考[站在BERT肩膀上的NLP新秀们（PART I）](https://blog.csdn.net/Kaiyuan_sjtu/article/details/90757442)
+
+
+小细节：
+
+<html>
+<br/>
+<img src='../assets/ernie-detail.png' style='max-height: 300px'/>
+<br/>
+</html>
+
 
 ### ernie(baiduNLP)
 
