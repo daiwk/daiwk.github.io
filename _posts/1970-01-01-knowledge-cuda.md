@@ -42,10 +42,10 @@ https://developer.nvidia.com/cuda-10.2-download-archive?target_os=Linux&target_a
 wget http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_rhel6.run --no-check-certificate
 ```
 
-然后用root：
+然后用root(加tmpdir 是因为默认看的是/tmp，很容易满的)：
 
 ```shell
-sh cuda_10.2.89_440.33.01_rhel6.run -tmpdir /home/work/tmp -s --toolkit  
+sh cuda_10.2.89_440.33.01_rhel6.run -tmpdir /home/work/tmp --silent --toolkit
 ```
 
 再然后：
