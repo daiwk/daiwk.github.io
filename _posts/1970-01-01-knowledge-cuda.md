@@ -36,6 +36,12 @@ NVIDIA-SMI 440.33.01    Driver Version: 440.33.01    CUDA Version: N/A
 https://developer.nvidia.com/cuda-10.2-download-archive?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=6&target_type=runfilelocal
 ```
 
+也就是：
+
+```shell
+wget http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_rhel6.run --no-check-certificate
+```
+
 然后用root：
 
 ```shell
