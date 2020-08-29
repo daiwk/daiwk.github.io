@@ -143,6 +143,13 @@ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python get-pip.py
 ```
 
+## setup.py安装时指定LD_LIBRARY_PATH
+
+```shell
+export PATH=/opt/compiler/gcc-gcc-4.8.2/bin/:$PATH
+LDFLAGS=-L/home/work/daiwenkai/paddle_space/app_cold/python/lib/ ../python/bin/python ./setup.py install
+```
+
 ## jupyter
 
 小技巧：如何把整个notebook里的各级目录的东西一起下载？(我们发现在界面里一次只能下载一个文件。。。)
