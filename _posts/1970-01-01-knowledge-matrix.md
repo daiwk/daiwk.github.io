@@ -88,9 +88,11 @@ tags: [机器学习中的矩阵、向量求导, ]
 ### 举例
 
 A是m\*n，X是n\*k，AX是m\*k
+
 Y=reduce_sum(AX)对X的导数就包括
-reduce_sum对AX的导数：一个全1的m\*k的矩阵
-AX对X的导数：A^T，n\*m
+
++ reduce_sum对AX的导数：一个全1的m\*k的矩阵
++ AX对X的导数：A^T，n\*m
 
 参考[https://www.cnblogs.com/pinard/p/10825264.html](https://www.cnblogs.com/pinard/p/10825264.html)
 
