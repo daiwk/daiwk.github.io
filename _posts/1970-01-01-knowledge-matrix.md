@@ -84,3 +84,22 @@ tags: [机器学习中的矩阵、向量求导, ]
     print mf1.grad
     print mf2.grad
 ```
+
+### 举例
+
+A是m\*n，X是n\*k，AX是m\*k
+Y=reduce_sum(AX)对X的导数就包括
+reduce_sum对AX的导数：一个全1的m\*k的矩阵
+AX对X的导数：A^T，n\*m
+
+参考[https://www.cnblogs.com/pinard/p/10825264.html](https://www.cnblogs.com/pinard/p/10825264.html)
+
+<html>
+<br/>
+
+<img src='../assets/matrix-qiudao.png' style='max-height: 400px'/>
+<br/>
+
+</html>
+
+所以这个就是 A^T \* 全1矩阵，也就是n\*m和m\*k相乘，得到的n\*k，和原来的X一样的维度
