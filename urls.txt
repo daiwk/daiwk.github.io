@@ -147,6 +147,7 @@ https://daiwk.github.io/posts/links-navigation-nlp.html
 https://daiwk.github.io/posts/audio-speech-recognition-and-speaker-diarization.html
 https://daiwk.github.io/posts/rl-rl-codes.html
 https://daiwk.github.io/posts/ml-traditional-ml.html
+https://daiwk.github.io/posts/knowledge-disk.html
 https://daiwk.github.io/posts/platform-tf-gan.html
 https://daiwk.github.io/posts/platform-paddlepaddle-tutorial.html
 https://daiwk.github.io/posts/ml-svm-3-levels.html
