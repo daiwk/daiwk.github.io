@@ -105,6 +105,16 @@ gbdt 是通过采用**加法模型**（即**对基函数进行线性组合**）�
 
 ## xgboost
 
+xgboost的树的叶子和predict结果有什么关系
+
++ 假设只有一棵树，
+  + 如果是回归，那就是叶子的得分+0.5的bias。[https://github.com/dmlc/xgboost/issues/1077](https://github.com/dmlc/xgboost/issues/1077)
+  + 如果是分类，那是叶子的得分sigmoid
++ 假设有多棵树，那分类就是每棵树的叶子的得分加起来再过个sigmoid
+
+[https://stats.stackexchange.com/questions/395697/what-is-an-intuitive-interpretation-of-the-leaf-values-in-xgboost-base-learners](https://stats.stackexchange.com/questions/395697/what-is-an-intuitive-interpretation-of-the-leaf-values-in-xgboost-base-learners)
+
+
 xgboost的predict函数线程不安全：[https://github.com/dmlc/xgboost/issues/311](https://github.com/dmlc/xgboost/issues/311)
 
 解决：可以将handle放到一个pool里，每次要predict的时候，从pool里去拿。
