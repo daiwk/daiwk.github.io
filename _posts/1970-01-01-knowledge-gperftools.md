@@ -318,6 +318,24 @@ perf script -i perf.data > out.perf
 <br/>
 </html>
 
+
+还可以用这个[https://daiwk.github.io/assets/perf.tar.gz](https://daiwk.github.io/assets/perf.tar.gz)
+
+然后，**用root权限**
+
+实时热点展示
+
+```shell
+./perf top -p ${pid}
+```
+
+统计信息：
+
+```shell
+./perf stat -p ${pid}
+```
+
+
 ## sanitizers
 
 [https://github.com/google/sanitizers/wiki](https://github.com/google/sanitizers/wiki)
