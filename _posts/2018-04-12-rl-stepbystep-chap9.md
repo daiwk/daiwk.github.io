@@ -100,6 +100,11 @@ Actor-Critic（AC）方法其实是policy-based和value-based方法的结合。�
 
 如果是Actor-only，那就是policy gradient，而如果是Critic-only，那就是Q-learning。
 
+### 3.0 pg
+
+[https://www.jianshu.com/p/2ccbab48414b](https://www.jianshu.com/p/2ccbab48414b)
+
+
 ### 3.1 随机策略AC方法
 
 随机策略的梯度为
