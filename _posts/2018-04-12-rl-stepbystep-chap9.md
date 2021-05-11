@@ -104,6 +104,8 @@ Actor-Critic（AC）方法其实是policy-based和value-based方法的结合。�
 
 [https://www.jianshu.com/p/2ccbab48414b](https://www.jianshu.com/p/2ccbab48414b)
 
+[https://blog.csdn.net/qq_30615903/article/details/80747380](https://blog.csdn.net/qq_30615903/article/details/80747380)
+
 如果一个动作得到的reward多，那么我们就使其出现的概率增加，如果一个动作得到的reward少，我们就使其出现的概率减小。
 
 根据这个思想，我们构造如下的损失函数：
