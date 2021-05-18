@@ -67,6 +67,22 @@ wx+b = logit = log odds
 E(T) = odds = e ^{logit} = e ^{log odds} = e^{wx+b}
 \]`
 
+参考tf的weighted sigmoid：```weighted_cross_entropy_with_logits```: [https://www.tensorflow.org/api_docs/python/tf/nn/weighted_cross_entropy_with_logits](https://www.tensorflow.org/api_docs/python/tf/nn/weighted_cross_entropy_with_logits)
+
+正常的sigmoid：
+
+```python
+labels * -log(sigmoid(logits)) +
+    (1 - labels) * -log(1 - sigmoid(logits))
+```
+
+weighted sigmoid只对正样本加权：
+
+```python
+labels * -log(sigmoid(logits)) * pos_weight +
+    (1 - labels) * -log(1 - sigmoid(logits))
+```
+
 
 <html>
 <br/>
