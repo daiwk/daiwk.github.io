@@ -7,7 +7,6 @@ tags: [c++, ]
 
 目录
 
-<!-- TOC -->autoauto- [字符串相关](#字符串相关)auto    - [缓冲区溢出问题](#缓冲区溢出问题)auto        - [strncpy/strncat](#strncpystrncat)auto        - [snprintf](#snprintf)auto- [各种容器](#各种容器)auto    - [map与unordered map对比](#map与unordered-map对比)auto- [各种智能指针](#各种智能指针)auto    - [unique_ptr](#unique_ptr)auto    - [shared_ptr](#shared_ptr)auto    - [weak_ptr](#weak_ptr)auto- [各种多线程](#各种多线程)auto    - [thread基本用法](#thread基本用法)auto    - [thread_local](#thread_local)auto    - [atomic](#atomic)auto    - [unique_lock与lock_guard](#unique_lock与lock_guard)auto- [其他tips](#其他tips)auto    - [值/引用/指针](#值引用指针)auto    - [避免大struct的拷贝](#避免大struct的拷贝)auto- [builtin相关](#builtin相关)autoauto<!-- /TOC -->
 
 ## 字符串相关
 
