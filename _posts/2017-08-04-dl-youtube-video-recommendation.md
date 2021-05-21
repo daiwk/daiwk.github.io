@@ -8,8 +8,6 @@ tags: [youtube视频推荐系统, ]
 目录
 
 
-<!-- TOC -->autoauto- [候选生成网络（Candidate Generation Network）](#候选生成网络candidate-generation-network)auto    - [将推荐看成分类问题](#将推荐看成分类问题)auto    - [4.2 Modeling Expected Watch Time](#42-modeling-expected-watch-time)auto- [代码实现](#代码实现)autoauto<!-- /TOC -->
-
 参考[http://www.sohu.com/a/155797861_465975](http://www.sohu.com/a/155797861_465975)
 
 参考[https://zhuanlan.zhihu.com/p/25343518](https://zhuanlan.zhihu.com/p/25343518)
