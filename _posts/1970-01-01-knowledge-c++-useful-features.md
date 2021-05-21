@@ -6,7 +6,29 @@ tags: [c++, ]
 ---
 
 目录
+<!-- TOC -->
 
+- [字符串相关](#字符串相关)
+    - [缓冲区溢出问题](#缓冲区溢出问题)
+        - [strncpy/strncat](#strncpystrncat)
+        - [snprintf](#snprintf)
+- [各种容器](#各种容器)
+    - [map与unordered map对比](#map与unordered-map对比)
+- [各种智能指针](#各种智能指针)
+    - [unique_ptr](#unique_ptr)
+    - [shared_ptr](#shared_ptr)
+    - [weak_ptr](#weak_ptr)
+- [各种多线程](#各种多线程)
+    - [thread基本用法](#thread基本用法)
+    - [thread_local](#thread_local)
+    - [atomic](#atomic)
+    - [unique_lock与lock_guard](#unique_lock与lock_guard)
+- [其他tips](#其他tips)
+    - [值/引用/指针](#值引用指针)
+    - [避免大struct的拷贝](#避免大struct的拷贝)
+- [builtin相关](#builtin相关)
+
+<!-- /TOC -->
 
 ## 字符串相关
 

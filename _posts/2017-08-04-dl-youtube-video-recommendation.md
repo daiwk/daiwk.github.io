@@ -7,6 +7,14 @@ tags: [youtube视频推荐系统, ]
 
 目录
 
+<!-- TOC -->
+
+- [候选生成网络（Candidate Generation Network）](#候选生成网络candidate-generation-network)
+    - [将推荐看成分类问题](#将推荐看成分类问题)
+    - [4.2 Modeling Expected Watch Time](#42-modeling-expected-watch-time)
+- [代码实现](#代码实现)
+
+<!-- /TOC -->
 
 参考[http://www.sohu.com/a/155797861_465975](http://www.sohu.com/a/155797861_465975)
 
