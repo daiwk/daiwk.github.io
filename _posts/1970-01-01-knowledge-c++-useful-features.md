@@ -7,28 +7,7 @@ tags: [c++, ]
 
 目录
 
-<!-- TOC -->
-
-- [字符串相关](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3)
-  - [缓冲区溢出问题](#%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA%E9%97%AE%E9%A2%98)
-    - [strncpy/strncat](#strncpystrncat)
-    - [snprintf](#snprintf)
-- [各种容器](#%E5%90%84%E7%A7%8D%E5%AE%B9%E5%99%A8)
-  - [map与unordered map对比](#map%E4%B8%8Eunordered-map%E5%AF%B9%E6%AF%94)
-- [各种智能指针](#%E5%90%84%E7%A7%8D%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88)
-  - [unique_ptr](#uniqueptr)
-  - [shared_ptr](#sharedptr)
-  - [weak_ptr](#weakptr)
-- [各种多线程](#%E5%90%84%E7%A7%8D%E5%A4%9A%E7%BA%BF%E7%A8%8B)
-  - [thread基本用法](#thread%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
-  - [thread_local](#threadlocal)
-  - [atomic](#atomic)
-  - [unique_lock与lock_guard](#uniquelock%E4%B8%8Elockguard)
-- [其他tips](#%E5%85%B6%E4%BB%96tips)
-  - [值/引用/指针](#%E5%80%BC%E5%BC%95%E7%94%A8%E6%8C%87%E9%92%88)
-  - [避免大struct的拷贝](#%E9%81%BF%E5%85%8D%E5%A4%A7struct%E7%9A%84%E6%8B%B7%E8%B4%9D)
-
-<!-- /TOC -->
+<!-- TOC -->autoauto- [字符串相关](#字符串相关)auto    - [缓冲区溢出问题](#缓冲区溢出问题)auto        - [strncpy/strncat](#strncpystrncat)auto        - [snprintf](#snprintf)auto- [各种容器](#各种容器)auto    - [map与unordered map对比](#map与unordered-map对比)auto- [各种智能指针](#各种智能指针)auto    - [unique_ptr](#unique_ptr)auto    - [shared_ptr](#shared_ptr)auto    - [weak_ptr](#weak_ptr)auto- [各种多线程](#各种多线程)auto    - [thread基本用法](#thread基本用法)auto    - [thread_local](#thread_local)auto    - [atomic](#atomic)auto    - [unique_lock与lock_guard](#unique_lock与lock_guard)auto- [其他tips](#其他tips)auto    - [值/引用/指针](#值引用指针)auto    - [避免大struct的拷贝](#避免大struct的拷贝)auto- [builtin相关](#builtin相关)autoauto<!-- /TOC -->
 
 ## 字符串相关
 
@@ -313,4 +292,24 @@ std::sort(m.begin(), m.end(),
     return a->seconds_pass < b->seconds_pass;
     });
 
+```
+
+
+## builtin相关
+
+参考[https://stackoverflow.com/questions/66230707/c-builtin-functions-source-codes](https://stackoverflow.com/questions/66230707/c-builtin-functions-source-codes)
+
+
+[https://github.com/gcc-mirror/gcc/blob/master/gcc/builtins.def#L317](https://github.com/gcc-mirror/gcc/blob/master/gcc/builtins.def#L317)
+
+例如```__builtin_strlen```函数就是
+
+```c++
+DEF_LIB_BUILTIN        (BUILT_IN_STRLEN, "strlen", BT_FN_SIZE_CONST_STRING, ATTR_PURE_NOTHROW_NONNULL_LEAF)
+```
+
+在厂内的话，就是```/opt/compiler/gcc-8.2/lib64/gcc/x86_64-pc-linux-gnu/8.2.0/plugin/include/builtins.def```中
+
+```c++
+DEF_LIB_BUILTIN_CHKP   (BUILT_IN_STRLEN, "strlen", BT_FN_SIZE_CONST_STRING, ATTR_PURE_NOTHROW_NONNULL_LEAF)
 ```
