@@ -7,6 +7,9 @@ https://github.com/mathjax/MathJax/archive/master.zip
 to install:
 https://www.mathjax.org/#docs
 
+more: https://daiwk.gitbook.io/int-collections/int-summary
+more: https://daiwk.gitbook.io/collections/collections
+
 
 #### 1.浏览
 http://www.panxw.com, 支持PC与智能机访问。  
