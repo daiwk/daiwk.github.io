@@ -6,7 +6,6 @@ https://daiwk.github.io/posts/platform-paddlepaddle-lstm-crf.html
 https://daiwk.github.io/posts/dl-pointer-networks-for-combinational-optimization.html
 https://daiwk.github.io/posts/platform-thrift.html
 https://daiwk.github.io/posts/platform-keras-multi-cpu.html
-https://daiwk.github.io/posts/links-navigation-recommender-system.html
 https://daiwk.github.io/posts/knowledge-git.html
 https://daiwk.github.io/posts/platform-interpret-ml.html
 https://daiwk.github.io/posts/ml-few-shot-learning.html
@@ -21,7 +20,6 @@ https://daiwk.github.io/posts/cv-glow.html
 https://daiwk.github.io/posts/image-install-pil.html
 https://daiwk.github.io/posts/platform-tensor-to-tensor-coding.html
 https://daiwk.github.io/posts/dl-gate-decorator.html
-https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/rl-slateq.html
 https://daiwk.github.io/posts/nlp-dl-for-nlp-best-practices.html
 https://daiwk.github.io/posts/ml-feature-engineering.html
@@ -153,6 +151,7 @@ https://daiwk.github.io/posts/ml-svm-3-levels.html
 https://daiwk.github.io/posts/dl-ngboost.html
 https://daiwk.github.io/posts/nlp-bam.html
 https://daiwk.github.io/posts/cv-img-txt-sim.html
+https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/rl-defend-adversarial-samples.html
 https://daiwk.github.io/posts/nlp-chatbot.html
 https://daiwk.github.io/posts/nlp-mrqa.html
@@ -187,12 +186,12 @@ https://daiwk.github.io/posts/platform-pytorch-anniversary.html
 https://daiwk.github.io/posts/dl-mtl.html
 https://daiwk.github.io/posts/platform-storm.html
 https://daiwk.github.io/posts/dl-wasserstein-autoencoders.html
-https://daiwk.github.io/posts/links-navigation-nlp.html
 https://daiwk.github.io/posts/platform-neural-structured-learning.html
 https://daiwk.github.io/posts/nlp-openai-gpt.html
 https://daiwk.github.io/posts/knowledge-url.html
 https://daiwk.github.io/posts/cv-deblurgan.html
 https://daiwk.github.io/posts/audio-lds.html
+https://daiwk.github.io/posts/links-navigation-gnn.html
 https://daiwk.github.io/posts/nlp-paddle-lark.html
 https://daiwk.github.io/posts/video-animate-face.html
 https://daiwk.github.io/posts/rl-stepbystep-chap7.html
@@ -314,6 +313,7 @@ https://daiwk.github.io/posts/ml-pearson-correlation-coefficient.html
 https://daiwk.github.io/posts/platform-lingvo.html
 https://daiwk.github.io/posts/rl-stepbystep-chap13.html
 https://daiwk.github.io/posts/nlp-tagspaces.html
+https://daiwk.github.io/posts/links-navigation-recommender-system.html
 https://daiwk.github.io/posts/platform-tensorflow-code-analysis-overview.html
 https://daiwk.github.io/posts/platform-tf-step-by-step-2-contrasts.html
 https://daiwk.github.io/posts/knowledge-eigen.html
@@ -332,9 +332,9 @@ https://daiwk.github.io/posts/cv-cvpr2017-hekaiming.html
 https://daiwk.github.io/posts/platform-multigpu-parallel.html
 https://daiwk.github.io/posts/knowledge-ctags.html
 https://daiwk.github.io/posts/dl-attention-models.html
-https://daiwk.github.io/posts/links-navigation-gnn.html
 https://daiwk.github.io/posts/cv-ocr.html
 https://daiwk.github.io/posts/nlp-elmo.html
+https://daiwk.github.io/posts/links-navigation-nlp.html
 https://daiwk.github.io/posts/dl-pserver.html
 https://daiwk.github.io/posts/ml-google-tutorial-tf-ml.html
 https://daiwk.github.io/posts/rl-stepbystep-chap8.html
