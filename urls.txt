@@ -6,6 +6,7 @@ https://daiwk.github.io/posts/platform-paddlepaddle-lstm-crf.html
 https://daiwk.github.io/posts/dl-pointer-networks-for-combinational-optimization.html
 https://daiwk.github.io/posts/platform-thrift.html
 https://daiwk.github.io/posts/platform-keras-multi-cpu.html
+https://daiwk.github.io/posts/links-navigation-recommender-system.html
 https://daiwk.github.io/posts/knowledge-git.html
 https://daiwk.github.io/posts/platform-interpret-ml.html
 https://daiwk.github.io/posts/ml-few-shot-learning.html
@@ -14,13 +15,13 @@ https://daiwk.github.io/posts/image-gan.html
 https://daiwk.github.io/posts/nlp-new-nmt.html
 https://daiwk.github.io/posts/rl-dual-learning-mt.html
 https://daiwk.github.io/posts/nlp-bert-code-annotated-application.html
-https://daiwk.github.io/posts/links-navigation-gnn.html
 https://daiwk.github.io/posts/audio-fastspeech.html
 https://daiwk.github.io/posts/dl-dl-ctr-models.html
 https://daiwk.github.io/posts/cv-glow.html
 https://daiwk.github.io/posts/image-install-pil.html
 https://daiwk.github.io/posts/platform-tensor-to-tensor-coding.html
 https://daiwk.github.io/posts/dl-gate-decorator.html
+https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/rl-slateq.html
 https://daiwk.github.io/posts/nlp-dl-for-nlp-best-practices.html
 https://daiwk.github.io/posts/ml-feature-engineering.html
@@ -31,7 +32,6 @@ https://daiwk.github.io/posts/dl-nested-lstm.html
 https://daiwk.github.io/posts/other-docker-cmds.html
 https://daiwk.github.io/posts/nlp-self-attention-models.html
 https://daiwk.github.io/posts/ml-recommender-systems.html
-https://daiwk.github.io/posts/links-navigation-recommender-system.html
 https://daiwk.github.io/posts/nlp-convseq2seq.html
 https://daiwk.github.io/posts/dl-one-shot-imitation-learning.html
 https://daiwk.github.io/posts/knowledge-tf-install.html
@@ -143,7 +143,6 @@ https://daiwk.github.io/posts/dl-mixmatch.html
 https://daiwk.github.io/posts/rl-rl-progresses.html
 https://daiwk.github.io/posts/platform-paddlepaddle-seq2seq.html
 https://daiwk.github.io/posts/dl-traditional-ctr-models.html
-https://daiwk.github.io/posts/links-navigation-nlp.html
 https://daiwk.github.io/posts/audio-speech-recognition-and-speaker-diarization.html
 https://daiwk.github.io/posts/rl-rl-codes.html
 https://daiwk.github.io/posts/ml-traditional-ml.html
@@ -188,6 +187,7 @@ https://daiwk.github.io/posts/platform-pytorch-anniversary.html
 https://daiwk.github.io/posts/dl-mtl.html
 https://daiwk.github.io/posts/platform-storm.html
 https://daiwk.github.io/posts/dl-wasserstein-autoencoders.html
+https://daiwk.github.io/posts/links-navigation-nlp.html
 https://daiwk.github.io/posts/platform-neural-structured-learning.html
 https://daiwk.github.io/posts/nlp-openai-gpt.html
 https://daiwk.github.io/posts/knowledge-url.html
@@ -323,7 +323,6 @@ https://daiwk.github.io/posts/rl-pg-gan.html
 https://daiwk.github.io/posts/knowledge-algorithms.html
 https://daiwk.github.io/posts/nlp-text-summary.html
 https://daiwk.github.io/posts/nlp-fasttext.html
-https://daiwk.github.io/posts/links-navigation-gan.html
 https://daiwk.github.io/posts/rl-stepbystep-chap5.html
 https://daiwk.github.io/posts/platform-bert-speedup.html
 https://daiwk.github.io/posts/cv-interpretable-cnn.html
@@ -333,6 +332,7 @@ https://daiwk.github.io/posts/cv-cvpr2017-hekaiming.html
 https://daiwk.github.io/posts/platform-multigpu-parallel.html
 https://daiwk.github.io/posts/knowledge-ctags.html
 https://daiwk.github.io/posts/dl-attention-models.html
+https://daiwk.github.io/posts/links-navigation-gnn.html
 https://daiwk.github.io/posts/cv-ocr.html
 https://daiwk.github.io/posts/nlp-elmo.html
 https://daiwk.github.io/posts/dl-pserver.html
