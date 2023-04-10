@@ -42,13 +42,13 @@ U(\theta) = E(\sum^{H}_{t=0}R(s_t,u_t);\pi_{\theta})=\sum_{\tau}P(\tau;\theta)R(
 \begin{split}
 \\ \triangledown _{\theta}(U_{\theta})&=\triangledown_{\theta}\sum_{\tau}P(\tau;\theta)R(\tau)
 \\&=\sum_{\tau}\triangledown_{\theta}P(\tau;\theta)R(\tau)
-\\&=\sum_{\tau} \frac{P(\tau;\theta)R(\tau)}{P(\tau;\theta)R(\tau)} \triangledown_{\theta}P(\tau;\theta)R(\tau)
-\\&=\sum_{\tau} P(\tau;\theta)\frac{\triangledown_{\theta}P(\tau;\theta)R(\tau)}{P(\tau;\theta)R(\tau)}
+\\&=\sum_{\tau} \frac{P(\tau;\theta)}{P(\tau;\theta)} \triangledown_{\theta}P(\tau;\theta)R(\tau)
+\\&=\sum_{\tau} P(\tau;\theta)\frac{\triangledown_{\theta}P(\tau;\theta)R(\tau)}{P(\tau;\theta)}
 \\&=\sum_{\tau} P(\tau;\theta)\triangledown_{\theta}\log P(\tau;\theta)R(\tau)
 \end{split}
 \]`
 
-其中，`\(\triangledown_x\log P(x)=\frac{1}{P}\triangledown_xP(x)\)`
+其中，`\(\triangledown_x\log P(x)=\frac{1}{P(x)}\triangledown_xP(x)\)`
 
 因此，策略梯度最终变成求`\(\triangledown_{\theta}\log P(\tau;\theta)R(\tau)\)`的期望。而这期望，可以通过利用当前策略`\(\pi_{\theta}\)`采样m条轨迹`\(\tau_1,...,\tau_m\)`之后，求平均来近似：
 
