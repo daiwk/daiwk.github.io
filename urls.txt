@@ -99,7 +99,6 @@ https://daiwk.github.io/posts/knowledge-testing-tools.html
 https://daiwk.github.io/posts/dl-topk-off-policy-correction.html
 https://daiwk.github.io/posts/rl-seqgan.html
 https://daiwk.github.io/posts/dl-dl-ai-notes.html
-https://daiwk.github.io/posts/nlp-dssm.html
 https://daiwk.github.io/posts/nlp-glue-above.html
 https://daiwk.github.io/posts/ml-regularization.html
 https://daiwk.github.io/posts/platform-tensorflow-seq2seq.html
@@ -174,7 +173,6 @@ https://daiwk.github.io/posts/knowledge-rnn-implementation.html
 https://daiwk.github.io/posts/dl-graph-representations.html
 https://daiwk.github.io/posts/rl-pytorch-rl-tutorial.html
 https://daiwk.github.io/posts/dl-speedup-tricks.html
-https://daiwk.github.io/posts/dl-youtube-video-recommendation.html
 https://daiwk.github.io/posts/audio-gan-tts.html
 https://daiwk.github.io/posts/audio-avm.html
 https://daiwk.github.io/posts/knowledge-mpi.html
@@ -225,7 +223,6 @@ https://daiwk.github.io/posts/platform-tf-serving-optimization.html
 https://daiwk.github.io/posts/dl-multi-sample-dropout.html
 https://daiwk.github.io/posts/ml-occf.html
 https://daiwk.github.io/posts/platform-tf-ranking.html
-https://daiwk.github.io/posts/nlp-albert.html
 https://daiwk.github.io/posts/platform-memcached.html
 https://daiwk.github.io/posts/dl-pointer-network-copynet.html
 https://daiwk.github.io/posts/ml-online-learning.html
@@ -248,7 +245,6 @@ https://daiwk.github.io/posts/platform-mlperf.html
 https://daiwk.github.io/posts/nlp-bert-code.html
 https://daiwk.github.io/posts/dl-capsules.html
 https://daiwk.github.io/posts/dl-talk-to-book.html
-https://daiwk.github.io/posts/nlp-xlnet.html
 https://daiwk.github.io/posts/other-use-docker-without-sshd.html
 https://daiwk.github.io/posts/platform-linux-kernel.html
 https://daiwk.github.io/posts/knowledge-gcc48.html

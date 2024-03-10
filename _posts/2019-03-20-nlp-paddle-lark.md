@@ -5,53 +5,6 @@ title: "paddle的LARK(ERNIE/BERT等)+bert的各种变种"
 tags: [paddle, bert, lark, ernie, tinybert, vlbert, vl-bert, vilbert, xlm, laser, mass, unilm, roberta, sensebert, faster transformer, 数字, ]
 ---
 
-目录
-
-<!-- TOC -->
-
-- [小结](#小结)
-- [bert](#bert)
-  - [finetune和跑预测并save模型](#finetune和跑预测并save模型)
-  - [线上infer部分](#线上infer部分)
-- [ernie](#ernie)
-  - [ernie(baiduNLP)](#erniebaidunlp)
-  - [ernie2.0(baidunlp)](#ernie20baidunlp)
-  - [ernie(清华ACL2019版)](#ernie清华acl2019版)
-    - [模型结构](#模型结构)
-    - [finetune方法](#finetune方法)
-- [XLMs/MASS/UNILM](#xlmsmassunilm)
-  - [XLM(facebook2019)](#xlmfacebook2019)
-  - [LASER(facebook2018)](#laserfacebook2018)
-  - [MASS(microsoft)](#massmicrosoft)
-  - [UNILM(microsoft)](#unilmmicrosoft)
-- [UER框架](#uer框架)
-- [Whole Word Masking BERT](#whole-word-masking-bert)
-- [xlnet](#xlnet)
-- [RoBERTa](#roberta)
-- [ALBERT](#albert)
-- [DistilBERT](#distilbert)
-- [移动端部署](#移动端部署)
-- [中文预训练模型汇总](#中文预训练模型汇总)
-  - [roberta中文](#roberta中文)
-  - [albert中文](#albert中文)
-  - [xlnet中文](#xlnet中文)
-- [TinyBert](#tinybert)
-- [SenseBert：解决歧义](#sensebert解决歧义)
-- [bert的可解释性](#bert的可解释性)
-- [bert相关模型的对比与分析](#bert相关模型的对比与分析)
-- [faster transformer](#faster-transformer)
-- [bert加速方法](#bert加速方法)
-- [多模态bert](#多模态bert)
-  - [vilbert](#vilbert)
-  - [VLbert](#vlbert)
-- [bert的一些常见问题](#bert的一些常见问题)
-  - [为什么不用hierarchical softmax](#为什么不用hierarchical-softmax)
-- [对数字的认知](#对数字的认知)
-- [与rl的结合](#与rl的结合)
-
-<!-- /TOC -->
-
-
 ## 小结
 
 [预训练语言模型关系图+必读论文列表，清华荣誉出品](https://mp.weixin.qq.com/s/-U_Lu2MMr5QRNe1xpv-_Xg)
